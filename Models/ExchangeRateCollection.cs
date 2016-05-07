@@ -13,6 +13,9 @@ namespace MyCryptos
 				}
 				return Instance;
 			}
+			private set {
+				Instance = value;
+			}
 		}
 
 		public List<ExchangeRate> ExchangeRates{ get; }

@@ -9,7 +9,9 @@ namespace MyCryptos
 		public Currency SecondaryCurrency{ get; }
 
 		public decimal Rate {
-			get;
+			get { 
+				return Rate;
+			}
 			set {
 				if (value > 0)
 					Rate = value;
@@ -33,7 +35,7 @@ namespace MyCryptos
 		public ExchangeRate GetInverse ()
 		{
 			ExchangeRate exchangeRate = new ExchangeRate (SecondaryCurrency, ReferenceCurrency);
-			if (Rate != null && Rate > 0) {
+			if (Rate > 0) {
 				exchangeRate.Rate = 1 / Rate;
 			}
 			return exchangeRate;

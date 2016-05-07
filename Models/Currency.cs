@@ -32,6 +32,10 @@ namespace MyCryptos
 		}
 
 
+		public static readonly Currency EUR = new Currency ("Euro", "EUR");
+		public static readonly Currency USD = new Currency ("US Dollar", "USD");
+		public static readonly Currency BTC = new Currency ("Bitcoin", "BTC");
+
 	}
 }
 

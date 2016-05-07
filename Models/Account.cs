@@ -13,7 +13,7 @@ namespace MyCryptos
 
 		public List<Tag> Tags { get; set; }
 
-		public Money getMoney (Currency currency);
+		public abstract Money GetMoney (Currency currency);
 	}
 }
 
