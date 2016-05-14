@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="MyCryptos.MainView" Title="MyCryptos">
+	<ContentPage.Content>
+		<StackLayout BackgroundColor="#0080FF">
+			<Label FontSize="36" FontAttributes="Bold" Margin="0,50,0,50" HorizontalTextAlignment="Center" TextColor="White" Text="35.35 BTC" />
+			<ListView x:Name="listView">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<TextCell Text="{Binding Money.String}" Detail="{Binding BtcValue.String}" />
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

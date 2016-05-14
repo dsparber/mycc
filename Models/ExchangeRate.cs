@@ -8,17 +8,7 @@ namespace MyCryptos
 
 		public Currency SecondaryCurrency{ get; }
 
-		public decimal Rate {
-			get { 
-				return Rate;
-			}
-			set {
-				if (value > 0)
-					Rate = value;
-				else
-					throw new Exception ("The exchange rate has to be greater than 0");
-			}
-		}
+		public decimal Rate { get; set; }
 
 
 		public ExchangeRate (Currency referenceCurrency, Currency secondaryCurrency, decimal rate) : this (referenceCurrency, secondaryCurrency)

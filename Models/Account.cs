@@ -3,17 +3,21 @@ using System.Collections.Generic;
 
 namespace MyCryptos
 {
-	public abstract class Account
+	public class Account
 	{
 		public string Name { get; set; }
 
 		public string Id { get; set; }
 
-		public double Units { get; set; }
-
 		public List<Tag> Tags { get; set; }
 
-		public abstract Money GetMoney (Currency currency);
+		public Money Money { get; set; }
+
+		public Money BtcValue { 
+			get { 
+				return CurrencyConverter.convert (Money, Currency.BTC);
+			}
+		}
 	}
 }
 

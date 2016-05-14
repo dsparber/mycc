@@ -17,7 +17,7 @@ namespace MyCryptos
 		{
 			Money money = new Money{ Currency = currency, Amount = 0 };
 			foreach (Account account in Accounts) {
-				money += account.GetMoney (currency);
+				money += CurrencyConverter.convert (account.Money, currency);
 			}
 			return money;
 		}

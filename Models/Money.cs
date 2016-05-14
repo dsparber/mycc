@@ -8,6 +8,12 @@ namespace MyCryptos
 
 		public Currency Currency { get; set; }
 
+		public string String {
+			get {
+				return Amount + " " + Currency.Abbreviation;
+			}
+		}
+
 
 		// Operators
 
