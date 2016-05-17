@@ -13,9 +13,9 @@ namespace MyCryptos
 
 		public Money Money { get; set; }
 
-		public Money BtcValue { 
+		public Money ReferenceValue { 
 			get { 
-				return CurrencyConverter.convert (Money, Currency.BTC);
+				return CurrencyConverter.convert (Money, PermanentSettings.Instance.ReferenceCurrency);
 			}
 		}
 	}

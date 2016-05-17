@@ -42,9 +42,12 @@
     <Compile Include="Helper\CurrencyConverter.cs" />
     <Compile Include="API Handler\BtceAPI.cs" />
     <Compile Include="API Handler\CurrencyAPI.cs" />
-    <Compile Include="MainView.xaml.cs">
+    <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainViewViewModel.cs" />
+    <Compile Include="Converters\NegateBooleanConverter.cs" />
+    <Compile Include="Settings\PermanentSettings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -80,9 +83,11 @@
     <Folder Include="Helper\" />
     <Folder Include="API Handler\" />
     <Folder Include="View\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Settings\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MainView.xaml">
+    <EmbeddedResource Include="View\MainView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

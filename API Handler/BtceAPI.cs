@@ -10,7 +10,7 @@ namespace MyCryptos
 {
 	public class BtceAPI : CurrencyAPI
 	{
-		private readonly static string URL = "https://btc-e.com/api/3/ticker{0}";
+		private readonly static string URL = "https://btc-e.com/api/3/ticker/{0}";
 		private readonly static string KEY = "last";
 
 		HttpClient client;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace MyCryptos
 {
@@ -22,6 +23,15 @@ namespace MyCryptos
 			this.SecondaryCurrency = secondaryCurrency;
 		}
 
+		public ExchangeRate GetFor (Currency currency)
+		{
+			if (currency.Equals (ReferenceCurrency))
+				return this;
+			if (currency.Equals (SecondaryCurrency))
+				return GetInverse ();
+			return null;
+		}
+
 		public ExchangeRate GetInverse ()
 		{
 			ExchangeRate exchangeRate = new ExchangeRate (SecondaryCurrency, ReferenceCurrency);
@@ -31,6 +41,48 @@ namespace MyCryptos
 			return exchangeRate;
 		}
 
+		public ExchangeRate GetCombinedRate (ExchangeRate rate)
+		{
+			ExchangeRate r = new ExchangeRate (DifferentCurrency (rate), rate.DifferentCurrency (this));
+
+			ExchangeRate r1 = GetFor (CommonCurrency (rate));
+			ExchangeRate r2 = rate.GetFor (rate.CommonCurrency (this));
+
+			r.Rate = r2.Rate / r1.Rate;
+
+			return r;
+		}
+
+		public bool Contains (Currency currency)
+		{
+			return ReferenceCurrency.Equals (currency) || SecondaryCurrency.Equals (currency);
+		}
+
+		public bool OneMatch (ExchangeRate rate)
+		{
+			return rate.Contains (ReferenceCurrency) || rate.Contains (SecondaryCurrency);
+		}
+
+		public Currency CommonCurrency (ExchangeRate rate)
+		{
+			if (rate.Contains (ReferenceCurrency))
+				return ReferenceCurrency;
+			if (rate.Contains (SecondaryCurrency))
+				return SecondaryCurrency;
+			return null;
+		}
+
+		public Currency DifferentCurrency (ExchangeRate rate)
+		{
+			if (CommonCurrency (rate) == null) {
+				return null;
+			}
+			if (rate.Contains (ReferenceCurrency))
+				return SecondaryCurrency;
+			if (rate.Contains (SecondaryCurrency))
+				return ReferenceCurrency;
+			return null;
+		}
 	}
 }
 

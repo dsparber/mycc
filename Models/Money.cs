@@ -10,10 +10,9 @@ namespace MyCryptos
 
 		public string String {
 			get {
-				return Amount + " " + Currency.Abbreviation;
+				return String.Format ("{0:#,#.##} {1}", Amount, Currency.Abbreviation);
 			}
 		}
-
 
 		// Operators
 
