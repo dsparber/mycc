@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace MyCryptos
 {
@@ -10,7 +11,7 @@ namespace MyCryptos
 
 		public string String {
 			get {
-				return String.Format ("{0:#,#.##} {1}", Amount, Currency.Abbreviation);
+				return String.Format (PermanentSettings.Instance.CultureInfo, "{0:#,#.##} {1}", Amount, Currency.Abbreviation);
 			}
 		}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace MyCryptos
 {
@@ -17,10 +18,13 @@ namespace MyCryptos
 
 		private PermanentSettings ()
 		{
-			ReferenceCurrency = Currency.EUR;
+			ReferenceCurrency = Currency.USD;
+			CultureInfo = new CultureInfo ("de-DE");
 		}
 
 		public Currency ReferenceCurrency{ get; set; }
+
+		public CultureInfo CultureInfo{ get; set; }
 	}
 }
 
