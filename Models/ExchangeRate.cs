@@ -83,6 +83,23 @@ namespace MyCryptos
 				return ReferenceCurrency;
 			return null;
 		}
+
+		public override bool Equals (Object obj)
+		{
+			// Check for null values and compare run-time types.
+			if (obj == null || GetType () != obj.GetType ())
+				return false;
+
+			ExchangeRate r = (ExchangeRate)obj;
+
+			return r.ReferenceCurrency.Equals (ReferenceCurrency) && r.SecondaryCurrency.Equals (SecondaryCurrency);
+		}
+
+
+		public override int GetHashCode ()
+		{
+			return ReferenceCurrency.GetHashCode () + SecondaryCurrency.GetHashCode ();
+		}
 	}
 }
 

@@ -27,27 +27,41 @@ namespace MyCryptos
 			Accounts = new ObservableCollection<Account> ();
 		}
 
-		public Money GetSum (Currency currency)
+		public async Task<Money> GetSum (Currency currency)
 		{
 			Money money = new Money{ Currency = currency, Amount = 0 };
 			foreach (Account account in Accounts) {
-				money += CurrencyConverter.convert (account.Money, currency);
+				money += await CurrencyConverter.convert (account.Money, currency);
 			}
 			return money;
 		}
 
 		public Money Sum {
 			get {
-				return GetSum (PermanentSettings.Instance.ReferenceCurrency);
+				return sum;
 			}
 		}
+
+		private Money sum{ get; set; }
 
 		public async Task LoadAccounts ()
 		{
 			Accounts.Add (new Account{ Money = new Money { Amount = 30, Currency = Currency.BTC } });
 			Accounts.Add (new Account{ Money = new Money { Amount = 1, Currency = Currency.EUR } });
 			Accounts.Add (new Account{ Money = new Money { Amount = 3, Currency = Currency.USD } });
+			Accounts.Add (new Account{ Money = new Money { Amount = 6, Currency = new Currency ("Lite Coin", "LTC") } });
+
+			await LoadReferenceValues ();
+		}
+
+		public async Task LoadReferenceValues ()
+		{
+			foreach (Account account in Accounts) {
+				await account.LoadReferenceValue ();
+			}
+
+			sum = await GetSum (PermanentSettings.Instance.ReferenceCurrency);
 		}
 	}
-}
 
+}

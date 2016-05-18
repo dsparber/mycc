@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 
@@ -21,30 +20,34 @@ namespace MyCryptos
 			client.MaxResponseContentBufferSize = 256000;
 		}
 
-		public async Task<List<ExchangeRate>> GetExchangeRatesAsync ()
+		public async Task<List<ExchangeRate>> GetAvailableRatesAsync ()
 		{
 			List<ExchangeRate> exchangeRates = new List<ExchangeRate> ();
 
 			exchangeRates.Add (new ExchangeRate (Currency.BTC, Currency.USD));
 			exchangeRates.Add (new ExchangeRate (Currency.BTC, Currency.EUR));
 
-			foreach (ExchangeRate exchangeRate in exchangeRates) {
-				var uri = new Uri (string.Format (URL, RateToUrl (exchangeRate)));
-
-				try {
-					var response = await client.GetAsync (uri);
-					if (response.IsSuccessStatusCode) {
-						var content = await response.Content.ReadAsStringAsync ();
-						var json = JObject.Parse (content);
-						JToken rateJson = json [RateToUrl (exchangeRate)];
-						var rate = (decimal)rateJson [KEY];
-						exchangeRate.Rate = rate;
-					}
-				} catch (Exception e) {
-					Debug.WriteLine (@"ERROR {0}", e.Message);
-				}
-			}
 			return exchangeRates;
+		}
+
+
+		public async Task<ExchangeRate> GetExchangeRateAsync (ExchangeRate exchangeRate)
+		{
+			var uri = new Uri (string.Format (URL, RateToUrl (exchangeRate)));
+
+			try {
+				var response = await client.GetAsync (uri);
+				if (response.IsSuccessStatusCode) {
+					var content = await response.Content.ReadAsStringAsync ();
+					var json = JObject.Parse (content);
+					JToken rateJson = json [RateToUrl (exchangeRate)];
+					var rate = (decimal)rateJson [KEY];
+					exchangeRate.Rate = rate;
+				}
+			} catch (Exception e) {
+				Debug.WriteLine (@"ERROR {0}", e.Message);
+			}
+			return exchangeRate;
 		}
 
 		private String RateToUrl (ExchangeRate exchangeRate)

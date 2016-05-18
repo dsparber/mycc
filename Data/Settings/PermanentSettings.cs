@@ -18,7 +18,7 @@ namespace MyCryptos
 
 		private PermanentSettings ()
 		{
-			ReferenceCurrency = Currency.USD;
+			ReferenceCurrency = Currency.EUR;
 			CultureInfo = new CultureInfo ("de-DE");
 		}
 

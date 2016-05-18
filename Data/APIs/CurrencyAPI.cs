@@ -6,7 +6,9 @@ namespace MyCryptos
 {
 	public interface CurrencyAPI
 	{
-		Task<List<ExchangeRate>> GetExchangeRatesAsync ();
+		Task<ExchangeRate> GetExchangeRateAsync (ExchangeRate exchangeRate);
+
+		Task<List<ExchangeRate>> GetAvailableRatesAsync ();
 	}
 }
 

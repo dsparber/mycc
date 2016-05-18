@@ -36,8 +36,6 @@ namespace MyCryptos
 			}
 		}
 
-
-
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public void RaisePropertyChanged (string propName)

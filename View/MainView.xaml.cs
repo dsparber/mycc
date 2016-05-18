@@ -19,9 +19,6 @@ namespace MyCryptos
 
 			viewModel = new MainViewViewModel ();
 			BindingContext = viewModel;
-
-
-			listView.ItemsSource = viewModel.AccountsCollection.Accounts;
 		}
 
 		protected async override void OnAppearing ()
@@ -32,6 +29,8 @@ namespace MyCryptos
 
 			await viewModel.AccountsCollection.LoadAccounts ();
 			viewModel.RaisePropertyChanged ("AccountsCollection");
+
+			listView.ItemsSource = viewModel.AccountsCollection.Accounts;
 
 			viewModel.IsLoading = false;
 		}

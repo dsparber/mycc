@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace MyCryptos
 {
@@ -13,9 +15,17 @@ namespace MyCryptos
 
 		public Money Money { get; set; }
 
-		public Money ReferenceValue { 
-			get { 
-				return CurrencyConverter.convert (Money, PermanentSettings.Instance.ReferenceCurrency);
+		public async Task LoadReferenceValue ()
+		{ 
+			referenceValue = await CurrencyConverter.convert (Money, PermanentSettings.Instance.ReferenceCurrency);
+			Debug.WriteLine (referenceValue);
+		}
+
+		private Money referenceValue { get; set; }
+
+		public Money ReferenceValue {
+			get {
+				return referenceValue;
 			}
 		}
 	}
