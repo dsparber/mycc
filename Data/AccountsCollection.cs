@@ -60,7 +60,7 @@ namespace MyCryptos
 				await account.LoadReferenceValue ();
 			}
 
-			sum = await GetSum (PermanentSettings.Instance.ReferenceCurrency);
+			sum = await GetSum (PermanentSettings.ReferenceCurrency);
 		}
 	}
 

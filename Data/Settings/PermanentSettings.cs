@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Globalization;
+using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 
 namespace MyCryptos
 {
-	public class PermanentSettings
+	public static class PermanentSettings
 	{
-		private static PermanentSettings instance{ get; set; }
+		private const string CultureInfoKey = "culture_info";
+		private static readonly string CultureInfoDefault = "de-DE";
 
-		public static PermanentSettings Instance {
+		private const string CurrencyKey = "int_key";
+		private static readonly String CurrencyDefault = Currency.EUR.Abbreviation;
+
+		private static ISettings AppSettings {
 			get {
-				if (instance == null) {
-					instance = new PermanentSettings ();
-				}
-				return instance;
+				return CrossSettings.Current;
 			}
 		}
 
-		private PermanentSettings ()
-		{
-			ReferenceCurrency = Currency.EUR;
-			CultureInfo = new CultureInfo ("de-DE");
+		public static CultureInfo CultureInfo {
+			get { return new CultureInfo (AppSettings.GetValueOrDefault<string> (CultureInfoKey, CultureInfoDefault)); }
+			set { AppSettings.AddOrUpdateValue<string> (CultureInfoKey, value.Name); }
 		}
 
-		public Currency ReferenceCurrency{ get; set; }
-
-		public CultureInfo CultureInfo{ get; set; }
+		public static Currency ReferenceCurrency {
+			get { return new Currency ("", AppSettings.GetValueOrDefault<string> (CurrencyKey, CurrencyDefault)); }
+			set { AppSettings.AddOrUpdateValue<string> (CurrencyKey, value.Abbreviation); }
+		}
 	}
 }
 

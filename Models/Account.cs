@@ -17,7 +17,7 @@ namespace MyCryptos
 
 		public async Task LoadReferenceValue ()
 		{ 
-			referenceValue = await CurrencyConverter.convert (Money, PermanentSettings.Instance.ReferenceCurrency);
+			referenceValue = await CurrencyConverter.convert (Money, PermanentSettings.ReferenceCurrency);
 			Debug.WriteLine (referenceValue);
 		}
 

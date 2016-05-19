@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MyCryptos;assembly=MyCryptos" x:Class="MyCryptos.MainView" Title="MyCryptos">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Name="Add" Icon="add.png" />
+	</ContentPage.ToolbarItems>
 	<ContentPage.Resources>
 		<ResourceDictionary>
 			<local:NegateBooleanConverter x:Key="not" />
