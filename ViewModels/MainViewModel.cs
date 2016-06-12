@@ -3,13 +3,13 @@ using System.ComponentModel;
 
 namespace MyCryptos
 {
-	public class MainViewViewModel : INotifyPropertyChanged
+	public class MainViewModel : INotifyPropertyChanged
 	{
 		private bool isLoading;
 
 		private AccountsCollection accountsCollection;
 
-		public MainViewViewModel ()
+		public MainViewModel ()
 		{
 			IsLoading = true;
 			accountsCollection = AccountsCollection.Instance;

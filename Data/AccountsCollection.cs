@@ -25,6 +25,11 @@ namespace MyCryptos
 		private AccountsCollection ()
 		{
 			Accounts = new ObservableCollection<Account> ();
+
+			Accounts.Add(new Account { Money = new Money { Amount = 30, Currency = Currency.BTC } });
+			Accounts.Add(new Account { Money = new Money { Amount = 1, Currency = Currency.EUR } });
+			Accounts.Add(new Account { Money = new Money { Amount = 3, Currency = Currency.USD } });
+			Accounts.Add(new Account { Money = new Money { Amount = 6, Currency = new Currency("Lite Coin", "LTC") } });
 		}
 
 		public async Task<Money> GetSum (Currency currency)
@@ -46,11 +51,6 @@ namespace MyCryptos
 
 		public async Task LoadAccounts ()
 		{
-			Accounts.Add (new Account{ Money = new Money { Amount = 30, Currency = Currency.BTC } });
-			Accounts.Add (new Account{ Money = new Money { Amount = 1, Currency = Currency.EUR } });
-			Accounts.Add (new Account{ Money = new Money { Amount = 3, Currency = Currency.USD } });
-			Accounts.Add (new Account{ Money = new Money { Amount = 6, Currency = new Currency ("Lite Coin", "LTC") } });
-
 			await LoadReferenceValues ();
 		}
 
@@ -60,7 +60,7 @@ namespace MyCryptos
 				await account.LoadReferenceValue ();
 			}
 
-			sum = await GetSum (PermanentSettings.ReferenceCurrency);
+			sum = await GetSum (Settings.ReferenceCurrency);
 		}
 	}
 

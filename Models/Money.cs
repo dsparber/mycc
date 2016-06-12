@@ -11,7 +11,7 @@ namespace MyCryptos
 
 		public string String {
 			get {
-				return String.Format (PermanentSettings.CultureInfo, "{0:#,0.##} {1}", Amount, Currency.Abbreviation);
+				return String.Format (Settings.CultureInfo, "{0:#,0.##} {1}", Amount, Currency.Abbreviation);
 			}
 		}
 

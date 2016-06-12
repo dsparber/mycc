@@ -1,38 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-
 using Xamarin.Forms;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.ServiceModel.Channels;
+
 
 namespace MyCryptos
 {
 	public partial class MainView : ContentPage
 	{
-		private MainViewViewModel viewModel;
+		private MainViewModel viewModel;
 
-		public MainView ()
+		public MainView()
 		{
-			InitializeComponent ();
+			InitializeComponent();
 
-			viewModel = new MainViewViewModel ();
+			viewModel = new MainViewModel();
 			BindingContext = viewModel;
 		}
 
-		protected async override void OnAppearing ()
-		{            
-			base.OnAppearing ();
+		protected async override void OnAppearing()
+		{
+			base.OnAppearing();
 
-			await ExchangeRateCollection.Instance.LoadRates ();
+			viewModel.IsLoading = true;
 
-			await viewModel.AccountsCollection.LoadAccounts ();
-			viewModel.RaisePropertyChanged ("AccountsCollection");
+			await ExchangeRateCollection.Instance.LoadRates();
+
+			await viewModel.AccountsCollection.LoadAccounts();
+			viewModel.RaisePropertyChanged("AccountsCollection");
 
 			listView.ItemsSource = viewModel.AccountsCollection.Accounts;
 
 			viewModel.IsLoading = false;
+		}
+
+		private void AddAccount(object sender, EventArgs args)
+		{
+			Navigation.PushModalAsync(new NavigationPage(new NewAccountView()));
 		}
 	}
 }

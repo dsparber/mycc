@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Class="MyCryptos.NewAccountView">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Name="Cancel"
+				Clicked="CancelClicked"/>
+		<ToolbarItem
+			Name="Speichern"
+			Clicked="SaveAccount"/>
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<StackLayout>
+			<Entry
+				Placeholder="Bezeichung" />
+			<Entry Placeholder="Betrag"/>
+			<Entry Placeholder="Currency"/>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

@@ -54,4 +54,32 @@ Global
 		{BA81C78F-C991-499E-B504-422EEDAAB3EE}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{BA81C78F-C991-499E-B504-422EEDAAB3EE}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 120
+		$1.TabsToSpaces = False
+		$1.inheritsSet = null
+		$1.inheritsScope = text/plain
+		$1.scope = application/json
+		$0.TextStylePolicy = $2
+		$2.inheritsSet = null
+		$2.scope = application/xml
+		$0.XmlFormattingPolicy = $3
+		$3.DefaultFormat = $4
+		$4.AttributesInNewLine = True
+		$4.AlignAttributes = True
+		$3.inheritsSet = null
+		$3.inheritsScope = application/xml
+		$3.scope = application/xaml+xml
+		$0.TextStylePolicy = $5
+		$5.inheritsSet = null
+		$5.scope = application/xaml+xml
+		$0.XmlFormattingPolicy = $6
+		$6.inheritsSet = null
+		$6.scope = application/xaml+xml
+		$0.TextStylePolicy = $7
+		$7.inheritsSet = null
+		$7.scope = application/json
+	EndGlobalSection
 EndGlobal

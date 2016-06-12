@@ -1,23 +1,55 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MyCryptos;assembly=MyCryptos" x:Class="MyCryptos.MainView" Title="MyCryptos">
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:MyCryptos;assembly=MyCryptos"
+	x:Class="MyCryptos.MainView"
+	Title="MyCryptos">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Name="Add" Icon="add.png" />
+		<ToolbarItem
+			Name="Add"
+			Icon="add.png" 
+			Clicked="AddAccount"/>
 	</ContentPage.ToolbarItems>
 	<ContentPage.Resources>
 		<ResourceDictionary>
-			<local:NegateBooleanConverter x:Key="not" />
+			<local:NegateBooleanConverter
+				x:Key="not" />
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
 		<StackLayout>
-			<RelativeLayout BackgroundColor="#0080FF" HeightRequest="150">
-				<Label Text="{Binding AccountsCollection.Sum.String}" IsVisible="{Binding IsLoading, Converter={StaticResource not}}" FontSize="36" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" TextColor="White" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}" RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" />
-				<ActivityIndicator Scale="1.5" Color="White" IsVisible="{Binding IsLoading}" IsRunning="{Binding IsLoading}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}" RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" />
+			<RelativeLayout
+				BackgroundColor="#0080FF"
+				HeightRequest="150">
+				<Label
+					Text="{Binding AccountsCollection.Sum.String}"
+					IsVisible="{Binding IsLoading, Converter={StaticResource not}}"
+					FontSize="36"
+					FontAttributes="Bold"
+					HorizontalOptions="CenterAndExpand"
+					VerticalOptions="CenterAndExpand"
+					HorizontalTextAlignment="Center"
+					TextColor="White"
+					RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
+					RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" />
+				<ActivityIndicator
+					Scale="1.5"
+					Color="White"
+					IsVisible="{Binding IsLoading}"
+					IsRunning="{Binding IsLoading}"
+					VerticalOptions="CenterAndExpand"
+					HorizontalOptions="CenterAndExpand"
+					RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
+					RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" />
 			</RelativeLayout>
-			<ListView x:Name="listView">
+			<ListView
+				x:Name="listView">
 				<ListView.ItemTemplate>
 					<DataTemplate>
-						<TextCell Text="{Binding Money.String}" Detail="{Binding ReferenceValue.String}" />
+						<TextCell
+							Text="{Binding Money.String}"
+							Detail="{Binding ReferenceValue.String}" />
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
