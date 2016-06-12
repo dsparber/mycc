@@ -49,7 +49,6 @@
     <Compile Include="Data\APIs\CurrencyAPI.cs" />
     <Compile Include="Data\Settings\Settings.cs" />
     <Compile Include="Data\CurrencyCollection.cs" />
-    <Compile Include="Helpers\Settings.cs" />
     <Compile Include="View\NewAccountView.xaml.cs">
       <DependentUpon>NewAccountView.xaml</DependentUpon>
     </Compile>

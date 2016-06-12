@@ -7,6 +7,13 @@ namespace MyCryptos
 {
 	public class Account
 	{
+		public Account() { }
+		public Account(string name, Money money)
+		{
+			this.Name = name;
+			this.Money = money;
+		}
+
 		public string Name { get; set; }
 
 		public string Id { get; set; }
@@ -15,16 +22,18 @@ namespace MyCryptos
 
 		public Money Money { get; set; }
 
-		public async Task LoadReferenceValue ()
-		{ 
-			referenceValue = await CurrencyConverter.convert (Money, Settings.ReferenceCurrency);
-			Debug.WriteLine (referenceValue);
+		public async Task LoadReferenceValue()
+		{
+			referenceValue = await CurrencyConverter.convert(Money, Settings.ReferenceCurrency);
+			Debug.WriteLine(referenceValue);
 		}
 
 		private Money referenceValue { get; set; }
 
-		public Money ReferenceValue {
-			get {
+		public Money ReferenceValue
+		{
+			get
+			{
 				return referenceValue;
 			}
 		}
