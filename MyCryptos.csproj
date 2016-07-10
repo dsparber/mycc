@@ -53,6 +53,10 @@
       <DependentUpon>..\..\View\NewAccountView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Old\ViewModels\MainViewModel.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Currency.cs" />
+    <Compile Include="Models\ExchangeRate.cs" />
+    <Compile Include="Models\Money.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -98,6 +102,7 @@
     <Folder Include="Old\Models\" />
     <Folder Include="Old\View\" />
     <Folder Include="Old\ViewModels\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Old\View\MainView.xaml">
