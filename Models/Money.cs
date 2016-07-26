@@ -1,6 +1,6 @@
 using System;
 
-namespace Models
+namespace models
 {
 	/// <summary>
 	/// Simple Model for Money, includes basic arithmetics

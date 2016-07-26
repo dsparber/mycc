@@ -53,10 +53,21 @@
       <DependentUpon>..\..\View\NewAccountView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Old\ViewModels\MainViewModel.cs" />
-    <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\Currency.cs" />
-    <Compile Include="Models\ExchangeRate.cs" />
-    <Compile Include="Models\Money.cs" />
+    <Compile Include="models\Account.cs" />
+    <Compile Include="models\Currency.cs" />
+    <Compile Include="models\ExchangeRate.cs" />
+    <Compile Include="models\Money.cs" />
+    <Compile Include="data\repositories\account\AccountRepository.cs" />
+    <Compile Include="data\repositories\account\LocalAccountRepository.cs" />
+    <Compile Include="data\repositories\account\OnlineAccountRepository.cs" />
+    <Compile Include="data\repositories\account\BittrexAccountRepository.cs" />
+    <Compile Include="data\repositories\currency\CurrencyRepository.cs" />
+    <Compile Include="data\repositories\currency\LocalCurrencyRepository.cs" />
+    <Compile Include="data\repositories\currency\OnlineCurrencyRepository.cs" />
+    <Compile Include="data\repositories\exchangerate\ExchangeRateRepository.cs" />
+    <Compile Include="data\repositories\exchangerate\BittrexExchnageRateRepository.cs" />
+    <Compile Include="data\repositories\exchangerate\LocalExchangeRateRepository.cs" />
+    <Compile Include="data\repositories\exchangerate\OnlineExchangeRateRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -102,7 +113,12 @@
     <Folder Include="Old\Models\" />
     <Folder Include="Old\View\" />
     <Folder Include="Old\ViewModels\" />
-    <Folder Include="Models\" />
+    <Folder Include="models\" />
+    <Folder Include="data\" />
+    <Folder Include="data\repositories\" />
+    <Folder Include="data\repositories\account\" />
+    <Folder Include="data\repositories\currency\" />
+    <Folder Include="data\repositories\exchangerate\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Old\View\MainView.xaml">

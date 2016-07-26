@@ -1,4 +1,4 @@
-namespace Models
+namespace models
 {
 
 	/// <summary>
