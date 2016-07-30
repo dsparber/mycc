@@ -20,6 +20,15 @@ namespace models
 		}
 
 		/// <summary>
+		/// Initializes a new instance of the <see cref="T:models.Currency"/> class.
+		/// </summary>
+		/// <param name="abbreviation">Unique identifier if the currency</param>
+		public Currency(String abbreviation)
+		{
+			Abbreviation = abbreviation;
+		}
+
+		/// <summary>
 		/// The name of the Currency
 		/// </summary>
 		public String Name;

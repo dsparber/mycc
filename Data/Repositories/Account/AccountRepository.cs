@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using data.database;
 using models;
 
 namespace data.repositories.account
 {
 	public abstract class AccountRepository
 	{
-		public List<Account> Accounts;
+		public IEnumerable<Account> Accounts;
 		public string RepositoryName;
+		public int RepositoryId;
 
 		public AccountRepository()
 		{
@@ -21,14 +23,14 @@ namespace data.repositories.account
 
 		protected async Task FetchFromDatabase()
 		{
-			// TODO Read Database
-			throw new NotImplementedException();
+			var db = new AccountDatabase();
+			Accounts = await db.GetAccounts(RepositoryId);
 		}
 
 		protected async Task WriteToDatabase()
 		{
-			// TODO Write to Database
-			throw new NotImplementedException();
+			var db = new AccountDatabase();
+			await db.WriteAccounts(RepositoryId, Accounts);
 		}
 	}
 }

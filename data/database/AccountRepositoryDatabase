@@ -1,0 +1,26 @@
+﻿using System.Threading.Tasks;
+using data.database.models;
+using SQLite;
+using Xamarin.Forms;
+
+namespace data.database
+{
+	public class AccountRepositoryDatabase
+	{
+		SQLiteAsyncConnection database;
+
+		public AccountRepositoryDatabase()
+		{
+			database = DependencyService.Get<ISQLiteConnection>().GetConnection();
+			database.CreateTableAsync<RepositoryDBM>();
+		}
+
+		public async Task<RepositoryDBM> GetRepository(string repositoryName)
+		{
+			var query = database.Table<RepositoryDBM>().Where(r => r.Name.Equals(repositoryName));
+
+			return await query.FirstAsync().ContinueWith(r => r.Result);
+		}
+	}
+}
+
