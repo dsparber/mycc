@@ -72,6 +72,9 @@
     <Compile Include="data\database\AccountDatabase.cs" />
     <Compile Include="data\database\models\AccountDBM.cs" />
     <Compile Include="data\database\models\AccountRepositoryDBM.cs" />
+    <Compile Include="data\storage\AccountStorage.cs" />
+    <Compile Include="data\database\AccountRepositoryDatabase.cs" />
+    <Compile Include="data\factories\AccountRepositoryFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -117,7 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="data\database\AccountRepositoryDatabase" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Old\" />
@@ -135,6 +137,8 @@
     <Folder Include="data\repositories\exchangerate\" />
     <Folder Include="data\database\" />
     <Folder Include="data\database\models\" />
+    <Folder Include="data\storage\" />
+    <Folder Include="data\factories\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Old\View\MainView.xaml">

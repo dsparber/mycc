@@ -8,7 +8,7 @@ namespace data.repositories.account
 {
 	public abstract class AccountRepository
 	{
-		public IEnumerable<Account> Accounts;
+		public List<Account> Accounts;
 		public string RepositoryName;
 		public int RepositoryId;
 
@@ -24,7 +24,7 @@ namespace data.repositories.account
 		protected async Task FetchFromDatabase()
 		{
 			var db = new AccountDatabase();
-			Accounts = await db.GetAccounts(RepositoryId);
+			Accounts = new List<Account>(await db.GetAccounts(RepositoryId));
 		}
 
 		protected async Task WriteToDatabase()
