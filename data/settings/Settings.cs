@@ -1,0 +1,29 @@
+﻿using Plugin.Settings;
+using Plugin.Settings.Abstractions;
+
+namespace data.settings
+{
+	public class Settings
+	{
+		public const string KEY_BASE_CURRENCY = "currency";
+
+		public static T Get<T>(string key, T defaultValue)
+		{
+			return AppSettings.GetValueOrDefault(key, defaultValue);
+		}
+
+		public static void Set<T>(string key, T value)
+		{
+			AppSettings.AddOrUpdateValue(key, value);
+		}
+
+		static ISettings AppSettings
+		{
+			get
+			{
+				return CrossSettings.Current;
+			}
+		}
+	}
+}
+

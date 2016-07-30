@@ -5,8 +5,8 @@ namespace data.database.models
 	[Table("Repositories")]
 	public class AccountRepositoryDBM
 	{
-		public static const int DB_TYPE_LOCAL_REPOSITORY = 1;
-		public static const int DB_TYPE_BITTREX_REPOSITORY = 2;
+		public const int DB_TYPE_LOCAL_REPOSITORY = 1;
+		public const int DB_TYPE_BITTREX_REPOSITORY = 2;
 
 
 		[PrimaryKey, AutoIncrement, Column("_id")]
