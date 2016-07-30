@@ -33,18 +33,11 @@
     <Compile Include="MyCryptos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Old\Converters\NegateBooleanConverter.cs" />
-    <Compile Include="Old\Data\AccountsCollection.cs" />
     <Compile Include="Old\Data\APIs\BittrexAPI.cs" />
     <Compile Include="Old\Data\APIs\BtceAPI.cs" />
     <Compile Include="Old\Data\APIs\CurrencyAPI.cs" />
-    <Compile Include="Old\Data\CurrencyCollection.cs" />
     <Compile Include="Old\Data\ExchangeRateCollection.cs" />
-    <Compile Include="Old\Data\Settings\Settings.cs" />
-    <Compile Include="Old\Helper\CurrencyConverter.cs" />
     <Compile Include="Old\Models\Account.cs" />
-    <Compile Include="Old\Models\Currency.cs" />
-    <Compile Include="Old\Models\ExchangeRate.cs" />
-    <Compile Include="Old\Models\Money.cs" />
     <Compile Include="Old\Models\Tag.cs" />
     <Compile Include="Old\View\MainView.xaml.cs">
       <DependentUpon>..\..\View\MainView.xaml</DependentUpon>
@@ -52,7 +45,6 @@
     <Compile Include="Old\View\NewAccountView.xaml.cs">
       <DependentUpon>..\..\View\NewAccountView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Old\ViewModels\MainViewModel.cs" />
     <Compile Include="models\Account.cs" />
     <Compile Include="models\Currency.cs" />
     <Compile Include="models\ExchangeRate.cs" />
@@ -126,10 +118,8 @@
     <Folder Include="Old\" />
     <Folder Include="Old\Converters\" />
     <Folder Include="Old\Data\" />
-    <Folder Include="Old\Helper\" />
     <Folder Include="Old\Models\" />
     <Folder Include="Old\View\" />
-    <Folder Include="Old\ViewModels\" />
     <Folder Include="models\" />
     <Folder Include="data\" />
     <Folder Include="data\repositories\" />
