@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace models
 {
 	/// <summary>
@@ -26,5 +28,11 @@ namespace models
 		/// The name of the account
 		/// </summary>
 		public string Name;
+
+		/// <summary>
+		/// All saved Tags for the account
+		/// </summary>
+		/// <value>The tags.</value>
+		public List<Tag> Tags { get; set; }
 	}
 }

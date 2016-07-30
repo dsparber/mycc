@@ -38,7 +38,6 @@
     <Compile Include="Old\Data\APIs\CurrencyAPI.cs" />
     <Compile Include="Old\Data\ExchangeRateCollection.cs" />
     <Compile Include="Old\Models\Account.cs" />
-    <Compile Include="Old\Models\Tag.cs" />
     <Compile Include="Old\View\MainView.xaml.cs">
       <DependentUpon>..\..\View\MainView.xaml</DependentUpon>
     </Compile>
@@ -68,6 +67,8 @@
     <Compile Include="data\database\AccountRepositoryDatabase.cs" />
     <Compile Include="data\factories\AccountRepositoryFactory.cs" />
     <Compile Include="data\settings\Settings.cs" />
+    <Compile Include="models\Tag.cs" />
+    <Compile Include="models\TagIdentifier.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
