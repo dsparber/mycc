@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using models;
 
 namespace MyCryptos
 {
@@ -23,9 +24,6 @@ namespace MyCryptos
 		public async Task<List<ExchangeRate>> GetAvailableRatesAsync ()
 		{
 			List<ExchangeRate> exchangeRates = new List<ExchangeRate> ();
-
-			exchangeRates.Add (new ExchangeRate (Currency.BTC, Currency.USD));
-			exchangeRates.Add (new ExchangeRate (Currency.BTC, Currency.EUR));
 
 			return exchangeRates;
 		}

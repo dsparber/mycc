@@ -37,7 +37,6 @@
     <Compile Include="Old\Data\APIs\BtceAPI.cs" />
     <Compile Include="Old\Data\APIs\CurrencyAPI.cs" />
     <Compile Include="Old\Data\ExchangeRateCollection.cs" />
-    <Compile Include="Old\Models\Account.cs" />
     <Compile Include="Old\View\MainView.xaml.cs">
       <DependentUpon>..\..\View\MainView.xaml</DependentUpon>
     </Compile>
@@ -69,6 +68,13 @@
     <Compile Include="data\settings\Settings.cs" />
     <Compile Include="models\Tag.cs" />
     <Compile Include="models\TagIdentifier.cs" />
+    <Compile Include="data\database\models\TagIdentifierDBM.cs" />
+    <Compile Include="data\database\models\TagDBM.cs" />
+    <Compile Include="data\database\models\TagAccountMapDBM.cs" />
+    <Compile Include="data\database\TagIdentifierDatabase.cs" />
+    <Compile Include="data\database\TagDatabase.cs" />
+    <Compile Include="data\database\helper\DatabaseHelper.cs" />
+    <Compile Include="data\database\TagAccountMapDatabase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -119,7 +125,6 @@
     <Folder Include="Old\" />
     <Folder Include="Old\Converters\" />
     <Folder Include="Old\Data\" />
-    <Folder Include="Old\Models\" />
     <Folder Include="Old\View\" />
     <Folder Include="models\" />
     <Folder Include="data\" />
@@ -132,6 +137,7 @@
     <Folder Include="data\storage\" />
     <Folder Include="data\factories\" />
     <Folder Include="data\settings\" />
+    <Folder Include="data\database\helper\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Old\View\MainView.xaml">

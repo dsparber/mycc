@@ -20,6 +20,25 @@ namespace models
 		}
 
 		/// <summary>
+		/// Initializes a new instance of the <see cref="T:models.Account"/> class.
+		/// </summary>
+		/// <param name="id">Identifier.</param>
+		/// <param name="name">Name.</param>
+		/// <param name="money">Money.</param>
+		public Account(int id, string name, Money money)
+		{
+			Id = id;
+			Name = name;
+			Money = money;
+		}
+
+		/// <summary>
+		/// Gets or sets the identifier.
+		/// </summary>
+		/// <value>The identifier.</value>
+		public int? Id { get; set; }
+
+		/// <summary>
 		/// Money of the account
 		/// </summary>
 		public Money Money;

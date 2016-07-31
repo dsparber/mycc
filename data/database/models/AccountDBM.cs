@@ -6,6 +6,8 @@ namespace data.database.models
 	[Table("Accounts")]
 	public class AccountDBM
 	{
+		public AccountDBM() { }
+
 		[PrimaryKey, AutoIncrement, Column("_id")]
 		public int Id { get; set; }
 
@@ -20,7 +22,16 @@ namespace data.database.models
 
 		public Account ToAccount()
 		{
-			return new Account(Name, new Money(MoneyAmount, new Currency(CurrencyCode)));
+			return new Account(Id, Name, new Money(MoneyAmount, new Currency(CurrencyCode)));
+		}
+
+		public AccountDBM(Account account, int repositoryId)
+		{
+			Id = account.Id.Value;
+			Name = account.Name;
+			MoneyAmount = account.Money.Amount;
+			CurrencyCode = account.Money.Currency.Abbreviation;
+			RepositoryId = repositoryId;
 		}
 			
 	}

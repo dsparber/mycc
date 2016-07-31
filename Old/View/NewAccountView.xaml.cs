@@ -19,7 +19,7 @@ namespace MyCryptos
 
 		private void SaveAccount(object sender, EventArgs args)
 		{
-			AccountsCollection.Instance.Accounts.Add(new Account(name.Text, new Money(decimal.Parse(amount.Text), new Currency(null, currency.Text))));
+			//AccountsCollection.Instance.Accounts.Add(new Account(name.Text, new Money(decimal.Parse(amount.Text), new Currency(null, currency.Text))));
 			Navigation.PopModalAsync();
 		}
 	}

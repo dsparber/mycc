@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using System;
 using System.Diagnostics;
+using models;
+using data.settings;
 
 namespace MyCryptos
 {
@@ -28,7 +30,7 @@ namespace MyCryptos
 
 		public async Task LoadRates(bool reload = false)
 		{
-			if (firstCall || reload || (Environment.TickCount - lastUpdate) > Settings.UpdateTimeCurrencyList)
+			if (firstCall || reload)
 			{
 				firstCall = false;
 				lastUpdate = Environment.TickCount;
@@ -65,15 +67,15 @@ namespace MyCryptos
 
 			foreach (ExchangeRate r1 in referenceCurrencyRates)
 			{
-				foreach (ExchangeRate r2 in secondaryCurrencyRates)
-				{
-					if (r1.OneMatch(r2))
-					{
-						await LoadRateFor(r1);
-						await LoadRateFor(r2);
-						return r1.GetCombinedRate(r2);
-					}
-				}
+				//foreach (ExchangeRate r2 in secondaryCurrencyRates)
+				//{
+				//	if (r1.OneMatch(r2))
+				//	{
+				//		await LoadRateFor(r1);
+				//		await LoadRateFor(r2);
+				//		return r1.GetCombinedRate(r2);
+				//	}
+				//}
 			}
 			return null;
 		}
@@ -93,7 +95,7 @@ namespace MyCryptos
 				if (exchangeRate.ReferenceCurrency.Equals(secondaryCurrency) && exchangeRate.SecondaryCurrency.Equals(referenceCurrency))
 				{
 					await LoadRateFor(exchangeRate);
-					return exchangeRate.GetInverse();
+					//return exchangeRate.GetInverse();
 				}
 			}
 			return null;
@@ -105,7 +107,7 @@ namespace MyCryptos
 			{
 				var findRate = ExchangeRates.Find(item => item.Equals(exchangeRate));
 				Debug.WriteLine(findRate);
-				if (findRate != null && findRate.Rate != null && (Environment.TickCount - findRate.LastUpdate) < Settings.UpdateTimeExchangeRate)
+				if (findRate != null && findRate.Rate != null)
 				{
 					return;
 				}

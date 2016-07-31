@@ -2,6 +2,8 @@
 {
 	public class Tag
 	{
+		public int? Id { get; set; }
+
 		public TagIdentifier Identifier { get; set; }
 
 		public decimal Units { get; set; }
@@ -27,8 +29,11 @@
 
 		public Tag(TagIdentifier identifier) : this(identifier, -1) { }
 
-		public Tag(TagIdentifier identifier, decimal units)
+		public Tag(TagIdentifier identifier, decimal units) : this(null, identifier, units) { }
+
+		public Tag(int? id, TagIdentifier identifier, decimal units)
 		{
+			Id = id;
 			Units = units;
 			Identifier = identifier;
 		}

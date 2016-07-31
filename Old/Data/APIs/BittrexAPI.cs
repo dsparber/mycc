@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using models;
 
 namespace MyCryptos
 {
@@ -49,7 +50,6 @@ namespace MyCryptos
 						var abbr = (String)token[CURRENCY_LIST_RESULT_CURRENCY];
 						Currency currency = new Currency(name, abbr);
 
-						exchangeRates.Add(new ExchangeRate(Currency.BTC, currency));
 					}
 				}
 			}
