@@ -14,6 +14,7 @@ namespace data.database
 		readonly SQLiteAsyncConnection database;
 		readonly TagDatabase tagDatabase;
 		readonly TagAccountMapDatabase tagAccountMapDatabase;
+		readonly CurrencyDatabase currencyDatabase;
 
 		public AccountDatabase()
 		{
@@ -22,12 +23,13 @@ namespace data.database
 
 			tagDatabase = new TagDatabase();
 			tagAccountMapDatabase = new TagAccountMapDatabase();
+			currencyDatabase = new CurrencyDatabase();
 		}
 
 		public async Task<IEnumerable<Account>> GetAccounts(int repositoryId)
 		{
 			var query = database.Table<AccountDBM>().Where(a => a.RepositoryId == repositoryId); 
-			var accounts = await query.ToListAsync().ContinueWith(q => q.Result.Select(a => a.ToAccount()));
+			var accounts = await query.ToListAsync().ContinueWith(q => q.Result.Select(a => a.ToAccount(currencyDatabase.Get(a.Id).Result)));
 
 			foreach (var a in accounts)
 			{

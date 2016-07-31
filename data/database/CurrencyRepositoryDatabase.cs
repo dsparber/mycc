@@ -6,19 +6,19 @@ using Xamarin.Forms;
 
 namespace data.database
 {
-	public class AccountRepositoryDatabase
+	public class CurrencyRepositoryDatabase
 	{
 		SQLiteAsyncConnection database;
 
-		public AccountRepositoryDatabase()
+		public CurrencyRepositoryDatabase()
 		{
 			database = DependencyService.Get<ISQLiteConnection>().GetConnection();
-			database.CreateTableAsync<AccountRepositoryDBM>().RunSynchronously();
+			database.CreateTableAsync<CurrencyRepositoryDBM>().RunSynchronously();
 		}
 
-		public async Task<IEnumerable<AccountRepositoryDBM>> GetRepositories()
+		public async Task<IEnumerable<CurrencyRepositoryDBM>> GetRepositories()
 		{
-			var query = database.Table<AccountRepositoryDBM>();
+			var query = database.Table<CurrencyRepositoryDBM>();
 			return await query.ToListAsync();
 		}
 	}

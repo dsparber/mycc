@@ -11,32 +11,44 @@ namespace models
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Currency"/> class.
 		/// </summary>
-		/// <param name="abbreviation">Unique identifier if the currency</param>
+		/// <param name="id">Unique identifier if the object</param>
+		/// <param name="code">Unique identifier if the currency</param>
 		/// <param name="name">Name of the currency</param>
-		public Currency(String abbreviation, String name)
+		public Currency(int? id, string code, string name)
 		{
+			Id = id;
 			Name = name;
-			Abbreviation = abbreviation;
+			Code = code;
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:models.Currency"/> class.
 		/// </summary>
-		/// <param name="abbreviation">Unique identifier if the currency</param>
-		public Currency(String abbreviation)
-		{
-			Abbreviation = abbreviation;
-		}
+		/// <param name="code">Unique identifier if the currency</param>
+		/// <param name="name">Name of the currency</param>
+		public Currency(string code, string name) : this(null, code, name) { }
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:models.Currency"/> class.
+		/// </summary>
+		/// <param name="code">Unique identifier if the currency</param>
+		public Currency(String code) : this(code, null) { }
+
+		/// <summary>
+		/// Gets or sets the identifier.
+		/// </summary>
+		/// <value>The identifier.</value>
+		public int? Id { get; set; }
 
 		/// <summary>
 		/// The name of the Currency
 		/// </summary>
-		public String Name;
+		public string Name;
 
 		/// <summary>
 		/// Stores the unique code for the currency
 		/// </summary>
 		/// <value>The abbreviation.</value>
-		public String Abbreviation { get; private set; }
+		public string Code { get; private set; }
 	}
 }

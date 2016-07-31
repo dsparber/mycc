@@ -14,15 +14,10 @@ namespace data.storage
 
 		AccountStorage()
 		{
-			Repositories = new List<AccountRepository>();
+			var repos = new AccountRepositoryDatabase().GetRepositories();
+			repos.RunSynchronously();
 
-			var db = new AccountRepositoryDatabase();
-
-			foreach (var r in db.GetRepositories().Result)
-			{
-				AccountRepository accountRepository = AccountRepositoryFactory.create(r);
-				Repositories.Add(accountRepository);
-			}
+			Repositories = repos.Result.Select(r => AccountRepositoryFactory.create(r)).ToList();
 		}
 
 		public List<Account> Accounts
@@ -58,4 +53,3 @@ namespace data.storage
 		}
 	}
 }
-

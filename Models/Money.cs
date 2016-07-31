@@ -43,7 +43,7 @@ namespace models
 		/// <returns>Money object as string</returns>
 		public override string ToString()
 		{
-			return String.Format("{0:#,0.##} {1}", Amount, Currency.Abbreviation);
+			return String.Format("{0:#,0.##} {1}", Amount, Currency.Code);
 		}
 
 		/// <summary>

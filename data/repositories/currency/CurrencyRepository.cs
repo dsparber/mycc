@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using data.database;
 using models;
 
 namespace data.repositories.currency
@@ -10,7 +10,7 @@ namespace data.repositories.currency
 		public List<Currency> Currencies;
 		public string RepositoryName;
 
-		public CurrencyRepository()
+		protected CurrencyRepository()
 		{
 			Currencies = new List<Currency>();
 		}
@@ -21,14 +21,14 @@ namespace data.repositories.currency
 
 		protected async Task FetchFromDatabase()
 		{
-			// TODO Read Database
-			throw new NotImplementedException();
+			var db = new CurrencyDatabase();
+			Currencies = new List<Currency>(await db.GetAll());
 		}
 
 		protected async Task WriteToDatabase()
 		{
-			// TODO Write to Database
-			throw new NotImplementedException();
+			var db = new CurrencyDatabase();
+			await db.Write(Currencies);
 		}
 	}
 }

@@ -86,7 +86,7 @@ namespace MyCryptos
 
 		private String RateToUrl(ExchangeRate exchangeRate)
 		{
-			return exchangeRate.ReferenceCurrency.Abbreviation.ToUpper() + "-" + exchangeRate.SecondaryCurrency.Abbreviation.ToUpper();
+			return exchangeRate.ReferenceCurrency.Code.ToUpper() + "-" + exchangeRate.SecondaryCurrency.Code.ToUpper();
 		}
 	}
 }

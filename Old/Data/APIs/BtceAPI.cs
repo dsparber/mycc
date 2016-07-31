@@ -50,7 +50,7 @@ namespace MyCryptos
 
 		private String RateToUrl (ExchangeRate exchangeRate)
 		{
-			return exchangeRate.ReferenceCurrency.Abbreviation.ToLower () + "_" + exchangeRate.SecondaryCurrency.Abbreviation.ToLower ();
+			return exchangeRate.ReferenceCurrency.Code.ToLower () + "_" + exchangeRate.SecondaryCurrency.Code.ToLower ();
 		}
 	}
 }

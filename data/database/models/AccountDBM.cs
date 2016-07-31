@@ -15,14 +15,13 @@ namespace data.database.models
 
 		public decimal MoneyAmount { get; set; }
 
-		[MaxLength(3)]
-		public string CurrencyCode { get; set; }
+		public int CurrencyId { get; set; }
 
 		public int RepositoryId { get; set; }
 
-		public Account ToAccount()
+		public Account ToAccount(Currency currency)
 		{
-			return new Account(Id, Name, new Money(MoneyAmount, new Currency(CurrencyCode)));
+			return new Account(Id, Name, new Money(MoneyAmount, currency));
 		}
 
 		public AccountDBM(Account account, int repositoryId)
@@ -30,7 +29,7 @@ namespace data.database.models
 			Id = account.Id.Value;
 			Name = account.Name;
 			MoneyAmount = account.Money.Amount;
-			CurrencyCode = account.Money.Currency.Abbreviation;
+			CurrencyId = account.Money.Currency.Id.Value;
 			RepositoryId = repositoryId;
 		}
 			

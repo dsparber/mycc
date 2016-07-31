@@ -75,6 +75,12 @@
     <Compile Include="data\database\TagDatabase.cs" />
     <Compile Include="data\database\helper\DatabaseHelper.cs" />
     <Compile Include="data\database\TagAccountMapDatabase.cs" />
+    <Compile Include="data\storage\CurrencyStorage.cs" />
+    <Compile Include="data\database\CurrencyRepositoryDatabase.cs" />
+    <Compile Include="data\database\models\CurrencyRepositoryDBM.cs" />
+    <Compile Include="data\factories\CurrencyRepositoryFactory.cs" />
+    <Compile Include="data\database\CurrencyDatabase.cs" />
+    <Compile Include="data\database\models\CurrencyDBM.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

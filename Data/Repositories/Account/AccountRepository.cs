@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using data.database;
 using models;
@@ -12,7 +11,7 @@ namespace data.repositories.account
 		public string RepositoryName;
 		public int RepositoryId;
 
-		public AccountRepository()
+		protected AccountRepository()
 		{
 			Accounts = new List<Account>();
 		}
