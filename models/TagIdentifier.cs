@@ -1,9 +1,12 @@
-﻿namespace models
+﻿using Xamarin.Forms;
+
+namespace models
 {
 	public class TagIdentifier
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
+		public Color Color { get; set; }
 
 		public override bool Equals(object obj)
 		{
