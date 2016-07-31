@@ -35,13 +35,9 @@
     <Compile Include="Old\Converters\NegateBooleanConverter.cs" />
     <Compile Include="Old\Data\APIs\BittrexAPI.cs" />
     <Compile Include="Old\Data\APIs\BtceAPI.cs" />
-    <Compile Include="Old\Data\APIs\CurrencyAPI.cs" />
     <Compile Include="Old\Data\ExchangeRateCollection.cs" />
     <Compile Include="Old\View\MainView.xaml.cs">
       <DependentUpon>..\..\View\MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Old\View\NewAccountView.xaml.cs">
-      <DependentUpon>..\..\View\NewAccountView.xaml</DependentUpon>
     </Compile>
     <Compile Include="models\Account.cs" />
     <Compile Include="models\Currency.cs" />
@@ -89,7 +85,6 @@
     <Compile Include="data\database\models\ExchangeRateDBM.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Import Project="packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <ItemGroup>
@@ -153,9 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Old\View\MainView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Old\View\NewAccountView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

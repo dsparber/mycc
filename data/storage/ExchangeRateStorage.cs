@@ -15,8 +15,6 @@ namespace data.storage
 		ExchangeRateStorage()
 		{
 			var repos = new ExchangeRateRepositoryDatabase().GetAll();
-			repos.RunSynchronously();
-
 			Repositories = repos.Result.Select(r => ExchangeRateRepositoryFactory.create(r)).ToList();
 		}
 

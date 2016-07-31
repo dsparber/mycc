@@ -8,12 +8,12 @@ using models;
 
 namespace MyCryptos
 {
-	public class BittrexAPI : CurrencyAPI
+	public class BittrexAPI
 	{
 		private readonly static string URL_CURRENCY_LIST = "https://bittrex.com/api/v1.1/public/getcurrencies";
 		private readonly static string CURRENCY_LIST_RESULT = "result";
-		private readonly static string CURRENCY_LIST_RESULT_NAME = "CurrencyLong";
-		private readonly static string CURRENCY_LIST_RESULT_CURRENCY = "Currency";
+		//private readonly static string CURRENCY_LIST_RESULT_NAME = "CurrencyLong";
+		//private readonly static string CURRENCY_LIST_RESULT_CURRENCY = "Currency";
 
 		private readonly static string URL_RATE = "https://bittrex.com/api/v1.1/public/getticker?market={0}";
 		private readonly static string RESULT_KEY = "result";
@@ -31,7 +31,7 @@ namespace MyCryptos
 
 		public async Task<List<ExchangeRate>> GetAvailableRatesAsync()
 		{
-			List<ExchangeRate> exchangeRates = new List<ExchangeRate>();
+			var exchangeRates = new List<ExchangeRate>();
 
 			var uri = new Uri(URL_CURRENCY_LIST);
 
@@ -42,13 +42,13 @@ namespace MyCryptos
 				{
 					var content = await response.Content.ReadAsStringAsync();
 					var json = JObject.Parse(content);
-					JArray result = (JArray)json[CURRENCY_LIST_RESULT];
+					var result = (JArray)json[CURRENCY_LIST_RESULT];
 
 					foreach (JToken token in result)
 					{
-						var name = (String)token[CURRENCY_LIST_RESULT_NAME];
-						var abbr = (String)token[CURRENCY_LIST_RESULT_CURRENCY];
-						Currency currency = new Currency(name, abbr);
+						//var name = (string)token[CURRENCY_LIST_RESULT_NAME];
+						//var abbr = (string)token[CURRENCY_LIST_RESULT_CURRENCY];
+						// Currency currency = new Currency(name, abbr);
 
 					}
 				}
@@ -84,7 +84,7 @@ namespace MyCryptos
 			return exchangeRate;
 		}
 
-		private String RateToUrl(ExchangeRate exchangeRate)
+		string RateToUrl(ExchangeRate exchangeRate)
 		{
 			return exchangeRate.ReferenceCurrency.Code.ToUpper() + "-" + exchangeRate.SecondaryCurrency.Code.ToUpper();
 		}

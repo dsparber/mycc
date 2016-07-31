@@ -6,20 +6,9 @@ namespace MyCryptos
 {
 	public partial class MainView : ContentPage
 	{
-
-		public MainView()
+		void AddAccount(object sender, EventArgs args)
 		{
-
-		}
-
-		protected async override void OnAppearing()
-		{
-			
-		}
-
-		private void AddAccount(object sender, EventArgs args)
-		{
-			Navigation.PushModalAsync(new NavigationPage(new NewAccountView()));
+			//Navigation.PushModalAsync(new NavigationPage(new NewAccountView()));
 		}
 	}
 }

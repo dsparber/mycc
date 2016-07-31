@@ -43,8 +43,7 @@
 					RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
 					RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" />
 			</RelativeLayout>
-			<ListView
-				x:Name="listView">
+			<ListView>
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<TextCell

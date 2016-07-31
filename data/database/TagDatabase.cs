@@ -27,9 +27,9 @@ namespace data.database
 		{
 			var query = database.Table<TagDBM>().ToListAsync();
 
-			Func<TagDBM, Tag> toTag = t => t.ToTag(tagIdentifierDatabase.Get(t.Id).Result);
+			Func<TagDBM, Task<Tag>> toTag = async t => t.ToTag(await tagIdentifierDatabase.Get(t.Id));
 
-			return await query.ContinueWith(l => l.Result.Select(toTag));
+			return await Task.WhenAll((await query).Select(toTag));
 		}
 
 		public async Task Write(IEnumerable<Tag> tags)

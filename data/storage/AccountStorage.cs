@@ -15,8 +15,6 @@ namespace data.storage
 		AccountStorage()
 		{
 			var repos = new AccountRepositoryDatabase().GetRepositories();
-			repos.RunSynchronously();
-
 			Repositories = repos.Result.Select(r => AccountRepositoryFactory.create(r)).ToList();
 		}
 

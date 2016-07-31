@@ -21,14 +21,14 @@ namespace data.database
 
 		public async Task<IEnumerable<TagIdentifier>> GetAll()
 		{
-			var query = database.Table<TagIdentifierDBM>().ToListAsync();
-			return await query.ContinueWith(l => l.Result.Select(t => t.ToTagIdentifier()));
+			var query = await database.Table<TagIdentifierDBM>().ToListAsync();
+			return query.Select(t => t.ToTagIdentifier());
 		}
 
 		public async Task<TagIdentifier> Get(int id)
 		{
-			var query = database.Table<TagIdentifierDBM>().ToListAsync();
-			return await query.ContinueWith(l => l.Result.Single(i => i.Id == id).ToTagIdentifier());
+			var query = await database.Table<TagIdentifierDBM>().ToListAsync();
+			return query.Single(i => i.Id == id).ToTagIdentifier();
 		}
 
 		public async Task Write(IEnumerable<TagIdentifier> tagIdentifiers)

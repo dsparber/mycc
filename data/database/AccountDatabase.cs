@@ -28,8 +28,8 @@ namespace data.database
 
 		public async Task<IEnumerable<Account>> GetAccounts(int repositoryId)
 		{
-			var query = database.Table<AccountDBM>().Where(a => a.RepositoryId == repositoryId); 
-			var accounts = await query.ToListAsync().ContinueWith(q => q.Result.Select(a => a.ToAccount(currencyDatabase.Get(a.Id).Result)));
+			var asyncList = database.Table<AccountDBM>().Where(a => a.RepositoryId == repositoryId).ToListAsync(); 
+			var accounts = await Task.WhenAll((await asyncList).Select(async a => a.ToAccount(await currencyDatabase.Get(a.Id))));
 
 			await Task.WhenAll(accounts.Select(async a =>
 			{

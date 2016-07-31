@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using models;
 
 namespace data.repositories.exchangerate
@@ -9,7 +8,6 @@ namespace data.repositories.exchangerate
 		public override async Task FetchAvailableRates()
 		{
 			// TODO Implement
-			throw new NotImplementedException();
 
 			await WriteToDatabase();
 		}
@@ -17,7 +15,6 @@ namespace data.repositories.exchangerate
 		public override async Task FetchExchangeRate(ExchangeRate exchangeRate)
 		{
 			// TODO Implement
-			throw new NotImplementedException();
 
 			await WriteToDatabase();
 		}

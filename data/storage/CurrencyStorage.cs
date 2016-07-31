@@ -15,8 +15,6 @@ namespace data.storage
 		CurrencyStorage()
 		{
 			var repos = new CurrencyRepositoryDatabase().GetRepositories();
-			repos.RunSynchronously();
-
 			Repositories = repos.Result.Select(r => CurrencyRepositoryFactory.create(r)).ToList();
 		}
 

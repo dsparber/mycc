@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace data.repositories.account
 {
@@ -8,7 +7,6 @@ namespace data.repositories.account
 		public override async Task Fetch()
 		{
 			// TODO Implement
-			throw new NotImplementedException();
 
 			await WriteToDatabase();
 		}

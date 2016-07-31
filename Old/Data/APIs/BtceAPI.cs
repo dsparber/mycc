@@ -8,7 +8,7 @@ using models;
 
 namespace MyCryptos
 {
-	public class BtceAPI : CurrencyAPI
+	public class BtceAPI
 	{
 		private readonly static string URL = "https://btc-e.com/api/3/ticker/{0}";
 		private readonly static string KEY = "last";
@@ -21,9 +21,9 @@ namespace MyCryptos
 			client.MaxResponseContentBufferSize = 256000;
 		}
 
-		public async Task<List<ExchangeRate>> GetAvailableRatesAsync ()
+		public List<ExchangeRate> GetAvailableRatesAsync ()
 		{
-			List<ExchangeRate> exchangeRates = new List<ExchangeRate> ();
+			var exchangeRates = new List<ExchangeRate> ();
 
 			return exchangeRates;
 		}
@@ -48,9 +48,9 @@ namespace MyCryptos
 			return exchangeRate;
 		}
 
-		private String RateToUrl (ExchangeRate exchangeRate)
+		string RateToUrl(ExchangeRate exchangeRate)
 		{
-			return exchangeRate.ReferenceCurrency.Code.ToLower () + "_" + exchangeRate.SecondaryCurrency.Code.ToLower ();
+			return exchangeRate.ReferenceCurrency.Code.ToLower() + "_" + exchangeRate.SecondaryCurrency.Code.ToLower();
 		}
 	}
 }
