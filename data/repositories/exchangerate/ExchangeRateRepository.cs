@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using data.database;
 using models;
 
 namespace data.repositories.exchangerate
@@ -10,7 +10,7 @@ namespace data.repositories.exchangerate
 		public List<ExchangeRate> ExchangeRates;
 		public string RepositoryName;
 
-		public ExchangeRateRepository()
+		protected ExchangeRateRepository()
 		{
 			ExchangeRates = new List<ExchangeRate>();
 		}
@@ -25,14 +25,14 @@ namespace data.repositories.exchangerate
 
 		protected async Task FetchFromDatabase()
 		{
-			// TODO Read Database
-			throw new NotImplementedException();
+			var db = new ExchangeRateDatabase();
+			ExchangeRates = new List<ExchangeRate>(await db.GetAll());
 		}
 
 		protected async Task WriteToDatabase()
 		{
-			// TODO Write to Database
-			throw new NotImplementedException();
+			var db = new ExchangeRateDatabase();
+			await db.Write(ExchangeRates);
 		}
 	}
 }

@@ -3,7 +3,7 @@ using data.repositories.currency;
 
 namespace data.factories
 {
-	public class CurrencyRepositoryFactory
+	public static class CurrencyRepositoryFactory
 	{
 		public static CurrencyRepository create(CurrencyRepositoryDBM repositoryDBM)
 		{

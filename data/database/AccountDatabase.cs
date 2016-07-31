@@ -31,19 +31,19 @@ namespace data.database
 			var query = database.Table<AccountDBM>().Where(a => a.RepositoryId == repositoryId); 
 			var accounts = await query.ToListAsync().ContinueWith(q => q.Result.Select(a => a.ToAccount(currencyDatabase.Get(a.Id).Result)));
 
-			foreach (var a in accounts)
+			await Task.WhenAll(accounts.Select(async a =>
 			{
 				var tagIds = (await tagAccountMapDatabase.GetForAccountId(a.Id.Value)).Select(t => t.TagId);
 
 				a.Tags = new List<Tag>((await tagDatabase.GetAll()).Where(t => tagIds.Contains(t.Id.Value)));
-			}
+			}));
 
 			return accounts;
 		}
 
 		public async Task WriteAccounts(int repositoryId, IEnumerable<Account> accounts)
 		{
-			foreach (var a in accounts)
+			await Task.WhenAll(accounts.Select(async a =>
 			{
 				var dbObj = new AccountDBM(a, repositoryId);
 				await DatabaseHelper.InsertOrUpdate(database, dbObj);
@@ -52,11 +52,11 @@ namespace data.database
 				await tagDatabase.Write(a.Tags);
 				await tagAccountMapDatabase.DeleteWithAccountId(a.Id.Value);
 
-				foreach (var t in a.Tags)
+				await Task.WhenAll(a.Tags.Select(async t =>
 				{
 					await tagAccountMapDatabase.Write(a, t);
-				}
-			}
+				}));
+			}));
 		}
 	}
 }

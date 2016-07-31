@@ -34,14 +34,12 @@ namespace data.database
 
 		public async Task Write(IEnumerable<Tag> tags)
 		{
-			foreach (Tag t in tags)
+			await Task.WhenAll(tags.Select(async t =>
 			{
 				var dbObj = new TagDBM(t);
-
 				await DatabaseHelper.InsertOrUpdate(database, dbObj);
-
 				t.Id = dbObj.Id;
-			}
+			}));
 			await tagIdentifierDatabase.Write(tags.Select(t => t.Identifier));
 		}
 	}

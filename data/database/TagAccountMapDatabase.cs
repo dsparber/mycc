@@ -6,6 +6,7 @@ using models;
 using SQLite;
 using Xamarin.Forms;
 
+
 namespace data.database
 {
 	public class TagAccountMapDatabase
@@ -30,10 +31,10 @@ namespace data.database
 
 		public async Task DeleteWithAccountId(int accountId)
 		{
-			foreach (var t in await GetForAccountId(accountId))
+			await Task.WhenAll((await GetForAccountId(accountId)).Select(async t =>
 			{
 				await database.DeleteAsync(t);
-			}
+			}));
 		}
 
 		public async Task Write(Account account, Tag tag)

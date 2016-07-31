@@ -81,6 +81,12 @@
     <Compile Include="data\factories\CurrencyRepositoryFactory.cs" />
     <Compile Include="data\database\CurrencyDatabase.cs" />
     <Compile Include="data\database\models\CurrencyDBM.cs" />
+    <Compile Include="data\storage\ExchangeRateStorage.cs" />
+    <Compile Include="data\database\ExchangeRateRepositoryDatabase.cs" />
+    <Compile Include="data\database\models\ExchangeRateRepositoryDBM.cs" />
+    <Compile Include="data\factories\ExchangeRateRepositoryFactory.cs" />
+    <Compile Include="data\database\ExchangeRateDatabase.cs" />
+    <Compile Include="data\database\models\ExchangeRateDBM.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

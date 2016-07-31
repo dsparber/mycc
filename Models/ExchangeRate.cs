@@ -13,7 +13,7 @@ namespace models
 		/// <param name="referenceCurrency">Reference currency.</param>
 		/// <param name="secondaryCurrency">Secondary currency.</param>
 		/// <param name="rate">Exchange rate.</param>
-		public ExchangeRate(Currency referenceCurrency, Currency secondaryCurrency, decimal? rate) 
+		public ExchangeRate(Currency referenceCurrency, Currency secondaryCurrency, decimal? rate)
 		{
 			this.ReferenceCurrency = referenceCurrency;
 			this.SecondaryCurrency = secondaryCurrency;
@@ -26,6 +26,12 @@ namespace models
 		/// <param name="referenceCurrency">Reference currency.</param>
 		/// <param name="secondaryCurrency">Secondary currency.</param>
 		public ExchangeRate(Currency referenceCurrency, Currency secondaryCurrency) : this(referenceCurrency, secondaryCurrency, null) { }
+
+		/// <summary>
+		/// Gets or sets the identifier.
+		/// </summary>
+		/// <value>The identifier.</value>
+		public int? Id { get; set; }
 
 		/// <summary>
 		/// The reference currency.

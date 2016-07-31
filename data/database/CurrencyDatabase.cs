@@ -31,12 +31,12 @@ namespace data.database
 
 		public async Task Write(List<Currency> currencies)
 		{
-			foreach (var c in currencies)
+			await Task.WhenAll(currencies.Select(async c =>
 			{
 				var dbObj = new CurrencyDBM(c);
 				await DatabaseHelper.InsertOrUpdate(database, dbObj);
 				c.Id = dbObj.Id;
-			}
+			}));
 		}
 	}
 }
