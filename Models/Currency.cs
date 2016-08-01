@@ -1,5 +1,3 @@
-using System;
-
 namespace models
 {
 	/// <summary>
@@ -32,7 +30,7 @@ namespace models
 		/// Initializes a new instance of the <see cref="T:models.Currency"/> class.
 		/// </summary>
 		/// <param name="code">Unique identifier if the currency</param>
-		public Currency(String code) : this(code, null) { }
+		public Currency(string code) : this(code, null) { }
 
 		/// <summary>
 		/// Gets or sets the identifier.
@@ -50,5 +48,29 @@ namespace models
 		/// </summary>
 		/// <value>The abbreviation.</value>
 		public string Code { get; private set; }
+
+		/// <summary>
+		/// Equals the specified obj.
+		/// </summary>
+		/// <param name="obj">Object.</param>
+		public override bool Equals(object obj)
+		{
+			if (obj == null || !(obj is Currency))
+			{
+				return false;
+			}
+			var c = (Currency)obj;
+
+			return Code.Equals(c.Code);
+		}
+
+		/// <summary>
+		/// Gets the hash code.
+		/// </summary>
+		/// <returns>The hash code.</returns>
+		public override int GetHashCode()
+		{
+			return Code.GetHashCode();
+		}
 	}
 }

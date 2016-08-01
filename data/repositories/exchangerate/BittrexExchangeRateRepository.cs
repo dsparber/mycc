@@ -5,6 +5,8 @@ namespace data.repositories.exchangerate
 {
 	public class BittrexExchangeRateRepository : OnlineExchangeRateRepository
 	{
+		public BittrexExchangeRateRepository(int repositoryId) : base(repositoryId) { }
+
 		public override async Task FetchAvailableRates()
 		{
 			// TODO Implement

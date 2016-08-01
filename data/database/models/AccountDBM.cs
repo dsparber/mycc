@@ -1,10 +1,12 @@
-﻿using models;
+﻿using System.Threading.Tasks;
+using data.database.interfaces;
+using models;
 using SQLite;
 
 namespace data.database.models
 {
 	[Table("Accounts")]
-	public class AccountDBM
+	public class AccountDBM : IRepositoryIdDBM<Account>
 	{
 		public AccountDBM() { }
 
@@ -19,9 +21,10 @@ namespace data.database.models
 
 		public int RepositoryId { get; set; }
 
-		public Account ToAccount(Currency currency)
+		public async Task<Account> Resolve()
 		{
-			return new Account(Id, Name, new Money(MoneyAmount, currency));
+			var db = new CurrencyDatabase();
+			return new Account(Id, Name, new Money(MoneyAmount, await db.Get(Id)));  
 		}
 
 		public AccountDBM(Account account, int repositoryId)

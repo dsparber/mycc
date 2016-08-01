@@ -5,48 +5,46 @@ using data.database.models;
 using data.database.helper;
 using models;
 using SQLite;
-using Xamarin.Forms;
 
 namespace data.database
 {
-	public class AccountDatabase
+	public class AccountDatabase : AbstractRepositoryIdDatabase<AccountDBM, Account>
 	{
-		readonly SQLiteAsyncConnection database;
+		
 		readonly TagDatabase tagDatabase;
 		readonly TagAccountMapDatabase tagAccountMapDatabase;
-		readonly CurrencyDatabase currencyDatabase;
 
 		public AccountDatabase()
 		{
-			database = DependencyService.Get<ISQLiteConnection>().GetConnection();
-			database.CreateTableAsync<AccountDBM>().RunSynchronously();
-
 			tagDatabase = new TagDatabase();
 			tagAccountMapDatabase = new TagAccountMapDatabase();
-			currencyDatabase = new CurrencyDatabase();
 		}
 
-		public async Task<IEnumerable<Account>> GetAccounts(int repositoryId)
+		public override async Task<IEnumerable<AccountDBM>> GetAllDbObjects()
 		{
-			var asyncList = database.Table<AccountDBM>().Where(a => a.RepositoryId == repositoryId).ToListAsync(); 
-			var accounts = await Task.WhenAll((await asyncList).Select(async a => a.ToAccount(await currencyDatabase.Get(a.Id))));
+			return await Connection.Table<AccountDBM>().ToListAsync();
+		}
+
+		public override async Task<IEnumerable<Account>> GetAll()
+		{
+			var accounts = await base.GetAll();
 
 			await Task.WhenAll(accounts.Select(async a =>
 			{
 				var tagIds = (await tagAccountMapDatabase.GetForAccountId(a.Id.Value)).Select(t => t.TagId);
 
-				a.Tags = new List<Tag>((await tagDatabase.GetAll()).Where(t => tagIds.Contains(t.Id.Value)));
+				a.Tags = ((await tagDatabase.GetAll()).Where(t => tagIds.Contains(t.Id.Value))).ToList();
 			}));
 
 			return accounts;
 		}
 
-		public async Task WriteAccounts(int repositoryId, IEnumerable<Account> accounts)
+		public override async Task Write(IEnumerable<Account> data, int repositoryId)
 		{
-			await Task.WhenAll(accounts.Select(async a =>
+			await Task.WhenAll(data.Select(async a =>
 			{
 				var dbObj = new AccountDBM(a, repositoryId);
-				await DatabaseHelper.InsertOrUpdate(database, dbObj);
+				await DatabaseHelper.InsertOrUpdate(this, dbObj);
 				a.Id = dbObj.Id;
 
 				await tagDatabase.Write(a.Tags);
@@ -58,6 +56,10 @@ namespace data.database
 				}));
 			}));
 		}
+
+		public override Task<CreateTablesResult> Create()
+		{
+			return Connection.CreateTableAsync<AccountDBM>();
+		}
 	}
 }
-

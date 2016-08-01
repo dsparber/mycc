@@ -1,11 +1,13 @@
 ﻿using SQLite;
 using models;
 using Xamarin.Forms;
+using System.Threading.Tasks;
+using data.database.interfaces;
 
 namespace data.database.models
 {
 	[Table("TagIdentifiers")]
-	public class TagIdentifierDBM
+	public class TagIdentifierDBM : IDBM<TagIdentifier>
 	{
 		public TagIdentifierDBM() { }
 
@@ -18,9 +20,19 @@ namespace data.database.models
 		public double ColorG { get; set; }
 		public double ColorB { get; set; }
 
-		public TagIdentifier ToTagIdentifier()
+		public Task<TagIdentifier> Resolve()
 		{
-			return new TagIdentifier { Id = Id, Name = Name , Color = new Color(ColorR, ColorG, ColorB)};
+			return Task.Factory.StartNew(() => new TagIdentifier { Id = Id, Name = Name, Color = new Color(ColorR, ColorG, ColorB) });
+		}
+
+		public int GetId()
+		{
+			return Id;
+		}
+
+		public void SetId(int id)
+		{
+			Id = id;
 		}
 
 		public TagIdentifierDBM(TagIdentifier identifier)

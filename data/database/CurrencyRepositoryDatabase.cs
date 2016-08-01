@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using data.database.interfaces;
 using data.database.models;
 using SQLite;
 using Xamarin.Forms;
@@ -8,7 +9,7 @@ namespace data.database
 {
 	public class CurrencyRepositoryDatabase
 	{
-		SQLiteAsyncConnection database;
+		readonly SQLiteAsyncConnection database;
 
 		public CurrencyRepositoryDatabase()
 		{

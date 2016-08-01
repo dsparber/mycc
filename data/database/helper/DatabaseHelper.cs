@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
-using SQLite;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
+using System;
+using data.database.interfaces;
 
 namespace data.database.helper
 {
@@ -7,12 +10,24 @@ namespace data.database.helper
 	{
 		DatabaseHelper(){}
 
-		public static async Task InsertOrUpdate(SQLiteAsyncConnection database, object dbObject)
+		public static async Task InsertOrUpdate<T, V>(AbstractDatabase<T, V> database, T obj) where T : IDBM<V>
 		{
-			var rowsAffected = await database.UpdateAsync(dbObject);
-			if (rowsAffected == 0)
+			var existingObjects = await database.GetAllDbObjects();
+
+			var comparisonObj = await obj.Resolve();
+			var resolved = await Task.WhenAll(existingObjects.Select(async o => new Tuple<int, V>(o.Id, await o.Resolve())));
+			var id = resolved.ToList().Find(r => r.Item2.Equals(comparisonObj)).Item1;
+
+			var existingObject = existingObjects.ToList().Find(o => o.Id == id);
+
+			if (!(EqualityComparer<T>.Default.Equals(existingObject, default(T))))
 			{
-				await database.InsertAsync(dbObject);
+				obj.Id = existingObject.Id;
+				await database.Create();
+				await database.Connection.UpdateAsync(obj);
+			}
+			else {
+				await database.Connection.InsertAsync(obj);
 			}
 		}
 	}

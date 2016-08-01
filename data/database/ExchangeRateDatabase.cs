@@ -4,41 +4,30 @@ using System.Linq;
 using data.database.models;
 using models;
 using SQLite;
-using Xamarin.Forms;
 using data.database.helper;
 using System;
 
 namespace data.database
 {
-	public class ExchangeRateDatabase
+	public class ExchangeRateDatabase : AbstractRepositoryIdDatabase<ExchangeRateDBM, ExchangeRate>
 	{
-
-		readonly SQLiteAsyncConnection database;
-		readonly CurrencyDatabase currencyDatabase;
-
-		public ExchangeRateDatabase()
+		public override Task<CreateTablesResult> Create()
 		{
-			database = DependencyService.Get<ISQLiteConnection>().GetConnection();
-			database.CreateTableAsync<CurrencyDBM>().RunSynchronously();
-
-			currencyDatabase = new CurrencyDatabase();
+			return Connection.CreateTableAsync<ExchangeRateDBM>();
 		}
 
-		public async Task<List<ExchangeRate>> GetAll()
+		public override async Task<IEnumerable<ExchangeRateDBM>> GetAllDbObjects()
 		{
-			var listDBM = await database.Table<ExchangeRateDBM>().ToListAsync();
-
-			Func<ExchangeRateDBM, Task<ExchangeRate>> convert = async c => c.ToExchangeRate(await currencyDatabase.Get(c.ReferenceCurrencyId), await currencyDatabase.Get(c.SecondaryCurrencyId));
-
-			return new List<ExchangeRate>(await Task.WhenAll(listDBM.Select(convert)));
+			await Create();
+			return await Connection.Table<ExchangeRateDBM>().ToListAsync();
 		}
 
-		public async Task Write(List<ExchangeRate> exchangeRates)
+		public override async Task Write(IEnumerable<ExchangeRate> data, int repositoryId)
 		{
-			await Task.WhenAll(exchangeRates.Select(async e =>
+			await Task.WhenAll(data.Select(async e =>
 			{
-				var dbObj = new ExchangeRateDBM(e);
-				await DatabaseHelper.InsertOrUpdate(database, dbObj);
+				var dbObj = new ExchangeRateDBM(e, repositoryId);
+				await DatabaseHelper.InsertOrUpdate(this, dbObj);
 				e.Id = dbObj.Id;
 			}));
 		}

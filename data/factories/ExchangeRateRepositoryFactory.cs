@@ -9,7 +9,7 @@ namespace data.factories
 		{
 			switch (repositoryDBM.Type) 
 			{
-				case ExchangeRateRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY: return new LocalExchangeRateRepository();
+				case ExchangeRateRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY: return new LocalExchangeRateRepository(ExchangeRateRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY);
 				default: return null;
 			}
 				

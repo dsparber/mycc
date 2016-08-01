@@ -23,13 +23,13 @@ namespace data.repositories.account
 		protected async Task FetchFromDatabase()
 		{
 			var db = new AccountDatabase();
-			Accounts = new List<Account>(await db.GetAccounts(RepositoryId));
+			Accounts = new List<Account>(await db.GetAll(RepositoryId));
 		}
 
 		protected async Task WriteToDatabase()
 		{
 			var db = new AccountDatabase();
-			await db.WriteAccounts(RepositoryId, Accounts);
+			await db.Write(Accounts, RepositoryId);
 		}
 	}
 }

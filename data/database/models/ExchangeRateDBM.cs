@@ -1,11 +1,13 @@
 ﻿using SQLite;
 using models;
+using System.Threading.Tasks;
+using data.database.interfaces;
 
 namespace data.database.models
 {
-	public class ExchangeRateDBM
+	public class ExchangeRateDBM : IRepositoryIdDBM<ExchangeRate>
 	{
-		public ExchangeRateDBM() {}
+		public ExchangeRateDBM() { }
 
 		[PrimaryKey, AutoIncrement, Column("_id")]
 		public int Id { get; set; }
@@ -16,17 +18,21 @@ namespace data.database.models
 
 		public decimal? Rate { get; set; }
 
-		public ExchangeRate ToExchangeRate(Currency referenceCurrency, Currency secondaryCurrency)
+		public int RepositoryId { get; set; }
+
+		public async Task<ExchangeRate> Resolve()
 		{
-			return new ExchangeRate(referenceCurrency, secondaryCurrency, Rate);
+			var db = new CurrencyDatabase();
+			return new ExchangeRate(await db.Get(ReferenceCurrencyId), await db.Get(SecondaryCurrencyId), Rate);
 		}
 
-		public ExchangeRateDBM(ExchangeRate exchangeRate)
+		public ExchangeRateDBM(ExchangeRate exchangeRate, int repositoryId)
 		{
 			Id = exchangeRate.Id.Value;
 			ReferenceCurrencyId = exchangeRate.ReferenceCurrency.Id.Value;
 			SecondaryCurrencyId = exchangeRate.SecondaryCurrency.Id.Value;
 			Rate = exchangeRate.Rate;
+			RepositoryId = repositoryId;
 		}
 	}
 }

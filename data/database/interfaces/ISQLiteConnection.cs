@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace data.database
+namespace data.database.interfaces
 {
 	public interface ISQLiteConnection
 	{

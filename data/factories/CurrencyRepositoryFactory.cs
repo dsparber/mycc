@@ -9,7 +9,7 @@ namespace data.factories
 		{
 			switch (repositoryDBM.Type) 
 			{
-				case CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY: return new LocalCurrencyRepository();
+				case CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY: return new LocalCurrencyRepository(CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY);
 				default: return null;
 			}
 				

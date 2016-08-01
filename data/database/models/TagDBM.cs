@@ -1,10 +1,12 @@
 ﻿using SQLite;
 using models;
+using System.Threading.Tasks;
+using data.database.interfaces;
 
 namespace data.database.models
 {
 	[Table("Tags")]
-	public class TagDBM
+	public class TagDBM : IDBM<Tag>
 	{
 		public TagDBM() { }
 
@@ -15,9 +17,20 @@ namespace data.database.models
 
 		public decimal Units { get; set; }
 
-		public Tag ToTag(TagIdentifier tagIdentifier)
+		public async Task<Tag> Resolve()
 		{
-			return new Tag (Id, tagIdentifier, Units);
+			var db = new TagIdentifierDatabase();
+			return new Tag(Id, await db.Get(Id), Units);
+		}
+
+		public int GetId()
+		{
+			return Id;
+		}
+
+		public void SetId(int id)
+		{
+			Id = id;
 		}
 
 		public TagDBM(Tag tag)
@@ -26,6 +39,8 @@ namespace data.database.models
 			IdentifierId = tag.Identifier.Id;
 			Units = tag.Units;
 		}
+
+
 	}
 }
 

@@ -1,8 +1,10 @@
-﻿using models;
+﻿using System.Threading.Tasks;
+using data.database.interfaces;
+using models;
 using SQLite;
 namespace data.database.models
 {
-	public class CurrencyDBM
+	public class CurrencyDBM : IRepositoryIdDBM<Currency>
 	{
 		public CurrencyDBM() { }
 
@@ -14,16 +16,19 @@ namespace data.database.models
 		[MaxLength(3)]
 		public string Code { get; set; }
 
-		public Currency ToCurrency()
-		{
-			return new Currency(Id, Code, Name);
-		}
+		public int RepositoryId { get; set; }
 
-		public CurrencyDBM(Currency currency)
+		public CurrencyDBM(Currency currency, int repositoryId)
 		{
 			Id = currency.Id.Value;
 			Name = currency.Name;
 			Code = currency.Code;
+			RepositoryId = repositoryId;
+		}
+
+		public Task<Currency> Resolve()
+		{
+			return Task.Factory.StartNew(() => new Currency(Id, Code, Name));
 		}
 	}
 }

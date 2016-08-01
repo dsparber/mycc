@@ -6,6 +6,8 @@ namespace data.repositories.exchangerate
 {
 	public class LocalExchangeRateRepository : ExchangeRateRepository
 	{
+		public LocalExchangeRateRepository(int repositoryId) : base(repositoryId) { }
+
 		public override async Task FetchAvailableRates()
 		{
 			await FetchFromDatabase();

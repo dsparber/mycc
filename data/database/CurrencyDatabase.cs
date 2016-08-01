@@ -4,37 +4,29 @@ using System.Linq;
 using data.database.models;
 using models;
 using SQLite;
-using Xamarin.Forms;
 using data.database.helper;
 
 namespace data.database
 {
-	public class CurrencyDatabase
+	public class CurrencyDatabase : AbstractRepositoryIdDatabase<CurrencyDBM, Currency>
 	{
-		readonly SQLiteAsyncConnection database;
-
-		public CurrencyDatabase()
+		public override async Task<CreateTablesResult> Create()
 		{
-			database = DependencyService.Get<ISQLiteConnection>().GetConnection();
-			database.CreateTableAsync<CurrencyDBM>().RunSynchronously();
+			return await Connection.CreateTableAsync<CurrencyDBM>();
 		}
 
-		public async Task<List<Currency>> GetAll()
+		public override async Task<IEnumerable<CurrencyDBM>> GetAllDbObjects()
 		{
-			return new List<Currency>((await database.Table<CurrencyDBM>().ToListAsync()).Select(c => c.ToCurrency()));
+			await Create();
+			return await Connection.Table<CurrencyDBM>().ToListAsync();
 		}
 
-		public async Task<Currency> Get(int id)
+		public override async Task Write(IEnumerable<Currency> data, int repositoryId)
 		{
-			return (await GetAll()).Single(c => c.Id == id);
-		}
-
-		public async Task Write(List<Currency> currencies)
-		{
-			await Task.WhenAll(currencies.Select(async c =>
+			await Task.WhenAll(data.Select(async c =>
 			{
-				var dbObj = new CurrencyDBM(c);
-				await DatabaseHelper.InsertOrUpdate(database, dbObj);
+				var dbObj = new CurrencyDBM(c, repositoryId);
+				await DatabaseHelper.InsertOrUpdate(this, dbObj);
 				c.Id = dbObj.Id;
 			}));
 		}

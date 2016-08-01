@@ -5,41 +5,29 @@ using data.database.helper;
 using System.Linq;
 using models;
 using SQLite;
-using Xamarin.Forms;
 
 namespace data.database
 {
-	public class TagIdentifierDatabase
+	public class TagIdentifierDatabase : AbstractDatabase<TagIdentifierDBM, TagIdentifier>
 	{
-		readonly SQLiteAsyncConnection database;
-
-		public TagIdentifierDatabase()
+		public override async Task<IEnumerable<TagIdentifierDBM>> GetAllDbObjects()
 		{
-			database = DependencyService.Get<ISQLiteConnection>().GetConnection();
-			database.CreateTableAsync<TagIdentifierDBM>().RunSynchronously();
+			await Create();
+			return await Connection.Table<TagIdentifierDBM>().ToListAsync();
 		}
 
-		public async Task<IEnumerable<TagIdentifier>> GetAll()
+		public override async Task Write(IEnumerable<TagIdentifier> data)
 		{
-			var query = await database.Table<TagIdentifierDBM>().ToListAsync();
-			return query.Select(t => t.ToTagIdentifier());
-		}
-
-		public async Task<TagIdentifier> Get(int id)
-		{
-			var query = await database.Table<TagIdentifierDBM>().ToListAsync();
-			return query.Single(i => i.Id == id).ToTagIdentifier();
-		}
-
-		public async Task Write(IEnumerable<TagIdentifier> tagIdentifiers)
-		{
-			await Task.WhenAll(tagIdentifiers.Select(async i =>
+			await Task.WhenAll(data.Select(async i =>
 			{
 				var dbObj = new TagIdentifierDBM(i);
-
-				await DatabaseHelper.InsertOrUpdate(database, dbObj);
+				await DatabaseHelper.InsertOrUpdate(this, dbObj);
 			}));
+		}
+
+		public override Task<CreateTablesResult> Create()
+		{
+			return Connection.CreateTableAsync<TagIdentifierDBM>();
 		}
 	}
 }
-

@@ -9,10 +9,12 @@ namespace data.repositories.exchangerate
 	{
 		public List<ExchangeRate> ExchangeRates;
 		public string RepositoryName;
+		public int RepositoryId;
 
-		protected ExchangeRateRepository()
+		protected ExchangeRateRepository(int repositoryId)
 		{
 			ExchangeRates = new List<ExchangeRate>();
+			RepositoryId = repositoryId;
 		}
 
 		public abstract Task FetchAvailableRates();
@@ -26,13 +28,13 @@ namespace data.repositories.exchangerate
 		protected async Task FetchFromDatabase()
 		{
 			var db = new ExchangeRateDatabase();
-			ExchangeRates = new List<ExchangeRate>(await db.GetAll());
+			ExchangeRates = new List<ExchangeRate>(await db.GetAll(RepositoryId));
 		}
 
 		protected async Task WriteToDatabase()
 		{
 			var db = new ExchangeRateDatabase();
-			await db.Write(ExchangeRates);
+			await db.Write(ExchangeRates, RepositoryId);
 		}
 	}
 }
