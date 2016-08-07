@@ -72,5 +72,7 @@ namespace models
 		{
 			return Code.GetHashCode();
 		}
+
+		public static readonly Currency BTC = new Currency("BTC", "Bitcoin");
 	}
 }

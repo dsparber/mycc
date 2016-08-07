@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using data.database.models;
 using models;
 using Newtonsoft.Json.Linq;
 
@@ -14,13 +15,14 @@ namespace data.repositories.currency
 		const string CURRENCY_LIST_RESULT_NAME = "CurrencyLong";
 		const string CURRENCY_LIST_RESULT_CURRENCY = "Currency";
 
+		const int BUFFER_SIZE = 256000;
+
 		readonly HttpClient client;
 
-
-		public BittrexCurrencyRepository(int repositoryId) : base(repositoryId)
+		public BittrexCurrencyRepository() : base(CurrencyRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY)
 		{
 			client = new HttpClient();
-			client.MaxResponseContentBufferSize = 256000;
+			client.MaxResponseContentBufferSize = BUFFER_SIZE;
 		}
 
 		public override async Task Fetch()
