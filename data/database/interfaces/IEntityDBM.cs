@@ -2,7 +2,7 @@
 
 namespace data.database.interfaces
 {
-	public interface IDBM<T>
+	public interface IEntityDBM<T>
 	{
 		int Id { get; set; }
 

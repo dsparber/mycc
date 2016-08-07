@@ -8,7 +8,7 @@ using SQLite;
 
 namespace data.database
 {
-	public class AccountDatabase : AbstractRepositoryIdDatabase<AccountDBM, Account>
+	public class AccountDatabase : AbstractEntityRepositoryIdDatabase<AccountDBM, Account>
 	{
 		
 		readonly TagDatabase tagDatabase;
@@ -22,7 +22,7 @@ namespace data.database
 
 		public override async Task<IEnumerable<AccountDBM>> GetAllDbObjects()
 		{
-			return await Connection.Table<AccountDBM>().ToListAsync();
+			return await (await Connection()).Table<AccountDBM>().ToListAsync();
 		}
 
 		public override async Task<IEnumerable<Account>> GetAll()
@@ -57,9 +57,9 @@ namespace data.database
 			}));
 		}
 
-		public override Task<CreateTablesResult> Create()
+		protected override Task<CreateTablesResult> Create()
 		{
-			return Connection.CreateTableAsync<AccountDBM>();
+			return ConnectionWithoutCreate.CreateTableAsync<AccountDBM>();
 		}
 	}
 }

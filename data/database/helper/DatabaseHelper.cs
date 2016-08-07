@@ -10,7 +10,7 @@ namespace data.database.helper
 	{
 		DatabaseHelper(){}
 
-		public static async Task InsertOrUpdate<T, V>(AbstractDatabase<T, V> database, T obj) where T : IDBM<V>
+		public static async Task InsertOrUpdate<T, V>(AbstractEntityDatabase<T, V> database, T obj) where T : IEntityDBM<V>
 		{
 			var existingObjects = await database.GetAllDbObjects();
 
@@ -23,11 +23,10 @@ namespace data.database.helper
 			if (!(EqualityComparer<T>.Default.Equals(existingObject, default(T))))
 			{
 				obj.Id = existingObject.Id;
-				await database.Create();
-				await database.Connection.UpdateAsync(obj);
+				await (await database.Connection()).UpdateAsync(obj);
 			}
 			else {
-				await database.Connection.InsertAsync(obj);
+				await (await database.Connection()).InsertAsync(obj);
 			}
 		}
 	}

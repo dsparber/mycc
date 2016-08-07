@@ -9,7 +9,7 @@ using System;
 
 namespace data.database
 {
-	public class TagDatabase : AbstractDatabase<TagDBM, Tag>
+	public class TagDatabase : AbstractEntityDatabase<TagDBM, Tag>
 	{
 		TagIdentifierDatabase tagIdentifierDatabase;
 
@@ -20,8 +20,7 @@ namespace data.database
 
 		public override async Task<IEnumerable<TagDBM>> GetAllDbObjects()
 		{
-			await Create();
-			return await Connection.Table<TagDBM>().ToListAsync();
+			return await (await Connection()).Table<TagDBM>().ToListAsync();
 		}
 
 		public override async Task Write(IEnumerable<Tag> data)
@@ -35,9 +34,9 @@ namespace data.database
 			await tagIdentifierDatabase.Write(data.Select(t => t.Identifier));
 		}
 
-		public override Task<CreateTablesResult> Create()
+		protected override Task<CreateTablesResult> Create()
 		{
-			return Connection.CreateTableAsync<TagDBM>();
+			return ConnectionWithoutCreate.CreateTableAsync<TagDBM>();
 		}
 	}
 }

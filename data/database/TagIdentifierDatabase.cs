@@ -8,12 +8,11 @@ using SQLite;
 
 namespace data.database
 {
-	public class TagIdentifierDatabase : AbstractDatabase<TagIdentifierDBM, TagIdentifier>
+	public class TagIdentifierDatabase : AbstractEntityDatabase<TagIdentifierDBM, TagIdentifier>
 	{
 		public override async Task<IEnumerable<TagIdentifierDBM>> GetAllDbObjects()
 		{
-			await Create();
-			return await Connection.Table<TagIdentifierDBM>().ToListAsync();
+			return await (await Connection()).Table<TagIdentifierDBM>().ToListAsync();
 		}
 
 		public override async Task Write(IEnumerable<TagIdentifier> data)
@@ -25,9 +24,9 @@ namespace data.database
 			}));
 		}
 
-		public override Task<CreateTablesResult> Create()
+		protected override Task<CreateTablesResult> Create()
 		{
-			return Connection.CreateTableAsync<TagIdentifierDBM>();
+			return ConnectionWithoutCreate.CreateTableAsync<TagIdentifierDBM>();
 		}
 	}
 }

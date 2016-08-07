@@ -2,52 +2,26 @@
 using data.database;
 using data.factories;
 using data.repositories.currency;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using data.database.models;
+using data.database.helper;
 
 namespace data.storage
 {
-	public class CurrencyStorage
+	public class CurrencyStorage : AbstractStorage<CurrencyRepositoryDBM, CurrencyRepository, CurrencyDBM, Currency>
 	{
-		public List<CurrencyRepository> Repositories;
-
-		CurrencyStorage()
+		protected override AbstractStorage<CurrencyRepositoryDBM, CurrencyRepository, CurrencyDBM, Currency> CreateInstance()
 		{
-			var repos = new CurrencyRepositoryDatabase().GetRepositories();
-			Repositories = repos.Result.Select(r => CurrencyRepositoryFactory.create(r)).ToList();
+			return new CurrencyStorage();
 		}
 
-		public List<Currency> Currencies
+		protected override CurrencyRepository Resolve(CurrencyRepositoryDBM obj)
 		{
-			get
-			{
-				return Repositories.SelectMany(r => r.Currencies).ToList();
-			}
+			return CurrencyRepositoryFactory.create(obj);
 		}
 
-		CurrencyStorage instance { get; set; }
-
-		public CurrencyStorage Instance
+		public override AbstractRepositoryDatabase<CurrencyRepositoryDBM> GetDatabase()
 		{
-			get
-			{
-				if (instance == null)
-				{
-					instance = new CurrencyStorage();
-				}
-				return instance;
-			}
-		}
-
-		public async Task Fetch()
-		{
-			await Task.WhenAll(Repositories.Select(x => x.Fetch()));
-		}
-
-		public async Task FetchFast()
-		{
-			await Task.WhenAll(Repositories.Select(x => x.FetchFast()));
+			return new CurrencyRepositoryDatabase();
 		}
 	}
 }

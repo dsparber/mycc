@@ -6,7 +6,7 @@ using SQLite;
 namespace data.database.models
 {
 	[Table("Accounts")]
-	public class AccountDBM : IRepositoryIdDBM<Account>
+	public class AccountDBM : IEntityRepositoryIdDBM<Account>
 	{
 		public AccountDBM() { }
 

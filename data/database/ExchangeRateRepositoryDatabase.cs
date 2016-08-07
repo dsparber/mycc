@@ -1,25 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using data.database.interfaces;
+using data.database.helper;
 using data.database.models;
 using SQLite;
-using Xamarin.Forms;
 
 namespace data.database
 {
-	public class ExchangeRateRepositoryDatabase
+	public class ExchangeRateRepositoryDatabase : AbstractRepositoryDatabase<ExchangeRateRepositoryDBM>
 	{
-		readonly SQLiteAsyncConnection database;
-
-		public ExchangeRateRepositoryDatabase()
+		public override async Task<IEnumerable<ExchangeRateRepositoryDBM>> GetRepositories()
 		{
-			database = DependencyService.Get<ISQLiteConnection>().GetConnection();
-			database.CreateTableAsync<ExchangeRateRepositoryDBM>().RunSynchronously();
+			var query = (await Connection()).Table<ExchangeRateRepositoryDBM>();
+			return await query.ToListAsync();
 		}
 
-		public async Task<IEnumerable<ExchangeRateRepositoryDBM>> GetAll()
+		protected override Task<CreateTablesResult> Create()
 		{
-			return await database.Table<ExchangeRateRepositoryDBM>().ToListAsync();
+			return ConnectionWithoutCreate.CreateTableAsync<ExchangeRateRepositoryDBM>();
 		}
 	}
 }

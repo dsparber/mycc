@@ -5,7 +5,7 @@ using data.database.interfaces;
 
 namespace data.database.helper
 {
-	public abstract class AbstractRepositoryIdDatabase<T, V> : AbstractDatabase<T, V> where T : IRepositoryIdDBM<V>
+	public abstract class AbstractEntityRepositoryIdDatabase<T, V> : AbstractEntityDatabase<T, V> where T : IEntityRepositoryIdDBM<V>
 	{
 		public abstract Task Write(IEnumerable<V> data, int repositoryId);
 

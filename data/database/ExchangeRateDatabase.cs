@@ -5,21 +5,19 @@ using data.database.models;
 using models;
 using SQLite;
 using data.database.helper;
-using System;
 
 namespace data.database
 {
-	public class ExchangeRateDatabase : AbstractRepositoryIdDatabase<ExchangeRateDBM, ExchangeRate>
+	public class ExchangeRateDatabase : AbstractEntityRepositoryIdDatabase<ExchangeRateDBM, ExchangeRate>
 	{
-		public override Task<CreateTablesResult> Create()
+		protected override Task<CreateTablesResult> Create()
 		{
-			return Connection.CreateTableAsync<ExchangeRateDBM>();
+			return ConnectionWithoutCreate.CreateTableAsync<ExchangeRateDBM>();
 		}
 
 		public override async Task<IEnumerable<ExchangeRateDBM>> GetAllDbObjects()
 		{
-			await Create();
-			return await Connection.Table<ExchangeRateDBM>().ToListAsync();
+			return await (await Connection()).Table<ExchangeRateDBM>().ToListAsync();
 		}
 
 		public override async Task Write(IEnumerable<ExchangeRate> data, int repositoryId)

@@ -1,26 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using data.database.interfaces;
+using data.database.helper;
 using data.database.models;
 using SQLite;
-using Xamarin.Forms;
 
 namespace data.database
 {
-	public class AccountRepositoryDatabase
+	public class AccountRepositoryDatabase : AbstractRepositoryDatabase<AccountRepositoryDBM>
 	{
-		readonly SQLiteAsyncConnection database;
-
-		public AccountRepositoryDatabase()
+		public override async Task<IEnumerable<AccountRepositoryDBM>> GetRepositories()
 		{
-			database = DependencyService.Get<ISQLiteConnection>().GetConnection();
-			database.CreateTableAsync<AccountRepositoryDBM>().RunSynchronously();
+			var query = (await Connection()).Table<AccountRepositoryDBM>();
+			return await query.ToListAsync();
 		}
 
-		public async Task<IEnumerable<AccountRepositoryDBM>> GetRepositories()
+		protected override Task<CreateTablesResult> Create()
 		{
-			var query = database.Table<AccountRepositoryDBM>();
-			return await query.ToListAsync();
+			return ConnectionWithoutCreate.CreateTableAsync<AccountRepositoryDBM>();
 		}
 	}
 }

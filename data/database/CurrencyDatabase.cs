@@ -8,17 +8,16 @@ using data.database.helper;
 
 namespace data.database
 {
-	public class CurrencyDatabase : AbstractRepositoryIdDatabase<CurrencyDBM, Currency>
+	public class CurrencyDatabase : AbstractEntityRepositoryIdDatabase<CurrencyDBM, Currency>
 	{
-		public override async Task<CreateTablesResult> Create()
+		protected override async Task<CreateTablesResult> Create()
 		{
-			return await Connection.CreateTableAsync<CurrencyDBM>();
+			return await ConnectionWithoutCreate.CreateTableAsync<CurrencyDBM>();
 		}
 
 		public override async Task<IEnumerable<CurrencyDBM>> GetAllDbObjects()
 		{
-			await Create();
-			return await Connection.Table<CurrencyDBM>().ToListAsync();
+			return await (await Connection()).Table<CurrencyDBM>().ToListAsync();
 		}
 
 		public override async Task Write(IEnumerable<Currency> data, int repositoryId)

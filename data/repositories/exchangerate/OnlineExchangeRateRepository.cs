@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using models;
 
 namespace data.repositories.exchangerate
@@ -8,14 +7,14 @@ namespace data.repositories.exchangerate
 	{
 		protected OnlineExchangeRateRepository(int repositoryId) : base(repositoryId) { }
 
-		public override async Task FetchAvailableRatesFast()
+		public override async Task FetchFast()
 		{
 			await FetchFromDatabase();
 		}
 
 		public override async Task FetchExchangeRateFast(ExchangeRate exchangeRate)
 		{
-			await FetchAvailableRatesFast();
+			await FetchFast();
 		}
 	}
 }

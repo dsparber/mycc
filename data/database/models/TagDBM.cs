@@ -6,7 +6,7 @@ using data.database.interfaces;
 namespace data.database.models
 {
 	[Table("Tags")]
-	public class TagDBM : IDBM<Tag>
+	public class TagDBM : IEntityDBM<Tag>
 	{
 		public TagDBM() { }
 

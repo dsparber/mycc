@@ -4,50 +4,27 @@ using data.database;
 using data.factories;
 using models;
 using System.Threading.Tasks;
-using System.Linq;
+using data.database.models;
+using data.database.helper;
+using System;
 
 namespace data.storage
 {
-	public class AccountStorage
+	public class AccountStorage : AbstractStorage<AccountRepositoryDBM, AccountRepository, AccountDBM, Account>
 	{
-		public List<AccountRepository> Repositories;
-
-		AccountStorage()
+		protected override AccountRepository Resolve(AccountRepositoryDBM obj)
 		{
-			var repos = new AccountRepositoryDatabase().GetRepositories();
-			Repositories = repos.Result.Select(r => AccountRepositoryFactory.create(r)).ToList();
+			return AccountRepositoryFactory.create(obj);
 		}
 
-		public List<Account> Accounts
+		protected override AbstractStorage<AccountRepositoryDBM, AccountRepository, AccountDBM, Account> CreateInstance()
 		{
-			get
-			{
-				return Repositories.SelectMany(r => r.Accounts).ToList();
-			}
+			return new AccountStorage();
 		}
 
-		AccountStorage instance { get; set; }
-
-		public AccountStorage Instance
+		public override AbstractRepositoryDatabase<AccountRepositoryDBM> GetDatabase()
 		{
-			get
-			{
-				if (instance == null)
-				{
-					instance = new AccountStorage();
-				}
-				return instance;
-			}
-		}
-
-		public async Task Fetch()
-		{
-			await Task.WhenAll(Repositories.Select(x => x.Fetch()));
-		}
-
-		public async Task FetchFast()
-		{
-			await Task.WhenAll(Repositories.Select(x => x.FetchFast()));
+			return new AccountRepositoryDatabase();
 		}
 	}
 }

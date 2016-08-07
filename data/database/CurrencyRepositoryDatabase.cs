@@ -1,26 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using data.database.interfaces;
+using data.database.helper;
 using data.database.models;
 using SQLite;
-using Xamarin.Forms;
 
 namespace data.database
 {
-	public class CurrencyRepositoryDatabase
+	public class CurrencyRepositoryDatabase : AbstractRepositoryDatabase<CurrencyRepositoryDBM>
 	{
-		readonly SQLiteAsyncConnection database;
-
-		public CurrencyRepositoryDatabase()
+		public override async Task<IEnumerable<CurrencyRepositoryDBM>> GetRepositories()
 		{
-			database = DependencyService.Get<ISQLiteConnection>().GetConnection();
-			database.CreateTableAsync<CurrencyRepositoryDBM>().RunSynchronously();
+			var query = (await Connection()).Table<CurrencyRepositoryDBM>();
+			return await query.ToListAsync();
 		}
 
-		public async Task<IEnumerable<CurrencyRepositoryDBM>> GetRepositories()
+		protected override Task<CreateTablesResult> Create()
 		{
-			var query = database.Table<CurrencyRepositoryDBM>();
-			return await query.ToListAsync();
+			return ConnectionWithoutCreate.CreateTableAsync<CurrencyRepositoryDBM>();
 		}
 	}
 }

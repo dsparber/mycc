@@ -1,36 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using data.database;
+﻿using data.database;
+using data.database.helper;
+using data.database.models;
+using data.repositories.general;
 using models;
 
 namespace data.repositories.currency
 {
-	public abstract class CurrencyRepository
+	public abstract class CurrencyRepository : AbstractRepository<CurrencyDBM, Currency>
 	{
-		public List<Currency> Currencies;
-		public string RepositoryName;
-		public int RepositoryId;
+		protected CurrencyRepository(int repositoryId) : base(repositoryId) { }
 
-		protected CurrencyRepository(int repositoryId)
+		protected override AbstractEntityRepositoryIdDatabase<CurrencyDBM, Currency> GetDatabase()
 		{
-			Currencies = new List<Currency>();
-			RepositoryId = repositoryId;
-		}
-
-		public abstract Task Fetch();
-
-		public abstract Task FetchFast();
-
-		protected async Task FetchFromDatabase()
-		{
-			var db = new CurrencyDatabase();
-			Currencies = new List<Currency>(await db.GetAll(RepositoryId));
-		}
-
-		protected async Task WriteToDatabase()
-		{
-			var db = new CurrencyDatabase();
-			await db.Write(Currencies, RepositoryId);
+			return new CurrencyDatabase();
 		}
 	}
 }

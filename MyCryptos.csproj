@@ -83,11 +83,16 @@
     <Compile Include="data\database\ExchangeRateDatabase.cs" />
     <Compile Include="data\database\models\ExchangeRateDBM.cs" />
     <Compile Include="data\repositories\currency\BittrexCurrencyRepository.cs" />
-    <Compile Include="data\database\interfaces\IDBM.cs" />
-    <Compile Include="data\database\interfaces\IRepositoryIdDBM.cs" />
-    <Compile Include="data\database\helper\AbstractDatabase.cs" />
-    <Compile Include="data\database\helper\AbstractRepositoryIdDatabase.cs" />
+    <Compile Include="data\database\interfaces\IEntityDBM.cs" />
+    <Compile Include="data\database\interfaces\IEntityRepositoryIdDBM.cs" />
+    <Compile Include="data\database\helper\AbstractEntityDatabase.cs" />
+    <Compile Include="data\database\helper\AbstractEntityRepositoryIdDatabase.cs" />
     <Compile Include="data\database\interfaces\ISQLiteConnection.cs" />
+    <Compile Include="data\storage\AbstractStorage.cs" />
+    <Compile Include="data\database\interfaces\IRepositoryDBM.cs" />
+    <Compile Include="data\repositories\general\AbstractRepository.cs" />
+    <Compile Include="data\database\helper\AbstractRepositoryDatabase.cs" />
+    <Compile Include="data\database\helper\AbstractDatabase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -152,6 +157,7 @@
     <Folder Include="data\settings\" />
     <Folder Include="data\database\helper\" />
     <Folder Include="data\database\interfaces\" />
+    <Folder Include="data\repositories\general\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Old\View\MainView.xaml">
