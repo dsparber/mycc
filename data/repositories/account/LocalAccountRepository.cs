@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
+using data.database.models;
 
 namespace data.repositories.account
 {
 	public class LocalAccountRepository : AccountRepository
 	{
-		public LocalAccountRepository(int reposioteyId) : base(reposioteyId) { }
+		public LocalAccountRepository() : base(AccountRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY) { }
 
 		public override async Task Fetch()
 		{

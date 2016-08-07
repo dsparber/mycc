@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
+using data.database.models;
 
 namespace data.repositories.currency
 {
 	public class LocalCurrencyRepository : CurrencyRepository
 	{
-		public LocalCurrencyRepository(int repositoryId) : base(repositoryId) {}
+		public LocalCurrencyRepository() : base(CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY) {}
 
 		public override async Task Fetch()
 		{

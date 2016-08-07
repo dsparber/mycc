@@ -31,6 +31,13 @@ namespace data.storage
 			return new ExchangeRateStorage();
 		}
 
+		protected override async Task OnFirstLaunch()
+		{
+			await GetDatabase().AddRepository(new ExchangeRateRepositoryDBM { Type = ExchangeRateRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY });
+			await GetDatabase().AddRepository(new ExchangeRateRepositoryDBM { Type = ExchangeRateRepositoryDBM.DB_TYPE_BTCE_REPOSITORY });
+			await GetDatabase().AddRepository(new ExchangeRateRepositoryDBM { Type = ExchangeRateRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY });
+		}
+
 		protected override ExchangeRateRepository Resolve(ExchangeRateRepositoryDBM obj)
 		{
 			return ExchangeRateRepositoryFactory.create(obj);

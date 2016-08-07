@@ -9,11 +9,25 @@ namespace data.database.helper
 	{
 		SQLiteAsyncConnection connection;
 
+		Task initialisation;
+
+		async Task initialise()
+		{
+			if (initialisation == null)
+			{
+				initialisation = Create();
+			}
+			if (!initialisation.IsCompleted)
+			{
+				await initialisation;
+			}
+		}
+
 		protected SQLiteAsyncConnection ConnectionWithoutCreate { get { return connection; } }
 
 		public async Task<SQLiteAsyncConnection> Connection()
 		{
-			await Create();
+			await initialise();
 			return connection;
 		}
 
