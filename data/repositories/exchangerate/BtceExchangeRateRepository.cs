@@ -24,7 +24,8 @@ namespace data.repositories.exchangerate
 
 		public override async Task Fetch()
 		{
-			// TODO Implement
+			Elements.Add(new ExchangeRate(Currency.BTC, Currency.EUR));
+			Elements.Add(new ExchangeRate(Currency.BTC, Currency.USD));
 			await WriteToDatabase();
 		}
 

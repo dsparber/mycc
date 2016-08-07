@@ -74,5 +74,7 @@ namespace models
 		}
 
 		public static readonly Currency BTC = new Currency("BTC", "Bitcoin");
+		public static readonly Currency EUR = new Currency("EUR", "Euro");
+		public static readonly Currency USD = new Currency("USD", "US Dollar");
 	}
 }
