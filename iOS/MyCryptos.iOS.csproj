@@ -149,6 +149,18 @@
     <BundleResource Include="Resources\add%402x.png" />
     <BundleResource Include="Resources\add%403x.png" />
     <BundleResource Include="Resources\add.png" />
+    <BundleResource Include="Resources\accounts.png" />
+    <BundleResource Include="Resources\accounts%402x.png" />
+    <BundleResource Include="Resources\accounts%403x.png" />
+    <BundleResource Include="Resources\coins.png" />
+    <BundleResource Include="Resources\coins%402x.png" />
+    <BundleResource Include="Resources\coins%403x.png" />
+    <BundleResource Include="Resources\settings.png" />
+    <BundleResource Include="Resources\settings%402x.png" />
+    <BundleResource Include="Resources\settings%403x.png" />
+    <BundleResource Include="Resources\tags.png" />
+    <BundleResource Include="Resources\tags%402x.png" />
+    <BundleResource Include="Resources\tags%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />

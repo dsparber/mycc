@@ -8,7 +8,7 @@
 	x:Class="view.TabContainerView">
 	<NavigationPage
 		Title="{i18n:Translate TagsTitle}"
-		Icon="tag.png">
+		Icon="tags.png">
 		<x:Arguments>
 			<view:TagsView />
 		</x:Arguments>
