@@ -34,9 +34,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Old\Converters\NegateBooleanConverter.cs" />
     <Compile Include="Old\Data\ExchangeRateCollection.cs" />
-    <Compile Include="Old\View\MainView.xaml.cs">
-      <DependentUpon>..\..\View\MainView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="models\Account.cs" />
     <Compile Include="models\Currency.cs" />
     <Compile Include="models\ExchangeRate.cs" />
@@ -104,6 +101,14 @@
     <Compile Include="view\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="resources\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="resources\ILocalise.cs" />
+    <Compile Include="resources\TranslateExtension.cs" />
+    <Compile Include="view\TagsView.xaml.cs">
+      <DependentUpon>TagsView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -154,7 +159,6 @@
     <Folder Include="Old\" />
     <Folder Include="Old\Converters\" />
     <Folder Include="Old\Data\" />
-    <Folder Include="Old\View\" />
     <Folder Include="models\" />
     <Folder Include="data\" />
     <Folder Include="data\repositories\" />
@@ -170,11 +174,9 @@
     <Folder Include="data\database\interfaces\" />
     <Folder Include="data\repositories\general\" />
     <Folder Include="view\" />
+    <Folder Include="resources\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Old\View\MainView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="view\TabContainerView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -185,6 +187,14 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="view\SettingsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\Resources.de.resx" />
+    <EmbeddedResource Include="view\TagsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

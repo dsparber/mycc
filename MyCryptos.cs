@@ -1,4 +1,4 @@
-﻿using System;
+﻿using resources;
 using view;
 using Xamarin.Forms;
 
@@ -10,6 +10,11 @@ namespace MyCryptos
 		{
 			// The root page of your application
 			MainPage = new TabContainerView();
+
+			if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
+			{
+				DependencyService.Get<ILocalise>().SetLocale();
+			}
 		}
 
 		protected override void OnStart ()

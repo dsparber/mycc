@@ -4,21 +4,32 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:local="clr-namespace:MyCryptos;assembly=MyCryptos"
 	xmlns:view="clr-namespace:view;assembly=MyCryptos"
+	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
 	x:Class="view.TabContainerView">
 	<NavigationPage
-		Title="Coins">
+		Title="{i18n:Translate TagsTitle}"
+		Icon="tag.png">
+		<x:Arguments>
+			<view:TagsView />
+		</x:Arguments>
+	</NavigationPage>
+	<NavigationPage
+		Title="{i18n:Translate CoinsTitle}"
+		Icon="coins.png">
 		<x:Arguments>
 			<view:CoinsView />
 		</x:Arguments>
 	</NavigationPage>
 	<NavigationPage
-		Title="Accounts">
+		Title="{i18n:Translate AccountsTitle}"
+		Icon="accounts.png">
 		<x:Arguments>
 			<view:AccountsView />
 		</x:Arguments>
 	</NavigationPage>
 	<NavigationPage
-		Title="Settings">
+		Title="{i18n:Translate SettingsTitle}"
+		Icon="settings.png">
 		<x:Arguments>
 			<view:SettingsView />
 		</x:Arguments>

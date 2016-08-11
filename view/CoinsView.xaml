@@ -2,11 +2,11 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
 	x:Class="view.CoinsView"
-	Title="Coins">
+	Title="{i18n:Translate CoinsTitle}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
-			Name="Add"
 			Icon="add.png" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>

@@ -2,9 +2,9 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
 	x:Class="view.SettingsView"
-	Title="Settings">
+	Title="{i18n:Translate SettingsTitle}">
 	<ContentPage.Content>
-
 	</ContentPage.Content>
 </ContentPage>
