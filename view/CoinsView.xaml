@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Class="view.CoinsView"
+	Title="Coins">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			Name="Add"
+			Icon="add.png" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<StackLayout>
+			<RelativeLayout
+				BackgroundColor="#0080FF"
+				HeightRequest="150">
+				<Label
+					Text="1337,42 BTC"
+					FontSize="36"
+					FontAttributes="Bold"
+					HorizontalOptions="CenterAndExpand"
+					VerticalOptions="CenterAndExpand"
+					HorizontalTextAlignment="Center"
+					TextColor="White"
+					RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
+					RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" />
+				<ActivityIndicator
+					Scale="1.5"
+					Color="White"
+					IsVisible="false"
+					IsRunning="false"
+					VerticalOptions="CenterAndExpand"
+					HorizontalOptions="CenterAndExpand"
+					RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
+					RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" />
+			</RelativeLayout>
+			<ListView>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<TextCell
+							Text="XY"
+							Detail="Z" />
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

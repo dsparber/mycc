@@ -1,5 +1,5 @@
 ﻿using System;
-
+using view;
 using Xamarin.Forms;
 
 namespace MyCryptos
@@ -9,7 +9,7 @@ namespace MyCryptos
 		public App ()
 		{
 			// The root page of your application
-			MainPage = new NavigationPage (new MainView ());
+			MainPage = new TabContainerView();
 		}
 
 		protected override void OnStart ()

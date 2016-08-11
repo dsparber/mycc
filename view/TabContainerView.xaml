@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TabbedPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:MyCryptos;assembly=MyCryptos"
+	xmlns:view="clr-namespace:view;assembly=MyCryptos"
+	x:Class="view.TabContainerView">
+	<NavigationPage
+		Title="Coins">
+		<x:Arguments>
+			<view:CoinsView />
+		</x:Arguments>
+	</NavigationPage>
+	<NavigationPage
+		Title="Accounts">
+		<x:Arguments>
+			<view:AccountsView />
+		</x:Arguments>
+	</NavigationPage>
+	<NavigationPage
+		Title="Settings">
+		<x:Arguments>
+			<view:SettingsView />
+		</x:Arguments>
+	</NavigationPage>
+</TabbedPage>
