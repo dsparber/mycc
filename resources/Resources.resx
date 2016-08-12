@@ -28,4 +28,22 @@
 	<data name="TagsTitle">
 		<value>Tags</value>
 	</data>
+	<data name="AddCoinTitle">
+		<value>Add Coin</value>
+	</data>
+	<data name="Cancel">
+		<value>Cancel</value>
+	</data>
+	<data name="Save">
+		<value>Save</value>
+	</data>
+	<data name="Add">
+		<value>Add</value>
+	</data>
+	<data name="AddAccountTitle">
+		<value>Add account</value>
+	</data>
+	<data name="AppName">
+		<value>MyCryptos</value>
+	</data>
 </root>

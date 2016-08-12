@@ -3,12 +3,18 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
-	x:Class="view.AccountsView"
-	Title="{i18n:Translate AccountsTitle}">
+	x:Class="view.AddAccountView"
+	Title="{i18n:Translate AddAccountTitle}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
-			Text="{i18n:Translate Add}"
-			Clicked="AddAccount" />
+			Text="{i18n:Translate Cancel}"
+			Clicked="Cancel"
+			Order="Primary"
+			Priority="0" />
+		<ToolbarItem
+			Name="{i18n:Translate Save}"
+			Order="Primary"
+			Priority="1" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 	</ContentPage.Content>

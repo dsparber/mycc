@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace view
 {
@@ -7,6 +8,20 @@ namespace view
 		public CoinsView()
 		{
 			InitializeComponent();
+		}
+
+		public void AddCoin(object sender, EventArgs e)
+		{
+			Navigation.PushModalAsync(new NavigationPage(new AddCoinView()));
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			if (Device.OS == TargetPlatform.Android)
+			{
+				Title = MyCryptos.resources.Resources.AppName;
+			}
 		}
 	}
 }

@@ -8,6 +8,12 @@ namespace view
 		{
 			InitializeComponent();
 		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			CurrentPage = Children[1];
+		}
 	}
 }
 

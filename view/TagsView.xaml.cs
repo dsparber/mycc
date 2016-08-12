@@ -11,6 +11,15 @@ namespace view
 		{
 			InitializeComponent();
 		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			if (Device.OS == TargetPlatform.Android)
+			{
+				Title = MyCryptos.resources.Resources.AppName;
+			}
+		}
 	}
 }
 

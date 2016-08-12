@@ -70,5 +70,41 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("TagsTitle", resourceCulture);
             }
         }
+        
+        public static string AddCoinTitle {
+            get {
+                return ResourceManager.GetString("AddCoinTitle", resourceCulture);
+            }
+        }
+        
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        public static string AddAccountTitle {
+            get {
+                return ResourceManager.GetString("AddAccountTitle", resourceCulture);
+            }
+        }
+        
+        public static string AppName {
+            get {
+                return ResourceManager.GetString("AppName", resourceCulture);
+            }
+        }
     }
 }
