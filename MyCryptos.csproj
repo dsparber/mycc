@@ -89,9 +89,6 @@
     <Compile Include="data\database\helper\AbstractRepositoryDatabase.cs" />
     <Compile Include="data\database\helper\AbstractDatabase.cs" />
     <Compile Include="data\repositories\exchangerate\BtceExchangeRateRepository.cs" />
-    <Compile Include="view\TabContainerView.xaml.cs">
-      <DependentUpon>TabContainerView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="view\CoinsView.xaml.cs">
       <DependentUpon>CoinsView.xaml</DependentUpon>
     </Compile>
@@ -100,9 +97,6 @@
     </Compile>
     <Compile Include="view\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="resources\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="resources\ILocalise.cs" />
     <Compile Include="resources\TranslateExtension.cs" />
@@ -114,6 +108,10 @@
     </Compile>
     <Compile Include="view\AddAccountView.xaml.cs">
       <DependentUpon>AddAccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\TabContainerView.cs" />
+    <Compile Include="resources\InternationalisationResources.Designer.cs">
+      <DependentUpon>InternationalisationResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
@@ -183,9 +181,6 @@
     <Folder Include="resources\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="view\TabContainerView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="view\CoinsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -194,10 +189,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="view\SettingsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="resources\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="resources\Resources.de.resx" />
     <EmbeddedResource Include="view\TagsView.xaml">
@@ -208,6 +199,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="view\AddAccountView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\InternationalisationResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InternationalisationResources.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\InternationalisationResources.de.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

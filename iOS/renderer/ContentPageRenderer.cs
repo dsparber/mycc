@@ -39,17 +39,17 @@ namespace renderer
 
 				if (info != null)
 				{
-					if (info.Text.Equals(Resources.Save))
+					if (info.Text.Equals(InternationalisationResources.Save))
 					{
 						systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Done);
 					}
-					else if (info.Text.Equals(Resources.Add))
+					else if (info.Text.Equals(InternationalisationResources.Add))
 					{
 						systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Add);
 						var x = UIBarButtonSystemItem.Add;
 						x.ToString();
 					}
-					else if (info.Text.Equals(Resources.Cancel))
+					else if (info.Text.Equals(InternationalisationResources.Cancel))
 					{
 						systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Cancel);
 					}
@@ -61,7 +61,7 @@ namespace renderer
 					systemItem.Target = nativeItem.Target;
 					nativeItem = systemItem;
 				}
-				if (info != null && info.Text.Equals(Resources.Cancel))
+				if (info != null && info.Text.Equals(InternationalisationResources.Cancel))
 				{
 					leftNativeButtons.Add(nativeItem);
 				}

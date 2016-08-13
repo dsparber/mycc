@@ -1,4 +1,5 @@
 ﻿using System;
+using MyCryptos.resources;
 using Xamarin.Forms;
 
 namespace view
@@ -20,7 +21,7 @@ namespace view
 			base.OnAppearing();
 			if (Device.OS == TargetPlatform.Android)
 			{
-				Title = MyCryptos.resources.Resources.AppName;
+				Title = InternationalisationResources.AppName;
 			}
 		}
 	}

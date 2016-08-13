@@ -12,7 +12,7 @@ namespace resources
 	public class TranslateExtension : IMarkupExtension
 	{
 		readonly CultureInfo ci;
-		const string ResourceId = "MyCryptos.resources.Resources";
+		const string ResourceId = "MyCryptos.resources.InternationalisationResources";
 
 		public TranslateExtension()
 		{

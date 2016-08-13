@@ -20,30 +20,33 @@
 		<value>Coins</value>
 	</data>
 	<data name="AccountsTitle">
-		<value>Accounts</value>
+		<value>Konten</value>
 	</data>
 	<data name="SettingsTitle">
-		<value>Settings</value>
+		<value>Einstellungen</value>
 	</data>
 	<data name="TagsTitle">
 		<value>Tags</value>
 	</data>
 	<data name="AddCoinTitle">
-		<value>Add Coin</value>
+		<value>Coin hinzufügen</value>
 	</data>
 	<data name="Cancel">
-		<value>Cancel</value>
+		<value>Abbrechen</value>
 	</data>
 	<data name="Save">
-		<value>Save</value>
+		<value>Speichern</value>
 	</data>
 	<data name="Add">
-		<value>Add</value>
+		<value>Neu</value>
 	</data>
 	<data name="AddAccountTitle">
-		<value>Add account</value>
+		<value>Konto hinzufügen</value>
 	</data>
 	<data name="AppName">
 		<value>MyCryptos</value>
+	</data>
+	<data name="Settings">
+		<value>Einstellungen</value>
 	</data>
 </root>
