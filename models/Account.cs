@@ -17,6 +17,7 @@ namespace models
 		{
 			Name = name;
 			Money = money;
+			Tags = new List<Tag>();
 		}
 
 		/// <summary>
@@ -30,6 +31,7 @@ namespace models
 			Id = id;
 			Name = name;
 			Money = money;
+			Tags = new List<Tag>();
 		}
 
 		/// <summary>

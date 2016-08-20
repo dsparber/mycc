@@ -160,5 +160,17 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("DefaultStorage", resourceCulture);
             }
         }
+        
+        public static string Label {
+            get {
+                return ResourceManager.GetString("Label", resourceCulture);
+            }
+        }
+        
+        public static string LabelExample {
+            get {
+                return ResourceManager.GetString("LabelExample", resourceCulture);
+            }
+        }
     }
 }

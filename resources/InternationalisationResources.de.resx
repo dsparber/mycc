@@ -73,4 +73,10 @@
 	<data name="DefaultStorage">
 		<value>Standardspeicher</value>
 	</data>
+	<data name="Label">
+		<value>Bezeichnung</value>
+	</data>
+	<data name="LabelExample">
+		<value>z.B. Ersparnisse</value>
+	</data>
 </root>

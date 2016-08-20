@@ -35,6 +35,11 @@ namespace data.repositories.general
 			var db = GetDatabase();
 			await db.Write(Elements, Id);
 		}
+
+		public async Task Add(V element) {
+			Elements.Add(element);
+			await WriteToDatabase();
+		}
 	}
 }
 

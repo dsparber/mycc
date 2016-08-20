@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using data.repositories.account;
 using data.storage;
+using models;
 using Xamarin.Forms;
-using System.Threading.Tasks;
 
 namespace view
 {
@@ -20,16 +19,22 @@ namespace view
 			Navigation.PopModalAsync();
 		}
 
-		protected async override void OnAppearing()
+		public async void Save(object sender, EventArgs e)
 		{
-			base.OnAppearing();
-			var accountStorage = AccountStorage.Instance;
-			await accountStorage.Fetch();
-			var localStorages = await accountStorage.RepositoriesOfType<LocalAccountRepository>();
-			foreach (var s in localStorages)
+			var name = LabelInput.Text;
+			var value = ValueInput.Text;
+			var currency = CurrencyInput.Text;
+
+			var currencyObject = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Code.ToLower().Equals(currency.ToLower()));
+			if (currencyObject == null)
 			{
-				StorageSection.Insert(0, new TextCell { Text = s.Name });
+				currencyObject = new Currency(currency);
 			}
+
+			var money = new Money(Decimal.Parse(value), currencyObject);
+			var account = new Account(name, money);
+			await (await AccountStorage.Instance.Repositories()).Find(r => r is LocalAccountRepository).Add(account);
+			await Navigation.PopModalAsync();
 		}
 	}
 }

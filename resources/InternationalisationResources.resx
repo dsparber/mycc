@@ -73,4 +73,10 @@
 	<data name="DefaultStorage">
 		<value>Default storage</value>
 	</data>
+	<data name="Label">
+		<value>Label</value>
+	</data>
+	<data name="LabelExample">
+		<value>e.g. Savings</value>
+	</data>
 </root>

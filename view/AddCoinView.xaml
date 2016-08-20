@@ -4,7 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
 	x:Class="view.AddCoinView"
-	Title="{i18n:Translate AddCoinTitle}">
+	Title="{i18n:Translate AddAccountTitle}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Text="{i18n:Translate Cancel}"
@@ -13,6 +13,7 @@
 			Priority="0" />
 		<ToolbarItem
 			Name="{i18n:Translate Save}"
+			Clicked="Save"
 			Order="Primary"
 			Priority="1" />
 	</ContentPage.ToolbarItems>
@@ -21,27 +22,22 @@
 			Intent="Form">
 			<TableView.Root>
 				<TableSection
+					Title="{i18n:Translate Label}">
+					<EntryCell
+						x:Name="LabelInput"
+						Label="{i18n:Translate Label}"
+						Placeholder="{i18n:Translate LabelExample}" />
+				</TableSection>
+				<TableSection
 					Title="{i18n:Translate Coins}">
 					<EntryCell
+						x:Name="ValueInput"
 						Label="{i18n:Translate Value}"
 						Placeholder="{i18n:Translate ValueExample}" />
 					<EntryCell
+						x:Name="CurrencyInput"
 						Label="{i18n:Translate Currency}"
 						Placeholder="{i18n:Translate CurrencyExample}" />
-				</TableSection>
-				<TableSection
-					x:Name="StorageSection"
-					Title="{i18n:Translate Storage}">
-					<ViewCell>
-						<StackLayout
-							Orientation="Horizontal">
-							<ContentView
-								WidthRequest="10" />
-							<Label
-								Text="{i18n:Translate NewStorage}"
-								YAlign="Center" />
-						</StackLayout>
-					</ViewCell>
 				</TableSection>
 			</TableView.Root>
 		</TableView>

@@ -16,9 +16,17 @@ namespace data.database.helper
 
 			var comparisonObj = await obj.Resolve();
 			var resolved = await Task.WhenAll(existingObjects.Select(async o => new Tuple<int, V>(o.Id, await o.Resolve())));
-			var id = resolved.ToList().Find(r => r.Item2.Equals(comparisonObj)).Item1;
 
-			var existingObject = existingObjects.ToList().Find(o => o.Id == id);
+			var found = resolved.ToList().Find(r => r.Item2.Equals(comparisonObj));
+
+			T existingObject;
+			if (found != null)
+			{
+				existingObject = existingObjects.ToList().Find(o => o.Id == found.Item1);
+			}
+			else {
+				existingObject = default(T);
+			}
 
 			if (!(EqualityComparer<T>.Default.Equals(existingObject, default(T))))
 			{

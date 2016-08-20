@@ -29,10 +29,16 @@ namespace data.database.models
 
 		public AccountDBM(Account account, int repositoryId)
 		{
-			Id = account.Id.Value;
+			if (account.Id.HasValue)
+			{
+				Id = account.Id.Value;
+			}
+			if (account.Money.Currency.Id.HasValue)
+			{
+				CurrencyId = account.Money.Currency.Id.Value;
+			}
 			Name = account.Name;
 			MoneyAmount = account.Money.Amount;
-			CurrencyId = account.Money.Currency.Id.Value;
 			RepositoryId = repositoryId;
 		}
 			

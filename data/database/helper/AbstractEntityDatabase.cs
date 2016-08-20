@@ -18,12 +18,17 @@ namespace data.database.helper
 
 		public async Task<T> GetDbObject(int id)
 		{
-			return (await GetAllDbObjects()).Single(o => o.Id == id);
+			return (await GetAllDbObjects()).FirstOrDefault(o => o.Id == id);
 		}
 
 		public async Task<V> Get(int id)
 		{
-			return await (await GetDbObject(id)).Resolve();
+			var element = await GetDbObject(id);
+			if (element != null)
+			{
+				return await element.Resolve();
+			}
+			return default(V);
 		}
 	}
 }
