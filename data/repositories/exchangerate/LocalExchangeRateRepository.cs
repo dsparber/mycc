@@ -6,7 +6,7 @@ namespace data.repositories.exchangerate
 {
 	public class LocalExchangeRateRepository : ExchangeRateRepository
 	{
-		public LocalExchangeRateRepository() : base(ExchangeRateRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY) { }
+		public LocalExchangeRateRepository(string name) : base(ExchangeRateRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY, name) { }
 
 		public override async Task Fetch()
 		{

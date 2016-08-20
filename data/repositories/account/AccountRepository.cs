@@ -8,7 +8,7 @@ namespace data.repositories.account
 {
 	public abstract class AccountRepository : AbstractRepository<AccountDBM, Account>
 	{
-		protected AccountRepository(int repositoryId) : base(repositoryId) { }
+		protected AccountRepository(int repositoryId, string name) : base(repositoryId, name) { }
 
 		protected override AbstractEntityRepositoryIdDatabase<AccountDBM, Account> GetDatabase()
 		{

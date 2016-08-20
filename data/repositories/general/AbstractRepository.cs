@@ -8,8 +8,8 @@ namespace data.repositories.general
 	public abstract class AbstractRepository<T, V> where T : IEntityRepositoryIdDBM<V>
 	{
 		public List<V> Elements;
-		public string RepositoryName;
-		public int RepositoryId; 
+		public string Name;
+		public int Id; 
 
 		public abstract Task Fetch();
 
@@ -17,22 +17,23 @@ namespace data.repositories.general
 
 		protected abstract AbstractEntityRepositoryIdDatabase<T, V> GetDatabase();
 
-		protected AbstractRepository(int repositoryId)
+		protected AbstractRepository(int repositoryId, string name)
 		{
-			RepositoryId = repositoryId;
+			Id = repositoryId;
+			Name = name;
 			Elements = new List<V>();
 		}
 
 		protected async Task FetchFromDatabase()
 		{
 			var db = GetDatabase();
-			Elements = new List<V>(await db.GetAll(RepositoryId));
+			Elements = new List<V>(await db.GetAll(Id));
 		}
 
 		protected async Task WriteToDatabase()
 		{
 			var db = GetDatabase();
-			await db.Write(Elements, RepositoryId);
+			await db.Write(Elements, Id);
 		}
 	}
 }

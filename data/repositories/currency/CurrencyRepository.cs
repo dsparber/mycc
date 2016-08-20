@@ -8,7 +8,7 @@ namespace data.repositories.currency
 {
 	public abstract class CurrencyRepository : AbstractRepository<CurrencyDBM, Currency>
 	{
-		protected CurrencyRepository(int repositoryId) : base(repositoryId) { }
+		protected CurrencyRepository(int repositoryId, string name) : base(repositoryId, name) { }
 
 		protected override AbstractEntityRepositoryIdDatabase<CurrencyDBM, Currency> GetDatabase()
 		{

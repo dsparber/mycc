@@ -1,6 +1,7 @@
 ﻿using SQLite;
 namespace data.database.models
 {
+	[Table("CurrencyRepositories")]
 	public class CurrencyRepositoryDBM
 	{
 		public const int DB_TYPE_LOCAL_REPOSITORY = 1;

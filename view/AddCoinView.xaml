@@ -17,5 +17,33 @@
 			Priority="1" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
+		<TableView
+			Intent="Form">
+			<TableView.Root>
+				<TableSection
+					Title="{i18n:Translate Coins}">
+					<EntryCell
+						Label="{i18n:Translate Value}"
+						Placeholder="{i18n:Translate ValueExample}" />
+					<EntryCell
+						Label="{i18n:Translate Currency}"
+						Placeholder="{i18n:Translate CurrencyExample}" />
+				</TableSection>
+				<TableSection
+					x:Name="StorageSection"
+					Title="{i18n:Translate Storage}">
+					<ViewCell>
+						<StackLayout
+							Orientation="Horizontal">
+							<ContentView
+								WidthRequest="10" />
+							<Label
+								Text="{i18n:Translate NewStorage}"
+								YAlign="Center" />
+						</StackLayout>
+					</ViewCell>
+				</TableSection>
+			</TableView.Root>
+		</TableView>
 	</ContentPage.Content>
 </ContentPage>

@@ -2,6 +2,7 @@
 
 namespace data.database.models
 {
+	[Table("ExchangeRateRepositories")]
 	public class ExchangeRateRepositoryDBM
 	{
 		public const int DB_TYPE_LOCAL_REPOSITORY = 1;

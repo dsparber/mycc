@@ -16,7 +16,7 @@ namespace data.repositories.exchangerate
 
 		readonly HttpClient client;
 
-		public BtceExchangeRateRepository() : base(ExchangeRateRepositoryDBM.DB_TYPE_BTCE_REPOSITORY)
+		public BtceExchangeRateRepository(string name) : base(ExchangeRateRepositoryDBM.DB_TYPE_BTCE_REPOSITORY, name)
 		{
 			client = new HttpClient();
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;

@@ -9,7 +9,7 @@ namespace data.repositories.exchangerate
 {
 	public abstract class ExchangeRateRepository : AbstractRepository<ExchangeRateDBM, ExchangeRate>
 	{
-		protected ExchangeRateRepository(int repositoryId) : base(repositoryId) { }
+		protected ExchangeRateRepository(int repositoryId, string name) : base(repositoryId, name) { }
 
 		protected override AbstractEntityRepositoryIdDatabase<ExchangeRateDBM, ExchangeRate> GetDatabase()
 		{

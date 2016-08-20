@@ -1,7 +1,10 @@
 ﻿using System.IO;
 using SQLite;
 using data.database.interfaces;
+using Xamarin.Forms;
+using data.database;
 
+[assembly: Dependency(typeof(SQLiteConnectionAndroid))]
 namespace data.database
 {
 	public class SQLiteConnectionAndroid : ISQLiteConnection

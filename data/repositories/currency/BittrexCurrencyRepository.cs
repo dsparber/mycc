@@ -19,7 +19,7 @@ namespace data.repositories.currency
 
 		readonly HttpClient client;
 
-		public BittrexCurrencyRepository() : base(CurrencyRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY)
+		public BittrexCurrencyRepository(string name) : base(CurrencyRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY, name)
 		{
 			client = new HttpClient();
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;

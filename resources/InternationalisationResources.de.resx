@@ -49,4 +49,28 @@
 	<data name="Settings">
 		<value>Einstellungen</value>
 	</data>
+	<data name="Coins">
+		<value>Geld</value>
+	</data>
+	<data name="Currency">
+		<value>Währung</value>
+	</data>
+	<data name="Value">
+		<value>Betrag</value>
+	</data>
+	<data name="CurrencyExample">
+		<value>z.B. BTC</value>
+	</data>
+	<data name="ValueExample">
+		<value>z.B. 10</value>
+	</data>
+	<data name="Storage">
+		<value>Speicher</value>
+	</data>
+	<data name="NewStorage">
+		<value>Neuen Speicher erzeugen</value>
+	</data>
+	<data name="DefaultStorage">
+		<value>Standardspeicher</value>
+	</data>
 </root>

@@ -6,22 +6,16 @@ using models;
 using SQLite;
 using Xamarin.Forms;
 using data.database.interfaces;
+using data.database.helper;
+using System;
 
 namespace data.database
 {
-	public class TagAccountMapDatabase
+	public class TagAccountMapDatabase : AbstractDatabase
 	{
-		readonly SQLiteAsyncConnection database;
-
-		public TagAccountMapDatabase()
-		{
-			database = DependencyService.Get<ISQLiteConnection>().GetConnection();
-			database.CreateTableAsync<TagAccountMapDBM>().RunSynchronously();
-		}
-
 		public async Task<IEnumerable<TagAccountMapDBM>> GetAll()
 		{
-			return await database.Table<TagAccountMapDBM>().ToListAsync();
+			return await (await Connection()).Table<TagAccountMapDBM>().ToListAsync();
 		}
 
 		public async Task<IEnumerable<TagAccountMapDBM>> GetForAccountId(int accountId)
@@ -33,7 +27,7 @@ namespace data.database
 		{
 			await Task.WhenAll((await GetForAccountId(accountId)).Select(async t =>
 			{
-				await database.DeleteAsync(t);
+				await (await Connection()).DeleteAsync(t);
 			}));
 		}
 
@@ -41,7 +35,12 @@ namespace data.database
 		{
 			var dbObj = new TagAccountMapDBM { TagId = tag.Id.Value, AccountId = account.Id.Value };
 
-			await database.InsertAsync(dbObj);
+			await (await Connection()).InsertAsync(dbObj);
+		}
+
+		protected override Task<CreateTablesResult> Create()
+		{
+			return ConnectionWithoutCreate.CreateTableAsync<TagAccountMapDBM>();
 		}
 	}
 }

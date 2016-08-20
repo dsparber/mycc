@@ -16,6 +16,4 @@
 			Order="Primary"
 			Priority="1" />
 	</ContentPage.ToolbarItems>
-	<ContentPage.Content>
-	</ContentPage.Content>
 </ContentPage>

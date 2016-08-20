@@ -20,7 +20,7 @@ namespace data.repositories.exchangerate
 
 		readonly HttpClient client;
 
-		public BittrexExchangeRateRepository() : base(ExchangeRateRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY)
+		public BittrexExchangeRateRepository(string name) : base(ExchangeRateRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY, name)
 		{
 			client = new HttpClient();
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;
@@ -28,7 +28,7 @@ namespace data.repositories.exchangerate
 
 		public override async Task Fetch()
 		{
-			var currencyRepository = new BittrexCurrencyRepository();
+			var currencyRepository = new BittrexCurrencyRepository(null);
 			await currencyRepository.Fetch();
 
 			Elements = currencyRepository.Elements.Select(e => new ExchangeRate(Currency.BTC, e)).ToList();

@@ -4,6 +4,7 @@ using models;
 using SQLite;
 namespace data.database.models
 {
+	[Table("Currencies")]
 	public class CurrencyDBM : IEntityRepositoryIdDBM<Currency>
 	{
 		public CurrencyDBM() { }

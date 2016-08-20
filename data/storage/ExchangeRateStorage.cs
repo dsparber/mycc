@@ -26,11 +26,6 @@ namespace data.storage
 			return new ExchangeRateRepositoryDatabase();
 		}
 
-		protected override AbstractStorage<ExchangeRateRepositoryDBM, ExchangeRateRepository, ExchangeRateDBM, ExchangeRate> CreateInstance()
-		{
-			return new ExchangeRateStorage();
-		}
-
 		protected override async Task OnFirstLaunch()
 		{
 			await GetDatabase().AddRepository(new ExchangeRateRepositoryDBM { Type = ExchangeRateRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY });
@@ -41,6 +36,20 @@ namespace data.storage
 		protected override ExchangeRateRepository Resolve(ExchangeRateRepositoryDBM obj)
 		{
 			return ExchangeRateRepositoryFactory.create(obj);
+		}
+
+		static ExchangeRateStorage instance { get; set; }
+
+		public static ExchangeRateStorage Instance
+		{
+			get
+			{
+				if (instance == null)
+				{
+					instance = new ExchangeRateStorage();
+				}
+				return instance;
+			}
 		}
 	}
 }

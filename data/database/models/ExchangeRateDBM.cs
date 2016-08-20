@@ -5,6 +5,7 @@ using data.database.interfaces;
 
 namespace data.database.models
 {
+	[Table("ExchangeRates")]
 	public class ExchangeRateDBM : IEntityRepositoryIdDBM<ExchangeRate>
 	{
 		public ExchangeRateDBM() { }

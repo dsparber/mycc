@@ -10,11 +10,6 @@ namespace data.storage
 {
 	public class CurrencyStorage : AbstractStorage<CurrencyRepositoryDBM, CurrencyRepository, CurrencyDBM, Currency>
 	{
-		protected override AbstractStorage<CurrencyRepositoryDBM, CurrencyRepository, CurrencyDBM, Currency> CreateInstance()
-		{
-			return new CurrencyStorage();
-		}
-
 		protected override CurrencyRepository Resolve(CurrencyRepositoryDBM obj)
 		{
 			return CurrencyRepositoryFactory.create(obj);
@@ -30,6 +25,20 @@ namespace data.storage
 			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY });
 			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_BTCE_REPOSITORY });
 			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY });
+		}
+
+		static CurrencyStorage instance { get; set; }
+
+		public static CurrencyStorage Instance
+		{
+			get
+			{
+				if (instance == null)
+				{
+					instance = new CurrencyStorage();
+				}
+				return instance;
+			}
 		}
 	}
 }

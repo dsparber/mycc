@@ -2,7 +2,7 @@
 
 namespace data.database.models
 {
-	[Table("Repositories")]
+	[Table("AccountRepositories")]
 	public class AccountRepositoryDBM
 	{
 		public const int DB_TYPE_LOCAL_REPOSITORY = 1;

@@ -112,5 +112,53 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
+        
+        public static string Coins {
+            get {
+                return ResourceManager.GetString("Coins", resourceCulture);
+            }
+        }
+        
+        public static string Currency {
+            get {
+                return ResourceManager.GetString("Currency", resourceCulture);
+            }
+        }
+        
+        public static string Value {
+            get {
+                return ResourceManager.GetString("Value", resourceCulture);
+            }
+        }
+        
+        public static string CurrencyExample {
+            get {
+                return ResourceManager.GetString("CurrencyExample", resourceCulture);
+            }
+        }
+        
+        public static string ValueExample {
+            get {
+                return ResourceManager.GetString("ValueExample", resourceCulture);
+            }
+        }
+        
+        public static string Storage {
+            get {
+                return ResourceManager.GetString("Storage", resourceCulture);
+            }
+        }
+        
+        public static string NewStorage {
+            get {
+                return ResourceManager.GetString("NewStorage", resourceCulture);
+            }
+        }
+        
+        public static string DefaultStorage {
+            get {
+                return ResourceManager.GetString("DefaultStorage", resourceCulture);
+            }
+        }
     }
 }

@@ -15,15 +15,13 @@ namespace data.storage
 
 		protected abstract R Resolve(T obj);
 
-		protected abstract AbstractStorage<T, R, D, V> CreateInstance();
-
 		protected virtual Task OnFirstLaunch() { return Task.Factory.StartNew(() => { }); }
 
 		Task initialisation;
 
 		async Task initialise()
 		{
-			if (Settings.Get(Settings.KEY_FIRST_LAUNCH, false))
+			if (ApplicationSettings.FirstLaunch)
 			{
 				if (initialisation == null)
 				{
@@ -33,7 +31,6 @@ namespace data.storage
 				{
 					await initialisation;
 				}
-				Settings.Set(Settings.KEY_FIRST_LAUNCH, true);
 			}
 		}
 
@@ -44,9 +41,19 @@ namespace data.storage
 			return repos.Select(r => Resolve(r)).ToList();
 		}
 
+		public async Task<List<R>> RepositoriesOfType<A>()
+		{
+			return (await Repositories()).FindAll(r => r is A);
+		}
+
 		public async Task<List<V>> AllElements()
 		{
-			return (await Repositories()).SelectMany(v => v.Elements).ToList();
+			return (await Repositories()).SelectMany(r => r.Elements).ToList();
+		}
+
+		public async Task<List<V>> AllOfType<A>()
+		{
+			return (await AllElements()).FindAll(e => e is A);
 		}
 
 		public async Task Fetch()
@@ -58,20 +65,5 @@ namespace data.storage
 		{
 			await Task.WhenAll((await Repositories()).Select(x => x.FetchFast()));
 		}
-
-		AbstractStorage<T, R, D, V> instance { get; set; }
-
-		public AbstractStorage<T, R, D, V> Instance
-		{
-			get
-			{
-				if (instance == null)
-				{
-					instance = CreateInstance();
-				}
-				return instance;
-			}
-		}
 	}
 }
-

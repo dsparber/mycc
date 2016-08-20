@@ -5,7 +5,7 @@ namespace data.repositories.currency
 {
 	public class LocalCurrencyRepository : CurrencyRepository
 	{
-		public LocalCurrencyRepository() : base(CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY) {}
+		public LocalCurrencyRepository(string name) : base(CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY, name) {}
 
 		public override async Task Fetch()
 		{

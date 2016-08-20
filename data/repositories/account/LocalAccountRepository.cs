@@ -5,7 +5,7 @@ namespace data.repositories.account
 {
 	public class LocalAccountRepository : AccountRepository
 	{
-		public LocalAccountRepository() : base(AccountRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY) { }
+		public LocalAccountRepository(string name) : base(AccountRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY, name) { }
 
 		public override async Task Fetch()
 		{
