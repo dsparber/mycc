@@ -40,7 +40,7 @@ namespace data.repositories.currency
 				{
 					var name = (string)token[CURRENCY_LIST_RESULT_NAME];
 					var code = (string)token[CURRENCY_LIST_RESULT_CURRENCY];
-					var c = new Currency(name, code);
+					var c = new Currency(code, name);
 
 					Elements.Remove(c);
 					Elements.Add(c);

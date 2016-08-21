@@ -34,6 +34,7 @@ namespace data.repositories.general
 		{
 			var db = GetDatabase();
 			await db.Write(Elements, Id);
+			Elements = new List<V>(await db.GetAll(Id));
 		}
 
 		public async Task Add(V element) {

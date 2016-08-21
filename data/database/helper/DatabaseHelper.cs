@@ -6,36 +6,27 @@ using data.database.interfaces;
 
 namespace data.database.helper
 {
-	public class DatabaseHelper
+	public static class DatabaseHelper
 	{
-		DatabaseHelper(){}
-
-		public static async Task InsertOrUpdate<T, V>(AbstractEntityDatabase<T, V> database, T obj) where T : IEntityDBM<V>
+		public static async Task InsertOrUpdate<T, V>(AbstractEntityDatabase<T, V> database, IEnumerable<T> objs) where T : IEntityDBM<V>
 		{
-			var existingObjects = await database.GetAllDbObjects();
+			var existingDbObjects = await database.GetAllDbObjects();
 
-			var comparisonObj = await obj.Resolve();
-			var resolved = await Task.WhenAll(existingObjects.Select(async o => new Tuple<int, V>(o.Id, await o.Resolve())));
+			var existingObjectsIdMap = (await Task.WhenAll(existingDbObjects.Select(async o => new Tuple<T, V>(o, await o.Resolve())))).ToList();
+			var existingObjects = existingObjectsIdMap.Select(e => e.Item2);
 
-			var found = resolved.ToList().Find(r => r.Item2.Equals(comparisonObj));
+			var comparisonObjectsIdMap = (await Task.WhenAll(objs.Select(async o => new Tuple<T, V>(o, await o.Resolve())))).ToList();
+			var comparisonObjects = comparisonObjectsIdMap.Select(c => c.Item2);
 
-			T existingObject;
-			if (found != null)
-			{
-				existingObject = existingObjects.ToList().Find(o => o.Id == found.Item1);
-			}
-			else {
-				existingObject = default(T);
-			}
+			var objectsFound = comparisonObjects.ToList().FindAll(c => existingObjects.Contains(c));
+			var objectsNotFound = comparisonObjects.ToList().FindAll(c => !existingObjects.Contains(c));
 
-			if (!(EqualityComparer<T>.Default.Equals(existingObject, default(T))))
-			{
-				obj.Id = existingObject.Id;
-				await (await database.Connection()).UpdateAsync(obj);
-			}
-			else {
-				await (await database.Connection()).InsertAsync(obj);
-			}
+			var dbObjectsFound = objectsFound.Select(o => existingObjectsIdMap.Find(e => e.Item2.Equals(o)).Item1);
+			var dbObjectsNotFound = objectsNotFound.Select(o => comparisonObjectsIdMap.Find(e => e.Item2.Equals(o)).Item1);
+
+			var connection = await database.Connection();
+			await connection.InsertAllAsync(dbObjectsNotFound);
+			await connection.UpdateAllAsync(dbObjectsFound);
 		}
 	}
 }

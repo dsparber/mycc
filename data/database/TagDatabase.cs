@@ -24,12 +24,7 @@ namespace data.database
 
 		public override async Task Write(IEnumerable<Tag> data)
 		{
-			await Task.WhenAll(data.Select(async t =>
-			{
-				var dbObj = new TagDBM(t);
-				await DatabaseHelper.InsertOrUpdate(this, dbObj);
-				t.Id = dbObj.Id;
-			}));
+			await DatabaseHelper.InsertOrUpdate(this, data.Select(t => new TagDBM(t)));
 			await tagIdentifierDatabase.Write(data.Select(t => t.Identifier));
 		}
 

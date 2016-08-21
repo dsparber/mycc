@@ -55,5 +55,21 @@ namespace models
 		/// </summary>
 		/// <value>The tags.</value>
 		public List<Tag> Tags { get; set; }
+
+		public override bool Equals(object obj)
+		{
+			if (obj == null || !(obj is Account))
+			{
+				return false;
+			}
+			var a = (Account)obj;
+
+			return (Id.HasValue && a.Id.HasValue && Id.Value == a.Id.Value);
+		}
+
+		public override int GetHashCode()
+		{
+			return Id.GetHashCode();
+		}
 	}
 }

@@ -22,12 +22,7 @@ namespace data.database
 
 		public override async Task Write(IEnumerable<ExchangeRate> data, int repositoryId)
 		{
-			await Task.WhenAll(data.Select(async e =>
-			{
-				var dbObj = new ExchangeRateDBM(e, repositoryId);
-				await DatabaseHelper.InsertOrUpdate(this, dbObj);
-				e.Id = dbObj.Id;
-			}));
+			await DatabaseHelper.InsertOrUpdate(this, data.Select(e => new ExchangeRateDBM(e, repositoryId)));
 		}
 	}
 }

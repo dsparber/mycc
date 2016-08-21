@@ -10,6 +10,7 @@ namespace data.factories
 			switch (repositoryDBM.Type) 
 			{
 				case CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY: return new LocalCurrencyRepository(repositoryDBM.Name);
+				case CurrencyRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY: return new BittrexCurrencyRepository(repositoryDBM.Name);
 				default: return null;
 			}
 				

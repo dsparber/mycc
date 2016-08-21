@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using data.repositories.account;
+using data.repositories.currency;
 using data.storage;
 using models;
 using Xamarin.Forms;
@@ -25,13 +25,17 @@ namespace view
 			var value = ValueInput.Text;
 			var currency = CurrencyInput.Text;
 
-			var currencyObject = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Code.ToLower().Equals(currency.ToLower()));
+			// TODO Improve Fetching => e.g. on Startup
+			await CurrencyStorage.Instance.Fetch();
+			var currencyObject = await CurrencyStorage.Instance.GetByString(currency);
 			if (currencyObject == null)
 			{
-				currencyObject = new Currency(currency);
+				currencyObject = new Currency(currency.ToUpper());
+				await (await CurrencyStorage.Instance.Repositories()).Find(r => r is LocalCurrencyRepository).Add(currencyObject);
+				currencyObject = await CurrencyStorage.Instance.GetByString(currency);
 			}
 
-			var money = new Money(Decimal.Parse(value), currencyObject);
+			var money = new Money(decimal.Parse(value), currencyObject);
 			var account = new Account(name, money);
 			await (await AccountStorage.Instance.Repositories()).Find(r => r is LocalAccountRepository).Add(account);
 			await Navigation.PopModalAsync();

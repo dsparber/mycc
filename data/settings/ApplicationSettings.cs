@@ -3,16 +3,22 @@ namespace data.settings
 {
 	public static class ApplicationSettings
 	{
+		static bool? firstLaunch;
+
 		public static bool FirstLaunch
 		{
 			get
 			{
-				var firstLaunch = Settings.Get(Settings.KEY_FIRST_LAUNCH, true);
-				if (firstLaunch)
+				if (!firstLaunch.HasValue)
 				{
-					Settings.Set(Settings.KEY_FIRST_LAUNCH, false);
+					var persitedValue = Settings.Get(Settings.KEY_FIRST_LAUNCH, true);
+					if (persitedValue)
+					{
+						Settings.Set(Settings.KEY_FIRST_LAUNCH, false);
+					}
+					firstLaunch = persitedValue;
 				}
-				return firstLaunch;
+				return firstLaunch.Value;
 			}
 		}
 	}

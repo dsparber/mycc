@@ -21,7 +21,10 @@ namespace data.database.models
 
 		public CurrencyDBM(Currency currency, int repositoryId)
 		{
-			Id = currency.Id.Value;
+			if (currency.Id.HasValue)
+			{
+				Id = currency.Id.Value;
+			}
 			Name = currency.Name;
 			Code = currency.Code;
 			RepositoryId = repositoryId;

@@ -10,6 +10,7 @@ namespace data.storage
 {
 	public abstract class AbstractStorage<T, R, D, V> where R : AbstractRepository<D, V> where D : IEntityRepositoryIdDBM<V>
 	{
+		private IEnumerable<R> repositories;
 
 		public abstract AbstractRepositoryDatabase<T> GetDatabase();
 
@@ -36,9 +37,13 @@ namespace data.storage
 
 		public async Task<List<R>> Repositories()
 		{
-			await initialise();
-			var repos = await GetDatabase().GetRepositories();
-			return repos.Select(r => Resolve(r)).ToList();
+			if (repositories == null)
+			{
+				await initialise();
+				var repos = await GetDatabase().GetRepositories();
+				repositories = repos.Select(r => Resolve(r)).ToList();
+			}
+			return repositories.ToList();
 		}
 
 		public async Task<List<R>> RepositoriesOfType<A>()

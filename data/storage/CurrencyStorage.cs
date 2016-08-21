@@ -5,6 +5,7 @@ using data.repositories.currency;
 using data.database.models;
 using data.database.helper;
 using System.Threading.Tasks;
+using System;
 
 namespace data.storage
 {
@@ -23,7 +24,6 @@ namespace data.storage
 		protected override async Task OnFirstLaunch()
 		{
 			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY });
-			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_BTCE_REPOSITORY });
 			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY });
 		}
 
@@ -39,6 +39,11 @@ namespace data.storage
 				}
 				return instance;
 			}
+		}
+
+		public async Task<Currency> GetByString(string s)
+		{
+			return (await AllElements()).Find(c => string.Equals(s, c.Code, StringComparison.OrdinalIgnoreCase) || string.Equals(s, c.Name, StringComparison.OrdinalIgnoreCase));
 		}
 	}
 }
