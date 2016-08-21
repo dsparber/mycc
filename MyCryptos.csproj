@@ -32,8 +32,6 @@
   <ItemGroup>
     <Compile Include="MyCryptos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Old\Converters\NegateBooleanConverter.cs" />
-    <Compile Include="Old\Data\ExchangeRateCollection.cs" />
     <Compile Include="models\Account.cs" />
     <Compile Include="models\Currency.cs" />
     <Compile Include="models\ExchangeRate.cs" />
@@ -114,6 +112,7 @@
       <DependentUpon>InternationalisationResources.resx</DependentUpon>
     </Compile>
     <Compile Include="data\settings\ApplicationSettings.cs" />
+    <Compile Include="models\helper\ExchangeRateHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -161,9 +160,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Old\" />
-    <Folder Include="Old\Converters\" />
-    <Folder Include="Old\Data\" />
     <Folder Include="models\" />
     <Folder Include="data\" />
     <Folder Include="data\repositories\" />
@@ -180,6 +176,7 @@
     <Folder Include="data\repositories\general\" />
     <Folder Include="view\" />
     <Folder Include="resources\" />
+    <Folder Include="models\helper\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="view\CoinsView.xaml">

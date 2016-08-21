@@ -1,5 +1,6 @@
 ﻿using System;
 using models;
+using Newtonsoft.Json;
 
 namespace data.settings
 {
@@ -28,7 +29,9 @@ namespace data.settings
 		{
 			get
 			{
-				return Settings.Get(Settings.KEY_BASE_CURRENCY, Currency.BTC);
+				var json = Settings.Get(Settings.KEY_BASE_CURRENCY, JsonConvert.SerializeObject(Currency.BTC));
+				var currency = JsonConvert.DeserializeObject<Currency>(json);
+				return currency;
 			}
 		}
 	}

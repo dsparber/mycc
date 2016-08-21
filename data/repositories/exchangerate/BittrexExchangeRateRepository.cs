@@ -31,7 +31,8 @@ namespace data.repositories.exchangerate
 			var currencyRepository = new BittrexCurrencyRepository(null);
 			await currencyRepository.Fetch();
 
-			Elements = currencyRepository.Elements.Select(e => new ExchangeRate(Currency.BTC, e)).ToList();
+			var btc = currencyRepository.Elements.Find(c => c.Equals(Currency.BTC));
+			Elements = currencyRepository.Elements.Select(e => new ExchangeRate(btc, e)).ToList();
 			await WriteToDatabase();
 			LastFetch = DateTime.Now;
 		}
@@ -49,6 +50,8 @@ namespace data.repositories.exchangerate
 				var rate = 1 / (decimal)rateJson[RATE_KEY];
 				exchangeRate.Rate = rate;
 			}
+			Elements.Remove(exchangeRate);
+			Elements.Add(exchangeRate);
 
 			await WriteToDatabase();
 			LastExchangeRateFetch = DateTime.Now;

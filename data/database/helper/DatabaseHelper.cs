@@ -21,7 +21,12 @@ namespace data.database.helper
 			var objectsFound = comparisonObjects.ToList().FindAll(c => existingObjects.Contains(c));
 			var objectsNotFound = comparisonObjects.ToList().FindAll(c => !existingObjects.Contains(c));
 
-			var dbObjectsFound = objectsFound.Select(o => existingObjectsIdMap.Find(e => e.Item2.Equals(o)).Item1);
+			var dbObjectsFound = objectsFound.Select(o =>
+			{
+				var dbObj = comparisonObjectsIdMap.Find(e => e.Item2.Equals(o)).Item1;
+				dbObj.Id = existingObjectsIdMap.Find(e => e.Item2.Equals(o)).Item1.Id;
+				return dbObj;
+			});
 			var dbObjectsNotFound = objectsNotFound.Select(o => comparisonObjectsIdMap.Find(e => e.Item2.Equals(o)).Item1);
 
 			var connection = await database.Connection();

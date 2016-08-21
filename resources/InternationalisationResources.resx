@@ -71,7 +71,7 @@
 		<value>Create new storage</value>
 	</data>
 	<data name="DefaultStorage">
-		<value>Default storage</value>
+		<value>Local storage</value>
 	</data>
 	<data name="Label">
 		<value>Label</value>

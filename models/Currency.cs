@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 namespace models
 {
 	/// <summary>
@@ -12,6 +13,7 @@ namespace models
 		/// <param name="id">Unique identifier if the object</param>
 		/// <param name="code">Unique identifier if the currency</param>
 		/// <param name="name">Name of the currency</param>
+		[JsonConstructor]
 		public Currency(int? id, string code, string name)
 		{
 			Id = id;

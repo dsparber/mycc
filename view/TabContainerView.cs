@@ -43,29 +43,23 @@ namespace view
 			var currencyFastFetchTask = CurrencyStorage.Instance.FetchFast();
 			var exchangeRateFastFetchTask = ExchangeRateStorage.Instance.FetchFast();
 
-			var accountFetchTask = accountFastFetchTask.ContinueWith(async t => await AccountStorage.Instance.Fetch());
-			var currencyFetchTask = currencyFastFetchTask.ContinueWith(async t => await CurrencyStorage.Instance.Fetch());
-			var exchangeRateFetchTask = exchangeRateFastFetchTask.ContinueWith(async t =>
-			{
-				await ExchangeRateStorage.Instance.Fetch();
-				await await accountFetchTask;
-				var neededRates = (await AccountStorage.Instance.AllElements()).Select(a => new ExchangeRate(a.Money.Currency, ApplicationSettings.BaseCurrency)).Distinct();
-				await Task.WhenAll(neededRates.ToList().Select(r => ExchangeRateStorage.Instance.FetchExchangeRate(r)));
-			});
-
 			await Task.WhenAll(accountFastFetchTask, currencyFastFetchTask, exchangeRateFastFetchTask);
-			await UpdateViews();
+			await UpdateViews(true, false);
+
+			var accountFetchTask = AccountStorage.Instance.Fetch();
+			var currencyFetchTask = CurrencyStorage.Instance.Fetch();
+			var exchangeRateFetchTask =  ExchangeRateStorage.Instance.Fetch();
 
 			await Task.WhenAll(accountFetchTask, currencyFetchTask, exchangeRateFetchTask);
-			await UpdateViews();
+			await UpdateViews(false, true);
 		}
 
-		async Task UpdateViews()
+		async Task UpdateViews(bool fast, bool done)
 		{        
 			var coinsView = (CoinsView)((NavigationPage)Children.ToList().Find(c => c is NavigationPage &&  ((NavigationPage)c).CurrentPage is CoinsView)).CurrentPage;
 			var accountsView = (AccountsView)((NavigationPage)Children.ToList().Find(c => c is NavigationPage && ((NavigationPage)c).CurrentPage is AccountsView)).CurrentPage;
 
-			await coinsView.UpdateView();
+			await coinsView.UpdateView(fast, done);
 			await accountsView.UpdateView();
 		}
 	}

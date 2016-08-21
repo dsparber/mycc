@@ -76,7 +76,7 @@ namespace models
 		/// Gets the inverse exchange rate.
 		/// </summary>
 		/// <returns>The inverse exchange rate.</returns>
-		public ExchangeRate getInverse()
+		public ExchangeRate GetInverse()
 		{
 			ExchangeRate exchangeRate = new ExchangeRate(SecondaryCurrency, ReferenceCurrency);
 			if (Rate != null)
@@ -92,7 +92,7 @@ namespace models
 		/// <param name="currency">The specified currency.</param>
 		public bool Contains(Currency currency)
 		{
-			return ReferenceCurrency.Equals(currency) || SecondaryCurrency.Equals(currency);
+			return (ReferenceCurrency != null && ReferenceCurrency.Equals(currency)) || ( SecondaryCurrency != null && SecondaryCurrency.Equals(currency));
 		}
 
 		/// <summary>
@@ -107,7 +107,8 @@ namespace models
 
 			ExchangeRate r = (ExchangeRate)obj;
 
-			return r.ReferenceCurrency.Equals(ReferenceCurrency) && r.SecondaryCurrency.Equals(SecondaryCurrency);
+			return ((ReferenceCurrency == null && r.ReferenceCurrency == null) || (ReferenceCurrency != null && ReferenceCurrency.Equals(r.ReferenceCurrency))) 
+				&& ((SecondaryCurrency == null && r.SecondaryCurrency == null) || (SecondaryCurrency != null && SecondaryCurrency.Equals(r.SecondaryCurrency)));
 		}
 
 		/// <summary>

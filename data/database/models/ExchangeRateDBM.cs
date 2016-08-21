@@ -29,9 +29,18 @@ namespace data.database.models
 
 		public ExchangeRateDBM(ExchangeRate exchangeRate, int repositoryId)
 		{
-			Id = exchangeRate.Id.Value;
-			ReferenceCurrencyId = exchangeRate.ReferenceCurrency.Id.Value;
-			SecondaryCurrencyId = exchangeRate.SecondaryCurrency.Id.Value;
+			if (exchangeRate.Id.HasValue)
+			{
+				Id = exchangeRate.Id.Value;
+			}
+			if (exchangeRate.ReferenceCurrency != null && exchangeRate.ReferenceCurrency.Id.HasValue)
+			{
+				ReferenceCurrencyId = exchangeRate.ReferenceCurrency.Id.Value;
+			}
+			if (exchangeRate.SecondaryCurrency != null && exchangeRate.SecondaryCurrency.Id.HasValue)
+			{
+				SecondaryCurrencyId = exchangeRate.SecondaryCurrency.Id.Value;
+			}
 			Rate = exchangeRate.Rate;
 			RepositoryId = repositoryId;
 		}

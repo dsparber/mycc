@@ -16,7 +16,7 @@
 				BackgroundColor="#0080FF"
 				HeightRequest="150">
 				<Label
-					Text="1337,42 BTC"
+					x:Name="TotalMoneyLabel"
 					FontSize="36"
 					FontAttributes="Bold"
 					HorizontalOptions="CenterAndExpand"
@@ -28,6 +28,7 @@
 				<ActivityIndicator
 					Scale="1.5"
 					Color="White"
+					x:Name="LoadingIndicator"
 					IsVisible="false"
 					IsRunning="false"
 					VerticalOptions="CenterAndExpand"

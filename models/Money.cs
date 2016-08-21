@@ -10,7 +10,7 @@ namespace models
 	{
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Models.Money"/> class.
+		/// Initializes a new instance of the <see cref="T:Money"/> class.
 		/// </summary>
 		/// <param name="amount">Units of the currency for initialisation</param>
 		/// <param name="currency">Desired currency</param>
@@ -21,7 +21,7 @@ namespace models
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Models.Money"/> class. The amount will be 0
+		/// Initializes a new instance of the <see cref="T:Money"/> class. The amount will be 0
 		/// </summary>
 		/// <param name="currency">Desired currency</param>
 		public Money(Currency currency) : this(0, currency) { }
@@ -43,15 +43,15 @@ namespace models
 		/// <returns>Money object as string</returns>
 		public override string ToString()
 		{
-			return String.Format("{0:#,0.##} {1}", Amount, Currency.Code);
+			return string.Format("{0:#,0.##} {1}", Amount, Currency != null ? Currency.Code : "");
 		}
 
 		/// <summary>
-		/// Adds a <see cref="Models.Money"/> to a <see cref="Models.Money"/>, yielding a new <see cref="T:Models.Money"/>.
+		/// Adds a <see cref="Money"/> to a <see cref="Money"/>, yielding a new <see cref="T:Money"/>.
 		/// </summary>
-		/// <param name="m1">The first <see cref="Models.Money"/> to add.</param>
-		/// <param name="m2">The second <see cref="Models.Money"/> to add.</param>
-		/// <returns>The <see cref="T:Models.Money"/> that is the sum of the values of <c>m1</c> and <c>m2</c>.</returns>
+		/// <param name="m1">The first <see cref="Money"/> to add.</param>
+		/// <param name="m2">The second <see cref="Money"/> to add.</param>
+		/// <returns>The <see cref="T:Money"/> that is the sum of the values of <c>m1</c> and <c>m2</c>.</returns>
 		public static Money operator +(Money m1, Money m2)
 		{
 			checkForCurrencyMissmatch(m1, m2);
@@ -59,11 +59,11 @@ namespace models
 		}
 
 		/// <summary>
-		/// Subtracts a <see cref="Models.Money"/> from a <see cref="Models.Money"/>, yielding a new <see cref="T:Models.Money"/>.
+		/// Subtracts a <see cref="Money"/> from a <see cref="Money"/>, yielding a new <see cref="T:Money"/>.
 		/// </summary>
-		/// <param name="m1">The <see cref="Models.Money"/> to subtract from (the minuend).</param>
-		/// <param name="m2">The <see cref="Models.Money"/> to subtract (the subtrahend).</param>
-		/// <returns>The <see cref="T:Models.Money"/> that is the <c>m1</c> minus <c>m2</c>.</returns>
+		/// <param name="m1">The <see cref="Money"/> to subtract from (the minuend).</param>
+		/// <param name="m2">The <see cref="Money"/> to subtract (the subtrahend).</param>
+		/// <returns>The <see cref="T:Money"/> that is the <c>m1</c> minus <c>m2</c>.</returns>
 		public static Money operator -(Money m1, Money m2)
 		{
 			checkForCurrencyMissmatch(m1, m2);
@@ -71,11 +71,11 @@ namespace models
 		}
 
 		/// <summary>
-		/// Computes the product of <c>m1</c> and <c>m2</c>, yielding a new <see cref="T:Models.Money"/>.
+		/// Computes the product of <c>m1</c> and <c>m2</c>, yielding a new <see cref="T:Money"/>.
 		/// </summary>
-		/// <param name="m1">The <see cref="Models.Money"/> to multiply.</param>
-		/// <param name="m2">The <see cref="Models.Money"/> to multiply.</param>
-		/// <returns>The <see cref="T:Models.Money"/> that is the <c>m1</c> * <c>m2</c>.</returns>
+		/// <param name="m1">The <see cref="Money"/> to multiply.</param>
+		/// <param name="m2">The <see cref="Money"/> to multiply.</param>
+		/// <returns>The <see cref="T:Money"/> that is the <c>m1</c> * <c>m2</c>.</returns>
 		public static Money operator *(Money m1, Money m2)
 		{
 			checkForCurrencyMissmatch(m1, m2);
@@ -83,11 +83,11 @@ namespace models
 		}
 
 		/// <summary>
-		/// Computes the division of <c>m1</c> and <c>m2</c>, yielding a new <see cref="T:Models.Money"/>.
+		/// Computes the division of <c>m1</c> and <c>m2</c>, yielding a new <see cref="T:Money"/>.
 		/// </summary>
-		/// <param name="m1">The <see cref="Models.Money"/> to divide (the divident).</param>
-		/// <param name="m2">The <see cref="Models.Money"/> to divide (the divisor).</param>
-		/// <returns>The <see cref="T:Models.Money"/> that is the <c>m1</c> / <c>m2</c>.</returns>
+		/// <param name="m1">The <see cref="Money"/> to divide (the divident).</param>
+		/// <param name="m2">The <see cref="Money"/> to divide (the divisor).</param>
+		/// <returns>The <see cref="T:Money"/> that is the <c>m1</c> / <c>m2</c>.</returns>
 		public static Money operator /(Money m1, Money m2)
 		{
 			checkForCurrencyMissmatch(m1, m2);
@@ -101,8 +101,10 @@ namespace models
 		/// <param name="m2">The second money instance</param>
 		private static void checkForCurrencyMissmatch(Money m1, Money m2)
 		{
-			if (m1.Currency != m2.Currency)
+			if (!m1.Currency.Equals(m2.Currency))
+			{
 				throw new InvalidOperationException("Currency missmatch - This operation cannot be performed on money instances with different currencies");
+			}
 		}
 	}
 }

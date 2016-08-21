@@ -30,9 +30,11 @@ namespace view
 
 		public async Task UpdateView()
 		{
+			var repos = await AccountStorage.Instance.Repositories();
+
 			AccountsTable.Root.Clear();
 
-			foreach (var r in await AccountStorage.Instance.Repositories())
+			foreach (var r in repos)
 			{
 				var section = new TableSection { Title = r.Name };
 

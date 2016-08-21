@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using data.settings;
 using data.storage;
 using models;
 using MyCryptos.resources;
@@ -29,9 +30,14 @@ namespace view
 			}
 		}
 
-		public async Task UpdateView()
+		public async Task UpdateView(bool fast, bool done)
 		{
-			CoinsTable.Root.Clear();
+			if (!done)
+			{
+				TotalMoneyLabel.IsVisible = false;
+				LoadingIndicator.IsVisible = true;
+				LoadingIndicator.IsRunning = true;
+			}
 
 			var money = (await AccountStorage.Instance.AllElements()).Select(a => a.Money);
 			var groups = money.GroupBy(a => a.Currency);
@@ -39,12 +45,33 @@ namespace view
 
 			var section = new TableSection();
 
+			var moneySum = new Money(0, ApplicationSettings.BaseCurrency);
+
 			foreach (var c in coins)
 			{
-				section.Add(new TextCell { Text = c.ToString()});
+				var textCell = new TextCell { Text = c.ToString() };
+
+				var rate = await ExchangeRateStorage.Instance.GetRate(c.Currency, ApplicationSettings.BaseCurrency, fast);
+
+				if (rate != null && rate.Rate.HasValue)
+				{
+					var mRef = new Money(c.Amount * rate.Rate.Value, ApplicationSettings.BaseCurrency);
+					moneySum += mRef;
+					textCell.Detail = mRef.ToString();
+				}
+				section.Add(textCell);
 			}
 
+			CoinsTable.Root.Clear();
 			CoinsTable.Root.Add(section);
+			TotalMoneyLabel.Text = moneySum.ToString();
+
+			if (done)
+			{
+				LoadingIndicator.IsVisible = false;
+				LoadingIndicator.IsRunning = false;
+				TotalMoneyLabel.IsVisible = true;
+			}
 		}
 	}
 }
