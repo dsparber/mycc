@@ -1,11 +1,16 @@
 ﻿using MyCryptos.resources;
 using Xamarin.Forms;
 using System;
+using System.Linq;
+using data.storage;
+using System.Threading.Tasks;
+using models;
+using data.settings;
 
 namespace view
 {
 	public class TabContainerView : TabbedPage
-	{
+	{ 
 		public TabContainerView()
 		{
 			Title = InternationalisationResources.AppName;
@@ -28,6 +33,40 @@ namespace view
 			}
 
 			CurrentPage = coinPage;
+		}
+
+		protected override async void OnAppearing()
+		{
+			base.OnAppearing();
+
+			var accountFastFetchTask = AccountStorage.Instance.FetchFast();
+			var currencyFastFetchTask = CurrencyStorage.Instance.FetchFast();
+			var exchangeRateFastFetchTask = ExchangeRateStorage.Instance.FetchFast();
+
+			var accountFetchTask = accountFastFetchTask.ContinueWith(async t => await AccountStorage.Instance.Fetch());
+			var currencyFetchTask = currencyFastFetchTask.ContinueWith(async t => await CurrencyStorage.Instance.Fetch());
+			var exchangeRateFetchTask = exchangeRateFastFetchTask.ContinueWith(async t =>
+			{
+				await ExchangeRateStorage.Instance.Fetch();
+				await await accountFetchTask;
+				var neededRates = (await AccountStorage.Instance.AllElements()).Select(a => new ExchangeRate(a.Money.Currency, ApplicationSettings.BaseCurrency)).Distinct();
+				await Task.WhenAll(neededRates.ToList().Select(r => ExchangeRateStorage.Instance.FetchExchangeRate(r)));
+			});
+
+			await Task.WhenAll(accountFastFetchTask, currencyFastFetchTask, exchangeRateFastFetchTask);
+			await UpdateViews();
+
+			await Task.WhenAll(accountFetchTask, currencyFetchTask, exchangeRateFetchTask);
+			await UpdateViews();
+		}
+
+		async Task UpdateViews()
+		{        
+			var coinsView = (CoinsView)((NavigationPage)Children.ToList().Find(c => c is NavigationPage &&  ((NavigationPage)c).CurrentPage is CoinsView)).CurrentPage;
+			var accountsView = (AccountsView)((NavigationPage)Children.ToList().Find(c => c is NavigationPage && ((NavigationPage)c).CurrentPage is AccountsView)).CurrentPage;
+
+			await coinsView.UpdateView();
+			await accountsView.UpdateView();
 		}
 	}
 }

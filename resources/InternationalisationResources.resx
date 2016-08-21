@@ -79,4 +79,22 @@
 	<data name="LabelExample">
 		<value>e.g. Savings</value>
 	</data>
+	<data name="Accounts">
+		<value>Accounts</value>
+	</data>
+	<data name="Account">
+		<value>Account</value>
+	</data>
+	<data name="NoAccounts">
+		<value>No account</value>
+	</data>
+	<data name="NoSources">
+		<value>No sources</value>
+	</data>
+	<data name="Sources">
+		<value>Sources</value>
+	</data>
+	<data name="Source">
+		<value>Source</value>
+	</data>
 </root>

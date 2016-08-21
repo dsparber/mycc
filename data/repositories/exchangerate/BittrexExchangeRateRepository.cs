@@ -33,6 +33,7 @@ namespace data.repositories.exchangerate
 
 			Elements = currencyRepository.Elements.Select(e => new ExchangeRate(Currency.BTC, e)).ToList();
 			await WriteToDatabase();
+			LastFetch = DateTime.Now;
 		}
 
 		public override async Task FetchExchangeRate(ExchangeRate exchangeRate)
@@ -50,6 +51,7 @@ namespace data.repositories.exchangerate
 			}
 
 			await WriteToDatabase();
+			LastExchangeRateFetch = DateTime.Now;
 		}
 
 		static string ToUrl(ExchangeRate exchangeRate)

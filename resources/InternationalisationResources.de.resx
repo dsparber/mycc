@@ -16,67 +16,110 @@
 		name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="CoinsTitle">
+	<data
+		name="CoinsTitle">
 		<value>Coins</value>
 	</data>
-	<data name="AccountsTitle">
+	<data
+		name="AccountsTitle">
 		<value>Konten</value>
 	</data>
-	<data name="SettingsTitle">
+	<data
+		name="SettingsTitle">
 		<value>Einstellungen</value>
 	</data>
-	<data name="TagsTitle">
+	<data
+		name="TagsTitle">
 		<value>Tags</value>
 	</data>
-	<data name="AddCoinTitle">
+	<data
+		name="AddCoinTitle">
 		<value>Coin hinzufügen</value>
 	</data>
-	<data name="Cancel">
+	<data
+		name="Cancel">
 		<value>Abbrechen</value>
 	</data>
-	<data name="Save">
+	<data
+		name="Save">
 		<value>Speichern</value>
 	</data>
-	<data name="Add">
+	<data
+		name="Add">
 		<value>Neu</value>
 	</data>
-	<data name="AddAccountTitle">
+	<data
+		name="AddAccountTitle">
 		<value>Konto hinzufügen</value>
 	</data>
-	<data name="AppName">
+	<data
+		name="AppName">
 		<value>MyCryptos</value>
 	</data>
-	<data name="Settings">
+	<data
+		name="Settings">
 		<value>Einstellungen</value>
 	</data>
-	<data name="Coins">
+	<data
+		name="Coins">
 		<value>Geld</value>
 	</data>
-	<data name="Currency">
+	<data
+		name="Currency">
 		<value>Währung</value>
 	</data>
-	<data name="Value">
+	<data
+		name="Value">
 		<value>Betrag</value>
 	</data>
-	<data name="CurrencyExample">
+	<data
+		name="CurrencyExample">
 		<value>z.B. BTC</value>
 	</data>
-	<data name="ValueExample">
+	<data
+		name="ValueExample">
 		<value>z.B. 10</value>
 	</data>
-	<data name="Storage">
+	<data
+		name="Storage">
 		<value>Speicher</value>
 	</data>
-	<data name="NewStorage">
+	<data
+		name="NewStorage">
 		<value>Neuen Speicher erzeugen</value>
 	</data>
-	<data name="DefaultStorage">
+	<data
+		name="DefaultStorage">
 		<value>Standardspeicher</value>
 	</data>
-	<data name="Label">
+	<data
+		name="Label">
 		<value>Bezeichnung</value>
 	</data>
-	<data name="LabelExample">
+	<data
+		name="LabelExample">
 		<value>z.B. Ersparnisse</value>
+	</data>
+	<data
+		name="Accounts">
+		<value>Konten</value>
+	</data>
+	<data
+		name="Account">
+		<value>Konto</value>
+	</data>
+	<data name="NoAccounts">
+		<value>Keine Konten</value>
+	</data>
+	<data name="NoSources">
+		<value>Keine Quellen</value>
+	</data>
+	<data
+		name="Sources">
+		<value>Quellen</value>
+	</data>
+	<data
+		name="Source">
+		<value>Quelle</value>
 	</data>
 </root>

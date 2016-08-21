@@ -1,4 +1,6 @@
 ﻿using System;
+using models;
+
 namespace data.settings
 {
 	public static class ApplicationSettings
@@ -19,6 +21,14 @@ namespace data.settings
 					firstLaunch = persitedValue;
 				}
 				return firstLaunch.Value;
+			}
+		}
+
+		public static Currency BaseCurrency
+		{
+			get
+			{
+				return Settings.Get(Settings.KEY_BASE_CURRENCY, Currency.BTC);
 			}
 		}
 	}

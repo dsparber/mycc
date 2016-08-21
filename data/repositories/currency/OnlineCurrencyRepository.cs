@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace data.repositories.currency
 {
@@ -9,6 +10,7 @@ namespace data.repositories.currency
 		public override async Task FetchFast()
 		{
 			await FetchFromDatabase();
+			LastFastFetch = DateTime.Now;
 		}
 	}
 }

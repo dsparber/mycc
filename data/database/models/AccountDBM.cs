@@ -24,7 +24,7 @@ namespace data.database.models
 		public async Task<Account> Resolve()
 		{
 			var db = new CurrencyDatabase();
-			return new Account(Id, Name, new Money(MoneyAmount, await db.Get(Id)));  
+			return new Account(Id, Name, new Money(MoneyAmount, await db.Get(CurrencyId)));  
 		}
 
 		public AccountDBM(Account account, int repositoryId)

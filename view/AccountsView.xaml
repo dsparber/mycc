@@ -11,5 +11,40 @@
 			Clicked="AddAccount" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
+		<StackLayout>
+			<RelativeLayout
+				BackgroundColor="#0080FF"
+				HeightRequest="150">
+				<StackLayout
+					RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
+					RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}"
+					HorizontalOptions="CenterAndExpand"
+					VerticalOptions="CenterAndExpand">
+					<Label
+						x:Name="AccountsLabel"
+						FontSize="36"
+						FontAttributes="Bold"
+						HorizontalTextAlignment="Center"
+						TextColor="White" />
+					<Label
+						x:Name="SourcesLabel"
+						FontSize="18"
+						HorizontalTextAlignment="Center"
+						TextColor="White" />
+				</StackLayout>
+				<ActivityIndicator
+					Scale="1.5"
+					Color="White"
+					IsVisible="false"
+					IsRunning="false"
+					VerticalOptions="CenterAndExpand"
+					HorizontalOptions="CenterAndExpand"
+					RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
+					RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" />
+			</RelativeLayout>
+			<TableView
+				Intent="Data"
+				x:Name="AccountsTable" />
+		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using data.database.helper;
 using data.database.interfaces;
@@ -7,6 +8,9 @@ namespace data.repositories.general
 {
 	public abstract class AbstractRepository<T, V> where T : IEntityRepositoryIdDBM<V>
 	{
+		public DateTime LastFastFetch{ get; protected set; }
+		public DateTime LastFetch { get; protected set; }
+
 		public List<V> Elements;
 		public string Name;
 		public int Id; 

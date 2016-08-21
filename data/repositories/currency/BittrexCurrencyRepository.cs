@@ -47,6 +47,7 @@ namespace data.repositories.currency
 				}
 			}
 			await WriteToDatabase();
+			LastFetch = DateTime.Now;
 		}
 	}
 }

@@ -10,6 +10,8 @@ namespace data.factories
 			switch (repositoryDBM.Type) 
 			{
 				case ExchangeRateRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY: return new LocalExchangeRateRepository(repositoryDBM.Name);
+				case ExchangeRateRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY: return new BittrexExchangeRateRepository(repositoryDBM.Name);
+				case ExchangeRateRepositoryDBM.DB_TYPE_BTCE_REPOSITORY: return new BtceExchangeRateRepository(repositoryDBM.Name);
 				default: return null;
 			}
 				

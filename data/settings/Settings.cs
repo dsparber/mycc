@@ -3,7 +3,7 @@ using Plugin.Settings.Abstractions;
 
 namespace data.settings
 {
-	public class Settings
+	public static class Settings
 	{
 		public const string KEY_BASE_CURRENCY = "currency";
 

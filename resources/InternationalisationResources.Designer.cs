@@ -172,5 +172,41 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("LabelExample", resourceCulture);
             }
         }
+        
+        public static string Accounts {
+            get {
+                return ResourceManager.GetString("Accounts", resourceCulture);
+            }
+        }
+        
+        public static string Account {
+            get {
+                return ResourceManager.GetString("Account", resourceCulture);
+            }
+        }
+        
+        public static string NoAccounts {
+            get {
+                return ResourceManager.GetString("NoAccounts", resourceCulture);
+            }
+        }
+        
+        public static string NoSources {
+            get {
+                return ResourceManager.GetString("NoSources", resourceCulture);
+            }
+        }
+        
+        public static string Sources {
+            get {
+                return ResourceManager.GetString("Sources", resourceCulture);
+            }
+        }
+        
+        public static string Source {
+            get {
+                return ResourceManager.GetString("Source", resourceCulture);
+            }
+        }
     }
 }

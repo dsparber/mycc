@@ -35,15 +35,9 @@
 					RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
 					RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" />
 			</RelativeLayout>
-			<ListView>
-				<ListView.ItemTemplate>
-					<DataTemplate>
-						<TextCell
-							Text="XY"
-							Detail="Z" />
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
+			<TableView
+				Intent="Data"
+				x:Name="CoinsTable" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
