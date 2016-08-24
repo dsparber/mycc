@@ -208,5 +208,11 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("Source", resourceCulture);
             }
         }
+        
+        public static string Refreshing {
+            get {
+                return ResourceManager.GetString("Refreshing", resourceCulture);
+            }
+        }
     }
 }

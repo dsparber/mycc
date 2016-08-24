@@ -97,4 +97,7 @@
 	<data name="Source">
 		<value>Source</value>
 	</data>
+	<data name="Refreshing">
+		<value>Refreshing</value>
+	</data>
 </root>

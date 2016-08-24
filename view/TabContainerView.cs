@@ -6,6 +6,7 @@ using data.storage;
 using System.Threading.Tasks;
 using models;
 using data.settings;
+using tasks;
 
 namespace view
 {
@@ -39,18 +40,14 @@ namespace view
 		{
 			base.OnAppearing();
 
-			var accountFastFetchTask = AccountStorage.Instance.FetchFast();
-			var currencyFastFetchTask = CurrencyStorage.Instance.FetchFast();
-			var exchangeRateFastFetchTask = ExchangeRateStorage.Instance.FetchFast();
+			var appTasks = AppTasks.Instance;
 
-			await Task.WhenAll(accountFastFetchTask, currencyFastFetchTask, exchangeRateFastFetchTask);
+			appTasks.StartFastFetchTask();
+			await appTasks.FastFetchTask;
+			appTasks.StartFetchTask();
 			await UpdateViews(true, false);
 
-			var accountFetchTask = AccountStorage.Instance.Fetch();
-			var currencyFetchTask = CurrencyStorage.Instance.Fetch();
-			var exchangeRateFetchTask =  ExchangeRateStorage.Instance.Fetch();
-
-			await Task.WhenAll(accountFetchTask, currencyFetchTask, exchangeRateFetchTask);
+			await appTasks.FetchTask;
 			await UpdateViews(false, true);
 		}
 

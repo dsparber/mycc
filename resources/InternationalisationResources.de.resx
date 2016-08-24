@@ -122,4 +122,7 @@
 		name="Source">
 		<value>Quelle</value>
 	</data>
+	<data name="Refreshing">
+		<value>Aktualisieren</value>
+	</data>
 </root>

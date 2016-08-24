@@ -76,6 +76,7 @@
     <MtouchProfiling>true</MtouchProfiling>
     <IpaPackageName>
     </IpaPackageName>
+    <CodesignProvision>b903e9b3-43b7-46e7-a9a7-ed53a08b7be6</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

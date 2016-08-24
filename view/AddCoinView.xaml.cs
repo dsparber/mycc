@@ -3,6 +3,7 @@ using data.repositories.account;
 using data.repositories.currency;
 using data.storage;
 using models;
+using tasks;
 using Xamarin.Forms;
 
 namespace view
@@ -25,8 +26,11 @@ namespace view
 			var value = ValueInput.Text;
 			var currency = CurrencyInput.Text;
 
-			// TODO Improve Fetching => e.g. on Startup
-			await CurrencyStorage.Instance.Fetch();
+			if (!AppTasks.Instance.IsFetchTaskFinished)
+			{
+				await AppTasks.Instance.FetchTask;
+			}
+
 			var currencyObject = await CurrencyStorage.Instance.GetByString(currency);
 			if (currencyObject == null)
 			{

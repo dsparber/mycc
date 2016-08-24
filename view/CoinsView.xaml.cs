@@ -34,8 +34,7 @@ namespace view
 		{
 			if (!done)
 			{
-				TotalMoneyLabel.IsVisible = false;
-				LoadingIndicator.IsVisible = true;
+				LoadingPanel.IsVisible = true;
 				LoadingIndicator.IsRunning = true;
 			}
 
@@ -68,9 +67,8 @@ namespace view
 
 			if (done)
 			{
-				LoadingIndicator.IsVisible = false;
+				LoadingPanel.IsVisible = false;
 				LoadingIndicator.IsRunning = false;
-				TotalMoneyLabel.IsVisible = true;
 			}
 		}
 	}

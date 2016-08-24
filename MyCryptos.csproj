@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="data\settings\ApplicationSettings.cs" />
     <Compile Include="models\helper\ExchangeRateHelper.cs" />
+    <Compile Include="tasks\AppTasks.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -177,6 +178,7 @@
     <Folder Include="view\" />
     <Folder Include="resources\" />
     <Folder Include="models\helper\" />
+    <Folder Include="tasks\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="view\CoinsView.xaml">

@@ -12,30 +12,32 @@
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
-			<RelativeLayout
+			<ContentView
 				BackgroundColor="#0080FF"
-				HeightRequest="150">
-				<Label
-					x:Name="TotalMoneyLabel"
-					FontSize="36"
-					FontAttributes="Bold"
-					HorizontalOptions="CenterAndExpand"
-					VerticalOptions="CenterAndExpand"
-					HorizontalTextAlignment="Center"
-					TextColor="White"
-					RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
-					RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" />
-				<ActivityIndicator
-					Scale="1.5"
-					Color="White"
-					x:Name="LoadingIndicator"
-					IsVisible="false"
-					IsRunning="false"
-					VerticalOptions="CenterAndExpand"
-					HorizontalOptions="CenterAndExpand"
-					RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
-					RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" />
-			</RelativeLayout>
+				HeightRequest="240">
+				<StackLayout
+					VerticalOptions="CenterAndExpand">
+					<Label
+						x:Name="TotalMoneyLabel"
+						FontSize="36"
+						FontAttributes="Bold"
+						HorizontalTextAlignment="Center"
+						TextColor="White" />
+					<StackLayout
+						x:Name="LoadingPanel"
+						Orientation="Horizontal"
+						HorizontalOptions="Center">
+						<Label
+							Text="{i18n:Translate Refreshing}"
+							TextColor="White">
+						</Label>
+						<ActivityIndicator
+							Color="White"
+							x:Name="LoadingIndicator"
+							IsRunning="true" />
+					</StackLayout>
+				</StackLayout>
+			</ContentView>
 			<TableView
 				Intent="Data"
 				x:Name="CoinsTable" />
