@@ -1,12 +1,8 @@
 ﻿using MyCryptos.resources;
 using Xamarin.Forms;
-using System;
-using System.Linq;
-using data.storage;
-using System.Threading.Tasks;
-using models;
-using data.settings;
 using tasks;
+using enums;
+using message;
 
 namespace view
 {
@@ -42,22 +38,33 @@ namespace view
 
 			var appTasks = AppTasks.Instance;
 
-			appTasks.StartFastFetchTask();
-			await appTasks.FastFetchTask;
-			appTasks.StartFetchTask();
-			await UpdateViews(true, false);
+			if (!appTasks.IsFastFetchTaskFinished)
+			{
+				if (!appTasks.IsFastFetchTaskStarted)
+				{
+					appTasks.StartFastFetchTask();
+				}
+				await appTasks.FastFetchTask;
+				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateCoinsView);
+				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateAccountsView);
+			}
+			if (!appTasks.IsFetchTaskFinished)
+			{
+				if (!appTasks.IsFetchTaskStarted)
+				{
+					appTasks.StartFetchTask();
+				}
+				await appTasks.FetchTask;
+				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.UpdateCoinsView);
+				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateAccountsView);
+			}
 
-			await appTasks.FetchTask;
-			await UpdateViews(false, true);
-		}
-
-		async Task UpdateViews(bool fast, bool done)
-		{        
-			var coinsView = (CoinsView)((NavigationPage)Children.ToList().Find(c => c is NavigationPage &&  ((NavigationPage)c).CurrentPage is CoinsView)).CurrentPage;
-			var accountsView = (AccountsView)((NavigationPage)Children.ToList().Find(c => c is NavigationPage && ((NavigationPage)c).CurrentPage is AccountsView)).CurrentPage;
-
-			await coinsView.UpdateView(fast, done);
-			await accountsView.UpdateView();
+			if (appTasks.IsAddAccountTaskStarted)
+			{
+				await appTasks.AddAccountTaskInstance;
+				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.MEDIUM), MessageConstants.UpdateCoinsView);
+				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateAccountsView);
+			}
 		}
 	}
 }

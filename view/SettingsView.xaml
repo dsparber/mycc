@@ -6,5 +6,16 @@
 	x:Class="view.SettingsView"
 	Title="{i18n:Translate SettingsTitle}">
 	<ContentPage.Content>
+		<TableView
+			Intent="Settings">
+			<TableSection
+				Title="{i18n:Translate ReferenceCurrency}">
+				<EntryCell
+					x:Name="ReferenceCurrency"
+					Completed="ReferenceCurrencyEntered"
+					Label="{i18n:Translate Currency}"
+					Placeholder="{i18n:Translate CurrencyExample}" />
+			</TableSection>
+		</TableView>
 	</ContentPage.Content>
 </ContentPage>

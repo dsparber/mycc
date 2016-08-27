@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using data.storage;
+using enums;
+using message;
 using MyCryptos.resources;
 using Xamarin.Forms;
 
@@ -12,6 +14,11 @@ namespace view
 		public AccountsView()
 		{
 			InitializeComponent();
+
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.UpdateAccountsView, async (speed) =>
+			{
+				await UpdateView();
+			});
 		}
 
 		public void AddAccount(object sender, EventArgs e)
@@ -58,10 +65,10 @@ namespace view
 			}
 			else if (accounts == 1)
 			{
-				AccountsLabel.Text = String.Format("{0} {1}", accounts, InternationalisationResources.Account);
+				AccountsLabel.Text = string.Format("{0} {1}", accounts, InternationalisationResources.Account);
 			}
 			else {
-				AccountsLabel.Text = String.Format("{0} {1}", accounts, InternationalisationResources.Accounts);
+				AccountsLabel.Text = string.Format("{0} {1}", accounts, InternationalisationResources.Accounts);
 			}
 
 			if (sources == 0)
@@ -70,10 +77,10 @@ namespace view
 			}
 			else if (sources == 1)
 			{
-				SourcesLabel.Text = String.Format("{0} {1}", sources, InternationalisationResources.Source);
+				SourcesLabel.Text = string.Format("{0} {1}", sources, InternationalisationResources.Source);
 			}
 			else {
-				SourcesLabel.Text = String.Format("{0} {1}", sources, InternationalisationResources.Sources);
+				SourcesLabel.Text = string.Format("{0} {1}", sources, InternationalisationResources.Sources);
 			}
 		}
 	}

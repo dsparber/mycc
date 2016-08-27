@@ -125,4 +125,7 @@
 	<data name="Refreshing">
 		<value>Aktualisieren</value>
 	</data>
+	<data name="ReferenceCurrency">
+		<value>Referenz Währung</value>
+	</data>
 </root>

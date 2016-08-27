@@ -6,6 +6,7 @@ using data.database.helper;
 using data.database.models;
 using data.factories;
 using data.repositories.exchangerate;
+using enums;
 using models;
 using models.helper;
 
@@ -62,14 +63,16 @@ namespace data.storage
 		}
 
 		// Helper
-		public async Task<ExchangeRate> GetRate(Currency referenceCurrency, Currency secondaryCurrency, bool fast)
+		public async Task<ExchangeRate> GetRate(Currency referenceCurrency, Currency secondaryCurrency, FetchSpeedEnum speed)
 		{
 			if (referenceCurrency == null || secondaryCurrency == null)
 			{
 				return null;
 			}
 
-			ExchangeRate rate = await GetDirectRate(referenceCurrency, secondaryCurrency, fast);
+			var allElements = await AllElements();
+
+			ExchangeRate rate = await GetDirectRate(referenceCurrency, secondaryCurrency, allElements, speed);
 
 			if (rate != null)
 			{
@@ -80,7 +83,7 @@ namespace data.storage
 			var referenceCurrencyRates = new List<ExchangeRate>();
 			var secondaryCurrencyRates = new List<ExchangeRate>();
 
-			foreach (ExchangeRate exchangeRate in await AllElements())
+			foreach (ExchangeRate exchangeRate in allElements)
 			{
 				if (exchangeRate.Contains(referenceCurrency))
 				{
@@ -98,9 +101,12 @@ namespace data.storage
 				{
 					if (ExchangeRateHelper.OneMatch(r1, r2))
 					{
-						if (!fast)
+						if (speed == FetchSpeedEnum.SLOW || (speed == FetchSpeedEnum.MEDIUM && !r1.Rate.HasValue))
 						{
 							await FetchExchangeRate(r1);
+						}
+						if (speed == FetchSpeedEnum.SLOW || (speed == FetchSpeedEnum.MEDIUM && !r2.Rate.HasValue))
+						{
 							await FetchExchangeRate(r2);
 						}
 						return ExchangeRateHelper.GetCombinedRate(r1, r2);
@@ -110,20 +116,18 @@ namespace data.storage
 			return null;
 		}
 
-		public async Task<ExchangeRate> GetDirectRate(Currency referenceCurrency, Currency secondaryCurrency, bool fast)
+		public async Task<ExchangeRate> GetDirectRate(Currency referenceCurrency, Currency secondaryCurrency, List<ExchangeRate> allElements, FetchSpeedEnum speed)
 		{
 			if (referenceCurrency.Equals(secondaryCurrency))
 			{
 				return new ExchangeRate(referenceCurrency, secondaryCurrency, 1);
 			}
 
-			var allElements = await AllElements();
-
 			foreach (ExchangeRate exchangeRate in allElements)
 			{
 				if (exchangeRate.Equals(new ExchangeRate(referenceCurrency, secondaryCurrency)))
 				{
-					if (!fast)
+					if (speed == FetchSpeedEnum.SLOW || (speed == FetchSpeedEnum.MEDIUM && !exchangeRate.Rate.HasValue))
 					{
 						await FetchExchangeRate(exchangeRate);
 					}
@@ -131,7 +135,7 @@ namespace data.storage
 				}
 				if (exchangeRate.Equals(new ExchangeRate(secondaryCurrency, referenceCurrency)))
 				{
-					if (!fast)
+					if (speed == FetchSpeedEnum.SLOW || (speed == FetchSpeedEnum.MEDIUM && !exchangeRate.Rate.HasValue))
 					{
 						await FetchExchangeRate(exchangeRate);
 					}

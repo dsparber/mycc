@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using data.settings;
 using data.storage;
+using enums;
 using models;
+using message;
 using MyCryptos.resources;
 using Xamarin.Forms;
 
@@ -11,9 +13,21 @@ namespace view
 {
 	public partial class CoinsView : ContentPage
 	{
+		Task updateViewTask;
+
 		public CoinsView()
 		{
 			InitializeComponent();
+
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.UpdateCoinsView, async (speed) =>
+			{
+				if (updateViewTask != null)
+				{
+					await updateViewTask;
+				}
+				updateViewTask = UpdateView(speed.Speed);
+				await updateViewTask;
+			});
 		}
 
 		public void AddCoin(object sender, EventArgs e)
@@ -30,9 +44,10 @@ namespace view
 			}
 		}
 
-		public async Task UpdateView(bool fast, bool done)
+		public async Task UpdateView(FetchSpeedEnum speed)
 		{
-			if (!done)
+
+			if (speed != FetchSpeedEnum.FAST)
 			{
 				LoadingPanel.IsVisible = true;
 				LoadingIndicator.IsRunning = true;
@@ -50,7 +65,7 @@ namespace view
 			{
 				var textCell = new TextCell { Text = c.ToString() };
 
-				var rate = await ExchangeRateStorage.Instance.GetRate(c.Currency, ApplicationSettings.BaseCurrency, fast);
+				var rate = await ExchangeRateStorage.Instance.GetRate(c.Currency, ApplicationSettings.BaseCurrency, speed);
 
 				if (rate != null && rate.Rate.HasValue)
 				{
@@ -61,15 +76,13 @@ namespace view
 				section.Add(textCell);
 			}
 
+			// TODO Speed Improvments => Update every Cell seperately / Add Cell after adding new account
 			CoinsTable.Root.Clear();
 			CoinsTable.Root.Add(section);
 			TotalMoneyLabel.Text = moneySum.ToString();
 
-			if (done)
-			{
-				LoadingPanel.IsVisible = false;
-				LoadingIndicator.IsRunning = false;
-			}
+			LoadingPanel.IsVisible = false;
+			LoadingIndicator.IsRunning = false;
 		}
 	}
 }

@@ -25,6 +25,7 @@
 						TextColor="White" />
 					<StackLayout
 						x:Name="LoadingPanel"
+						IsVisible="false"
 						Orientation="Horizontal"
 						HorizontalOptions="Center">
 						<Label

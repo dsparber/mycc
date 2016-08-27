@@ -214,5 +214,11 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("Refreshing", resourceCulture);
             }
         }
+        
+        public static string ReferenceCurrency {
+            get {
+                return ResourceManager.GetString("ReferenceCurrency", resourceCulture);
+            }
+        }
     }
 }

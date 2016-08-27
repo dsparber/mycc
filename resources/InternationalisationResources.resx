@@ -100,4 +100,7 @@
 	<data name="Refreshing">
 		<value>Refreshing</value>
 	</data>
+	<data name="ReferenceCurrency">
+		<value>Reference Currency</value>
+	</data>
 </root>

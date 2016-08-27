@@ -114,6 +114,9 @@
     <Compile Include="data\settings\ApplicationSettings.cs" />
     <Compile Include="models\helper\ExchangeRateHelper.cs" />
     <Compile Include="tasks\AppTasks.cs" />
+    <Compile Include="enums\FetchSpeed.cs" />
+    <Compile Include="data\repositories\currency\BtceCurrencyRepository.cs" />
+    <Compile Include="message\MessageConstants.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -179,6 +182,8 @@
     <Folder Include="resources\" />
     <Folder Include="models\helper\" />
     <Folder Include="tasks\" />
+    <Folder Include="enums\" />
+    <Folder Include="message\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="view\CoinsView.xaml">

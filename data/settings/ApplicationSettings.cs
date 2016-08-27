@@ -33,6 +33,10 @@ namespace data.settings
 				var currency = JsonConvert.DeserializeObject<Currency>(json);
 				return currency;
 			}
+			set { 
+				Settings.Set(Settings.KEY_BASE_CURRENCY, JsonConvert.SerializeObject(value));
+			}
 		}
+
 	}
 }

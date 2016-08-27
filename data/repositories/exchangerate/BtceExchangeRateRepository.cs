@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using data.database.models;
+using data.repositories.currency;
+using data.storage;
 using models;
 using Newtonsoft.Json.Linq;
 
@@ -24,8 +27,11 @@ namespace data.repositories.exchangerate
 
 		public override async Task Fetch()
 		{
-			Elements.Add(new ExchangeRate(Currency.BTC, Currency.EUR));
-			Elements.Add(new ExchangeRate(Currency.BTC, Currency.USD));
+			var currencyRepository = new BtceCurrencyRepository(null);
+			await currencyRepository.Fetch();
+
+			var btc = currencyRepository.Elements.Find(c => c.Equals(Currency.BTC));
+			Elements = currencyRepository.Elements.Select(e => new ExchangeRate(btc, e)).ToList();
 			await WriteToDatabase();
 			LastFetch = DateTime.Now;
 		}

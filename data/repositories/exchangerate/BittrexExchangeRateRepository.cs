@@ -47,8 +47,11 @@ namespace data.repositories.exchangerate
 				var content = await response.Content.ReadAsStringAsync();
 				var json = JObject.Parse(content);
 				JToken rateJson = json[RESULT_KEY];
-				var rate = 1 / (decimal)rateJson[RATE_KEY];
-				exchangeRate.Rate = rate;
+				if (rateJson.ToList().Count != 0)
+				{
+					var rate = 1 / (decimal)rateJson[RATE_KEY];
+					exchangeRate.Rate = rate;
+				}
 			}
 			Elements.Remove(exchangeRate);
 			Elements.Add(exchangeRate);

@@ -31,17 +31,7 @@ namespace view
 				await AppTasks.Instance.FetchTask;
 			}
 
-			var currencyObject = await CurrencyStorage.Instance.GetByString(currency);
-			if (currencyObject == null)
-			{
-				currencyObject = new Currency(currency.ToUpper());
-				await (await CurrencyStorage.Instance.Repositories()).Find(r => r is LocalCurrencyRepository).Add(currencyObject);
-				currencyObject = await CurrencyStorage.Instance.GetByString(currency);
-			}
-
-			var money = new Money(decimal.Parse(value), currencyObject);
-			var account = new Account(name, money);
-			await (await AccountStorage.Instance.Repositories()).Find(r => r is LocalAccountRepository).Add(account);
+			AppTasks.Instance.StartAddAccountTask(name, decimal.Parse(value), currency);
 			await Navigation.PopModalAsync();
 		}
 	}
