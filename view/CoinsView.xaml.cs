@@ -85,6 +85,8 @@ namespace view
 				cells.Add(cell);
 			}
 
+			cells = sortCells(cells);
+
 			section.Clear();
 			foreach (var c in cells)
 			{
@@ -116,12 +118,59 @@ namespace view
 					moneySum += mRef;
 					TotalMoneyLabel.Text = moneySum.ToString();
 					c.ReferenceValue = mRef;
+					cells = sortCells(cells);
 				}
 				c.IsLoading = false;
 			}
 
+			cells = sortCells(cells);
+
+			section.Clear();
+			foreach (var c in cells)
+			{
+				section.Add(c);
+			}
+
 			LoadingPanel.IsVisible = false;
 			LoadingIndicator.IsRunning = false;
+		}
+
+		List<CoinViewCell> sortCells(List<CoinViewCell> cells)
+		{
+			if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_VALUE))
+			{
+				if (ApplicationSettings.SortDirection.Equals(SortDirection.ASCENDING))
+				{
+					cells = cells.OrderBy(c => c.ReferenceValue != null ? c.ReferenceValue.Amount : 0).ToList();
+				}
+				else {
+					cells = cells.OrderByDescending(c => c.ReferenceValue != null ? c.ReferenceValue.Amount : 0).ToList();
+				}
+			}
+
+			if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_UNITS))
+			{
+				if (ApplicationSettings.SortDirection.Equals(SortDirection.ASCENDING))
+				{
+					cells = cells.OrderBy(c => c.SumMoney.Amount).ToList();
+				}
+				else {
+					cells = cells.OrderByDescending(c => c.SumMoney.Amount).ToList();
+				}
+			}
+
+			if (ApplicationSettings.SortOrder.Equals(SortOrder.ALPHABETICAL))
+			{
+				if (ApplicationSettings.SortDirection.Equals(SortDirection.ASCENDING))
+				{
+					cells = cells.OrderBy(c => c.SumMoney.Currency.Code).ToList();
+				}
+				else {
+					cells = cells.OrderByDescending(c => c.SumMoney.Currency.Code).ToList();
+				}
+			}
+
+			return cells;
 		}
 	}
 }

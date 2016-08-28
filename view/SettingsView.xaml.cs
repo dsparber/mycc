@@ -39,6 +39,8 @@ namespace view
 			{
 				ApplicationSettings.SortOrder = SortOrder.BY_VALUE;
 			}
+			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateCoinsView);
+			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateAccountsView);
 		}
 	}
 }

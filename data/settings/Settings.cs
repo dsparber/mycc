@@ -11,6 +11,8 @@ namespace data.settings
 
 		public const string KEY_SORT_ORDER = "sort-order";
 
+		public const string KEY_SORT_DIRECTION = "sort-direction";
+
 		public static T Get<T>(string key, T defaultValue)
 		{
 			return AppSettings.GetValueOrDefault(key, defaultValue);

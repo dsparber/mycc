@@ -53,5 +53,19 @@ namespace data.settings
 				Settings.Set(Settings.KEY_SORT_ORDER, value.ToString());
 			}
 		}
+
+		public static SortDirection SortDirection
+		{
+			get
+			{
+				var defaultValue = SortDirection.ASCENDING.ToString();
+				var stringValue = Settings.Get(Settings.KEY_SORT_DIRECTION, defaultValue);
+				return (SortDirection)Enum.Parse(typeof(SortDirection), stringValue);
+			}
+			set
+			{
+				Settings.Set(Settings.KEY_SORT_DIRECTION, value.ToString());
+			}
+		}
 	}
 }
