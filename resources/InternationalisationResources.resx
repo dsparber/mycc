@@ -103,4 +103,28 @@
 	<data name="ReferenceCurrency">
 		<value>Reference Currency</value>
 	</data>
+	<data name="AddActionChooseTitle">
+		<value>Which action should be performed?</value>
+	</data>
+	<data name="AddLocalAccount">
+		<value>Add local account</value>
+	</data>
+	<data name="SortOrder">
+		<value>Sort order</value>
+	</data>
+	<data name="Alphabetical">
+		<value>Alphabetical</value>
+	</data>
+	<data name="ByValue">
+		<value>By value</value>
+	</data>
+	<data name="ByUnits">
+		<value>By units</value>
+	</data>
+	<data name="NoExchangeRateFound">
+		<value>No exchange rate found</value>
+	</data>
+	<data name="RefreshingDots">
+		<value>Refreshing ...</value>
+	</data>
 </root>

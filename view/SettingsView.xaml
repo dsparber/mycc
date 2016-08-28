@@ -16,6 +16,21 @@
 					Label="{i18n:Translate Currency}"
 					Placeholder="{i18n:Translate CurrencyExample}" />
 			</TableSection>
+			<TableSection
+				Title="{i18n:Translate SortOrder}">
+				<TextCell
+					x:Name="SortOrderAlphabetical"
+					Tapped="SortOrderSelected"
+					Text="{i18n:Translate Alphabetical}" />
+				<TextCell
+					x:Name="SortOrderByValue"
+					Tapped="SortOrderSelected"
+					Text="{i18n:Translate ByValue}" />
+				<TextCell
+					x:Name="SortOrderByUnits"
+					Tapped="SortOrderSelected"
+					Text="{i18n:Translate ByUnits}" />
+			</TableSection>
 		</TableView>
 	</ContentPage.Content>
 </ContentPage>

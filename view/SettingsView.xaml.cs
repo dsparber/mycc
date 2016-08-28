@@ -25,7 +25,21 @@ namespace view
 			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.MEDIUM), MessageConstants.UpdateCoinsView);
 		}
 
-		// TODO Sort Order (Value, Amount, Alphapetical)
+		void SortOrderSelected(object sender, System.EventArgs e)
+		{
+			if (sender.Equals(SortOrderAlphabetical))
+			{
+				ApplicationSettings.SortOrder = SortOrder.ALPHABETICAL;
+			}
+			else if (sender.Equals(SortOrderByUnits))
+			{
+				ApplicationSettings.SortOrder = SortOrder.BY_UNITS;
+			}
+			else
+			{
+				ApplicationSettings.SortOrder = SortOrder.BY_VALUE;
+			}
+		}
 	}
 }
 

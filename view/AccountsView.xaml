@@ -8,7 +8,7 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Text="{i18n:Translate Add}"
-			Clicked="AddAccount" />
+			Clicked="Add" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>

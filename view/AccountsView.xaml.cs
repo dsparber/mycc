@@ -21,9 +21,13 @@ namespace view
 			});
 		}
 
-		public void AddAccount(object sender, EventArgs e)
+		public async void Add(object sender, EventArgs e)
 		{
-			Navigation.PushModalAsync(new NavigationPage(new AddAccountView()));
+			var action = await DisplayActionSheet(InternationalisationResources.AddActionChooseTitle, InternationalisationResources.Cancel, null, InternationalisationResources.AddLocalAccount);
+			if (InternationalisationResources.AddLocalAccount.Equals(action))
+			{
+				await Navigation.PushModalAsync(new NavigationPage(new AddAccountView()));
+			}
 		}
 
 		protected override void OnAppearing()

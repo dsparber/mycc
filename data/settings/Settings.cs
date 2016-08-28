@@ -9,6 +9,8 @@ namespace data.settings
 
 		public const string KEY_FIRST_LAUNCH = "first-launch";
 
+		public const string KEY_SORT_ORDER = "sort-order";
+
 		public static T Get<T>(string key, T defaultValue)
 		{
 			return AppSettings.GetValueOrDefault(key, defaultValue);

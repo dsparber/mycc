@@ -13,7 +13,33 @@
 			Priority="0" />
 		<ToolbarItem
 			Name="{i18n:Translate Save}"
+			Clicked="Save"
 			Order="Primary"
 			Priority="1" />
 	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<TableView
+			Intent="Form">
+			<TableView.Root>
+				<TableSection
+					Title="{i18n:Translate Label}">
+					<EntryCell
+						x:Name="LabelInput"
+						Label="{i18n:Translate Label}"
+						Placeholder="{i18n:Translate LabelExample}" />
+				</TableSection>
+				<TableSection
+					Title="{i18n:Translate Coins}">
+					<EntryCell
+						x:Name="ValueInput"
+						Label="{i18n:Translate Value}"
+						Placeholder="{i18n:Translate ValueExample}" />
+					<EntryCell
+						x:Name="CurrencyInput"
+						Label="{i18n:Translate Currency}"
+						Placeholder="{i18n:Translate CurrencyExample}" />
+				</TableSection>
+			</TableView.Root>
+		</TableView>
+	</ContentPage.Content>
 </ContentPage>

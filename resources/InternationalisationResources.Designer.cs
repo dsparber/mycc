@@ -220,5 +220,53 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("ReferenceCurrency", resourceCulture);
             }
         }
+        
+        public static string AddActionChooseTitle {
+            get {
+                return ResourceManager.GetString("AddActionChooseTitle", resourceCulture);
+            }
+        }
+        
+        public static string AddLocalAccount {
+            get {
+                return ResourceManager.GetString("AddLocalAccount", resourceCulture);
+            }
+        }
+        
+        public static string SortOrder {
+            get {
+                return ResourceManager.GetString("SortOrder", resourceCulture);
+            }
+        }
+        
+        public static string Alphabetical {
+            get {
+                return ResourceManager.GetString("Alphabetical", resourceCulture);
+            }
+        }
+        
+        public static string ByValue {
+            get {
+                return ResourceManager.GetString("ByValue", resourceCulture);
+            }
+        }
+        
+        public static string ByUnits {
+            get {
+                return ResourceManager.GetString("ByUnits", resourceCulture);
+            }
+        }
+        
+        public static string NoExchangeRateFound {
+            get {
+                return ResourceManager.GetString("NoExchangeRateFound", resourceCulture);
+            }
+        }
+        
+        public static string RefreshingDots {
+            get {
+                return ResourceManager.GetString("RefreshingDots", resourceCulture);
+            }
+        }
     }
 }

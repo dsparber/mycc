@@ -8,6 +8,8 @@ using models;
 using message;
 using MyCryptos.resources;
 using Xamarin.Forms;
+using view.components;
+using System.Collections.Generic;
 
 namespace view
 {
@@ -28,11 +30,20 @@ namespace view
 				updateViewTask = UpdateView(speed.Speed);
 				await updateViewTask;
 			});
+
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, (speed) =>
+			{
+				if (!speed.Speed.Equals(FetchSpeedEnum.FAST))
+				{
+					LoadingPanel.IsVisible = true;
+					LoadingIndicator.IsRunning = true;
+				}
+			});
 		}
 
 		public void AddCoin(object sender, EventArgs e)
 		{
-			Navigation.PushModalAsync(new NavigationPage(new AddCoinView()));
+			Navigation.PushModalAsync(new NavigationPage(new AddAccountView()));
 		}
 
 		protected override void OnAppearing()
@@ -46,40 +57,68 @@ namespace view
 
 		public async Task UpdateView(FetchSpeedEnum speed)
 		{
-
-			if (speed != FetchSpeedEnum.FAST)
+			if (!speed.Equals(FetchSpeedEnum.FAST))
 			{
 				LoadingPanel.IsVisible = true;
 				LoadingIndicator.IsRunning = true;
+			}
+
+			if (CoinsTable.Root.Count == 0)
+			{
+				CoinsTable.Root.Add(new TableSection());
 			}
 
 			var money = (await AccountStorage.Instance.AllElements()).Select(a => a.Money);
 			var groups = money.GroupBy(a => a.Currency);
 			var coins = groups.Select(g => new Money(g.ToList().Sum(m => m.Amount), g.Key));
 
-			var section = new TableSection();
-
-			var moneySum = new Money(0, ApplicationSettings.BaseCurrency);
+			var section = CoinsTable.Root[0];
+			var cells = new List<CoinViewCell>();
 
 			foreach (var c in coins)
 			{
-				var textCell = new TextCell { Text = c.ToString() };
+				var cell = section.Select(e => (CoinViewCell)e).ToList().Find(e => e.SumMoney.Currency.Equals(c.Currency));
+				if (cell == null)
+				{
+					cell = new CoinViewCell { SumMoney = c };
+				}
+				cells.Add(cell);
+			}
 
-				var rate = await ExchangeRateStorage.Instance.GetRate(c.Currency, ApplicationSettings.BaseCurrency, speed);
+			section.Clear();
+			foreach (var c in cells)
+			{
+				section.Add(c);
+			}
+
+			var moneySum = new Money(0, ApplicationSettings.BaseCurrency);
+			foreach (var c in cells)
+			{
+				if (c.ReferenceValue != null && c.ReferenceValue.Currency.Equals(moneySum.Currency))
+				{
+					moneySum += c.ReferenceValue;
+				}
+			}
+			TotalMoneyLabel.Text = moneySum.ToString();
+
+			foreach (var c in cells)
+			{
+				c.IsLoading = true;
+				var rate = await ExchangeRateStorage.Instance.GetRate(c.SumMoney.Currency, ApplicationSettings.BaseCurrency, speed);
 
 				if (rate != null && rate.Rate.HasValue)
 				{
-					var mRef = new Money(c.Amount * rate.Rate.Value, ApplicationSettings.BaseCurrency);
+					var mRef = new Money(c.SumMoney.Amount * rate.Rate.Value, ApplicationSettings.BaseCurrency);
+					if (c.ReferenceValue != null && c.ReferenceValue.Currency.Equals(moneySum.Currency))
+					{
+						moneySum -= c.ReferenceValue;
+					}
 					moneySum += mRef;
-					textCell.Detail = mRef.ToString();
+					TotalMoneyLabel.Text = moneySum.ToString();
+					c.ReferenceValue = mRef;
 				}
-				section.Add(textCell);
+				c.IsLoading = false;
 			}
-
-			// TODO Speed Improvments => Update every Cell seperately / Add Cell after adding new account
-			CoinsTable.Root.Clear();
-			CoinsTable.Root.Add(section);
-			TotalMoneyLabel.Text = moneySum.ToString();
 
 			LoadingPanel.IsVisible = false;
 			LoadingIndicator.IsRunning = false;

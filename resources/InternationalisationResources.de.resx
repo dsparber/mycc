@@ -128,4 +128,28 @@
 	<data name="ReferenceCurrency">
 		<value>Referenz Währung</value>
 	</data>
+	<data name="AddActionChooseTitle">
+		<value>Welche Aktion wollen Sie ausführen?</value>
+	</data>
+	<data name="AddLocalAccount">
+		<value>Lokales Konto hinzufügen</value>
+	</data>
+	<data name="SortOrder">
+		<value>Sortierreihenfolge</value>
+	</data>
+	<data name="Alphabetical">
+		<value>Alphabetisch</value>
+	</data>
+	<data name="ByValue">
+		<value>Nach Wert</value>
+	</data>
+	<data name="ByUnits">
+		<value>Nach Einheiten</value>
+	</data>
+	<data name="NoExchangeRateFound">
+		<value>No exchange rate found</value>
+	</data>
+	<data name="RefreshingDots">
+		<value>Aktualisieren ...</value>
+	</data>
 </root>

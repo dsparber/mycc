@@ -1,5 +1,6 @@
 ﻿using System;
 using models;
+using enums;
 using Newtonsoft.Json;
 
 namespace data.settings
@@ -33,10 +34,24 @@ namespace data.settings
 				var currency = JsonConvert.DeserializeObject<Currency>(json);
 				return currency;
 			}
-			set { 
+			set
+			{
 				Settings.Set(Settings.KEY_BASE_CURRENCY, JsonConvert.SerializeObject(value));
 			}
 		}
 
+		public static SortOrder SortOrder
+		{
+			get
+			{
+				var defaultValue = SortOrder.ALPHABETICAL.ToString();
+				var stringValue = Settings.Get(Settings.KEY_SORT_ORDER, defaultValue);
+				return (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
+			}
+			set
+			{
+				Settings.Set(Settings.KEY_SORT_ORDER, value.ToString());
+			}
+		}
 	}
 }

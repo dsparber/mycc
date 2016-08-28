@@ -43,6 +43,7 @@ namespace view
 				if (!appTasks.IsFastFetchTaskStarted)
 				{
 					appTasks.StartFastFetchTask();
+					MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.StartedFetching);
 				}
 				await appTasks.FastFetchTask;
 				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateCoinsView);
@@ -53,6 +54,7 @@ namespace view
 				if (!appTasks.IsFetchTaskStarted)
 				{
 					appTasks.StartFetchTask();
+					MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.StartedFetching);
 				}
 				await appTasks.FetchTask;
 				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.UpdateCoinsView);
