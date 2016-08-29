@@ -57,16 +57,25 @@ namespace view.components
 			ReferenceValueLabel = new Label();
 
 			ReferenceValueLabel.TextColor = Color.Gray;
-			ReferenceValueLabel.FontSize = SumMoneyLabel.FontSize * 0.8;
+			ReferenceValueLabel.FontSize = SumMoneyLabel.FontSize * 0.75;
 
 			var stack = new StackLayout();
 			stack.Spacing = 0;
 			stack.Children.Add(SumMoneyLabel);
 			stack.Children.Add(ReferenceValueLabel);
 
+			var icon = new Image { HeightRequest = 20, Source = ImageSource.FromFile("more.png") };
+			icon.HorizontalOptions = LayoutOptions.EndAndExpand;
+
+			var horizontalStack = new StackLayout { Orientation = StackOrientation.Horizontal };
+			horizontalStack.Children.Add(stack);
+			horizontalStack.Children.Add(icon);
+			horizontalStack.VerticalOptions = LayoutOptions.CenterAndExpand;
+
+
 			var contentView = new ContentView();
-			contentView.Margin = new Thickness(15, 3);
-			contentView.Content = stack;
+			contentView.Margin = new Thickness(15, 0);
+			contentView.Content = horizontalStack;
 
 			View = contentView;
 		}

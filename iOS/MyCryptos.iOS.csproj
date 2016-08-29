@@ -179,6 +179,9 @@
     <BundleResource Include="Resources\checkmark.png" />
     <BundleResource Include="Resources\checkmark%402x.png" />
     <BundleResource Include="Resources\checkmark%403x.png" />
+    <BundleResource Include="Resources\more.png" />
+    <BundleResource Include="Resources\more%402x.png" />
+    <BundleResource Include="Resources\more%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
