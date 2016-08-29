@@ -3,6 +3,7 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+	xmlns:components="clr-namespace:view.components;assembly=MyCryptos"
 	x:Class="view.SettingsView"
 	Title="{i18n:Translate SettingsTitle}">
 	<ContentPage.Content>
@@ -18,18 +19,42 @@
 			</TableSection>
 			<TableSection
 				Title="{i18n:Translate SortOrder}">
-				<TextCell
+				<components:CustomIconCell
 					x:Name="SortOrderAlphabetical"
 					Tapped="SortOrderSelected"
-					Text="{i18n:Translate Alphabetical}" />
-				<TextCell
+					Text="{i18n:Translate Alphabetical}"
+					Icon="checkmark.png" />
+				<components:CustomIconCell
 					x:Name="SortOrderByValue"
 					Tapped="SortOrderSelected"
-					Text="{i18n:Translate ByValue}" />
-				<TextCell
+					Text="{i18n:Translate ByValue}"
+					Icon="checkmark.png" />
+				<components:CustomIconCell
 					x:Name="SortOrderByUnits"
 					Tapped="SortOrderSelected"
-					Text="{i18n:Translate ByUnits}" />
+					Text="{i18n:Translate ByUnits}"
+					Icon="checkmark.png" />
+			</TableSection>
+			<TableSection
+				Title="{i18n:Translate SortDirection}">
+				<components:CustomIconCell
+					x:Name="SortDirectionAscending"
+					Tapped="SortOrderSelected"
+					Text="{i18n:Translate Ascending}"
+					Icon="checkmark.png" />
+				<components:CustomIconCell
+					x:Name="SortDirectionDescending"
+					Tapped="SortOrderSelected"
+					Text="{i18n:Translate Descending}"
+					Icon="checkmark.png" />
+			</TableSection>
+			<TableSection
+				Title="{i18n:Translate AutomaticallyRefresh}">
+				<SwitchCell
+					x:Name="AutoRefresh"
+					Text="{i18n:Translate RefreshOnStartup}"
+					OnChanged="AutoRefreshChanged"
+					On="true" />
 			</TableSection>
 		</TableView>
 	</ContentPage.Content>

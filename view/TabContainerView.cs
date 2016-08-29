@@ -3,11 +3,12 @@ using Xamarin.Forms;
 using tasks;
 using enums;
 using message;
+using data.settings;
 
 namespace view
 {
 	public class TabContainerView : TabbedPage
-	{ 
+	{
 		public TabContainerView()
 		{
 			Title = InternationalisationResources.AppName;
@@ -49,16 +50,20 @@ namespace view
 				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateCoinsView);
 				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateAccountsView);
 			}
-			if (!appTasks.IsFetchTaskFinished)
+
+			if (ApplicationSettings.AutoRefreshOnStartup)
 			{
-				if (!appTasks.IsFetchTaskStarted)
+				if (!appTasks.IsFetchTaskFinished)
 				{
-					appTasks.StartFetchTask();
-					MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.StartedFetching);
+					if (!appTasks.IsFetchTaskStarted)
+					{
+						appTasks.StartFetchTask();
+						MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.StartedFetching);
+					}
+					await appTasks.FetchTask;
+					MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.UpdateCoinsView);
+					MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateAccountsView);
 				}
-				await appTasks.FetchTask;
-				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.UpdateCoinsView);
-				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateAccountsView);
 			}
 
 			if (appTasks.IsAddAccountTaskStarted)

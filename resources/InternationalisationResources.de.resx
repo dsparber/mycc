@@ -108,10 +108,12 @@
 		name="Account">
 		<value>Konto</value>
 	</data>
-	<data name="NoAccounts">
+	<data
+		name="NoAccounts">
 		<value>Keine Konten</value>
 	</data>
-	<data name="NoSources">
+	<data
+		name="NoSources">
 		<value>Keine Quellen</value>
 	</data>
 	<data
@@ -122,34 +124,64 @@
 		name="Source">
 		<value>Quelle</value>
 	</data>
-	<data name="Refreshing">
+	<data
+		name="Refreshing">
 		<value>Aktualisieren</value>
 	</data>
-	<data name="ReferenceCurrency">
+	<data
+		name="ReferenceCurrency">
 		<value>Referenz Währung</value>
 	</data>
-	<data name="AddActionChooseTitle">
+	<data
+		name="AddActionChooseTitle">
 		<value>Welche Aktion wollen Sie ausführen?</value>
 	</data>
-	<data name="AddLocalAccount">
+	<data
+		name="AddLocalAccount">
 		<value>Lokales Konto hinzufügen</value>
 	</data>
-	<data name="SortOrder">
+	<data
+		name="SortOrder">
 		<value>Sortierreihenfolge</value>
 	</data>
-	<data name="Alphabetical">
+	<data
+		name="Alphabetical">
 		<value>Alphabetisch</value>
 	</data>
-	<data name="ByValue">
+	<data
+		name="ByValue">
 		<value>Nach Wert</value>
 	</data>
-	<data name="ByUnits">
+	<data
+		name="ByUnits">
 		<value>Nach Einheiten</value>
 	</data>
-	<data name="NoExchangeRateFound">
+	<data
+		name="NoExchangeRateFound">
 		<value>No exchange rate found</value>
 	</data>
-	<data name="RefreshingDots">
+	<data
+		name="RefreshingDots">
 		<value>Aktualisieren ...</value>
+	</data>
+	<data
+		name="SortDirection">
+		<value>Sortierrichtung</value>
+	</data>
+	<data
+		name="Ascending">
+		<value>Aufsteigend</value>
+	</data>
+	<data
+		name="Descending">
+		<value>Absteigend</value>
+	</data>
+	<data
+		name="AutomaticallyRefresh">
+		<value>Automatisches Aktualisieren</value>
+	</data>
+	<data
+		name="RefreshOnStartup">
+		<value>Aktualiserung beim Start</value>
 	</data>
 </root>

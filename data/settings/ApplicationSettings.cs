@@ -67,5 +67,17 @@ namespace data.settings
 				Settings.Set(Settings.KEY_SORT_DIRECTION, value.ToString());
 			}
 		}
+
+		public static bool AutoRefreshOnStartup
+		{
+			get
+			{
+				return Settings.Get(Settings.KEY_AUTO_REFRESH_ON_STARTUP, true);
+			}
+			set
+			{
+				Settings.Set(Settings.KEY_AUTO_REFRESH_ON_STARTUP, value);
+			}
+		}
 	}
 }

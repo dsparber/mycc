@@ -268,5 +268,35 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("RefreshingDots", resourceCulture);
             }
         }
+        
+        public static string SortDirection {
+            get {
+                return ResourceManager.GetString("SortDirection", resourceCulture);
+            }
+        }
+        
+        public static string Ascending {
+            get {
+                return ResourceManager.GetString("Ascending", resourceCulture);
+            }
+        }
+        
+        public static string Descending {
+            get {
+                return ResourceManager.GetString("Descending", resourceCulture);
+            }
+        }
+        
+        public static string AutomaticallyRefresh {
+            get {
+                return ResourceManager.GetString("AutomaticallyRefresh", resourceCulture);
+            }
+        }
+        
+        public static string RefreshOnStartup {
+            get {
+                return ResourceManager.GetString("RefreshOnStartup", resourceCulture);
+            }
+        }
     }
 }
