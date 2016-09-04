@@ -68,7 +68,9 @@ namespace view
 				CoinsTable.Root.Add(new TableSection());
 			}
 
-			var money = (await AccountStorage.Instance.AllElements()).Select(a => a.Money);
+			var allAccounts = await AccountStorage.Instance.AllElements();
+
+			var money = allAccounts.Select(a => a.Money);
 			var groups = money.GroupBy(a => a.Currency);
 			var coins = groups.Select(g => new Money(g.ToList().Sum(m => m.Amount), g.Key));
 
@@ -81,6 +83,9 @@ namespace view
 				if (cell == null)
 				{
 					cell = new CoinViewCell { SumMoney = c };
+				}
+				else {
+					cell = new CoinViewCell { SumMoney = cell.SumMoney, ReferenceValue = cell.ReferenceValue };
 				}
 				cells.Add(cell);
 			}
@@ -103,10 +108,13 @@ namespace view
 			}
 			TotalMoneyLabel.Text = moneySum.ToString();
 
+			var rates = new List<ExchangeRate>();
+
 			foreach (var c in cells)
 			{
 				c.IsLoading = true;
 				var rate = await ExchangeRateStorage.Instance.GetRate(c.SumMoney.Currency, ApplicationSettings.BaseCurrency, speed);
+				rates.Add(rate);
 
 				if (rate != null && rate.Rate.HasValue)
 				{
@@ -128,6 +136,10 @@ namespace view
 			section.Clear();
 			foreach (var c in cells)
 			{
+				c.Tapped += (sender, e) =>
+				{
+					Navigation.PushAsync(new CoinDetailView(allAccounts.Where(a => a.Money.Currency.Equals(c.SumMoney.Currency)), rates.Find(r => r.ReferenceCurrency.Equals(c.SumMoney.Currency))));
+				};
 				section.Add(c);
 			}
 
