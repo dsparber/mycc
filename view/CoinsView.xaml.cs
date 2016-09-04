@@ -57,11 +57,7 @@ namespace view
 
 		public async Task UpdateView(FetchSpeedEnum speed)
 		{
-			if (!speed.Equals(FetchSpeedEnum.FAST))
-			{
-				LoadingPanel.IsVisible = true;
-				LoadingIndicator.IsRunning = true;
-			}
+			showIsLoading(true, speed);
 
 			if (CoinsTable.Root.Count == 0)
 			{
@@ -69,117 +65,102 @@ namespace view
 			}
 
 			var allAccounts = await AccountStorage.Instance.AllElements();
-
-			var money = allAccounts.Select(a => a.Money);
-			var groups = money.GroupBy(a => a.Currency);
-			var coins = groups.Select(g => new Money(g.ToList().Sum(m => m.Amount), g.Key));
+			var groups = allAccounts.GroupBy(a => a.Money.Currency);
 
 			var section = CoinsTable.Root[0];
 			var cells = new List<CoinViewCell>();
 
-			foreach (var c in coins)
+			foreach (var g in groups)
 			{
-				var cell = section.Select(e => (CoinViewCell)e).ToList().Find(e => e.SumMoney.Currency.Equals(c.Currency));
+				var cell = section.Select(e => (CoinViewCell)e).ToList().Find(e => e.Currency.Equals(g.Key));
 				if (cell == null)
 				{
-					cell = new CoinViewCell { SumMoney = c };
-				}
-				else {
-					cell = new CoinViewCell { SumMoney = cell.SumMoney, ReferenceValue = cell.ReferenceValue };
+					cell = new CoinViewCell(Navigation) { Accounts = g.ToList() };
 				}
 				cells.Add(cell);
 			}
-
-			cells = sortCells(cells);
-
-			section.Clear();
-			foreach (var c in cells)
-			{
-				section.Add(c);
-			}
+			setCells(section, cells);
 
 			var moneySum = new Money(0, ApplicationSettings.BaseCurrency);
 			foreach (var c in cells)
 			{
-				if (c.ReferenceValue != null && c.ReferenceValue.Currency.Equals(moneySum.Currency))
+				if (moneySum.Currency.Equals(c.Currency))
 				{
-					moneySum += c.ReferenceValue;
+					moneySum += c.MoneyReference;
 				}
 			}
 			TotalMoneyLabel.Text = moneySum.ToString();
 
-			var rates = new List<ExchangeRate>();
-
 			foreach (var c in cells)
 			{
 				c.IsLoading = true;
-				var rate = await ExchangeRateStorage.Instance.GetRate(c.SumMoney.Currency, ApplicationSettings.BaseCurrency, speed);
-				rates.Add(rate);
 
-				if (rate != null && rate.Rate.HasValue)
+				var rate = await ExchangeRateStorage.Instance.GetRate(c.Currency, ApplicationSettings.BaseCurrency, speed);
+
+				if (moneySum.Currency.Equals(c.Currency))
 				{
-					var mRef = new Money(c.SumMoney.Amount * rate.Rate.Value, ApplicationSettings.BaseCurrency);
-					if (c.ReferenceValue != null && c.ReferenceValue.Currency.Equals(moneySum.Currency))
-					{
-						moneySum -= c.ReferenceValue;
-					}
-					moneySum += mRef;
-					TotalMoneyLabel.Text = moneySum.ToString();
-					c.ReferenceValue = mRef;
-					cells = sortCells(cells);
+					moneySum -= c.MoneyReference;
 				}
+
+				c.ExchangeRate = rate;
+				setCells(section, cells);
+
+				if (c.MoneyReference != null)
+				{
+					moneySum += c.MoneyReference;
+				}
+				TotalMoneyLabel.Text = moneySum.ToString();
+
 				c.IsLoading = false;
 			}
 
+			showIsLoading(false, speed);
+		}
+
+		void showIsLoading(bool loading, FetchSpeedEnum speed)
+		{
+			if (!speed.Equals(FetchSpeedEnum.FAST))
+			{
+				LoadingPanel.IsVisible = loading;
+				LoadingIndicator.IsRunning = loading;
+			}
+		}
+
+		void setCells(TableSection section, List<CoinViewCell> cells)
+		{
 			cells = sortCells(cells);
 
 			section.Clear();
 			foreach (var c in cells)
 			{
-				c.Tapped += (sender, e) =>
-				{
-					Navigation.PushAsync(new CoinDetailView(allAccounts.Where(a => a.Money.Currency.Equals(c.SumMoney.Currency)), rates.Find(r => r.ReferenceCurrency.Equals(c.SumMoney.Currency))));
-				};
 				section.Add(c);
 			}
-
-			LoadingPanel.IsVisible = false;
-			LoadingIndicator.IsRunning = false;
 		}
 
 		List<CoinViewCell> sortCells(List<CoinViewCell> cells)
 		{
+			Func<CoinViewCell, object> sortLambda;
+
 			if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_VALUE))
 			{
-				if (ApplicationSettings.SortDirection.Equals(SortDirection.ASCENDING))
-				{
-					cells = cells.OrderBy(c => c.ReferenceValue != null ? c.ReferenceValue.Amount : 0).ToList();
-				}
-				else {
-					cells = cells.OrderByDescending(c => c.ReferenceValue != null ? c.ReferenceValue.Amount : 0).ToList();
-				}
+				sortLambda = c => c.MoneyReference != null ? c.MoneyReference.Amount : 0;
+			}
+			else if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_UNITS))
+			{
+				sortLambda = c => c.MoneySum.Amount;
+			}
+			else
+			{
+				sortLambda = c => c.Currency.Code;
 			}
 
-			if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_UNITS))
-			{
-				if (ApplicationSettings.SortDirection.Equals(SortDirection.ASCENDING))
-				{
-					cells = cells.OrderBy(c => c.SumMoney.Amount).ToList();
-				}
-				else {
-					cells = cells.OrderByDescending(c => c.SumMoney.Amount).ToList();
-				}
-			}
 
-			if (ApplicationSettings.SortOrder.Equals(SortOrder.ALPHABETICAL))
+			if (ApplicationSettings.SortDirection.Equals(SortDirection.ASCENDING))
 			{
-				if (ApplicationSettings.SortDirection.Equals(SortDirection.ASCENDING))
-				{
-					cells = cells.OrderBy(c => c.SumMoney.Currency.Code).ToList();
-				}
-				else {
-					cells = cells.OrderByDescending(c => c.SumMoney.Currency.Code).ToList();
-				}
+				cells = cells.OrderBy(sortLambda).ToList();
+			}
+			else {
+				cells = cells.OrderByDescending(sortLambda).ToList();
 			}
 
 			return cells;

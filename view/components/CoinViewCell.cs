@@ -1,4 +1,6 @@
-﻿using models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using models;
 using MyCryptos.resources;
 using Xamarin.Forms;
 
@@ -9,33 +11,77 @@ namespace view.components
 		readonly Label SumMoneyLabel;
 		readonly Label ReferenceValueLabel;
 
-		Money sumMoney;
-		Money referenceValue;
+		readonly INavigation Navigation;
 
-		public Money SumMoney
+		IEnumerable<Account> accounts;
+		ExchangeRate exchangeRate;
+
+		public ExchangeRate ExchangeRate
 		{
 			get
 			{
-				return sumMoney;
+				return exchangeRate;
 			}
 			set
 			{
-				sumMoney = value;
-				SumMoneyLabel.Text = sumMoney.ToString();
+				exchangeRate = value;
+				ReferenceValueLabel.Text = moneyReference != null ? moneyReference.ToString() : string.Empty;
+				setTapRecognizer();
 			}
 		}
-		public Money ReferenceValue
+		public IEnumerable<Account> Accounts
 		{
 			get
 			{
-				return referenceValue;
+				if (accounts == null)
+				{
+					accounts = new List<Account>();
+				}
+				return accounts;
 			}
 			set
 			{
-				referenceValue = value;
-				ReferenceValueLabel.Text = referenceValue.ToString();
+				accounts = value;
+				SumMoneyLabel.Text = moneySum != null ? moneySum.ToString() : string.Empty;
+				setTapRecognizer();
 			}
 		}
+
+		public Currency Currency
+		{
+			get
+			{
+				return Accounts.ToList().Count > 0 ? Accounts.First().Money.Currency : null;
+			}
+		}
+
+		Money moneySum
+		{
+			get
+			{
+				if (Accounts.ToList().Count > 0)
+				{
+					return new Money(Accounts.Sum(a => a.Money.Amount), Accounts.First().Money.Currency);
+				}
+				return null;
+			}
+		}
+
+		public Money MoneySum { get { return moneySum; } }
+
+		Money moneyReference
+		{
+			get
+			{
+				if (exchangeRate != null && exchangeRate.Rate.HasValue && moneySum != null)
+				{
+					return new Money(moneySum.Amount * exchangeRate.Rate.Value, exchangeRate.SecondaryCurrency);
+				}
+				return null;
+			}
+		}
+
+		public Money MoneyReference { get { return moneyReference; } }
 
 		public bool IsLoading
 		{
@@ -46,13 +92,15 @@ namespace view.components
 					ReferenceValueLabel.Text = InternationalisationResources.RefreshingDots;
 				}
 				else {
-					ReferenceValueLabel.Text = referenceValue != null ? referenceValue.ToString() : InternationalisationResources.NoExchangeRateFound;
+					ReferenceValueLabel.Text = moneyReference != null ? moneyReference.ToString() : InternationalisationResources.NoExchangeRateFound;
 				}
 			}
 		}
 
-		public CoinViewCell()
+		public CoinViewCell(INavigation navigation)
 		{
+			Navigation = navigation;
+
 			SumMoneyLabel = new Label();
 			ReferenceValueLabel = new Label();
 
@@ -72,12 +120,26 @@ namespace view.components
 			horizontalStack.Children.Add(icon);
 			horizontalStack.VerticalOptions = LayoutOptions.CenterAndExpand;
 
-
 			var contentView = new ContentView();
 			contentView.Margin = new Thickness(15, 0);
 			contentView.Content = horizontalStack;
 
 			View = contentView;
+			setTapRecognizer();
+		}
+
+		void setTapRecognizer()
+		{
+			var gestureRecognizer = new TapGestureRecognizer();
+			gestureRecognizer.Tapped += (sender, e) =>
+			{
+				Navigation.PushAsync(new CoinDetailView(accounts, exchangeRate));
+			};
+			if (View != null)
+			{
+				View.GestureRecognizers.Clear();
+				View.GestureRecognizers.Add(gestureRecognizer);
+			}
 		}
 	}
 }
