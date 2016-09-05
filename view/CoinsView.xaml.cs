@@ -10,6 +10,7 @@ using MyCryptos.resources;
 using Xamarin.Forms;
 using view.components;
 using System.Collections.Generic;
+using helpers;
 
 namespace view
 {
@@ -73,6 +74,9 @@ namespace view
 				{
 					cell = new CoinViewCell(Navigation) { Accounts = g.ToList() };
 				}
+				else {
+					cell.Accounts = g.ToList();
+				}
 				cells.Add(cell);
 			}
 			setCells(section, cells);
@@ -123,42 +127,13 @@ namespace view
 
 		void setCells(TableSection section, List<CoinViewCell> cells)
 		{
-			cells = sortCells(cells);
+			cells = SortHelper.SortCells(cells);
 
 			section.Clear();
 			foreach (var c in cells)
 			{
 				section.Add(c);
 			}
-		}
-
-		List<CoinViewCell> sortCells(List<CoinViewCell> cells)
-		{
-			Func<CoinViewCell, object> sortLambda;
-
-			if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_VALUE))
-			{
-				sortLambda = c => c.MoneyReference != null ? c.MoneyReference.Amount : 0;
-			}
-			else if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_UNITS))
-			{
-				sortLambda = c => c.MoneySum.Amount;
-			}
-			else
-			{
-				sortLambda = c => c.Currency.Code;
-			}
-
-
-			if (ApplicationSettings.SortDirection.Equals(SortDirection.ASCENDING))
-			{
-				cells = cells.OrderBy(sortLambda).ToList();
-			}
-			else {
-				cells = cells.OrderByDescending(sortLambda).ToList();
-			}
-
-			return cells;
 		}
 	}
 }

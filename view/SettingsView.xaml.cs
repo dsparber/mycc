@@ -27,6 +27,7 @@ namespace view
 			var code = ReferenceCurrency.Text;
 			ApplicationSettings.BaseCurrency = new Currency(code);
 			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.MEDIUM), MessageConstants.UpdateCoinsView);
+			// TODO Update Coin Detail View
 		}
 
 		void SortOrderSelected(object sender, System.EventArgs e)
@@ -53,8 +54,7 @@ namespace view
 			}
 			updateCheckmarks();
 
-			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateCoinsView);
-			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateAccountsView);
+			MessagingCenter.Send(string.Empty, MessageConstants.SortOrderChanged);
 		}
 
 		void AutoRefreshChanged(object sender, EventArgs e)

@@ -2,8 +2,10 @@
 using models;
 using Xamarin.Forms;
 using System.Linq;
-using data.settings;
 using MyCryptos.resources;
+using view.components;
+using helpers;
+using message;
 
 namespace view
 {
@@ -27,6 +29,26 @@ namespace view
 				Header.InfoText = InternationalisationResources.NoExchangeRateFound;
 			}
 
+			var cells = new List<AccountViewCell>();
+			foreach (var a in accounts)
+			{
+				cells.Add(new AccountViewCell(Navigation) { Account = a });
+			}
+			cells = SortHelper.SortCells(cells);
+			foreach (var c in cells)
+			{
+				AccountSection.Add(c);
+			}
+
+			MessagingCenter.Subscribe<string>(this, MessageConstants.SortOrderChanged, (str) =>
+			{
+				cells = SortHelper.SortCells(cells);
+				AccountSection.Clear();
+				foreach (var c in cells)
+				{
+					AccountSection.Add(c);
+				}
+			});
 		}
 	}
 }

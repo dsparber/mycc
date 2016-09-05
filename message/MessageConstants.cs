@@ -6,6 +6,7 @@
 		public const string UpdateAccountsView = "UpdateAccountsView";
 		public const string StartedFetching = "StartedFetching";
 		public const string DoneFetching = "DoneFetching";
+		public const string SortOrderChanged = "SortOrderChanged";
 	}
 }
 

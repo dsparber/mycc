@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using data.storage;
 using enums;
+using helpers;
 using message;
 using MyCryptos.resources;
+using view.components;
 using Xamarin.Forms;
 
 namespace view
@@ -16,6 +19,11 @@ namespace view
 			InitializeComponent();
 
 			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.UpdateAccountsView, async (speed) =>
+			{
+				await UpdateView();
+			});
+
+			MessagingCenter.Subscribe<string>(this, MessageConstants.SortOrderChanged, async (str) =>
 			{
 				await UpdateView();
 			});
@@ -47,14 +55,17 @@ namespace view
 
 			foreach (var r in repos)
 			{
-				var section = new TableSection { Title = r.Name };
-
-				foreach (var e in r.Elements)
+				var cells = new List<AccountViewCell>();
+				foreach (var a in r.Elements)
 				{
-					// TODO Create AccountViewCell Component
-					section.Add(new TextCell { Text = e.Name, Detail = e.Money.ToString() });
+					cells.Add(new AccountViewCell(Navigation) { Account = a });
 				}
-
+				var section = new TableSection { Title = r.Name };
+				cells = SortHelper.SortCells(cells);
+				foreach (var c in cells)
+				{
+					section.Add(c);
+				}
 				if (section.Count > 0)
 				{
 					AccountsTable.Root.Add(section);

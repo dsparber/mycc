@@ -22,7 +22,10 @@ namespace view
 			var value = ValueInput.Text;
 			var currency = CurrencyInput.Text;
 
-			if (!AppTasks.Instance.IsFetchTaskFinished)
+			// TODO Floatpoint numbers
+			// TODO Currency InputCell => Search
+
+			if (AppTasks.Instance.IsFetchTaskStarted && !AppTasks.Instance.IsFetchTaskFinished)
 			{
 				await AppTasks.Instance.FetchTask;
 			}
