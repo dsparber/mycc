@@ -61,8 +61,8 @@ namespace view
 				CoinsTable.Root.Add(new TableSection());
 			}
 
-			var allAccounts = await AccountStorage.Instance.AllElements();
-			var groups = allAccounts.GroupBy(a => a.Money.Currency);
+			var allAccounts = await AccountStorage.Instance.AllElementsWithRepositories();
+			var groups = allAccounts.GroupBy(a => a.Item1.Money.Currency);
 
 			var section = CoinsTable.Root[0];
 			var cells = new List<CoinViewCell>();
@@ -72,7 +72,7 @@ namespace view
 				var cell = section.Select(e => (CoinViewCell)e).ToList().Find(e => e.Currency.Equals(g.Key));
 				if (cell == null)
 				{
-					cell = new CoinViewCell(Navigation) { Accounts = g.ToList() };
+					cell = new CoinViewCell(Navigation) { Accounts = g.ToList()};
 				}
 				else {
 					cell.Accounts = g.ToList();

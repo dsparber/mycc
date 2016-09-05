@@ -6,18 +6,20 @@ using MyCryptos.resources;
 using view.components;
 using helpers;
 using message;
+using data.repositories.account;
+using System;
 
 namespace view
 {
 	public partial class CoinDetailView : ContentPage
 	{
-		public CoinDetailView(IEnumerable<Account> accounts, ExchangeRate exchangeRate)
+		public CoinDetailView(IEnumerable<Tuple<Account, AccountRepository>> accounts, ExchangeRate exchangeRate)
 		{
 			InitializeComponent();
 
-			var moneySum = new Money(accounts.Sum(a => a.Money.Amount), accounts.First().Money.Currency);
+			var moneySum = new Money(accounts.Sum(a => a.Item1.Money.Amount), accounts.First().Item1.Money.Currency);
 
-			Title = accounts.First().Money.Currency.Code;
+			Title = accounts.First().Item1.Money.Currency.Code;
 			Header.TitleText = moneySum.ToString();
 
 			if (exchangeRate.Rate.HasValue)
@@ -32,7 +34,7 @@ namespace view
 			var cells = new List<AccountViewCell>();
 			foreach (var a in accounts)
 			{
-				cells.Add(new AccountViewCell(Navigation) { Account = a });
+				cells.Add(new AccountViewCell(Navigation) { Account = a.Item1, Repository = a.Item2});
 			}
 			cells = SortHelper.SortCells(cells);
 			foreach (var c in cells)

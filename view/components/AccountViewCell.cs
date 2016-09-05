@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using data.repositories.account;
 using models;
 using MyCryptos.resources;
 using Xamarin.Forms;
@@ -28,6 +29,14 @@ namespace view.components
 				MoneyLabel.Text = account.Money.ToString();
 				setTapRecognizer();
 			}
+		}
+
+		public AccountRepository repository;
+
+		public AccountRepository Repository
+		{
+			get { return repository; }
+			set { repository = value; setTapRecognizer(); }
 		}
 
 		public bool IsLoading
@@ -80,8 +89,7 @@ namespace view.components
 			var gestureRecognizer = new TapGestureRecognizer();
 			gestureRecognizer.Tapped += (sender, e) =>
 			{
-				// TODO
-				// Navigation.PushAsync();
+				Navigation.PushAsync(new AccountDetailView(account, repository));
 			};
 			if (View != null)
 			{

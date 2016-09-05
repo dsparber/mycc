@@ -298,5 +298,17 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("RefreshOnStartup", resourceCulture);
             }
         }
+        
+        public static string SourceText {
+            get {
+                return ResourceManager.GetString("SourceText", resourceCulture);
+            }
+        }
+        
+        public static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
     }
 }

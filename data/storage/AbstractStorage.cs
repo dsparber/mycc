@@ -6,6 +6,7 @@ using data.database.interfaces;
 using data.database.helper;
 using data.settings;
 using enums;
+using System;
 
 namespace data.storage
 {
@@ -55,6 +56,11 @@ namespace data.storage
 		public async Task<List<V>> AllElements()
 		{
 			return (await Repositories()).SelectMany(r => r.Elements).ToList();
+		}
+
+		public async Task<List<Tuple<V, R>>> AllElementsWithRepositories()
+		{
+			return (await Repositories()).SelectMany(r => r.Elements.Select(e => Tuple.Create<V, R>(e, r))).ToList();
 		}
 
 		public async Task<List<V>> AllOfType<A>()

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using data.repositories.account;
 using models;
 using MyCryptos.resources;
 using Xamarin.Forms;
@@ -13,7 +15,7 @@ namespace view.components
 
 		readonly INavigation Navigation;
 
-		IEnumerable<Account> accounts;
+		IEnumerable<Tuple<Account, AccountRepository>> accounts;
 		ExchangeRate exchangeRate;
 
 		public ExchangeRate ExchangeRate
@@ -29,13 +31,13 @@ namespace view.components
 				setTapRecognizer();
 			}
 		}
-		public IEnumerable<Account> Accounts
+		public IEnumerable<Tuple<Account, AccountRepository>> Accounts
 		{
 			get
 			{
 				if (accounts == null)
 				{
-					accounts = new List<Account>();
+					accounts = new List<Tuple<Account, AccountRepository>>();
 				}
 				return accounts;
 			}
@@ -47,11 +49,16 @@ namespace view.components
 			}
 		}
 
+		public AccountRepository repository(Account account)
+		{
+			return Accounts.ToList().Find(t => t.Item1 == account).Item2;
+		}
+
 		public Currency Currency
 		{
 			get
 			{
-				return Accounts.ToList().Count > 0 ? Accounts.First().Money.Currency : null;
+				return Accounts.ToList().Count > 0 ? Accounts.First().Item1.Money.Currency : null;
 			}
 		}
 
@@ -61,7 +68,7 @@ namespace view.components
 			{
 				if (Accounts.ToList().Count > 0)
 				{
-					return new Money(Accounts.Sum(a => a.Money.Amount), Accounts.First().Money.Currency);
+					return new Money(Accounts.Sum(a => a.Item1.Money.Amount), Accounts.First().Item1.Money.Currency);
 				}
 				return null;
 			}

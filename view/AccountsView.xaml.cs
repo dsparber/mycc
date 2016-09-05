@@ -58,7 +58,7 @@ namespace view
 				var cells = new List<AccountViewCell>();
 				foreach (var a in r.Elements)
 				{
-					cells.Add(new AccountViewCell(Navigation) { Account = a });
+					cells.Add(new AccountViewCell(Navigation) { Account = a, Repository = r });
 				}
 				var section = new TableSection { Title = r.Name };
 				cells = SortHelper.SortCells(cells);

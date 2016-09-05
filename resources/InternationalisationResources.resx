@@ -184,4 +184,12 @@
 		name="RefreshOnStartup">
 		<value>Refresh on startup</value>
 	</data>
+	<data
+		name="SourceText">
+		<value>Source: {0}</value>
+	</data>
+	<data
+		name="Tags">
+		<value>Tags</value>
+	</data>
 </root>

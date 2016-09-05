@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+	xmlns:components="clr-namespace:view.components;assembly=MyCryptos"
+	x:Class="view.AccountDetailView">
+	<ContentPage.Content>
+		<StackLayout>
+			<components:HeaderView
+				x:Name="Header" />
+			<TableView
+				Margin="0,-8,0,0"
+				Intent="Form">
+				<TableSection
+					Title="{i18n:Translate Tags}"
+					x:Name="TagsSection">
+				</TableSection>
+			</TableView>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
