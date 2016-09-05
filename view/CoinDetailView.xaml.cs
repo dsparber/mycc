@@ -16,7 +16,7 @@ namespace view
 			var moneySum = new Money(accounts.Sum(a => a.Money.Amount), accounts.First().Money.Currency);
 
 			Title = accounts.First().Money.Currency.Code;
-			TotalMoneyLabel.Text = moneySum.ToString();
+			TotalMoneyLabel.Text = moneySum.ToString(); // TODO Create unified HeaderView -> Title, Info, Loading
 
 			if (exchangeRate.Rate.HasValue)
 			{

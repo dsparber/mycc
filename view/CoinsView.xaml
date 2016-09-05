@@ -3,6 +3,7 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+	xmlns:components="clr-namespace:view.components;assembly=MyCryptos"
 	x:Class="view.CoinsView"
 	Title="{i18n:Translate CoinsTitle}">
 	<ContentPage.ToolbarItems>
@@ -12,33 +13,8 @@
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
-			<ContentView
-				BackgroundColor="#0080FF"
-				HeightRequest="240">
-				<StackLayout
-					VerticalOptions="CenterAndExpand">
-					<Label
-						x:Name="TotalMoneyLabel"
-						FontSize="36"
-						FontAttributes="Bold"
-						HorizontalTextAlignment="Center"
-						TextColor="White" />
-					<StackLayout
-						x:Name="LoadingPanel"
-						IsVisible="false"
-						Orientation="Horizontal"
-						HorizontalOptions="Center">
-						<Label
-							Text="{i18n:Translate Refreshing}"
-							TextColor="White">
-						</Label>
-						<ActivityIndicator
-							Color="White"
-							x:Name="LoadingIndicator"
-							IsRunning="true" />
-					</StackLayout>
-				</StackLayout>
-			</ContentView>
+			<components:HeaderView
+				x:Name="Header" />
 			<TableView
 				Intent="Data"
 				x:Name="CoinsTable" />

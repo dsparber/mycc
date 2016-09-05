@@ -51,6 +51,7 @@ namespace view
 
 				foreach (var e in r.Elements)
 				{
+					// TODO Create AccountViewCell Component
 					section.Add(new TextCell { Text = e.Name, Detail = e.Money.ToString() });
 				}
 

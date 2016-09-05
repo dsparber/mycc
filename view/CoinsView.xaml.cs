@@ -33,11 +33,7 @@ namespace view
 
 			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, (speed) =>
 			{
-				if (!speed.Speed.Equals(FetchSpeedEnum.FAST))
-				{
-					LoadingPanel.IsVisible = true;
-					LoadingIndicator.IsRunning = true;
-				}
+				Header.IsLoading |= !speed.Speed.Equals(FetchSpeedEnum.FAST);
 			});
 		}
 
@@ -89,7 +85,7 @@ namespace view
 					moneySum += c.MoneyReference;
 				}
 			}
-			TotalMoneyLabel.Text = moneySum.ToString();
+			Header.TitleText = moneySum.ToString();
 
 			foreach (var c in cells)
 			{
@@ -109,7 +105,7 @@ namespace view
 				{
 					moneySum += c.MoneyReference;
 				}
-				TotalMoneyLabel.Text = moneySum.ToString();
+				Header.TitleText = moneySum.ToString();
 
 				c.IsLoading = false;
 			}
@@ -121,8 +117,7 @@ namespace view
 		{
 			if (!speed.Equals(FetchSpeedEnum.FAST))
 			{
-				LoadingPanel.IsVisible = loading;
-				LoadingIndicator.IsRunning = loading;
+				Header.IsLoading = loading;
 			}
 		}
 
