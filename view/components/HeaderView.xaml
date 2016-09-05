@@ -3,39 +3,46 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+	xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
 	x:Class="view.components.HeaderView">
 	<ContentView.Content>
-		<ContentView
-			BackgroundColor="#0080FF"
-			HeightRequest="160">
-			<StackLayout
-				VerticalOptions="CenterAndExpand">
-				<Label
-					x:Name="TitleLabel"
-					FontSize="36"
-					FontAttributes="Bold"
-					HorizontalTextAlignment="Center"
-					TextColor="White" />
-				<Label
-					x:Name="InfoLabel"
-					FontSize="18"
-					HorizontalTextAlignment="Center"
-					TextColor="White" />
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition
+					Height="140" />
+			</Grid.RowDefinitions>
+			<ContentView
+				BackgroundColor="{x:Static constants:AppConstants.ThemeColor}">
 				<StackLayout
-					x:Name="LoadingPanel"
-					IsVisible="false"
-					Orientation="Horizontal"
-					HorizontalOptions="Center">
+					VerticalOptions="CenterAndExpand"
+					HorizontalOptions="CenterAndExpand">
 					<Label
-						Text="{i18n:Translate Refreshing}"
-						TextColor="White">
-					</Label>
-					<ActivityIndicator
-						Color="White"
-						x:Name="LoadingIndicator"
-						IsRunning="true" />
+						x:Name="TitleLabel"
+						FontSize="36"
+						FontAttributes="Bold"
+						HorizontalTextAlignment="Center"
+						TextColor="White" />
+					<Label
+						x:Name="InfoLabel"
+						FontSize="18"
+						HorizontalTextAlignment="Center"
+						TextColor="White" />
+					<StackLayout
+						x:Name="LoadingPanel"
+						IsVisible="false"
+						Orientation="Horizontal"
+						HorizontalOptions="Center">
+						<Label
+							Text="{i18n:Translate Refreshing}"
+							TextColor="White">
+						</Label>
+						<ActivityIndicator
+							Color="White"
+							x:Name="LoadingIndicator"
+							IsRunning="true" />
+					</StackLayout>
 				</StackLayout>
-			</StackLayout>
-		</ContentView>
+			</ContentView>
+		</Grid>
 	</ContentView.Content>
 </ContentView>

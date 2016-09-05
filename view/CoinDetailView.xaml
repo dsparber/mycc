@@ -2,27 +2,12 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:components="clr-namespace:view.components;assembly=MyCryptos"
 	x:Class="view.CoinDetailView">
 	<ContentPage.Content>
 		<StackLayout>
-			<ContentView
-				BackgroundColor="#0080FF"
-				HeightRequest="160">
-				<StackLayout
-					VerticalOptions="CenterAndExpand">
-					<Label
-						x:Name="TotalMoneyLabel"
-						FontSize="36"
-						FontAttributes="Bold"
-						HorizontalTextAlignment="Center"
-						TextColor="White" />
-					<Label
-						x:Name="ReferenceMoneyLabel"
-						FontSize="18"
-						HorizontalTextAlignment="Center"
-						TextColor="White" />
-				</StackLayout>
-			</ContentView>
+			<components:HeaderView
+				x:Name="Header" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

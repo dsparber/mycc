@@ -16,15 +16,15 @@ namespace view
 			var moneySum = new Money(accounts.Sum(a => a.Money.Amount), accounts.First().Money.Currency);
 
 			Title = accounts.First().Money.Currency.Code;
-			TotalMoneyLabel.Text = moneySum.ToString(); // TODO Create unified HeaderView -> Title, Info, Loading
+			Header.TitleText = moneySum.ToString();
 
 			if (exchangeRate.Rate.HasValue)
 			{
 				var moneyReference = new Money(moneySum.Amount * exchangeRate.Rate.Value, exchangeRate.SecondaryCurrency);
-				ReferenceMoneyLabel.Text = moneyReference.ToString();
+				Header.InfoText = moneyReference.ToString();
 			}
-			else { 
-				ReferenceMoneyLabel.Text = InternationalisationResources.NoExchangeRateFound;
+			else {
+				Header.InfoText = InternationalisationResources.NoExchangeRateFound;
 			}
 
 		}

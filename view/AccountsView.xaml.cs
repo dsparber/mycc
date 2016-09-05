@@ -66,26 +66,26 @@ namespace view
 
 			if (accounts == 0)
 			{
-				AccountsLabel.Text = InternationalisationResources.NoAccounts;
+				Header.TitleText = InternationalisationResources.NoAccounts;
 			}
 			else if (accounts == 1)
 			{
-				AccountsLabel.Text = string.Format("{0} {1}", accounts, InternationalisationResources.Account);
+				Header.TitleText = string.Format("{0} {1}", accounts, InternationalisationResources.Account);
 			}
 			else {
-				AccountsLabel.Text = string.Format("{0} {1}", accounts, InternationalisationResources.Accounts);
+				Header.TitleText = string.Format("{0} {1}", accounts, InternationalisationResources.Accounts);
 			}
 
 			if (sources == 0)
 			{
-				SourcesLabel.Text = InternationalisationResources.NoSources;
+				Header.InfoText = InternationalisationResources.NoSources;
 			}
 			else if (sources == 1)
 			{
-				SourcesLabel.Text = string.Format("{0} {1}", sources, InternationalisationResources.Source);
+				Header.InfoText = string.Format("{0} {1}", sources, InternationalisationResources.Source);
 			}
 			else {
-				SourcesLabel.Text = string.Format("{0} {1}", sources, InternationalisationResources.Sources);
+				Header.InfoText = string.Format("{0} {1}", sources, InternationalisationResources.Sources);
 			}
 		}
 	}
