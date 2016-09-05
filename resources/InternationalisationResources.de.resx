@@ -192,4 +192,8 @@
 		name="Tags">
 		<value>Tags</value>
 	</data>
+	<data
+		name="SearchCurrencies">
+		<value>Währungen durchsuchen</value>
+	</data>
 </root>

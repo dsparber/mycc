@@ -10,12 +10,8 @@
 		<TableView
 			Intent="Settings">
 			<TableSection
-				Title="{i18n:Translate ReferenceCurrency}">
-				<EntryCell
-					x:Name="ReferenceCurrency"
-					Completed="ReferenceCurrencyEntered"
-					Label="{i18n:Translate Currency}"
-					Placeholder="{i18n:Translate CurrencyExample}" />
+				Title="{i18n:Translate ReferenceCurrency}"
+				x:Name="CurrencySection">
 			</TableSection>
 			<TableSection
 				Title="{i18n:Translate SortOrder}">

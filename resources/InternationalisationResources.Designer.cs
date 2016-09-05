@@ -310,5 +310,11 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("Tags", resourceCulture);
             }
         }
+        
+        public static string SearchCurrencies {
+            get {
+                return ResourceManager.GetString("SearchCurrencies", resourceCulture);
+            }
+        }
     }
 }

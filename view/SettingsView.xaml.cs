@@ -4,28 +4,29 @@ using message;
 using models;
 using System;
 using Xamarin.Forms;
+using view.components;
 
 namespace view
 {
 	public partial class SettingsView : ContentPage
 	{
+		CurrencyEntryCell ReferenceCurrency;
 		public SettingsView()
 		{
 			InitializeComponent();
-		}
 
-		protected override void OnAppearing()
-		{
-			ReferenceCurrency.Text = ApplicationSettings.BaseCurrency.Code;
+			ReferenceCurrency = new CurrencyEntryCell(Navigation);
+			CurrencySection.Add(ReferenceCurrency);
+			ReferenceCurrency.SelectedCurrency = ApplicationSettings.BaseCurrency;
+			ReferenceCurrency.OnSelected = ReferenceCurrencyEntered;
+
 			AutoRefresh.On = ApplicationSettings.AutoRefreshOnStartup;
-
 			updateCheckmarks();
 		}
 
-		void ReferenceCurrencyEntered(object sender, EventArgs e)
+		void ReferenceCurrencyEntered(Currency currency)
 		{
-			var code = ReferenceCurrency.Text;
-			ApplicationSettings.BaseCurrency = new Currency(code);
+			ApplicationSettings.BaseCurrency = currency;
 			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.MEDIUM), MessageConstants.UpdateCoinsView);
 			// TODO Update Coin Detail View
 		}
