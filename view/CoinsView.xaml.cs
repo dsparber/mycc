@@ -72,7 +72,7 @@ namespace view
 				var cell = section.Select(e => (CoinViewCell)e).ToList().Find(e => e.Currency.Equals(g.Key));
 				if (cell == null)
 				{
-					cell = new CoinViewCell(Navigation) { Accounts = g.ToList()};
+					cell = new CoinViewCell(Navigation) { Accounts = g.ToList() };
 				}
 				else {
 					cell.Accounts = g.ToList();
@@ -84,7 +84,7 @@ namespace view
 			var moneySum = new Money(0, ApplicationSettings.BaseCurrency);
 			foreach (var c in cells)
 			{
-				if (moneySum.Currency.Equals(c.Currency))
+				if (c.MoneyReference != null && moneySum.Currency.Equals(c.MoneyReference.Currency))
 				{
 					moneySum += c.MoneyReference;
 				}
@@ -97,7 +97,7 @@ namespace view
 
 				var rate = await ExchangeRateStorage.Instance.GetRate(c.Currency, ApplicationSettings.BaseCurrency, speed);
 
-				if (moneySum.Currency.Equals(c.Currency))
+				if (c.MoneyReference != null && moneySum.Currency.Equals(c.MoneyReference.Currency))
 				{
 					moneySum -= c.MoneyReference;
 				}

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using MyCryptos.resources;
 using renderer;
@@ -15,6 +16,19 @@ namespace renderer
 		{
 			base.ViewWillAppear(animated);
 
+			rearrangeButtons();
+		}
+
+		private ToolbarItem GetButtonInfo(IList<ToolbarItem> items, string name)
+		{
+			if (string.IsNullOrEmpty(name) || items == null)
+				return null;
+
+			return items.ToList().FirstOrDefault(itemData => name.Equals(itemData.Text));
+		}
+
+		void rearrangeButtons()
+		{
 			if (NavigationController == null)
 			{
 				return;
@@ -27,9 +41,7 @@ namespace renderer
 			var rightNativeButtons = (navigationItem.RightBarButtonItems ?? new UIBarButtonItem[] { }).ToList();
 			var allButtons = new List<UIBarButtonItem>(leftNativeButtons);
 			allButtons.AddRange(rightNativeButtons);
-			leftNativeButtons.RemoveAll(b => true);
 			rightNativeButtons.RemoveAll(b => true);
-
 
 			allButtons.ForEach(nativeItem =>
 			{
@@ -61,6 +73,7 @@ namespace renderer
 					systemItem.Target = nativeItem.Target;
 					nativeItem = systemItem;
 				}
+
 				if (info != null && info.Text.Equals(InternationalisationResources.Cancel))
 				{
 					leftNativeButtons.Add(nativeItem);
@@ -69,17 +82,10 @@ namespace renderer
 					rightNativeButtons.Add(nativeItem);
 				}
 			});
+			rightNativeButtons.RemoveAll(b => leftNativeButtons.Contains(b));
 
 			navigationItem.RightBarButtonItems = rightNativeButtons.ToArray();
 			navigationItem.LeftBarButtonItems = leftNativeButtons.ToArray();
-		}
-
-		private ToolbarItem GetButtonInfo(IList<ToolbarItem> items, string name)
-		{
-			if (string.IsNullOrEmpty(name) || items == null)
-				return null;
-
-			return items.ToList().FirstOrDefault(itemData => name.Equals(itemData.Text));
 		}
 	}
 }

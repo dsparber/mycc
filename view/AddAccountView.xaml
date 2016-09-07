@@ -29,15 +29,12 @@
 						Placeholder="{i18n:Translate LabelExample}" />
 				</TableSection>
 				<TableSection
-					Title="{i18n:Translate Coins}">
+					Title="{i18n:Translate Coins}"
+					x:Name="MoneySection">
 					<EntryCell
 						x:Name="ValueInput"
 						Label="{i18n:Translate Value}"
 						Placeholder="{i18n:Translate ValueExample}" />
-					<EntryCell
-						x:Name="CurrencyInput"
-						Label="{i18n:Translate Currency}"
-						Placeholder="{i18n:Translate CurrencyExample}" />
 				</TableSection>
 			</TableView.Root>
 		</TableView>

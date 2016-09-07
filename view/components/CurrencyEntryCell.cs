@@ -97,7 +97,6 @@ namespace view.components
 				ToolbarItems.Add(done);
 
 				searchBar = new SearchBar { Placeholder = InternationalisationResources.SearchCurrencies };
-				// TODO Implement search
 
 				activityIndicator = new ActivityIndicator();
 				activityIndicator.IsRunning = true;
@@ -120,7 +119,27 @@ namespace view.components
 
 				var section = new TableSection();
 
-				foreach (var c in (await currencies).OrderBy(c => c.Code))
+				var currenciesSorted = (await currencies).OrderBy(c => c.Code);
+				setTableContent(section, currenciesSorted);
+
+				searchBar.TextChanged += (sender, e) =>
+				{
+					var txt = e.NewTextValue;
+					var filtered = currenciesSorted.Where(c => c.Code.Contains(txt) || c.Name.Contains(txt));
+					setTableContent(section, filtered);
+				};
+
+				currenciesTableView.Root.Add(section);
+
+				activityIndicator.IsRunning = false;
+				activityIndicator.IsVisible = false;
+				currenciesTableView.IsVisible = true;
+			}
+
+			void setTableContent(TableSection section, IEnumerable<Currency> currenciesSorted)
+			{
+				section.Clear();
+				foreach (var c in currenciesSorted)
 				{
 					var cell = new TextCell { Text = c.Code, Detail = c.Name };
 					cell.Tapped += (sender, e) =>
@@ -131,12 +150,6 @@ namespace view.components
 					};
 					section.Add(cell);
 				}
-
-				currenciesTableView.Root.Add(section);
-
-				activityIndicator.IsRunning = false;
-				activityIndicator.IsVisible = false;
-				currenciesTableView.IsVisible = true;
 			}
 		}
 	}
