@@ -208,4 +208,8 @@
 		name="Delete">
 		<value>Delete</value>
 	</data>
+	<data
+		name="LocalAccount">
+		<value>Local account</value>
+	</data>
 </root>

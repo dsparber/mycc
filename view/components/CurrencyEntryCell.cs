@@ -9,8 +9,6 @@ using Xamarin.Forms;
 
 namespace view.components
 {
-	// TODO Fix 0 bei DetailView
-
 	public class CurrencyEntryCell : ViewCell
 	{
 		readonly Label TitleLabel;
@@ -20,7 +18,6 @@ namespace view.components
 		readonly INavigation Navigation;
 
 		Currency selectedCurrency;
-		decimal selectedAmount;
 		bool isAmountEnabled;
 
 		public Action<Currency> onSelected;
@@ -51,13 +48,38 @@ namespace view.components
 
 		public decimal SelectedAmount
 		{
-			set { selectedAmount = value; if (value != 0) AmountEntry.Text = SelectedAmount.ToString(); }
-			get { selectedAmount = decimal.Parse((AmountEntry == null || AmountEntry.Text == null) ? "0" : AmountEntry.Text); return selectedAmount; }
+			set
+			{
+				if (value != 0)
+				{
+					AmountEntry.Text = value.ToString();
+				}
+			}
+			get
+			{
+				if (AmountEntry == null)
+				{
+					return 0;
+				}
+				var txt = AmountEntry.Text;
+				var selectedAmount = (txt ?? "0");
+				if (selectedAmount.Trim().Equals(string.Empty))
+				{
+					return 0;
+				}
+				return decimal.Parse(selectedAmount);
+			}
 		}
 
 		public bool IsAmountEnabled
 		{
-			set { isAmountEnabled = value; AmountEntry.IsVisible = value; SelectedCurrencyLabel.HorizontalOptions = value ? LayoutOptions.End : LayoutOptions.EndAndExpand; }
+			set
+			{
+				isAmountEnabled = value;
+				AmountEntry.IsVisible = value;
+				SelectedCurrencyLabel.HorizontalOptions = value ? LayoutOptions.End : LayoutOptions.EndAndExpand;
+				TitleLabel.Text = value ? InternationalisationResources.Value : InternationalisationResources.Currency;
+			}
 			get { return isAmountEnabled; }
 		}
 
@@ -65,9 +87,17 @@ namespace view.components
 		{
 			Navigation = navigation;
 
-			TitleLabel = new Label { Text = InternationalisationResources.Value };
+			TitleLabel = new Label();
 			TitleLabel.VerticalOptions = LayoutOptions.CenterAndExpand; ;
 			TitleLabel.WidthRequest = 103;
+
+			if (IsAmountEnabled)
+			{
+				TitleLabel.Text = InternationalisationResources.Value;
+			}
+			else {
+				TitleLabel.Text = InternationalisationResources.Currency;
+			}
 
 			SelectedCurrencyLabel = new Label();
 			SelectedCurrencyLabel.VerticalOptions = LayoutOptions.CenterAndExpand;
@@ -79,14 +109,10 @@ namespace view.components
 			AmountEntry.VerticalOptions = LayoutOptions.CenterAndExpand;
 			AmountEntry.Keyboard = Keyboard.Numeric;
 			AmountEntry.Placeholder = InternationalisationResources.Value;
-			AmountEntry.TextChanged += (sender, e) => {
+			AmountEntry.TextChanged += (sender, e) =>
+			{
 				OnTyped(SelectedMoney);
 			};
-
-			if (SelectedAmount != 0)
-			{
-				AmountEntry.Text = SelectedAmount.ToString();
-			}
 
 			var icon = new Image { HeightRequest = 20, Source = ImageSource.FromFile("more.png") };
 			icon.HorizontalOptions = LayoutOptions.End;
@@ -169,7 +195,7 @@ namespace view.components
 
 				var section = new TableSection();
 
-				var currenciesSorted = (await currencies).OrderBy(c => c.Code);
+				var currenciesSorted = (await currencies).Distinct().OrderBy(c => c.Code);
 				setTableContent(section, currenciesSorted);
 
 				searchBar.TextChanged += (sender, e) =>

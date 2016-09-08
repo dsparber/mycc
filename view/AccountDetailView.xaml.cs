@@ -119,6 +119,8 @@ namespace view
 			Title = InternationalisationResources.AddAccountTitle;
 			Header.TitleText = selectedMoney.ToString();
 			currencyEntryCell.SelectedMoney = selectedMoney;
+			AccountName.Text = InternationalisationResources.LocalAccount;
+			Header.InfoText = AccountName.Text;
 			AccountName.Completed += (sender, e) => Header.InfoText = AccountName.Text;
 		}
 	}

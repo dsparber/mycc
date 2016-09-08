@@ -334,5 +334,11 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
+        
+        public static string LocalAccount {
+            get {
+                return ResourceManager.GetString("LocalAccount", resourceCulture);
+            }
+        }
     }
 }
