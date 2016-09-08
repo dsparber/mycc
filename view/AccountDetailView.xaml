@@ -25,22 +25,13 @@
 				IsVisible="false">
 				<TableView.Root>
 					<TableSection
-						Title="{i18n:Translate Label}">
+						x:Name="AccountSection">
 						<EntryCell
 							x:Name="AccountName"
 							Label="{i18n:Translate Label}"
 							Placeholder="{i18n:Translate LabelExample}" />
 					</TableSection>
-					<TableSection
-						Title="{i18n:Translate Coins}"
-						x:Name="MoneySection">
-						<EntryCell
-							x:Name="AccountValue"
-							Keyboard="Numeric"
-							Label="{i18n:Translate Value}"
-							Placeholder="{i18n:Translate ValueExample}" />
-					</TableSection>
-					<TableSection>
+					<TableSection x:Name="DeleteSection">
 						<ViewCell>
 							<Button
 								TextColor="Red"

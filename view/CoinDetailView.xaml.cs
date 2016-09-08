@@ -62,10 +62,11 @@ namespace view
 		void setHeader(IEnumerable<Tuple<Account, AccountRepository>> accounts, ExchangeRate exchangeRate)
 		{
 			var moneySum = new Money(accounts.Sum(a => a.Item1.Money.Amount), accounts.First().Item1.Money.Currency);
-			Title = accounts.First().Item1.Money.Currency.Code;
+			var currency = accounts.First().Item1.Money.Currency;
+			Title = currency != null ? currency.Code : string.Empty;
 			Header.TitleText = moneySum.ToString();
 
-			if (exchangeRate.Rate.HasValue)
+			if (exchangeRate != null && exchangeRate.Rate.HasValue)
 			{
 				var moneyReference = new Money(moneySum.Amount * exchangeRate.Rate.Value, exchangeRate.SecondaryCurrency);
 				Header.InfoText = moneyReference.ToString();

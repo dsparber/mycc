@@ -33,7 +33,7 @@ namespace data.database.models
 			{
 				Id = account.Id.Value;
 			}
-			if (account.Money.Currency.Id.HasValue)
+			if (account.Money.Currency != null && account.Money.Currency.Id.HasValue)
 			{
 				CurrencyId = account.Money.Currency.Id.Value;
 			}

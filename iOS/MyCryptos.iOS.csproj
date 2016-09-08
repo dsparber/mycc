@@ -159,6 +159,7 @@
     <Compile Include="data\database\SQLiteConnectionIOS.cs" />
     <Compile Include="Localise.cs" />
     <Compile Include="renderer\ContentPageRenderer.cs" />
+    <Compile Include="renderer\CustomEntryRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

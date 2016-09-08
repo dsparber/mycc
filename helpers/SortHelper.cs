@@ -23,7 +23,7 @@ namespace helpers
 			}
 			else
 			{
-				sortLambda = c => c.Currency.Code;
+				sortLambda = c => c.Currency != null ? c.Currency.Code : string.Empty;
 			}
 
 

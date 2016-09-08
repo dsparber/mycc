@@ -50,7 +50,7 @@ namespace view
 
 		public void AddCoin(object sender, EventArgs e)
 		{
-			Navigation.PushModalAsync(new NavigationPage(new AddAccountView()));
+			Navigation.PushModalAsync(new NavigationPage(new AccountDetailView(null, null) { IsNew = true }));
 		}
 
 		protected override void OnAppearing()
@@ -79,15 +79,18 @@ namespace view
 
 			foreach (var g in groups)
 			{
-				var cell = section.Select(e => (CoinViewCell)e).ToList().Find(e => e.Currency.Equals(g.Key));
-				if (cell == null)
+				if (g.Key != null)
 				{
-					cell = new CoinViewCell(Navigation) { Accounts = g.ToList() };
+					var cell = section.Select(e => (CoinViewCell)e).ToList().Find(e => g.Key.Equals(e.Currency));
+					if (cell == null)
+					{
+						cell = new CoinViewCell(Navigation) { Accounts = g.ToList() };
+					}
+					else {
+						cell.Accounts = g.ToList();
+					}
+					cells.Add(cell);
 				}
-				else {
-					cell.Accounts = g.ToList();
-				}
-				cells.Add(cell);
 			}
 			setCells(section, cells);
 
