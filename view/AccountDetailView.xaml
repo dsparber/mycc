@@ -10,12 +10,46 @@
 			<components:HeaderView
 				x:Name="Header" />
 			<TableView
+				x:Name="DefaultView"
 				Margin="0,-8,0,0"
 				Intent="Form">
 				<TableSection
 					Title="{i18n:Translate Tags}"
 					x:Name="TagsSection">
 				</TableSection>
+			</TableView>
+			<TableView
+				x:Name="EditView"
+				Intent="Form"
+				Margin="0,-8,0,0"
+				IsVisible="false">
+				<TableView.Root>
+					<TableSection
+						Title="{i18n:Translate Label}">
+						<EntryCell
+							x:Name="AccountName"
+							Label="{i18n:Translate Label}"
+							Placeholder="{i18n:Translate LabelExample}" />
+					</TableSection>
+					<TableSection
+						Title="{i18n:Translate Coins}"
+						x:Name="MoneySection">
+						<EntryCell
+							x:Name="AccountValue"
+							Keyboard="Numeric"
+							Label="{i18n:Translate Value}"
+							Placeholder="{i18n:Translate ValueExample}" />
+					</TableSection>
+					<TableSection>
+						<ViewCell>
+							<Button
+								TextColor="Red"
+								Text="{i18n:Translate Delete}"
+								Clicked="Delete">
+							</Button>
+						</ViewCell>
+					</TableSection>
+				</TableView.Root>
 			</TableView>
 		</StackLayout>
 	</ContentPage.Content>

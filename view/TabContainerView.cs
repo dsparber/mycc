@@ -68,7 +68,7 @@ namespace view
 
 			if (appTasks.IsAddAccountTaskStarted)
 			{
-				await appTasks.AddAccountTaskInstance;
+				await appTasks.AddAccountTask;
 				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.MEDIUM), MessageConstants.UpdateCoinsView);
 				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateAccountsView);
 			}

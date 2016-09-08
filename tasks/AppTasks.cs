@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using data.repositories.account;
-using data.repositories.currency;
 using data.storage;
 using models;
 
@@ -11,10 +10,12 @@ namespace tasks
 		Task fastFetchTaskInstance;
 		Task fetchTaskInstance;
 		Task addAccountTaskInstance;
+		Task deleteAccountTaskInstance;
 
 		public Task FastFetchTask { get { return fastFetchTaskInstance; } }
 		public Task FetchTask { get { return fetchTaskInstance; } }
-		public Task AddAccountTaskInstance { get { return addAccountTaskInstance; } }
+		public Task AddAccountTask { get { return addAccountTaskInstance; } }
+		public Task DeleteAccountTask { get { return addAccountTaskInstance; } }
 
 		public void StartFastFetchTask()
 		{
@@ -32,11 +33,19 @@ namespace tasks
 			}
 		}
 
-		public void StartAddAccountTask(string accountName, decimal value, string currencyCode)
+		public void StartAddAccountTask(Account account)
 		{
 			if (addAccountTaskInstance == null || addAccountTaskInstance.IsCompleted)
 			{
-				addAccountTaskInstance = addAccountTask(accountName, value, currencyCode);
+				addAccountTaskInstance = addAccountTask(account);
+			}
+		}
+
+		public void StartDeleteAccountTask(Account account)
+		{
+			if (deleteAccountTaskInstance == null || deleteAccountTaskInstance.IsCompleted)
+			{
+				deleteAccountTaskInstance = deleteAccountTask(account);
 			}
 		}
 
@@ -64,6 +73,14 @@ namespace tasks
 			}
 		}
 
+		public bool IsDeleteAccountTaskFinished
+		{
+			get
+			{
+				return deleteAccountTaskInstance != null && deleteAccountTaskInstance.IsCompleted;
+			}
+		}
+
 		public bool IsFastFetchTaskStarted
 		{
 			get
@@ -88,6 +105,14 @@ namespace tasks
 			}
 		}
 
+		public bool IsDeleteAccountTaskStarted
+		{
+			get
+			{
+				return deleteAccountTaskInstance != null && (deleteAccountTaskInstance.Status.Equals(TaskStatus.Running) || deleteAccountTaskInstance.IsCompleted);
+			}
+		}
+
 		Task fastFetchTask()
 		{
 			var accountFastFetchTask = AccountStorage.Instance.FetchFast();
@@ -106,19 +131,14 @@ namespace tasks
 			return Task.WhenAll(accountFetchTask, currencyFetchTask, exchangeRateFetchTask);
 		}
 
-		async Task addAccountTask(string accountName, decimal value, string currencyCode)
+		async Task addAccountTask(Account account)
 		{
-			var currency = await CurrencyStorage.Instance.GetByString(currencyCode);
-			if (currency == null)
-			{
-				currency = new Currency(currencyCode.ToUpper());
-				await (await CurrencyStorage.Instance.Repositories()).Find(r => r is LocalCurrencyRepository).Add(currency);
-				currency = await CurrencyStorage.Instance.GetByString(currencyCode);
-			}
-
-			var money = new Money(value, currency);
-			var account = new Account(accountName, money);
 			await (await AccountStorage.Instance.Repositories()).Find(r => r is LocalAccountRepository).Add(account);
+		}
+
+		async Task deleteAccountTask(Account account)
+		{
+			await (await AccountStorage.Instance.Repositories()).Find(r => r is LocalAccountRepository).Delete(account);
 		}
 
 		static AppTasks instance { get; set; }

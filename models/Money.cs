@@ -47,6 +47,15 @@ namespace models
 		}
 
 		/// <summary>
+		/// Formats the money as string
+		/// </summary>
+		/// <returns>Money object as string</returns>
+		public string ToStringWithoutCurrency()
+		{
+			return string.Format("{0:#,0.##}", Amount);
+		}
+
+		/// <summary>
 		/// Adds a <see cref="Money"/> to a <see cref="Money"/>, yielding a new <see cref="T:Money"/>.
 		/// </summary>
 		/// <param name="m1">The first <see cref="Money"/> to add.</param>

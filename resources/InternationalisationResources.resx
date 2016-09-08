@@ -196,4 +196,16 @@
 		name="SearchCurrencies">
 		<value>Search currencies</value>
 	</data>
+	<data
+		name="Edit">
+		<value>Edit</value>
+	</data>
+	<data
+		name="Editing">
+		<value>Editing</value>
+	</data>
+	<data
+		name="Delete">
+		<value>Delete</value>
+	</data>
 </root>

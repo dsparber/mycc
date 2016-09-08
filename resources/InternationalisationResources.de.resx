@@ -196,4 +196,16 @@
 		name="SearchCurrencies">
 		<value>Währungen durchsuchen</value>
 	</data>
+	<data
+		name="Edit">
+		<value>Bearbeiten</value>
+	</data>
+	<data
+		name="Editing">
+		<value>Bearbeiten</value>
+	</data>
+	<data
+		name="Delete">
+		<value>Löschen</value>
+	</data>
 </root>

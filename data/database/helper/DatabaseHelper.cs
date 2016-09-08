@@ -10,6 +10,8 @@ namespace data.database.helper
 	{
 		public static async Task InsertOrUpdate<T, V>(AbstractEntityDatabase<T, V> database, IEnumerable<T> objs) where T : IEntityDBM<V>
 		{
+			// TODO Delete no longer existing objects
+
 			var existingDbObjects = await database.GetAllDbObjects();
 
 			var existingObjectsIdMap = (await Task.WhenAll(existingDbObjects.Select(async o => new Tuple<T, V>(o, await o.Resolve())))).ToList();

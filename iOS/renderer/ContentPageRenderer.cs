@@ -55,6 +55,10 @@ namespace renderer
 					{
 						systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Done);
 					}
+					if (info.Text.Equals(InternationalisationResources.Edit))
+					{
+						systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Edit);
+					}
 					else if (info.Text.Equals(InternationalisationResources.Add))
 					{
 						systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Add);

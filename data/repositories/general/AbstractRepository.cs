@@ -45,6 +45,19 @@ namespace data.repositories.general
 			Elements.Add(element);
 			await WriteToDatabase();
 		}
+
+		public async Task Update(V element)
+		{
+			Elements.Remove(element);
+			Elements.Add(element);
+			await WriteToDatabase();
+		}
+
+		public async Task Delete(V element)
+		{
+			Elements.Remove(element);
+			await WriteToDatabase();
+		}
 	}
 }
 

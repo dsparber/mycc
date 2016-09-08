@@ -27,6 +27,11 @@ namespace view
 			{
 				await UpdateView();
 			});
+
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdateAccounts, async (str) =>
+			{
+				await UpdateView();
+			});
 		}
 
 		public async void Add(object sender, EventArgs e)

@@ -31,7 +31,7 @@ namespace view
 			// TODO Update Coin Detail View
 		}
 
-		void SortOrderSelected(object sender, System.EventArgs e)
+		void SortOrderSelected(object sender, EventArgs e)
 		{
 			if (sender.Equals(SortOrderAlphabetical))
 			{

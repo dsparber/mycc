@@ -316,5 +316,23 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("SearchCurrencies", resourceCulture);
             }
         }
+        
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        public static string Editing {
+            get {
+                return ResourceManager.GetString("Editing", resourceCulture);
+            }
+        }
+        
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
     }
 }

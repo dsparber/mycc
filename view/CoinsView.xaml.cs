@@ -36,6 +36,16 @@ namespace view
 			{
 				Header.IsLoading |= !speed.Speed.Equals(FetchSpeedEnum.FAST);
 			});
+
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdateAccounts, async (str) =>
+			{
+				if (updateViewTask != null)
+				{
+					await updateViewTask;
+				}
+				updateViewTask = UpdateView(FetchSpeedEnum.FAST);
+				await updateViewTask;
+			});
 		}
 
 		public void AddCoin(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System;
 using data.settings;
+using models;
 using tasks;
 using view.components;
 using Xamarin.Forms;
@@ -32,13 +33,16 @@ namespace view
 			var currency = currencyEntryCell.SelectedCurrency;
 
 			// TODO Floatpoint numbers
+			// TODO Default label
 
-			if (AppTasks.Instance.IsFetchTaskStarted && !AppTasks.Instance.IsFetchTaskFinished)
+			if (AppTasks.Instance.IsFetchTaskStarted && !AppTasks.Instance.IsFetchTaskStarted)
 			{
 				await AppTasks.Instance.FetchTask;
 			}
 
-			AppTasks.Instance.StartAddAccountTask(name, decimal.Parse(value), currency.Code);
+			var account = new Account(name, new Money(decimal.Parse(value), currency));
+
+			AppTasks.Instance.StartAddAccountTask(account);
 			await Navigation.PopModalAsync();
 		}
 	}

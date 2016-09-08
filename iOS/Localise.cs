@@ -58,8 +58,6 @@ namespace MyCryptos.iOS
 			}
 			catch
 			{
-				// iOS locale not valid .NET culture (eg. "en-ES" : English in Spain)
-				// fallback to first characters, in this case "en"
 				ci = new CultureInfo(prefLanguageOnly);
 			}
 

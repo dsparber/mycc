@@ -7,6 +7,8 @@
 		public const string StartedFetching = "StartedFetching";
 		public const string DoneFetching = "DoneFetching";
 		public const string SortOrderChanged = "SortOrderChanged";
+
+		public const string UpdateAccounts = "UpdateAccounts";
 	}
 }
 
