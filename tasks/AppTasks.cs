@@ -15,7 +15,7 @@ namespace tasks
 		public Task FastFetchTask { get { return fastFetchTaskInstance; } }
 		public Task FetchTask { get { return fetchTaskInstance; } }
 		public Task AddAccountTask { get { return addAccountTaskInstance; } }
-		public Task DeleteAccountTask { get { return addAccountTaskInstance; } }
+		public Task DeleteAccountTask { get { return deleteAccountTaskInstance; } }
 
 		public void StartFastFetchTask()
 		{

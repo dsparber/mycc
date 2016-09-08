@@ -10,8 +10,6 @@ namespace data.database.helper
 	{
 		public static async Task InsertOrUpdate<T, V>(AbstractEntityDatabase<T, V> database, IEnumerable<T> objs) where T : IEntityDBM<V>
 		{
-			// TODO Delete no longer existing objects
-
 			var existingDbObjects = await database.GetAllDbObjects();
 
 			var existingObjectsIdMap = (await Task.WhenAll(existingDbObjects.Select(async o => new Tuple<T, V>(o, await o.Resolve())))).ToList();
@@ -23,6 +21,8 @@ namespace data.database.helper
 			var objectsFound = comparisonObjects.ToList().FindAll(c => existingObjects.Contains(c));
 			var objectsNotFound = comparisonObjects.ToList().FindAll(c => !existingObjects.Contains(c));
 
+			var noLongerExisting = existingObjects.ToList().FindAll(c => !objectsFound.Contains(c));
+
 			var dbObjectsFound = objectsFound.Select(o =>
 			{
 				var dbObj = comparisonObjectsIdMap.Find(e => e.Item2.Equals(o)).Item1;
@@ -30,10 +30,15 @@ namespace data.database.helper
 				return dbObj;
 			});
 			var dbObjectsNotFound = objectsNotFound.Select(o => comparisonObjectsIdMap.Find(e => e.Item2.Equals(o)).Item1);
+			var dbObjectsNotExisting = noLongerExisting.Select(o => existingObjectsIdMap.Find(e => e.Item2.Equals(o)).Item1);
 
 			var connection = await database.Connection();
 			await connection.InsertAllAsync(dbObjectsNotFound);
 			await connection.UpdateAllAsync(dbObjectsFound);
+			foreach (var o in dbObjectsNotExisting)
+			{
+				await connection.DeleteAsync(o);
+			}
 		}
 	}
 }
