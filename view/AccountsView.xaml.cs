@@ -39,7 +39,7 @@ namespace view
 			var action = await DisplayActionSheet(InternationalisationResources.AddActionChooseTitle, InternationalisationResources.Cancel, null, InternationalisationResources.AddLocalAccount);
 			if (InternationalisationResources.AddLocalAccount.Equals(action))
 			{
-				await Navigation.PushModalAsync(new NavigationPage(new AddAccountView()));
+				await Navigation.PushModalAsync(new NavigationPage(new AccountDetailView(null, null) { IsNew = true }));
 			}
 		}
 

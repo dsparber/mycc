@@ -28,7 +28,6 @@ namespace view
 		{
 			ApplicationSettings.BaseCurrency = currency;
 			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.MEDIUM), MessageConstants.UpdateCoinsView);
-			// TODO Update Coin Detail View
 		}
 
 		void SortOrderSelected(object sender, EventArgs e)

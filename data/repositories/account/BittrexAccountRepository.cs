@@ -17,4 +17,3 @@ namespace data.repositories.account
 		}
 	}
 }
-

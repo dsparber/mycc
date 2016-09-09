@@ -112,9 +112,6 @@
     <Compile Include="enums\FetchSpeed.cs" />
     <Compile Include="data\repositories\currency\BtceCurrencyRepository.cs" />
     <Compile Include="message\MessageConstants.cs" />
-    <Compile Include="view\AddAccountView.xaml.cs">
-      <DependentUpon>AddAccountView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="enums\SortOrder.cs" />
     <Compile Include="enums\SortDirection.cs" />
     <Compile Include="view\components\CoinViewCell.cs" />
@@ -225,9 +222,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="resources\InternationalisationResources.de.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\AddAccountView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="view\CoinDetailView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
