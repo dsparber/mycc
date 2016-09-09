@@ -19,8 +19,8 @@ namespace renderer
 
 		void RemoveAppIconFromActionBar()
 		{
-			//var actionBar = ((Activity)Context).ActionBar;
-			//actionBar.SetIcon(new ColorDrawable(Color.Transparent.ToAndroid()));
+			var actionBar = ((Activity)Context).ActionBar;
+			actionBar.SetIcon(new ColorDrawable(Color.Transparent.ToAndroid()));
 		}
 	}
 }
