@@ -13,7 +13,7 @@
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidApplication>True</AndroidApplication>
-    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <AssemblyName>MyCryptos.Droid</AssemblyName>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
   </PropertyGroup>
@@ -136,6 +136,7 @@
     <Folder Include="data\" />
     <Folder Include="data\database\" />
     <Folder Include="renderer\" />
+    <Folder Include="Resources\values-v21\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />
@@ -145,6 +146,17 @@
     <AndroidResource Include="Resources\drawable\add.png" />
     <AndroidResource Include="Resources\drawable\checkmark.png" />
     <AndroidResource Include="Resources\drawable\more.png" />
+    <AndroidResource Include="Resources\values\colors.xml" />
+    <AndroidResource Include="Resources\values\style.xml" />
+    <AndroidResource Include="Resources\values-v21\style.xml" />
+    <AndroidResource Include="Resources\layout\tabs.axml" />
+    <AndroidResource Include="Resources\layout\toolbar.axml" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="xamandroidsupportdesign">
+      <Version>23.4.0.1</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
