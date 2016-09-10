@@ -62,5 +62,10 @@ namespace data.database
 		{
 			return ConnectionWithoutCreate.CreateTableAsync<AccountDBM>();
 		}
+
+		public async override Task Delete(Account element, int repositoryId)
+		{
+			await DatabaseHelper.Delete(this, new AccountDBM(element, repositoryId));
+		}
 	}
 }

@@ -24,6 +24,11 @@ namespace data.database
 		{
 			await DatabaseHelper.InsertOrUpdate(this, data.Select(e => new ExchangeRateDBM(e, repositoryId)));
 		}
+
+		public async override Task Delete(ExchangeRate element, int repositoryId)
+		{
+			await DatabaseHelper.Delete(this, new ExchangeRateDBM(element, repositoryId));
+		}
 	}
 }
 

@@ -24,5 +24,10 @@ namespace data.database
 		{
 			await DatabaseHelper.InsertOrUpdate(this, data.Select(c => new CurrencyDBM(c, repositoryId)));
 		}
+
+		public async override Task Delete(Currency element, int repositoryId)
+		{
+			await DatabaseHelper.Delete(this, new CurrencyDBM(element, repositoryId));
+		}
 	}
 }

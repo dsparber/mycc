@@ -75,6 +75,15 @@ namespace models
 			return Code.GetHashCode();
 		}
 
+		/// <summary>
+		/// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:models.Currency"/>.
+		/// </summary>
+		/// <returns>A <see cref="T:System.String"/> that represents the current <see cref="T:models.Currency"/>.</returns>
+		public override string ToString()
+		{
+			return string.Format("[Currency: Id={0}, Code={1}]", Id, Code);
+		}
+
 		public static readonly Currency BTC = new Currency("BTC", "Bitcoin");
 		public static readonly Currency EUR = new Currency("EUR", "Euro");
 		public static readonly Currency USD = new Currency("USD", "US Dollar");

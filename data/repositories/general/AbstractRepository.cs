@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using data.database.helper;
 using data.database.interfaces;
@@ -37,7 +38,14 @@ namespace data.repositories.general
 		protected async Task WriteToDatabase()
 		{
 			var db = GetDatabase();
+			Elements = Elements.Distinct().ToList();
 			await db.Write(Elements, Id);
+			Elements = new List<V>(await db.GetAll(Id));
+		}
+
+		protected async Task DeleteFromDatabase(V element) {
+			var db = GetDatabase();
+			await db.Delete(element, Id);
 			Elements = new List<V>(await db.GetAll(Id));
 		}
 
@@ -55,8 +63,7 @@ namespace data.repositories.general
 
 		public async Task Delete(V element)
 		{
-			Elements.Remove(element);
-			await WriteToDatabase();
+			await DeleteFromDatabase(element);
 		}
 	}
 }

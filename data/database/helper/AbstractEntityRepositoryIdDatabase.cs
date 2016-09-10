@@ -8,6 +8,7 @@ namespace data.database.helper
 	public abstract class AbstractEntityRepositoryIdDatabase<T, V> : AbstractEntityDatabase<T, V> where T : IEntityRepositoryIdDBM<V>
 	{
 		public abstract Task Write(IEnumerable<V> data, int repositoryId);
+		public abstract Task Delete(V element, int repositoryId);
 
 		public async Task<IEnumerable<T>> GetAllDbObjects(int repositoryId)
 		{
