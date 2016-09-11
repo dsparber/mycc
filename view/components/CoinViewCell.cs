@@ -140,7 +140,14 @@ namespace view.components
 			var gestureRecognizer = new TapGestureRecognizer();
 			gestureRecognizer.Tapped += (sender, e) =>
 			{
-				Navigation.PushAsync(new CoinDetailView(accounts, exchangeRate));
+				if (accounts.ToList().Count > 1)
+				{
+					Navigation.PushAsync(new CoinDetailView(accounts, exchangeRate));
+				}
+				else {
+					var element = accounts.ToList()[0];
+					Navigation.PushAsync(new AccountDetailView(element.Item1, element.Item2));
+				}
 			};
 			if (View != null)
 			{
