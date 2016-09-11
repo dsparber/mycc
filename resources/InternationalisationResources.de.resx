@@ -212,4 +212,16 @@
 		name="LocalAccount">
 		<value>Lokales Konto</value>
 	</data>
+	<data
+		name="DifferentCoinsCount">
+		<value>{0} verschiedene Coins</value>
+	</data>
+	<data
+		name="EqualTo">
+		<value>Entspricht</value>
+	</data>
+	<data
+		name="ExchangeRate">
+		<value>Kurs: {0}</value>
+	</data>
 </root>

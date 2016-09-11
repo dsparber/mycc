@@ -103,6 +103,7 @@ namespace view
 				}
 			}
 			Header.TitleText = moneySum.ToString();
+			Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, groups.ToList().Count);
 
 			foreach (var c in cells)
 			{

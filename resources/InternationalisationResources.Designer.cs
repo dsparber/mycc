@@ -340,5 +340,23 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("LocalAccount", resourceCulture);
             }
         }
+        
+        public static string DifferentCoinsCount {
+            get {
+                return ResourceManager.GetString("DifferentCoinsCount", resourceCulture);
+            }
+        }
+        
+        public static string EqualTo {
+            get {
+                return ResourceManager.GetString("EqualTo", resourceCulture);
+            }
+        }
+        
+        public static string ExchangeRate {
+            get {
+                return ResourceManager.GetString("ExchangeRate", resourceCulture);
+            }
+        }
     }
 }

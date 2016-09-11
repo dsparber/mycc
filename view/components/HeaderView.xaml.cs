@@ -19,7 +19,7 @@ namespace view.components
 		public bool IsLoading
 		{
 			get { return LoadingPanel.IsVisible; }
-			set { LoadingPanel.IsVisible = value; LoadingIndicator.IsRunning = value; }
+			set { LoadingPanel.IsVisible = value; LoadingIndicator.IsRunning = value; InfoLabel.IsVisible = !value; }
 		}
 
 		public HeaderView()

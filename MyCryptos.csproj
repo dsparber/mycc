@@ -219,6 +219,7 @@
   <ItemGroup>
     <EmbeddedResource Include="view\CoinsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="view\AccountsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using data.repositories.account;
 using data.settings;
 using data.storage;
+using enums;
 using message;
 using models;
 using MyCryptos.resources;
@@ -24,6 +27,8 @@ namespace view
 		public bool IsNew;
 
 		Money selectedMoney;
+
+		List<Currency> ReferenceCurrencies;
 
 		public AccountDetailView(Account account, AccountRepository repository)
 		{
@@ -54,6 +59,29 @@ namespace view
 
 			currencyEntryCell.OnSelected = (c) => Header.TitleText = currencyEntryCell.SelectedMoney.ToString();
 			currencyEntryCell.OnTyped = (m) => Header.TitleText = m.ToString();
+
+			ReferenceCurrencies = new List<Currency>();
+			ReferenceCurrencies.Add(ApplicationSettings.BaseCurrency);
+			ReferenceCurrencies.Add(Currency.BTC);
+			ReferenceCurrencies.Add(Currency.EUR);
+			ReferenceCurrencies.Add(Currency.USD);
+			ReferenceCurrencies = ReferenceCurrencies.Distinct().ToList();
+		}
+
+		protected async override void OnAppearing()
+		{
+			EqualsSection.Clear();
+
+			// TODO Loading animation?
+			foreach (var c in ReferenceCurrencies)
+			{
+				var rate = await ExchangeRateStorage.Instance.GetRate(account.Money.Currency, (await CurrencyStorage.Instance.AllElements()).Find(e => e.Equals(c)), FetchSpeedEnum.SLOW);
+				EqualsSection.Add(new TextCell
+				{
+					Text = new Money(account.Money.Amount * rate.RateNotNull, c).ToString(),
+					Detail = string.Format(InternationalisationResources.ExchangeRate, rate.Rate)
+				});
+			}
 		}
 
 		public void StartEditing(object sender, EventArgs e)

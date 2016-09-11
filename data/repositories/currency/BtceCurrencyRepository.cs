@@ -11,7 +11,6 @@ namespace data.repositories.currency
 
 		public override async Task Fetch()
 		{
-			Elements.Add(Currency.BTC);
 			Elements.Add(Currency.EUR);
 			Elements.Add(Currency.USD);
 			await WriteToDatabase();
