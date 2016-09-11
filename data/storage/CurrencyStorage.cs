@@ -9,7 +9,7 @@ using System;
 
 namespace data.storage
 {
-	public class CurrencyStorage : AbstractStorage<CurrencyRepositoryDBM, CurrencyRepository, CurrencyDBM, Currency>
+	public class CurrencyStorage : AbstractDatabaseStorage<CurrencyRepositoryDBM, CurrencyRepository, CurrencyDBM, Currency>
 	{
 		protected override CurrencyRepository Resolve(CurrencyRepositoryDBM obj)
 		{
@@ -26,6 +26,7 @@ namespace data.storage
 			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY });
 			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY });
 			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_BTCE_REPOSITORY });
+			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_CRYPTONATOR_REPOSITORY });
 		}
 
 		static CurrencyStorage instance { get; set; }

@@ -210,6 +210,8 @@ namespace view.components
 				activityIndicator.IsRunning = false;
 				activityIndicator.IsVisible = false;
 				currenciesTableView.IsVisible = true;
+
+				searchBar.Focus();
 			}
 
 			void setTableContent(TableSection section, IEnumerable<Currency> currenciesSorted)

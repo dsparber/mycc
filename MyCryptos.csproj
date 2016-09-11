@@ -129,6 +129,21 @@
       <DependentUpon>AccountDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\components\CurrencyEntryCell.cs" />
+    <Compile Include="data\repositories\availablerates\AvailableRatesRepository.cs" />
+    <Compile Include="data\repositories\availablerates\LocalAvailableRatesRepository.cs" />
+    <Compile Include="data\database\models\AvailableRatesRepositoryDBM.cs" />
+    <Compile Include="data\repositories\general\AbstractDatabaseRepository.cs" />
+    <Compile Include="data\repositories\availablerates\OnlineAvailableRatesRepository.cs" />
+    <Compile Include="data\repositories\availablerates\BittrexAvailableRatesRepository.cs" />
+    <Compile Include="data\repositories\availablerates\BtceAvailableRatesRepository.cs" />
+    <Compile Include="data\repositories\availablerates\CryptonatorAvailableRatesRepository.cs" />
+    <Compile Include="data\repositories\exchangerate\CryptonatorExchangeRateRepository.cs" />
+    <Compile Include="data\repositories\currency\CryptonatorCurrencyRepository.cs" />
+    <Compile Include="data\storage\AvailableRatesStorage.cs" />
+    <Compile Include="data\storage\AbstractDatabaseStorage.cs" />
+    <Compile Include="data\factories\AvailableRatesFactory.cs" />
+    <Compile Include="data\database\AvailableRatesRepositoryDatabase.cs" />
+    <Compile Include="data\repositories\general\AbstractAvailabilityRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -199,6 +214,7 @@
     <Folder Include="view\components\" />
     <Folder Include="constants\" />
     <Folder Include="helpers\" />
+    <Folder Include="data\repositories\availablerates\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="view\CoinsView.xaml">

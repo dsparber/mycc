@@ -15,9 +15,9 @@ namespace models
 		/// <param name="rate">Exchange rate.</param>
 		public ExchangeRate(Currency referenceCurrency, Currency secondaryCurrency, decimal? rate)
 		{
-			this.ReferenceCurrency = referenceCurrency;
-			this.SecondaryCurrency = secondaryCurrency;
-			this.Rate = rate;
+			ReferenceCurrency = referenceCurrency;
+			SecondaryCurrency = secondaryCurrency;
+			Rate = rate;
 		}
 
 		/// <summary>
@@ -78,7 +78,7 @@ namespace models
 		/// <returns>The inverse exchange rate.</returns>
 		public ExchangeRate GetInverse()
 		{
-			ExchangeRate exchangeRate = new ExchangeRate(SecondaryCurrency, ReferenceCurrency);
+			var exchangeRate = new ExchangeRate(SecondaryCurrency, ReferenceCurrency);
 			if (Rate != null)
 			{
 				exchangeRate.Rate = 1 / Rate;
@@ -92,7 +92,7 @@ namespace models
 		/// <param name="currency">The specified currency.</param>
 		public bool Contains(Currency currency)
 		{
-			return (ReferenceCurrency != null && ReferenceCurrency.Equals(currency)) || ( SecondaryCurrency != null && SecondaryCurrency.Equals(currency));
+			return (ReferenceCurrency != null && ReferenceCurrency.Equals(currency)) || (SecondaryCurrency != null && SecondaryCurrency.Equals(currency));
 		}
 
 		/// <summary>
@@ -105,9 +105,9 @@ namespace models
 			if (obj == null || GetType() != obj.GetType())
 				return false;
 
-			ExchangeRate r = (ExchangeRate)obj;
+			var r = (ExchangeRate)obj;
 
-			return ((ReferenceCurrency == null && r.ReferenceCurrency == null) || (ReferenceCurrency != null && ReferenceCurrency.Equals(r.ReferenceCurrency))) 
+			return ((ReferenceCurrency == null && r.ReferenceCurrency == null) || (ReferenceCurrency != null && ReferenceCurrency.Equals(r.ReferenceCurrency)))
 				&& ((SecondaryCurrency == null && r.SecondaryCurrency == null) || (SecondaryCurrency != null && SecondaryCurrency.Equals(r.SecondaryCurrency)));
 		}
 
@@ -117,6 +117,10 @@ namespace models
 		/// <returns>The hash code.</returns>
 		public override int GetHashCode()
 		{
+			if (ReferenceCurrency == null && SecondaryCurrency == null) { return 0; }
+			if (ReferenceCurrency != null) { return ReferenceCurrency.GetHashCode(); }
+			if (SecondaryCurrency != null) { return SecondaryCurrency.GetHashCode(); }
+
 			return ReferenceCurrency.GetHashCode() + SecondaryCurrency.GetHashCode();
 		}
 

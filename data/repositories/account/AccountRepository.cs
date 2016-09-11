@@ -6,7 +6,7 @@ using models;
 
 namespace data.repositories.account
 {
-	public abstract class AccountRepository : AbstractRepository<AccountDBM, Account>
+	public abstract class AccountRepository : AbstractDatabaseRepository<AccountDBM, Account>
 	{
 		protected AccountRepository(int repositoryId, string name) : base(repositoryId, name) { }
 

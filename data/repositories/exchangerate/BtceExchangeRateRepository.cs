@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using data.database.models;
-using data.repositories.currency;
-using data.storage;
 using models;
 using Newtonsoft.Json.Linq;
 
@@ -25,18 +22,7 @@ namespace data.repositories.exchangerate
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;
 		}
 
-		public override async Task Fetch()
-		{
-			var currencyRepository = new BtceCurrencyRepository(null);
-			await currencyRepository.Fetch();
-
-			var btc = currencyRepository.Elements.Find(c => c.Equals(Currency.BTC));
-			Elements = currencyRepository.Elements.Select(e => new ExchangeRate(btc, e)).ToList();
-			await WriteToDatabase();
-			LastFetch = DateTime.Now;
-		}
-
-		public override async Task FetchExchangeRate(ExchangeRate exchangeRate)
+		protected async override Task GetFetchTask(ExchangeRate exchangeRate)
 		{
 			var uri = new Uri(string.Format(URL, RateToUrl(exchangeRate)));
 			var response = await client.GetAsync(uri);
@@ -49,9 +35,6 @@ namespace data.repositories.exchangerate
 				var rate = (decimal)rateJson[KEY];
 				exchangeRate.Rate = rate;
 			}
-
-			await WriteToDatabase();
-			LastExchangeRateFetch = DateTime.Now;
 		}
 
 		string RateToUrl(ExchangeRate exchangeRate)

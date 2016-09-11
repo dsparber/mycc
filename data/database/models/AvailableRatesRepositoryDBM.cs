@@ -2,8 +2,8 @@
 
 namespace data.database.models
 {
-	[Table("ExchangeRateRepositories")]
-	public class ExchangeRateRepositoryDBM
+	[Table("AvailableRatesRepositories")]
+	public class AvailableRatesRepositoryDBM
 	{
 		public const int DB_TYPE_LOCAL_REPOSITORY = 1;
 		public const int DB_TYPE_BTCE_REPOSITORY = 2;

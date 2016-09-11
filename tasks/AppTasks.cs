@@ -113,22 +113,20 @@ namespace tasks
 			}
 		}
 
-		Task fastFetchTask()
+		async Task fastFetchTask()
 		{
-			var accountFastFetchTask = AccountStorage.Instance.FetchFast();
-			var currencyFastFetchTask = CurrencyStorage.Instance.FetchFast();
-			var exchangeRateFastFetchTask = ExchangeRateStorage.Instance.FetchFast();
-
-			return Task.WhenAll(accountFastFetchTask, currencyFastFetchTask, exchangeRateFastFetchTask);
+			await AccountStorage.Instance.FetchFast();
+			await CurrencyStorage.Instance.FetchFast();
+			await AvailableRatesStorage.Instance.FetchFast();
+			await ExchangeRateStorage.Instance.FetchFast();
 		}
 
-		Task fetchTask()
+		async Task fetchTask()
 		{
-			var accountFetchTask = AccountStorage.Instance.Fetch();
-			var currencyFetchTask = CurrencyStorage.Instance.Fetch();
-			var exchangeRateFetchTask = ExchangeRateStorage.Instance.Fetch();
-
-			return Task.WhenAll(accountFetchTask, currencyFetchTask, exchangeRateFetchTask);
+			await AccountStorage.Instance.Fetch();
+			await CurrencyStorage.Instance.Fetch();
+			await ExchangeRateStorage.Instance.Fetch();
+			await AvailableRatesStorage.Instance.Fetch();
 		}
 
 		async Task addAccountTask(Account account)

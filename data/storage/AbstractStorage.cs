@@ -2,17 +2,15 @@
 using System.Threading.Tasks;
 using System.Linq;
 using data.repositories.general;
-using data.database.interfaces;
 using data.database.helper;
 using data.settings;
-using enums;
 using System;
 
 namespace data.storage
 {
-	public abstract class AbstractStorage<T, R, D, V> where R : AbstractRepository<D, V> where D : IEntityRepositoryIdDBM<V>
+	public abstract class AbstractStorage<T, R, V> where R : AbstractRepository<V>
 	{
-		private IEnumerable<R> repositories;
+		protected IEnumerable<R> repositories;
 
 		public abstract AbstractRepositoryDatabase<T> GetDatabase();
 
@@ -51,21 +49,6 @@ namespace data.storage
 		public async Task<List<R>> RepositoriesOfType<A>()
 		{
 			return (await Repositories()).FindAll(r => r is A);
-		}
-
-		public async Task<List<V>> AllElements()
-		{
-			return (await Repositories()).SelectMany(r => r.Elements).ToList();
-		}
-
-		public async Task<List<Tuple<V, R>>> AllElementsWithRepositories()
-		{
-			return (await Repositories()).SelectMany(r => r.Elements.Select(e => Tuple.Create<V, R>(e, r))).ToList();
-		}
-
-		public async Task<List<V>> AllOfType<A>()
-		{
-			return (await AllElements()).FindAll(e => e is A);
 		}
 
 		public async Task Fetch()

@@ -1,6 +1,7 @@
 ﻿using System;
 using data.repositories.account;
 using data.settings;
+using data.storage;
 using message;
 using models;
 using MyCryptos.resources;
@@ -86,12 +87,14 @@ namespace view
 			ToolbarItems.Add(edit);
 		}
 
-		public void Save(object sender, EventArgs e)
+		public async void Save(object sender, EventArgs e)
 		{
-			account = new Account(AccountName.Text, currencyEntryCell.SelectedMoney);
+			var money = currencyEntryCell.SelectedMoney;
+			money = new Money(money.Amount, (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(money.Currency)));
+			account = new Account(AccountName.Text, money);
 
 			AppTasks.Instance.StartAddAccountTask(account);
-			Navigation.PopModalAsync();
+			await Navigation.PopModalAsync();
 		}
 
 		async void Delete(object sender, EventArgs e)

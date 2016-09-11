@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using data.database.models;
-using models;
 
 namespace data.repositories.exchangerate
 {
@@ -21,17 +20,10 @@ namespace data.repositories.exchangerate
 			LastFastFetch = DateTime.Now;
 		}
 
-		public override async Task FetchExchangeRate(ExchangeRate exchangeRate)
+		public override async Task FetchNew()
 		{
 			await Fetch();
-			LastExchangeRateFetch = DateTime.Now;
-		}
-
-		public override async Task FetchExchangeRateFast(ExchangeRate exchangeRate)
-		{
-			await Fetch();
-			LastExchangeRateFastFetch = DateTime.Now;
+			LastFastFetch = DateTime.Now;
 		}
 	}
 }
-

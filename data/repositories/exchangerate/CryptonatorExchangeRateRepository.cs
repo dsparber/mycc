@@ -5,27 +5,28 @@ using System;
 using System.Net.Http;
 using data.database.models;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace data.repositories.exchangerate
 {
-	public class BittrexExchangeRateRepository : OnlineExchangeRateRepository
+	public class CryptonatorExchangeRateRepository : OnlineExchangeRateRepository
 	{
-		const string URL_RATE = "https://bittrex.com/api/v1.1/public/getticker?market={0}";
+		const string URL_RATE = "https://www.cryptonator.com/api/ticker/{0}";
 
-		const string RESULT_KEY = "result";
-		const string RATE_KEY = "Last";
+		const string RESULT_KEY = "ticker";
+		const string RATE_KEY = "price";
 
 		const int BUFFER_SIZE = 256000;
 
 		readonly HttpClient client;
 
-		public BittrexExchangeRateRepository(string name) : base(ExchangeRateRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY, name)
+		public CryptonatorExchangeRateRepository(string name) : base(ExchangeRateRepositoryDBM.DB_TYPE_CRYPTONATOR_REPOSITORY, name)
 		{
 			client = new HttpClient();
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;
 		}
 
-		protected async override Task GetFetchTask(ExchangeRate exchangeRate)
+		protected override async Task GetFetchTask(ExchangeRate exchangeRate)
 		{
 			var uri = new Uri(string.Format(URL_RATE, ToUrl(exchangeRate)));
 			var response = await client.GetAsync(uri);
@@ -43,12 +44,11 @@ namespace data.repositories.exchangerate
 			}
 			Elements.Remove(exchangeRate);
 			Elements.Add(exchangeRate);
-
 		}
 
 		static string ToUrl(ExchangeRate exchangeRate)
 		{
-			return exchangeRate.ReferenceCurrency.Code.ToUpper() + "-" + exchangeRate.SecondaryCurrency.Code.ToUpper();
+			return exchangeRate.ReferenceCurrency.Code.ToLower() + "-" + exchangeRate.SecondaryCurrency.Code.ToLower();
 		}
 	}
 }

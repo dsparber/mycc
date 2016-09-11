@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace data.storage
 {
-	public class AccountStorage : AbstractStorage<AccountRepositoryDBM, AccountRepository, AccountDBM, Account>
+	public class AccountStorage : AbstractDatabaseStorage<AccountRepositoryDBM, AccountRepository, AccountDBM, Account>
 	{
 		protected override AccountRepository Resolve(AccountRepositoryDBM obj)
 		{

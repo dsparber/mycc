@@ -6,7 +6,7 @@ using models;
 
 namespace data.repositories.currency
 {
-	public abstract class CurrencyRepository : AbstractRepository<CurrencyDBM, Currency>
+	public abstract class CurrencyRepository : AbstractDatabaseRepository<CurrencyDBM, Currency>
 	{
 		protected CurrencyRepository(int repositoryId, string name) : base(repositoryId, name) { }
 

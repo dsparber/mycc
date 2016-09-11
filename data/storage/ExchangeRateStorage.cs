@@ -5,6 +5,7 @@ using data.database;
 using data.database.helper;
 using data.database.models;
 using data.factories;
+using data.repositories.availablerates;
 using data.repositories.exchangerate;
 using enums;
 using models;
@@ -12,25 +13,8 @@ using models.helper;
 
 namespace data.storage
 {
-	public class ExchangeRateStorage : AbstractStorage<ExchangeRateRepositoryDBM, ExchangeRateRepository, ExchangeRateDBM, ExchangeRate>
+	public class ExchangeRateStorage : AbstractDatabaseStorage<ExchangeRateRepositoryDBM, ExchangeRateRepository, ExchangeRateDBM, ExchangeRate>
 	{
-		public async Task FetchExchangeRate(ExchangeRate exchangeRate)
-		{
-			await Task.WhenAll((await Repositories()).Select(x =>
-			{
-				if (x.Elements.Contains(exchangeRate))
-				{
-					return x.FetchExchangeRate(exchangeRate);
-				}
-				return Task.Factory.StartNew(() => { });
-			}));
-		}
-
-		public async Task FetchExchangeRateFast(ExchangeRate exchangeRate)
-		{
-			await Task.WhenAll((await Repositories()).Select(x => x.FetchExchangeRateFast(exchangeRate)));
-		}
-
 		public override AbstractRepositoryDatabase<ExchangeRateRepositoryDBM> GetDatabase()
 		{
 			return new ExchangeRateRepositoryDatabase();
@@ -41,6 +25,7 @@ namespace data.storage
 			await GetDatabase().AddRepository(new ExchangeRateRepositoryDBM { Type = ExchangeRateRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY });
 			await GetDatabase().AddRepository(new ExchangeRateRepositoryDBM { Type = ExchangeRateRepositoryDBM.DB_TYPE_BTCE_REPOSITORY });
 			await GetDatabase().AddRepository(new ExchangeRateRepositoryDBM { Type = ExchangeRateRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY });
+			await GetDatabase().AddRepository(new ExchangeRateRepositoryDBM { Type = ExchangeRateRepositoryDBM.DB_TYPE_CRYPTONATOR_REPOSITORY });
 		}
 
 		protected override ExchangeRateRepository Resolve(ExchangeRateRepositoryDBM obj)
@@ -62,6 +47,11 @@ namespace data.storage
 			}
 		}
 
+		public async Task FetchNew()
+		{
+			await Task.WhenAll((await Repositories()).Select(x => x.FetchNew()));
+		}
+
 		// Helper
 		public async Task<ExchangeRate> GetRate(Currency referenceCurrency, Currency secondaryCurrency, FetchSpeedEnum speed)
 		{
@@ -70,9 +60,7 @@ namespace data.storage
 				return null;
 			}
 
-			var allElements = await AllElements();
-
-			ExchangeRate rate = await GetDirectRate(referenceCurrency, secondaryCurrency, allElements, speed);
+			ExchangeRate rate = await GetDirectRate(referenceCurrency, secondaryCurrency, speed);
 
 			if (rate != null)
 			{
@@ -83,17 +71,19 @@ namespace data.storage
 			var referenceCurrencyRates = new List<ExchangeRate>();
 			var secondaryCurrencyRates = new List<ExchangeRate>();
 
-			foreach (ExchangeRate exchangeRate in allElements)
+			var eRef = await AvailableRatesStorage.Instance.ExchangeRateWithCurrency(referenceCurrency);
+			var eSec = await AvailableRatesStorage.Instance.ExchangeRateWithCurrency(secondaryCurrency);
+
+
+			if (eRef != null)
 			{
-				if (exchangeRate.Contains(referenceCurrency))
-				{
-					referenceCurrencyRates.Add(exchangeRate);
-				}
-				if (exchangeRate.Contains(secondaryCurrency))
-				{
-					secondaryCurrencyRates.Add(exchangeRate);
-				}
+				referenceCurrencyRates.Add(eRef);
 			}
+			if (eSec != null)
+			{
+				secondaryCurrencyRates.Add(eSec);
+			}
+
 
 			foreach (ExchangeRate r1 in referenceCurrencyRates)
 			{
@@ -101,13 +91,15 @@ namespace data.storage
 				{
 					if (ExchangeRateHelper.OneMatch(r1, r2))
 					{
-						if (speed == FetchSpeedEnum.SLOW || (speed == FetchSpeedEnum.MEDIUM && !r1.Rate.HasValue))
+						await AddRate(r1);
+						await AddRate(r2);
+						if (speed == FetchSpeedEnum.SLOW)
 						{
-							await FetchExchangeRate(r1);
+							await Fetch();
 						}
-						if (speed == FetchSpeedEnum.SLOW || (speed == FetchSpeedEnum.MEDIUM && !r2.Rate.HasValue))
+						else if (speed == FetchSpeedEnum.MEDIUM)
 						{
-							await FetchExchangeRate(r2);
+							await FetchNew();
 						}
 						return ExchangeRateHelper.GetCombinedRate(r1, r2);
 					}
@@ -116,36 +108,47 @@ namespace data.storage
 			return null;
 		}
 
-		public async Task<ExchangeRate> GetDirectRate(Currency referenceCurrency, Currency secondaryCurrency, List<ExchangeRate> allElements, FetchSpeedEnum speed)
+		public async Task<ExchangeRate> GetDirectRate(Currency referenceCurrency, Currency secondaryCurrency, FetchSpeedEnum speed)
 		{
 			if (referenceCurrency.Equals(secondaryCurrency))
 			{
 				return new ExchangeRate(referenceCurrency, secondaryCurrency, 1);
 			}
 
-			foreach (ExchangeRate exchangeRate in allElements)
+			var exchangeRate = new ExchangeRate(referenceCurrency, secondaryCurrency);
+
+			var exists = await AvailableRatesStorage.Instance.IsAvailable(exchangeRate);
+			var existsInverse = await AvailableRatesStorage.Instance.IsAvailable(exchangeRate.GetInverse());
+
+			if (exists || existsInverse)
 			{
-				if (exchangeRate.Equals(new ExchangeRate(referenceCurrency, secondaryCurrency)))
+				await AddRate(exchangeRate);
+				if (speed == FetchSpeedEnum.SLOW)
 				{
-					if (speed == FetchSpeedEnum.SLOW || (speed == FetchSpeedEnum.MEDIUM && !exchangeRate.Rate.HasValue))
-					{
-						await FetchExchangeRate(exchangeRate);
-					}
+					await Fetch();
+				}
+				else if (speed == FetchSpeedEnum.MEDIUM)
+				{
+					await FetchNew();
+				}
+				if (exists)
+				{
 					return exchangeRate;
 				}
-				if (exchangeRate.Equals(new ExchangeRate(secondaryCurrency, referenceCurrency)))
-				{
-					if (speed == FetchSpeedEnum.SLOW || (speed == FetchSpeedEnum.MEDIUM && !exchangeRate.Rate.HasValue))
-					{
-						await FetchExchangeRate(exchangeRate);
-					}
-					return exchangeRate.GetInverse();
-				}
+				return exchangeRate.GetInverse();
 			}
 			return null;
 		}
 
-
+		async Task AddRate(ExchangeRate exchangeRate)
+		{
+			foreach (var r in await AvailableRatesStorage.Instance.Repositories())
+			{
+				if (r.IsAvailable(exchangeRate))
+				{
+					await (await r.ExchangeRateRepository()).Add(exchangeRate);
+				}
+			}
+		}
 	}
 }
-

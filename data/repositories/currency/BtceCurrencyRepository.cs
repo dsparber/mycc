@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using data.database.models;
 using models;
-using Newtonsoft.Json.Linq;
 
 namespace data.repositories.currency
 {
