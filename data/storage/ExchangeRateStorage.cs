@@ -131,12 +131,16 @@ namespace data.storage
 				{
 					await FetchNew();
 				}
+
+				exchangeRate = (await AllElements()).Find(e => e.Equals(exchangeRate));
+
 				if (exists)
 				{
 					return exchangeRate;
 				}
 				return exchangeRate.GetInverse();
 			}
+
 			return null;
 		}
 

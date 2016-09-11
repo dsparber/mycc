@@ -38,7 +38,7 @@ namespace data.repositories.exchangerate
 				JToken rateJson = json[RESULT_KEY];
 				if (rateJson.ToList().Count != 0)
 				{
-					var rate = 1 / (decimal)rateJson[RATE_KEY];
+					var rate = (decimal)rateJson[RATE_KEY];
 					exchangeRate.Rate = rate;
 				}
 			}
