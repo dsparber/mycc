@@ -119,7 +119,7 @@ namespace view
 				c.ExchangeRate = rate;
 				setCells(section, cells);
 
-				if (c.MoneyReference != null)
+				if (c.MoneyReference != null && moneySum.Currency.Equals(c.MoneyReference.Currency))
 				{
 					moneySum += c.MoneyReference;
 				}

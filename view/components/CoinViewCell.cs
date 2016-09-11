@@ -8,6 +8,7 @@ using Xamarin.Forms;
 
 namespace view.components
 {
+	// TODO Inhert from custom view cell
 	public class CoinViewCell : ViewCell
 	{
 		readonly Label SumMoneyLabel;

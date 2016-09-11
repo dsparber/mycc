@@ -66,21 +66,23 @@ namespace view
 			ReferenceCurrencies.Add(Currency.EUR);
 			ReferenceCurrencies.Add(Currency.USD);
 			ReferenceCurrencies = ReferenceCurrencies.Distinct().ToList();
+
+			foreach (var c in ReferenceCurrencies)
+			{
+				EqualsSection.Add(new ReferenceValueViewCell { ExchangeRate = new ExchangeRate(account.Money.Currency, c), IsLoading = true, Money = account.Money });
+			}
 		}
 
 		protected async override void OnAppearing()
 		{
-			EqualsSection.Clear();
-
-			// TODO Loading animation?
-			foreach (var c in ReferenceCurrencies)
+			foreach (var cell in EqualsSection)
 			{
-				var rate = await ExchangeRateStorage.Instance.GetRate(account.Money.Currency, (await CurrencyStorage.Instance.AllElements()).Find(e => e.Equals(c)), FetchSpeedEnum.SLOW);
-				EqualsSection.Add(new TextCell
-				{
-					Text = new Money(account.Money.Amount * rate.RateNotNull, c).ToString(),
-					Detail = string.Format(InternationalisationResources.ExchangeRate, rate.Rate)
-				});
+				var viewCell = (ReferenceValueViewCell)cell;
+
+				var currency = (await CurrencyStorage.Instance.AllElements()).Find(e => e.Equals(viewCell.ExchangeRate.SecondaryCurrency));
+				var rate = await ExchangeRateStorage.Instance.GetRate(account.Money.Currency, currency, FetchSpeedEnum.SLOW);
+				viewCell.ExchangeRate = rate;
+				viewCell.IsLoading = false;
 			}
 		}
 
