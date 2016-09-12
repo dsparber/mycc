@@ -17,7 +17,6 @@ namespace view
 		public CoinDetailView(IEnumerable<Tuple<Account, AccountRepository>> accounts, ExchangeRate exchangeRate)
 		{
 			InitializeComponent();
-			var currency = accounts.First().Item1.Money.Currency;
 
 			updateView(accounts, exchangeRate);
 
@@ -29,7 +28,7 @@ namespace view
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdateAccounts, async (str) =>
 			{
 				var accs = await AccountStorage.Instance.AllElementsWithRepositories();
-				accs = accs.Where(t => t.Item1.Money.Currency.Equals(currency)).ToList();
+				accs = accs.Where(t => t.Item1.Money.Currency.Equals(currency(accounts))).ToList();
 
 				if (accs.Count == 0)
 				{
@@ -56,24 +55,38 @@ namespace view
 				AccountSection.Add(c);
 			}
 
+			var table = new ReferenceCurrenciesTableView { BaseMoney = moneySum(accounts) };
+			foreach (var cell in table.Cells)
+			{
+				EqualsSection.Add(cell);
+			}
+
 			setHeader(accounts, exchangeRate);
 		}
 
 		void setHeader(IEnumerable<Tuple<Account, AccountRepository>> accounts, ExchangeRate exchangeRate)
 		{
-			var moneySum = new Money(accounts.Sum(a => a.Item1.Money.Amount), accounts.First().Item1.Money.Currency);
-			var currency = accounts.First().Item1.Money.Currency;
-			Title = currency != null ? currency.Code : string.Empty;
-			Header.TitleText = moneySum.ToString();
+			Title = currency(accounts) != null ? currency(accounts).Code : string.Empty;
+			Header.TitleText = moneySum(accounts).ToString();
 
 			if (exchangeRate != null && exchangeRate.Rate.HasValue)
 			{
-				var moneyReference = new Money(moneySum.Amount * exchangeRate.Rate.Value, exchangeRate.SecondaryCurrency);
+				var moneyReference = new Money(moneySum(accounts).Amount * exchangeRate.Rate.Value, exchangeRate.SecondaryCurrency);
 				Header.InfoText = moneyReference.ToString();
 			}
 			else {
 				Header.InfoText = InternationalisationResources.NoExchangeRateFound;
 			}
+		}
+
+		Money moneySum(IEnumerable<Tuple<Account, AccountRepository>> accounts)
+		{
+			return new Money(accounts.Sum(a => a.Item1.Money.Amount), accounts.First().Item1.Money.Currency);
+		}
+
+		Currency currency(IEnumerable<Tuple<Account, AccountRepository>> accounts)
+		{
+			return accounts.First().Item1.Money.Currency;
 		}
 	}
 }

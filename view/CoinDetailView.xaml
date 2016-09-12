@@ -16,6 +16,10 @@
 					Title="{i18n:Translate Accounts}"
 					x:Name="AccountSection">
 				</TableSection>
+				<TableSection
+					Title="{i18n:Translate EqualTo}"
+					x:Name="EqualsSection">
+				</TableSection>
 			</TableView>
 		</StackLayout>
 	</ContentPage.Content>

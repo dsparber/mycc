@@ -107,25 +107,25 @@ namespace view
 
 			foreach (var c in cells)
 			{
-				c.IsLoading = true;
-
-				var rate = await ExchangeRateStorage.Instance.GetRate(c.Currency, ApplicationSettings.BaseCurrency, speed);
-
 				if (c.MoneyReference != null && moneySum.Currency.Equals(c.MoneyReference.Currency))
 				{
 					moneySum -= c.MoneyReference;
 				}
 
-				c.ExchangeRate = rate;
-				setCells(section, cells);
+				if (c.IsLoading)
+				{
+					var rate = await ExchangeRateStorage.Instance.GetRate(c.Currency, ApplicationSettings.BaseCurrency, speed);
+
+					c.ExchangeRate = rate;
+					setCells(section, cells);
+					c.IsLoading = false;
+				}
 
 				if (c.MoneyReference != null && moneySum.Currency.Equals(c.MoneyReference.Currency))
 				{
 					moneySum += c.MoneyReference;
 				}
 				Header.TitleText = moneySum.ToString();
-
-				c.IsLoading = false;
 			}
 
 			showIsLoading(false, speed);

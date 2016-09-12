@@ -9,9 +9,18 @@ namespace data.storage
 {
 	public abstract class AbstractDatabaseStorage<T, R, D, V> : AbstractStorage<T, R, V> where R : AbstractDatabaseRepository<D, V> where D : IEntityRepositoryIdDBM<V>
 	{
+		protected AbstractDatabaseStorage()
+		{
+			CachedElements = new List<V>();
+		}
+
+		public List<V> CachedElements { get; private set;}
+
 		public async Task<List<V>> AllElements()
 		{
-			return (await Repositories()).SelectMany(r => r.Elements).ToList();
+			var elements = (await Repositories()).SelectMany(r => r.Elements).ToList();
+			CachedElements = elements;
+			return elements;
 		}
 
 		public async Task<List<Tuple<V, R>>> AllElementsWithRepositories()

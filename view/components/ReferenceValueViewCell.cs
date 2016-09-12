@@ -28,9 +28,11 @@ namespace view.components
 
 		void setView()
 		{
+			IsLoading = true;
 			if (exchangeRate != null && exchangeRate.Rate.HasValue && money != null)
 			{
 				Text = new Money(money.Amount * exchangeRate.RateNotNull, exchangeRate.SecondaryCurrency).ToString();
+				IsLoading = false;
 			}
 			else if (exchangeRate != null)
 			{

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using data.settings;
+using data.storage;
 using enums;
+using models;
 using view.components;
 
 namespace helpers
@@ -44,7 +46,11 @@ namespace helpers
 
 			if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_VALUE))
 			{
-				sortLambda = c => c.Account.Money.Amount; // TODO Reference value
+				sortLambda = c =>
+				{
+					var rate = ExchangeRateStorage.Instance.CachedElements.Find(e => e.Equals(new ExchangeRate(c.Account.Money.Currency, ApplicationSettings.BaseCurrency)));
+					return c.Account.Money.Amount * (rate != null ? rate.RateNotNull : 0);
+				};
 			}
 			else if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_UNITS))
 			{
@@ -52,7 +58,7 @@ namespace helpers
 			}
 			else
 			{
-				sortLambda = c => c.Account.Name;
+				sortLambda = c => c.Account.Name + c.Account.Money.Currency.Code;
 			}
 
 

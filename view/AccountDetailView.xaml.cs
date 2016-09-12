@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using data.repositories.account;
 using data.settings;
 using data.storage;
-using enums;
 using message;
 using models;
 using MyCryptos.resources;
@@ -27,8 +24,6 @@ namespace view
 		public bool IsNew;
 
 		Money selectedMoney;
-
-		List<Currency> ReferenceCurrencies;
 
 		public AccountDetailView(Account account, AccountRepository repository)
 		{
@@ -59,26 +54,6 @@ namespace view
 
 			currencyEntryCell.OnSelected = (c) => Header.TitleText = currencyEntryCell.SelectedMoney.ToString();
 			currencyEntryCell.OnTyped = (m) => Header.TitleText = m.ToString();
-
-
-		}
-
-		protected async override void OnAppearing()
-		{
-			if (!IsNew)
-			{
-
-				// TODO move to own component, add to coin detail view 
-				foreach (var cell in EqualsSection)
-				{
-					var viewCell = (ReferenceValueViewCell)cell;
-
-					var currency = (await CurrencyStorage.Instance.AllElements()).Find(e => e.Equals(viewCell.ExchangeRate.SecondaryCurrency));
-					var rate = await ExchangeRateStorage.Instance.GetRate(account.Money.Currency, currency, FetchSpeedEnum.MEDIUM);
-					viewCell.ExchangeRate = rate;
-					viewCell.IsLoading = false;
-				}
-			}
 		}
 
 		public void StartEditing(object sender, EventArgs e)
@@ -136,17 +111,9 @@ namespace view
 			Header.TitleText = account.Money.ToString();
 			Header.InfoText = string.Format(InternationalisationResources.SourceText, repository.Name);
 			currencyEntryCell.SelectedMoney = account.Money;
-
-			ReferenceCurrencies = new List<Currency>();
-			ReferenceCurrencies.Add(ApplicationSettings.BaseCurrency);
-			ReferenceCurrencies.Add(Currency.BTC);
-			ReferenceCurrencies.Add(Currency.EUR);
-			ReferenceCurrencies.Add(Currency.USD);
-			ReferenceCurrencies = ReferenceCurrencies.Distinct().OrderBy(c => c.Code).ToList();
-
-			foreach (var c in ReferenceCurrencies)
-			{
-				EqualsSection.Add(new ReferenceValueViewCell { ExchangeRate = new ExchangeRate(account.Money.Currency, c), IsLoading = true, Money = account.Money });
+			var table = new ReferenceCurrenciesTableView { BaseMoney = account.Money };
+			foreach (var cell in table.Cells) { 
+				EqualsSection.Add(cell);
 			}
 		}
 

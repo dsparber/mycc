@@ -54,6 +54,7 @@ namespace view
 			}
 			updateCheckmarks();
 
+			// TODO Review sorting applied
 			MessagingCenter.Send(string.Empty, MessageConstants.SortOrderChanged);
 		}
 
