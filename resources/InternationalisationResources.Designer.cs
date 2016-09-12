@@ -358,5 +358,11 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("ExchangeRate", resourceCulture);
             }
         }
+        
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
     }
 }

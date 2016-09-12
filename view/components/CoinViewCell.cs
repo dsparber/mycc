@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using data.repositories.account;
 using models;
-using MyCryptos.resources;
 using Xamarin.Forms;
 
 namespace view.components
 {
-	// TODO Inhert from custom view cell
-	public class CoinViewCell : ViewCell
+	public class CoinViewCell : CustomViewCell
 	{
-		readonly Label SumMoneyLabel;
-		readonly Label ReferenceValueLabel;
-
 		readonly INavigation Navigation;
 
 		IEnumerable<Tuple<Account, AccountRepository>> accounts;
@@ -21,33 +16,13 @@ namespace view.components
 
 		public ExchangeRate ExchangeRate
 		{
-			get
-			{
-				return exchangeRate;
-			}
-			set
-			{
-				exchangeRate = value;
-				ReferenceValueLabel.Text = moneyReference != null ? moneyReference.ToString() : string.Empty;
-				setTapRecognizer();
-			}
+			get { return exchangeRate; }
+			set { exchangeRate = value; Detail = MoneyReference != null ? MoneyReference.ToString() : string.Empty; setTapRecognizer(); }
 		}
 		public IEnumerable<Tuple<Account, AccountRepository>> Accounts
 		{
-			get
-			{
-				if (accounts == null)
-				{
-					accounts = new List<Tuple<Account, AccountRepository>>();
-				}
-				return accounts;
-			}
-			set
-			{
-				accounts = value;
-				SumMoneyLabel.Text = moneySum != null ? moneySum.ToString() : string.Empty;
-				setTapRecognizer();
-			}
+			get { if (accounts == null) { accounts = new List<Tuple<Account, AccountRepository>>(); } return accounts; }
+			set { accounts = value; Text = MoneySum != null ? MoneySum.ToString() : string.Empty; setTapRecognizer(); }
 		}
 
 		public AccountRepository repository(Account account)
@@ -57,13 +32,10 @@ namespace view.components
 
 		public Currency Currency
 		{
-			get
-			{
-				return Accounts.ToList().Count > 0 ? Accounts.First().Item1.Money.Currency : null;
-			}
+			get { return Accounts.ToList().Count > 0 ? Accounts.First().Item1.Money.Currency : null; }
 		}
 
-		Money moneySum
+		public Money MoneySum
 		{
 			get
 			{
@@ -75,64 +47,22 @@ namespace view.components
 			}
 		}
 
-		public Money MoneySum { get { return moneySum; } }
-
-		Money moneyReference
+		public Money MoneyReference
 		{
 			get
 			{
-				if (exchangeRate != null && exchangeRate.Rate.HasValue && moneySum != null)
+				if (exchangeRate != null && exchangeRate.Rate.HasValue && MoneySum != null)
 				{
-					return new Money(moneySum.Amount * exchangeRate.Rate.Value, exchangeRate.SecondaryCurrency);
+					return new Money(MoneySum.Amount * exchangeRate.Rate.Value, exchangeRate.SecondaryCurrency);
 				}
 				return null;
-			}
-		}
-
-		public Money MoneyReference { get { return moneyReference; } }
-
-		public bool IsLoading
-		{
-			set
-			{
-				if (value)
-				{
-					ReferenceValueLabel.Text = InternationalisationResources.RefreshingDots;
-				}
-				else {
-					ReferenceValueLabel.Text = moneyReference != null ? moneyReference.ToString() : InternationalisationResources.NoExchangeRateFound;
-				}
 			}
 		}
 
 		public CoinViewCell(INavigation navigation)
 		{
 			Navigation = navigation;
-
-			SumMoneyLabel = new Label();
-			ReferenceValueLabel = new Label();
-
-			ReferenceValueLabel.TextColor = Color.Gray;
-			ReferenceValueLabel.FontSize = SumMoneyLabel.FontSize * 0.75;
-
-			var stack = new StackLayout();
-			stack.Spacing = 0;
-			stack.Children.Add(SumMoneyLabel);
-			stack.Children.Add(ReferenceValueLabel);
-
-			var icon = new Image { HeightRequest = 20, Source = ImageSource.FromFile("more.png") };
-			icon.HorizontalOptions = LayoutOptions.EndAndExpand;
-
-			var horizontalStack = new StackLayout { Orientation = StackOrientation.Horizontal };
-			horizontalStack.Children.Add(stack);
-			horizontalStack.Children.Add(icon);
-			horizontalStack.VerticalOptions = LayoutOptions.CenterAndExpand;
-
-			var contentView = new ContentView();
-			contentView.Margin = new Thickness(15, 0);
-			contentView.Content = horizontalStack;
-
-			View = contentView;
+			Image = "more.png";
 			setTapRecognizer();
 		}
 

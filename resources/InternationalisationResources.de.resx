@@ -224,4 +224,8 @@
 		name="ExchangeRate">
 		<value>Kurs: {0}</value>
 	</data>
+	<data
+		name="Name">
+		<value>Name</value>
+	</data>
 </root>

@@ -89,7 +89,7 @@ namespace view.components
 
 			TitleLabel = new Label();
 			TitleLabel.VerticalOptions = LayoutOptions.CenterAndExpand; ;
-			TitleLabel.WidthRequest = 103;
+			TitleLabel.WidthRequest = 100;
 
 			if (IsAmountEnabled)
 			{

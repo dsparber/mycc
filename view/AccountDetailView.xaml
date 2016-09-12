@@ -30,9 +30,9 @@
 				<TableView.Root>
 					<TableSection
 						x:Name="AccountSection">
-						<EntryCell
+						<components:CustomEntryCell
 							x:Name="AccountName"
-							Label="{i18n:Translate Label}"
+							Title="{i18n:Translate Name}"
 							Placeholder="{i18n:Translate LabelExample}" />
 					</TableSection>
 					<TableSection x:Name="DeleteSection">

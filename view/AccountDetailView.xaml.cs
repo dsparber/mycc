@@ -60,35 +60,29 @@ namespace view
 			currencyEntryCell.OnSelected = (c) => Header.TitleText = currencyEntryCell.SelectedMoney.ToString();
 			currencyEntryCell.OnTyped = (m) => Header.TitleText = m.ToString();
 
-			ReferenceCurrencies = new List<Currency>();
-			ReferenceCurrencies.Add(ApplicationSettings.BaseCurrency);
-			ReferenceCurrencies.Add(Currency.BTC);
-			ReferenceCurrencies.Add(Currency.EUR);
-			ReferenceCurrencies.Add(Currency.USD);
-			ReferenceCurrencies = ReferenceCurrencies.Distinct().ToList();
 
-			foreach (var c in ReferenceCurrencies)
-			{
-				EqualsSection.Add(new ReferenceValueViewCell { ExchangeRate = new ExchangeRate(account.Money.Currency, c), IsLoading = true, Money = account.Money });
-			}
 		}
 
 		protected async override void OnAppearing()
 		{
-			foreach (var cell in EqualsSection)
+			if (!IsNew)
 			{
-				var viewCell = (ReferenceValueViewCell)cell;
 
-				var currency = (await CurrencyStorage.Instance.AllElements()).Find(e => e.Equals(viewCell.ExchangeRate.SecondaryCurrency));
-				var rate = await ExchangeRateStorage.Instance.GetRate(account.Money.Currency, currency, FetchSpeedEnum.SLOW);
-				viewCell.ExchangeRate = rate;
-				viewCell.IsLoading = false;
+				// TODO move to own component, add to coin detail view 
+				foreach (var cell in EqualsSection)
+				{
+					var viewCell = (ReferenceValueViewCell)cell;
+
+					var currency = (await CurrencyStorage.Instance.AllElements()).Find(e => e.Equals(viewCell.ExchangeRate.SecondaryCurrency));
+					var rate = await ExchangeRateStorage.Instance.GetRate(account.Money.Currency, currency, FetchSpeedEnum.MEDIUM);
+					viewCell.ExchangeRate = rate;
+					viewCell.IsLoading = false;
+				}
 			}
 		}
 
 		public void StartEditing(object sender, EventArgs e)
 		{
-
 			AccountName.Text = account.Name;
 			currencyEntryCell.SelectedMoney = account.Money;
 
@@ -142,6 +136,18 @@ namespace view
 			Header.TitleText = account.Money.ToString();
 			Header.InfoText = string.Format(InternationalisationResources.SourceText, repository.Name);
 			currencyEntryCell.SelectedMoney = account.Money;
+
+			ReferenceCurrencies = new List<Currency>();
+			ReferenceCurrencies.Add(ApplicationSettings.BaseCurrency);
+			ReferenceCurrencies.Add(Currency.BTC);
+			ReferenceCurrencies.Add(Currency.EUR);
+			ReferenceCurrencies.Add(Currency.USD);
+			ReferenceCurrencies = ReferenceCurrencies.Distinct().OrderBy(c => c.Code).ToList();
+
+			foreach (var c in ReferenceCurrencies)
+			{
+				EqualsSection.Add(new ReferenceValueViewCell { ExchangeRate = new ExchangeRate(account.Money.Currency, c), IsLoading = true, Money = account.Money });
+			}
 		}
 
 		void setToNewView()
@@ -154,7 +160,7 @@ namespace view
 			currencyEntryCell.SelectedMoney = selectedMoney;
 			AccountName.Text = InternationalisationResources.LocalAccount;
 			Header.InfoText = AccountName.Text;
-			AccountName.Completed += (sender, e) => Header.InfoText = AccountName.Text;
+			AccountName.Entry.TextChanged += (sender, e) => Header.InfoText = e.NewTextValue;
 		}
 	}
 }

@@ -84,7 +84,7 @@ namespace view
 					var cell = section.Select(e => (CoinViewCell)e).ToList().Find(e => g.Key.Equals(e.Currency));
 					if (cell == null)
 					{
-						cell = new CoinViewCell(Navigation) { Accounts = g.ToList() };
+						cell = new CoinViewCell(Navigation) { Accounts = g.ToList(), IsLoading = true };
 					}
 					else {
 						cell.Accounts = g.ToList();
