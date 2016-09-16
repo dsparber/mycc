@@ -24,6 +24,7 @@ namespace data.storage
 		protected override async Task OnFirstLaunch()
 		{
 			await GetDatabase().AddRepository(new AccountRepositoryDBM { Type = AccountRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY, Name = InternationalisationResources.DefaultStorage });
+			await GetDatabase().AddRepository(new AccountRepositoryDBM { Type = AccountRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY, Name = InternationalisationResources.BittrexSource });
 		}
 
 		static AccountStorage instance { get; set; }

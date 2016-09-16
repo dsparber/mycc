@@ -71,6 +71,7 @@ namespace view
 				Header.InfoText = moneyReference.ToString();
 			}
 			else {
+				// TODO Look in cache 
 				Header.InfoText = InternationalisationResources.NoExchangeRateFound;
 			}
 		}

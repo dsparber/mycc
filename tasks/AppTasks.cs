@@ -115,16 +115,16 @@ namespace tasks
 
 		async Task fastFetchTask()
 		{
-			await AccountStorage.Instance.FetchFast();
 			await CurrencyStorage.Instance.FetchFast();
+			await AccountStorage.Instance.FetchFast();
 			await AvailableRatesStorage.Instance.FetchFast();
 			await ExchangeRateStorage.Instance.FetchFast();
 		}
 
 		async Task fetchTask()
 		{
-			await AccountStorage.Instance.Fetch();
 			await CurrencyStorage.Instance.Fetch();
+			await AccountStorage.Instance.Fetch();
 			await ExchangeRateStorage.Instance.Fetch();
 			await AvailableRatesStorage.Instance.Fetch();
 		}

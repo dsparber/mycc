@@ -364,5 +364,17 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("Name", resourceCulture);
             }
         }
+        
+        public static string BittrexAccount {
+            get {
+                return ResourceManager.GetString("BittrexAccount", resourceCulture);
+            }
+        }
+        
+        public static string BittrexSource {
+            get {
+                return ResourceManager.GetString("BittrexSource", resourceCulture);
+            }
+        }
     }
 }

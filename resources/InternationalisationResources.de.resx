@@ -228,4 +228,12 @@
 		name="Name">
 		<value>Name</value>
 	</data>
+	<data
+		name="BittrexAccount">
+		<value>Bittrex Konto</value>
+	</data>
+	<data
+		name="BittrexSource">
+		<value>Bittrex</value>
+	</data>
 </root>
