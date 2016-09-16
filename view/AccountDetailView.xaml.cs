@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using data.repositories.account;
 using data.settings;
 using data.storage;
+using helpers;
 using message;
 using models;
 using MyCryptos.resources;
@@ -18,12 +20,12 @@ namespace view
 		ToolbarItem cancel = new ToolbarItem { Text = InternationalisationResources.Cancel };
 
 		CurrencyEntryCell currencyEntryCell;
+		public List<ReferenceValueViewCell> ReferenceValueCells;
 
 		Account account;
+		Money selectedMoney;
 
 		public bool IsNew;
-
-		Money selectedMoney;
 
 		public AccountDetailView(Account account, AccountRepository repository)
 		{
@@ -43,6 +45,7 @@ namespace view
 				setToExistingView(repository);
 				done.Clicked += DoneEditing;
 				ToolbarItems.Add(edit);
+				MessagingCenter.Subscribe<string>(this, MessageConstants.SortOrderChanged, str => SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection));
 			}
 			else {
 				setToNewView();
@@ -112,9 +115,12 @@ namespace view
 			Header.InfoText = string.Format(InternationalisationResources.SourceText, repository.Name);
 			currencyEntryCell.SelectedMoney = account.Money;
 			var table = new ReferenceCurrenciesTableView { BaseMoney = account.Money };
+
+			ReferenceValueCells = new List<ReferenceValueViewCell>();
 			foreach (var cell in table.Cells) { 
-				EqualsSection.Add(cell);
+				ReferenceValueCells.Add(cell);
 			}
+			SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
 		}
 
 		void setToNewView()

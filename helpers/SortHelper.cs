@@ -2,75 +2,55 @@
 using System.Collections.Generic;
 using System.Linq;
 using data.settings;
-using data.storage;
 using enums;
-using models;
 using view.components;
+using Xamarin.Forms;
 
 namespace helpers
 {
 	public static class SortHelper
 	{
-		public static List<CoinViewCell> SortCells(List<CoinViewCell> cells)
+		public static IEnumerable<T> SortCells<T>(IEnumerable<T> cells) where T : SortableViewCell
 		{
-			Func<CoinViewCell, object> sortLambda;
+			Func<T, object> sortLambda;
 
-			if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_VALUE))
+			switch (ApplicationSettings.SortOrder)
 			{
-				sortLambda = c => c.MoneyReference != null ? c.MoneyReference.Amount : 0;
-			}
-			else if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_UNITS))
-			{
-				sortLambda = c => c.MoneySum.Amount;
-			}
-			else
-			{
-				sortLambda = c => c.Currency != null ? c.Currency.Code : string.Empty;
+				case SortOrder.BY_VALUE: sortLambda = c => c.Value; break;
+				case SortOrder.BY_UNITS: sortLambda = c => c.Units; break;
+				default: sortLambda = c => c.Name; break;
 			}
 
-
-			if (ApplicationSettings.SortDirection.Equals(SortDirection.ASCENDING))
+			switch (ApplicationSettings.SortDirection)
 			{
-				cells = cells.OrderBy(sortLambda).ToList();
-			}
-			else {
-				cells = cells.OrderByDescending(sortLambda).ToList();
+				case SortDirection.DESCENDING: cells = cells.OrderByDescending(sortLambda); break;
+				default: cells = cells.OrderBy(sortLambda); break;
 			}
 
 			return cells;
 		}
 
-		public static List<AccountViewCell> SortCells(List<AccountViewCell> cells)
+		public static void ApplySortOrder<T>(IEnumerable<T> cells, TableSection section) where T : SortableViewCell
 		{
-			Func<AccountViewCell, object> sortLambda;
+			cells = SortCells(cells);
+			section.Clear();
 
-			if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_VALUE))
+			foreach (var c in cells)
 			{
-				sortLambda = c =>
-				{
-					var rate = ExchangeRateStorage.Instance.CachedElements.Find(e => e.Equals(new ExchangeRate(c.Account.Money.Currency, ApplicationSettings.BaseCurrency)));
-					return c.Account.Money.Amount * (rate != null ? rate.RateNotNull : 0);
-				};
+				section.Add(c);
 			}
-			else if (ApplicationSettings.SortOrder.Equals(SortOrder.BY_UNITS))
-			{
-				sortLambda = c => c.Account.Money.Amount;
-			}
-			else
-			{
-				sortLambda = c => c.Account.Name + c.Account.Money.Currency.Code;
-			}
+		}
 
+		public static void ApplySortOrder<T>(IEnumerable<Tuple<TableSection, List<T>>> elements, TableView tableView) where T : SortableViewCell
+		{
+			tableView.Root.Clear();
 
-			if (ApplicationSettings.SortDirection.Equals(SortDirection.ASCENDING))
+			elements = elements.OrderBy(e => e.Item1.Title);
+			foreach (var e in elements)
 			{
-				cells = cells.OrderBy(sortLambda).ToList();
+				ApplySortOrder(e.Item2, e.Item1);
+				tableView.Root.Add(e.Item1);
 			}
-			else {
-				cells = cells.OrderByDescending(sortLambda).ToList();
-			}
-
-			return cells;
 		}
 	}
 }

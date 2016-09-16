@@ -14,24 +14,17 @@ namespace view
 {
 	public partial class AccountsView : ContentPage
 	{
+		List<Tuple<TableSection, List<AccountViewCell>>> Elements;
+
 		public AccountsView()
 		{
 			InitializeComponent();
 
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.UpdateAccountsView, async (speed) =>
-			{
-				await UpdateView();
-			});
+			Elements = new List<Tuple<TableSection, List<AccountViewCell>>>();
 
-			MessagingCenter.Subscribe<string>(this, MessageConstants.SortOrderChanged, async (str) =>
-			{
-				await UpdateView();
-			});
-
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdateAccounts, async (str) =>
-			{
-				await UpdateView();
-			});
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.UpdateAccountsView, async (speed) => await UpdateView());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdateAccounts, async (str) => await UpdateView());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.SortOrderChanged, str => SortHelper.ApplySortOrder(Elements, AccountsTable));
 		}
 
 		public async void Add(object sender, EventArgs e)
@@ -54,29 +47,25 @@ namespace view
 
 		public async Task UpdateView()
 		{
-			var repos = await AccountStorage.Instance.Repositories();
+			Elements.Clear();
 
-			AccountsTable.Root.Clear();
-
-			foreach (var r in repos)
+			foreach (var r in await AccountStorage.Instance.Repositories())
 			{
 				var cells = new List<AccountViewCell>();
+				var section = new TableSection { Title = r.Name };
 				foreach (var a in r.Elements)
 				{
 					cells.Add(new AccountViewCell(Navigation) { Account = a, Repository = r });
 				}
-				var section = new TableSection { Title = r.Name };
-				cells = SortHelper.SortCells(cells);
-				foreach (var c in cells)
-				{
-					section.Add(c);
-				}
-				if (section.Count > 0)
-				{
-					AccountsTable.Root.Add(section);
-				}
+				Elements.Add(Tuple.Create(section, cells));
 			}
+			SortHelper.ApplySortOrder(Elements, AccountsTable);
 
+			setHeader();
+		}
+
+		void setHeader()
+		{
 			var accounts = AccountsTable.Root.Sum(s => s.Count);
 			var sources = AccountsTable.Root.Count();
 

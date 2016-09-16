@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace view.components
 {
-	public class CustomViewCell : ViewCell
+	public class CustomViewCell : SortableViewCell
 	{
 		protected readonly Label MasterLabel;
 		protected readonly Label DetailLabel;
@@ -60,5 +60,9 @@ namespace view.components
 
 			IsLoading = false;
 		}
+
+		public override decimal Units { get { return 0; } }
+		public override string Name { get { return Text; } }
+		public override decimal Value { get { return 0; } }
 	}
 }

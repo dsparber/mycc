@@ -11,7 +11,7 @@ namespace data.repositories.exchangerate
 {
 	public class CryptonatorExchangeRateRepository : OnlineExchangeRateRepository
 	{
-		const string URL_RATE = "https://www.cryptonator.com/api/ticker/{0}";
+		const string URL_RATE = "https://api.cryptonator.com/api/ticker/{0}";
 
 		const string RESULT_KEY = "ticker";
 		const string RATE_KEY = "price";
@@ -26,6 +26,7 @@ namespace data.repositories.exchangerate
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;
 		}
 
+		// TODO Add Error Handling for all Online FetchTasks => Avoid App chrash
 		protected override async Task GetFetchTask(ExchangeRate exchangeRate)
 		{
 			var uri = new Uri(string.Format(URL_RATE, ToUrl(exchangeRate)));

@@ -47,6 +47,10 @@ namespace view.components
 				Detail = InternationalisationResources.NoExchangeRateFound;
 			}
 		}
+
+		public override decimal Units { get { return Money.Amount * (ExchangeRate != null ? ExchangeRate.RateNotNull : 0); } }
+		public override string Name { get { return ExchangeRate.SecondaryCurrency.Code; } }
+		public override decimal Value { get { return Money.Amount * (ExchangeRate != null ? ExchangeRate.RateNotNull : 0); } }
 	}
 }
 

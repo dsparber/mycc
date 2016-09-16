@@ -11,12 +11,16 @@ using Xamarin.Forms;
 using view.components;
 using System.Collections.Generic;
 using helpers;
+using data.repositories.account;
 
 namespace view
 {
 	public partial class CoinsView : ContentPage
 	{
 		Task updateViewTask;
+
+		TableSection Section;
+		List<CoinViewCell> Cells;
 
 		public CoinsView()
 		{
@@ -32,11 +36,6 @@ namespace view
 				await updateViewTask;
 			});
 
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, (speed) =>
-			{
-				Header.IsLoading |= !speed.Speed.Equals(FetchSpeedEnum.FAST);
-			});
-
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdateAccounts, async (str) =>
 			{
 				if (updateViewTask != null)
@@ -46,6 +45,9 @@ namespace view
 				updateViewTask = UpdateView(FetchSpeedEnum.FAST);
 				await updateViewTask;
 			});
+
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, (speed) => Header.IsLoading |= !speed.Speed.Equals(FetchSpeedEnum.FAST));
+			MessagingCenter.Subscribe<string>(this, MessageConstants.SortOrderChanged, str => SortHelper.ApplySortOrder(Cells, Section));
 		}
 
 		public void AddCoin(object sender, EventArgs e)
@@ -65,47 +67,16 @@ namespace view
 		public async Task UpdateView(FetchSpeedEnum speed)
 		{
 			showIsLoading(true, speed);
+			initializeTable();
 
-			if (CoinsTable.Root.Count == 0)
-			{
-				CoinsTable.Root.Add(new TableSection());
-			}
+			Cells = await getCells();
+			SortHelper.ApplySortOrder(Cells, Section);
 
-			var allAccounts = await AccountStorage.Instance.AllElementsWithRepositories();
-			var groups = allAccounts.GroupBy(a => a.Item1.Money.Currency);
-
-			var section = CoinsTable.Root[0];
-			var cells = new List<CoinViewCell>();
-
-			foreach (var g in groups)
-			{
-				if (g.Key != null)
-				{
-					var cell = section.Select(e => (CoinViewCell)e).ToList().Find(e => g.Key.Equals(e.Currency));
-					if (cell == null)
-					{
-						cell = new CoinViewCell(Navigation) { Accounts = g.ToList(), IsLoading = true };
-					}
-					else {
-						cell.Accounts = g.ToList();
-					}
-					cells.Add(cell);
-				}
-			}
-			setCells(section, cells);
-
-			var moneySum = new Money(0, ApplicationSettings.BaseCurrency);
-			foreach (var c in cells)
-			{
-				if (c.MoneyReference != null && moneySum.Currency.Equals(c.MoneyReference.Currency))
-				{
-					moneySum += c.MoneyReference;
-				}
-			}
+			var moneySum = getMoneySum();
 			Header.TitleText = moneySum.ToString();
-			Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, groups.ToList().Count);
+			Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, (await groups()).ToList().Count);
 
-			foreach (var c in cells)
+			foreach (var c in Cells)
 			{
 				if (c.MoneyReference != null && moneySum.Currency.Equals(c.MoneyReference.Currency))
 				{
@@ -117,7 +88,6 @@ namespace view
 					var rate = await ExchangeRateStorage.Instance.GetRate(c.Currency, ApplicationSettings.BaseCurrency, speed);
 
 					c.ExchangeRate = rate;
-					setCells(section, cells);
 					c.IsLoading = false;
 				}
 
@@ -128,6 +98,7 @@ namespace view
 				Header.TitleText = moneySum.ToString();
 			}
 
+			SortHelper.ApplySortOrder(Cells, Section);
 			showIsLoading(false, speed);
 		}
 
@@ -139,16 +110,56 @@ namespace view
 			}
 		}
 
-		void setCells(TableSection section, List<CoinViewCell> cells)
+		async Task<IEnumerable<IGrouping<Currency, Tuple<Account, AccountRepository>>>> groups()
 		{
-			cells = SortHelper.SortCells(cells);
+			var allAccounts = await AccountStorage.Instance.AllElementsWithRepositories();
+			return allAccounts.GroupBy(a => a.Item1.Money.Currency);
+		}
 
-			section.Clear();
-			foreach (var c in cells)
+		void initializeTable()
+		{
+			if (CoinsTable.Root.Count == 0)
 			{
-				section.Add(c);
+				CoinsTable.Root.Add(new TableSection());
 			}
+
+			Section = CoinsTable.Root[0];
+			Cells = new List<CoinViewCell>();
+		}
+
+		async Task<List<CoinViewCell>> getCells()
+		{
+			var cells = new List<CoinViewCell>();
+
+			foreach (var g in await groups())
+			{
+				if (g.Key != null)
+				{
+					var cell = Cells.ToList().Find(e => g.Key.Equals(e.Currency));
+					if (cell == null)
+					{
+						cell = new CoinViewCell(Navigation) { Accounts = g.ToList(), IsLoading = true };
+					}
+					else {
+						cell.Accounts = g.ToList();
+					}
+					cells.Add(cell);
+				}
+			}
+			return cells;
+		}
+
+		Money getMoneySum()
+		{
+			var moneySum = new Money(0, ApplicationSettings.BaseCurrency);
+			foreach (var c in Cells)
+			{
+				if (c.MoneyReference != null && moneySum.Currency.Equals(c.MoneyReference.Currency))
+				{
+					moneySum += c.MoneyReference;
+				}
+			}
+			return moneySum;
 		}
 	}
 }
-

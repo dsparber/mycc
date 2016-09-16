@@ -14,6 +14,9 @@ namespace view
 {
 	public partial class CoinDetailView : ContentPage
 	{
+		List<AccountViewCell> Cells;
+		List<ReferenceValueViewCell> ReferenceValueCells;
+
 		public CoinDetailView(IEnumerable<Tuple<Account, AccountRepository>> accounts, ExchangeRate exchangeRate)
 		{
 			InitializeComponent();
@@ -22,9 +25,9 @@ namespace view
 
 			MessagingCenter.Subscribe<string>(this, MessageConstants.SortOrderChanged, (str) =>
 			{
-				updateView(accounts, exchangeRate);
+				SortHelper.ApplySortOrder(Cells, AccountSection);
+				SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
 			});
-
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdateAccounts, async (str) =>
 			{
 				var accs = await AccountStorage.Instance.AllElementsWithRepositories();
@@ -42,24 +45,17 @@ namespace view
 
 		void updateView(IEnumerable<Tuple<Account, AccountRepository>> accounts, ExchangeRate exchangeRate)
 		{
-			var cells = new List<AccountViewCell>();
+			Cells = new List<AccountViewCell>();
 			foreach (var a in accounts)
 			{
-				cells.Add(new AccountViewCell(Navigation) { Account = a.Item1, Repository = a.Item2 });
-			}
-
-			cells = SortHelper.SortCells(cells);
-			AccountSection.Clear();
-			foreach (var c in cells)
-			{
-				AccountSection.Add(c);
+				Cells.Add(new AccountViewCell(Navigation) { Account = a.Item1, Repository = a.Item2 });
 			}
 
 			var table = new ReferenceCurrenciesTableView { BaseMoney = moneySum(accounts) };
-			foreach (var cell in table.Cells)
-			{
-				EqualsSection.Add(cell);
-			}
+			ReferenceValueCells = table.Cells;
+
+			SortHelper.ApplySortOrder(Cells, AccountSection);
+			SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
 
 			setHeader(accounts, exchangeRate);
 		}

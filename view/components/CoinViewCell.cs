@@ -86,6 +86,10 @@ namespace view.components
 				View.GestureRecognizers.Add(gestureRecognizer);
 			}
 		}
+
+		public override decimal Units { get { return MoneySum.Amount; } }
+		public override string Name { get { return MoneySum.Currency.Code; } }
+		public override decimal Value { get { return MoneySum.Amount * (ExchangeRate != null ? ExchangeRate.RateNotNull : 0); } }
 	}
 }
 

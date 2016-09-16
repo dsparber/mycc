@@ -1,4 +1,6 @@
 ﻿using data.repositories.account;
+using data.settings;
+using data.storage;
 using models;
 using Xamarin.Forms;
 
@@ -41,7 +43,25 @@ namespace view.components
 				View.GestureRecognizers.Add(gestureRecognizer);
 			}
 		}
+
+		public override decimal Units { get { return Account.Money.Amount; } }
+		public override string Name { get { return Account.Name + Account.Money.Currency.Code; } }
+		public override decimal Value
+		{
+			get
+			{
+				ExchangeRate rate = null;
+				if (Account.Money.Currency.Equals(ApplicationSettings.BaseCurrency)){
+					rate = new ExchangeRate(Account.Money.Currency, Account.Money.Currency, 1);
+				}
+				if (rate == null)
+				{
+					rate = ExchangeRateStorage.Instance.CachedElements.Find(e => e.Equals(new ExchangeRate(Account.Money.Currency, ApplicationSettings.BaseCurrency)));
+				}
+				return Account.Money.Amount * (rate != null ? rate.RateNotNull : 0);
+				}
+			}
+		}
 	}
-}
 
 
