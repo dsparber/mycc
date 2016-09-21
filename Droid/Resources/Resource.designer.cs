@@ -27,6 +27,8 @@ namespace MyCryptos.Droid
 		public static void UpdateIdValues()
 		{
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::MyCryptos.Droid.Resource.Attribute.actionBarSize;
+			global::PCLCrypto.Resource.String.ApplicationName = global::MyCryptos.Droid.Resource.String.ApplicationName;
+			global::PCLCrypto.Resource.String.Hello = global::MyCryptos.Droid.Resource.String.Hello;
 		}
 		
 		public partial class Animation
@@ -2957,6 +2959,12 @@ namespace MyCryptos.Droid
 		
 		public partial class String
 		{
+			
+			// aapt resource value: 0x7f060027
+			public const int ApplicationName = 2131099687;
+			
+			// aapt resource value: 0x7f060026
+			public const int Hello = 2131099686;
 			
 			// aapt resource value: 0x7f060012
 			public const int abc_action_bar_home_description = 2131099666;

@@ -49,7 +49,10 @@ namespace helpers
 			foreach (var e in elements)
 			{
 				ApplySortOrder(e.Item2, e.Item1);
-				tableView.Root.Add(e.Item1);
+				if (e.Item1.Count > 0)
+				{
+					tableView.Root.Add(e.Item1);
+				}
 			}
 		}
 	}

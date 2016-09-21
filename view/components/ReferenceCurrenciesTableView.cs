@@ -59,6 +59,7 @@ namespace view.components
 
 					Cells.Add(cell);
 				}
+				// TODO Fix: cells dissapearing after update
 				updateView();
 			}
 		}

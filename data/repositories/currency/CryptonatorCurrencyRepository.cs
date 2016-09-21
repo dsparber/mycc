@@ -9,7 +9,7 @@ namespace data.repositories.currency
 {
 	public class CryptonatorCurrencyRepository : OnlineCurrencyRepository
 	{
-		const string URL_CURRENCY_LIST = "https://www.cryptonator.com/api/currencies";
+		const string URL_CURRENCY_LIST = "https://api.cryptonator.com/api/currencies";
 
 		const string CURRENCY_LIST_RESULT = "rows";
 		const string CURRENCY_LIST_RESULT_NAME = "name";

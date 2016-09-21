@@ -42,7 +42,7 @@ namespace data.database
 
 		public override async Task Write(IEnumerable<Account> data, int repositoryId)
 		{
-			var dbObjects = data.Select(a => new Tuple<Account, AccountDBM> (a, new AccountDBM(a, repositoryId)));
+			var dbObjects = data.Select(a => new Tuple<Account, AccountDBM> (a, new AccountDBM(a, repositoryId))).ToList();
 
 			await DatabaseHelper.InsertOrUpdate(this, dbObjects.Select(o => o.Item2));
 

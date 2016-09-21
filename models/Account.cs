@@ -64,7 +64,12 @@ namespace models
 			}
 			var a = (Account)obj;
 
-			return (Id.HasValue && a.Id.HasValue && Id.Value == a.Id.Value);
+			if (Id.HasValue && a.Id.HasValue && Id.Value != 0)
+			{
+				return Id.Value == a.Id.Value;
+			}
+
+			return Name.Equals(a.Name) && Money.Currency.Equals(a.Money.Currency);
 		}
 
 		public override int GetHashCode()

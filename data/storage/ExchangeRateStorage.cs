@@ -110,6 +110,9 @@ namespace data.storage
 
 		public async Task<ExchangeRate> GetDirectRate(Currency referenceCurrency, Currency secondaryCurrency, FetchSpeedEnum speed)
 		{
+			referenceCurrency = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(referenceCurrency));
+			secondaryCurrency = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(secondaryCurrency));
+
 			if (referenceCurrency.Equals(secondaryCurrency))
 			{
 				return new ExchangeRate(referenceCurrency, secondaryCurrency, 1);
@@ -150,9 +153,12 @@ namespace data.storage
 			{
 				if (r.IsAvailable(exchangeRate))
 				{
+					// TODO Why not reached?
 					await (await r.ExchangeRateRepository()).Add(exchangeRate);
+					return;
 				}
 			}
+			await (await Repositories()).Find(r => r is LocalExchangeRateRepository).Add(exchangeRate);
 		}
 	}
 }

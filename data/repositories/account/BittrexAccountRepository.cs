@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,7 +64,6 @@ namespace data.repositories.account
 
 				var newAccounts = new List<Account>();
 
-				// TODO fix
 				foreach (var r in results){
 					var currencyCode = (string)r[CURRENCY_KEY];
 					var balance = (decimal)r[BALANCE_KEY];
@@ -85,12 +86,13 @@ namespace data.repositories.account
 					}
 				}
 
+				await Task.WhenAll(Elements.Select(async e => await Delete(e)));
 				Elements.Clear();
 				Elements.AddRange(newAccounts);
-			}
 
-			await WriteToDatabase();
-			LastFetch = DateTime.Now;
+				await WriteToDatabase();
+				LastFetch = DateTime.Now;
+			}
 		}
 
 		static string ByteToString(byte[] buff)
