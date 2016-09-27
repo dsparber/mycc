@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
+using data.storage;
+using enums;
 using models;
 using MyCryptos.resources;
 
@@ -45,6 +48,17 @@ namespace view.components
 			}
 			else {
 				Detail = InternationalisationResources.NoExchangeRateFound;
+			}
+		}
+
+		public async Task Update()
+		{
+			if (IsLoading)
+			{
+				var currency = (await CurrencyStorage.Instance.AllElements()).Find(e => e.Equals(ExchangeRate.SecondaryCurrency));
+				var rate = await ExchangeRateStorage.Instance.GetRate(Money.Currency, currency, FetchSpeedEnum.MEDIUM);
+				ExchangeRate = rate;
+				IsLoading = false;
 			}
 		}
 

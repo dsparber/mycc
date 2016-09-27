@@ -117,10 +117,23 @@ namespace view
 			var table = new ReferenceCurrenciesTableView { BaseMoney = account.Money };
 
 			ReferenceValueCells = new List<ReferenceValueViewCell>();
-			foreach (var cell in table.Cells) { 
+			foreach (var cell in table.Cells)
+			{
 				ReferenceValueCells.Add(cell);
 			}
 			SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
+		}
+
+		protected async override void OnAppearing()
+		{
+			base.OnAppearing();
+			if (!IsNew && account != null)
+			{
+				foreach (var c in ReferenceValueCells)
+				{
+					await c.Update();
+				}
+			}
 		}
 
 		void setToNewView()

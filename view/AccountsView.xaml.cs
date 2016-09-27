@@ -29,10 +29,14 @@ namespace view
 
 		public async void Add(object sender, EventArgs e)
 		{
-			var action = await DisplayActionSheet(InternationalisationResources.AddActionChooseTitle, InternationalisationResources.Cancel, null, InternationalisationResources.AddLocalAccount);
+			var action = await DisplayActionSheet(InternationalisationResources.AddActionChooseTitle, InternationalisationResources.Cancel, null, InternationalisationResources.AddLocalAccount, InternationalisationResources.AddBittrexAcoount);
 			if (InternationalisationResources.AddLocalAccount.Equals(action))
 			{
 				await Navigation.PushModalAsync(new NavigationPage(new AccountDetailView(null, null) { IsNew = true }));
+			}
+			if (InternationalisationResources.AddBittrexAcoount.Equals(action))
+			{
+				await Navigation.PushModalAsync(new NavigationPage(new AddRepositoryView()));
 			}
 		}
 

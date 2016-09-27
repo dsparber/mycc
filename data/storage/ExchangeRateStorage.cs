@@ -5,7 +5,6 @@ using data.database;
 using data.database.helper;
 using data.database.models;
 using data.factories;
-using data.repositories.availablerates;
 using data.repositories.exchangerate;
 using enums;
 using models;
@@ -153,7 +152,6 @@ namespace data.storage
 			{
 				if (r.IsAvailable(exchangeRate))
 				{
-					// TODO Why not reached?
 					await (await r.ExchangeRateRepository()).Add(exchangeRate);
 					return;
 				}

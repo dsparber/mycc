@@ -376,5 +376,47 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("BittrexSource", resourceCulture);
             }
         }
+        
+        public static string ApiKey {
+            get {
+                return ResourceManager.GetString("ApiKey", resourceCulture);
+            }
+        }
+        
+        public static string SecretApiKey {
+            get {
+                return ResourceManager.GetString("SecretApiKey", resourceCulture);
+            }
+        }
+        
+        public static string AddRepositoryTitle {
+            get {
+                return ResourceManager.GetString("AddRepositoryTitle", resourceCulture);
+            }
+        }
+        
+        public static string Bittrex {
+            get {
+                return ResourceManager.GetString("Bittrex", resourceCulture);
+            }
+        }
+        
+        public static string AddBittrexAcoount {
+            get {
+                return ResourceManager.GetString("AddBittrexAcoount", resourceCulture);
+            }
+        }
+        
+        public static string AddSource {
+            get {
+                return ResourceManager.GetString("AddSource", resourceCulture);
+            }
+        }
+        
+        public static string GrantAccess {
+            get {
+                return ResourceManager.GetString("GrantAccess", resourceCulture);
+            }
+        }
     }
 }

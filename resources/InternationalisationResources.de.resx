@@ -158,7 +158,7 @@
 	</data>
 	<data
 		name="NoExchangeRateFound">
-		<value>No exchange rate found</value>
+		<value>Kein Wechselkurs gefunden</value>
 	</data>
 	<data
 		name="RefreshingDots">
@@ -235,5 +235,33 @@
 	<data
 		name="BittrexSource">
 		<value>Bittrex</value>
+	</data>
+	<data
+		name="ApiKey">
+		<value>Key</value>
+	</data>
+	<data
+		name="SecretApiKey">
+		<value>Secret</value>
+	</data>
+	<data
+		name="AddRepositoryTitle">
+		<value>Quelle hinzufügen</value>
+	</data>
+	<data
+		name="Bittrex">
+		<value>Bittrex</value>
+	</data>
+	<data
+		name="AddBittrexAcoount">
+		<value>Bittrex Konto hinzufügen</value>
+	</data>
+	<data
+		name="AddSource">
+		<value>Neue Quelle hinzufügen</value>
+	</data>
+	<data
+		name="GrantAccess">
+		<value>Zugriff erlauben</value>
 	</data>
 </root>

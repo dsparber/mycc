@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using data.repositories.account;
+using SQLite;
 
 namespace data.database.models
 {
@@ -14,7 +15,22 @@ namespace data.database.models
 
 		public string Name { get; set; }
 
-		public int Type { get; set;}
+		public int Type { get; set; }
+
+		/// <summary>
+		/// Json formated additional data for the account. E.g. Api-Key
+		/// </summary>
+		/// <value>Json data</value>
+		public string Data { get; set; }
+
+		public AccountRepositoryDBM() { }
+
+		public AccountRepositoryDBM(AccountRepository repository)
+		{
+			Name = repository.Name;
+			Data = repository.Data;
+			Type = repository.Id;
+		}
 	}
 }
 

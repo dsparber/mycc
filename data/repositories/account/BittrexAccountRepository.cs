@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -10,6 +9,7 @@ using data.storage;
 using models;
 using MyCryptos.resources;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using PCLCrypto;
 using static PCLCrypto.WinRTCrypto;
 
@@ -17,9 +17,11 @@ namespace data.repositories.account
 {
 	public class BittrexAccountRepository : OnlineAccountRepository
 	{
-		// TODO Load from Database
-		const string API_KEY = "51bb7379ae6645af87a8005f74fd272c";
-		const string API_KEY_SECRET = "8eea5afc2a7340079143b8dae4e9b46f";
+		// Test Data
+		// const string API_KEY = "51bb7379ae6645af87a8005f74fd272c";
+		// const string API_KEY_SECRET = "8eea5afc2a7340079143b8dae4e9b46f";
+
+		string apiKey, apiKeyPrivate;
 
 		const string BASE_URL = "https://bittrex.com/api/v1.1/account/getbalances?apikey={0}&nonce={1}";
 		const string SIGNING = "apisign";
@@ -31,7 +33,23 @@ namespace data.repositories.account
 		const int BUFFER_SIZE = 256000;
 		readonly HttpClient client;
 
-		public BittrexAccountRepository(string name) : base(AccountRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY, name)
+		public override string Data { get { return JsonConvert.SerializeObject(new KeyData(apiKey, apiKeyPrivate)); } }
+
+		public BittrexAccountRepository(string name, string data) : this(name)
+		{
+			var keys = JsonConvert.DeserializeObject<KeyData>(data);
+
+			apiKey = keys.key;
+			apiKeyPrivate = keys.privateKey;
+		}
+
+		public BittrexAccountRepository(string name, string apiKey, string apiKeyPrivate) : this(name)
+		{
+			this.apiKey = apiKey;
+			this.apiKeyPrivate = apiKeyPrivate;
+		}
+
+		BittrexAccountRepository(string name) : base(AccountRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY, name)
 		{
 			client = new HttpClient();
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;
@@ -40,9 +58,9 @@ namespace data.repositories.account
 		public override async Task Fetch()
 		{
 			var nounce = Convert.ToUInt64((DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds);
-			var uri = new Uri(string.Format(BASE_URL, API_KEY, nounce));
+			var uri = new Uri(string.Format(BASE_URL, apiKey, nounce));
 
-			byte[] keyBytes = Encoding.UTF8.GetBytes(API_KEY_SECRET);
+			byte[] keyBytes = Encoding.UTF8.GetBytes(apiKeyPrivate);
 			byte[] dataBytes = Encoding.UTF8.GetBytes(uri.AbsoluteUri);
 
 			var algorithm = MacAlgorithmProvider.OpenAlgorithm(MacAlgorithm.HmacSha512);
@@ -64,12 +82,14 @@ namespace data.repositories.account
 
 				var newAccounts = new List<Account>();
 
-				foreach (var r in results){
+				foreach (var r in results)
+				{
 					var currencyCode = (string)r[CURRENCY_KEY];
 					var balance = (decimal)r[BALANCE_KEY];
 
-					if (balance != 0) {
-						
+					if (balance != 0)
+					{
+
 						var curr = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Code.Equals(currencyCode));
 
 						var newAccount = new Account(InternationalisationResources.BittrexAccount, new Money(balance, curr));
@@ -80,7 +100,7 @@ namespace data.repositories.account
 							existing.Money = newAccount.Money;
 							newAccounts.Add(existing);
 						}
-						else { 
+						else {
 							newAccounts.Add(newAccount);
 						}
 					}
@@ -103,6 +123,18 @@ namespace data.repositories.account
 				sBuilder.Append(buff[i].ToString("X2"));
 			}
 			return sBuilder.ToString().ToLower();
+		}
+
+		class KeyData
+		{
+
+			public string key, privateKey;
+
+			public KeyData(string key, string privateKey)
+			{
+				this.key = key;
+				this.privateKey = privateKey;
+			}
 		}
 	}
 }

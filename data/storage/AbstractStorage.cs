@@ -46,6 +46,12 @@ namespace data.storage
 			return repositories.ToList();
 		}
 
+		public async Task Add(T repository)
+		{
+			await Repositories();
+			await GetDatabase().AddRepository(repository);
+		}
+
 		public async Task<List<R>> RepositoriesOfType<A>()
 		{
 			return (await Repositories()).FindAll(r => r is A);

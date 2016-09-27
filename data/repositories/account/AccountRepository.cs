@@ -14,5 +14,7 @@ namespace data.repositories.account
 		{
 			return new AccountDatabase();
 		}
+
+		public abstract string Data { get; }
 	}
 }

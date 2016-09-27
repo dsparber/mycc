@@ -71,8 +71,15 @@ namespace view
 				Header.InfoText = moneyReference.ToString();
 			}
 			else {
-				// TODO Look in cache 
-				Header.InfoText = InternationalisationResources.NoExchangeRateFound;
+				var rate = ExchangeRateStorage.Instance.CachedElements.Find(e => e.Equals(exchangeRate));
+				if (rate != null && rate.Rate.HasValue)
+				{
+					var moneyReference = new Money(moneySum(accounts).Amount * rate.Rate.Value, rate.SecondaryCurrency);
+					Header.InfoText = moneyReference.ToString();
+				}
+				else { 
+					Header.InfoText = InternationalisationResources.NoExchangeRateFound;
+				}
 			}
 		}
 

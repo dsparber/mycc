@@ -54,30 +54,17 @@ namespace view.components
 				foreach (var c in referenceCurrencies)
 				{
 					var rate = new ExchangeRate(baseMoney.Currency, c);
+					if (baseMoney.Equals(c))
+					{
+						rate.Rate = 1;
+					}
 					var rateFromStorage = ExchangeRateStorage.Instance.CachedElements.Find(r => r.Equals(rate));
-					var cell = new ReferenceValueViewCell { ExchangeRate = rateFromStorage ?? rate, Money = baseMoney };
+					rate = rate.Rate.HasValue ? rate : rateFromStorage ?? rate;
+					var cell = new ReferenceValueViewCell { ExchangeRate = rate, Money = baseMoney };
 
 					Cells.Add(cell);
-				}
-				// TODO Fix: cells dissapearing after update
-				updateView();
-			}
-		}
-
-		async void updateView()
-		{
-			foreach (var cell in Cells)
-			{
-				if (cell.IsLoading)
-				{
-					var currency = (await CurrencyStorage.Instance.AllElements()).Find(e => e.Equals(cell.ExchangeRate.SecondaryCurrency));
-					var rate = await ExchangeRateStorage.Instance.GetRate(baseMoney.Currency, currency, FetchSpeedEnum.MEDIUM);
-					cell.ExchangeRate = rate;
-					cell.IsLoading = false;
-					SortHelper.ApplySortOrder(Cells, Section);
 				}
 			}
 		}
 	}
 }
-

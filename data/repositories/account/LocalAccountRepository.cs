@@ -19,6 +19,8 @@ namespace data.repositories.account
 			await Fetch();
 			LastFastFetch = DateTime.Now;
 		}
+
+		public override string Data { get { return string.Empty; } }
 	}
 }
 

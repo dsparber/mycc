@@ -236,4 +236,32 @@
 		name="BittrexSource">
 		<value>Bittrex</value>
 	</data>
+	<data
+		name="ApiKey">
+		<value>Key</value>
+	</data>
+	<data
+		name="SecretApiKey">
+		<value>Secret</value>
+	</data>
+	<data
+		name="AddRepositoryTitle">
+		<value>Add source</value>
+	</data>
+	<data
+		name="Bittrex">
+		<value>Bittrex</value>
+	</data>
+	<data
+		name="AddBittrexAcoount">
+		<value>Add Bittrex account</value>
+	</data>
+	<data
+		name="AddSource">
+		<value>Add new source</value>
+	</data>
+	<data
+		name="GrantAccess">
+		<value>Grant access</value>
+	</data>
 </root>
