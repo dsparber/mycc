@@ -44,10 +44,14 @@ namespace view
 
 			if (!IsNew && account != null)
 			{
-				setToExistingView(repository);
+				ReferenceValueCells = new List<ReferenceValueViewCell>();
+				setToExistingView();
 				done.Clicked += DoneEditing;
 				ToolbarItems.Add(edit);
-				MessagingCenter.Subscribe<string>(this, MessageConstants.SortOrderChanged, str => SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection));
+
+				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, str => SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection));
+				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateReferenceValues());
+				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateReferenceValues());
 			}
 			else {
 				setToNewView();
@@ -88,7 +92,7 @@ namespace view
 			account.Money = currencyEntryCell.SelectedMoney;
 			await repository.Add(account);
 
-			MessagingCenter.Send(string.Empty, MessageConstants.UpdateAccounts);
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 
 			Title = account.Name;
 			Header.TitleText = account.Money.ToString();
@@ -113,20 +117,25 @@ namespace view
 		{
 			AppTasks.Instance.StartDeleteAccountTask(account);
 			await AppTasks.Instance.DeleteAccountTask;
-			MessagingCenter.Send(string.Empty, MessageConstants.UpdateAccounts);
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 
 			await Navigation.PopAsync();
 		}
 
-		void setToExistingView(AccountRepository repository)
+		void setToExistingView()
 		{
 			Title = account.Name;
 			Header.TitleText = account.Money.ToString();
 			Header.InfoText = string.Format(InternationalisationResources.SourceText, repository.Name);
 			currencyEntryCell.SelectedMoney = account.Money;
-			var table = new ReferenceCurrenciesTableView { BaseMoney = account.Money };
 
-			ReferenceValueCells = new List<ReferenceValueViewCell>();
+			updateReferenceValues();
+		}
+
+		void updateReferenceValues()
+		{
+			var table = new ReferenceCurrenciesTableView { BaseMoney = account.Money };
+			ReferenceValueCells.Clear();
 			foreach (var cell in table.Cells)
 			{
 				ReferenceValueCells.Add(cell);

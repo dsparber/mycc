@@ -22,9 +22,9 @@ namespace view
 
 			Elements = new List<Tuple<TableSection, List<AccountViewCell>>>();
 
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.UpdateAccountsView, async (speed) => await UpdateView());
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdateAccounts, async (str) => await UpdateView());
-			MessagingCenter.Subscribe<string>(this, MessageConstants.SortOrderChanged, str => SortHelper.ApplySortOrder(Elements, AccountsTable));
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, async (str) => await updateView());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, str => SortHelper.ApplySortOrder(Elements, AccountsTable));
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => SortHelper.ApplySortOrder(Elements, AccountsTable));
 		}
 
 		public async void Add(object sender, EventArgs e)
@@ -49,7 +49,7 @@ namespace view
 			}
 		}
 
-		public async Task UpdateView()
+		async Task updateView()
 		{
 			Elements.Clear();
 

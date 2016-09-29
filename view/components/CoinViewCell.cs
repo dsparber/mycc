@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using data.repositories.account;
 using models;
+using MyCryptos.resources;
 using Xamarin.Forms;
 
 namespace view.components
@@ -63,6 +64,7 @@ namespace view.components
 		{
 			Navigation = navigation;
 			Image = "more.png";
+			Detail = InternationalisationResources.NoExchangeRateFound;
 			setTapRecognizer();
 		}
 

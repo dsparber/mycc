@@ -47,8 +47,12 @@ namespace view
 					MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.StartedFetching);
 				}
 				await appTasks.FastFetchTask;
-				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateCoinsView);
-				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateAccountsView);
+				if (!ApplicationSettings.AutoRefreshOnStartup)
+				{
+					MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.DoneFetching);
+				}
+				MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+				MessagingCenter.Send(string.Empty, MessageConstants.UpdatedExchangeRates);
 			}
 
 			if (ApplicationSettings.AutoRefreshOnStartup)
@@ -58,19 +62,18 @@ namespace view
 					if (!appTasks.IsFetchTaskStarted)
 					{
 						appTasks.StartFetchTask();
-						MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.StartedFetching);
 					}
 					await appTasks.FetchTask;
-					MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.UpdateCoinsView);
-					MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateAccountsView);
+					MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.DoneFetching);
+					MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+					MessagingCenter.Send(string.Empty, MessageConstants.UpdatedExchangeRates);
 				}
 			}
 
 			if (appTasks.IsAddAccountTaskStarted)
 			{
 				await appTasks.AddAccountTask;
-				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.MEDIUM), MessageConstants.UpdateCoinsView);
-				MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.UpdateAccountsView);
+				MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 			}
 		}
 	}

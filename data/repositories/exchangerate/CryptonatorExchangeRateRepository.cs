@@ -26,7 +26,6 @@ namespace data.repositories.exchangerate
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;
 		}
 
-		// TODO Add Error Handling for all Online FetchTasks => Avoid App chrash
 		protected override async Task GetFetchTask(ExchangeRate exchangeRate)
 		{
 			var uri = new Uri(string.Format(URL_RATE, ToUrl(exchangeRate)));

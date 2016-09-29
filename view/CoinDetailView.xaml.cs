@@ -9,6 +9,7 @@ using message;
 using data.repositories.account;
 using System;
 using data.storage;
+using data.settings;
 
 namespace view
 {
@@ -23,12 +24,13 @@ namespace view
 
 			updateView(accounts, exchangeRate);
 
-			MessagingCenter.Subscribe<string>(this, MessageConstants.SortOrderChanged, (str) =>
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, (str) =>
 			{
 				SortHelper.ApplySortOrder(Cells, AccountSection);
 				SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
 			});
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdateAccounts, async (str) =>
+
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, async (str) =>
 			{
 				var accs = await AccountStorage.Instance.AllElementsWithRepositories();
 				accs = accs.Where(t => t.Item1.Money.Currency.Equals(currency(accounts))).ToList();
@@ -41,6 +43,14 @@ namespace view
 					updateView(accs, exchangeRate);
 				}
 			});
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, (str) => reloadData(accounts));
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, (str) => reloadData(accounts));
+		}
+
+		void reloadData(IEnumerable<Tuple<Account, AccountRepository>> accounts)
+		{
+			var rate = ExchangeRateStorage.Instance.CachedElements.Find(c => c.Equals(new ExchangeRate(currency(accounts), ApplicationSettings.BaseCurrency)));
+			updateView(accounts, rate);
 		}
 
 		void updateView(IEnumerable<Tuple<Account, AccountRepository>> accounts, ExchangeRate exchangeRate)

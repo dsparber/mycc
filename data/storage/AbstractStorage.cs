@@ -57,12 +57,12 @@ namespace data.storage
 			return (await Repositories()).FindAll(r => r is A);
 		}
 
-		public async Task Fetch()
+		public virtual async Task Fetch()
 		{
 			await Task.WhenAll((await Repositories()).Select(x => x.Fetch()));
 		}
 
-		public async Task FetchFast()
+		public virtual async Task FetchFast()
 		{
 			await Task.WhenAll((await Repositories()).Select(x => x.FetchFast()));
 		}

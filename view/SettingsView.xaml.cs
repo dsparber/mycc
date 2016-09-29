@@ -27,7 +27,7 @@ namespace view
 		void ReferenceCurrencyEntered(Currency currency)
 		{
 			ApplicationSettings.BaseCurrency = currency;
-			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.MEDIUM), MessageConstants.UpdateCoinsView); // Own Message - Speed up by looking into cache
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedReferenceCurrency);
 		}
 
 		void SortOrderSelected(object sender, EventArgs e)
@@ -54,7 +54,7 @@ namespace view
 			}
 			updateCheckmarks();
 
-			MessagingCenter.Send(string.Empty, MessageConstants.SortOrderChanged);
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedSortOrder);
 		}
 
 		void AutoRefreshChanged(object sender, EventArgs e)

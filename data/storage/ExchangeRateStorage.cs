@@ -142,7 +142,6 @@ namespace data.storage
 				}
 				return exchangeRate.GetInverse();
 			}
-
 			return null;
 		}
 

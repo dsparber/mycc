@@ -33,8 +33,8 @@ namespace helpers
 		public static void ApplySortOrder<T>(IEnumerable<T> cells, TableSection section) where T : SortableViewCell
 		{
 			cells = SortCells(cells);
-			section.Clear();
 
+			section.Clear();
 			foreach (var c in cells)
 			{
 				section.Add(c);

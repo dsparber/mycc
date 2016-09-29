@@ -1,7 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using data.repositories.account;
 using data.storage;
+using enums;
+using message;
 using models;
+using Xamarin.Forms;
 
 namespace tasks
 {
@@ -11,11 +17,14 @@ namespace tasks
 		Task fetchTaskInstance;
 		Task addAccountTaskInstance;
 		Task deleteAccountTaskInstance;
+		Task missingRatesTaskInstance;
 
 		public Task FastFetchTask { get { return fastFetchTaskInstance; } }
 		public Task FetchTask { get { return fetchTaskInstance; } }
 		public Task AddAccountTask { get { return addAccountTaskInstance; } }
 		public Task DeleteAccountTask { get { return deleteAccountTaskInstance; } }
+		public Task MissingRatesTask { get { return missingRatesTaskInstance; } }
+
 
 		public void StartFastFetchTask()
 		{
@@ -49,69 +58,26 @@ namespace tasks
 			}
 		}
 
-		public bool IsFastFetchTaskFinished
+		public void StartMissingRatesTask(IEnumerable<ExchangeRate> rates)
 		{
-			get
+			if (missingRatesTaskInstance == null || missingRatesTaskInstance.IsCompleted)
 			{
-				return fastFetchTaskInstance != null && fastFetchTaskInstance.IsCompleted;
+				missingRatesTaskInstance = missingRatesTask(rates);
 			}
 		}
 
-		public bool IsFetchTaskFinished
-		{
-			get
-			{
-				return fetchTaskInstance != null && fetchTaskInstance.IsCompleted;
-			}
-		}
+		public bool IsFastFetchTaskFinished { get { return isFinished(fastFetchTaskInstance); } }
+		public bool IsFetchTaskFinished{ get { return isFinished(fetchTaskInstance); } }
+		public bool IsAddAccountTaskFinished { get { return isFinished(addAccountTaskInstance); } }
+		public bool IsDeleteAccountTaskFinished { get { return isFinished(deleteAccountTaskInstance); } }
+		public bool IsMissingRatesTaskFinished { get { return isFinished(missingRatesTaskInstance); } }
 
-		public bool IsAddAccountTaskFinished
-		{
-			get
-			{
-				return addAccountTaskInstance != null && addAccountTaskInstance.IsCompleted;
-			}
-		}
+		public bool IsFastFetchTaskStarted { get { return isStarted(fastFetchTaskInstance); } }
+		public bool IsFetchTaskStarted { get { return isStarted(fetchTaskInstance); } }
+		public bool IsAddAccountTaskStarted { get { return isStarted(addAccountTaskInstance); } }
+		public bool IsDeleteAccountTaskStarted { get { return isStarted(deleteAccountTaskInstance); } }
+		public bool IsMissingRatesTaskStarted { get { return isStarted(missingRatesTaskInstance); } }
 
-		public bool IsDeleteAccountTaskFinished
-		{
-			get
-			{
-				return deleteAccountTaskInstance != null && deleteAccountTaskInstance.IsCompleted;
-			}
-		}
-
-		public bool IsFastFetchTaskStarted
-		{
-			get
-			{
-				return fastFetchTaskInstance != null && (fastFetchTaskInstance.Status.Equals(TaskStatus.Running) || fastFetchTaskInstance.IsCompleted);
-			}
-		}
-
-		public bool IsFetchTaskStarted
-		{
-			get
-			{
-				return fetchTaskInstance != null && (fetchTaskInstance.Status.Equals(TaskStatus.Running) || fetchTaskInstance.IsCompleted);
-			}
-		}
-
-		public bool IsAddAccountTaskStarted
-		{
-			get
-			{
-				return addAccountTaskInstance != null && (addAccountTaskInstance.Status.Equals(TaskStatus.Running) || addAccountTaskInstance.IsCompleted);
-			}
-		}
-
-		public bool IsDeleteAccountTaskStarted
-		{
-			get
-			{
-				return deleteAccountTaskInstance != null && (deleteAccountTaskInstance.Status.Equals(TaskStatus.Running) || deleteAccountTaskInstance.IsCompleted);
-			}
-		}
 
 		async Task fastFetchTask()
 		{
@@ -139,8 +105,20 @@ namespace tasks
 			await (await AccountStorage.Instance.Repositories()).Find(r => r is LocalAccountRepository).Delete(account);
 		}
 
-		static AppTasks instance { get; set; }
+		async Task missingRatesTask(IEnumerable<ExchangeRate> rates)
+		{
+			MessagingCenter.Send(string.Empty, MessageConstants.StartedFetching);
+			await Task.WhenAll(rates.Select(async r =>
+			{
+				await ExchangeRateStorage.Instance.GetRate(r.ReferenceCurrency, r.SecondaryCurrency, FetchSpeedEnum.FAST);
+			}));
+			await ExchangeRateStorage.Instance.Fetch();
+			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.LoadedMissing);
+			MessagingCenter.Send(string.Empty, MessageConstants.DoneFetching);
+		}
 
+
+		static AppTasks instance { get; set; }
 		public static AppTasks Instance
 		{
 			get
@@ -151,6 +129,15 @@ namespace tasks
 				}
 				return instance;
 			}
+		}
+
+		static bool isStarted(Task task)
+		{
+			return task != null && (task.Status.Equals(TaskStatus.Running) || task.IsCompleted);
+		}
+		static bool isFinished(Task task)
+		{
+			return task != null && task.IsCompleted;
 		}
 	}
 }

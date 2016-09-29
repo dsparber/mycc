@@ -2,13 +2,15 @@
 {
 	public static class MessageConstants
 	{
-		public const string UpdateCoinsView = "UpdateCoinsView";
-		public const string UpdateAccountsView = "UpdateAccountsView";
+		public const string UpdatedExchangeRates = "UpdatedExchangeRates";
+		public const string UpdatedAccounts = "UpdatedAccounts";
+		public const string UpdatedSortOrder = "UpdatedSortOrder";
+		public const string UpdatedReferenceCurrency = "UpdatedReferenceCurrency";
+
 		public const string StartedFetching = "StartedFetching";
 		public const string DoneFetching = "DoneFetching";
-		public const string SortOrderChanged = "SortOrderChanged";
 
-		public const string UpdateAccounts = "UpdateAccounts";
+		public const string LoadedMissing = "LoadedMissing";
 	}
 }
 

@@ -12,15 +12,15 @@ namespace data.storage
 		protected AbstractDatabaseStorage()
 		{
 			CachedElements = new List<V>();
+			CachedElementsWithRepository = new List<Tuple<V, R>>();
 		}
 
-		public List<V> CachedElements { get; private set;}
+		public List<V> CachedElements { get; private set; }
+		public List<Tuple<V, R>> CachedElementsWithRepository { get; private set; }
 
 		public async Task<List<V>> AllElements()
 		{
-			var elements = (await Repositories()).SelectMany(r => r.Elements).ToList();
-			CachedElements = elements;
-			return elements;
+			return (await Repositories()).SelectMany(r => r.Elements).ToList();
 		}
 
 		public async Task<List<Tuple<V, R>>> AllElementsWithRepositories()
@@ -32,7 +32,19 @@ namespace data.storage
 		{
 			return (await AllElements()).FindAll(e => e is A);
 		}
+
+		public async override Task Fetch()
+		{
+			await base.Fetch();
+			CachedElements = await AllElements();
+			CachedElementsWithRepository = await AllElementsWithRepositories();
+		}
+
+		public async override Task FetchFast()
+		{
+			await base.FetchFast();
+			CachedElements = await AllElements();
+			CachedElementsWithRepository = await AllElementsWithRepositories();
+		}
 	}
-
-
 }
