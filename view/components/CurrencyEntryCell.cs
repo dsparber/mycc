@@ -83,6 +83,17 @@ namespace view.components
 			get { return isAmountEnabled; }
 		}
 
+		public bool IsEditable
+		{
+			set
+			{
+				AmountEntry.IsEnabled = value;
+				AmountEntry.Opacity = value ? 1 : 0.5;
+				SelectedCurrencyLabel.Opacity = value ? 1 : 0.5;
+			}
+			get { return AmountEntry.IsEnabled; }
+		}
+
 		public CurrencyEntryCell(INavigation navigation)
 		{
 			Navigation = navigation;
@@ -137,7 +148,10 @@ namespace view.components
 			var gestureRecognizer = new TapGestureRecognizer();
 			gestureRecognizer.Tapped += (sender, e) =>
 			{
-				Navigation.PushAsync(new CurrencyOverlay(this));
+				if (IsEditable)
+				{
+					Navigation.PushAsync(new CurrencyOverlay(this));
+				}
 			};
 			if (View != null)
 			{

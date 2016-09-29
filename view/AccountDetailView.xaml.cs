@@ -24,6 +24,7 @@ namespace view
 
 		Account account;
 		Money selectedMoney;
+		AccountRepository repository;
 
 		public bool IsNew;
 
@@ -32,6 +33,7 @@ namespace view
 			InitializeComponent();
 
 			this.account = account;
+			this.repository = repository;
 
 			currencyEntryCell = new CurrencyEntryCell(Navigation);
 			currencyEntryCell.IsAmountEnabled = true;
@@ -64,6 +66,14 @@ namespace view
 			AccountName.Text = account.Name;
 			currencyEntryCell.SelectedMoney = account.Money;
 
+			var isLocal = repository is LocalAccountRepository;
+
+			currencyEntryCell.IsEditable = isLocal;
+			if (!isLocal)
+			{
+				EditView.Root.Remove(DeleteSection);
+			}
+
 			EditView.IsVisible = true;
 			DefaultView.IsVisible = false;
 			ToolbarItems.Clear();
@@ -73,11 +83,11 @@ namespace view
 
 		public async void DoneEditing(object sender, EventArgs e)
 		{
+			repository.Elements.Remove(account);
 			account.Name = AccountName.Text;
 			account.Money = currencyEntryCell.SelectedMoney;
+			await repository.Add(account);
 
-			AppTasks.Instance.StartAddAccountTask(account);
-			await AppTasks.Instance.AddAccountTask;
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdateAccounts);
 
 			Title = account.Name;
