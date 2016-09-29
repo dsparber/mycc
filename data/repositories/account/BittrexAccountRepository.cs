@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using PCLCrypto;
 using static PCLCrypto.WinRTCrypto;
+using System.Diagnostics;
 
 namespace data.repositories.account
 {
@@ -55,7 +56,7 @@ namespace data.repositories.account
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;
 		}
 
-		public override async Task Fetch()
+		public override async Task<bool> Fetch()
 		{
 			var nounce = Convert.ToUInt64((DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds);
 			var uri = new Uri(string.Format(BASE_URL, apiKey, nounce));
@@ -75,44 +76,54 @@ namespace data.repositories.account
 
 			if (response.IsSuccessStatusCode)
 			{
-				var content = await response.Content.ReadAsStringAsync();
-				var json = JObject.Parse(content);
-
-				var results = (JArray)json[RESULT_KEY];
-
-				var newAccounts = new List<Account>();
-
-				foreach (var r in results)
+				try
 				{
-					var currencyCode = (string)r[CURRENCY_KEY];
-					var balance = (decimal)r[BALANCE_KEY];
+					var content = await response.Content.ReadAsStringAsync();
+					var json = JObject.Parse(content);
 
-					if (balance != 0)
+					var results = (JArray)json[RESULT_KEY];
+
+					var newAccounts = new List<Account>();
+
+					foreach (var r in results)
 					{
+						var currencyCode = (string)r[CURRENCY_KEY];
+						var balance = (decimal)r[BALANCE_KEY];
 
-						var curr = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Code.Equals(currencyCode));
-
-						var newAccount = new Account(InternationalisationResources.BittrexAccount, new Money(balance, curr));
-						var existing = Elements.Find(a => a.Money.Currency.Equals(newAccount.Money.Currency));
-
-						if (existing != null)
+						if (balance != 0)
 						{
-							existing.Money = newAccount.Money;
-							newAccounts.Add(existing);
-						}
-						else {
-							newAccounts.Add(newAccount);
+
+							var curr = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Code.Equals(currencyCode));
+
+							var newAccount = new Account(InternationalisationResources.BittrexAccount, new Money(balance, curr));
+							var existing = Elements.Find(a => a.Money.Currency.Equals(newAccount.Money.Currency));
+
+							if (existing != null)
+							{
+								existing.Money = newAccount.Money;
+								newAccounts.Add(existing);
+							}
+							else {
+								newAccounts.Add(newAccount);
+							}
 						}
 					}
+
+					await Task.WhenAll(Elements.Select(async e => await Delete(e)));
+					Elements.Clear();
+					Elements.AddRange(newAccounts);
+
+					await WriteToDatabase();
+					LastFetch = DateTime.Now;
+					return true;
 				}
-
-				await Task.WhenAll(Elements.Select(async e => await Delete(e)));
-				Elements.Clear();
-				Elements.AddRange(newAccounts);
-
-				await WriteToDatabase();
-				LastFetch = DateTime.Now;
+				catch (Exception e)
+				{
+					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+					return false;
+				}
 			}
+			return false;
 		}
 
 		static string ByteToString(byte[] buff)

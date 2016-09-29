@@ -8,16 +8,16 @@ namespace data.repositories.account
 	{
 		public LocalAccountRepository(string name) : base(AccountRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY, name) { }
 
-		public override async Task Fetch()
+		public override async Task<bool> Fetch()
 		{
-			await FetchFromDatabase();
 			LastFetch = DateTime.Now;
+			return await FetchFromDatabase();
 		}
 
-		public override async Task FetchFast()
+		public override async Task<bool> FetchFast()
 		{
-			await Fetch();
 			LastFastFetch = DateTime.Now;
+			return await Fetch();
 		}
 
 		public override string Data { get { return string.Empty; } }

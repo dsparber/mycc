@@ -8,22 +8,22 @@ namespace data.repositories.exchangerate
 	{
 		public LocalExchangeRateRepository(string name) : base(ExchangeRateRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY, name) { }
 
-		public override async Task Fetch()
+		public override async Task<bool> Fetch()
 		{
-			await FetchFromDatabase();
 			LastFetch = DateTime.Now;
+			return await FetchFromDatabase();
 		}
 
-		public override async Task FetchFast()
+		public override async Task<bool> FetchFast()
 		{
-			await Fetch();
 			LastFastFetch = DateTime.Now;
+			return await Fetch();
 		}
 
-		public override async Task FetchNew()
+		public override async Task<bool> FetchNew()
 		{
-			await Fetch();
 			LastFastFetch = DateTime.Now;
+			return await Fetch();
 		}
 	}
 }

@@ -7,9 +7,9 @@ namespace data.repositories.general
 		public string Name;
 		public int Id;
 
-		public abstract Task Fetch();
+		public abstract Task<bool> Fetch();
 
-		public abstract Task FetchFast();
+		public abstract Task<bool> FetchFast();
 
 		protected AbstractRepository(int repositoryId, string name)
 		{

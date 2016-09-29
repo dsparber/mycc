@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using data.database.models;
 using data.repositories.exchangerate;
@@ -21,16 +23,24 @@ namespace data.repositories.availablerates
 			return Elements.Contains(element);
 		}
 
-		public override async Task Fetch()
+		public override async Task<bool> Fetch()
 		{
-			var localExchangeRateRepository = (await ExchangeRateStorage.Instance.Repositories()).Find(r => r is LocalExchangeRateRepository);
-			Elements = localExchangeRateRepository.Elements;
+			try
+			{
+				var localExchangeRateRepository = (await ExchangeRateStorage.Instance.Repositories()).Find(r => r is LocalExchangeRateRepository);
+				Elements = localExchangeRateRepository.Elements;
+				return true;
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+				return false;
+			}
 		}
 
-		public override async Task FetchFast()
+		public override Task<bool> FetchFast()
 		{
-			var localExchangeRateRepository = (await ExchangeRateStorage.Instance.Repositories()).Find(r => r is LocalExchangeRateRepository);
-			Elements = localExchangeRateRepository.Elements;
+			return Fetch();
 		}
 
 		public async override Task<ExchangeRateRepository> ExchangeRateRepository()

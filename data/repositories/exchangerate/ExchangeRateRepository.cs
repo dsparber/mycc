@@ -16,7 +16,7 @@ namespace data.repositories.exchangerate
 			return new ExchangeRateDatabase();
 		}
 
-		public abstract Task FetchNew();
+		public abstract Task<bool> FetchNew();
 	}
 }
 

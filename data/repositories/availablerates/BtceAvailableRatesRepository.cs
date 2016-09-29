@@ -6,6 +6,8 @@ using data.database.models;
 using data.storage;
 using System.Collections.Generic;
 using data.repositories.exchangerate;
+using System;
+using System.Diagnostics;
 
 namespace data.repositories.availablerates
 {
@@ -23,12 +25,21 @@ namespace data.repositories.availablerates
 			return Elements.Contains(element);
 		}
 
-		public override async Task Fetch()
+		public override async Task<bool> Fetch()
 		{
-			var repository = (await CurrencyStorage.Instance.Repositories()).Find(r => r is BtceCurrencyRepository);
+			try
+			{
+				var repository = (await CurrencyStorage.Instance.Repositories()).Find(r => r is BtceCurrencyRepository);
 
-			var btc = repository.Elements.Find(c => c.Equals(Currency.BTC));
-			Elements = repository.Elements.Select(e => new ExchangeRate(btc, e)).ToList();
+				var btc = repository.Elements.Find(c => c.Equals(Currency.BTC));
+				Elements = repository.Elements.Select(e => new ExchangeRate(btc, e)).ToList();
+				return true;
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+				return false;
+			}
 		}
 
 		public async override Task<ExchangeRateRepository> ExchangeRateRepository()

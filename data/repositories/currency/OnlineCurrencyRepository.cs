@@ -7,10 +7,10 @@ namespace data.repositories.currency
 	{
 		protected OnlineCurrencyRepository(int repositoryId, string name) : base(repositoryId, name) { }
 
-		public override async Task FetchFast()
+		public override async Task<bool> FetchFast()
 		{
-			await FetchFromDatabase();
 			LastFastFetch = DateTime.Now;
+			return await FetchFromDatabase();
 		}
 	}
 }

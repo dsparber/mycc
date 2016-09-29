@@ -9,7 +9,7 @@ namespace data.repositories.availablerates
 	{
 		protected AvailableRatesRepository(int repositoryId, string name) : base(repositoryId, name) { }
 
-		public override Task FetchFast()
+		public override Task<bool> FetchFast()
 		{
 			return Fetch();
 		}

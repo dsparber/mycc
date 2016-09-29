@@ -7,10 +7,10 @@ namespace data.repositories.account
 	{
 		protected OnlineAccountRepository(int reposioteyId, string name) : base(reposioteyId, name) { }
 
-		public override async Task FetchFast()
+		public override async Task<bool> FetchFast()
 		{
-			await FetchFromDatabase();
 			LastFastFetch = DateTime.Now;
+			return await FetchFromDatabase();
 		}
 	}
 }

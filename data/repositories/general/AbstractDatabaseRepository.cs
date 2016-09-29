@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using data.database.helper;
@@ -21,10 +22,19 @@ namespace data.repositories.general
 			Elements = new List<V>();
 		}
 
-		protected async Task FetchFromDatabase()
+		protected async Task<bool> FetchFromDatabase()
 		{
-			var db = GetDatabase();
-			Elements = new List<V>(await db.GetAll(Id));
+			try
+			{
+				var db = GetDatabase();
+				Elements = new List<V>(await db.GetAll(Id));
+				return true;
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+				return false;
+			}
 		}
 
 		protected async Task WriteToDatabase()

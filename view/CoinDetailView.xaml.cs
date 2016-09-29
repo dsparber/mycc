@@ -77,7 +77,7 @@ namespace view
 					var moneyReference = new Money(moneySum(accounts).Amount * rate.Rate.Value, rate.SecondaryCurrency);
 					Header.InfoText = moneyReference.ToString();
 				}
-				else { 
+				else {
 					Header.InfoText = InternationalisationResources.NoExchangeRateFound;
 				}
 			}
@@ -91,6 +91,15 @@ namespace view
 		Currency currency(IEnumerable<Tuple<Account, AccountRepository>> accounts)
 		{
 			return accounts.First().Item1.Money.Currency;
+		}
+
+		protected async override void OnAppearing()
+		{
+			base.OnAppearing();
+			foreach (var c in ReferenceValueCells)
+			{
+				await c.Update();
+			}
 		}
 	}
 }

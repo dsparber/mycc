@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using data.database.models;
@@ -25,30 +26,39 @@ namespace data.repositories.currency
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;
 		}
 
-		public override async Task Fetch()
+		public override async Task<bool> Fetch()
 		{
 			var uri = new Uri(URL_CURRENCY_LIST);
 
 			var response = await client.GetAsync(uri);
 			if (response.IsSuccessStatusCode)
 			{
-				var content = await response.Content.ReadAsStringAsync();
-				var json = JObject.Parse(content);
-				var result = (JArray)json[CURRENCY_LIST_RESULT];
-
-				foreach (JToken token in result)
+				try
 				{
-					var name = (string)token[CURRENCY_LIST_RESULT_NAME];
-					var code = (string)token[CURRENCY_LIST_RESULT_CURRENCY];
-					var c = new Currency(code, name);
+					var content = await response.Content.ReadAsStringAsync();
+					var json = JObject.Parse(content);
+					var result = (JArray)json[CURRENCY_LIST_RESULT];
 
-					Elements.Remove(c);
-					Elements.Add(c);
+					foreach (JToken token in result)
+					{
+						var name = (string)token[CURRENCY_LIST_RESULT_NAME];
+						var code = (string)token[CURRENCY_LIST_RESULT_CURRENCY];
+						var c = new Currency(code, name);
+
+						Elements.Remove(c);
+						Elements.Add(c);
+					}
+					await WriteToDatabase();
+					LastFetch = DateTime.Now;
+					return true;
+				}
+				catch (Exception e)
+				{
+					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+					return false;
 				}
 			}
-			await WriteToDatabase();
-			LastFetch = DateTime.Now;
+			return false;
 		}
 	}
 }
-
