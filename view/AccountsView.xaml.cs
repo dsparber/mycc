@@ -29,20 +29,30 @@ namespace view
 
 		public async void Add(object sender, EventArgs e)
 		{
-			var action = await DisplayActionSheet(InternationalisationResources.AddActionChooseTitle, InternationalisationResources.Cancel, null, InternationalisationResources.AddLocalAccount, InternationalisationResources.AddBittrexAcoount);
-			if (InternationalisationResources.AddLocalAccount.Equals(action))
-			{
-				await Navigation.PushModalAsync(new NavigationPage(new AccountDetailView(null, null) { IsNew = true }));
-			}
-			if (InternationalisationResources.AddBittrexAcoount.Equals(action))
-			{
-				await Navigation.PushModalAsync(new NavigationPage(new AddRepositoryView()));
-			}
+			await AddDialog(this);
 		}
 
 		public async void SourcesClicked(object sender, EventArgs e)
 		{
+			await OpenSourcesView(Navigation);
+		}
+
+		public static async Task OpenSourcesView(INavigation Navigation)
+		{
 			await Navigation.PushModalAsync(new NavigationPage(new SourcesView(await AccountStorage.Instance.Repositories())));
+		}
+
+		public static async Task AddDialog(ContentPage page)
+		{
+			var action = await page.DisplayActionSheet(InternationalisationResources.AddActionChooseTitle, InternationalisationResources.Cancel, null, InternationalisationResources.AddLocalAccount, InternationalisationResources.AddSource);
+			if (InternationalisationResources.AddLocalAccount.Equals(action))
+			{
+				await page.Navigation.PushModalAsync(new NavigationPage(new AccountDetailView(null, null) { IsNew = true }));
+			}
+			if (InternationalisationResources.AddSource.Equals(action))
+			{
+				await page.Navigation.PushModalAsync(new NavigationPage(new AddRepositoryView()));
+			}
 		}
 
 		protected override void OnAppearing()

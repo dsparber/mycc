@@ -9,7 +9,10 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Text="{i18n:Translate Add}"
-			Clicked="AddCoin" />
+			Clicked="Add" />
+		<ToolbarItem
+			Text="{i18n:Translate Sources}"
+			Clicked="SourcesClicked" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>

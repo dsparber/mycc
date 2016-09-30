@@ -20,6 +20,7 @@
 				x:Name="Header" />
 			<TableView
 				Intent="Data"
+				Margin="0,-8,0,0"
 				x:Name="AccountsTable" />
 		</StackLayout>
 	</ContentPage.Content>

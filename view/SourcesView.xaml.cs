@@ -4,7 +4,9 @@ using System.Linq;
 using data.repositories.account;
 using MyCryptos.resources;
 using view.components;
+using message;
 using Xamarin.Forms;
+using data.storage;
 
 namespace view
 {
@@ -17,24 +19,12 @@ namespace view
 			InitializeComponent();
 			this.repositories = repositories;
 
-			setHeader();
+			setView();
 
-			foreach (var r in repositories)
-			{
-				var c = new CustomViewCell { Text = r.Name, Detail = r.Type, Image = "more.png" };
-
-				if (r is LocalAccountRepository)
-				{
-					LocalSection.Add(c);
-				}
-				else {
-					OnlineSection.Add(c);
-				}
-			}
-
-			var cell = new CustomViewCell { Text = InternationalisationResources.AddSource, IsActionCell = true };
-			cell.Tapped += (sender, e) => Navigation.PushModalAsync(new NavigationPage(new AddRepositoryView()));
-			OnlineSection.Add(cell);
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, async str => {
+				this.repositories = await AccountStorage.Instance.Repositories();
+				setView();
+			});
 		}
 
 		public async void Cancel(object sender, EventArgs e)
@@ -59,6 +49,31 @@ namespace view
 												   InternationalisationResources.Sources));
 
 			Header.InfoText = string.Format("{0} {1}, {2} {3}", local, InternationalisationResources.Local, (sources - local), InternationalisationResources.Online);
+		}
+
+		void setView()
+		{
+			setHeader();
+
+			LocalSection.Clear();
+			OnlineSection.Clear();
+
+			foreach (var r in repositories)
+			{
+				var c = new CustomViewCell { Text = r.Name, Detail = r.Type, Image = "more.png" };
+
+				if (r is LocalAccountRepository)
+				{
+					LocalSection.Add(c);
+				}
+				else {
+					OnlineSection.Add(c);
+				}
+			}
+
+			var cell = new CustomViewCell { Text = InternationalisationResources.AddSource, IsActionCell = true };
+			cell.Tapped += (sender, e) => Navigation.PushModalAsync(new NavigationPage(new AddRepositoryView()));
+			OnlineSection.Add(cell);
 		}
 	}
 }

@@ -128,9 +128,14 @@ namespace view
 			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => Header.IsLoading = false);
 		}
 
-		public void AddCoin(object sender, EventArgs e)
+		public async void Add(object sender, EventArgs e)
 		{
-			Navigation.PushModalAsync(new NavigationPage(new AccountDetailView(null, null) { IsNew = true }));
+			await AccountsView.AddDialog(this);
+		}
+
+		public async void SourcesClicked(object sender, EventArgs e)
+		{
+			await AccountsView.OpenSourcesView(Navigation);
 		}
 	}
 }
