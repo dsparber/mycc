@@ -78,7 +78,7 @@ namespace renderer
 					nativeItem = systemItem;
 				}
 
-				if (info != null && info.Text.Equals(InternationalisationResources.Cancel))
+				if (info != null && (info.Text.Equals(InternationalisationResources.Cancel) || info.Text.Equals(InternationalisationResources.Sources)))
 				{
 					leftNativeButtons.Add(nativeItem);
 				}
@@ -88,8 +88,8 @@ namespace renderer
 			});
 			rightNativeButtons.RemoveAll(b => leftNativeButtons.Contains(b));
 
-			navigationItem.RightBarButtonItems = rightNativeButtons.ToArray();
-			navigationItem.LeftBarButtonItems = leftNativeButtons.ToArray();
+			navigationItem.RightBarButtonItems = rightNativeButtons.Distinct().ToArray();
+			navigationItem.LeftBarButtonItems = leftNativeButtons.Distinct().ToArray();
 		}
 	}
 }

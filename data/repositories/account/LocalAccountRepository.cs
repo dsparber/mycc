@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using data.database.models;
+using MyCryptos.resources;
 
 namespace data.repositories.account
 {
@@ -21,6 +22,8 @@ namespace data.repositories.account
 		}
 
 		public override string Data { get { return string.Empty; } }
+
+		public override string Type { get { return InternationalisationResources.Local; } }
 	}
 }
 

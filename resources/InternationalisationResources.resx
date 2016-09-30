@@ -284,4 +284,12 @@
 		name="Fetching">
 		<value>Fetching</value>
 	</data>
+	<data
+		name="Local">
+		<value>Local</value>
+	</data>
+	<data
+		name="Online">
+		<value>Online</value>
+	</data>
 </root>

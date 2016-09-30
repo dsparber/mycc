@@ -284,4 +284,12 @@
 		name="Fetching">
 		<value>Daten laden</value>
 	</data>
+	<data
+		name="Local">
+		<value>Lokal</value>
+	</data>
+	<data
+		name="Online">
+		<value>Online</value>
+	</data>
 </root>

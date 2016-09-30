@@ -40,6 +40,11 @@ namespace view
 			}
 		}
 
+		public async void SourcesClicked(object sender, EventArgs e)
+		{
+			await Navigation.PushModalAsync(new NavigationPage(new SourcesView(await AccountStorage.Instance.Repositories())));
+		}
+
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();

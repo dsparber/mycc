@@ -448,5 +448,17 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("Fetching", resourceCulture);
             }
         }
+        
+        public static string Local {
+            get {
+                return ResourceManager.GetString("Local", resourceCulture);
+            }
+        }
+        
+        public static string Online {
+            get {
+                return ResourceManager.GetString("Online", resourceCulture);
+            }
+        }
     }
 }

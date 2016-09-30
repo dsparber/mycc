@@ -1,4 +1,5 @@
-﻿using MyCryptos.resources;
+﻿using constants;
+using MyCryptos.resources;
 using Xamarin.Forms;
 
 namespace view.components
@@ -36,6 +37,12 @@ namespace view.components
 		{
 			get { return isLoading; }
 			set { isLoading = value; DetailLabel.IsVisible = !value; LoadingView.IsVisible = value; }
+		}
+
+		public bool IsActionCell
+		{
+			get { return MasterLabel.TextColor.Equals(AppConstants.ThemeColor); }
+			set { MasterLabel.TextColor = value ? AppConstants.ThemeColor : Color.Black; }
 		}
 
 		public CustomViewCell()

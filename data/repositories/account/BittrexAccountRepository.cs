@@ -95,7 +95,7 @@ namespace data.repositories.account
 
 							var curr = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Code.Equals(currencyCode));
 
-							var newAccount = new Account(InternationalisationResources.BittrexAccount, new Money(balance, curr));
+							var newAccount = new Account(String.Format("{0} ({1})", InternationalisationResources.BittrexAccount, curr.Code), new Money(balance, curr));
 							var existing = Elements.Find(a => a.Money.Currency.Equals(newAccount.Money.Currency));
 
 							if (existing != null)
@@ -147,5 +147,7 @@ namespace data.repositories.account
 				this.privateKey = privateKey;
 			}
 		}
+
+		public override string Type { get { return InternationalisationResources.Bittrex; } }
 	}
 }
