@@ -2,6 +2,7 @@
 using data.database.models;
 using data.repositories.account;
 using data.storage;
+using message;
 using MyCryptos.resources;
 using Xamarin.Forms;
 
@@ -43,7 +44,11 @@ namespace view
 			var success = await repository.Fetch();
 			if (success)
 			{
+				Header.LoadingText = InternationalisationResources.Fetching;
 				await AccountStorage.Instance.Add(new AccountRepositoryDBM(repository));
+				await AccountStorage.Instance.Fetch();
+				MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+
 				await Navigation.PopModalAsync();
 			}
 			else {

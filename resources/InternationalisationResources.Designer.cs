@@ -442,5 +442,11 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("Testing", resourceCulture);
             }
         }
+        
+        public static string Fetching {
+            get {
+                return ResourceManager.GetString("Fetching", resourceCulture);
+            }
+        }
     }
 }

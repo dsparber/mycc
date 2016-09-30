@@ -278,6 +278,10 @@
 	</data>
 	<data
 		name="Testing">
-		<value>Testing</value>
+		<value>Testen</value>
+	</data>
+	<data
+		name="Fetching">
+		<value>Daten laden</value>
 	</data>
 </root>

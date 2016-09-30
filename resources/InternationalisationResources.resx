@@ -280,4 +280,8 @@
 		name="Testing">
 		<value>Testing</value>
 	</data>
+	<data
+		name="Fetching">
+		<value>Fetching</value>
+	</data>
 </root>
