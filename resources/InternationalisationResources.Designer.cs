@@ -418,5 +418,29 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("GrantAccess", resourceCulture);
             }
         }
+        
+        public static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        public static string FetchingNoSuccessText {
+            get {
+                return ResourceManager.GetString("FetchingNoSuccessText", resourceCulture);
+            }
+        }
+        
+        public static string Testing {
+            get {
+                return ResourceManager.GetString("Testing", resourceCulture);
+            }
+        }
     }
 }

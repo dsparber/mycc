@@ -16,6 +16,12 @@ namespace view.components
 			set { InfoLabel.Text = value; }
 		}
 
+		public string LoadingText
+		{
+			get { return RefreshingLabel.Text; }
+			set { RefreshingLabel.Text = value; }
+		}
+
 		public bool IsLoading
 		{
 			get { return LoadingPanel.IsVisible; }

@@ -15,6 +15,7 @@ namespace view
 			Title = InternationalisationResources.AddRepositoryTitle;
 			Header.TitleText = InternationalisationResources.Bittrex;
 			Header.InfoText = InternationalisationResources.AddSource;
+			Header.LoadingText = InternationalisationResources.Testing;
 			RepositoryNameEntryCell.Text = InternationalisationResources.Bittrex;
 			RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
 		}
@@ -26,16 +27,33 @@ namespace view
 
 		async void Save(object sender, EventArgs e)
 		{
+			Header.IsLoading = true;
+
+			RepositoryNameEntryCell.IsEditable = false;
+			ApiKeyEntryCell.IsEditable = false;
+			SecretApiKeyEntryCell.IsEditable = false;
+
 			var nameText = RepositoryNameEntryCell.Text.Trim();
 			var name = nameText.Equals(string.Empty) ? InternationalisationResources.Bittrex : nameText;
-			var key = ApiKeyEntryCell.Text;
-			var secretKey = SecretApiKeyEntryCell.Text;
-
-			// TODO Verify data -> Try to load accounts, set accountview/coinview
+			var key = ApiKeyEntryCell.Text ?? string.Empty;
+			var secretKey = SecretApiKeyEntryCell.Text ?? string.Empty;
 
 			var repository = new BittrexAccountRepository(name, key, secretKey);
-			await AccountStorage.Instance.Add(new AccountRepositoryDBM(repository));
-			await Navigation.PopModalAsync();
+
+			var success = await repository.Fetch();
+			if (success)
+			{
+				await AccountStorage.Instance.Add(new AccountRepositoryDBM(repository));
+				await Navigation.PopModalAsync();
+			}
+			else {
+				Header.IsLoading = false;
+				await DisplayAlert(InternationalisationResources.Error, InternationalisationResources.FetchingNoSuccessText, InternationalisationResources.Ok);
+
+				RepositoryNameEntryCell.IsEditable = true;
+				ApiKeyEntryCell.IsEditable = true;
+				SecretApiKeyEntryCell.IsEditable = true;
+			}
 		}
 	}
 }

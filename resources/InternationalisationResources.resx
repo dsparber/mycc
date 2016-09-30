@@ -264,4 +264,20 @@
 		name="GrantAccess">
 		<value>Grant access</value>
 	</data>
+	<data
+		name="Ok">
+		<value>Ok</value>
+	</data>
+	<data
+		name="Error">
+		<value>Error</value>
+	</data>
+	<data
+		name="FetchingNoSuccessText">
+		<value>Error! Fetching data was not successful. Please verify Your input!</value>
+	</data>
+	<data
+		name="Testing">
+		<value>Testing</value>
+	</data>
 </root>

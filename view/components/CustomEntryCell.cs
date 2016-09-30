@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace view.components
 {
@@ -29,6 +28,15 @@ namespace view.components
 			set { Entry.Text = value; }
 		}
 
+		public bool IsEditable
+		{
+			set
+			{
+				Entry.IsEnabled = value;
+				Entry.Opacity = value ? 1 : 0.5;
+			}
+		}
+
 		public CustomEntryCell()
 		{
 			Entry = new Entry { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
@@ -41,7 +49,7 @@ namespace view.components
 			View = stack;
 
 			var gestureRecogniser = new TapGestureRecognizer();
-			gestureRecogniser.Tapped += (sender, e) =>  Entry.Focus();
+			gestureRecogniser.Tapped += (sender, e) => Entry.Focus();
 			View.GestureRecognizers.Add(gestureRecogniser);
 		}
 	}

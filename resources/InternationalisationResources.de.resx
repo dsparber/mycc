@@ -264,4 +264,20 @@
 		name="GrantAccess">
 		<value>Zugriff erlauben</value>
 	</data>
+	<data
+		name="Ok">
+		<value>Ok</value>
+	</data>
+	<data
+		name="Error">
+		<value>Fehler</value>
+	</data>
+	<data
+		name="FetchingNoSuccessText">
+		<value>Fehler! Daten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Eingabe!</value>
+	</data>
+	<data
+		name="Testing">
+		<value>Testing</value>
+	</data>
 </root>
