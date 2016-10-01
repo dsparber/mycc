@@ -61,6 +61,7 @@ namespace view
 			foreach (var r in repositories)
 			{
 				var c = new CustomViewCell { Text = r.Name, Detail = r.Type, Image = "more.png" };
+				c.Tapped += (sender, e) => Navigation.PushAsync(new RepositoryView(r));
 
 				if (r is LocalAccountRepository)
 				{

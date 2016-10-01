@@ -9,10 +9,10 @@ namespace data.factories
 		{
 			switch (repositoryDBM.Type)
 			{
-				case CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY: return new LocalCurrencyRepository(repositoryDBM.Name);
-				case CurrencyRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY: return new BittrexCurrencyRepository(repositoryDBM.Name);
-				case CurrencyRepositoryDBM.DB_TYPE_BTCE_REPOSITORY: return new BtceCurrencyRepository(repositoryDBM.Name);
-				case CurrencyRepositoryDBM.DB_TYPE_CRYPTONATOR_REPOSITORY: return new CryptonatorCurrencyRepository(repositoryDBM.Name);
+				case CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY: return new LocalCurrencyRepository(repositoryDBM.Name) { DatabaseId = repositoryDBM.Id };
+				case CurrencyRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY: return new BittrexCurrencyRepository(repositoryDBM.Name) { DatabaseId = repositoryDBM.Id };
+				case CurrencyRepositoryDBM.DB_TYPE_BTCE_REPOSITORY: return new BtceCurrencyRepository(repositoryDBM.Name) { DatabaseId = repositoryDBM.Id };
+				case CurrencyRepositoryDBM.DB_TYPE_CRYPTONATOR_REPOSITORY: return new CryptonatorCurrencyRepository(repositoryDBM.Name) { DatabaseId = repositoryDBM.Id };
 				default: return null;
 			}
 

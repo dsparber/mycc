@@ -50,6 +50,17 @@ namespace data.storage
 		{
 			await Repositories();
 			await GetDatabase().AddRepository(repository);
+			var repos = await GetDatabase().GetRepositories();
+			repositories = repos.Select(r => Resolve(r)).ToList();
+		}
+
+		public virtual async Task Remove(T repository)
+		{
+			await Repositories();
+
+			await GetDatabase().Remove(repository);
+			var repos = await GetDatabase().GetRepositories();
+			repositories = repos.Select(r => Resolve(r)).ToList();
 		}
 
 		public async Task<List<R>> RepositoriesOfType<A>()

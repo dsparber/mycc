@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+	xmlns:components="clr-namespace:view.components;assembly=MyCryptos"
+	x:Class="view.RepositoryView">
+	<ContentPage.Content>
+		<StackLayout>
+			<components:HeaderView
+				x:Name="Header" />
+			<TableView
+				x:Name="TableView"
+				Intent="Form"
+				Margin="0,-8,0,0">
+				<TableSection
+					Title="{i18n:Translate Label}">
+					<components:CustomEntryCell
+						x:Name="RepositoryNameEntryCell"
+						Title="{i18n:Translate Name}"
+						Placeholder="{i18n:Translate Name}" />
+				</TableSection>
+				<TableSection
+					x:Name="DeleteSection">
+					<ViewCell>
+						<Button
+							x:Name="DeleteButton"
+							TextColor="Red"
+							Text="{i18n:Translate Delete}"
+							Clicked="Delete">
+						</Button>
+					</ViewCell>
+				</TableSection>
+			</TableView>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

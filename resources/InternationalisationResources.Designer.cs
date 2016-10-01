@@ -460,5 +460,17 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("Online", resourceCulture);
             }
         }
+        
+        public static string RepositoryType {
+            get {
+                return ResourceManager.GetString("RepositoryType", resourceCulture);
+            }
+        }
+        
+        public static string Deleting {
+            get {
+                return ResourceManager.GetString("Deleting", resourceCulture);
+            }
+        }
     }
 }

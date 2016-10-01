@@ -11,6 +11,11 @@ namespace data.database.helper
 		{
 			await (await Connection()).InsertAsync(repository);
 		}
+
+		public async Task Remove(T repository)
+		{
+			await (await Connection()).DeleteAsync(repository);
+		}
 	}
 }
 

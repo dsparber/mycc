@@ -10,8 +10,8 @@ namespace data.factories
 		{
 			switch (repositoryDBM.Type)
 			{
-				case AccountRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY: return new LocalAccountRepository(repositoryDBM.Name);
-				case AccountRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY: return new BittrexAccountRepository(repositoryDBM.Name, repositoryDBM.Data);
+				case AccountRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY: return new LocalAccountRepository(repositoryDBM.Name) { DatabaseId = repositoryDBM.Id};
+				case AccountRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY: return new BittrexAccountRepository(repositoryDBM.Name, repositoryDBM.Data) { DatabaseId = repositoryDBM.Id };
 				default: return null;
 			}
 

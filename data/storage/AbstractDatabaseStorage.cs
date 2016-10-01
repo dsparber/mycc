@@ -46,5 +46,20 @@ namespace data.storage
 			CachedElements = await AllElements();
 			CachedElementsWithRepository = await AllElementsWithRepositories();
 		}
+
+		public override async Task Remove(T repository)
+		{
+			await Repositories();
+
+			// Delete all elements
+			var resolved = Resolve(repository);
+			var repo = (await Repositories()).Find(r => r.DatabaseId == resolved.DatabaseId);
+			var elements = repo.Elements;
+			await Task.WhenAll(elements.Select(async e => await repo.Delete(e)));
+
+			await GetDatabase().Remove(repository);
+			var repos = await GetDatabase().GetRepositories();
+			repositories = repos.Select(r => Resolve(r)).ToList();
+		}
 	}
 }

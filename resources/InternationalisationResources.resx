@@ -292,4 +292,12 @@
 		name="Online">
 		<value>Online</value>
 	</data>
+	<data
+		name="RepositoryType">
+		<value>Type</value>
+	</data>
+	<data
+		name="Deleting">
+		<value>Deleting</value>
+	</data>
 </root>

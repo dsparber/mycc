@@ -24,7 +24,7 @@ namespace data.database.models
 		public async Task<Account> Resolve()
 		{
 			var db = new CurrencyDatabase();
-			return new Account(Id, Name, new Money(MoneyAmount, await db.Get(CurrencyId)));  
+			return new Account(Id, Name, new Money(MoneyAmount, await db.Get(CurrencyId)));
 		}
 
 		public AccountDBM(Account account, int repositoryId)
@@ -41,6 +41,5 @@ namespace data.database.models
 			MoneyAmount = account.Money.Amount;
 			RepositoryId = repositoryId;
 		}
-			
 	}
 }

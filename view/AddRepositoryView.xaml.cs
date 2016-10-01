@@ -45,6 +45,7 @@ namespace view
 			if (success)
 			{
 				Header.LoadingText = InternationalisationResources.Fetching;
+				// TODO Fix every account twice
 				await AccountStorage.Instance.Add(new AccountRepositoryDBM(repository));
 				await AccountStorage.Instance.Fetch();
 				MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);

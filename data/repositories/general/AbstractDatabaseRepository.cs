@@ -15,6 +15,8 @@ namespace data.repositories.general
 		public DateTime LastFastFetch { get; protected set; }
 		public DateTime LastFetch { get; protected set; }
 
+		public int DatabaseId { get; set; }
+
 		protected abstract AbstractEntityRepositoryIdDatabase<T, V> GetDatabase();
 
 		protected AbstractDatabaseRepository(int repositoryId, string name) : base(repositoryId, name)
