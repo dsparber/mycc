@@ -15,7 +15,7 @@ namespace data.repositories.general
 		public DateTime LastFastFetch { get; protected set; }
 		public DateTime LastFetch { get; protected set; }
 
-		public int DatabaseId { get; set; }
+		public int Id { get; set; }
 
 		protected abstract AbstractEntityRepositoryIdDatabase<T, V> GetDatabase();
 
@@ -29,7 +29,7 @@ namespace data.repositories.general
 			try
 			{
 				var db = GetDatabase();
-				Elements = new List<V>(await db.GetAll(Id));
+				Elements = new List<V>(await db.GetAll(RepositoryTypeId));
 				return true;
 			}
 			catch (Exception e)
@@ -44,14 +44,14 @@ namespace data.repositories.general
 			var db = GetDatabase();
 			Elements = Elements.Distinct().ToList();
 			await db.Write(Elements, Id);
-			Elements = new List<V>(await db.GetAll(Id));
+			Elements = new List<V>((await db.GetAll(Id)));
 		}
 
 		protected async Task DeleteFromDatabase(V element)
 		{
 			var db = GetDatabase();
-			await db.Delete(element, Id);
-			Elements = new List<V>(await db.GetAll(Id));
+			await db.Delete(element, RepositoryTypeId);
+			Elements = new List<V>(await db.GetAll(RepositoryTypeId));
 		}
 
 		public async Task Add(V element)

@@ -36,6 +36,11 @@ namespace data.storage
 		public async override Task Fetch()
 		{
 			await base.Fetch();
+			await updateCache();
+		}
+
+		public async Task updateCache()
+		{
 			CachedElements = await AllElements();
 			CachedElementsWithRepository = await AllElementsWithRepositories();
 		}
@@ -43,8 +48,7 @@ namespace data.storage
 		public async override Task FetchFast()
 		{
 			await base.FetchFast();
-			CachedElements = await AllElements();
-			CachedElementsWithRepository = await AllElementsWithRepositories();
+			await updateCache();
 		}
 
 		public override async Task Remove(T repository)
@@ -53,13 +57,15 @@ namespace data.storage
 
 			// Delete all elements
 			var resolved = Resolve(repository);
-			var repo = (await Repositories()).Find(r => r.DatabaseId == resolved.DatabaseId);
+			var repo = (await Repositories()).Find(r => r.Id == resolved.Id);
 			var elements = repo.Elements;
 			await Task.WhenAll(elements.Select(async e => await repo.Delete(e)));
 
 			await GetDatabase().Remove(repository);
 			var repos = await GetDatabase().GetRepositories();
 			repositories = repos.Select(r => Resolve(r)).ToList();
+
+			await updateCache();
 		}
 	}
 }

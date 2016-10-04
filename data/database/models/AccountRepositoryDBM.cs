@@ -29,8 +29,8 @@ namespace data.database.models
 		{
 			Name = repository.Name;
 			Data = repository.Data;
-			Type = repository.Id;
-			Id = repository.DatabaseId;
+			Type = repository.RepositoryTypeId;
+			Id = repository.Id;
 		}
 
 		public override bool Equals(object obj)

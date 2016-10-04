@@ -5,15 +5,15 @@ namespace data.repositories.general
 	public abstract class AbstractRepository<V>
 	{
 		public string Name;
-		public int Id;
+		public int RepositoryTypeId;
 
 		public abstract Task<bool> Fetch();
 
 		public abstract Task<bool> FetchFast();
 
-		protected AbstractRepository(int repositoryId, string name)
+		protected AbstractRepository(int repositoryTypeId, string name)
 		{
-			Id = repositoryId;
+			RepositoryTypeId = repositoryTypeId;
 			Name = name;
 		}
 	}
