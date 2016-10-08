@@ -48,11 +48,18 @@ namespace view.components
 		public CustomViewCell()
 		{
 			MasterLabel = new Label();
-			DetailLabel = new Label { TextColor = Color.Gray, FontSize = MasterLabel.FontSize * 0.75 };
-			LoadingView = new StackLayout { Orientation = StackOrientation.Horizontal, Spacing = 0, Padding = new Thickness(0), Margin = new Thickness(0) };
+
+            if (Device.OS == TargetPlatform.Android)
+            {
+                MasterLabel.FontSize = AppConstants.AndroidFontSize;
+            }
+
+            DetailLabel = new Label { TextColor = Color.Gray, FontSize = MasterLabel.FontSize * 0.75 };
+
+            LoadingView = new StackLayout { Orientation = StackOrientation.Horizontal, Spacing = 0, Padding = new Thickness(0), Margin = new Thickness(0) };
 			LoadingView.Children.Add(new Label { Text = InternationalisationResources.RefreshingDots, TextColor = Color.Gray, FontSize = MasterLabel.FontSize * 0.75, VerticalOptions = LayoutOptions.Center });
 
-			var stack = new StackLayout { Spacing = 0 };
+            var stack = new StackLayout { Spacing = 0 };
 			stack.Children.Add(MasterLabel);
 			stack.Children.Add(DetailLabel);
 			stack.Children.Add(LoadingView);

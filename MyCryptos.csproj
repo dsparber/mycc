@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -93,6 +93,9 @@
       <DependentUpon>AccountsView.xaml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="view\components\HeaderView.xaml.cs">
+      <DependentUpon>HeaderView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -117,9 +120,6 @@
     <Compile Include="view\components\CustomIconCell.cs" />
     <Compile Include="view\CoinDetailView.xaml.cs">
       <DependentUpon>CoinDetailView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\components\HeaderView.xaml.cs">
-      <DependentUpon>HeaderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="constants\AppConstants.cs" />
     <Compile Include="view\components\AccountViewCell.cs" />
@@ -214,33 +214,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="models\" />
-    <Folder Include="data\" />
-    <Folder Include="data\repositories\" />
-    <Folder Include="data\repositories\account\" />
-    <Folder Include="data\repositories\currency\" />
-    <Folder Include="data\repositories\exchangerate\" />
-    <Folder Include="data\database\" />
-    <Folder Include="data\database\models\" />
-    <Folder Include="data\storage\" />
-    <Folder Include="data\factories\" />
-    <Folder Include="data\settings\" />
-    <Folder Include="data\database\helper\" />
-    <Folder Include="data\database\interfaces\" />
-    <Folder Include="data\repositories\general\" />
-    <Folder Include="view\" />
-    <Folder Include="resources\" />
-    <Folder Include="models\helper\" />
-    <Folder Include="tasks\" />
-    <Folder Include="enums\" />
-    <Folder Include="message\" />
-    <Folder Include="view\components\" />
-    <Folder Include="constants\" />
-    <Folder Include="helpers\" />
-    <Folder Include="data\repositories\availablerates\" />
+    <EmbeddedResource Include="view\components\HeaderView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="view\CoinsView.xaml">
@@ -266,9 +247,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="view\CoinDetailView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\components\HeaderView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="view\AccountDetailView.xaml">

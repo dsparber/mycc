@@ -6,6 +6,7 @@ using data.storage;
 using models;
 using MyCryptos.resources;
 using Xamarin.Forms;
+using constants;
 
 namespace view.components
 {
@@ -99,7 +100,7 @@ namespace view.components
 			Navigation = navigation;
 
 			TitleLabel = new Label();
-			TitleLabel.VerticalOptions = LayoutOptions.CenterAndExpand; ;
+			TitleLabel.VerticalOptions = LayoutOptions.CenterAndExpand; 
 			TitleLabel.WidthRequest = 100;
 
 			if (IsAmountEnabled)
@@ -110,7 +111,7 @@ namespace view.components
 				TitleLabel.Text = InternationalisationResources.Currency;
 			}
 
-			SelectedCurrencyLabel = new Label();
+            SelectedCurrencyLabel = new Label();
 			SelectedCurrencyLabel.VerticalOptions = LayoutOptions.CenterAndExpand;
 			SelectedCurrencyLabel.HorizontalOptions = IsAmountEnabled ? LayoutOptions.End : LayoutOptions.EndAndExpand;
 
@@ -125,7 +126,14 @@ namespace view.components
 				OnTyped(SelectedMoney);
 			};
 
-			var icon = new Image { HeightRequest = 20, Source = ImageSource.FromFile("more.png") };
+            if (Device.OS == TargetPlatform.Android)
+            {
+                TitleLabel.FontSize = AppConstants.AndroidFontSize;
+                SelectedCurrencyLabel.FontSize = AppConstants.AndroidFontSize;
+                AmountEntry.FontSize = AppConstants.AndroidFontSize;
+            }
+
+            var icon = new Image { HeightRequest = 20, Source = ImageSource.FromFile("more.png") };
 			icon.HorizontalOptions = LayoutOptions.End;
 
 			var horizontalStack = new StackLayout { Orientation = StackOrientation.Horizontal };

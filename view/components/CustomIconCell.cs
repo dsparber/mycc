@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using constants;
+using Xamarin.Forms;
 
 namespace view.components
 {
@@ -36,7 +37,13 @@ namespace view.components
 			iconImage.HorizontalOptions = LayoutOptions.EndAndExpand;
 			iconImage.HeightRequest = 20;
 
-			var stack = new StackLayout { Orientation = StackOrientation.Horizontal };
+
+            if (Device.OS == TargetPlatform.Android)
+            {
+                textLabel.FontSize = AppConstants.AndroidFontSize;
+            }
+
+            var stack = new StackLayout { Orientation = StackOrientation.Horizontal };
 			stack.Children.Add(textLabel);
 			stack.Children.Add(iconImage);
 			stack.VerticalOptions = LayoutOptions.CenterAndExpand;

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using constants;
+using Xamarin.Forms;
 
 namespace view.components
 {
@@ -46,7 +47,14 @@ namespace view.components
 			stack.Children.Add(TitleLabel);
 			stack.Children.Add(Entry);
 
-			View = stack;
+
+            if (Device.OS == TargetPlatform.Android)
+            {
+                TitleLabel.FontSize = AppConstants.AndroidFontSize;
+                Entry.FontSize = AppConstants.AndroidFontSize;
+            }
+
+            View = stack;
 
 			var gestureRecogniser = new TapGestureRecognizer();
 			gestureRecogniser.Tapped += (sender, e) => Entry.Focus();
