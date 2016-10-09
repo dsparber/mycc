@@ -50,7 +50,7 @@ namespace view.components
 			stack.Margin = new Thickness(15, 0);
 
 			View = stack;
-		}
+        }
 	}
 }
 

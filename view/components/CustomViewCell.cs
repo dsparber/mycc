@@ -72,7 +72,7 @@ namespace view.components
 
 			View = mainView;
 
-			IsLoading = false;
+            IsLoading = false;
 		}
 
 		public override decimal Units { get { return 0; } }

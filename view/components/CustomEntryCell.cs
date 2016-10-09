@@ -56,7 +56,7 @@ namespace view.components
 
             View = stack;
 
-			var gestureRecogniser = new TapGestureRecognizer();
+            var gestureRecogniser = new TapGestureRecognizer();
 			gestureRecogniser.Tapped += (sender, e) => Entry.Focus();
 			View.GestureRecognizers.Add(gestureRecogniser);
 		}

@@ -96,6 +96,7 @@
     <Compile Include="view\components\HeaderView.xaml.cs">
       <DependentUpon>HeaderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\MasterDetailContainerView.cs" />
     <Compile Include="view\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>

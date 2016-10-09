@@ -146,9 +146,9 @@ namespace view.components
 			var contentView = new ContentView();
 			contentView.Margin = new Thickness(15, 0);
 			contentView.Content = horizontalStack;
-
+            
 			View = contentView;
-			setTapRecognizer();
+            setTapRecognizer();
 		}
 
 		void setTapRecognizer()

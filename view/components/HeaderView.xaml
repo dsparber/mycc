@@ -34,6 +34,7 @@
 						HorizontalOptions="Center">
 						<Label
 							x:Name="RefreshingLabel"
+              FontSize="18"
 							Text="{i18n:Translate Refreshing}"
 							TextColor="White">
 						</Label>

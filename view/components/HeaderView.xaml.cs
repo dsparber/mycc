@@ -34,8 +34,9 @@ namespace view.components
 
             if (Device.OS == TargetPlatform.Android)
             {
-                LoadingIndicator.Scale = 0.25;
-                LoadingIndicator.Margin = new Thickness(0);
+                LoadingIndicator.HeightRequest = 18;
+                LoadingIndicator.WidthRequest = 18;
+                LoadingIndicator.VerticalOptions = LayoutOptions.Center;
             }
         }
     }
