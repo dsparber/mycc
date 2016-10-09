@@ -2,9 +2,10 @@
 using data.settings;
 using data.storage;
 using models;
+using view;
 using Xamarin.Forms;
 
-namespace view.components
+namespace MyCryptos.view.components
 {
 	public class AccountViewCell : CustomViewCell
 	{

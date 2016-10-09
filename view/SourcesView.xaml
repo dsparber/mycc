@@ -3,31 +3,29 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
-	xmlns:components="clr-namespace:view.components;assembly=MyCryptos"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
 	x:Class="view.SourcesView"
 	Title="{i18n:Translate Sources}">
-	<ContentPage.ToolbarItems>
-		<ToolbarItem
-			Text="{i18n:Translate Cancel}"
-			Clicked="Cancel" />
-		<ToolbarItem
-			Text="{i18n:Translate Save}"
-			Clicked="Save" />
-	</ContentPage.ToolbarItems>
-	<ContentPage.Content>
-		<StackLayout>
-			<components:HeaderView
+  <ContentPage.ToolbarItems>
+    <ToolbarItem
+			Text="{i18n:Translate Done}"
+			Clicked="Done"
+      x:Name="DoneItem"/>
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <StackLayout>
+      <components:HeaderView
 				x:Name="Header" />
-			<TableView
+      <TableView
 				Intent="Form"
 				Margin="0,-8,0,0">
-				<TableSection
+        <TableSection
 					x:Name="LocalSection"
 					Title="{i18n:Translate Local}" />
-				<TableSection
+        <TableSection
 					x:Name="OnlineSection"
 					Title="{i18n:Translate Online}" />
-			</TableView>
-		</StackLayout>
-	</ContentPage.Content>
+      </TableView>
+    </StackLayout>
+  </ContentPage.Content>
 </ContentPage>

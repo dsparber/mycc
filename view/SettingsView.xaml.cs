@@ -4,7 +4,7 @@ using message;
 using models;
 using System;
 using Xamarin.Forms;
-using view.components;
+using MyCryptos.view.components;
 
 namespace view
 {
@@ -21,7 +21,7 @@ namespace view
 			ReferenceCurrency.OnSelected = ReferenceCurrencyEntered;
 
 			AutoRefresh.On = ApplicationSettings.AutoRefreshOnStartup;
-			updateCheckmarks();
+            updateCheckmarks();
 		}
 
 		void ReferenceCurrencyEntered(Currency currency)

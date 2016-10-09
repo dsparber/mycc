@@ -3,45 +3,39 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
-	xmlns:components="clr-namespace:view.components;assembly=MyCryptos"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
+  xmlns:addrepositoryviews="clr-namespace:MyCryptos.view.addrepositoryviews;assembly=MyCryptos"
 	x:Class="view.AddRepositoryView"
 	Title="{i18n:Translate AddRepositoryTitle}">
-	<ContentPage.ToolbarItems>
-		<ToolbarItem
+  <ContentPage.ToolbarItems>
+    <ToolbarItem
 			Text="{i18n:Translate Save}"
 			Clicked="Save" />
-		<ToolbarItem
+    <ToolbarItem
 			Text="{i18n:Translate Cancel}"
-			Clicked="Cancel" />
-	</ContentPage.ToolbarItems>
-	<ContentPage.Content>
-		<StackLayout>
-			<components:HeaderView
+			Clicked="Cancel"
+      x:Name="CancelItem"/>
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <StackLayout x:Name="Stack">
+      <components:HeaderView
 				x:Name="Header" />
-			<TableView
+      <TableView
 				Intent="Form"
 				Margin="0,-8,0,0">
-				<TableView.Root>
-					<TableSection
-						Title="{i18n:Translate Label}">
-						<components:CustomEntryCell
+        <TableView.Root>
+          <TableSection
+            Title="{i18n:Translate Source}">
+            <components:CustomPickerCell
+              x:Name="TypePickerCell"
+              Title="{i18n:Translate Type}"/>
+            <components:CustomEntryCell
 							x:Name="RepositoryNameEntryCell"
 							Title="{i18n:Translate Name}"
 							Placeholder="{i18n:Translate Name}" />
-					</TableSection>
-					<TableSection
-						Title="{i18n:Translate GrantAccess}">
-						<components:CustomEntryCell
-							x:Name="ApiKeyEntryCell"
-							Title="{i18n:Translate ApiKey}"
-							Placeholder="{i18n:Translate ApiKey}" />
-						<components:CustomEntryCell
-							x:Name="SecretApiKeyEntryCell"
-							Title="{i18n:Translate SecretApiKey}"
-							Placeholder="{i18n:Translate SecretApiKey}" />
-					</TableSection>
-				</TableView.Root>
-			</TableView>
-		</StackLayout>
-	</ContentPage.Content>
+          </TableSection>
+        </TableView.Root>
+      </TableView>
+    </StackLayout>
+  </ContentPage.Content>
 </ContentPage>

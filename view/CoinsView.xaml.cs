@@ -7,7 +7,7 @@ using models;
 using message;
 using MyCryptos.resources;
 using Xamarin.Forms;
-using view.components;
+using MyCryptos.view.components;
 using System.Collections.Generic;
 using helpers;
 using data.repositories.account;
@@ -23,9 +23,12 @@ namespace view
 		{
 			InitializeComponent();
 			addSubscriber();
-
+        
 			Cells = new List<CoinViewCell>();
-			Title = (Device.OS == TargetPlatform.Android) ? InternationalisationResources.AppName : Title;
+
+            if (Device.OS == TargetPlatform.Android) {
+                CoinsSection.Title = InternationalisationResources.Coins;
+            }
 		}
 
 		void updateView(bool loadMissing)

@@ -1,7 +1,7 @@
 ﻿using constants;
 using Xamarin.Forms;
 
-namespace view.components
+namespace MyCryptos.view.components
 {
 	public class CustomIconCell : ViewCell
 	{

@@ -1,11 +1,8 @@
 ﻿using Android.App;
 using Android.Graphics.Drawables;
-using constants;
-using MyCryptos.resources;
 using renderer;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using static Android.App.ActivityManager;
 
 [assembly: ExportRenderer(typeof(NavigationPage), typeof(CustomNavigationRenderer))]
 

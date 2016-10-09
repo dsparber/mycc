@@ -3,7 +3,7 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
-	xmlns:components="clr-namespace:view.components;assembly=MyCryptos"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
 	x:Class="view.RepositoryView">
 	<ContentPage.Content>
 		<StackLayout>

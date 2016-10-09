@@ -3,26 +3,27 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
-	xmlns:components="clr-namespace:view.components;assembly=MyCryptos"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
 	x:Class="view.CoinsView"
 	Title="{i18n:Translate CoinsTitle}">
-	<ContentPage.ToolbarItems>
-		<ToolbarItem
+  <ContentPage.ToolbarItems>
+    <ToolbarItem
 			Text="{i18n:Translate Add}"
 			Clicked="Add" />
-		<ToolbarItem
+    <ToolbarItem
 			Text="{i18n:Translate Sources}"
 			Clicked="SourcesClicked" />
-	</ContentPage.ToolbarItems>
-	<ContentPage.Content>
-		<StackLayout>
-			<components:HeaderView
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <StackLayout>
+      <components:HeaderView
 				x:Name="Header" />
-			<TableView
-				Intent="Data">
-				<TableSection
-					x:Name="CoinsSection" />
-			</TableView>
-		</StackLayout>
-	</ContentPage.Content>
+      <TableView
+				Intent="Data"
+        Margin="0,-8,0,0">
+        <TableSection
+      		x:Name="CoinsSection" />
+      </TableView>
+    </StackLayout>
+  </ContentPage.Content>
 </ContentPage>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using data.settings;
 using enums;
-using view.components;
+using MyCryptos.view.components;
 using Xamarin.Forms;
 
 namespace helpers

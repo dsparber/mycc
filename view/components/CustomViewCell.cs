@@ -2,7 +2,7 @@
 using MyCryptos.resources;
 using Xamarin.Forms;
 
-namespace view.components
+namespace MyCryptos.view.components
 {
 	public class CustomViewCell : SortableViewCell
 	{

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using data.storage;
 using enums;
 using models;
 using MyCryptos.resources;
 
-namespace view.components
+namespace MyCryptos.view.components
 {
 	public class ReferenceValueViewCell : CustomViewCell
 	{

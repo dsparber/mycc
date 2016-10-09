@@ -8,7 +8,7 @@ using MyCryptos.resources;
 using Xamarin.Forms;
 using constants;
 
-namespace view.components
+namespace MyCryptos.view.components
 {
 	public class CurrencyEntryCell : ViewCell
 	{

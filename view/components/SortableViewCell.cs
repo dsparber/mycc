@@ -1,7 +1,7 @@
 ﻿using models;
 using Xamarin.Forms;
 
-namespace view.components
+namespace MyCryptos.view.components
 {
 	public abstract class SortableViewCell : ViewCell
 	{

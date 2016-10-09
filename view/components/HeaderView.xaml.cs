@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace view.components
+namespace MyCryptos.view.components
 {
     public partial class HeaderView : ContentView
     {

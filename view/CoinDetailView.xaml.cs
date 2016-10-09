@@ -3,7 +3,7 @@ using models;
 using Xamarin.Forms;
 using System.Linq;
 using MyCryptos.resources;
-using view.components;
+using MyCryptos.view.components;
 using helpers;
 using message;
 using data.repositories.account;

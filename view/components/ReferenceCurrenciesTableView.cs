@@ -6,7 +6,7 @@ using data.settings;
 using System.Linq;
 using data.storage;
 
-namespace view.components
+namespace MyCryptos.view.components
 {
 	public class ReferenceCurrenciesTableView : TableView
 	{

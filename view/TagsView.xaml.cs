@@ -1,5 +1,4 @@
-﻿using MyCryptos.resources;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace view
 {
@@ -8,15 +7,6 @@ namespace view
 		public TagsView()
 		{
 			InitializeComponent();
-		}
-
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
-			if (Device.OS == TargetPlatform.Android)
-			{
-				Title = InternationalisationResources.AppName;
-			}
 		}
 	}
 }

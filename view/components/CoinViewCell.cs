@@ -5,8 +5,9 @@ using data.repositories.account;
 using models;
 using MyCryptos.resources;
 using Xamarin.Forms;
+using view;
 
-namespace view.components
+namespace MyCryptos.view.components
 {
 	public class CoinViewCell : CustomViewCell
 	{
