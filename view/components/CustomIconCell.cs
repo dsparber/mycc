@@ -31,7 +31,7 @@ namespace MyCryptos.view.components
 
         public CustomIconCell()
         {
-            textLabel = new Label();
+            textLabel = new Label { TextColor = Color.FromHex("222") };
             iconImage = new Image { Aspect = Aspect.AspectFit };
             iconImage.IsVisible = ShowIcon;
             iconImage.HorizontalOptions = LayoutOptions.EndAndExpand;

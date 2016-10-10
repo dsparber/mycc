@@ -48,7 +48,7 @@ namespace MyCryptos.view.components
 
         public CustomViewCell()
         {
-            MasterLabel = new Label();
+            MasterLabel = new Label { TextColor = Color.FromHex("222") };
 
             if (Device.OS == TargetPlatform.Android)
             {
@@ -67,7 +67,7 @@ namespace MyCryptos.view.components
 
             AccessoryImage = new Image { HeightRequest = 20, HorizontalOptions = LayoutOptions.EndAndExpand };
 
-            var mainView = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand};
+            var mainView = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand };
             mainView.Children.Add(stack);
             mainView.Children.Add(AccessoryImage);
 

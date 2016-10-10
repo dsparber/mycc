@@ -99,7 +99,7 @@ namespace MyCryptos.view.components
         {
             Navigation = navigation;
 
-            TitleLabel = new Label();
+            TitleLabel = new Label { TextColor = Color.FromHex("222") };
             TitleLabel.VerticalOptions = LayoutOptions.CenterAndExpand;
             TitleLabel.WidthRequest = 100;
 
@@ -112,7 +112,7 @@ namespace MyCryptos.view.components
                 TitleLabel.Text = InternationalisationResources.Currency;
             }
 
-            SelectedCurrencyLabel = new Label();
+            SelectedCurrencyLabel = new Label { TextColor = Color.FromHex("222") };
             SelectedCurrencyLabel.VerticalOptions = LayoutOptions.CenterAndExpand;
             SelectedCurrencyLabel.HorizontalOptions = IsAmountEnabled ? LayoutOptions.End : LayoutOptions.EndAndExpand;
 

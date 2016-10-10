@@ -30,7 +30,7 @@ namespace MyCryptos.renderer
 
                     text.SetTextColor(AppConstants.ThemeColor.ToAndroid());
                     divider.SetBackgroundColor(Color.FromHex("c7d7d4").ToAndroid());
-                    text.SetPadding(30, 10, 0, -10);
+                    text.SetPadding(30, 10, 0, 0);
                 }
                 catch (Exception) { }
             }

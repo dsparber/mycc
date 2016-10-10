@@ -41,7 +41,7 @@ namespace MyCryptos.view.components
         public CustomEntryCell()
         {
             Entry = new Entry { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
-            TitleLabel = new Label { WidthRequest = 100, VerticalOptions = LayoutOptions.CenterAndExpand };
+            TitleLabel = new Label { WidthRequest = 100, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = Color.FromHex("222") };
 
             var stack = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand };
             stack.Children.Add(TitleLabel);
@@ -59,7 +59,7 @@ namespace MyCryptos.view.components
             if (Device.OS == TargetPlatform.Android)
             {
                 stack.BackgroundColor = Color.White;
-                View = new ContentView { Content = stack, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5)};
+                View = new ContentView { Content = stack, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5) };
             }
             else
             {
