@@ -18,6 +18,9 @@
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <StackLayout x:Name="Stack">
+      <StackLayout.BackgroundColor>
+        <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
+      </StackLayout.BackgroundColor>
       <components:HeaderView
 				x:Name="Header" />
       <TableView

@@ -95,6 +95,7 @@
       <DependentUpon>AccountsView.xaml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="view\components\CustomSwitchCell.cs" />
     <Compile Include="view\components\CustomPickerCell.cs" />
     <Compile Include="view\components\HeaderView.xaml.cs">
       <DependentUpon>HeaderView.xaml</DependentUpon>

@@ -3,13 +3,12 @@ using Xamarin.Forms;
 
 namespace MyCryptos.view.components
 {
-    class CustomPickerCell : ViewCell
+    class CustomSwitchCell : ViewCell
     {
-        public readonly Picker Picker;
+        public readonly Switch Switch;
         protected readonly Label TitleLabel;
 
         string title;
-        string placeholder;
 
         public string Title
         {
@@ -21,19 +20,25 @@ namespace MyCryptos.view.components
         {
             set
             {
-                Picker.IsEnabled = value;
-                Picker.Opacity = value ? 1 : 0.5;
+                Switch.IsEnabled = value;
             }
         }
 
-        public CustomPickerCell()
+        public bool On
         {
-            Picker = new Picker { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
-            TitleLabel = new Label { WidthRequest = 100, VerticalOptions = LayoutOptions.CenterAndExpand };
+            get { return Switch.IsToggled; }
+            set { Switch.IsToggled = value; }
+        }
+
+        public CustomSwitchCell()
+        {
+            Switch = new Switch { HorizontalOptions = LayoutOptions.EndAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
+
+            TitleLabel = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
 
             var stack = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand };
             stack.Children.Add(TitleLabel);
-            stack.Children.Add(Picker);
+            stack.Children.Add(Switch);
 
 
             if (Device.OS == TargetPlatform.Android)
@@ -46,7 +51,7 @@ namespace MyCryptos.view.components
             if (Device.OS == TargetPlatform.Android)
             {
                 stack.BackgroundColor = Color.White;
-                View = new ContentView { Content = stack, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5), Margin = new Thickness(0, 0, 0, -0.5) };
+                View = new ContentView { Content = stack, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5) };
             }
             else
             {
@@ -54,7 +59,7 @@ namespace MyCryptos.view.components
             }
 
             var gestureRecogniser = new TapGestureRecognizer();
-            gestureRecogniser.Tapped += (sender, e) => Picker.Focus();
+            gestureRecogniser.Tapped += (sender, e) => Switch.Focus();
             View.GestureRecognizers.Add(gestureRecogniser);
         }
     }

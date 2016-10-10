@@ -67,7 +67,7 @@ namespace MyCryptos.view.components
 			Image = "more.png";
 			Detail = InternationalisationResources.NoExchangeRateFound;
 			setTapRecognizer();
-		}
+        }
 
 		void setTapRecognizer()
 		{

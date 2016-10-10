@@ -6,52 +6,53 @@
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
 	x:Class="view.SettingsView"
 	Title="{i18n:Translate SettingsTitle}">
-	<ContentPage.Content>
-		<TableView
-			Intent="Settings">
-			<TableSection
+  <ContentPage.BackgroundColor>
+    <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
+  </ContentPage.BackgroundColor>
+  <ContentPage.Content>
+    <TableView
+        Intent="Settings">
+      <TableSection
 				Title="{i18n:Translate ReferenceCurrency}"
 				x:Name="CurrencySection">
-			</TableSection>
-			<TableSection
+      </TableSection>
+      <TableSection
 				Title="{i18n:Translate SortOrder}">
-				<components:CustomIconCell
+        <components:CustomIconCell
 					x:Name="SortOrderAlphabetical"
 					Tapped="SortOrderSelected"
 					Text="{i18n:Translate Alphabetical}"
 					Icon="checkmark.png" />
-				<components:CustomIconCell
+        <components:CustomIconCell
 					x:Name="SortOrderByValue"
 					Tapped="SortOrderSelected"
 					Text="{i18n:Translate ByValue}"
 					Icon="checkmark.png" />
-				<components:CustomIconCell
+        <components:CustomIconCell
 					x:Name="SortOrderByUnits"
 					Tapped="SortOrderSelected"
 					Text="{i18n:Translate ByUnits}"
 					Icon="checkmark.png" />
-			</TableSection>
-			<TableSection
+      </TableSection>
+      <TableSection
 				Title="{i18n:Translate SortDirection}">
-				<components:CustomIconCell
+        <components:CustomIconCell
 					x:Name="SortDirectionAscending"
 					Tapped="SortOrderSelected"
 					Text="{i18n:Translate Ascending}"
 					Icon="checkmark.png" />
-				<components:CustomIconCell
+        <components:CustomIconCell
 					x:Name="SortDirectionDescending"
 					Tapped="SortOrderSelected"
 					Text="{i18n:Translate Descending}"
 					Icon="checkmark.png" />
-			</TableSection>
-			<TableSection
+      </TableSection>
+      <TableSection
 				Title="{i18n:Translate AutomaticallyRefresh}">
-				<SwitchCell
+        <components:CustomSwitchCell
 					x:Name="AutoRefresh"
-					Text="{i18n:Translate RefreshOnStartup}"
-					OnChanged="AutoRefreshChanged"
-					On="true" />
-			</TableSection>
-		</TableView>
-	</ContentPage.Content>
+					Title="{i18n:Translate RefreshOnStartup}" />
+      </TableSection>
+    </TableView>
+  </ContentPage.Content>
 </ContentPage>

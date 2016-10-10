@@ -21,6 +21,7 @@ namespace view
 			ReferenceCurrency.OnSelected = ReferenceCurrencyEntered;
 
 			AutoRefresh.On = ApplicationSettings.AutoRefreshOnStartup;
+            AutoRefresh.Switch.Toggled += AutoRefreshChanged;
             updateCheckmarks();
 		}
 
