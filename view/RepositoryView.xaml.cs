@@ -21,7 +21,7 @@ namespace view
 
 			Title = repository.Name;
 			Header.TitleText = repository.Name;
-			Header.InfoText = string.Format("{0}: {1}", InternationalisationResources.RepositoryType, repository.Type);
+			Header.InfoText = string.Format("{0}: {1}", InternationalisationResources.RepositoryType, repository.Description);
 			RepositoryNameEntryCell.Text = repository.Name;
 
 			saveItem = new ToolbarItem { Text = InternationalisationResources.Save };
@@ -58,7 +58,7 @@ namespace view
 
 			await AccountStorage.Instance.Remove(new AccountRepositoryDBM(repository));
 			repository.Name = RepositoryNameEntryCell.Text ?? string.Empty;
-			await AccountStorage.Instance.Add(new AccountRepositoryDBM(repository));
+			await AccountStorage.Instance.AddRepository(new AccountRepositoryDBM(repository));
 			await AccountStorage.Instance.Fetch();
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 			await Navigation.PopAsync();

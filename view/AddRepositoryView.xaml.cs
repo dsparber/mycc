@@ -10,77 +10,89 @@ using System.Collections.Generic;
 
 namespace view
 {
-    public partial class AddRepositoryView : ContentPage
-    {
-        List<AbstractAddRepositoryView> addViews;
-        AbstractAddRepositoryView RepositorySpecificView;
+	public partial class AddRepositoryView : ContentPage
+	{
+		List<AbstractAddRepositoryView> addViews;
+		AbstractAddRepositoryView RepositorySpecificView;
 
-        public AddRepositoryView()
-        {
-            InitializeComponent();
-            Title = InternationalisationResources.AddRepositoryTitle;
-            Header.InfoText = InternationalisationResources.AddSource;
-            Header.LoadingText = InternationalisationResources.Testing;
+		public AddRepositoryView()
+		{
+			InitializeComponent();
+			Title = InternationalisationResources.AddRepositoryTitle;
+			Header.InfoText = InternationalisationResources.AddSource;
+			Header.LoadingText = InternationalisationResources.Testing;
 
-            if (Device.OS == TargetPlatform.Android)
-            {
-                ToolbarItems.Remove(CancelItem);
-            }
+			if (Device.OS == TargetPlatform.Android)
+			{
+				ToolbarItems.Remove(CancelItem);
+			}
 
-            addViews = new List<AbstractAddRepositoryView>();
-            addViews.Add(new AddBittrexRepositoryView());
+			addViews = new List<AbstractAddRepositoryView>();
+			addViews.Add(new AddBittrexRepositoryView());
+			addViews.Add(new AddBlockExpertsRepositoryView());
 
-            addViews = addViews.OrderBy(v => v.DefaultName).ToList();
-            RepositorySpecificView = addViews[0];
-            Stack.Children.Add(RepositorySpecificView);
+			addViews = addViews.OrderBy(v => v.DefaultName).ToList();
+			RepositorySpecificView = addViews[0];
+			TableView.Root.Add(RepositorySpecificView.InputSection);
 
-            foreach (var item in addViews.Select(v => v.DefaultName))
-            {
-                TypePickerCell.Picker.Items.Add(item);
-            }
-            TypePickerCell.Picker.SelectedIndex = 0;
-            TypePickerCell.Picker.SelectedIndexChanged += (sender, e) => { RepositorySpecificView = addViews[TypePickerCell.Picker.SelectedIndex]; };
+			foreach (var item in addViews.Select(v => v.DefaultName))
+			{
+				TypePickerCell.Picker.Items.Add(item);
+			}
+			TypePickerCell.Picker.SelectedIndex = 0;
+			TypePickerCell.Picker.SelectedIndexChanged += (sender, e) =>
+			{
+				var old = RepositorySpecificView;
 
-            Header.TitleText = RepositorySpecificView.DefaultName;
-            RepositoryNameEntryCell.Text = RepositorySpecificView.DefaultName;
-            RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
-        }
+				RepositorySpecificView = addViews[TypePickerCell.Picker.SelectedIndex];
+				RepositoryNameEntryCell.Text = (old.DefaultName.Equals(RepositoryNameEntryCell.Text)) ? RepositorySpecificView.DefaultName : RepositoryNameEntryCell.Text;
 
-        void Cancel(object sender, EventArgs e)
-        {
-            Navigation.PopModalAsync();
-        }
+				TableView.Root.Remove(old.InputSection);
+				TableView.Root.Add(RepositorySpecificView.InputSection);
+			};
 
-        async void Save(object sender, EventArgs e)
-        {
-            Header.IsLoading = true;
+			Header.TitleText = RepositorySpecificView.DefaultName;
+			RepositoryNameEntryCell.Text = RepositorySpecificView.DefaultName;
+			RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
+		}
 
-            RepositoryNameEntryCell.IsEditable = false;
-            RepositorySpecificView.Enabled = false;
+		void Cancel(object sender, EventArgs e)
+		{
+			Navigation.PopModalAsync();
+		}
 
-            var nameText = RepositoryNameEntryCell.Text.Trim();
-            var name = nameText.Equals(string.Empty) ? InternationalisationResources.Bittrex : nameText;
+		async void Save(object sender, EventArgs e)
+		{
+			Header.IsLoading = true;
 
-            var repository = RepositorySpecificView.GetRepository(name);
+			RepositoryNameEntryCell.IsEditable = false;
+			TypePickerCell.IsEditable = false;
+			RepositorySpecificView.Enabled = false;
 
-            var success = await repository.Fetch();
-            if (success)
-            {
-                Header.LoadingText = InternationalisationResources.Fetching;
-                await AccountStorage.Instance.Add(new AccountRepositoryDBM(repository));
-                await AccountStorage.Instance.Fetch();
-                MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+			var nameText = RepositoryNameEntryCell.Text.Trim();
+			var name = nameText.Equals(string.Empty) ? InternationalisationResources.Bittrex : nameText;
 
-                await Navigation.PopModalAsync();
-            }
-            else
-            {
-                Header.IsLoading = false;
-                await DisplayAlert(InternationalisationResources.Error, InternationalisationResources.FetchingNoSuccessText, InternationalisationResources.Ok);
+			var repository = RepositorySpecificView.GetRepository(name);
 
-                RepositoryNameEntryCell.IsEditable = true;
-                RepositorySpecificView.Enabled = true;
-            }
-        }
-    }
+			var success = await repository.Fetch();
+			if (success)
+			{
+				Header.LoadingText = InternationalisationResources.Fetching;
+				await AccountStorage.Instance.AddRepository(new AccountRepositoryDBM(repository));
+				await AccountStorage.Instance.Fetch();
+				MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+
+				await Navigation.PopModalAsync();
+			}
+			else
+			{
+				Header.IsLoading = false;
+				await DisplayAlert(InternationalisationResources.Error, InternationalisationResources.FetchingNoSuccessText, InternationalisationResources.Ok);
+
+				RepositoryNameEntryCell.IsEditable = true;
+				TypePickerCell.IsEditable = true;
+				RepositorySpecificView.Enabled = true;
+			}
+		}
+	}
 }

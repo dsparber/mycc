@@ -18,7 +18,7 @@ namespace models
 		{
 			Id = id;
 			Name = name;
-			Code = code;
+			Code = code.ToUpper();
 		}
 
 		/// <summary>

@@ -109,7 +109,7 @@ namespace data.repositories.account
 						}
 					}
 
-					await Task.WhenAll(Elements.Select(async e => await Delete(e)));
+					await DeleteAll();
 					Elements.Clear();
 					Elements.AddRange(newAccounts);
 
@@ -148,6 +148,6 @@ namespace data.repositories.account
 			}
 		}
 
-		public override string Type { get { return InternationalisationResources.Bittrex; } }
+		public override string Description { get { return InternationalisationResources.Bittrex; } }
 	}
 }

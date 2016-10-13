@@ -23,7 +23,7 @@ namespace data.repositories.account
 
 		public override string Data { get { return string.Empty; } }
 
-		public override string Type { get { return InternationalisationResources.Local; } }
+		public override string Description { get { return InternationalisationResources.Local; } }
 	}
 }
 

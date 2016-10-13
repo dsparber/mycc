@@ -222,6 +222,7 @@
     <Compile Include="renderer\ContentPageRenderer.cs" />
     <Compile Include="renderer\CustomEntryRenderer.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="renderer\CustomPickerRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -244,6 +245,9 @@
     <BundleResource Include="Resources\more.png" />
     <BundleResource Include="Resources\more%402x.png" />
     <BundleResource Include="Resources\more%403x.png" />
+    <BundleResource Include="Resources\down.png" />
+    <BundleResource Include="Resources\down%402x.png" />
+    <BundleResource Include="Resources\down%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />

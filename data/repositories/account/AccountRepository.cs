@@ -17,6 +17,6 @@ namespace data.repositories.account
 
 		public abstract string Data { get; }
 
-		public abstract string Type { get; }
+		public abstract string Description { get; }
 	}
 }

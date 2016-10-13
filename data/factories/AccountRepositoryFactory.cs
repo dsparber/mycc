@@ -12,6 +12,7 @@ namespace data.factories
 			{
 				case AccountRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY: return new LocalAccountRepository(repositoryDBM.Name) { Id = repositoryDBM.Id};
 				case AccountRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY: return new BittrexAccountRepository(repositoryDBM.Name, repositoryDBM.Data) { Id = repositoryDBM.Id };
+				case AccountRepositoryDBM.DB_TYPE_BLOCK_EXPERTS_REPOSITORY: return new BlockExpertsAccountRepository(repositoryDBM.Name, repositoryDBM.Data) { Id = repositoryDBM.Id };
 				default: return null;
 			}
 

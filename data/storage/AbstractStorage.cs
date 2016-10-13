@@ -4,7 +4,6 @@ using System.Linq;
 using data.repositories.general;
 using data.database.helper;
 using data.settings;
-using System;
 
 namespace data.storage
 {
@@ -46,7 +45,7 @@ namespace data.storage
 			return repositories.ToList();
 		}
 
-		public async Task Add(T repository)
+		public async Task AddRepository(T repository)
 		{
 			await Repositories();
 			await GetDatabase().AddRepository(repository);

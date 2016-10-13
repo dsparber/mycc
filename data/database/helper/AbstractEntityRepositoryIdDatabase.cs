@@ -10,6 +10,15 @@ namespace data.database.helper
 		public abstract Task Write(IEnumerable<V> data, int repositoryId);
 		public abstract Task Delete(V element, int repositoryId);
 
+		public async Task DeleteAll(int repositoryId)
+		{
+			var all = await GetAllDbObjects(repositoryId);
+			foreach (var e in all)
+			{
+				await DatabaseHelper.Delete(this, e);
+			}
+		}
+
 		public async Task<IEnumerable<T>> GetAllDbObjects(int repositoryId)
 		{
 			return (await GetAllDbObjects()).Where(o => o.RepositoryId == repositoryId);

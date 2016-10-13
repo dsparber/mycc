@@ -29,7 +29,7 @@ namespace data.repositories.general
 			try
 			{
 				var db = GetDatabase();
-				Elements = new List<V>(await db.GetAll(RepositoryTypeId));
+				Elements = new List<V>(await db.GetAll(Id));
 				return true;
 			}
 			catch (Exception e)
@@ -50,8 +50,15 @@ namespace data.repositories.general
 		protected async Task DeleteFromDatabase(V element)
 		{
 			var db = GetDatabase();
-			await db.Delete(element, RepositoryTypeId);
-			Elements = new List<V>(await db.GetAll(RepositoryTypeId));
+			await db.Delete(element, Id);
+			Elements = new List<V>(await db.GetAll(Id));
+		}
+
+		protected async Task DeleteAllFromDatabase()
+		{
+			var db = GetDatabase();
+			await db.DeleteAll(Id);
+			Elements = new List<V>(await db.GetAll(Id));
 		}
 
 		public async Task Add(V element)
@@ -70,6 +77,11 @@ namespace data.repositories.general
 		public async Task Delete(V element)
 		{
 			await DeleteFromDatabase(element);
+		}
+
+		public async Task DeleteAll()
+		{
+			await DeleteAllFromDatabase();
 		}
 	}
 }
