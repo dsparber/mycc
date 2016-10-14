@@ -32,7 +32,7 @@ namespace models
 		/// Initializes a new instance of the <see cref="T:models.Currency"/> class.
 		/// </summary>
 		/// <param name="code">Unique identifier if the currency</param>
-		public Currency(string code) : this(code, null) { }
+		public Currency(string code) : this(code, code) { }
 
 		/// <summary>
 		/// Gets or sets the identifier.
