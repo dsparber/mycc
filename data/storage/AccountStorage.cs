@@ -6,6 +6,7 @@ using data.database.models;
 using data.database.helper;
 using MyCryptos.resources;
 using System.Threading.Tasks;
+using System;
 
 namespace data.storage
 {
@@ -25,6 +26,11 @@ namespace data.storage
 		{
 			var localRepository = new AccountRepositoryDBM(new LocalAccountRepository(InternationalisationResources.DefaultStorage));
 			await GetDatabase().AddRepository(localRepository);
+		}
+
+		public async override Task<AccountRepository> GetLocalRepository()
+		{
+			return (await Repositories()).Find(r => r is LocalAccountRepository);
 		}
 
 		static AccountStorage instance { get; set; }

@@ -7,6 +7,9 @@ using MyCryptos.resources;
 using Xamarin.Forms;
 using MyCryptos.view.addrepositoryviews;
 using System.Collections.Generic;
+using models;
+using data.settings;
+using tasks;
 
 namespace view
 {
@@ -81,6 +84,9 @@ namespace view
 				await AccountStorage.Instance.AddRepository(new AccountRepositoryDBM(repository));
 				await AccountStorage.Instance.Fetch();
 				MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+
+				var newRates = repository.Elements.Select(a => new ExchangeRate(a.Money.Currency, ApplicationSettings.BaseCurrency));
+				AppTasks.Instance.StartMissingRatesTask(newRates);
 
 				await Navigation.PopModalAsync();
 			}

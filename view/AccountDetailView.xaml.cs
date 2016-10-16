@@ -10,6 +10,8 @@ using MyCryptos.resources;
 using tasks;
 using Xamarin.Forms;
 using MyCryptos.view.components;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace view
 {
@@ -152,10 +154,7 @@ namespace view
             base.OnAppearing();
             if (!IsNew && account != null)
             {
-                foreach (var c in ReferenceValueCells)
-                {
-                    await c.Update();
-                }
+				await Task.WhenAll(ReferenceValueCells.Select(async c => await c.Update()));
             }
         }
 

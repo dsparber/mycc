@@ -27,8 +27,7 @@ namespace data.repositories.availablerates
 		{
 			try
 			{
-				var localExchangeRateRepository = (await ExchangeRateStorage.Instance.Repositories()).Find(r => r is LocalExchangeRateRepository);
-				Elements = localExchangeRateRepository.Elements;
+				Elements = (await ExchangeRateStorage.Instance.GetLocalRepository()).Elements;
 				return true;
 			}
 			catch (Exception e)
@@ -45,7 +44,7 @@ namespace data.repositories.availablerates
 
 		public async override Task<ExchangeRateRepository> ExchangeRateRepository()
 		{
-			return (await ExchangeRateStorage.Instance.Repositories()).Find(r => r is LocalExchangeRateRepository);
+			return await ExchangeRateStorage.Instance.GetLocalRepository();
 		}
 
 		public override ExchangeRate ExchangeRateWithCurrency(Currency currency)

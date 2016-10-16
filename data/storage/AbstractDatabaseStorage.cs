@@ -67,5 +67,27 @@ namespace data.storage
 
 			await updateCache();
 		}
+
+		public abstract Task<R> GetLocalRepository();
+
+		public async Task AddToLocalRepository(V element)
+		{
+			var local = await GetLocalRepository();
+			if (local != null)
+			{
+				await local.Add(element);
+				await updateCache();
+			}
+		}
+
+		public async Task RemoveFromLocalRepository(V element)
+		{
+			var local = await GetLocalRepository();
+			if (local != null)
+			{
+				await local.Delete(element);
+				await updateCache();
+			}
+		}
 	}
 }

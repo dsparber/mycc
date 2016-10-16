@@ -13,6 +13,9 @@ using Newtonsoft.Json;
 using PCLCrypto;
 using static PCLCrypto.WinRTCrypto;
 using System.Diagnostics;
+using System.Net;
+using Xamarin.Forms;
+using message;
 
 namespace data.repositories.account
 {
@@ -72,12 +75,13 @@ namespace data.repositories.account
 			client.DefaultRequestHeaders.Remove(SIGNING);
 			client.DefaultRequestHeaders.Add(SIGNING, hash);
 
-			var response = await client.GetAsync(uri);
-
-			if (response.IsSuccessStatusCode)
+			try
 			{
-				try
+				var response = await client.GetAsync(uri);
+
+				if (response.IsSuccessStatusCode)
 				{
+
 					var content = await response.Content.ReadAsStringAsync();
 					var json = JObject.Parse(content);
 
@@ -117,11 +121,14 @@ namespace data.repositories.account
 					LastFetch = DateTime.Now;
 					return true;
 				}
-				catch (Exception e)
-				{
-					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
-					return false;
-				}
+			}
+			catch (WebException e)
+			{
+				MessagingCenter.Send(e, MessageConstants.NetworkError);
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
 			}
 			return false;
 		}

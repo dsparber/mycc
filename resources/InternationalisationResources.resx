@@ -497,7 +497,7 @@
 	<data
 		name="FetchingNoSuccessText"
 		xml:space="preserve">
-    <value>Error! Fetching data was not successful. Please verify Your input!</value>
+    <value>Error! Fetching data was not successful. Please verify Your input and internet connection!</value>
   </data>
 	<data
 		name="Testing"
@@ -573,5 +573,10 @@
 		name="BittrexAccount"
 		xml:space="preserve">
     <value>Bittrex account</value>
+  </data>
+	<data
+		name="NetworkError"
+		xml:space="preserve">
+    <value>An internet connection could not be established. Please verify that your phone has internet access.</value>
   </data>
 </root>

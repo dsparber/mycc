@@ -66,12 +66,6 @@ namespace view
                     MessagingCenter.Send(string.Empty, MessageConstants.UpdatedExchangeRates);
                 }
             }
-
-            if (appTasks.IsAddAccountTaskStarted)
-            {
-                await appTasks.AddAccountTask;
-                MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
-            }
         }
     }
 }

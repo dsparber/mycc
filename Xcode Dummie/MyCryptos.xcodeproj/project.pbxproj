@@ -417,6 +417,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = GAH6QW97Q6;
 				INFOPLIST_FILE = MyCryptos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.danielsparber.MyCryptos;
@@ -429,6 +430,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = GAH6QW97Q6;
 				INFOPLIST_FILE = MyCryptos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.danielsparber.MyCryptos;
@@ -501,6 +503,7 @@
 				6547C80B1D8574820016C588 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6547C80C1D8574820016C588 /* Build configuration list for PBXNativeTarget "MyCryptosTests" */ = {
 			isa = XCConfigurationList;
@@ -509,6 +512,7 @@
 				6547C80E1D8574820016C588 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6547C80F1D8574820016C588 /* Build configuration list for PBXNativeTarget "MyCryptosUITests" */ = {
 			isa = XCConfigurationList;
@@ -517,6 +521,7 @@
 				6547C8111D8574820016C588 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using helpers;
 using data.repositories.account;
 using tasks;
+using System.Diagnostics;
 
 namespace view
 {
@@ -31,31 +32,12 @@ namespace view
             }
 		}
 
-		void updateView(bool loadMissing)
+		void updateView(string action)
 		{
-			setCells(loadMissing);
+			setCells(action);
 
 			Header.TitleText = moneySum.ToString();
 			Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, groups.ToList().Count);
-
-			if (loadMissing)
-			{
-				var missingRates = new List<ExchangeRate>();
-
-				foreach (var c in Cells)
-				{
-					var neededRate = new ExchangeRate(c.Currency, ApplicationSettings.BaseCurrency);
-
-					var rate = (c.ExchangeRate != null && c.ExchangeRate.Rate.HasValue) ? c.ExchangeRate : null;
-					rate = rate ?? ExchangeRateStorage.Instance.CachedElements.Find(x => x.Equals(neededRate));
-
-					if (rate == null || !rate.Rate.HasValue)
-					{
-						missingRates.Add(neededRate);
-					}
-				}
-				AppTasks.Instance.StartMissingRatesTask(missingRates);
-			}
 		}
 
 		IEnumerable<IGrouping<Currency, Tuple<Account, AccountRepository>>> groups
@@ -67,7 +49,7 @@ namespace view
 			}
 		}
 
-		void setCells(bool loadMissing)
+		void setCells(string action)
 		{
 			var cells = new List<CoinViewCell>();
 
@@ -89,7 +71,7 @@ namespace view
 					{
 						cell.ExchangeRate = rate;
 					}
-					if (loadMissing)
+					if (!action.Equals(MessageConstants.UpdatedExchangeRates))
 					{
 						cell.IsLoading = (rate == null || !rate.Rate.HasValue);
 					}
@@ -121,10 +103,9 @@ namespace view
 
 		void addSubscriber()
 		{
-			MessagingCenter.Subscribe<string>(this, MessageConstants.LoadedMissing, str => updateView(false));
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView(true));
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView(true));
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView(false));
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView(MessageConstants.UpdatedExchangeRates));
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView(MessageConstants.UpdatedReferenceCurrency));
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView(MessageConstants.UpdatedAccounts));
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, str => SortHelper.ApplySortOrder(Cells, CoinsSection));
 
 			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => Header.IsLoading = true);

@@ -497,7 +497,7 @@
 	<data
 		name="FetchingNoSuccessText"
 		xml:space="preserve">
-    <value>Fehler! Daten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Eingabe!</value>
+    <value>Fehler! Daten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Eingabe und Internetverbindung!</value>
   </data>
 	<data
 		name="Testing"
@@ -573,5 +573,10 @@
 		name="BittrexAccount"
 		xml:space="preserve">
     <value>Bittrex Konto</value>
+  </data>
+	<data
+		name="NetworkError"
+		xml:space="preserve">
+    <value>Keine Verbindung zum Internet! Bitte stellen Sie sicher, dass Ihr Handy Internetzugriff hat.</value>
   </data>
 </root>

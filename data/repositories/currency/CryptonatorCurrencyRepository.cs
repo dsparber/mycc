@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using data.database.models;
+using message;
 using models;
 using Newtonsoft.Json.Linq;
+using Xamarin.Forms;
 
 namespace data.repositories.currency
 {
@@ -29,12 +32,12 @@ namespace data.repositories.currency
 		public override async Task<bool> Fetch()
 		{
 			var uri = new Uri(URL_CURRENCY_LIST);
-
-			var response = await client.GetAsync(uri);
-			if (response.IsSuccessStatusCode)
+			try
 			{
-				try
+				var response = await client.GetAsync(uri);
+				if (response.IsSuccessStatusCode)
 				{
+
 					var content = await response.Content.ReadAsStringAsync();
 					var json = JObject.Parse(content);
 					var result = (JArray)json[CURRENCY_LIST_RESULT];
@@ -51,12 +54,16 @@ namespace data.repositories.currency
 					await WriteToDatabase();
 					LastFetch = DateTime.Now;
 					return true;
+
 				}
-				catch (Exception e)
-				{
-					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
-					return false;
-				}
+			}
+			catch (WebException e)
+			{
+				MessagingCenter.Send(e, MessageConstants.NetworkError);
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
 			}
 			return false;
 		}

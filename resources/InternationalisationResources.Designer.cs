@@ -520,5 +520,11 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("BlockExpertsAccount", resourceCulture);
             }
         }
+        
+        public static string NetworkError {
+            get {
+                return ResourceManager.GetString("NetworkError", resourceCulture);
+            }
+        }
     }
 }

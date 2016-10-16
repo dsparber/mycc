@@ -8,6 +8,9 @@ using data.storage;
 using MyCryptos.resources;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Net;
+using Xamarin.Forms;
+using message;
 
 namespace data.repositories.account
 {
@@ -51,19 +54,20 @@ namespace data.repositories.account
 		{
 			var uri = new Uri(string.Format(BASE_URL, coin.Code, address));
 
-			var response = await client.GetAsync(uri);
-
-			if (response.IsSuccessStatusCode)
+			try
 			{
-				try
+				var response = await client.GetAsync(uri);
+
+				if (response.IsSuccessStatusCode)
 				{
+
 					var content = await response.Content.ReadAsStringAsync();
 					var balance = decimal.Parse(content);
 
 					var dbCoin = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(coin));
 					if (dbCoin == null)
 					{
-						await CurrencyStorage.Instance.Add(coin);
+						await CurrencyStorage.Instance.AddToLocalRepository(coin);
 						dbCoin = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(coin));
 					}
 
@@ -82,11 +86,15 @@ namespace data.repositories.account
 					LastFetch = DateTime.Now;
 					return true;
 				}
-				catch (Exception e)
-				{
-					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
-					return false;
-				}
+
+			}
+			catch (WebException e)
+			{
+				MessagingCenter.Send(e, MessageConstants.NetworkError);
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
 			}
 			return false;
 		}

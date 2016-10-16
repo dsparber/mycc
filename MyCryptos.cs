@@ -4,13 +4,18 @@ using data.storage;
 using resources;
 using view;
 using Xamarin.Forms;
+using MyCryptos.message;
 
 namespace MyCryptos
 {
     public class App : Application
     {
+		public ErrorMessageHandler errorMessageHandler;
+
         public App()
         {
+			errorMessageHandler = ErrorMessageHandler.Instance;
+
             // The root page of your application
             if (Device.OS == TargetPlatform.Android)
             {

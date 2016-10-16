@@ -10,7 +10,8 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Text="{i18n:Translate Save}"
-			Clicked="Save" />
+			Clicked="Save"
+			x:Name="SaveItem"/>
 		<ToolbarItem
 			Text="{i18n:Translate Cancel}"
 			Clicked="Cancel"

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using message;
 using models;
+using Xamarin.Forms;
 
 namespace data.repositories.exchangerate
 {
@@ -33,6 +36,11 @@ namespace data.repositories.exchangerate
 				LastFetch = DateTime.Now;
 				return true;
 			}
+			catch (WebException e)
+			{
+				MessagingCenter.Send(e, MessageConstants.NetworkError);
+				return false;
+			}
 			catch (Exception e)
 			{
 				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
@@ -59,6 +67,11 @@ namespace data.repositories.exchangerate
 				await WriteToDatabase();
 				LastFetch = DateTime.Now;
 				return true;
+			}
+			catch (WebException e)
+			{
+				MessagingCenter.Send(e, MessageConstants.NetworkError);
+				return false;
 			}
 			catch (Exception e)
 			{

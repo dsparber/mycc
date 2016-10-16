@@ -68,7 +68,7 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchFloat32>true</MtouchFloat32>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: daniel.sparber@outlook.at (4Q6DP3DYEC)</CodesignKey>
     <DeviceSpecificBuild>true</DeviceSpecificBuild>
     <MtouchDebug>true</MtouchDebug>
     <MtouchUseSGen>true</MtouchUseSGen>
@@ -76,7 +76,7 @@
     <MtouchProfiling>true</MtouchProfiling>
     <IpaPackageName>
     </IpaPackageName>
-    <CodesignProvision>cfc0d4af-e64d-4245-ab1f-66a4a6c6b859</CodesignProvision>
+    <CodesignProvision>4fa0b4ad-2a04-4e5b-9917-b5b4e499abde</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

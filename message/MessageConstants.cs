@@ -11,6 +11,9 @@
 		public const string DoneFetching = "DoneFetching";
 
 		public const string LoadedMissing = "LoadedMissing";
+
+
+		public const string NetworkError = "NetworkError";
 	}
 }
 

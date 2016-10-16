@@ -25,6 +25,9 @@ namespace view
             MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, async (str) => await updateView());
             MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, str => SortHelper.ApplySortOrder(Elements, AccountsTable));
             MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => SortHelper.ApplySortOrder(Elements, AccountsTable));
+
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => Header.IsLoading = true);
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => Header.IsLoading = false);
         }
 
         public async void Add(object sender, EventArgs e)

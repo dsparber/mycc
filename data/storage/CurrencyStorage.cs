@@ -49,13 +49,9 @@ namespace data.storage
 			return (await AllElements()).Find(c => string.Equals(s, c.Code, StringComparison.OrdinalIgnoreCase) || string.Equals(s, c.Name, StringComparison.OrdinalIgnoreCase));
 		}
 
-		public async Task Add(Currency currency)
+		public async override Task<CurrencyRepository> GetLocalRepository()
 		{
-			var local = (await Repositories()).Find(r => r is LocalCurrencyRepository);
-			if (local != null)
-			{
-				await local.Add(currency);
-			}
+			return (await Repositories()).Find(r => r is LocalCurrencyRepository);
 		}
 	}
 }

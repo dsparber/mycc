@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using data.repositories.account;
+using data.settings;
 using data.storage;
 using enums;
 using message;
@@ -97,12 +98,18 @@ namespace tasks
 
 		async Task addAccountTask(Account account)
 		{
-			await (await AccountStorage.Instance.Repositories()).Find(r => r is LocalAccountRepository).Add(account);
+			await AccountStorage.Instance.AddToLocalRepository(account);
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+
+			await ExchangeRateStorage.Instance.GetRate(account.Money.Currency, ApplicationSettings.BaseCurrency, FetchSpeedEnum.FAST);
+			await ExchangeRateStorage.Instance.FetchNew();
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedExchangeRates);
 		}
 
 		async Task deleteAccountTask(Account account)
 		{
-			await (await AccountStorage.Instance.Repositories()).Find(r => r is LocalAccountRepository).Delete(account);
+			await AccountStorage.Instance.RemoveFromLocalRepository(account);
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 		}
 
 		async Task missingRatesTask(IEnumerable<ExchangeRate> rates)
@@ -112,8 +119,8 @@ namespace tasks
 			{
 				await ExchangeRateStorage.Instance.GetRate(r.ReferenceCurrency, r.SecondaryCurrency, FetchSpeedEnum.FAST);
 			}));
-			await ExchangeRateStorage.Instance.Fetch();
-			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.LoadedMissing);
+			await ExchangeRateStorage.Instance.FetchNew();
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedExchangeRates);
 			MessagingCenter.Send(string.Empty, MessageConstants.DoneFetching);
 		}
 

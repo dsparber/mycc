@@ -155,7 +155,13 @@ namespace data.storage
 					return;
 				}
 			}
-			await (await Repositories()).Find(r => r is LocalExchangeRateRepository).Add(exchangeRate);
+			await AddToLocalRepository(exchangeRate);
+			await updateCache();
+		}
+
+		public async override Task<ExchangeRateRepository> GetLocalRepository()
+		{
+			return (await Repositories()).Find(r => r is LocalExchangeRateRepository);
 		}
 	}
 }
