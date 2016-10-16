@@ -25,6 +25,12 @@ namespace view
                 IconSource = "accounts.png",
                 Page = new AccountsView()
             });
+			masterPageItems.Add(new MasterPageItem
+			{
+				Title = InternationalisationResources.Sources,
+				IconSource = "sources.png",
+				Page = new SourcesView()
+			});
             masterPageItems.Add(new MasterPageItem
             {
                 Title = InternationalisationResources.Settings,
