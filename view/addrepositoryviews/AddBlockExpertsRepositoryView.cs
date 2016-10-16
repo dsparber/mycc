@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using MyCryptos.view.components;
 using MyCryptos.resources;
-using models;
+using data.repositories.currency;
 
 namespace MyCryptos.view.addrepositoryviews
 {
@@ -10,23 +10,24 @@ namespace MyCryptos.view.addrepositoryviews
 	{
 
 		readonly TableSection section;
-		CustomEntryCell coinEntryCell, addressEntryCell;
+		CurrencyEntryCell currencyEntryCell;
+		CustomEntryCell addressEntryCell;
 
-		public AddBlockExpertsRepositoryView()
+		public AddBlockExpertsRepositoryView(INavigation navigation)
 		{
-			coinEntryCell = new CustomEntryCell { Title = InternationalisationResources.Currency, Placeholder = InternationalisationResources.Currency };
+			currencyEntryCell = new CurrencyEntryCell(navigation) { IsAmountEnabled = false, CurrencyRepositoryType = typeof(BlockExpertsCurrencyRepository), IsFormRepresentation = true };
 			addressEntryCell = new CustomEntryCell { Title = InternationalisationResources.Address, Placeholder = InternationalisationResources.Address };
 
 			section = new TableSection();
 
 			section.Title = InternationalisationResources.AccountInformation;
-			section.Add(coinEntryCell);
+			section.Add(currencyEntryCell);
 			section.Add(addressEntryCell);
 		}
 
 		public override AccountRepository GetRepository(string name)
 		{
-			var coin = new Currency(coinEntryCell.Text ?? string.Empty);
+			var coin = currencyEntryCell.SelectedCurrency;
 			var address = addressEntryCell.Text ?? string.Empty;
 
 			var repository = new BlockExpertsAccountRepository(name, coin, address);
@@ -37,12 +38,17 @@ namespace MyCryptos.view.addrepositoryviews
 		{
 			set
 			{
-				coinEntryCell.IsEditable = value;
+				currencyEntryCell.IsEditable = value;
 				addressEntryCell.IsEditable = value;
 			}
 		}
 
 		public override string DefaultName
+		{
+			get { return InternationalisationResources.BlockExpertsAccount; }
+		}
+
+		public override string Description
 		{
 			get { return InternationalisationResources.BlockExperts; }
 		}

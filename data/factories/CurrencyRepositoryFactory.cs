@@ -13,6 +13,7 @@ namespace data.factories
 				case CurrencyRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY: return new BittrexCurrencyRepository(repositoryDBM.Name) { Id = repositoryDBM.Id };
 				case CurrencyRepositoryDBM.DB_TYPE_BTCE_REPOSITORY: return new BtceCurrencyRepository(repositoryDBM.Name) { Id = repositoryDBM.Id };
 				case CurrencyRepositoryDBM.DB_TYPE_CRYPTONATOR_REPOSITORY: return new CryptonatorCurrencyRepository(repositoryDBM.Name) { Id = repositoryDBM.Id };
+				case CurrencyRepositoryDBM.DB_TYPE_BLOCK_EXPERTS_REPOSITORY: return new BlockExpertsCurrencyRepository(repositoryDBM.Name) { Id = repositoryDBM.Id };
 				default: return null;
 			}
 

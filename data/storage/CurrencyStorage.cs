@@ -27,6 +27,7 @@ namespace data.storage
 			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY });
 			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_BTCE_REPOSITORY });
 			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_CRYPTONATOR_REPOSITORY });
+			await GetDatabase().AddRepository(new CurrencyRepositoryDBM { Type = CurrencyRepositoryDBM.DB_TYPE_BLOCK_EXPERTS_REPOSITORY });
 		}
 
 		static CurrencyStorage instance { get; set; }

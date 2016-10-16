@@ -8,6 +8,7 @@ namespace data.database.models
 		public const int DB_TYPE_BTCE_REPOSITORY = 2;
 		public const int DB_TYPE_BITTREX_REPOSITORY = 3;
 		public const int DB_TYPE_CRYPTONATOR_REPOSITORY = 4;
+		public const int DB_TYPE_BLOCK_EXPERTS_REPOSITORY = 5;
 
 
 		[PrimaryKey, AutoIncrement, Column("_id")]

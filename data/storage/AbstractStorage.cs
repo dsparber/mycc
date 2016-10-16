@@ -4,6 +4,7 @@ using System.Linq;
 using data.repositories.general;
 using data.database.helper;
 using data.settings;
+using System;
 
 namespace data.storage
 {
@@ -65,6 +66,11 @@ namespace data.storage
 		public async Task<List<R>> RepositoriesOfType<A>()
 		{
 			return (await Repositories()).FindAll(r => r is A);
+		}
+
+		public async Task<List<R>> RepositoriesOfType(Type type)
+		{
+			return (await Repositories()).FindAll(r => r.GetType() == type);
 		}
 
 		public virtual async Task Fetch()

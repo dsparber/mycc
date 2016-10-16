@@ -62,7 +62,7 @@ namespace MyCryptos.view.components
 		}
 
 		public override decimal Units { get { return Money.Amount * (ExchangeRate != null ? ExchangeRate.RateNotNull : 0); } }
-		public override string Name { get { return ExchangeRate.SecondaryCurrency.Code; } }
+		public override string Name { get { return (ExchangeRate != null) ? ExchangeRate.SecondaryCurrency.Code : string.Empty; } }
 		public override decimal Value { get { return Money.Amount * (ExchangeRate != null ? ExchangeRate.RateNotNull : 0); } }
 	}
 }

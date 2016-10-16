@@ -42,6 +42,11 @@ namespace MyCryptos.view.addrepositoryviews
 
 		public override string DefaultName
 		{
+			get { return InternationalisationResources.BittrexAccount; }
+		}
+
+		public override string Description
+		{
 			get { return InternationalisationResources.Bittrex; }
 		}
 

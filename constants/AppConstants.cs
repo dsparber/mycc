@@ -7,7 +7,13 @@ namespace constants
 	{
 		public static readonly Color ThemeColor = Color.FromHex("#3498db");
         // #34495e, #f39c12, #3498db
+
         public static readonly int AndroidFontSize = 17;
+		public static readonly Color FontColor = Color.FromHex("222");
+		public static readonly double OpacityDisabledField = 0.5;
+		public static readonly Color FontColorLight = FontColor.MultiplyAlpha(OpacityDisabledField);
+
+		public static readonly int LabelWidth = 100;
 	}
 }
 

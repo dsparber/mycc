@@ -13,9 +13,9 @@ namespace data.repositories.account
 {
 	public class BlockExpertsAccountRepository : OnlineAccountRepository
 	{
-
-		const string testCoin = "alx";
-		const string testAddress = "AZRRZiKXNigfakwrf7nTn2exEbcod7kjrA";
+		// Test Data
+		// const string testCoin = "alx";
+		// const string testAddress = "AZRRZiKXNigfakwrf7nTn2exEbcod7kjrA";
 
 		readonly string address;
 		Currency coin;
@@ -61,14 +61,16 @@ namespace data.repositories.account
 					var balance = decimal.Parse(content);
 
 					var dbCoin = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(coin));
-					if (dbCoin == null) {
+					if (dbCoin == null)
+					{
 						await CurrencyStorage.Instance.Add(coin);
 						dbCoin = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(coin));
 					}
 
 					coin = dbCoin ?? coin;
 
-					var newAccount = new Account(Description, new Money(balance, coin));
+					var name = (Elements.Count > 0) ? Elements.First().Name : coin.Name;
+					var newAccount = new Account(name, new Money(balance, coin));
 
 					// Remove old
 					await DeleteAll();
@@ -102,6 +104,6 @@ namespace data.repositories.account
 			}
 		}
 
-		public override string Description { get { return string.Format("{0} / {1}", (coin.Name ?? coin.Code), InternationalisationResources.BlockExperts); } }
+		public override string Description { get { return string.Format("{0} / {1}", InternationalisationResources.BlockExperts, coin.Name); } }
 	}
 }

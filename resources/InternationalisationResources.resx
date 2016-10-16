@@ -559,4 +559,19 @@
 		xml:space="preserve">
     <value>Account information</value>
   </data>
+	<data
+		name="SelectCurrency"
+		xml:space="preserve">
+    <value>Select Currency</value>
+  </data>
+	<data
+		name="BlockExpertsAccount"
+		xml:space="preserve">
+    <value>Block Experts account</value>
+  </data>
+	<data
+		name="BittrexAccount"
+		xml:space="preserve">
+    <value>Bittrex account</value>
+  </data>
 </root>

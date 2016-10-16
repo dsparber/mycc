@@ -29,13 +29,13 @@ namespace view
 
 			addViews = new List<AbstractAddRepositoryView>();
 			addViews.Add(new AddBittrexRepositoryView());
-			addViews.Add(new AddBlockExpertsRepositoryView());
+			addViews.Add(new AddBlockExpertsRepositoryView(Navigation));
 
 			addViews = addViews.OrderBy(v => v.DefaultName).ToList();
 			RepositorySpecificView = addViews[0];
 			TableView.Root.Add(RepositorySpecificView.InputSection);
 
-			foreach (var item in addViews.Select(v => v.DefaultName))
+			foreach (var item in addViews.Select(v => v.Description))
 			{
 				TypePickerCell.Picker.Items.Add(item);
 			}

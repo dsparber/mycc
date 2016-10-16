@@ -10,259 +10,267 @@ using constants;
 
 namespace MyCryptos.view.components
 {
-    public class CurrencyEntryCell : ViewCell
-    {
-        readonly Label TitleLabel;
-        readonly Label SelectedCurrencyLabel;
-        readonly Entry AmountEntry;
+	public class CurrencyEntryCell : ViewCell
+	{
+		readonly Label TitleLabel;
+		readonly Label SelectedCurrencyLabel;
+		readonly Entry AmountEntry;
 
-        readonly INavigation Navigation;
+		readonly INavigation Navigation;
 
-        Currency selectedCurrency;
-        bool isAmountEnabled;
+		Currency selectedCurrency;
+		bool isAmountEnabled;
+		bool isFormRepresentation;
 
-        public Action<Currency> onSelected;
-        public Action<Currency> OnSelected
-        {
-            get { return onSelected ?? ((c) => { }); }
-            set { onSelected = value; }
-        }
-        public Action<Money> onTyped;
-        public Action<Money> OnTyped
-        {
-            get { return onTyped ?? ((c) => { }); }
-            set { onTyped = value; }
-        }
+		public Type CurrencyRepositoryType;
 
-        public Currency SelectedCurrency
-        {
-            set { selectedCurrency = value; if (selectedCurrency != null) SelectedCurrencyLabel.Text = selectedCurrency.Code; }
-            get { return selectedCurrency; }
-        }
+		public Action<Currency> onSelected;
+		public Action<Currency> OnSelected
+		{
+			get { return onSelected ?? ((c) => { }); }
+			set { onSelected = value; }
+		}
+		public Action<Money> onTyped;
+		public Action<Money> OnTyped
+		{
+			get { return onTyped ?? ((c) => { }); }
+			set { onTyped = value; }
+		}
 
-        public Money SelectedMoney
-        {
-            set { SelectedCurrency = value.Currency; SelectedAmount = value.Amount; }
-            get { return new Money(SelectedAmount, SelectedCurrency); }
-        }
+		public Currency SelectedCurrency
+		{
+			set
+			{
+				selectedCurrency = value;
+
+				SelectedCurrencyLabel.Text = (selectedCurrency != null) ? selectedCurrency.Code : InternationalisationResources.SelectCurrency;
+				SelectedCurrencyLabel.TextColor = (selectedCurrency != null) ? AppConstants.FontColor : AppConstants.FontColorLight;
+			}
+			get { return selectedCurrency; }
+		}
+
+		public Money SelectedMoney
+		{
+			set { SelectedCurrency = value.Currency; SelectedAmount = value.Amount; }
+			get { return new Money(SelectedAmount, SelectedCurrency); }
+		}
 
 
-        public decimal SelectedAmount
-        {
-            set
-            {
-                if (value != 0)
-                {
-                    AmountEntry.Text = value.ToString();
-                }
-            }
-            get
-            {
-                if (AmountEntry == null)
-                {
-                    return 0;
-                }
-                var txt = AmountEntry.Text;
-                var selectedAmount = (txt ?? "0");
-                if (selectedAmount.Trim().Equals(string.Empty))
-                {
-                    return 0;
-                }
-                return decimal.Parse(selectedAmount);
-            }
-        }
+		public decimal SelectedAmount
+		{
+			set
+			{
+				if (value != 0)
+				{
+					AmountEntry.Text = value.ToString();
+				}
+			}
+			get
+			{
+				if (AmountEntry == null)
+				{
+					return 0;
+				}
+				var txt = AmountEntry.Text;
+				var selectedAmount = (txt ?? "0");
+				if (selectedAmount.Trim().Equals(string.Empty))
+				{
+					return 0;
+				}
+				return decimal.Parse(selectedAmount);
+			}
+		}
 
-        public bool IsAmountEnabled
-        {
-            set
-            {
-                isAmountEnabled = value;
-                AmountEntry.IsVisible = value;
-                SelectedCurrencyLabel.HorizontalOptions = value ? LayoutOptions.End : LayoutOptions.EndAndExpand;
-                TitleLabel.Text = value ? InternationalisationResources.Value : InternationalisationResources.Currency;
-            }
-            get { return isAmountEnabled; }
-        }
+		public bool IsAmountEnabled
+		{
+			set
+			{
+				isAmountEnabled = value;
+				AmountEntry.IsVisible = value;
+				SelectedCurrencyLabel.HorizontalOptions = value ? LayoutOptions.End : LayoutOptions.EndAndExpand;
+				TitleLabel.Text = value ? InternationalisationResources.Value : InternationalisationResources.Currency;
+			}
+			get { return isAmountEnabled; }
+		}
 
-        public bool IsEditable
-        {
-            set
-            {
-                AmountEntry.IsEnabled = value;
-                AmountEntry.Opacity = value ? 1 : 0.5;
-                SelectedCurrencyLabel.Opacity = value ? 1 : 0.5;
-            }
-            get { return AmountEntry.IsEnabled; }
-        }
+		public bool IsFormRepresentation
+		{
+			set
+			{
+				isFormRepresentation = value;
+				SelectedCurrencyLabel.HorizontalOptions = (IsAmountEnabled) ? LayoutOptions.End : (value) ? LayoutOptions.FillAndExpand : LayoutOptions.EndAndExpand;
+			}
+			get { return isFormRepresentation; }
+		}
 
-        public CurrencyEntryCell(INavigation navigation)
-        {
-            Navigation = navigation;
+		public bool IsEditable
+		{
+			set
+			{
+				AmountEntry.IsEnabled = value;
+				AmountEntry.Opacity = value ? 1 : 0.5;
+				SelectedCurrencyLabel.Opacity = value ? 1 : 0.5;
+			}
+			get { return AmountEntry.IsEnabled; }
+		}
 
-            TitleLabel = new Label { TextColor = Color.FromHex("222") };
-            TitleLabel.VerticalOptions = LayoutOptions.CenterAndExpand;
-            TitleLabel.WidthRequest = 100;
+		public CurrencyEntryCell(INavigation navigation)
+		{
+			Navigation = navigation;
 
-            if (IsAmountEnabled)
-            {
-                TitleLabel.Text = InternationalisationResources.Value;
-            }
-            else
-            {
-                TitleLabel.Text = InternationalisationResources.Currency;
-            }
+			TitleLabel = new Label { TextColor = AppConstants.FontColor, WidthRequest = AppConstants.LabelWidth, VerticalOptions = LayoutOptions.CenterAndExpand };
+			TitleLabel.Text = (IsAmountEnabled) ? InternationalisationResources.Value : InternationalisationResources.Currency;
 
-            SelectedCurrencyLabel = new Label { TextColor = Color.FromHex("222") };
-            SelectedCurrencyLabel.VerticalOptions = LayoutOptions.CenterAndExpand;
-            SelectedCurrencyLabel.HorizontalOptions = IsAmountEnabled ? LayoutOptions.End : LayoutOptions.EndAndExpand;
+			SelectedCurrencyLabel = new Label { TextColor = AppConstants.FontColor, VerticalOptions = LayoutOptions.CenterAndExpand };
+			SelectedCurrencyLabel.HorizontalOptions = (IsAmountEnabled) ? LayoutOptions.End : (IsFormRepresentation) ? LayoutOptions.FillAndExpand : LayoutOptions.EndAndExpand;
+			SelectedCurrencyLabel.Text = (selectedCurrency != null) ? selectedCurrency.Code : InternationalisationResources.SelectCurrency;
+			SelectedCurrencyLabel.TextColor = (selectedCurrency != null) ? AppConstants.FontColor : AppConstants.FontColorLight;
 
-            AmountEntry = new Entry();
-            AmountEntry.IsVisible = IsAmountEnabled;
-            AmountEntry.HorizontalOptions = LayoutOptions.FillAndExpand;
-            AmountEntry.VerticalOptions = LayoutOptions.CenterAndExpand;
-            AmountEntry.Keyboard = Keyboard.Numeric;
-            AmountEntry.Placeholder = InternationalisationResources.Value;
-            AmountEntry.TextChanged += (sender, e) =>
-            {
-                OnTyped(SelectedMoney);
-            };
+			AmountEntry = new Entry { IsVisible = IsAmountEnabled, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand, Keyboard = Keyboard.Numeric, Placeholder = InternationalisationResources.Value };
+			AmountEntry.TextChanged += (sender, e) => OnTyped(SelectedMoney);
 
-            if (Device.OS == TargetPlatform.Android)
-            {
-                TitleLabel.FontSize = AppConstants.AndroidFontSize;
-                SelectedCurrencyLabel.FontSize = AppConstants.AndroidFontSize;
-                AmountEntry.FontSize = AppConstants.AndroidFontSize;
-            }
+			if (Device.OS == TargetPlatform.Android)
+			{
+				TitleLabel.FontSize = AppConstants.AndroidFontSize;
+				SelectedCurrencyLabel.FontSize = AppConstants.AndroidFontSize;
+				AmountEntry.FontSize = AppConstants.AndroidFontSize;
+			}
 
-            var icon = new Image { HeightRequest = 20, Source = ImageSource.FromFile("more.png") };
-            icon.HorizontalOptions = LayoutOptions.End;
+			var icon = new Image { HeightRequest = 20, Source = ImageSource.FromFile("more.png") };
+			icon.HorizontalOptions = LayoutOptions.End;
 
-            var horizontalStack = new StackLayout { Orientation = StackOrientation.Horizontal };
-            horizontalStack.Children.Add(TitleLabel);
-            horizontalStack.Children.Add(AmountEntry);
-            horizontalStack.Children.Add(SelectedCurrencyLabel);
-            horizontalStack.Children.Add(icon);
-            horizontalStack.VerticalOptions = LayoutOptions.CenterAndExpand;
+			var horizontalStack = new StackLayout { Orientation = StackOrientation.Horizontal };
+			horizontalStack.Children.Add(TitleLabel);
+			horizontalStack.Children.Add(AmountEntry);
+			horizontalStack.Children.Add(SelectedCurrencyLabel);
+			horizontalStack.Children.Add(icon);
+			horizontalStack.VerticalOptions = LayoutOptions.CenterAndExpand;
 
-            var contentView = new ContentView();
-            contentView.Padding = new Thickness(15, 0);
-            contentView.Content = horizontalStack;
-            contentView.HorizontalOptions = LayoutOptions.FillAndExpand;
-            contentView.VerticalOptions = LayoutOptions.FillAndExpand;
-            if (Device.OS == TargetPlatform.Android)
-            {
-                contentView.BackgroundColor = Color.White;
-                View = new ContentView { Content = contentView, BackgroundColor = Color.FromHex("c7d7d4") };
-            }
-            else
-            {
-                View = contentView;
-            }
-            setTapRecognizer();
-        }
+			var contentView = new ContentView();
+			contentView.Padding = new Thickness(15, 0);
+			contentView.Content = horizontalStack;
+			contentView.HorizontalOptions = LayoutOptions.FillAndExpand;
+			contentView.VerticalOptions = LayoutOptions.FillAndExpand;
+			if (Device.OS == TargetPlatform.Android)
+			{
+				contentView.BackgroundColor = Color.White;
+				View = new ContentView { Content = contentView, BackgroundColor = Color.FromHex("c7d7d4") };
+			}
+			else
+			{
+				View = contentView;
+			}
+			setTapRecognizer();
+		}
 
-        void setTapRecognizer()
-        {
-            var gestureRecognizer = new TapGestureRecognizer();
-            gestureRecognizer.Tapped += (sender, e) =>
-            {
-                if (IsEditable)
-                {
-                    Navigation.PushAsync(new CurrencyOverlay(this));
-                }
-            };
-            if (View != null)
-            {
-                View.GestureRecognizers.Clear();
-                View.GestureRecognizers.Add(gestureRecognizer);
-            }
-        }
+		void setTapRecognizer()
+		{
+			var gestureRecognizer = new TapGestureRecognizer();
+			gestureRecognizer.Tapped += (sender, e) =>
+			{
+				if (IsEditable)
+				{
+					Navigation.PushAsync(new CurrencyOverlay(this));
+				}
+			};
+			if (View != null)
+			{
+				View.GestureRecognizers.Clear();
+				View.GestureRecognizers.Add(gestureRecognizer);
+			}
+		}
 
-        class CurrencyOverlay : ContentPage
-        {
-            readonly ActivityIndicator activityIndicator;
-            readonly SearchBar searchBar;
-            readonly TableView currenciesTableView;
-            readonly CurrencyEntryCell parent;
+		class CurrencyOverlay : ContentPage
+		{
+			readonly ActivityIndicator activityIndicator;
+			readonly SearchBar searchBar;
+			readonly TableView currenciesTableView;
+			readonly CurrencyEntryCell parent;
 
-            Task<List<Currency>> currencies;
+			Task<List<Currency>> currencies;
 
-            public CurrencyOverlay(CurrencyEntryCell parent)
-            {
-                this.parent = parent;
-                currencies = CurrencyStorage.Instance.AllElements();
+			public CurrencyOverlay(CurrencyEntryCell parent)
+			{
+				this.parent = parent;
+				currencies = Task.Run(async () =>
+				{
+					var type = parent.CurrencyRepositoryType;
 
-                Title = InternationalisationResources.Currency;
+					var repos = (type != null) ? await CurrencyStorage.Instance.RepositoriesOfType(type) : await CurrencyStorage.Instance.Repositories();
+					return repos.SelectMany(r => r.Elements).ToList();
+				});
 
-                EventHandler doneAction = (sender, e) =>
-                {
-                    parent.OnSelected(parent.SelectedCurrency);
-                    Navigation.PopAsync();
-                };
+				Title = InternationalisationResources.Currency;
 
-                var done = new ToolbarItem { Text = InternationalisationResources.Save };
-                done.Clicked += doneAction;
-                ToolbarItems.Add(done);
+				EventHandler doneAction = (sender, e) =>
+				{
+					parent.OnSelected(parent.SelectedCurrency);
+					Navigation.PopAsync();
+				};
 
-                searchBar = new SearchBar { Placeholder = InternationalisationResources.SearchCurrencies };
+				var done = new ToolbarItem { Text = InternationalisationResources.Save };
+				done.Clicked += doneAction;
+				ToolbarItems.Add(done);
 
-                activityIndicator = new ActivityIndicator();
-                activityIndicator.IsRunning = true;
-                activityIndicator.Margin = new Thickness(10);
+				searchBar = new SearchBar { Placeholder = InternationalisationResources.SearchCurrencies };
 
-                currenciesTableView = new TableView();
-                currenciesTableView.IsVisible = false;
+				activityIndicator = new ActivityIndicator();
+				activityIndicator.IsRunning = true;
+				activityIndicator.Margin = new Thickness(10);
 
-                var stack = new StackLayout();
-                stack.Children.Add(searchBar);
-                stack.Children.Add(activityIndicator);
-                stack.Children.Add(currenciesTableView);
+				currenciesTableView = new TableView();
+				currenciesTableView.IsVisible = false;
 
-                Content = stack;
-            }
+				var stack = new StackLayout();
+				stack.Children.Add(searchBar);
+				stack.Children.Add(activityIndicator);
+				stack.Children.Add(currenciesTableView);
 
-            protected async override void OnAppearing()
-            {
-                base.OnAppearing();
+				Content = stack;
+			}
 
-                var section = new TableSection();
+			protected async override void OnAppearing()
+			{
+				base.OnAppearing();
 
-                var currenciesSorted = (await currencies).Distinct().OrderBy(c => c.Code);
-                setTableContent(section, currenciesSorted);
+				var section = new TableSection();
 
-                searchBar.TextChanged += (sender, e) =>
-                {
-                    var txt = e.NewTextValue;
-                    var filtered = currenciesSorted.Where(c => c.Code.ToLower().Contains(txt.ToLower()) || c.Name.ToLower().Contains(txt.ToLower()));
-                    setTableContent(section, filtered);
-                };
+				var currenciesSorted = (await currencies).Distinct().OrderBy(c => c.Code);
+				setTableContent(section, currenciesSorted);
 
-                currenciesTableView.Root.Add(section);
+				searchBar.TextChanged += (sender, e) =>
+				{
+					var txt = e.NewTextValue;
+					var filtered = currenciesSorted.Where(c => c.Code.ToLower().Contains(txt.ToLower()) || c.Name.ToLower().Contains(txt.ToLower()));
+					setTableContent(section, filtered);
+				};
 
-                activityIndicator.IsRunning = false;
-                activityIndicator.IsVisible = false;
-                currenciesTableView.IsVisible = true;
+				currenciesTableView.Root.Add(section);
 
-                searchBar.Focus();
-            }
+				activityIndicator.IsRunning = false;
+				activityIndicator.IsVisible = false;
+				currenciesTableView.IsVisible = true;
 
-            void setTableContent(TableSection section, IEnumerable<Currency> currenciesSorted)
-            {
-                section.Clear();
-                foreach (var c in currenciesSorted)
-                {
-                    var cell = new TextCell { Text = c.Code, Detail = c.Name };
-                    cell.Tapped += (sender, e) =>
-                    {
-                        parent.SelectedCurrency = c;
-                        parent.OnSelected(parent.SelectedCurrency);
-                        Navigation.PopAsync();
-                    };
-                    section.Add(cell);
-                }
-            }
-        }
-    }
+				searchBar.Focus();
+			}
+
+			void setTableContent(TableSection section, IEnumerable<Currency> currenciesSorted)
+			{
+				section.Clear();
+				foreach (var c in currenciesSorted)
+				{
+					var cell = new TextCell { Text = c.Code, Detail = c.Name };
+					cell.Tapped += (sender, e) =>
+					{
+						parent.SelectedCurrency = c;
+						parent.OnSelected(parent.SelectedCurrency);
+						Navigation.PopAsync();
+					};
+					section.Add(cell);
+				}
+			}
+		}
+	}
 }
 
 

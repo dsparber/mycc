@@ -41,7 +41,7 @@ namespace MyCryptos.view.components
         public CustomEntryCell()
         {
             Entry = new Entry { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
-            TitleLabel = new Label { WidthRequest = 100, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = Color.FromHex("222") };
+			TitleLabel = new Label { WidthRequest = AppConstants.LabelWidth, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = AppConstants.FontColor };
 
             var stack = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand };
             stack.Children.Add(TitleLabel);

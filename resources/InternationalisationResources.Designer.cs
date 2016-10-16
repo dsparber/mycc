@@ -508,5 +508,17 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("AccountInformation", resourceCulture);
             }
         }
+        
+        public static string SelectCurrency {
+            get {
+                return ResourceManager.GetString("SelectCurrency", resourceCulture);
+            }
+        }
+        
+        public static string BlockExpertsAccount {
+            get {
+                return ResourceManager.GetString("BlockExpertsAccount", resourceCulture);
+            }
+        }
     }
 }
