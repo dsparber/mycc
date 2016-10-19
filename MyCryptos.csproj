@@ -30,6 +30,7 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="helpers\NavigationHelper.cs" />
     <Compile Include="MyCryptos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="models\Account.cs" />

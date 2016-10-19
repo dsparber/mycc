@@ -6,7 +6,8 @@
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
 	x:Class="MyCryptos.view.components.HeaderView">
 	<ContentView.Content>
-		<Grid>
+		<Grid 
+      x:Name="GridView">
 			<Grid.RowDefinitions>
 				<RowDefinition
 					Height="140" />

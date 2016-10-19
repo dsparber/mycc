@@ -12,6 +12,7 @@
 			Clicked="Add" />
 		<ToolbarItem
 			Text="{i18n:Translate Sources}"
+      x:Name="SourcesToolbarItem"
 			Clicked="SourcesClicked" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>

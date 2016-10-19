@@ -45,7 +45,12 @@ namespace view
 			});
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, (str) => reloadData(accounts));
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, (str) => reloadData(accounts));
-		}
+
+            if (Device.OS == TargetPlatform.Android)
+            {
+                Title = string.Empty;
+            }
+        }
 
 		void reloadData(IEnumerable<Tuple<Account, AccountRepository>> accounts)
 		{
@@ -72,7 +77,10 @@ namespace view
 
 		void setHeader(IEnumerable<Tuple<Account, AccountRepository>> accounts, ExchangeRate exchangeRate)
 		{
-			Title = currency(accounts) != null ? currency(accounts).Code : string.Empty;
+            if (Device.OS != TargetPlatform.Android)
+            {
+                Title = currency(accounts) != null ? currency(accounts).Code : string.Empty;
+            }
 			Header.TitleText = moneySum(accounts).ToString();
 
 			if (exchangeRate != null && exchangeRate.Rate.HasValue)

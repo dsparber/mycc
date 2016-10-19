@@ -8,6 +8,7 @@ using message;
 using Xamarin.Forms;
 using data.storage;
 using System.Threading.Tasks;
+using MyCryptos.helpers;
 
 namespace view
 {
@@ -33,6 +34,7 @@ namespace view
 			if (Device.OS == TargetPlatform.Android)
 			{
 				ToolbarItems.Remove(DoneItem);
+                Title = string.Empty;
 			}
 
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, async str =>
@@ -46,7 +48,7 @@ namespace view
 
 		public async void Done(object sender, EventArgs e)
 		{
-			await Navigation.PopModalAsync();
+			await Navigation.PopOrPopModal();
 		}
 
 		void setHeader()
@@ -86,17 +88,7 @@ namespace view
 			}
 
 			var cell = new CustomViewCell { Text = InternationalisationResources.AddSource, IsActionCell = true };
-			cell.Tapped += (sender, e) =>
-			{
-				if (Device.OS == TargetPlatform.Android)
-				{
-					Navigation.PushAsync((new AddRepositoryView()));
-				}
-				else
-				{
-					Navigation.PushModalAsync(new NavigationPage(new AddRepositoryView()));
-				}
-			};
+			cell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AddRepositoryView());
 			OnlineSection.Add(cell);
 		}
 	}

@@ -12,6 +12,7 @@ using Xamarin.Forms;
 using MyCryptos.view.components;
 using System.Threading.Tasks;
 using System.Linq;
+using MyCryptos.helpers;
 
 namespace view
 {
@@ -59,7 +60,7 @@ namespace view
             {
                 setToNewView();
                 done.Clicked += Save;
-                cancel.Clicked += (sender, e) => Navigation.PopModalAsync();
+                cancel.Clicked += (sender, e) => Navigation.PopOrPopModal();
                 if (Device.OS != TargetPlatform.Android)
                 {
                     ToolbarItems.Add(cancel);
@@ -69,6 +70,10 @@ namespace view
 
             currencyEntryCell.OnSelected = (c) => Header.TitleText = currencyEntryCell.SelectedMoney.ToString();
             currencyEntryCell.OnTyped = (m) => Header.TitleText = m.ToString();
+
+            if (Device.OS == TargetPlatform.Android) {
+                Title = string.Empty;
+            }
         }
 
         public void StartEditing(object sender, EventArgs e)
@@ -88,7 +93,10 @@ namespace view
             DefaultView.IsVisible = false;
             ToolbarItems.Clear();
             ToolbarItems.Add(done);
-            Title = InternationalisationResources.Editing;
+            if (Device.OS != TargetPlatform.Android)
+            {
+                Title = InternationalisationResources.Editing;
+            }
         }
 
         public async void DoneEditing(object sender, EventArgs e)
@@ -100,7 +108,10 @@ namespace view
 
             MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 
-            Title = account.Name;
+            if (Device.OS != TargetPlatform.Android)
+            {
+                Title = account.Name;
+            }
             Header.TitleText = account.Money.ToString();
 
             DefaultView.IsVisible = true;
@@ -116,7 +127,8 @@ namespace view
             account = new Account(AccountName.Text, money);
 
             AppTasks.Instance.StartAddAccountTask(account);
-            await Navigation.PopModalAsync();
+
+            await Navigation.PopOrPopModal();
         }
 
         async void Delete(object sender, EventArgs e)
@@ -130,7 +142,10 @@ namespace view
 
         void setToExistingView()
         {
-            Title = account.Name;
+            if (Device.OS != TargetPlatform.Android)
+            {
+                Title = account.Name;
+            }
             Header.TitleText = account.Money.ToString();
             Header.InfoText = string.Format(InternationalisationResources.SourceText, repository.Name);
             currencyEntryCell.SelectedMoney = account.Money;
@@ -163,7 +178,10 @@ namespace view
             EditView.IsVisible = true;
             DefaultView.IsVisible = false;
             DeleteSection.Clear();
-            Title = InternationalisationResources.AddAccountTitle;
+            if (Device.OS != TargetPlatform.Android)
+            {
+                Title = InternationalisationResources.AddAccountTitle;
+            }
             Header.TitleText = selectedMoney.ToString();
             currencyEntryCell.SelectedMoney = selectedMoney;
             AccountName.Text = InternationalisationResources.LocalAccount;

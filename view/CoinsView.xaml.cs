@@ -18,19 +18,21 @@ namespace view
 {
 	public partial class CoinsView : ContentPage
 	{
-		List<CoinViewCell> Cells;
+		List<SortableViewCell> Cells;
 
 		public CoinsView()
 		{
 			InitializeComponent();
 			addSubscriber();
         
-			Cells = new List<CoinViewCell>();
+			Cells = new List<SortableViewCell>();
 
             if (Device.OS == TargetPlatform.Android) {
                 CoinsSection.Title = InternationalisationResources.Coins;
+                ToolbarItems.Remove(SourcesToolbarItem);
+                Title = string.Empty;
             }
-		}
+        }
 
 		void updateView(string action)
 		{
@@ -51,13 +53,13 @@ namespace view
 
 		void setCells(string action)
 		{
-			var cells = new List<CoinViewCell>();
+			var cells = new List<SortableViewCell>();
 
 			foreach (var g in groups)
 			{
 				if (g.Key != null)
 				{
-					var cell = Cells.ToList().Find(e => g.Key.Equals(e.Currency));
+					var cell = Cells.ToList().Where(e => e is CoinViewCell).Select(e => (CoinViewCell)e).ToList().Find(e => g.Key.Equals(e.Currency));
 					if (cell == null)
 					{
 						cell = new CoinViewCell(Navigation) { Accounts = g.ToList(), IsLoading = true };
@@ -81,6 +83,10 @@ namespace view
 					cells.Add(cell);
 				}
 			}
+            if (cells.Count == 0) {
+                cells.Add(new CustomViewCell { Text = InternationalisationResources.NoCoins });
+            }
+
 			Cells = cells;
 			SortHelper.ApplySortOrder(Cells, CoinsSection);
 		}
@@ -90,7 +96,7 @@ namespace view
 			get
 			{
 				var sum = new Money(0, ApplicationSettings.BaseCurrency);
-				foreach (var c in Cells)
+				foreach (var c in Cells.Where(e => e is CoinViewCell).Select(e => (CoinViewCell)e))
 				{
 					if (c.MoneyReference != null && sum.Currency.Equals(c.MoneyReference.Currency))
 					{

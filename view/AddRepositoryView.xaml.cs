@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using models;
 using data.settings;
 using tasks;
+using MyCryptos.helpers;
 
 namespace view
 {
@@ -28,6 +29,7 @@ namespace view
 			if (Device.OS == TargetPlatform.Android)
 			{
 				ToolbarItems.Remove(CancelItem);
+                Title = string.Empty;
 			}
 
 			addViews = new List<AbstractAddRepositoryView>();
@@ -61,7 +63,7 @@ namespace view
 
 		void Cancel(object sender, EventArgs e)
 		{
-			Navigation.PopModalAsync();
+            Navigation.PopOrPopModal();
 		}
 
 		async void Save(object sender, EventArgs e)
@@ -88,7 +90,7 @@ namespace view
 				var newRates = repository.Elements.Select(a => new ExchangeRate(a.Money.Currency, ApplicationSettings.BaseCurrency));
 				AppTasks.Instance.StartMissingRatesTask(newRates);
 
-				await Navigation.PopModalAsync();
+				await Navigation.PopOrPopModal();
 			}
 			else
 			{

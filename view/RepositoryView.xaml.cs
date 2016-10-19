@@ -48,7 +48,12 @@ namespace view
 					ToolbarItems.Clear();
 				}
 			};
-		}
+
+            if (Device.OS == TargetPlatform.Android)
+            {
+                Title = string.Empty;
+            }
+        }
 
 		async void save(object sender, EventArgs e)
 		{
