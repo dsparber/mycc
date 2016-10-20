@@ -23,6 +23,7 @@ namespace view
 			Header.TitleText = repository.Name;
 			Header.InfoText = string.Format("{0}: {1}", InternationalisationResources.RepositoryType, repository.Description);
 			RepositoryNameEntryCell.Text = repository.Name;
+            DeleteButtonCell.Tapped += Delete;
 
 			saveItem = new ToolbarItem { Text = InternationalisationResources.Save };
 			saveItem.Clicked += save;
@@ -58,7 +59,6 @@ namespace view
 		async void save(object sender, EventArgs e)
 		{
 			Header.IsLoading = true;
-			DeleteButton.IsEnabled = false;
 			RepositoryNameEntryCell.IsEditable = false;
 
 			await AccountStorage.Instance.Remove(new AccountRepositoryDBM(repository));
@@ -73,7 +73,6 @@ namespace view
 		{
 			Header.LoadingText = InternationalisationResources.Deleting;
 			Header.IsLoading = true;
-			DeleteButton.IsEnabled = false;
 			RepositoryNameEntryCell.IsEditable = false;
 
 			await AccountStorage.Instance.Remove(new AccountRepositoryDBM(repository));

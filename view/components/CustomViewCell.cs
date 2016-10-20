@@ -20,12 +20,12 @@ namespace MyCryptos.view.components
         public string Text
         {
             get { return text; }
-            set { text = value; MasterLabel.Text = text; }
+            set { text = value; MasterLabel.Text = text; if (detail == null) DetailLabel.IsVisible = false; }
         }
         public string Detail
         {
             get { return detail; }
-            set { detail = value; DetailLabel.Text = detail; }
+            set { detail = value; DetailLabel.Text = detail; DetailLabel.IsVisible = true; }
         }
 
         public string Image
@@ -43,7 +43,13 @@ namespace MyCryptos.view.components
         public bool IsActionCell
         {
             get { return MasterLabel.TextColor.Equals(AppConstants.ThemeColor); }
-            set { MasterLabel.TextColor = value ? AppConstants.ThemeColor : Color.Black; if (value) stack.Children.Remove(DetailLabel); }
+            set { MasterLabel.TextColor = value ? AppConstants.ThemeColor : AppConstants.FontColor; if (value) stack.Children.Remove(DetailLabel); }
+        }
+
+        public bool IsDeleteActionCell
+        {
+            get { return MasterLabel.TextColor.Equals(Color.Red); }
+            set { MasterLabel.TextColor = value ? Color.Red : AppConstants.FontColor; if (value) stack.Children.Remove(DetailLabel); MasterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand; }
         }
 
         public CustomViewCell()
@@ -60,14 +66,14 @@ namespace MyCryptos.view.components
             LoadingView = new StackLayout { Orientation = StackOrientation.Horizontal, Spacing = 0, Padding = new Thickness(0), Margin = new Thickness(0) };
             LoadingView.Children.Add(new Label { Text = InternationalisationResources.RefreshingDots, TextColor = Color.Gray, FontSize = MasterLabel.FontSize * 0.75, VerticalOptions = LayoutOptions.Center });
 
-            stack = new StackLayout { Spacing = 0 };
+            stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand };
             stack.Children.Add(MasterLabel);
             stack.Children.Add(DetailLabel);
             stack.Children.Add(LoadingView);
 
-            AccessoryImage = new Image { HeightRequest = 20, HorizontalOptions = LayoutOptions.EndAndExpand };
+            AccessoryImage = new Image { HeightRequest = 20, HorizontalOptions = LayoutOptions.End };
 
-            var mainView = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand };
+            var mainView = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Fill };
             mainView.Children.Add(stack);
             mainView.Children.Add(AccessoryImage);
 

@@ -10,7 +10,7 @@
       x:Name="GridView">
 			<Grid.RowDefinitions>
 				<RowDefinition
-					Height="140" />
+					Height="160" />
 			</Grid.RowDefinitions>
 			<ContentView
 				BackgroundColor="{x:Static constants:AppConstants.ThemeColor}">

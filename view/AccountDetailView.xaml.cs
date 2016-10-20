@@ -44,6 +44,7 @@ namespace view
 
             edit.Clicked += StartEditing;
             selectedMoney = new Money(0, ApplicationSettings.BaseCurrency);
+            DeleteButtonCell.Tapped += Delete;
 
             if (!IsNew && account != null)
             {

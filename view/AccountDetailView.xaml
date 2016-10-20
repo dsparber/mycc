@@ -39,13 +39,10 @@
 							Placeholder="{i18n:Translate LabelExample}" />
 					</TableSection>
 					<TableSection x:Name="DeleteSection">
-						<ViewCell>
-							<Button
-								TextColor="Red"
-								Text="{i18n:Translate Delete}"
-								Clicked="Delete">
-							</Button>
-						</ViewCell>
+            <components:CustomViewCell
+						x:Name="DeleteButtonCell"
+						Text="{i18n:Translate Delete}"
+						IsDeleteActionCell="true" />
 					</TableSection>
 				</TableView.Root>
 			</TableView>
