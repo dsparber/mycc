@@ -35,6 +35,7 @@ namespace view
 			addViews = new List<AbstractAddRepositoryView>();
 			addViews.Add(new AddBittrexRepositoryView());
 			addViews.Add(new AddBlockExpertsRepositoryView(Navigation));
+            addViews.Add(new AddBlockchainRepositoryView());
 
 			addViews = addViews.OrderBy(v => v.DefaultName).ToList();
 			RepositorySpecificView = addViews[0];

@@ -251,6 +251,24 @@ namespace MyCryptos.resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blockchain.
+        /// </summary>
+        public static string Blockchain {
+            get {
+                return ResourceManager.GetString("Blockchain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blockchain account.
+        /// </summary>
+        public static string BlockchainAccount {
+            get {
+                return ResourceManager.GetString("BlockchainAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Block Experts.
         /// </summary>
         public static string BlockExperts {

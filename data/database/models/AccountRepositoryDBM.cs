@@ -9,8 +9,9 @@ namespace data.database.models
 		public const int DB_TYPE_LOCAL_REPOSITORY = 1;
 		public const int DB_TYPE_BITTREX_REPOSITORY = 2;
 		public const int DB_TYPE_BLOCK_EXPERTS_REPOSITORY = 3;
+		public const int DB_TYPE_BLOCKCHAIN_REPOSITORY = 4;
 
-		[PrimaryKey, AutoIncrement, Column("_id")]
+        [PrimaryKey, AutoIncrement, Column("_id")]
 		public int Id { get; set; }
 
 		public string Name { get; set; }
@@ -23,7 +24,7 @@ namespace data.database.models
 		/// <value>Json data</value>
 		public string Data { get; set; }
 
-		public AccountRepositoryDBM() { }
+        public AccountRepositoryDBM() { }
 
 		public AccountRepositoryDBM(AccountRepository repository)
 		{

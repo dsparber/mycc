@@ -30,6 +30,7 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="data\repositories\account\BlockchainAccountRepository.cs" />
     <Compile Include="helpers\NavigationHelper.cs" />
     <Compile Include="MyCryptos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="data\repositories\exchangerate\BtceExchangeRateRepository.cs" />
     <Compile Include="view\addrepositoryviews\AbstractAddRepositoryView.cs" />
     <Compile Include="view\addrepositoryviews\AddBittrexRepositoryView.cs" />
+    <Compile Include="view\addrepositoryviews\AddBlockchainRepositoryView.cs" />
     <Compile Include="view\CoinsView.xaml.cs">
       <DependentUpon>CoinsView.xaml</DependentUpon>
     </Compile>

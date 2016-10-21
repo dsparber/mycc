@@ -4,10 +4,12 @@ namespace MyCryptos.view.components
 {
     public partial class HeaderView : ContentView
     {
+        double initialSize;
+
         public string TitleText
         {
             get { return TitleLabel.Text; }
-            set { TitleLabel.Text = value; }
+            set { TitleLabel.Text = value; setTitleSize(); }
         }
 
         public string InfoText
@@ -40,6 +42,18 @@ namespace MyCryptos.view.components
                 TitleLabel.Margin = new Thickness(0, -45, 0, 0);
                 GridView.RowDefinitions.Clear();
                 GridView.RowDefinitions.Add(new RowDefinition { Height = 100 });
+            }
+
+            initialSize = TitleLabel.FontSize;
+        }
+
+        void setTitleSize() {
+
+            TitleLabel.FontSize = initialSize;
+
+            while (TitleLabel.Height > initialSize)
+            {
+                TitleLabel.FontSize = TitleLabel.FontSize - 0.5;
             }
         }
     }

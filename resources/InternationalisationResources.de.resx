@@ -360,4 +360,10 @@
   <data name="NoCoins" xml:space="preserve">
     <value>Keine Coins</value>
   </data>
+  <data name="Blockchain" xml:space="preserve">
+    <value>Blockchain</value>
+  </data>
+  <data name="BlockchainAccount" xml:space="preserve">
+    <value>Blockchain Konto</value>
+  </data>
 </root>
