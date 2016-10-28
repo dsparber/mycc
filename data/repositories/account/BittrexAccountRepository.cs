@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using data.database.models;
 using data.storage;
-using models;
+using MyCryptos.models;
 using MyCryptos.resources;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Net;
 using Xamarin.Forms;
 using message;
+using System.Linq;
 
 namespace data.repositories.account
 {
@@ -58,7 +59,7 @@ namespace data.repositories.account
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;
 		}
 
-		public override async Task<bool> Fetch()
+		async Task<JArray> getResult()
 		{
 			var nounce = Convert.ToUInt64((DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds);
 			var uri = new Uri(string.Format(BASE_URL, apiKey, nounce));
@@ -74,19 +75,42 @@ namespace data.repositories.account
 			client.DefaultRequestHeaders.Remove(SIGNING);
 			client.DefaultRequestHeaders.Add(SIGNING, hash);
 
+
+			var response = await client.GetAsync(uri);
+
+			if (response.IsSuccessStatusCode)
+			{
+
+				var content = await response.Content.ReadAsStringAsync();
+				var json = JObject.Parse(content);
+
+				var results = (JArray)json[RESULT_KEY];
+				return results;
+			}
+			return null;
+		}
+
+		public override async Task<bool> Test()
+		{
 			try
 			{
-				var response = await client.GetAsync(uri);
+				return (await getResult()) != null;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+		}
 
-				if (response.IsSuccessStatusCode)
+		public override async Task<bool> Fetch()
+		{
+			try
+			{
+				var results = await getResult();
+
+				if (results != null)
 				{
-
-					var content = await response.Content.ReadAsStringAsync();
-					var json = JObject.Parse(content);
-
-					var results = (JArray)json[RESULT_KEY];
-
-					var newAccounts = new List<Account>();
+					var currentAccounts = new List<Account>();
 
 					foreach (var r in results)
 					{
@@ -98,25 +122,25 @@ namespace data.repositories.account
 
 							var curr = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Code.Equals(currencyCode));
 
-							var newAccount = new Account(string.Format("{0} ({1})", InternationalisationResources.BittrexAccount, curr.Code), new Money(balance, curr));
-							var existing = Elements.Find(a => a.Money.Currency.Equals(newAccount.Money.Currency));
+							var money = new Money(balance, curr);
+							var existing = Elements.ToList().Find(a => a.Money.Currency.Equals(money.Currency));
 
 							if (existing != null)
 							{
-								existing.Money = newAccount.Money;
-								newAccounts.Add(existing);
+								existing.Money = money;
+								await Update(existing);
+								currentAccounts.Add(existing);
 							}
 							else {
-								newAccounts.Add(newAccount);
+								var newAccount = new Account(string.Format("{0} ({1})", InternationalisationResources.BittrexAccount, curr.Code), money);
+								await Add(newAccount);
+								currentAccounts.Add(newAccount);
 							}
 						}
 					}
+					Func<Account, bool> notInCurrentAccounts = e => !currentAccounts.Select(a => a.Money.Currency).Contains(e.Money.Currency);
+					await Task.WhenAll(Elements.Where(notInCurrentAccounts).Select(e => Remove(e)));
 
-					await DeleteAll();
-					Elements.Clear();
-					Elements.AddRange(newAccounts);
-
-					await WriteToDatabase();
 					LastFetch = DateTime.Now;
 					return true;
 				}

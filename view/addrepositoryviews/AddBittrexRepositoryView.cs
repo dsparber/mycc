@@ -22,7 +22,7 @@ namespace MyCryptos.view.addrepositoryviews
 			section.Add(apiPrivateKeyEntryCell);
 		}
 
-		public override AccountRepository GetRepository(string name)
+		public override OnlineAccountRepository GetRepository(string name)
 		{
 			var key = apiKeyEntryCell.Text ?? string.Empty;
 			var secretKey = apiPrivateKeyEntryCell.Text ?? string.Empty;

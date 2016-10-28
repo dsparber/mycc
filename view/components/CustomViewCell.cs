@@ -25,7 +25,7 @@ namespace MyCryptos.view.components
         public string Detail
         {
             get { return detail; }
-            set { detail = value; DetailLabel.Text = detail; DetailLabel.IsVisible = true; }
+			set { detail = value; DetailLabel.Text = detail; DetailLabel.IsVisible = !IsLoading; }
         }
 
         public string Image

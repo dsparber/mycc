@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using System.Linq;
 using data.repositories.currency;
-using models;
+using MyCryptos.models;
 using data.database.models;
 using data.storage;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace data.repositories.availablerates
 			{
 				var repository = (await CurrencyStorage.Instance.Repositories()).Find(r => r is BittrexCurrencyRepository);
 
-				var btc = repository.Elements.Find(c => c.Equals(Currency.BTC));
+				var btc = repository.Elements.ToList().Find(c => c.Equals(Currency.BTC));
 				Elements = repository.Elements.Select(e => new ExchangeRate(btc, e)).ToList();
 				return true;
 			}

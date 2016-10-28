@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using models;
+using System.Threading.Tasks;
+using MyCryptos.models;
 using data.database.models;
 using data.storage;
 using data.repositories.currency;
@@ -7,12 +7,13 @@ using System.Collections.Generic;
 using System;
 using data.repositories.exchangerate;
 using System.Diagnostics;
+using System.Linq;
 
 namespace data.repositories.availablerates
 {
 	public class CryptonatorAvailableRatesRepository : AvailableRatesRepository
 	{
-		List<Currency> Currencies;
+		IEnumerable<Currency> Currencies;
 
 		public CryptonatorAvailableRatesRepository(string name) : base(AvailableRatesRepositoryDBM.DB_TYPE_CRYPTONATOR_REPOSITORY, name)
 		{
@@ -47,7 +48,7 @@ namespace data.repositories.availablerates
 		{
 			if (Currencies.Contains(currency))
 			{
-				return new ExchangeRate(currency, Currencies.Find(c => c.Equals(Currency.BTC)));
+				return new ExchangeRate(currency, Currencies.ToList().Find(c => c.Equals(Currency.BTC)));
 			}
 			return null;
 		}

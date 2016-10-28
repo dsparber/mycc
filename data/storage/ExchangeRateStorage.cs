@@ -1,35 +1,26 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using data.database;
-using data.database.helper;
 using data.database.models;
-using data.factories;
 using data.repositories.exchangerate;
 using enums;
-using models;
-using models.helper;
+using MyCryptos.models;
+using MyCryptos.models.helper;
 
 namespace data.storage
 {
 	public class ExchangeRateStorage : AbstractDatabaseStorage<ExchangeRateRepositoryDBM, ExchangeRateRepository, ExchangeRateDBM, ExchangeRate>
 	{
-		public override AbstractRepositoryDatabase<ExchangeRateRepositoryDBM> GetDatabase()
-		{
-			return new ExchangeRateRepositoryDatabase();
-		}
+		public ExchangeRateStorage() : base(new ExchangeRateRepositoryDatabase()) { }
+
 
 		protected override async Task OnFirstLaunch()
 		{
-			await GetDatabase().AddRepository(new ExchangeRateRepositoryDBM { Type = ExchangeRateRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY });
-			await GetDatabase().AddRepository(new ExchangeRateRepositoryDBM { Type = ExchangeRateRepositoryDBM.DB_TYPE_BTCE_REPOSITORY });
-			await GetDatabase().AddRepository(new ExchangeRateRepositoryDBM { Type = ExchangeRateRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY });
-			await GetDatabase().AddRepository(new ExchangeRateRepositoryDBM { Type = ExchangeRateRepositoryDBM.DB_TYPE_CRYPTONATOR_REPOSITORY });
-		}
-
-		protected override ExchangeRateRepository Resolve(ExchangeRateRepositoryDBM obj)
-		{
-			return ExchangeRateRepositoryFactory.create(obj);
+			await Add(new BittrexExchangeRateRepository(null));
+			await Add(new BtceExchangeRateRepository(null));
+			await Add(new LocalExchangeRateRepository(null));
+			await Add(new CryptonatorExchangeRateRepository(null));
 		}
 
 		static ExchangeRateStorage instance { get; set; }
@@ -49,6 +40,7 @@ namespace data.storage
 		public async Task FetchNew()
 		{
 			await Task.WhenAll((await Repositories()).Select(x => x.FetchNew()));
+			await updateCache();
 		}
 
 		// Helper

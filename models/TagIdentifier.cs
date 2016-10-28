@@ -1,10 +1,10 @@
 ﻿using Xamarin.Forms;
 
-namespace models
+namespace MyCryptos.models
 {
-	public class TagIdentifier
+	public class TagIdentifier : Persistable
 	{
-		public int Id { get; set; }
+		public int? Id { get; set; }
 		public string Name { get; set; }
 		public Color Color { get; set; }
 

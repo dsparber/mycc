@@ -1,7 +1,7 @@
-﻿using data.repositories.account;
+using data.repositories.account;
 using data.settings;
 using data.storage;
-using models;
+using MyCryptos.models;
 using view;
 using Xamarin.Forms;
 

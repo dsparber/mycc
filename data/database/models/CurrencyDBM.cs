@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using data.database.interfaces;
-using models;
+using MyCryptos.models;
 using SQLite;
 namespace data.database.models
 {
@@ -19,15 +19,12 @@ namespace data.database.models
 
 		public int RepositoryId { get; set; }
 
-		public CurrencyDBM(Currency currency, int repositoryId)
+		public CurrencyDBM(Currency currency)
 		{
-			if (currency.Id.HasValue)
-			{
-				Id = currency.Id.Value;
-			}
+			Id = currency.Id.GetValueOrDefault();
 			Name = currency.Name;
 			Code = currency.Code;
-			RepositoryId = repositoryId;
+			RepositoryId = currency.RepositoryId.GetValueOrDefault();
 		}
 
 		public Task<Currency> Resolve()

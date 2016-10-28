@@ -1,5 +1,5 @@
-﻿using System;
-using models;
+using System;
+using MyCryptos.models;
 using enums;
 using Newtonsoft.Json;
 

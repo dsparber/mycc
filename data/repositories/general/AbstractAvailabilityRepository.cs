@@ -1,6 +1,6 @@
 ﻿namespace data.repositories.general
 {
-	public abstract class AbstractAvailabilityRepository<V> : AbstractRepository<V>
+	public abstract class AbstractAvailabilityRepository<V> : AbstractRepository
 	{
 		protected AbstractAvailabilityRepository(int repositoryId, string name) : base(repositoryId, name) { }
 

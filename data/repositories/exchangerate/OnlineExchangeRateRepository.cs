@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using message;
-using models;
+using MyCryptos.models;
 using Xamarin.Forms;
 
 namespace data.repositories.exchangerate
@@ -22,18 +22,33 @@ namespace data.repositories.exchangerate
 
 		protected abstract Task GetFetchTask(ExchangeRate exchangeRate);
 
+		async Task fetch(Func<ExchangeRate, bool> filter)
+		{
+			var newElements = Elements.Where(e => e.ReferenceCurrency != null && e.SecondaryCurrency != null).ToList();
+
+			var t = new List<Task>();
+			foreach (var e in Elements.Where(filter))
+			{
+				t.Add(GetFetchTask(e));
+			}
+			await Task.WhenAll(t);
+
+			var existingElements = newElements.Where(Elements.Contains);
+			var oldElements = Elements.Where(e => !existingElements.Contains(e));
+			newElements.RemoveAll(existingElements.Contains);
+
+			await Add(newElements);
+			await Update(existingElements);
+			await Task.WhenAll(oldElements.Select(e => Remove(e)));
+
+			LastFetch = DateTime.Now;
+		}
+
 		public override async Task<bool> Fetch()
 		{
 			try
 			{
-				Elements = Elements.Where(e => e.ReferenceCurrency != null && e.SecondaryCurrency != null).ToList();
-
-				var t = new List<Task>();
-				foreach (var e in Elements) t.Add(GetFetchTask(e));
-				await Task.WhenAll(t);
-
-				await WriteToDatabase();
-				LastFetch = DateTime.Now;
+				await fetch(e => true);
 				return true;
 			}
 			catch (WebException e)
@@ -52,20 +67,7 @@ namespace data.repositories.exchangerate
 		{
 			try
 			{
-				Elements = Elements.Where(e => e.ReferenceCurrency != null && e.SecondaryCurrency != null).ToList();
-
-				var t = new List<Task>();
-				foreach (var e in Elements)
-				{
-					if (!e.Rate.HasValue)
-					{
-						t.Add(GetFetchTask(e));
-					}
-				}
-				await Task.WhenAll(t);
-
-				await WriteToDatabase();
-				LastFetch = DateTime.Now;
+				await fetch(e => !e.Rate.HasValue);
 				return true;
 			}
 			catch (WebException e)

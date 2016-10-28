@@ -1,13 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.Net;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using data.database.models;
-using message;
-using models;
+using MyCryptos.models;
 using Newtonsoft.Json.Linq;
-using Xamarin.Forms;
 
 namespace data.repositories.currency
 {
@@ -29,43 +27,36 @@ namespace data.repositories.currency
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;
 		}
 
-		public override async Task<bool> Fetch()
+		protected async override Task<IEnumerable<Currency>> GetCurrencies()
 		{
 			var uri = new Uri(URL_CURRENCY_LIST);
 
-			try
+			var response = await client.GetAsync(uri);
+
+			if (response.IsSuccessStatusCode)
 			{
-				var response = await client.GetAsync(uri);
-				if (response.IsSuccessStatusCode)
+
+				var content = await response.Content.ReadAsStringAsync();
+				var json = JObject.Parse(content);
+				var result = (JArray)json[CURRENCY_LIST_RESULT];
+
+				var currentElements = new List<Currency>();
+
+				foreach (JToken token in result)
 				{
+					var name = (string)token[CURRENCY_LIST_RESULT_NAME];
+					var code = (string)token[CURRENCY_LIST_RESULT_CURRENCY];
+					var c = new Currency(code, name);
+					currentElements.Add(c);
 
-					var content = await response.Content.ReadAsStringAsync();
-					var json = JObject.Parse(content);
-					var result = (JArray)json[CURRENCY_LIST_RESULT];
-
-					foreach (JToken token in result)
-					{
-						var name = (string)token[CURRENCY_LIST_RESULT_NAME];
-						var code = (string)token[CURRENCY_LIST_RESULT_CURRENCY];
-						var c = new Currency(code, name);
-
-						Elements.Remove(c);
-						Elements.Add(c);
-					}
-					await WriteToDatabase();
-					LastFetch = DateTime.Now;
-					return true;
 				}
+
+				await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(e => Remove(e)));
+
+				LastFetch = DateTime.Now;
+				return currentElements;
 			}
-			catch (WebException e)
-			{
-				MessagingCenter.Send(e, MessageConstants.NetworkError);
-			}
-			catch (Exception e)
-			{
-				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
-			}
-			return false;
+			return null;
 		}
 	}
 }

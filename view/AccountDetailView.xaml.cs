@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using data.repositories.account;
 using data.settings;
 using data.storage;
 using helpers;
 using message;
-using models;
+using MyCryptos.models;
 using MyCryptos.resources;
 using tasks;
 using Xamarin.Forms;
@@ -104,10 +104,9 @@ namespace view
 
 		public async void DoneEditing(object sender, EventArgs e)
 		{
-			repository.Elements.Remove(account);
 			account.Name = AccountName.Text;
 			account.Money = currencyEntryCell.SelectedMoney;
-			await repository.Add(account);
+			await repository.Update(account);
 
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 

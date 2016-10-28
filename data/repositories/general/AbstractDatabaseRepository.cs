@@ -1,35 +1,39 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
-using data.database.helper;
 using data.database.interfaces;
+using MyCryptos.data.database.helper;
+using MyCryptos.models;
 
 namespace data.repositories.general
 {
-	public abstract class AbstractDatabaseRepository<T, V> : AbstractRepository<V> where T : IEntityRepositoryIdDBM<V>
+	public abstract class AbstractDatabaseRepository<T, V> : AbstractRepository where T : IEntityRepositoryIdDBM<V> where V : PersistableRepositoryElement
 	{
-		public List<V> Elements;
+		List<V> elements;
+
+		public IEnumerable<V> Elements
+		{
+			get { return elements.FindAll(e => true); }
+		}
 
 		public DateTime LastFastFetch { get; protected set; }
 		public DateTime LastFetch { get; protected set; }
 
-		public int Id { get; set; }
+		readonly AbstractDatabase<T, V> Database;
 
-		protected abstract AbstractEntityRepositoryIdDatabase<T, V> GetDatabase();
-
-		protected AbstractDatabaseRepository(int repositoryId, string name) : base(repositoryId, name)
+		protected AbstractDatabaseRepository(int repositoryId, string name, AbstractDatabase<T, V> database) : base(repositoryId, name)
 		{
-			Elements = new List<V>();
+			elements = new List<V>();
+			Database = database;
 		}
 
 		protected async Task<bool> FetchFromDatabase()
 		{
 			try
 			{
-				var db = GetDatabase();
-				Elements = new List<V>(await db.GetAll(Id));
+				elements = new List<V>((await Database.GetAll()).Where(v => v.RepositoryId == Id));
 				return true;
 			}
 			catch (Exception e)
@@ -39,49 +43,47 @@ namespace data.repositories.general
 			}
 		}
 
-		protected async Task WriteToDatabase()
+		public async Task RemoveAll()
 		{
-			var db = GetDatabase();
-			Elements = Elements.Distinct().ToList();
-			await db.Write(Elements, Id);
-			Elements = new List<V>((await db.GetAll(Id)));
+			await Task.WhenAll(Elements.Select(e => Database.Delete(e)));
+			elements.RemoveAll(e => true);
 		}
 
-		protected async Task DeleteFromDatabase(V element)
+		public async Task Remove(V element)
 		{
-			var db = GetDatabase();
-			await db.Delete(element, Id);
-			Elements = new List<V>(await db.GetAll(Id));
-		}
-
-		protected async Task DeleteAllFromDatabase()
-		{
-			var db = GetDatabase();
-			await db.DeleteAll(Id);
-			Elements = new List<V>(await db.GetAll(Id));
+			await Database.Delete(element);
+			elements.Remove(element);
 		}
 
 		public async Task Add(V element)
 		{
-			Elements.Add(element);
-			await WriteToDatabase();
+			element = await Database.Insert(element);
+			elements.Add(element);
+		}
+
+		public async Task Add(IEnumerable<V> newElements)
+		{
+			newElements = await Database.Insert(newElements);
+			elements.AddRange(elements);
+		}
+
+		public async Task Update(IEnumerable<V> updateElements)
+		{
+			elements.RemoveAll(updateElements.Contains);
+			updateElements = await Database.Update(updateElements);
+			elements.AddRange(updateElements);
 		}
 
 		public async Task Update(V element)
 		{
-			Elements.Remove(element);
-			Elements.Add(element);
-			await WriteToDatabase();
+			await Update(element, element);
 		}
 
-		public async Task Delete(V element)
+		public async Task Update(V oldElement, V newElement)
 		{
-			await DeleteFromDatabase(element);
-		}
-
-		public async Task DeleteAll()
-		{
-			await DeleteAllFromDatabase();
+			elements.Remove(oldElement);
+			newElement = await Database.Update(oldElement, newElement);
+			elements.Add(newElement);
 		}
 	}
 }

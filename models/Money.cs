@@ -1,6 +1,6 @@
 using System;
 
-namespace models
+namespace MyCryptos.models
 {
 	/// <summary>
 	/// Simple Model for Money, includes basic arithmetics

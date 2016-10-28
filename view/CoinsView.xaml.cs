@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Linq;
 using data.settings;
 using data.storage;
 using enums;
-using models;
+using MyCryptos.models;
 using message;
 using MyCryptos.resources;
 using Xamarin.Forms;

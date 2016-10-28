@@ -1,17 +1,20 @@
-﻿using data.repositories.account;
+﻿using System;
+using System.Threading.Tasks;
+using data.database.interfaces;
+using data.repositories.account;
 using SQLite;
 
 namespace data.database.models
 {
 	[Table("AccountRepositories")]
-	public class AccountRepositoryDBM
+	public class AccountRepositoryDBM : IEntityDBM<AccountRepository>
 	{
 		public const int DB_TYPE_LOCAL_REPOSITORY = 1;
 		public const int DB_TYPE_BITTREX_REPOSITORY = 2;
 		public const int DB_TYPE_BLOCK_EXPERTS_REPOSITORY = 3;
 		public const int DB_TYPE_BLOCKCHAIN_REPOSITORY = 4;
 
-        [PrimaryKey, AutoIncrement, Column("_id")]
+		[PrimaryKey, AutoIncrement, Column("_id")]
 		public int Id { get; set; }
 
 		public string Name { get; set; }
@@ -24,14 +27,14 @@ namespace data.database.models
 		/// <value>Json data</value>
 		public string Data { get; set; }
 
-        public AccountRepositoryDBM() { }
+		public AccountRepositoryDBM() { }
 
 		public AccountRepositoryDBM(AccountRepository repository)
 		{
 			Name = repository.Name;
 			Data = repository.Data;
 			Type = repository.RepositoryTypeId;
-			Id = repository.Id;
+			Id = repository.Id.HasValue ? repository.Id.Value : default(int);
 		}
 
 		public override bool Equals(object obj)
@@ -47,6 +50,20 @@ namespace data.database.models
 		{
 			return Id.GetHashCode();
 		}
+
+		public Task<AccountRepository> Resolve()
+		{
+			return Task.Factory.StartNew<AccountRepository>(() =>
+			{
+				switch (Type)
+				{
+					case DB_TYPE_LOCAL_REPOSITORY: return new LocalAccountRepository(Name) { Id = Id };
+					case DB_TYPE_BITTREX_REPOSITORY: return new BittrexAccountRepository(Name, Data) { Id = Id };
+					case DB_TYPE_BLOCK_EXPERTS_REPOSITORY: return new BlockExpertsAccountRepository(Name, Data) { Id = Id };
+					case DB_TYPE_BLOCKCHAIN_REPOSITORY: return new BlockchainAccountRepository(Name, Data) { Id = Id };
+					default: throw new NotImplementedException();
+				}
+			});
+		}
 	}
 }
-

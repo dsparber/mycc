@@ -1,7 +1,7 @@
 ﻿using SQLite;
-using models;
 using System.Threading.Tasks;
 using data.database.interfaces;
+using MyCryptos.models;
 
 namespace data.database.models
 {
@@ -36,7 +36,7 @@ namespace data.database.models
 		public TagDBM(Tag tag)
 		{
 			Id = tag.Id.Value;
-			IdentifierId = tag.Identifier.Id;
+			IdentifierId = tag.Identifier.Id.HasValue ? tag.Identifier.Id.Value : default(int);
 			Units = tag.Units;
 		}
 

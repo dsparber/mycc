@@ -1,17 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using data.database.models;
 using data.repositories.exchangerate;
 using data.storage;
-using models;
+using MyCryptos.models;
 
 namespace data.repositories.availablerates
 {
 	public class LocalAvailableRatesRepository : AvailableRatesRepository
 	{
-		List<ExchangeRate> Elements;
+		IEnumerable<ExchangeRate> Elements;
 
 		public LocalAvailableRatesRepository(string name) : base(AvailableRatesRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY, name)
 		{

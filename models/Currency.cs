@@ -1,10 +1,10 @@
 using Newtonsoft.Json;
-namespace models
+namespace MyCryptos.models
 {
 	/// <summary>
 	///  Simple model for Currencies
 	/// </summary>
-	public class Currency
+	public class Currency : PersistableRepositoryElement
 	{
 
 		/// <summary>
@@ -39,6 +39,12 @@ namespace models
 		/// </summary>
 		/// <value>The identifier.</value>
 		public int? Id { get; set; }
+
+		/// <summary>
+		/// Gets or sets the repository identifier.
+		/// </summary>
+		/// <value>The identifierΩ</value>
+		public int? RepositoryId { get; set; }
 
 		/// <summary>
 		/// The name of the Currency

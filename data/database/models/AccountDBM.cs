@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using data.database.interfaces;
-using models;
+using MyCryptos.models;
 using SQLite;
 
 namespace data.database.models
@@ -27,7 +27,7 @@ namespace data.database.models
 			return new Account(Id, Name, new Money(MoneyAmount, await db.Get(CurrencyId)));
 		}
 
-		public AccountDBM(Account account, int repositoryId)
+		public AccountDBM(Account account)
 		{
 			if (account.Id.HasValue)
 			{
@@ -39,7 +39,7 @@ namespace data.database.models
 			}
 			Name = account.Name;
 			MoneyAmount = account.Money.Amount;
-			RepositoryId = repositoryId;
+			RepositoryId = account.RepositoryId.HasValue ? account.RepositoryId.Value : default(int);
 		}
 	}
 }

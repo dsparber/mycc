@@ -1,23 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using data.database.helper;
 using data.database.models;
+using data.repositories.account;
+using MyCryptos.data.database.helper;
 using SQLite;
 
 namespace data.database
 {
-	public class AccountRepositoryDatabase : AbstractRepositoryDatabase<AccountRepositoryDBM>
+	public class AccountRepositoryDatabase : AbstractDatabase<AccountRepositoryDBM, AccountRepository>
 	{
-		public override async Task<IEnumerable<AccountRepositoryDBM>> GetRepositories()
+		public async override Task<IEnumerable<AccountRepositoryDBM>> GetAllDbObjects()
 		{
-			var query = (await Connection()).Table<AccountRepositoryDBM>();
-			return await query.ToListAsync();
+			return await (await Connection).Table<AccountRepositoryDBM>().ToListAsync();
 		}
 
-		protected override Task<CreateTablesResult> Create()
+		public async override Task<AccountRepositoryDBM> GetDbObject(int id)
 		{
-			return ConnectionWithoutCreate.CreateTableAsync<AccountRepositoryDBM>();
+			return await(await Connection).FindAsync<AccountRepositoryDBM>(p => p.Id == id);
+		}
+
+		protected override Task Create(SQLiteAsyncConnection connection)
+		{
+			return connection.CreateTableAsync<AccountRepositoryDBM>();
+
+		}
+
+		protected override AccountRepositoryDBM Resolve(AccountRepository element)
+		{
+			return new AccountRepositoryDBM(element);
 		}
 	}
 }

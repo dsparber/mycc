@@ -1,33 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
 using data.database.models;
-using models;
 using SQLite;
-using data.database.helper;
+using MyCryptos.data.database.helper;
+using MyCryptos.models;
 
 namespace data.database
 {
-	public class ExchangeRateDatabase : AbstractEntityRepositoryIdDatabase<ExchangeRateDBM, ExchangeRate>
+	public class ExchangeRateDatabase : AbstractDatabase<ExchangeRateDBM, ExchangeRate>
 	{
-		protected override Task<CreateTablesResult> Create()
-		{
-			return ConnectionWithoutCreate.CreateTableAsync<ExchangeRateDBM>();
-		}
-
 		public override async Task<IEnumerable<ExchangeRateDBM>> GetAllDbObjects()
 		{
-			return await (await Connection()).Table<ExchangeRateDBM>().ToListAsync();
+			return await (await Connection).Table<ExchangeRateDBM>().ToListAsync();
 		}
 
-		public override async Task Write(IEnumerable<ExchangeRate> data, int repositoryId)
+		protected override async Task Create(SQLiteAsyncConnection connection)
 		{
-			await DatabaseHelper.InsertOrUpdate(this, data.Select(e => new ExchangeRateDBM(e, repositoryId)));
+			await connection.CreateTableAsync<ExchangeRateDBM>();
 		}
 
-		public async override Task Delete(ExchangeRate element, int repositoryId)
+		public async override Task<ExchangeRateDBM> GetDbObject(int id)
 		{
-			await DatabaseHelper.Delete(this, new ExchangeRateDBM(element, repositoryId));
+			return await (await Connection).FindAsync<ExchangeRateDBM>(p => p.Id == id);
+		}
+
+		protected override ExchangeRateDBM Resolve(ExchangeRate element)
+		{
+			return new ExchangeRateDBM(element);
 		}
 	}
 }

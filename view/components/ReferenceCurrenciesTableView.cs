@@ -1,4 +1,4 @@
-﻿using models;
+using MyCryptos.models;
 using MyCryptos.resources;
 using Xamarin.Forms;
 using System.Collections.Generic;

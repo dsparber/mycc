@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using data.database.models;
-using models;
+using MyCryptos.models;
 using data.storage;
 using MyCryptos.resources;
 using Newtonsoft.Json;
@@ -15,90 +15,119 @@ using Newtonsoft.Json.Linq;
 
 namespace data.repositories.account
 {
-    public class BlockchainAccountRepository : OnlineAccountRepository
-    {
-        readonly string address;
+	public class BlockchainAccountRepository : OnlineAccountRepository
+	{
+		readonly string address;
 
-        const string BASE_URL = "https://blockchain.info/de/address/{0}?format=json&limit=0";
-        const string JSON_BALANCE = "final_balance";
+		const string BASE_URL = "https://blockchain.info/de/address/{0}?format=json&limit=0";
+		const string JSON_BALANCE = "final_balance";
 
-        const int BUFFER_SIZE = 256000;
-        readonly HttpClient client;
+		const int BUFFER_SIZE = 256000;
+		readonly HttpClient client;
 
-        public override string Data { get { return JsonConvert.SerializeObject(new KeyData(address)); } }
+		public override string Data { get { return JsonConvert.SerializeObject(new KeyData(address)); } }
 
-        public BlockchainAccountRepository(string name, string dataOrAddress) : this(name)
-        {
-            try
-            {
-                var keyData = JsonConvert.DeserializeObject<KeyData>(dataOrAddress);
-                address = keyData.address;
-            }
-            catch
-            {
-                address = dataOrAddress;
-            }
-        }
+		public BlockchainAccountRepository(string name, string dataOrAddress) : this(name)
+		{
+			try
+			{
+				var keyData = JsonConvert.DeserializeObject<KeyData>(dataOrAddress);
+				address = keyData.address;
+			}
+			catch
+			{
+				address = dataOrAddress;
+			}
+		}
 
-        BlockchainAccountRepository(string name) : base(AccountRepositoryDBM.DB_TYPE_BLOCKCHAIN_REPOSITORY, name)
-        {
-            client = new HttpClient();
-            client.MaxResponseContentBufferSize = BUFFER_SIZE;
-        }
+		BlockchainAccountRepository(string name) : base(AccountRepositoryDBM.DB_TYPE_BLOCKCHAIN_REPOSITORY, name)
+		{
+			client = new HttpClient();
+			client.MaxResponseContentBufferSize = BUFFER_SIZE;
+		}
 
-        public override async Task<bool> Fetch()
-        {
-            var uri = new Uri(string.Format(BASE_URL, address));
+		async Task<decimal?> getBalance()
+		{
+			var uri = new Uri(string.Format(BASE_URL, address));
 
-            try
-            {
-                var response = await client.GetAsync(uri);
+			var response = await client.GetAsync(uri);
 
-                if (response.IsSuccessStatusCode)
-                {
+			if (response.IsSuccessStatusCode)
+			{
+				var content = await response.Content.ReadAsStringAsync();
 
-                    var content = await response.Content.ReadAsStringAsync();
+				var json = JObject.Parse(content);
+				var balance = (decimal)json[JSON_BALANCE];
+				return balance;
+			}
+			return null;
+		}
 
-                    var json = JObject.Parse(content);
-                    var balance = (decimal)json[JSON_BALANCE];
+		public override async Task<bool> Test()
+		{
+			try
+			{
+				return (await getBalance()).HasValue;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+		}
 
-                    var btc = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(Currency.BTC));
+		public override async Task<bool> Fetch()
+		{
+			try
+			{
+				var balance = await getBalance();
 
-                    var name = (Elements.Count > 0) ? Elements.First().Name : InternationalisationResources.BlockchainAccount;
-                    var newAccount = new Account(name, new Money(balance, btc));
+				if (balance.HasValue)
+				{
+					var btc = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(Currency.BTC));
 
-                    await DeleteAll();
-                    Elements.Clear();
-                    Elements.Add(newAccount);
+					var existing = Elements.First();
+					var money = new Money(balance.Value, btc);
 
-                    await WriteToDatabase();
-                    LastFetch = DateTime.Now;
-                    return true;
-                }
 
-            }
-            catch (WebException e)
-            {
-                MessagingCenter.Send(e, MessageConstants.NetworkError);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
-            }
-            return false;
-        }
+					if (existing != null)
+					{
+						existing.Money = money;
+						await Update(existing);
+					}
+					else
+					{
+						var name = InternationalisationResources.BlockchainAccount;
+						var newAccount = new Account(name, money);
+						await Add(newAccount);
+					}
 
-        class KeyData
-        {
+					LastFetch = DateTime.Now;
+					return true;
+				}
 
-            public string address;
+			}
+			catch (WebException e)
+			{
+				MessagingCenter.Send(e, MessageConstants.NetworkError);
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+			}
+			return false;
+		}
 
-            public KeyData(string address)
-            {
-                this.address = address;
-            }
-        }
+		class KeyData
+		{
 
-        public override string Description { get { return InternationalisationResources.Blockchain; } }
-    }
+			public string address;
+
+			public KeyData(string address)
+			{
+				this.address = address;
+			}
+		}
+
+		public override string Description { get { return InternationalisationResources.Blockchain; } }
+	}
 }

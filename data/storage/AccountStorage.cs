@@ -1,31 +1,20 @@
-﻿using data.repositories.account;
+using data.repositories.account;
 using data.database;
-using data.factories;
-using models;
+using MyCryptos.models;
 using data.database.models;
-using data.database.helper;
 using MyCryptos.resources;
 using System.Threading.Tasks;
-using System;
 
 namespace data.storage
 {
 	public class AccountStorage : AbstractDatabaseStorage<AccountRepositoryDBM, AccountRepository, AccountDBM, Account>
 	{
-		protected override AccountRepository Resolve(AccountRepositoryDBM obj)
-		{
-			return AccountRepositoryFactory.create(obj);
-		}
-
-		public override AbstractRepositoryDatabase<AccountRepositoryDBM> GetDatabase()
-		{
-			return new AccountRepositoryDatabase();
-		}
+		public AccountStorage() : base(new AccountRepositoryDatabase()) { }
 
 		protected override async Task OnFirstLaunch()
 		{
-			var localRepository = new AccountRepositoryDBM(new LocalAccountRepository(InternationalisationResources.DefaultStorage));
-			await GetDatabase().AddRepository(localRepository);
+			var localRepository = new LocalAccountRepository(InternationalisationResources.DefaultStorage);
+			await Add(localRepository);
 		}
 
 		public async override Task<AccountRepository> GetLocalRepository()

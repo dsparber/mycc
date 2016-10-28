@@ -61,9 +61,8 @@ namespace view
 			Header.IsLoading = true;
 			RepositoryNameEntryCell.IsEditable = false;
 
-			await AccountStorage.Instance.Remove(new AccountRepositoryDBM(repository));
 			repository.Name = RepositoryNameEntryCell.Text ?? string.Empty;
-			await AccountStorage.Instance.AddRepository(new AccountRepositoryDBM(repository));
+			await AccountStorage.Instance.Update(repository);
 			await AccountStorage.Instance.Fetch();
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 			await Navigation.PopAsync();
@@ -75,7 +74,7 @@ namespace view
 			Header.IsLoading = true;
 			RepositoryNameEntryCell.IsEditable = false;
 
-			await AccountStorage.Instance.Remove(new AccountRepositoryDBM(repository));
+			await AccountStorage.Instance.Remove(repository);
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 			await Navigation.PopAsync();
 		}

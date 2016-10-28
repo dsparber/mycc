@@ -1,5 +1,5 @@
-﻿using SQLite;
-using models;
+using SQLite;
+using MyCryptos.models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using data.database.interfaces;
@@ -37,7 +37,7 @@ namespace data.database.models
 
 		public TagIdentifierDBM(TagIdentifier identifier)
 		{
-			Id = identifier.Id;
+			Id = identifier.Id.HasValue ? identifier.Id.Value : default(int);
 			Name = identifier.Name;
 			ColorR = identifier.Color.R;
 			ColorG = identifier.Color.G;

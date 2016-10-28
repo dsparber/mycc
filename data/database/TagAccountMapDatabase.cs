@@ -1,46 +1,31 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using data.database.models;
-using System.Linq;
-using models;
 using SQLite;
-using Xamarin.Forms;
-using data.database.interfaces;
-using data.database.helper;
-using System;
+using MyCryptos.data.database.helper;
 
 namespace data.database
 {
-	public class TagAccountMapDatabase : AbstractDatabase
+	public class TagAccountMapDatabase : AbstractDatabase<TagAccountMapDBM, TagAccountMapDBM>
 	{
-		public async Task<IEnumerable<TagAccountMapDBM>> GetAll()
+		public override async Task<IEnumerable<TagAccountMapDBM>> GetAllDbObjects()
 		{
-			return await (await Connection()).Table<TagAccountMapDBM>().ToListAsync();
+			return await (await Connection).Table<TagAccountMapDBM>().ToListAsync();
 		}
 
-		public async Task<IEnumerable<TagAccountMapDBM>> GetForAccountId(int accountId)
+		protected override async Task Create(SQLiteAsyncConnection connection)
 		{
-			return (await GetAll()).Where(x => x.AccountId == accountId);
+			await connection.CreateTableAsync<TagAccountMapDBM>();
 		}
 
-		public async Task DeleteWithAccountId(int accountId)
+		public async override Task<TagAccountMapDBM> GetDbObject(int id)
 		{
-			await Task.WhenAll((await GetForAccountId(accountId)).Select(async t =>
-			{
-				await (await Connection()).DeleteAsync(t);
-			}));
+			return await (await Connection).FindAsync<TagAccountMapDBM>(p => p.Id == id);
 		}
 
-		public async Task Write(Account account, Tag tag)
+		protected override TagAccountMapDBM Resolve(TagAccountMapDBM element)
 		{
-			var dbObj = new TagAccountMapDBM { TagId = tag.Id.Value, AccountId = account.Id.Value };
-
-			await (await Connection()).InsertAsync(dbObj);
-		}
-
-		protected override Task<CreateTablesResult> Create()
-		{
-			return ConnectionWithoutCreate.CreateTableAsync<TagAccountMapDBM>();
+			return element;
 		}
 	}
 }

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
-namespace models
+namespace MyCryptos.models
 {
 	/// <summary>
 	/// Model for a simple account
 	/// </summary>
-	public class Account
+	public class Account : PersistableRepositoryElement
 	{
 
 		/// <summary>
@@ -39,6 +39,12 @@ namespace models
 		/// </summary>
 		/// <value>The identifier.</value>
 		public int? Id { get; set; }
+
+		/// <summary>
+		/// Gets or sets the identifier.
+		/// </summary>
+		/// <value>The identifier of the repository</value>
+		public int? RepositoryId { get; set; }
 
 		/// <summary>
 		/// Money of the account

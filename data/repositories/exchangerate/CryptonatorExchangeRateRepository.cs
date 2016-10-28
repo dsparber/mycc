@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using System.Linq;
-using models;
+using MyCryptos.models;
 using System;
 using System.Net.Http;
 using data.database.models;
@@ -42,8 +42,6 @@ namespace data.repositories.exchangerate
 					exchangeRate.Rate = rate;
 				}
 			}
-			Elements.Remove(exchangeRate);
-			Elements.Add(exchangeRate);
 		}
 
 		static string ToUrl(ExchangeRate exchangeRate)

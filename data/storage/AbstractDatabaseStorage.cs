@@ -4,26 +4,28 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using MyCryptos.models;
+using MyCryptos.data.database.helper;
 
 namespace data.storage
 {
-	public abstract class AbstractDatabaseStorage<T, R, D, V> : AbstractStorage<T, R, V> where R : AbstractDatabaseRepository<D, V> where D : IEntityRepositoryIdDBM<V>
+	public abstract class AbstractDatabaseStorage<Ta, Va, T, V> : AbstractStorage<Ta, Va> where Va : AbstractDatabaseRepository<T,V> where Ta : IEntityDBM<Va> where T : IEntityRepositoryIdDBM<V> where V : PersistableRepositoryElement
 	{
-		protected AbstractDatabaseStorage()
+		protected AbstractDatabaseStorage(AbstractDatabase<Ta, Va> database) : base(database)
 		{
 			CachedElements = new List<V>();
-			CachedElementsWithRepository = new List<Tuple<V, R>>();
+			CachedElementsWithRepository = new List<Tuple<V, Va>>();
 		}
 
 		public List<V> CachedElements { get; private set; }
-		public List<Tuple<V, R>> CachedElementsWithRepository { get; private set; }
+		public List<Tuple<V, Va>> CachedElementsWithRepository { get; private set; }
 
 		public async Task<List<V>> AllElements()
 		{
 			return (await Repositories()).SelectMany(r => r.Elements).ToList();
 		}
 
-		public async Task<List<Tuple<V, R>>> AllElementsWithRepositories()
+		public async Task<List<Tuple<V, Va>>> AllElementsWithRepositories()
 		{
 			return (await Repositories()).SelectMany(r => r.Elements.Select(e => Tuple.Create(e, r))).ToList();
 		}
@@ -51,24 +53,30 @@ namespace data.storage
 			await updateCache();
 		}
 
-		public override async Task Remove(T repository)
+		public override async Task Remove(Va repository)
 		{
-			await Repositories();
+			await base.Remove(repository);
 
 			// Delete all elements
-			var resolved = Resolve(repository);
-			var repo = (await Repositories()).Find(r => r.Id == resolved.Id);
-			var elements = repo.Elements;
-			await Task.WhenAll(elements.Select(async e => await repo.Delete(e)));
-
-			await GetDatabase().Remove(repository);
-			var repos = await GetDatabase().GetRepositories();
-			repositories = repos.Select(r => Resolve(r)).ToList();
+			var repo = (await Repositories()).Find(r => r.Id == repository.Id);
+			await repo.RemoveAll();
 
 			await updateCache();
 		}
 
-		public abstract Task<R> GetLocalRepository();
+		public async override Task Update(Va repository)
+		{
+			await base.Update(repository);
+			await updateCache();
+		}
+
+		public async override Task Add(Va repository)
+		{
+			await base.Add(repository);
+			await updateCache();
+		}
+
+		public abstract Task<Va> GetLocalRepository();
 
 		public async Task AddToLocalRepository(V element)
 		{
@@ -85,7 +93,7 @@ namespace data.storage
 			var local = await GetLocalRepository();
 			if (local != null)
 			{
-				await local.Delete(element);
+				await local.Remove(element);
 				await updateCache();
 			}
 		}

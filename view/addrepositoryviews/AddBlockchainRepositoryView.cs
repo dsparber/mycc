@@ -22,7 +22,7 @@ namespace MyCryptos.view.addrepositoryviews
 			section.Add(addressEntryCell);
 		}
 
-		public override AccountRepository GetRepository(string name)
+		public override OnlineAccountRepository GetRepository(string name)
 		{
 			var address = addressEntryCell.Text ?? string.Empty;
 

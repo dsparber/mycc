@@ -1,4 +1,4 @@
-﻿namespace models.helper
+﻿namespace MyCryptos.models.helper
 {
 	public static class ExchangeRateHelper
 	{

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using models;
+using System.Collections.Generic;
+using MyCryptos.models;
 using Xamarin.Forms;
 using System.Linq;
 using MyCryptos.resources;

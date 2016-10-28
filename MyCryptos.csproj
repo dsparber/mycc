@@ -54,7 +54,6 @@
     <Compile Include="data\database\models\AccountRepositoryDBM.cs" />
     <Compile Include="data\storage\AccountStorage.cs" />
     <Compile Include="data\database\AccountRepositoryDatabase.cs" />
-    <Compile Include="data\factories\AccountRepositoryFactory.cs" />
     <Compile Include="data\settings\Settings.cs" />
     <Compile Include="models\Tag.cs" />
     <Compile Include="models\TagIdentifier.cs" />
@@ -63,12 +62,10 @@
     <Compile Include="data\database\models\TagAccountMapDBM.cs" />
     <Compile Include="data\database\TagIdentifierDatabase.cs" />
     <Compile Include="data\database\TagDatabase.cs" />
-    <Compile Include="data\database\helper\DatabaseHelper.cs" />
     <Compile Include="data\database\TagAccountMapDatabase.cs" />
     <Compile Include="data\storage\CurrencyStorage.cs" />
     <Compile Include="data\database\CurrencyRepositoryDatabase.cs" />
     <Compile Include="data\database\models\CurrencyRepositoryDBM.cs" />
-    <Compile Include="data\factories\CurrencyRepositoryFactory.cs" />
     <Compile Include="data\database\CurrencyDatabase.cs" />
     <Compile Include="data\database\models\CurrencyDBM.cs" />
     <Compile Include="data\storage\ExchangeRateStorage.cs" />
@@ -80,12 +77,9 @@
     <Compile Include="data\repositories\currency\BittrexCurrencyRepository.cs" />
     <Compile Include="data\database\interfaces\IEntityDBM.cs" />
     <Compile Include="data\database\interfaces\IEntityRepositoryIdDBM.cs" />
-    <Compile Include="data\database\helper\AbstractEntityDatabase.cs" />
-    <Compile Include="data\database\helper\AbstractEntityRepositoryIdDatabase.cs" />
     <Compile Include="data\database\interfaces\ISQLiteConnection.cs" />
     <Compile Include="data\storage\AbstractStorage.cs" />
     <Compile Include="data\repositories\general\AbstractRepository.cs" />
-    <Compile Include="data\database\helper\AbstractRepositoryDatabase.cs" />
     <Compile Include="data\database\helper\AbstractDatabase.cs" />
     <Compile Include="data\repositories\exchangerate\BtceExchangeRateRepository.cs" />
     <Compile Include="view\addrepositoryviews\AbstractAddRepositoryView.cs" />
@@ -172,6 +166,8 @@
     <Compile Include="view\addrepositoryviews\AddBlockExpertsRepositoryView.cs" />
     <Compile Include="data\repositories\currency\BlockExpertsCurrencyRepository.cs" />
     <Compile Include="message\ErrorMessageHandler.cs" />
+    <Compile Include="models\Persistable.cs" />
+    <Compile Include="models\PersistableRepositoryElement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

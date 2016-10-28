@@ -1,7 +1,7 @@
-﻿using data.settings;
+using data.settings;
 using enums;
 using message;
-using models;
+using MyCryptos.models;
 using System;
 using Xamarin.Forms;
 using MyCryptos.view.components;

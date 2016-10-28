@@ -1,10 +1,10 @@
-namespace models
+namespace MyCryptos.models
 {
 
 	/// <summary>
 	/// Simple exchange rate model
 	/// </summary>
-	public class ExchangeRate
+	public class ExchangeRate : PersistableRepositoryElement
 	{
 
 		/// <summary>
@@ -32,6 +32,12 @@ namespace models
 		/// </summary>
 		/// <value>The identifier.</value>
 		public int? Id { get; set; }
+
+		/// <summary>
+		/// Gets or sets the repository identifier.
+		/// </summary>
+		/// <value>The identifier.</value>
+		public int? RepositoryId { get; set; }
 
 		/// <summary>
 		/// The reference currency.

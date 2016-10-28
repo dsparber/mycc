@@ -1,33 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
 using data.database.models;
-using models;
 using SQLite;
-using data.database.helper;
+using MyCryptos.data.database.helper;
+using MyCryptos.models;
 
 namespace data.database
 {
-	public class CurrencyDatabase : AbstractEntityRepositoryIdDatabase<CurrencyDBM, Currency>
+	public class CurrencyDatabase : AbstractDatabase<CurrencyDBM, Currency>
 	{
-		protected override async Task<CreateTablesResult> Create()
-		{
-			return await ConnectionWithoutCreate.CreateTableAsync<CurrencyDBM>();
-		}
-
 		public override async Task<IEnumerable<CurrencyDBM>> GetAllDbObjects()
 		{
-			return await (await Connection()).Table<CurrencyDBM>().ToListAsync();
+			return await (await Connection).Table<CurrencyDBM>().ToListAsync();
 		}
 
-		public override async Task Write(IEnumerable<Currency> data, int repositoryId)
+		protected override async Task Create(SQLiteAsyncConnection connection)
 		{
-			await DatabaseHelper.InsertOrUpdate(this, data.Select(c => new CurrencyDBM(c, repositoryId)));
+			await connection.CreateTableAsync<CurrencyDBM>();
 		}
 
-		public async override Task Delete(Currency element, int repositoryId)
+		public async override Task<CurrencyDBM> GetDbObject(int id)
 		{
-			await DatabaseHelper.Delete(this, new CurrencyDBM(element, repositoryId));
+			return await (await Connection).FindAsync<CurrencyDBM>(p => p.Id == id);
+		}
+
+		protected override CurrencyDBM Resolve(Currency element)
+		{
+			return new CurrencyDBM(element);
 		}
 	}
 }

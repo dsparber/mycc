@@ -1,31 +1,21 @@
-﻿using models;
+using MyCryptos.models;
 using data.database;
-using data.factories;
 using data.database.models;
-using data.database.helper;
 using System.Threading.Tasks;
 using data.repositories.availablerates;
 
 namespace data.storage
 {
-	public class AvailableRatesStorage : AbstractStorage<AvailableRatesRepositoryDBM, AvailableRatesRepository, ExchangeRate>
+	public class AvailableRatesStorage : AbstractStorage<AvailableRatesRepositoryDBM, AvailableRatesRepository>
 	{
-		public override AbstractRepositoryDatabase<AvailableRatesRepositoryDBM> GetDatabase()
-		{
-			return new AvailableRatesRepositoryDatabase();
-		}
-
-		protected override AvailableRatesRepository Resolve(AvailableRatesRepositoryDBM obj)
-		{
-			return AvailableRatesFactory.create(obj);
-		}
+		public AvailableRatesStorage() : base(new AvailableRatesRepositoryDatabase()) { }
 
 		protected override async Task OnFirstLaunch()
 		{
-			await GetDatabase().AddRepository(new AvailableRatesRepositoryDBM { Type = AvailableRatesRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY });
-			await GetDatabase().AddRepository(new AvailableRatesRepositoryDBM { Type = AvailableRatesRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY });
-			await GetDatabase().AddRepository(new AvailableRatesRepositoryDBM { Type = AvailableRatesRepositoryDBM.DB_TYPE_BTCE_REPOSITORY });
-			await GetDatabase().AddRepository(new AvailableRatesRepositoryDBM { Type = AvailableRatesRepositoryDBM.DB_TYPE_CRYPTONATOR_REPOSITORY });
+			await Add(new BittrexAvailableRatesRepository(null));
+			await Add(new LocalAvailableRatesRepository(null));
+			await Add(new BtceAvailableRatesRepository(null));
+			await Add(new CryptonatorAvailableRatesRepository(null));
 		}
 
 		static AvailableRatesStorage instance { get; set; }

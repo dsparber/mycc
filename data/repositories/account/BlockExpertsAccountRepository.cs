@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using data.database.models;
-using models;
+using MyCryptos.models;
 using data.storage;
 using MyCryptos.resources;
 using Newtonsoft.Json;
@@ -50,39 +50,52 @@ namespace data.repositories.account
 			client.MaxResponseContentBufferSize = BUFFER_SIZE;
 		}
 
-		public override async Task<bool> Fetch()
+		async Task<Money> getMoney()
 		{
 			var uri = new Uri(string.Format(BASE_URL, coin.Code, address));
 
+			var response = await client.GetAsync(uri);
+
+			if (response.IsSuccessStatusCode)
+			{
+
+				var content = await response.Content.ReadAsStringAsync();
+				var balance = decimal.Parse(content);
+
+				var dbCoin = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(coin));
+				if (dbCoin == null)
+				{
+					await CurrencyStorage.Instance.AddToLocalRepository(coin);
+					dbCoin = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(coin));
+				}
+
+				coin = dbCoin ?? coin;
+				var money = new Money(balance, coin);
+				return money;
+			}
+			return null;
+		}
+
+		public override async Task<bool> Fetch()
+		{
 			try
 			{
-				var response = await client.GetAsync(uri);
+				var money = await getMoney();
 
-				if (response.IsSuccessStatusCode)
+				if (money != null)
 				{
+					var existing = Elements.First();
 
-					var content = await response.Content.ReadAsStringAsync();
-					var balance = decimal.Parse(content);
-
-					var dbCoin = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(coin));
-					if (dbCoin == null)
+					if (existing != null)
 					{
-						await CurrencyStorage.Instance.AddToLocalRepository(coin);
-						dbCoin = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(coin));
+						existing.Money = money;
+						await Update(existing);
+					}
+					else {
+						var newAccount = new Account(coin.Name, money);
+						await Add(newAccount);
 					}
 
-					coin = dbCoin ?? coin;
-
-					var name = (Elements.Count > 0) ? Elements.First().Name : coin.Name;
-					var newAccount = new Account(name, new Money(balance, coin));
-
-					// Remove old
-					await DeleteAll();
-					Elements.Clear();
-
-					Elements.Add(newAccount);
-
-					await WriteToDatabase();
 					LastFetch = DateTime.Now;
 					return true;
 				}
@@ -97,6 +110,18 @@ namespace data.repositories.account
 				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
 			}
 			return false;
+		}
+
+		public override async Task<bool> Test()
+		{
+			try
+			{
+				return (await getMoney()) != null;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
 		}
 
 		class KeyData

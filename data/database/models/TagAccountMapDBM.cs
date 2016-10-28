@@ -1,9 +1,12 @@
-﻿using SQLite;
+﻿using System.Threading.Tasks;
+using data.database.interfaces;
+using MyCryptos.models;
+using SQLite;
 
 namespace data.database.models
 {
 	[Table("TagsAccountsMap")]
-	public class TagAccountMapDBM
+	public class TagAccountMapDBM : Persistable, IEntityDBM<TagAccountMapDBM>
 	{
 		[PrimaryKey, AutoIncrement, Column("_id")]
 		public int Id { get; set; }
@@ -11,6 +14,12 @@ namespace data.database.models
 		public int TagId { get; set; }
 
 		public int AccountId { get; set; }
+
+		int? Persistable.Id
+		{
+			get { return Id; }
+			set { Id = value.GetValueOrDefault(); }
+		}
 
 		public override bool Equals(object obj)
 		{
@@ -26,6 +35,11 @@ namespace data.database.models
 		public override int GetHashCode()
 		{
 			return TagId.GetHashCode() + AccountId.GetHashCode();
+		}
+
+		public Task<TagAccountMapDBM> Resolve()
+		{
+			return Task.Factory.StartNew(() => this);
 		}
 	}
 }

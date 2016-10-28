@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using data.storage;
 using enums;
-using models;
+using MyCryptos.models;
 using MyCryptos.resources;
 
 namespace MyCryptos.view.components

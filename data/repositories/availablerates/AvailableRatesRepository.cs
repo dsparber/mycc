@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using data.repositories.exchangerate;
 using data.repositories.general;
-using models;
+using MyCryptos.models;
 
 namespace data.repositories.availablerates
 {

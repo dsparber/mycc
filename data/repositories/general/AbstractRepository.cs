@@ -1,11 +1,14 @@
 ﻿using System.Threading.Tasks;
+using MyCryptos.models;
 
 namespace data.repositories.general
 {
-	public abstract class AbstractRepository<V>
+	public abstract class AbstractRepository : Persistable
 	{
 		public string Name;
 		public int RepositoryTypeId;
+
+		public int? Id { get; set; }
 
 		public abstract Task<bool> Fetch();
 

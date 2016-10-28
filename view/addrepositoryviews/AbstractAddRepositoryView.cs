@@ -10,6 +10,6 @@ namespace MyCryptos.view.addrepositoryviews
 		public abstract bool Enabled { set; }
 		public abstract string Description { get; }
 		public abstract string DefaultName { get; }
-		public abstract AccountRepository GetRepository(string name);
+		public abstract OnlineAccountRepository GetRepository(string name);
 	}
 }

@@ -1,6 +1,6 @@
-﻿namespace models
+﻿namespace MyCryptos.models
 {
-	public class Tag
+	public class Tag : Persistable
 	{
 		public int? Id { get; set; }
 

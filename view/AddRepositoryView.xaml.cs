@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using data.database.models;
 using data.storage;
@@ -7,11 +7,10 @@ using MyCryptos.resources;
 using Xamarin.Forms;
 using MyCryptos.view.addrepositoryviews;
 using System.Collections.Generic;
-using models;
+using MyCryptos.models;
 using data.settings;
 using tasks;
 using MyCryptos.helpers;
-using System.Diagnostics;
 
 namespace view
 {
@@ -86,11 +85,11 @@ namespace view
 
 			var repository = RepositorySpecificView.GetRepository(name);
 
-			var success = await repository.Fetch();
+			var success = await repository.Test();
 			if (success)
 			{
 				Header.LoadingText = InternationalisationResources.Fetching;
-				await AccountStorage.Instance.AddRepository(new AccountRepositoryDBM(repository));
+				await AccountStorage.Instance.Add(repository);
 				await AccountStorage.Instance.Fetch();
 				MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 

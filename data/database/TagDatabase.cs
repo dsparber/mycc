@@ -1,37 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
 using data.database.models;
-using models;
 using SQLite;
-using data.database.helper;
+using MyCryptos.data.database.helper;
+using MyCryptos.models;
 
 namespace data.database
 {
-	public class TagDatabase : AbstractEntityDatabase<TagDBM, Tag>
+	public class TagDatabase : AbstractDatabase<TagDBM, Tag>
 	{
-		TagIdentifierDatabase tagIdentifierDatabase;
-
-		public TagDatabase()
-		{
-			tagIdentifierDatabase = new TagIdentifierDatabase();
-		}
-
 		public override async Task<IEnumerable<TagDBM>> GetAllDbObjects()
 		{
-			return await (await Connection()).Table<TagDBM>().ToListAsync();
+			return await (await Connection).Table<TagDBM>().ToListAsync();
 		}
 
-		public override async Task Write(IEnumerable<Tag> data)
+		protected override async Task Create(SQLiteAsyncConnection connection)
 		{
-			await DatabaseHelper.InsertOrUpdate(this, data.Select(t => new TagDBM(t)));
-			await tagIdentifierDatabase.Write(data.Select(t => t.Identifier));
+			await connection.CreateTableAsync<TagDBM>();
 		}
 
-		protected override Task<CreateTablesResult> Create()
+		public async override Task<TagDBM> GetDbObject(int id)
 		{
-			return ConnectionWithoutCreate.CreateTableAsync<TagDBM>();
+			return await (await Connection).FindAsync<TagDBM>(p => p.Id == id);
+		}
+
+		protected override TagDBM Resolve(Tag element)
+		{
+			return new TagDBM(element);
 		}
 	}
 }
-

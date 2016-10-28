@@ -25,7 +25,7 @@ namespace MyCryptos.view.addrepositoryviews
 			section.Add(addressEntryCell);
 		}
 
-		public override AccountRepository GetRepository(string name)
+		public override OnlineAccountRepository GetRepository(string name)
 		{
 			var coin = currencyEntryCell.SelectedCurrency;
 			var address = addressEntryCell.Text ?? string.Empty;

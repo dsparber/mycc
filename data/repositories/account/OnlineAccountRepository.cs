@@ -12,6 +12,8 @@ namespace data.repositories.account
 			LastFastFetch = DateTime.Now;
 			return await FetchFromDatabase();
 		}
+
+		public abstract Task<bool> Test();
 	}
 }
 

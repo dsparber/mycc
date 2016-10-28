@@ -1,7 +1,7 @@
 ﻿using SQLite;
-using models;
 using System.Threading.Tasks;
 using data.database.interfaces;
+using MyCryptos.models;
 
 namespace data.database.models
 {
@@ -27,22 +27,22 @@ namespace data.database.models
 			return new ExchangeRate(await db.Get(ReferenceCurrencyId), await db.Get(SecondaryCurrencyId), Rate);
 		}
 
-		public ExchangeRateDBM(ExchangeRate exchangeRate, int repositoryId)
+		public ExchangeRateDBM(ExchangeRate exchangeRate)
 		{
-			if (exchangeRate.Id.HasValue)
+			
+			Id = exchangeRate.Id.GetValueOrDefault();
+			
+			if (exchangeRate.ReferenceCurrency != null)
 			{
-				Id = exchangeRate.Id.Value;
+				ReferenceCurrencyId = exchangeRate.ReferenceCurrency.Id.GetValueOrDefault();
 			}
-			if (exchangeRate.ReferenceCurrency != null && exchangeRate.ReferenceCurrency.Id.HasValue)
+			if (exchangeRate.SecondaryCurrency != null)
 			{
-				ReferenceCurrencyId = exchangeRate.ReferenceCurrency.Id.Value;
+				SecondaryCurrencyId = exchangeRate.SecondaryCurrency.Id.GetValueOrDefault();
 			}
-			if (exchangeRate.SecondaryCurrency != null && exchangeRate.SecondaryCurrency.Id.HasValue)
-			{
-				SecondaryCurrencyId = exchangeRate.SecondaryCurrency.Id.Value;
-			}
+
 			Rate = exchangeRate.Rate;
-			RepositoryId = repositoryId;
+			RepositoryId = exchangeRate.RepositoryId.GetValueOrDefault();
 		}
 	}
 }
