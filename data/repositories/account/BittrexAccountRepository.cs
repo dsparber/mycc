@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,7 +98,7 @@ namespace data.repositories.account
 
 							var curr = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Code.Equals(currencyCode));
 
-							var newAccount = new Account(String.Format("{0} ({1})", InternationalisationResources.BittrexAccount, curr.Code), new Money(balance, curr));
+							var newAccount = new Account(string.Format("{0} ({1})", InternationalisationResources.BittrexAccount, curr.Code), new Money(balance, curr));
 							var existing = Elements.Find(a => a.Money.Currency.Equals(newAccount.Money.Currency));
 
 							if (existing != null)

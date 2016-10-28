@@ -15,7 +15,6 @@
 			<ContentView
 				BackgroundColor="{x:Static constants:AppConstants.ThemeColor}">
 				<StackLayout
-          x:Name="labelStack"
 					VerticalOptions="CenterAndExpand"
 					HorizontalOptions="CenterAndExpand">
 					<Label

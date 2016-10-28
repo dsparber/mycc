@@ -10,6 +10,7 @@ using data.repositories.account;
 using System;
 using data.storage;
 using data.settings;
+using System.Diagnostics;
 
 namespace view
 {
@@ -30,27 +31,34 @@ namespace view
 				SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
 			});
 
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, async (str) =>
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, async str =>
+			 {
+				 try
+				 {
+					 var accs = await AccountStorage.Instance.AllElementsWithRepositories();
+					 accs = accs.Where(t => t.Item1.Money.Currency.Equals(currency(accounts))).ToList();
+
+					 if (accs.Count == 0)
+					 {
+						 Navigation.RemovePage(this);
+					 }
+					 else {
+						 updateView(accs, exchangeRate);
+					 }
+				 }
+				 catch (Exception e)
+				 {
+					 Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+				 }
+			 });
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => reloadData(accounts));
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => reloadData(accounts));
+
+			if (Device.OS == TargetPlatform.Android)
 			{
-				var accs = await AccountStorage.Instance.AllElementsWithRepositories();
-				accs = accs.Where(t => t.Item1.Money.Currency.Equals(currency(accounts))).ToList();
-
-				if (accs.Count == 0)
-				{
-					Navigation.RemovePage(this);
-				}
-				else {
-					updateView(accs, exchangeRate);
-				}
-			});
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, (str) => reloadData(accounts));
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, (str) => reloadData(accounts));
-
-            if (Device.OS == TargetPlatform.Android)
-            {
-                Title = string.Empty;
-            }
-        }
+				Title = string.Empty;
+			}
+		}
 
 		void reloadData(IEnumerable<Tuple<Account, AccountRepository>> accounts)
 		{
@@ -77,10 +85,10 @@ namespace view
 
 		void setHeader(IEnumerable<Tuple<Account, AccountRepository>> accounts, ExchangeRate exchangeRate)
 		{
-            if (Device.OS != TargetPlatform.Android)
-            {
-                Title = currency(accounts) != null ? currency(accounts).Code : string.Empty;
-            }
+			if (Device.OS != TargetPlatform.Android)
+			{
+				Title = currency(accounts) != null ? currency(accounts).Code : string.Empty;
+			}
 			Header.TitleText = moneySum(accounts).ToString();
 
 			if (exchangeRate != null && exchangeRate.Rate.HasValue)
@@ -116,7 +124,14 @@ namespace view
 			base.OnAppearing();
 			foreach (var c in ReferenceValueCells)
 			{
-				await c.Update();
+				try
+				{
+					await c.Update();
+				}
+				catch (Exception e)
+				{
+					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+				}
 			}
 		}
 	}

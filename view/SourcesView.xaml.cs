@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using data.storage;
 using System.Threading.Tasks;
 using MyCryptos.helpers;
+using System.Diagnostics;
 
 namespace view
 {
@@ -34,13 +35,20 @@ namespace view
 			if (Device.OS == TargetPlatform.Android)
 			{
 				ToolbarItems.Remove(DoneItem);
-                Title = string.Empty;
+				Title = string.Empty;
 			}
 
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, async str =>
 			{
-				this.repositories = await AccountStorage.Instance.Repositories();
-				setView();
+				try
+				{
+					this.repositories = await AccountStorage.Instance.Repositories();
+					setView();
+				}
+				catch (Exception e)
+				{
+					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+				}
 			});
 		}
 

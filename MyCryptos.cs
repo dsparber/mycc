@@ -5,6 +5,8 @@ using resources;
 using view;
 using Xamarin.Forms;
 using MyCryptos.message;
+using data.settings;
+using tasks;
 
 namespace MyCryptos
 {
@@ -30,6 +32,14 @@ namespace MyCryptos
             {
                 DependencyService.Get<ILocalise>().SetLocale();
             }
+
+			if (ApplicationSettings.AutoRefreshOnStartup)
+			{
+				AppTasks.Instance.StartFetchTask(true);
+			}
+			else {
+				AppTasks.Instance.StartFastFetchTask();
+			}
         }
 
         protected override void OnStart()

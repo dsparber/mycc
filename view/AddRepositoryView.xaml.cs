@@ -11,6 +11,7 @@ using models;
 using data.settings;
 using tasks;
 using MyCryptos.helpers;
+using System.Diagnostics;
 
 namespace view
 {
@@ -51,7 +52,12 @@ namespace view
 				var old = RepositorySpecificView;
 
 				RepositorySpecificView = addViews[TypePickerCell.Picker.SelectedIndex];
-				RepositoryNameEntryCell.Text = (old.DefaultName.Equals(RepositoryNameEntryCell.Text)) ? RepositorySpecificView.DefaultName : RepositoryNameEntryCell.Text;
+
+				var defaultName = RepositorySpecificView.DefaultName;
+				var oldDefaultName = old.DefaultName;
+				var text = RepositoryNameEntryCell.Text;
+
+				RepositoryNameEntryCell.Entry.Text = oldDefaultName.Equals(text) ? defaultName : text;
 
 				TableView.Root.Remove(old.InputSection);
 				TableView.Root.Add(RepositorySpecificView.InputSection);

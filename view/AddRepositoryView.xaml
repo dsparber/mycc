@@ -10,16 +10,14 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Text="{i18n:Translate Save}"
-			Clicked="Save"
-			x:Name="SaveItem"/>
+			Clicked="Save" />
 		<ToolbarItem
 			Text="{i18n:Translate Cancel}"
 			Clicked="Cancel"
 			x:Name="CancelItem" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
-		<StackLayout
-			x:Name="Stack">
+		<StackLayout>
 			<StackLayout.BackgroundColor>
 				<OnPlatform
 					x:TypeArguments="Color"

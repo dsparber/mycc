@@ -1,5 +1,4 @@
 ﻿using MyCryptos.resources;
-using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 
@@ -56,12 +55,6 @@ namespace view
             }
         }
 
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-            await TabContainerView.StartTask();
-        }
-
         class MasterPageItem
         {
             public string Title { get; set; }
@@ -72,7 +65,7 @@ namespace view
         class MasterPage : ContentPage
         {
             public ListView ListView { get { return listView; } }
-            ListView listView;
+            readonly ListView listView;
 
             public MasterPage(List<MasterPageItem> masterPageItems)
             {

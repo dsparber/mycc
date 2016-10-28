@@ -33,11 +33,11 @@ namespace tasks
 			}
 		}
 
-		public void StartFetchTask()
+		public void StartFetchTask(bool includeFastFetchTask)
 		{
 			if (fetchTaskInstance == null || fetchTaskInstance.IsCompleted)
 			{
-				fetchTaskInstance = fetchTask();
+				fetchTaskInstance = fetchTask(includeFastFetchTask);
 			}
 		}
 
@@ -65,33 +65,44 @@ namespace tasks
 			}
 		}
 
-		public bool IsFastFetchTaskFinished { get { return isFinished(fastFetchTaskInstance); } }
-		public bool IsFetchTaskFinished{ get { return isFinished(fetchTaskInstance); } }
-		public bool IsAddAccountTaskFinished { get { return isFinished(addAccountTaskInstance); } }
-		public bool IsDeleteAccountTaskFinished { get { return isFinished(deleteAccountTaskInstance); } }
-		public bool IsMissingRatesTaskFinished { get { return isFinished(missingRatesTaskInstance); } }
+		public bool IsFastFetchTaskFinished { get { return fastFetchTaskInstance.IsFinished(); } }
+		public bool IsFetchTaskFinished { get { return fetchTaskInstance.IsFinished(); } }
+		public bool IsAddAccountTaskFinished { get { return addAccountTaskInstance.IsFinished(); } }
+		public bool IsDeleteAccountTaskFinished { get { return deleteAccountTaskInstance.IsFinished(); } }
+		public bool IsMissingRatesTaskFinished { get { return missingRatesTaskInstance.IsFinished(); } }
 
-		public bool IsFastFetchTaskStarted { get { return isStarted(fastFetchTaskInstance); } }
-		public bool IsFetchTaskStarted { get { return isStarted(fetchTaskInstance); } }
-		public bool IsAddAccountTaskStarted { get { return isStarted(addAccountTaskInstance); } }
-		public bool IsDeleteAccountTaskStarted { get { return isStarted(deleteAccountTaskInstance); } }
-		public bool IsMissingRatesTaskStarted { get { return isStarted(missingRatesTaskInstance); } }
+		public bool IsFastFetchTaskStarted { get { return fastFetchTaskInstance.IsStarted(); } }
+		public bool IsFetchTaskStarted { get { return fetchTaskInstance.IsStarted(); } }
+		public bool IsAddAccountTaskStarted { get { return addAccountTaskInstance.IsStarted(); } }
+		public bool IsDeleteAccountTaskStarted { get { return deleteAccountTaskInstance.IsStarted(); } }
+		public bool IsMissingRatesTaskStarted { get { return missingRatesTaskInstance.IsStarted(); } }
 
 
 		async Task fastFetchTask()
 		{
+			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.StartedFetching);
 			await CurrencyStorage.Instance.FetchFast();
 			await AccountStorage.Instance.FetchFast();
 			await AvailableRatesStorage.Instance.FetchFast();
 			await ExchangeRateStorage.Instance.FetchFast();
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedExchangeRates);
+			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.DoneFetching);
 		}
 
-		async Task fetchTask()
+		async Task fetchTask(bool includeFastFetchTask)
 		{
+			if (includeFastFetchTask) {
+				await fastFetchTask();
+			}
+			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.StartedFetching);
 			await CurrencyStorage.Instance.Fetch();
 			await AccountStorage.Instance.Fetch();
 			await ExchangeRateStorage.Instance.Fetch();
 			await AvailableRatesStorage.Instance.Fetch();
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedExchangeRates);
+			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.DoneFetching);
 		}
 
 		async Task addAccountTask(Account account)
@@ -136,11 +147,16 @@ namespace tasks
 			}
 		}
 
-		static bool isStarted(Task task)
+
+	}
+
+	public static class TaskHelper
+	{
+		public static bool IsStarted(this Task task)
 		{
 			return task != null && (task.Status.Equals(TaskStatus.Running) || task.IsCompleted);
 		}
-		static bool isFinished(Task task)
+		public static bool IsFinished(this Task task)
 		{
 			return task != null && task.IsCompleted;
 		}
