@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using data.database.models;
+using MyCryptos.models;
 
 namespace data.repositories.currency
 {
@@ -18,6 +19,11 @@ namespace data.repositories.currency
 		{
 			LastFastFetch = DateTime.Now;
 			return await Fetch();
+		}
+
+		protected override Func<Currency, bool> DatabaseFilter
+		{
+			get { return v => true; }
 		}
 	}
 }

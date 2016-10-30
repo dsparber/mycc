@@ -45,7 +45,7 @@ namespace view
 		{
 			get
 			{
-				var allAccounts = AccountStorage.Instance.CachedElementsWithRepository;
+				var allAccounts = AccountStorage.Instance.AllElementsWithRepositories;
 				return allAccounts.GroupBy(a => a.Item1.Money.Currency);
 			}
 		}
@@ -68,7 +68,7 @@ namespace view
 						cell.Accounts = g.ToList();
 					}
 					var rate = cell.Currency.Equals(ApplicationSettings.BaseCurrency) ? new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency, 1) : null;
-					rate = rate ?? ExchangeRateStorage.Instance.CachedElements.Find(c => c.Equals(new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency))) ?? cell.ExchangeRate;
+					rate = rate ?? ExchangeRateStorage.Instance.AllElements.Find(c => c.Equals(new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency))) ?? cell.ExchangeRate;
 					if (rate != null && rate.Rate.HasValue)
 					{
 						cell.ExchangeRate = rate;

@@ -14,7 +14,7 @@ namespace data.repositories.availablerates
 			return Fetch();
 		}
 
-		public abstract Task<ExchangeRateRepository> ExchangeRateRepository();
+		public abstract ExchangeRateRepository ExchangeRateRepository { get; }
 
 		public abstract ExchangeRate ExchangeRateWithCurrency(Currency currency);
 	}

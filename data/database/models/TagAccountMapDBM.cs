@@ -6,7 +6,7 @@ using SQLite;
 namespace data.database.models
 {
 	[Table("TagsAccountsMap")]
-	public class TagAccountMapDBM : Persistable, IEntityDBM<TagAccountMapDBM>
+	public class TagAccountMapDBM : Persistable<int>, IEntityDBM<TagAccountMapDBM, int>
 	{
 		[PrimaryKey, AutoIncrement, Column("_id")]
 		public int Id { get; set; }
@@ -14,12 +14,6 @@ namespace data.database.models
 		public int TagId { get; set; }
 
 		public int AccountId { get; set; }
-
-		int? Persistable.Id
-		{
-			get { return Id; }
-			set { Id = value.GetValueOrDefault(); }
-		}
 
 		public override bool Equals(object obj)
 		{
@@ -39,7 +33,7 @@ namespace data.database.models
 
 		public Task<TagAccountMapDBM> Resolve()
 		{
-			return Task.Factory.StartNew(() => this);
+			return Task.Factory.StartNew(() => { return this; });
 		}
 	}
 }

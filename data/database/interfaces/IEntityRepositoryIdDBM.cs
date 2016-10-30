@@ -1,6 +1,9 @@
-﻿namespace data.database.interfaces
+﻿
+using MyCryptos.models;
+
+namespace data.database.interfaces
 {
-	public interface IEntityRepositoryIdDBM<T> : IEntityDBM<T>
+	public interface IEntityRepositoryIdDBM<T, IDType> : IEntityDBM<T, IDType> where T : PersistableRepositoryElement<IDType>
 	{
 		int RepositoryId { get; set; }
 	}

@@ -1,7 +1,7 @@
 ﻿namespace MyCryptos.models
 {
-	public interface Persistable
+	public interface Persistable<IdType>
 	{
-		int? Id { get; set; }
+		IdType Id { get; set; }
 	}
 }

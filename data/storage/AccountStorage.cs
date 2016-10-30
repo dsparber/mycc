@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace data.storage
 {
-	public class AccountStorage : AbstractDatabaseStorage<AccountRepositoryDBM, AccountRepository, AccountDBM, Account>
+	public class AccountStorage : AbstractDatabaseStorage<AccountRepositoryDBM, AccountRepository, AccountDBM, Account, int>
 	{
 		public AccountStorage() : base(new AccountRepositoryDatabase()) { }
 
@@ -17,9 +17,12 @@ namespace data.storage
 			await Add(localRepository);
 		}
 
-		public async override Task<AccountRepository> GetLocalRepository()
+		public override AccountRepository LocalRepository
 		{
-			return (await Repositories()).Find(r => r is LocalAccountRepository);
+			get
+			{
+				return Repositories.Find(r => r is LocalAccountRepository);
+			}
 		}
 
 		static AccountStorage instance { get; set; }

@@ -52,7 +52,7 @@ namespace MyCryptos.view.components
 					{
 						rate.Rate = 1;
 					}
-					var rateFromStorage = ExchangeRateStorage.Instance.CachedElements.Find(r => r.Equals(rate));
+					var rateFromStorage = ExchangeRateStorage.Instance.Find(rate) ?? ((ExchangeRateStorage.Instance.Find(rate.Inverse) != null) ? ExchangeRateStorage.Instance.Find(rate.Inverse).Inverse : null);
 					rate = rate.Rate.HasValue ? rate : rateFromStorage ?? rate;
 					var cell = new ReferenceValueViewCell { ExchangeRate = rate, Money = baseMoney };
 

@@ -7,7 +7,7 @@ using SQLite;
 
 namespace data.database
 {
-	public class AccountRepositoryDatabase : AbstractDatabase<AccountRepositoryDBM, AccountRepository>
+	public class AccountRepositoryDatabase : AbstractDatabase<AccountRepositoryDBM, AccountRepository, int>
 	{
 		public async override Task<IEnumerable<AccountRepositoryDBM>> GetAllDbObjects()
 		{

@@ -6,7 +6,7 @@ using MyCryptos.models;
 namespace data.database.models
 {
 	[Table("Tags")]
-	public class TagDBM : IEntityDBM<Tag>
+	public class TagDBM : IEntityDBM<Tag, int>
 	{
 		public TagDBM() { }
 
@@ -35,8 +35,8 @@ namespace data.database.models
 
 		public TagDBM(Tag tag)
 		{
-			Id = tag.Id.Value;
-			IdentifierId = tag.Identifier.Id.HasValue ? tag.Identifier.Id.Value : default(int);
+			Id = tag.Id;
+			IdentifierId = tag.Identifier.Id;
 			Units = tag.Units;
 		}
 

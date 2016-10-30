@@ -10,7 +10,6 @@ using MyCryptos.resources;
 using MyCryptos.view.components;
 using Xamarin.Forms;
 using MyCryptos.helpers;
-using System.Diagnostics;
 
 namespace view
 {
@@ -24,17 +23,7 @@ namespace view
 
 			Elements = new List<Tuple<TableSection, List<SortableViewCell>>>();
 
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, async str =>
-			{
-				try
-				{
-					await updateView();
-				}
-				catch (Exception e)
-				{
-					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
-				}
-			});
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, str => SortHelper.ApplySortOrder(Elements, AccountsTable));
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => SortHelper.ApplySortOrder(Elements, AccountsTable));
 
@@ -60,7 +49,7 @@ namespace view
 
 		public static async Task OpenSourcesView(INavigation Navigation)
 		{
-			var page = new SourcesView(await AccountStorage.Instance.Repositories());
+			var page = new SourcesView(AccountStorage.Instance.Repositories);
 
 			await Navigation.PushOrPushModal(page);
 		}
@@ -77,11 +66,11 @@ namespace view
 			}
 		}
 
-		async Task updateView()
+		void updateView()
 		{
 			Elements.Clear();
 
-			foreach (var r in await AccountStorage.Instance.Repositories())
+			foreach (var r in AccountStorage.Instance.Repositories)
 			{
 				var cells = new List<SortableViewCell>();
 				var section = new TableSection { Title = r.Name };

@@ -3,10 +3,11 @@ using System.Threading.Tasks;
 using data.database.models;
 using SQLite;
 using MyCryptos.data.database.helper;
+using MyCryptos.models;
 
 namespace data.database
 {
-	public class TagAccountMapDatabase : AbstractDatabase<TagAccountMapDBM, TagAccountMapDBM>
+	public class TagAccountMapDatabase : AbstractDatabase<TagAccountMapDBM, TagAccountMapDBM, int>
 	{
 		public override async Task<IEnumerable<TagAccountMapDBM>> GetAllDbObjects()
 		{
@@ -25,7 +26,7 @@ namespace data.database
 
 		protected override TagAccountMapDBM Resolve(TagAccountMapDBM element)
 		{
-			return element;
+			return new TagAccountMapDBM();
 		}
 	}
 }

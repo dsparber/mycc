@@ -271,7 +271,7 @@
     <value>Entspricht</value>
   </data>
   <data name="ExchangeRate" xml:space="preserve">
-    <value>Kurs: {0}</value>
+    <value>Kurs: {0:#,0.#####}</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>

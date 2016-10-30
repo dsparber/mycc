@@ -9,86 +9,92 @@ using MyCryptos.data.database.helper;
 
 namespace data.storage
 {
-	public abstract class AbstractStorage<T, V> where V : AbstractRepository where T : IEntityDBM<V>
+	public abstract class AbstractStorage<T, V> where V : AbstractRepository where T : IEntityDBM<V, int>
 	{
-		protected List<V> repositories;
+		public List<V> Repositories { get; private set; }
 
-		protected AbstractStorage(AbstractDatabase<T, V> database)
+		readonly Task onCreationTask;
+
+		protected AbstractStorage(AbstractDatabase<T, V, int> database)
 		{
 			Database = database;
+			Repositories = new List<V>();
+			onCreationTask = OnCreation();
 		}
 
-		AbstractDatabase<T, V> Database { get; set; }
+		AbstractDatabase<T, V, int> Database { get; set; }
 
-		protected virtual Task OnFirstLaunch() { return Task.Factory.StartNew(() => { }); }
-
-		Task initialisation;
-
-		async Task initialise()
+		async Task OnCreation()
 		{
+			Repositories.AddRange(await Database.GetAll());
 			if (ApplicationSettings.FirstLaunch)
 			{
-				if (initialisation == null)
-				{
-					initialisation = OnFirstLaunch();
-				}
-				if (!initialisation.IsCompleted)
-				{
-					await initialisation;
-				}
+				await OnFirstLaunch();
 			}
 		}
+		protected virtual Task OnFirstLaunch() { return Task.Factory.StartNew(() => { }); }
 
-		public async Task<List<V>> Repositories()
-		{
-			if (repositories == null)
-			{
-				await initialise();
-				repositories = (await Database.GetAll()).ToList();
-			}
-			return repositories;
-		}
 
 		public virtual async Task Add(V repository)
 		{
-			await Repositories();
 			repository = await Database.Insert(repository);
-			repositories.Add(repository);
+			Repositories.Add(repository);
 		}
 
 		public virtual async Task Remove(V repository)
 		{
-			await Repositories();
 			await Database.Delete(repository);
-			repositories.Remove(repository);
+			Repositories.Remove(repository);
 		}
 
 		public virtual async Task Update(V repository)
 		{
-			await Repositories();
-			repositories.Remove(repository);
+			Repositories.Remove(repository);
 			repository = await Database.Update(repository);
-			repositories.Add(repository);
+			Repositories.Add(repository);
 		}
 
-		public async Task<List<A>> RepositoriesOfType<A>() where A : V
+		public List<A> RepositoriesOfType<A>() where A : V
 		{
-			return (await Repositories()).OfType<A>().ToList();
+			return Repositories.OfType<A>().ToList();
 		}
 
-		public async Task<List<V>> RepositoriesOfType(Type type)
+		public List<V> RepositoriesOfType(Type type)
 		{
-			return (await Repositories()).FindAll(r => r.GetType() == type);
+			return Repositories.FindAll(r => r.GetType() == type);
 		}
 
-		public virtual async Task Fetch()
+		public A RepositoryOfType<A>() where A : V
 		{
-			await Task.WhenAll((await Repositories()).Select(x => x.Fetch()));
+			return RepositoriesOfType<A>().FirstOrDefault();
 		}
 
-		public virtual async Task FetchFast()
+		public V RepositoryOfType(Type type)
 		{
-			await Task.WhenAll((await Repositories()).Select(x => x.FetchFast()));
+			return RepositoriesOfType(type).FirstOrDefault();
+		}
+
+		protected virtual Task beforeFetching() {
+			return Task.Factory.StartNew(() => { });
+		}
+
+		protected virtual Task beforeFastFetching()
+		{
+			return Task.Factory.StartNew(() => { });
+		}
+
+		public async Task Fetch()
+		{
+			await onCreationTask;
+			await beforeFetching();
+			await Task.WhenAll(Repositories.Select(x => x.Fetch()));
+		}
+
+		public async Task FetchFast()
+		{
+			await onCreationTask;
+			await beforeFastFetching();
+			await Task.WhenAll(Repositories.Select(x => x.FetchFast()));
 		}
 	}
 }

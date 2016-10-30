@@ -31,24 +31,17 @@ namespace view
 				SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
 			});
 
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, async str =>
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str =>
 			 {
-				 try
-				 {
-					 var accs = await AccountStorage.Instance.AllElementsWithRepositories();
-					 accs = accs.Where(t => t.Item1.Money.Currency.Equals(currency(accounts))).ToList();
+				 var accs = AccountStorage.Instance.AllElementsWithRepositories;
+				 accs = accs.Where(t => t.Item1.Money.Currency.Equals(currency(accounts))).ToList();
 
-					 if (accs.Count == 0)
-					 {
-						 Navigation.RemovePage(this);
-					 }
-					 else {
-						 updateView(accs, exchangeRate);
-					 }
-				 }
-				 catch (Exception e)
+				 if (accs.Count == 0)
 				 {
-					 Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+					 Navigation.RemovePage(this);
+				 }
+				 else {
+					 updateView(accs, exchangeRate);
 				 }
 			 });
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => reloadData(accounts));
@@ -62,7 +55,7 @@ namespace view
 
 		void reloadData(IEnumerable<Tuple<Account, AccountRepository>> accounts)
 		{
-			var rate = ExchangeRateStorage.Instance.CachedElements.Find(c => c.Equals(new ExchangeRate(currency(accounts), ApplicationSettings.BaseCurrency)));
+			var rate = ExchangeRateStorage.Instance.AllElements.Find(c => c.Equals(new ExchangeRate(currency(accounts), ApplicationSettings.BaseCurrency)));
 			updateView(accounts, rate);
 		}
 
@@ -97,7 +90,7 @@ namespace view
 				Header.InfoText = moneyReference.ToString();
 			}
 			else {
-				var rate = ExchangeRateStorage.Instance.CachedElements.Find(e => e.Equals(exchangeRate));
+				var rate = ExchangeRateStorage.Instance.AllElements.Find(e => e.Equals(exchangeRate));
 				if (rate != null && rate.Rate.HasValue)
 				{
 					var moneyReference = new Money(moneySum(accounts).Amount * rate.Rate.Value, rate.SecondaryCurrency);

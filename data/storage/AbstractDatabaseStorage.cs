@@ -9,48 +9,34 @@ using MyCryptos.data.database.helper;
 
 namespace data.storage
 {
-	public abstract class AbstractDatabaseStorage<Ta, Va, T, V> : AbstractStorage<Ta, Va> where Va : AbstractDatabaseRepository<T,V> where Ta : IEntityDBM<Va> where T : IEntityRepositoryIdDBM<V> where V : PersistableRepositoryElement
+	public abstract class AbstractDatabaseStorage<Ta, Va, T, V, IdType> : AbstractStorage<Ta, Va> where Va : AbstractDatabaseRepository<T,V, IdType> where Ta : IEntityDBM<Va, int> where T : IEntityRepositoryIdDBM<V, IdType> where V : PersistableRepositoryElement<IdType>
 	{
-		protected AbstractDatabaseStorage(AbstractDatabase<Ta, Va> database) : base(database)
+		protected AbstractDatabaseStorage(AbstractDatabase<Ta, Va, int> database) : base(database) {}
+
+		public List<V> AllElements
 		{
-			CachedElements = new List<V>();
-			CachedElementsWithRepository = new List<Tuple<V, Va>>();
+			get
+			{
+				return Repositories.SelectMany(r => r.Elements).ToList();
+			}
 		}
 
-		public List<V> CachedElements { get; private set; }
-		public List<Tuple<V, Va>> CachedElementsWithRepository { get; private set; }
-
-		public async Task<List<V>> AllElements()
+		public List<Tuple<V, Va>> AllElementsWithRepositories
 		{
-			return (await Repositories()).SelectMany(r => r.Elements).ToList();
+			get
+			{
+				return Repositories.SelectMany(r => r.Elements.Select(e => Tuple.Create(e, r))).ToList();
+			}
 		}
 
-		public async Task<List<Tuple<V, Va>>> AllElementsWithRepositories()
+		public List<V> AllOfType<A>()
 		{
-			return (await Repositories()).SelectMany(r => r.Elements.Select(e => Tuple.Create(e, r))).ToList();
+			return AllElements.FindAll(e => e is A);
 		}
 
-		public async Task<List<V>> AllOfType<A>()
+		public V Find(V element)
 		{
-			return (await AllElements()).FindAll(e => e is A);
-		}
-
-		public async override Task Fetch()
-		{
-			await base.Fetch();
-			await updateCache();
-		}
-
-		public async Task updateCache()
-		{
-			CachedElements = await AllElements();
-			CachedElementsWithRepository = await AllElementsWithRepositories();
-		}
-
-		public async override Task FetchFast()
-		{
-			await base.FetchFast();
-			await updateCache();
+			return AllElements.Find(e => e.Equals(element));
 		}
 
 		public override async Task Remove(Va repository)
@@ -58,44 +44,10 @@ namespace data.storage
 			await base.Remove(repository);
 
 			// Delete all elements
-			var repo = (await Repositories()).Find(r => r.Id == repository.Id);
+			var repo = Repositories.Find(r => r.Id == repository.Id);
 			await repo.RemoveAll();
-
-			await updateCache();
 		}
 
-		public async override Task Update(Va repository)
-		{
-			await base.Update(repository);
-			await updateCache();
-		}
-
-		public async override Task Add(Va repository)
-		{
-			await base.Add(repository);
-			await updateCache();
-		}
-
-		public abstract Task<Va> GetLocalRepository();
-
-		public async Task AddToLocalRepository(V element)
-		{
-			var local = await GetLocalRepository();
-			if (local != null)
-			{
-				await local.Add(element);
-				await updateCache();
-			}
-		}
-
-		public async Task RemoveFromLocalRepository(V element)
-		{
-			var local = await GetLocalRepository();
-			if (local != null)
-			{
-				await local.Remove(element);
-				await updateCache();
-			}
-		}
+		public abstract Va LocalRepository { get; }
 	}
 }

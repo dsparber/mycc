@@ -57,7 +57,7 @@ namespace MyCryptos.view.components
 				}
 				if (rate == null)
 				{
-					rate = ExchangeRateStorage.Instance.CachedElements.Find(e => e.Equals(new ExchangeRate(Account.Money.Currency, ApplicationSettings.BaseCurrency)));
+					rate = ExchangeRateStorage.Instance.AllElements.Find(e => e.Equals(new ExchangeRate(Account.Money.Currency, ApplicationSettings.BaseCurrency)));
 				}
 				return Account.Money.Amount * (rate != null ? rate.RateNotNull : 0);
 				}

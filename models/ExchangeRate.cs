@@ -1,10 +1,12 @@
+using System;
+
 namespace MyCryptos.models
 {
 
 	/// <summary>
 	/// Simple exchange rate model
 	/// </summary>
-	public class ExchangeRate : PersistableRepositoryElement
+	public class ExchangeRate : PersistableRepositoryElement<string>
 	{
 
 		/// <summary>
@@ -15,6 +17,10 @@ namespace MyCryptos.models
 		/// <param name="rate">Exchange rate.</param>
 		public ExchangeRate(Currency referenceCurrency, Currency secondaryCurrency, decimal? rate)
 		{
+			if (referenceCurrency == null || secondaryCurrency == null)
+			{
+				throw new ArgumentNullException();
+			}
 			ReferenceCurrency = referenceCurrency;
 			SecondaryCurrency = secondaryCurrency;
 			Rate = rate;
@@ -31,23 +37,27 @@ namespace MyCryptos.models
 		/// Gets or sets the identifier.
 		/// </summary>
 		/// <value>The identifier.</value>
-		public int? Id { get; set; }
+		public string Id
+		{
+			get { return ReferenceCurrency.Code + SecondaryCurrency.Code; }
+			set { }
+		}
 
 		/// <summary>
 		/// Gets or sets the repository identifier.
 		/// </summary>
 		/// <value>The identifier.</value>
-		public int? RepositoryId { get; set; }
+		public int RepositoryId { get; set; }
 
 		/// <summary>
 		/// The reference currency.
 		/// </summary>
-		public Currency ReferenceCurrency;
+		public Currency ReferenceCurrency { get; private set; }
 
 		/// <summary>
 		/// The secondary currency.
 		/// </summary>
-		public Currency SecondaryCurrency;
+		public Currency SecondaryCurrency { get; private set; }
 
 		/// <summary>
 		/// The rate, can not be not null. No value equals 0
@@ -82,14 +92,17 @@ namespace MyCryptos.models
 		/// Gets the inverse exchange rate.
 		/// </summary>
 		/// <returns>The inverse exchange rate.</returns>
-		public ExchangeRate GetInverse()
+		public ExchangeRate Inverse
 		{
-			var exchangeRate = new ExchangeRate(SecondaryCurrency, ReferenceCurrency);
-			if (Rate != null)
+			get
 			{
-				exchangeRate.Rate = 1 / Rate;
+				var exchangeRate = new ExchangeRate(SecondaryCurrency, ReferenceCurrency);
+				if (Rate != null)
+				{
+					exchangeRate.Rate = 1 / Rate;
+				}
+				return exchangeRate;
 			}
-			return exchangeRate;
 		}
 
 		/// <summary>
@@ -113,8 +126,11 @@ namespace MyCryptos.models
 
 			var r = (ExchangeRate)obj;
 
-			return ((ReferenceCurrency == null && r.ReferenceCurrency == null) || (ReferenceCurrency != null && ReferenceCurrency.Equals(r.ReferenceCurrency)))
-				&& ((SecondaryCurrency == null && r.SecondaryCurrency == null) || (SecondaryCurrency != null && SecondaryCurrency.Equals(r.SecondaryCurrency)));
+			if (ReferenceCurrency != null && SecondaryCurrency != null)
+			{
+				return ReferenceCurrency.Equals(r.ReferenceCurrency) && SecondaryCurrency.Equals(r.SecondaryCurrency);
+			}
+			return Id == r.Id;
 		}
 
 		/// <summary>
@@ -123,11 +139,11 @@ namespace MyCryptos.models
 		/// <returns>The hash code.</returns>
 		public override int GetHashCode()
 		{
-			if (ReferenceCurrency == null && SecondaryCurrency == null) { return 0; }
-			if (ReferenceCurrency != null) { return ReferenceCurrency.GetHashCode(); }
-			if (SecondaryCurrency != null) { return SecondaryCurrency.GetHashCode(); }
-
-			return ReferenceCurrency.GetHashCode() + SecondaryCurrency.GetHashCode();
+			if (ReferenceCurrency != null && SecondaryCurrency != null)
+			{
+				return ReferenceCurrency.GetHashCode() + SecondaryCurrency.GetHashCode();
+			}
+			return Id.GetHashCode();
 		}
 
 		/// <summary>
@@ -136,7 +152,7 @@ namespace MyCryptos.models
 		/// <returns>The string.</returns>
 		public override string ToString()
 		{
-			return string.Format("[ExchangeRate: ReferenceCurrency={0}, SecondaryCurrency={1}, Rate={2}]", ReferenceCurrency, SecondaryCurrency, Rate);
+			return string.Format("{0} -> {1}: {2}", ReferenceCurrency, SecondaryCurrency, Rate);
 		}
 	}
 }

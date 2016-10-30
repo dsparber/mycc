@@ -7,7 +7,7 @@ using SQLite;
 
 namespace data.database
 {
-	public class ExchangeRateRepositoryDatabase : AbstractDatabase<ExchangeRateRepositoryDBM, ExchangeRateRepository>
+	public class ExchangeRateRepositoryDatabase : AbstractDatabase<ExchangeRateRepositoryDBM, ExchangeRateRepository, int>
 	{
 		public async override Task<IEnumerable<ExchangeRateRepositoryDBM>> GetAllDbObjects()
 		{

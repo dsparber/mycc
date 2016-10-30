@@ -7,7 +7,7 @@ using MyCryptos.models;
 
 namespace data.database
 {
-	public class ExchangeRateDatabase : AbstractDatabase<ExchangeRateDBM, ExchangeRate>
+	public class ExchangeRateDatabase : AbstractDatabase<ExchangeRateDBM, ExchangeRate, string>
 	{
 		public override async Task<IEnumerable<ExchangeRateDBM>> GetAllDbObjects()
 		{
@@ -19,9 +19,9 @@ namespace data.database
 			await connection.CreateTableAsync<ExchangeRateDBM>();
 		}
 
-		public async override Task<ExchangeRateDBM> GetDbObject(int id)
+		public async override Task<ExchangeRateDBM> GetDbObject(string id)
 		{
-			return await (await Connection).FindAsync<ExchangeRateDBM>(p => p.Id == id);
+			return await (await Connection).FindAsync<ExchangeRateDBM>(p => p.Id.Equals(id));
 		}
 
 		protected override ExchangeRateDBM Resolve(ExchangeRate element)

@@ -6,7 +6,7 @@ using SQLite;
 namespace data.database.models
 {
 	[Table("Accounts")]
-	public class AccountDBM : IEntityRepositoryIdDBM<Account>
+	public class AccountDBM : IEntityRepositoryIdDBM<Account, int>
 	{
 		public AccountDBM() { }
 
@@ -17,29 +17,29 @@ namespace data.database.models
 
 		public decimal MoneyAmount { get; set; }
 
-		public int CurrencyId { get; set; }
+		[MaxLength(3)]
+		public string CurrencyCode { get; set; }
 
 		public int RepositoryId { get; set; }
 
 		public async Task<Account> Resolve()
 		{
 			var db = new CurrencyDatabase();
-			return new Account(Id, Name, new Money(MoneyAmount, await db.Get(CurrencyId)));
+			return new Account(Id, Name, new Money(MoneyAmount, (await db.Get(CurrencyCode)))) { RepositoryId = RepositoryId };
 		}
 
 		public AccountDBM(Account account)
 		{
-			if (account.Id.HasValue)
+
+			Id = account.Id;
+
+			if (account.Money.Currency != null)
 			{
-				Id = account.Id.Value;
-			}
-			if (account.Money.Currency != null && account.Money.Currency.Id.HasValue)
-			{
-				CurrencyId = account.Money.Currency.Id.Value;
+				CurrencyCode = account.Money.Currency.Code;
 			}
 			Name = account.Name;
 			MoneyAmount = account.Money.Amount;
-			RepositoryId = account.RepositoryId.HasValue ? account.RepositoryId.Value : default(int);
+			RepositoryId = account.RepositoryId;
 		}
 	}
 }

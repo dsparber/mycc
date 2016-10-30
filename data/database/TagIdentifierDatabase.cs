@@ -7,7 +7,7 @@ using MyCryptos.data.database.helper;
 
 namespace data.database
 {
-	public class TagIdentifierDatabase : AbstractDatabase<TagIdentifierDBM, TagIdentifier>
+	public class TagIdentifierDatabase : AbstractDatabase<TagIdentifierDBM, TagIdentifier, int>
 	{
 		public override async Task<IEnumerable<TagIdentifierDBM>> GetAllDbObjects()
 		{

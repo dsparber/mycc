@@ -24,18 +24,13 @@ namespace data.repositories.availablerates
 			return Elements.Contains(element);
 		}
 
-		public override async Task<bool> Fetch()
+		public override Task<bool> Fetch()
 		{
-			try
+			return Task.Factory.StartNew(() =>
 			{
-				Elements = (await ExchangeRateStorage.Instance.GetLocalRepository()).Elements;
+				Elements = ExchangeRateStorage.Instance.LocalRepository.Elements;
 				return true;
-			}
-			catch (Exception e)
-			{
-				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
-				return false;
-			}
+			});
 		}
 
 		public override Task<bool> FetchFast()
@@ -43,9 +38,12 @@ namespace data.repositories.availablerates
 			return Fetch();
 		}
 
-		public async override Task<ExchangeRateRepository> ExchangeRateRepository()
+		public override ExchangeRateRepository ExchangeRateRepository
 		{
-			return await ExchangeRateStorage.Instance.GetLocalRepository();
+			get
+			{
+				return ExchangeRateStorage.Instance.LocalRepository;
+			}
 		}
 
 		public override ExchangeRate ExchangeRateWithCurrency(Currency currency)

@@ -7,7 +7,7 @@ using MyCryptos.models;
 
 namespace data.database
 {
-	public class TagDatabase : AbstractDatabase<TagDBM, Tag>
+	public class TagDatabase : AbstractDatabase<TagDBM, Tag, int>
 	{
 		public override async Task<IEnumerable<TagDBM>> GetAllDbObjects()
 		{

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using data.storage;
 using MyCryptos.models;
 using MyCryptos.resources;
@@ -187,18 +186,16 @@ namespace MyCryptos.view.components
 			readonly TableView currenciesTableView;
 			readonly CurrencyEntryCell parent;
 
-			Task<List<Currency>> currencies;
+			List<Currency> currencies;
 
 			public CurrencyOverlay(CurrencyEntryCell parent)
 			{
 				this.parent = parent;
-				currencies = Task.Run(async () =>
-				{
-					var type = parent.CurrencyRepositoryType;
 
-					var repos = (type != null) ? await CurrencyStorage.Instance.RepositoriesOfType(type) : await CurrencyStorage.Instance.Repositories();
-					return repos.SelectMany(r => r.Elements).ToList();
-				});
+				var type = parent.CurrencyRepositoryType;
+
+				var repos = (type != null) ? CurrencyStorage.Instance.RepositoriesOfType(type) : CurrencyStorage.Instance.Repositories;
+				currencies = repos.SelectMany(r => r.Elements).ToList();
 
 				Title = InternationalisationResources.Currency;
 
@@ -229,13 +226,13 @@ namespace MyCryptos.view.components
 				Content = stack;
 			}
 
-			protected async override void OnAppearing()
+			protected override void OnAppearing()
 			{
 				base.OnAppearing();
 
 				var section = new TableSection();
 
-				var currenciesSorted = (await currencies).Distinct().OrderBy(c => c.Code);
+				var currenciesSorted = currencies.Distinct().OrderBy(c => c.Code);
 				setTableContent(section, currenciesSorted);
 
 				searchBar.TextChanged += (sender, e) =>

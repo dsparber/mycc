@@ -7,7 +7,7 @@ using SQLite;
 namespace data.database.models
 {
 	[Table("AccountRepositories")]
-	public class AccountRepositoryDBM : IEntityDBM<AccountRepository>
+	public class AccountRepositoryDBM : IEntityDBM<AccountRepository, int>
 	{
 		public const int DB_TYPE_LOCAL_REPOSITORY = 1;
 		public const int DB_TYPE_BITTREX_REPOSITORY = 2;
@@ -34,7 +34,7 @@ namespace data.database.models
 			Name = repository.Name;
 			Data = repository.Data;
 			Type = repository.RepositoryTypeId;
-			Id = repository.Id.HasValue ? repository.Id.Value : default(int);
+			Id = repository.Id;
 		}
 
 		public override bool Equals(object obj)

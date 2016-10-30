@@ -32,9 +32,9 @@ namespace data.storage
 			}
 		}
 
-		public async Task<ExchangeRate> ExchangeRateWithCurrency(Currency currency)
+		public ExchangeRate ExchangeRateWithCurrency(Currency currency)
 		{
-			foreach (var r in await Repositories())
+			foreach (var r in Repositories)
 			{
 				var e = r.ExchangeRateWithCurrency(currency);
 				if (e != null)
@@ -45,9 +45,9 @@ namespace data.storage
 			return null;
 		}
 
-		public async Task<bool> IsAvailable(ExchangeRate exchangeRate)
+		public bool IsAvailable(ExchangeRate exchangeRate)
 		{
-			foreach (var r in await Repositories())
+			foreach (var r in Repositories)
 			{
 				if (r.IsAvailable(exchangeRate))
 				{

@@ -4,16 +4,16 @@ using data.repositories.currency;
 using data.database.models;
 using System.Threading.Tasks;
 using System;
-using MyCryptos.data.database.helper;
 
 namespace data.storage
 {
-	public class CurrencyStorage : AbstractDatabaseStorage<CurrencyRepositoryDBM, CurrencyRepository, CurrencyDBM, Currency>
+	public class CurrencyStorage : AbstractDatabaseStorage<CurrencyRepositoryDBM, CurrencyRepository, CurrencyDBM, Currency, string>
 	{
 		public CurrencyStorage() : base(new CurrencyRepositoryDatabase()) { }
 
 		protected override async Task OnFirstLaunch()
 		{
+			await Add(new LocalCurrencyRepository(null));
 			await Add(new BittrexCurrencyRepository(null));
 			await Add(new BtceCurrencyRepository(null));
 			await Add(new CryptonatorCurrencyRepository(null));
@@ -34,14 +34,22 @@ namespace data.storage
 			}
 		}
 
-		public async Task<Currency> GetByString(string s)
+		public  Currency GetByString(string s)
 		{
-			return (await AllElements()).Find(c => string.Equals(s, c.Code, StringComparison.OrdinalIgnoreCase) || string.Equals(s, c.Name, StringComparison.OrdinalIgnoreCase));
+			return AllElements.Find(c => string.Equals(s, c.Code, StringComparison.OrdinalIgnoreCase) || string.Equals(s, c.Name, StringComparison.OrdinalIgnoreCase));
 		}
 
-		public async override Task<CurrencyRepository> GetLocalRepository()
+		public override CurrencyRepository LocalRepository
 		{
-			return (await Repositories()).Find(r => r is LocalCurrencyRepository);
+			get
+			{
+				return Repositories.Find(r => r is LocalCurrencyRepository);
+			}
+		}
+
+		protected override async Task beforeFastFetching()
+		{
+			await LocalRepository.Fetch();
 		}
 	}
 }

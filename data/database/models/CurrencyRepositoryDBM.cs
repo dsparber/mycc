@@ -6,7 +6,7 @@ using SQLite;
 namespace data.database.models
 {
 	[Table("CurrencyRepositories")]
-	public class CurrencyRepositoryDBM : IEntityDBM<CurrencyRepository>
+	public class CurrencyRepositoryDBM : IEntityDBM<CurrencyRepository, int>
 	{
 		public const int DB_TYPE_LOCAL_REPOSITORY = 1;
 		public const int DB_TYPE_BTCE_REPOSITORY = 2;
@@ -21,7 +21,7 @@ namespace data.database.models
 		{
 			Name = repository.Name;
 			Type = repository.RepositoryTypeId;
-			Id = repository.Id.HasValue ? repository.Id.Value : default(int);
+			Id = repository.Id;
 		}
 
 		[PrimaryKey, AutoIncrement, Column("_id")]

@@ -81,10 +81,11 @@ namespace tasks
 		async Task fastFetchTask()
 		{
 			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.StartedFetching);
+			await CurrencyRepositoryMapStorage.Instance.FetchFast();
 			await CurrencyStorage.Instance.FetchFast();
 			await AccountStorage.Instance.FetchFast();
-			await AvailableRatesStorage.Instance.FetchFast();
 			await ExchangeRateStorage.Instance.FetchFast();
+			await AvailableRatesStorage.Instance.FetchFast();
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedExchangeRates);
 			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.FAST), MessageConstants.DoneFetching);
@@ -96,6 +97,7 @@ namespace tasks
 				await fastFetchTask();
 			}
 			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.StartedFetching);
+			await CurrencyRepositoryMapStorage.Instance.Fetch();
 			await CurrencyStorage.Instance.Fetch();
 			await AccountStorage.Instance.Fetch();
 			await ExchangeRateStorage.Instance.Fetch();
@@ -107,7 +109,7 @@ namespace tasks
 
 		async Task addAccountTask(Account account)
 		{
-			await AccountStorage.Instance.AddToLocalRepository(account);
+			await AccountStorage.Instance.LocalRepository.Add(account);
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 
 			await ExchangeRateStorage.Instance.GetRate(account.Money.Currency, ApplicationSettings.BaseCurrency, FetchSpeedEnum.FAST);
@@ -117,7 +119,7 @@ namespace tasks
 
 		async Task deleteAccountTask(Account account)
 		{
-			await AccountStorage.Instance.RemoveFromLocalRepository(account);
+			await AccountStorage.Instance.LocalRepository.Remove(account);
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 		}
 

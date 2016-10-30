@@ -36,7 +36,7 @@ namespace MyCryptos.view.components
 				Text = new Money(money.Amount * exchangeRate.RateNotNull, exchangeRate.SecondaryCurrency).ToString();
 				IsLoading = false;
 			}
-			else if (exchangeRate != null)
+			else if (exchangeRate != null && exchangeRate.SecondaryCurrency != null)
 			{
 				Text = string.Format("X {0}", exchangeRate.SecondaryCurrency.Code);
 			}
@@ -54,8 +54,7 @@ namespace MyCryptos.view.components
 		{
 			if (IsLoading)
 			{
-				var currency = (await CurrencyStorage.Instance.AllElements()).Find(e => e.Equals(ExchangeRate.SecondaryCurrency));
-				var rate = await ExchangeRateStorage.Instance.GetRate(Money.Currency, currency, FetchSpeedEnum.MEDIUM);
+				var rate = await ExchangeRateStorage.Instance.GetRate(Money.Currency, ExchangeRate.SecondaryCurrency, FetchSpeedEnum.SLOW);
 				ExchangeRate = rate;
 				IsLoading = false;
 			}

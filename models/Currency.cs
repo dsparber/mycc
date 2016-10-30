@@ -4,29 +4,20 @@ namespace MyCryptos.models
 	/// <summary>
 	///  Simple model for Currencies
 	/// </summary>
-	public class Currency : PersistableRepositoryElement
+	public class Currency : PersistableRepositoryElement<string>
 	{
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Currency"/> class.
 		/// </summary>
-		/// <param name="id">Unique identifier if the object</param>
 		/// <param name="code">Unique identifier if the currency</param>
 		/// <param name="name">Name of the currency</param>
 		[JsonConstructor]
-		public Currency(int? id, string code, string name)
+		public Currency(string code, string name)
 		{
-			Id = id;
 			Name = name;
 			Code = code.ToUpper();
 		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:models.Currency"/> class.
-		/// </summary>
-		/// <param name="code">Unique identifier if the currency</param>
-		/// <param name="name">Name of the currency</param>
-		public Currency(string code, string name) : this(null, code, name) { }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:models.Currency"/> class.
@@ -38,13 +29,17 @@ namespace MyCryptos.models
 		/// Gets or sets the identifier.
 		/// </summary>
 		/// <value>The identifier.</value>
-		public int? Id { get; set; }
+		public string Id
+		{
+			get { return Code; }
+			set { Code = value; }
+		}
 
 		/// <summary>
 		/// Gets or sets the repository identifier.
 		/// </summary>
-		/// <value>The identifierΩ</value>
-		public int? RepositoryId { get; set; }
+		/// <value>The identifier.</value>
+		public int RepositoryId { get; set; }
 
 		/// <summary>
 		/// The name of the Currency
@@ -87,7 +82,7 @@ namespace MyCryptos.models
 		/// <returns>A <see cref="T:System.String"/> that represents the current <see cref="T:models.Currency"/>.</returns>
 		public override string ToString()
 		{
-			return string.Format("[Currency: Id={0}, Code={1}]", Id, Code);
+			return Code;
 		}
 
 		public static readonly Currency BTC = new Currency("BTC", "Bitcoin");

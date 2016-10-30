@@ -6,7 +6,7 @@ using MyCryptos.models;
 
 namespace data.repositories.exchangerate
 {
-	public abstract class ExchangeRateRepository : AbstractDatabaseRepository<ExchangeRateDBM, ExchangeRate>
+	public abstract class ExchangeRateRepository : AbstractDatabaseRepository<ExchangeRateDBM, ExchangeRate, string>
 	{
 		protected ExchangeRateRepository(int repositoryId, string name) : base(repositoryId, name, new ExchangeRateDatabase()) { }
 

@@ -58,15 +58,14 @@ namespace data.repositories.account
 
 			if (response.IsSuccessStatusCode)
 			{
-
 				var content = await response.Content.ReadAsStringAsync();
 				var balance = decimal.Parse(content);
 
-				var dbCoin = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(coin));
+				var dbCoin = CurrencyStorage.Instance.Find(coin);
 				if (dbCoin == null)
 				{
-					await CurrencyStorage.Instance.AddToLocalRepository(coin);
-					dbCoin = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(coin));
+					await CurrencyStorage.Instance.LocalRepository.Add(coin);
+					dbCoin = CurrencyStorage.Instance.Find(coin);
 				}
 
 				coin = dbCoin ?? coin;
@@ -88,7 +87,7 @@ namespace data.repositories.account
 
 					if (existing != null)
 					{
-						existing.Money = money;
+						existing = new Account(existing.Id, existing.RepositoryId, existing.Name, money);
 						await Update(existing);
 					}
 					else {

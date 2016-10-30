@@ -16,6 +16,10 @@ namespace MyCryptos.models
 		/// <param name="currency">Desired currency</param>
 		public Money(decimal amount, Currency currency)
 		{
+			if (currency == null)
+			{
+				throw new ArgumentNullException();
+			}
 			Amount = amount;
 			Currency = currency;
 		}
@@ -108,7 +112,7 @@ namespace MyCryptos.models
 		/// </summary>
 		/// <param name="m1">The first money instance</param>
 		/// <param name="m2">The second money instance</param>
-		private static void checkForCurrencyMissmatch(Money m1, Money m2)
+		static void checkForCurrencyMissmatch(Money m1, Money m2)
 		{
 			if (!m1.Currency.Equals(m2.Currency))
 			{

@@ -7,16 +7,13 @@ using MyCryptos.view.components;
 using message;
 using Xamarin.Forms;
 using data.storage;
-using System.Threading.Tasks;
 using MyCryptos.helpers;
-using System.Diagnostics;
 
 namespace view
 {
 	public partial class SourcesView : ContentPage
 	{
 		List<AccountRepository> repositories;
-		Task<List<AccountRepository>> repositoriesTask;
 
 		public SourcesView(List<AccountRepository> repositories)
 		{
@@ -25,12 +22,10 @@ namespace view
 
 			if (repositories == null)
 			{
-				repositoriesTask = Task.Run(async () => this.repositories = await AccountStorage.Instance.Repositories());
-				repositoriesTask.ContinueWith(e => setView());
+				repositories = AccountStorage.Instance.Repositories;
 			}
-			else {
-				setView();
-			}
+			setView();
+
 
 			if (Device.OS == TargetPlatform.Android)
 			{
@@ -38,17 +33,10 @@ namespace view
 				Title = string.Empty;
 			}
 
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, async str =>
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str =>
 			{
-				try
-				{
-					this.repositories = await AccountStorage.Instance.Repositories();
-					setView();
-				}
-				catch (Exception e)
-				{
-					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
-				}
+				this.repositories = AccountStorage.Instance.Repositories;
+				setView();
 			});
 		}
 

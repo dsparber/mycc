@@ -9,7 +9,7 @@ using MyCryptos.models;
 
 namespace data.repositories.general
 {
-	public abstract class AbstractDatabaseRepository<T, V> : AbstractRepository where T : IEntityRepositoryIdDBM<V> where V : PersistableRepositoryElement
+	public abstract class AbstractDatabaseRepository<T, V, IdType> : AbstractRepository where T : IEntityRepositoryIdDBM<V, IdType> where V : PersistableRepositoryElement<IdType>
 	{
 		List<V> elements;
 
@@ -21,19 +21,24 @@ namespace data.repositories.general
 		public DateTime LastFastFetch { get; protected set; }
 		public DateTime LastFetch { get; protected set; }
 
-		readonly AbstractDatabase<T, V> Database;
+		readonly AbstractDatabase<T, V, IdType> Database;
 
-		protected AbstractDatabaseRepository(int repositoryId, string name, AbstractDatabase<T, V> database) : base(repositoryId, name)
+		protected AbstractDatabaseRepository(int repositoryId, string name, AbstractDatabase<T, V, IdType> database) : base(repositoryId, name)
 		{
 			elements = new List<V>();
 			Database = database;
 		}
 
-		protected async Task<bool> FetchFromDatabase()
+		protected virtual Func<V, bool> DatabaseFilter
+		{
+			get { return v => v.RepositoryId == Id; }
+		}
+
+		protected virtual async Task<bool> FetchFromDatabase()
 		{
 			try
 			{
-				elements = new List<V>((await Database.GetAll()).Where(v => v.RepositoryId == Id));
+				elements = new List<V>((await Database.GetAll()).Where(DatabaseFilter));
 				return true;
 			}
 			catch (Exception e)
@@ -59,6 +64,18 @@ namespace data.repositories.general
 		{
 			element = await Database.Insert(element);
 			elements.Add(element);
+		}
+
+		public async Task AddOrUpdate(V element)
+		{
+			var existing = await Database.Get(element.Id);
+			if (EqualityComparer<V>.Default.Equals(existing, default(V)))
+			{
+				await Add(element);
+			}
+			else {
+				await Update(element);
+			}
 		}
 
 		public async Task Add(IEnumerable<V> newElements)

@@ -1,8 +1,8 @@
 ﻿namespace MyCryptos.models
 {
-	public class Tag : Persistable
+	public class Tag : Persistable<int>
 	{
-		public int? Id { get; set; }
+		public int Id { get; set; }
 
 		public TagIdentifier Identifier { get; set; }
 
@@ -29,9 +29,9 @@
 
 		public Tag(TagIdentifier identifier) : this(identifier, -1) { }
 
-		public Tag(TagIdentifier identifier, decimal units) : this(null, identifier, units) { }
+		public Tag(TagIdentifier identifier, decimal units) : this(default(int), identifier, units) { }
 
-		public Tag(int? id, TagIdentifier identifier, decimal units)
+		public Tag(int id, TagIdentifier identifier, decimal units)
 		{
 			Id = id;
 			Units = units;

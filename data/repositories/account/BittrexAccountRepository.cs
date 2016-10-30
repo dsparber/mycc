@@ -120,14 +120,14 @@ namespace data.repositories.account
 						if (balance != 0)
 						{
 
-							var curr = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Code.Equals(currencyCode));
+							var curr = CurrencyStorage.Instance.Find(new Currency(currencyCode));
 
 							var money = new Money(balance, curr);
 							var existing = Elements.ToList().Find(a => a.Money.Currency.Equals(money.Currency));
 
 							if (existing != null)
 							{
-								existing.Money = money;
+								existing = new Account(existing.Id, existing.RepositoryId, existing.Name, money);
 								await Update(existing);
 								currentAccounts.Add(existing);
 							}

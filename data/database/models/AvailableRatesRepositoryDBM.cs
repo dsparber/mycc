@@ -7,7 +7,7 @@ using SQLite;
 namespace data.database.models
 {
 	[Table("AvailableRatesRepositories")]
-	public class AvailableRatesRepositoryDBM : IEntityDBM<AvailableRatesRepository>
+	public class AvailableRatesRepositoryDBM : IEntityDBM<AvailableRatesRepository, int>
 	{
 		public const int DB_TYPE_LOCAL_REPOSITORY = 1;
 		public const int DB_TYPE_BTCE_REPOSITORY = 2;
@@ -27,7 +27,7 @@ namespace data.database.models
 		{
 			Name = repository.Name;
 			Type = repository.RepositoryTypeId;
-			Id = repository.Id.HasValue ? repository.Id.Value : default(int);
+			Id = repository.Id;
 		}
 
 		public Task<AvailableRatesRepository> Resolve()

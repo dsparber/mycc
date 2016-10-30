@@ -7,7 +7,7 @@ using SQLite;
 
 namespace data.database
 {
-	public class CurrencyRepositoryDatabase : AbstractDatabase<CurrencyRepositoryDBM, CurrencyRepository>
+	public class CurrencyRepositoryDatabase : AbstractDatabase<CurrencyRepositoryDBM, CurrencyRepository, int>
 	{
 		public override async Task<IEnumerable<CurrencyRepositoryDBM>> GetAllDbObjects()
 		{

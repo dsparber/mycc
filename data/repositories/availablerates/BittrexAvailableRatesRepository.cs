@@ -6,8 +6,6 @@ using data.database.models;
 using data.storage;
 using System.Collections.Generic;
 using data.repositories.exchangerate;
-using System.Diagnostics;
-using System;
 
 namespace data.repositories.availablerates
 {
@@ -25,26 +23,24 @@ namespace data.repositories.availablerates
 			return Elements.Contains(element);
 		}
 
-		public override async Task<bool> Fetch()
+		public override Task<bool> Fetch()
 		{
-			try
+			return Task.Factory.StartNew(() =>
 			{
-				var repository = (await CurrencyStorage.Instance.Repositories()).Find(r => r is BittrexCurrencyRepository);
+				var repository = CurrencyStorage.Instance.RepositoryOfType<BittrexCurrencyRepository>();
+				var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.RepositoryId == repository.Id).Select(e => e.Code);
 
-				var btc = repository.Elements.ToList().Find(c => c.Equals(Currency.BTC));
-				Elements = repository.Elements.Select(e => new ExchangeRate(btc, e)).ToList();
+				Elements = CurrencyStorage.Instance.AllElements.Where(e => codes.Contains(e.Code)).Select(e => new ExchangeRate(Currency.BTC, e)).ToList();
 				return true;
-			}
-			catch (Exception e)
-			{
-				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
-				return false;
-			}
+			});
 		}
 
-		public async override Task<ExchangeRateRepository> ExchangeRateRepository()
+		public override ExchangeRateRepository ExchangeRateRepository
 		{
-			return (await ExchangeRateStorage.Instance.Repositories()).Find(r => r is BittrexExchangeRateRepository);
+			get
+			{
+				return ExchangeRateStorage.Instance.Repositories.OfType<BittrexExchangeRateRepository>().FirstOrDefault();
+			}
 		}
 
 		public override ExchangeRate ExchangeRateWithCurrency(Currency currency)

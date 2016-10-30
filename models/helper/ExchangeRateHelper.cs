@@ -46,7 +46,7 @@
 			if (currency.Equals(rate.ReferenceCurrency))
 				return rate;
 			if (currency.Equals(rate.SecondaryCurrency))
-				return rate.GetInverse();
+				return rate.Inverse;
 			return null;
 		}
 

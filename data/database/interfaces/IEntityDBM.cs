@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
+using MyCryptos.models;
 
 namespace data.database.interfaces
 {
-	public interface IEntityDBM<T>
+	public interface IEntityDBM<T, IDType> where T : Persistable<IDType>
 	{
-		int Id { get; set; }
+		IDType Id { get; set; }
 
 		Task<T> Resolve();
 	}

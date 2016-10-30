@@ -2,9 +2,9 @@
 
 namespace MyCryptos.models
 {
-	public class TagIdentifier : Persistable
+	public class TagIdentifier : Persistable<int>
 	{
-		public int? Id { get; set; }
+		public int Id { get; set; }
 		public string Name { get; set; }
 		public Color Color { get; set; }
 

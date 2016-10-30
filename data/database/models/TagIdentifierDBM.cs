@@ -7,7 +7,7 @@ using data.database.interfaces;
 namespace data.database.models
 {
 	[Table("TagIdentifiers")]
-	public class TagIdentifierDBM : IEntityDBM<TagIdentifier>
+	public class TagIdentifierDBM : IEntityDBM<TagIdentifier, int>
 	{
 		public TagIdentifierDBM() { }
 
@@ -37,7 +37,7 @@ namespace data.database.models
 
 		public TagIdentifierDBM(TagIdentifier identifier)
 		{
-			Id = identifier.Id.HasValue ? identifier.Id.Value : default(int);
+			Id = identifier.Id;
 			Name = identifier.Name;
 			ColorR = identifier.Color.R;
 			ColorG = identifier.Color.G;

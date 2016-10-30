@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace MyCryptos.data.database.helper
 {
-	public abstract class AbstractDatabase<T, V> where T : IEntityDBM<V> where V : Persistable
+	public abstract class AbstractDatabase<T, V, IdType> where T : IEntityDBM<V, IdType> where V : Persistable<IdType>
 	{
 		SQLiteAsyncConnection connection;
 
@@ -50,6 +50,7 @@ namespace MyCryptos.data.database.helper
 			var dbElement = Resolve(element);
 			await (await Connection).InsertAsync(dbElement);
 			element.Id = dbElement.Id;
+
 			return element;
 		}
 		public async Task<IEnumerable<V>> Insert(IEnumerable<V> elemets)
@@ -66,7 +67,7 @@ namespace MyCryptos.data.database.helper
 
 		public async Task<V> Update(V oldElement, V newElement)
 		{
-			if (newElement.Id.HasValue && oldElement.Id == newElement.Id)
+			if (EqualityComparer<IdType>.Default.Equals(oldElement.Id, newElement.Id) && !EqualityComparer<IdType>.Default.Equals(default(IdType), newElement.Id))
 			{
 				await (await Connection).UpdateAsync(Resolve(newElement));
 				return newElement;
@@ -94,10 +95,15 @@ namespace MyCryptos.data.database.helper
 			return await Task.WhenAll((await GetAllDbObjects()).Select(o => o.Resolve()));
 		}
 
-		public abstract Task<T> GetDbObject(int id);
-		public async Task<V> Get(int id)
+		public abstract Task<T> GetDbObject(IdType id);
+		public async Task<V> Get(IdType id)
 		{
 			var element = await GetDbObject(id);
+			return await ResolveReverse(element);
+		}
+
+		public async Task<V> ResolveReverse(T element)
+		{
 			if (!EqualityComparer<T>.Default.Equals(element, default(T)))
 			{
 				return await element.Resolve();

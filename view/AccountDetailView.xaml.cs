@@ -105,7 +105,7 @@ namespace view
 		public async void DoneEditing(object sender, EventArgs e)
 		{
 			account.Name = AccountName.Text;
-			account.Money = currencyEntryCell.SelectedMoney;
+			account = new Account(account.Id, account.RepositoryId, account.Name, currencyEntryCell.SelectedMoney);
 			await repository.Update(account);
 
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
@@ -122,15 +122,15 @@ namespace view
 			ToolbarItems.Add(edit);
 		}
 
-		public async void Save(object sender, EventArgs e)
+		public void Save(object sender, EventArgs e)
 		{
 			var money = currencyEntryCell.SelectedMoney;
-			money = new Money(money.Amount, (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(money.Currency)));
 			account = new Account(AccountName.Text, money);
+			account.RepositoryId = AccountStorage.Instance.LocalRepository.Id;
 
 			AppTasks.Instance.StartAddAccountTask(account);
 
-			await Navigation.PopOrPopModal();
+			Navigation.PopOrPopModal();
 		}
 
 		async void Delete(object sender, EventArgs e)

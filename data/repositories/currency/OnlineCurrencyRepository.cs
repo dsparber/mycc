@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using data.database.models;
+using data.storage;
 using message;
 using MyCryptos.models;
 using Xamarin.Forms;
@@ -27,24 +29,35 @@ namespace data.repositories.currency
 			try
 			{
 				var currentElements = await GetCurrencies();
+				var mapElements = new List<CurrencyRepositoryElementDBM>();
 
 				if (currentElements != null)
 				{
 					foreach (var c in currentElements)
 					{
-						var existing = Elements.ToList().Find(e => e.Equals(c));
+						var existing = CurrencyStorage.Instance.LocalRepository.Elements.ToList().Find(e => e.Equals(c));
 
 						if (existing != null)
 						{
-							existing.Name = c.Name;
-							await Update(existing);
+							c.Name = (c.Name.Equals(c.Code)) ? existing.Name : c.Name;
 						}
-						else {
-							await Add(c);
+						await CurrencyStorage.Instance.LocalRepository.AddOrUpdate(c);
+
+						var mapEntry = new CurrencyRepositoryElementDBM { Code = c.Code, RepositoryId = Id };
+						var all = CurrencyRepositoryMapStorage.Instance.AllElements;
+						var existingMapEntry = all.Find(e => e.Code.Equals(c.Code) && e.RepositoryId == Id);
+
+						mapElements.Add(existingMapEntry ?? mapEntry);
+
+						if (existingMapEntry == null)
+						{
+							await CurrencyRepositoryMapStorage.Instance.LocalRepository.Add(mapEntry);
 						}
 					}
 
-					await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(e => Remove(e)));
+					var toDelete = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.RepositoryId == Id).Where(e => !mapElements.Contains(e));
+					await Task.WhenAll(toDelete.Select(e => CurrencyRepositoryMapStorage.Instance.LocalRepository.Remove(e)));
+					await Task.WhenAll(Elements.Where(e => toDelete.Contains(new CurrencyRepositoryElementDBM { Code = e.Code, RepositoryId = Id })).Select(e => Remove(e)));
 
 					LastFetch = DateTime.Now;
 					return true;

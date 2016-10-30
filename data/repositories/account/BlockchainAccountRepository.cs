@@ -83,7 +83,7 @@ namespace data.repositories.account
 
 				if (balance.HasValue)
 				{
-					var btc = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(Currency.BTC));
+					var btc = Currency.BTC;
 
 					var existing = Elements.First();
 					var money = new Money(balance.Value, btc);
@@ -91,7 +91,7 @@ namespace data.repositories.account
 
 					if (existing != null)
 					{
-						existing.Money = money;
+						existing = new Account(existing.Id, existing.RepositoryId, existing.Name, money);
 						await Update(existing);
 					}
 					else

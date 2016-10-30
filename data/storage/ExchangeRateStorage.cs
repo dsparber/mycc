@@ -10,7 +10,7 @@ using MyCryptos.models.helper;
 
 namespace data.storage
 {
-	public class ExchangeRateStorage : AbstractDatabaseStorage<ExchangeRateRepositoryDBM, ExchangeRateRepository, ExchangeRateDBM, ExchangeRate>
+	public class ExchangeRateStorage : AbstractDatabaseStorage<ExchangeRateRepositoryDBM, ExchangeRateRepository, ExchangeRateDBM, ExchangeRate, string>
 	{
 		public ExchangeRateStorage() : base(new ExchangeRateRepositoryDatabase()) { }
 
@@ -39,8 +39,7 @@ namespace data.storage
 
 		public async Task FetchNew()
 		{
-			await Task.WhenAll((await Repositories()).Select(x => x.FetchNew()));
-			await updateCache();
+			await Task.WhenAll(Repositories.Select(x => x.FetchNew()));
 		}
 
 		// Helper
@@ -62,8 +61,8 @@ namespace data.storage
 			var referenceCurrencyRates = new List<ExchangeRate>();
 			var secondaryCurrencyRates = new List<ExchangeRate>();
 
-			var eRef = await AvailableRatesStorage.Instance.ExchangeRateWithCurrency(referenceCurrency);
-			var eSec = await AvailableRatesStorage.Instance.ExchangeRateWithCurrency(secondaryCurrency);
+			var eRef = AvailableRatesStorage.Instance.ExchangeRateWithCurrency(referenceCurrency);
+			var eSec = AvailableRatesStorage.Instance.ExchangeRateWithCurrency(secondaryCurrency);
 
 
 			if (eRef != null)
@@ -101,9 +100,6 @@ namespace data.storage
 
 		public async Task<ExchangeRate> GetDirectRate(Currency referenceCurrency, Currency secondaryCurrency, FetchSpeedEnum speed)
 		{
-			referenceCurrency = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(referenceCurrency));
-			secondaryCurrency = (await CurrencyStorage.Instance.AllElements()).Find(c => c.Equals(secondaryCurrency));
-
 			if (referenceCurrency.Equals(secondaryCurrency))
 			{
 				return new ExchangeRate(referenceCurrency, secondaryCurrency, 1);
@@ -111,8 +107,8 @@ namespace data.storage
 
 			var exchangeRate = new ExchangeRate(referenceCurrency, secondaryCurrency);
 
-			var exists = await AvailableRatesStorage.Instance.IsAvailable(exchangeRate);
-			var existsInverse = await AvailableRatesStorage.Instance.IsAvailable(exchangeRate.GetInverse());
+			var exists = AvailableRatesStorage.Instance.IsAvailable(exchangeRate);
+			var existsInverse = AvailableRatesStorage.Instance.IsAvailable(exchangeRate.Inverse);
 
 			if (exists || existsInverse)
 			{
@@ -126,34 +122,42 @@ namespace data.storage
 					await FetchNew();
 				}
 
-				exchangeRate = (await AllElements()).Find(e => e.Equals(exchangeRate));
+				exchangeRate = Find(exchangeRate);
 
 				if (exists)
 				{
 					return exchangeRate;
 				}
-				return exchangeRate.GetInverse();
+				return exchangeRate.Inverse;
 			}
 			return null;
 		}
 
 		async Task AddRate(ExchangeRate exchangeRate)
 		{
-			foreach (var r in await AvailableRatesStorage.Instance.Repositories())
+			var added = false;
+			foreach (var r in AvailableRatesStorage.Instance.Repositories)
 			{
-				if (r.IsAvailable(exchangeRate))
+				if (!added && r.IsAvailable(exchangeRate))
 				{
-					await (await r.ExchangeRateRepository()).Add(exchangeRate);
-					return;
+					added = true;
+					exchangeRate.RepositoryId = r.Id;
+					await r.ExchangeRateRepository.AddOrUpdate(exchangeRate);
 				}
 			}
-			await AddToLocalRepository(exchangeRate);
-			await updateCache();
+			if (!added)
+			{
+				exchangeRate.RepositoryId = LocalRepository.Id;
+				await LocalRepository.AddOrUpdate(exchangeRate);
+			}
 		}
 
-		public async override Task<ExchangeRateRepository> GetLocalRepository()
+		public override ExchangeRateRepository LocalRepository
 		{
-			return (await Repositories()).Find(r => r is LocalExchangeRateRepository);
+			get
+			{
+				return Repositories.Find(r => r is LocalExchangeRateRepository);
+			}
 		}
 	}
 }
