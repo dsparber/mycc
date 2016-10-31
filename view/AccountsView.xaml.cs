@@ -80,6 +80,7 @@ namespace view
 				}
 				if (cells.Count == 0)
 				{
+					// TODO Replace with Action Cells to add a local account if it is a locacl repository
 					cells.Add(new CustomViewCell { Text = InternationalisationResources.NoAccounts });
 				}
 				Elements.Add(Tuple.Create(section, cells));

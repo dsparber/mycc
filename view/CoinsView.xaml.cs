@@ -35,9 +35,9 @@ namespace view
 			}
 		}
 
-		void updateView(string action)
+		void updateView()
 		{
-			setCells(action);
+			setCells();
 
 			Header.TitleText = moneySum.ToString();
 			Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, groups.ToList().Count);
@@ -52,7 +52,7 @@ namespace view
 			}
 		}
 
-		void setCells(string action)
+		void setCells()
 		{
 			var cells = new List<SortableViewCell>();
 			var neededRates = new List<ExchangeRate>();
@@ -70,20 +70,16 @@ namespace view
 					{
 						cell.Accounts = g.ToList();
 					}
-					var rate = ExchangeRateHelper.GetRate(cell.Currency, ApplicationSettings.BaseCurrency);
+					var neededRate = new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency);
+					var rate = ExchangeRateHelper.GetRate(neededRate);
 					cell.ExchangeRate = rate;
 					if (rate == null || !rate.Rate.HasValue)
 					{
-						neededRates.Add(new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency));
+						neededRates.Add(neededRate);
 					}
-					if (rate == null)
-					{
-						cell.IsLoading = true;
-					}
-					else
-					{
-						cell.IsLoading = false;
-					}
+
+					cell.IsLoading = rate != null && !rate.Rate.HasValue;
+
 					cells.Add(cell);
 				}
 			}
@@ -91,6 +87,7 @@ namespace view
 			{
 				cells.Add(new CustomViewCell
 				{
+					// TODO Replace with two Action Cells to add a local account and a new source
 					Text = InternationalisationResources.NoCoins
 				});
 			}
@@ -118,9 +115,9 @@ namespace view
 
 		void addSubscriber()
 		{
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView(MessageConstants.UpdatedExchangeRates));
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView(MessageConstants.UpdatedReferenceCurrency));
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView(MessageConstants.UpdatedAccounts));
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, str => SortHelper.ApplySortOrder(Cells, CoinsSection));
 
 			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));

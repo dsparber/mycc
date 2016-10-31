@@ -6,41 +6,39 @@ using System;
 using data.settings;
 using System.Linq;
 using MyCryptos.helpers;
+using helpers;
 
 namespace MyCryptos.view.components
 {
-	public class ReferenceCurrenciesSection 
+	public class ReferenceCurrenciesSection
 	{
 		public List<ReferenceValueViewCell> Cells { get; private set; }
 		public TableSection Section { get; private set; }
 
 		public ReferenceCurrenciesSection(Money baseMoney)
 		{
-
-			var exchangeRates = new List<ExchangeRate>();
-			var currencies = ApplicationSettings.ReferenceCurrencies;
-			currencies.Add(ApplicationSettings.BaseCurrency);
-			currencies = currencies.Distinct().ToList();
-
-			foreach (var c in currencies)
-			{
-				exchangeRates.Add(ExchangeRateHelper.GetRate(baseMoney.Currency, c));
-			}
-
-			if (exchangeRates == null || baseMoney == null)
+			if (baseMoney == null)
 			{
 				throw new ArgumentNullException();
 			}
 
+			var currencies = ApplicationSettings.ReferenceCurrencies.Concat(new List<Currency> { ApplicationSettings.BaseCurrency }).Distinct();
+
 			Section = new TableSection { Title = InternationalisationResources.EqualTo };
 			Cells = new List<ReferenceValueViewCell>();
 
-			foreach (var e in exchangeRates)
+			foreach (var c in currencies)
 			{
-				var cell = new ReferenceValueViewCell { ExchangeRate = e, Money = baseMoney };
+				var e = new ExchangeRate(baseMoney.Currency, c);
+				var r = ExchangeRateHelper.GetRate(e);
+				var cell = new ReferenceValueViewCell { ExchangeRate = r ?? e, Money = baseMoney };
+				cell.IsLoading = (r != null && !r.Rate.HasValue);
+
 				Cells.Add(cell);
 				Section.Add(cell);
 			}
+
+			SortHelper.ApplySortOrder(Cells, Section);
 		}
 	}
 }

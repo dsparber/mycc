@@ -8,6 +8,11 @@ namespace MyCryptos.helpers
 {
 	public static class ExchangeRateHelper
 	{
+		public static ExchangeRate GetRate(ExchangeRate rate)
+		{
+			return GetRate(rate.ReferenceCurrency, rate.SecondaryCurrency);
+		}
+
 		public static ExchangeRate GetRate(Currency referenceCurrency, Currency secondaryCurrency)
 		{
 			if (referenceCurrency == null || secondaryCurrency == null)
@@ -30,7 +35,7 @@ namespace MyCryptos.helpers
 			{
 				foreach (var r2 in secondaryCurrencyRates)
 				{
-					if (OneMatch(r1, r2))
+					if (FindMatch(r1, r2, referenceCurrency, secondaryCurrency))
 					{
 						var e1 = ExchangeRateStorage.Instance.Find(r1) ?? r1;
 						var e2 = ExchangeRateStorage.Instance.Find(r2) ?? r2;
@@ -63,6 +68,11 @@ namespace MyCryptos.helpers
 			return null;
 		}
 
+		public static Task<ExchangeRate> GetRate(ExchangeRate rate, FetchSpeedEnum speed)
+		{
+			return GetRate(rate.ReferenceCurrency, rate.SecondaryCurrency, speed);
+		}
+
 		public static async Task<ExchangeRate> GetRate(Currency referenceCurrency, Currency secondaryCurrency, FetchSpeedEnum speed)
 		{
 			if (referenceCurrency == null || secondaryCurrency == null)
@@ -86,7 +96,7 @@ namespace MyCryptos.helpers
 			{
 				foreach (ExchangeRate r2 in secondaryCurrencyRates)
 				{
-					if (OneMatch(r1, r2))
+					if (FindMatch(r1, r2, referenceCurrency, secondaryCurrency))
 					{
 						await AddRate(r1);
 						await AddRate(r2);
@@ -171,6 +181,11 @@ namespace MyCryptos.helpers
 		public static bool OneMatch(ExchangeRate r1, ExchangeRate r2)
 		{
 			return r1.Contains(r2.ReferenceCurrency) || r1.Contains(r2.SecondaryCurrency);
+		}
+
+		public static bool FindMatch(ExchangeRate r1, ExchangeRate r2, Currency ref1, Currency ref2)
+		{
+			return (r1.Contains(r2.ReferenceCurrency) || r1.Contains(r2.SecondaryCurrency)) && !CommonCurrency(r1, r2).Equals(ref1) && !CommonCurrency(r1, r2).Equals(ref2);
 		}
 
 		public static ExchangeRate GetCombinedRate(ExchangeRate rate1, ExchangeRate rate2)

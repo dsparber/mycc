@@ -209,26 +209,17 @@ namespace MyCryptos.view.components
 				done.Clicked += doneAction;
 				ToolbarItems.Add(done);
 
+				// TODO Fix Android Searchbar Issue
 				searchBar = new SearchBar { Placeholder = InternationalisationResources.SearchCurrencies };
-
-				activityIndicator = new ActivityIndicator();
-				activityIndicator.IsRunning = true;
-				activityIndicator.Margin = new Thickness(10);
 
 				currenciesTableView = new TableView();
 				currenciesTableView.IsVisible = false;
 
 				var stack = new StackLayout();
 				stack.Children.Add(searchBar);
-				stack.Children.Add(activityIndicator);
 				stack.Children.Add(currenciesTableView);
 
 				Content = stack;
-			}
-
-			protected override void OnAppearing()
-			{
-				base.OnAppearing();
 
 				var section = new TableSection();
 
@@ -244,9 +235,12 @@ namespace MyCryptos.view.components
 
 				currenciesTableView.Root.Add(section);
 
-				activityIndicator.IsRunning = false;
-				activityIndicator.IsVisible = false;
 				currenciesTableView.IsVisible = true;
+			}
+
+			protected override void OnAppearing()
+			{
+				base.OnAppearing();
 
 				searchBar.Focus();
 			}
@@ -256,6 +250,7 @@ namespace MyCryptos.view.components
 				section.Clear();
 				foreach (var c in currenciesSorted)
 				{
+					// TODO Use own Cells
 					var cell = new TextCell { Text = c.Code, Detail = c.Name };
 					cell.Tapped += (sender, e) =>
 					{

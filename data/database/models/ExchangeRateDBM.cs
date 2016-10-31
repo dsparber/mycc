@@ -13,7 +13,14 @@ namespace data.database.models
 		[PrimaryKey, Column("_id")]
 		public string Id
 		{
-			get { return ReferenceCurrencyCode + SecondaryCurrencyCode; }
+			get
+			{
+				if (string.Compare(ReferenceCurrencyCode, SecondaryCurrencyCode, System.StringComparison.Ordinal) < 0)
+				{
+					return ReferenceCurrencyCode + SecondaryCurrencyCode;
+				}
+				return SecondaryCurrencyCode + ReferenceCurrencyCode;
+			}
 			set { }
 		}
 

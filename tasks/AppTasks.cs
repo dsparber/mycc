@@ -126,10 +126,12 @@ namespace tasks
 
 		async Task missingRatesTask(IEnumerable<ExchangeRate> rates)
 		{
-			if (rates.ToList().Count > 0)
+			var ratesList = rates.ToList();
+			ratesList.RemoveAll(e => e == null);
+			if (ratesList.Count > 0)
 			{
 				MessagingCenter.Send(string.Empty, MessageConstants.StartedFetching);
-				await Task.WhenAll(rates.Select(async r =>
+				await Task.WhenAll(ratesList.Select(async r =>
 				{
 					await ExchangeRateHelper.GetRate(r.ReferenceCurrency, r.SecondaryCurrency, FetchSpeedEnum.FAST);
 				}));

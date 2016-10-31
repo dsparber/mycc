@@ -57,7 +57,7 @@ namespace data.repositories.availablerates
 		{
 			if (Currencies.Contains(currency))
 			{
-				return new List<ExchangeRate> { new ExchangeRate(currency, Currency.BTC), new ExchangeRate(currency, Currency.EUR), new ExchangeRate(currency, Currency.USD) };
+				return new List<ExchangeRate> { new ExchangeRate(currency, Currency.BTC), new ExchangeRate(currency, Currency.EUR), new ExchangeRate(currency, Currency.USD) }.Where(e => !e.ReferenceCurrency.Equals(e.SecondaryCurrency)).ToList();
 			}
 			return new List<ExchangeRate>();
 		}
