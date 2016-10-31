@@ -24,22 +24,16 @@ namespace data.repositories.exchangerate
 
 		async Task fetch(Func<ExchangeRate, bool> filter)
 		{
-			var newElements = Elements.Where(e => e.ReferenceCurrency != null && e.SecondaryCurrency != null).ToList();
+			var newElements = Elements.Where(e => e.ReferenceCurrency != null && e.SecondaryCurrency != null).Where(filter).ToList();
 
 			var t = new List<Task>();
-			foreach (var e in Elements.Where(filter))
+			foreach (var e in newElements)
 			{
 				t.Add(GetFetchTask(e));
 			}
 			await Task.WhenAll(t);
 
-			var existingElements = newElements.Where(Elements.Contains);
-			var oldElements = Elements.Where(e => !existingElements.Contains(e));
-			newElements.RemoveAll(existingElements.Contains);
-
-			await Add(newElements);
-			await Update(existingElements);
-			await Task.WhenAll(oldElements.Select(e => Remove(e)));
+			await Task.WhenAll(newElements.Select(e => AddOrUpdate(e)));
 
 			LastFetch = DateTime.Now;
 		}

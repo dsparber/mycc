@@ -15,6 +15,8 @@ namespace data.settings
 
 		public const string KEY_AUTO_REFRESH_ON_STARTUP = "auto-refresh-on-startup";
 
+		public const string KEY_REFERENCE_CURRENCIES = "reference-currencies";
+
 		public static T Get<T>(string key, T defaultValue)
 		{
 			return AppSettings.GetValueOrDefault(key, defaultValue);

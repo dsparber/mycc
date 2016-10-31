@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using data.storage;
 using enums;
+using MyCryptos.helpers;
 using MyCryptos.models;
 using MyCryptos.resources;
 
@@ -50,19 +50,8 @@ namespace MyCryptos.view.components
 			}
 		}
 
-		public async Task Update()
-		{
-			if (IsLoading)
-			{
-				var rate = await ExchangeRateStorage.Instance.GetRate(Money.Currency, ExchangeRate.SecondaryCurrency, FetchSpeedEnum.SLOW);
-				ExchangeRate = rate;
-				IsLoading = false;
-			}
-		}
-
 		public override decimal Units { get { return Money.Amount * (ExchangeRate != null ? ExchangeRate.RateNotNull : 0); } }
 		public override string Name { get { return (ExchangeRate != null) ? ExchangeRate.SecondaryCurrency.Code : string.Empty; } }
 		public override decimal Value { get { return Money.Amount * (ExchangeRate != null ? ExchangeRate.RateNotNull : 0); } }
 	}
 }
-

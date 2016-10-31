@@ -14,7 +14,6 @@ namespace data.database.models
 			set { }
 		}
 
-		[MaxLength(3)]
 		public string Code { get; set; }
 
 		public int RepositoryId { get; set; }

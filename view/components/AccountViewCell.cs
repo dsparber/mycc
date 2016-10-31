@@ -1,6 +1,6 @@
 using data.repositories.account;
 using data.settings;
-using data.storage;
+using MyCryptos.helpers;
 using MyCryptos.models;
 using view;
 using Xamarin.Forms;
@@ -57,7 +57,7 @@ namespace MyCryptos.view.components
 				}
 				if (rate == null)
 				{
-					rate = ExchangeRateStorage.Instance.AllElements.Find(e => e.Equals(new ExchangeRate(Account.Money.Currency, ApplicationSettings.BaseCurrency)));
+					rate = ExchangeRateHelper.GetRate(Account.Money.Currency, ApplicationSettings.BaseCurrency);
 				}
 				return Account.Money.Amount * (rate != null ? rate.RateNotNull : 0);
 				}

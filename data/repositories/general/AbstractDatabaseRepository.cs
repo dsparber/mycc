@@ -68,20 +68,15 @@ namespace data.repositories.general
 
 		public async Task AddOrUpdate(V element)
 		{
-			var existing = await Database.Get(element.Id);
-			if (EqualityComparer<V>.Default.Equals(existing, default(V)))
-			{
-				await Add(element);
-			}
-			else {
-				await Update(element);
-			}
+			elements.Remove(element);
+			await Database.InsertOrUpdate(element);
+			elements.Add(element);
 		}
 
 		public async Task Add(IEnumerable<V> newElements)
 		{
 			newElements = await Database.Insert(newElements);
-			elements.AddRange(elements);
+			elements.AddRange(newElements);
 		}
 
 		public async Task Update(IEnumerable<V> updateElements)

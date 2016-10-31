@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using data.repositories.exchangerate;
 using data.repositories.general;
@@ -7,7 +8,7 @@ namespace data.repositories.availablerates
 {
 	public abstract class AvailableRatesRepository : AbstractAvailabilityRepository<ExchangeRate>
 	{
-		protected AvailableRatesRepository(int repositoryId, string name) : base(repositoryId, name) { }
+		protected AvailableRatesRepository(int repositoryTypeId, string name) : base(repositoryTypeId, name) { }
 
 		public override Task<bool> FetchFast()
 		{
@@ -17,6 +18,8 @@ namespace data.repositories.availablerates
 		public abstract ExchangeRateRepository ExchangeRateRepository { get; }
 
 		public abstract ExchangeRate ExchangeRateWithCurrency(Currency currency);
+
+		public abstract List<ExchangeRate> ExchangeRatesWithCurrency(Currency currency);
 	}
 }
 

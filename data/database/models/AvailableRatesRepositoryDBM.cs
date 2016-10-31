@@ -36,11 +36,11 @@ namespace data.database.models
 			{
 				switch (Type)
 				{
-					case DB_TYPE_LOCAL_REPOSITORY: return new LocalAvailableRatesRepository(Name);
-					case DB_TYPE_BITTREX_REPOSITORY: return new BittrexAvailableRatesRepository(Name);
-					case DB_TYPE_BTCE_REPOSITORY: return new BtceAvailableRatesRepository(Name);
-					case DB_TYPE_CRYPTONATOR_REPOSITORY: return new CryptonatorAvailableRatesRepository(Name);
-					default: throw new NotImplementedException();
+					case DB_TYPE_LOCAL_REPOSITORY: return new LocalAvailableRatesRepository(Name) { Id = Id };
+					case DB_TYPE_BITTREX_REPOSITORY: return new BittrexAvailableRatesRepository(Name) { Id = Id };
+					case DB_TYPE_BTCE_REPOSITORY: return new BtceAvailableRatesRepository(Name) { Id = Id };
+					case DB_TYPE_CRYPTONATOR_REPOSITORY: return new CryptonatorAvailableRatesRepository(Name) { Id = Id };
+					default: throw new NotSupportedException();
 				}
 			});
 		}

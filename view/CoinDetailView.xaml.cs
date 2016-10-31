@@ -10,7 +10,8 @@ using data.repositories.account;
 using System;
 using data.storage;
 using data.settings;
-using System.Diagnostics;
+using MyCryptos.helpers;
+using tasks;
 
 namespace view
 {
@@ -19,12 +20,79 @@ namespace view
 		List<AccountViewCell> Cells;
 		List<ReferenceValueViewCell> ReferenceValueCells;
 
-		public CoinDetailView(IEnumerable<Tuple<Account, AccountRepository>> accounts, ExchangeRate exchangeRate)
+		List<ExchangeRate> ExchangeRates;
+		IEnumerable<Tuple<Account, AccountRepository>> Accounts;
+
+		Currency currency;
+		Money moneySum { get { return new Money(Accounts.Sum(a => a.Item1.Money.Amount), Accounts.First().Item1.Money.Currency); } }
+
+		public CoinDetailView(Currency pageCurrency)
 		{
 			InitializeComponent();
 
-			updateView(accounts, exchangeRate);
+			currency = pageCurrency;
 
+			subscribe();
+			loadData();
+		}
+
+		void loadData()
+		{
+			var accs = AccountStorage.Instance.AllElementsWithRepositories;
+			Accounts = accs.Where(t => t.Item1.Money.Currency.Equals(currency)).ToList();
+
+			var currencies = ApplicationSettings.ReferenceCurrencies;
+			currencies.Add(ApplicationSettings.BaseCurrency);
+			currencies = currencies.Distinct().ToList();
+
+			ExchangeRates = new List<ExchangeRate>();
+			foreach (var c in currencies)
+			{
+				ExchangeRates.Add(ExchangeRateHelper.GetRate(currency, c));
+			}
+
+			updateView();
+		}
+
+		void updateView()
+		{
+			Cells = new List<AccountViewCell>();
+			foreach (var a in Accounts)
+			{
+				Cells.Add(new AccountViewCell(Navigation) { Account = a.Item1, Repository = a.Item2 });
+			}
+
+			var table = new ReferenceCurrenciesSection(moneySum);
+			ReferenceValueCells = table.Cells;
+
+			SortHelper.ApplySortOrder(Cells, AccountSection);
+			SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
+
+			var neededRates = ReferenceValueCells.Where(c => c.IsLoading).Select(c => c.ExchangeRate);
+			AppTasks.Instance.StartMissingRatesTask(neededRates);
+
+			setHeader();
+		}
+
+		void setHeader()
+		{
+			Header.TitleText = moneySum.ToString();
+
+			var exchangeRate = ExchangeRates.Find(e => e.SecondaryCurrency.Equals(ApplicationSettings.BaseCurrency));
+
+			if (exchangeRate != null && exchangeRate.Rate.HasValue)
+			{
+				var moneyReference = new Money(moneySum.Amount * exchangeRate.Rate.Value, exchangeRate.SecondaryCurrency);
+				Header.InfoText = moneyReference.ToString();
+			}
+			else {
+				Header.InfoText = InternationalisationResources.NoExchangeRateFound;
+
+			}
+		}
+
+		void subscribe()
+		{
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, (str) =>
 			{
 				SortHelper.ApplySortOrder(Cells, AccountSection);
@@ -32,100 +100,19 @@ namespace view
 			});
 
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str =>
-			 {
-				 var accs = AccountStorage.Instance.AllElementsWithRepositories;
-				 accs = accs.Where(t => t.Item1.Money.Currency.Equals(currency(accounts))).ToList();
-
-				 if (accs.Count == 0)
-				 {
-					 Navigation.RemovePage(this);
-				 }
-				 else {
-					 updateView(accs, exchangeRate);
-				 }
-			 });
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => reloadData(accounts));
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => reloadData(accounts));
-
-			if (Device.OS == TargetPlatform.Android)
 			{
-				Title = string.Empty;
-			}
-		}
+				loadData();
 
-		void reloadData(IEnumerable<Tuple<Account, AccountRepository>> accounts)
-		{
-			var rate = ExchangeRateStorage.Instance.AllElements.Find(c => c.Equals(new ExchangeRate(currency(accounts), ApplicationSettings.BaseCurrency)));
-			updateView(accounts, rate);
-		}
-
-		void updateView(IEnumerable<Tuple<Account, AccountRepository>> accounts, ExchangeRate exchangeRate)
-		{
-			Cells = new List<AccountViewCell>();
-			foreach (var a in accounts)
-			{
-				Cells.Add(new AccountViewCell(Navigation) { Account = a.Item1, Repository = a.Item2 });
-			}
-
-			var table = new ReferenceCurrenciesTableView { BaseMoney = moneySum(accounts) };
-			ReferenceValueCells = table.Cells;
-
-			SortHelper.ApplySortOrder(Cells, AccountSection);
-			SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
-
-			setHeader(accounts, exchangeRate);
-		}
-
-		void setHeader(IEnumerable<Tuple<Account, AccountRepository>> accounts, ExchangeRate exchangeRate)
-		{
-			if (Device.OS != TargetPlatform.Android)
-			{
-				Title = currency(accounts) != null ? currency(accounts).Code : string.Empty;
-			}
-			Header.TitleText = moneySum(accounts).ToString();
-
-			if (exchangeRate != null && exchangeRate.Rate.HasValue)
-			{
-				var moneyReference = new Money(moneySum(accounts).Amount * exchangeRate.Rate.Value, exchangeRate.SecondaryCurrency);
-				Header.InfoText = moneyReference.ToString();
-			}
-			else {
-				var rate = ExchangeRateStorage.Instance.AllElements.Find(e => e.Equals(exchangeRate));
-				if (rate != null && rate.Rate.HasValue)
+				if (Accounts.ToList().Count == 0)
 				{
-					var moneyReference = new Money(moneySum(accounts).Amount * rate.Rate.Value, rate.SecondaryCurrency);
-					Header.InfoText = moneyReference.ToString();
+					Navigation.RemovePage(this);
 				}
 				else {
-					Header.InfoText = InternationalisationResources.NoExchangeRateFound;
+					updateView();
 				}
-			}
-		}
-
-		Money moneySum(IEnumerable<Tuple<Account, AccountRepository>> accounts)
-		{
-			return new Money(accounts.Sum(a => a.Item1.Money.Amount), accounts.First().Item1.Money.Currency);
-		}
-
-		Currency currency(IEnumerable<Tuple<Account, AccountRepository>> accounts)
-		{
-			return accounts.First().Item1.Money.Currency;
-		}
-
-		protected async override void OnAppearing()
-		{
-			base.OnAppearing();
-			foreach (var c in ReferenceValueCells)
-			{
-				try
-				{
-					await c.Update();
-				}
-				catch (Exception e)
-				{
-					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
-				}
-			}
+			});
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => loadData());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => loadData());
 		}
 	}
 }

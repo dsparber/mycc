@@ -11,6 +11,8 @@ using MyCryptos.view.components;
 using System.Collections.Generic;
 using helpers;
 using data.repositories.account;
+using MyCryptos.helpers;
+using tasks;
 
 namespace view
 {
@@ -53,6 +55,7 @@ namespace view
 		void setCells(string action)
 		{
 			var cells = new List<SortableViewCell>();
+			var neededRates = new List<ExchangeRate>();
 
 			foreach (var g in groups)
 			{
@@ -67,15 +70,15 @@ namespace view
 					{
 						cell.Accounts = g.ToList();
 					}
-					var rate = cell.Currency.Equals(ApplicationSettings.BaseCurrency) ? new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency, 1) : null;
-					rate = rate ?? ExchangeRateStorage.Instance.AllElements.Find(c => c.Equals(new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency))) ?? cell.ExchangeRate;
-					if (rate != null && rate.Rate.HasValue)
+					var rate = ExchangeRateHelper.GetRate(cell.Currency, ApplicationSettings.BaseCurrency);
+					cell.ExchangeRate = rate;
+					if (rate == null || !rate.Rate.HasValue)
 					{
-						cell.ExchangeRate = rate;
+						neededRates.Add(new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency));
 					}
-					if (!action.Equals(MessageConstants.UpdatedExchangeRates))
+					if (rate == null)
 					{
-						cell.IsLoading = (rate == null || !rate.Rate.HasValue);
+						cell.IsLoading = true;
 					}
 					else
 					{
@@ -86,11 +89,15 @@ namespace view
 			}
 			if (cells.Count == 0)
 			{
-				cells.Add(new CustomViewCell { Text = InternationalisationResources.NoCoins });
+				cells.Add(new CustomViewCell
+				{
+					Text = InternationalisationResources.NoCoins
+				});
 			}
 
 			Cells = cells;
 			SortHelper.ApplySortOrder(Cells, CoinsSection);
+			AppTasks.Instance.StartMissingRatesTask(neededRates);
 		}
 
 		Money moneySum
@@ -111,13 +118,13 @@ namespace view
 
 		void addSubscriber()
 		{
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str =>updateView(MessageConstants.UpdatedExchangeRates));
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str =>  updateView(MessageConstants.UpdatedReferenceCurrency));
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView(MessageConstants.UpdatedExchangeRates));
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView(MessageConstants.UpdatedReferenceCurrency));
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView(MessageConstants.UpdatedAccounts));
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, str => SortHelper.ApplySortOrder(Cells, CoinsSection));
 
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => Header.IsLoading = true);
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => Header.IsLoading = false);
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));
 		}
 
 		public async void Add(object sender, EventArgs e)
@@ -128,6 +135,17 @@ namespace view
 		public async void SourcesClicked(object sender, EventArgs e)
 		{
 			await AccountsView.OpenSourcesView(Navigation);
+		}
+
+		void setLoadingAnimation(FetchSpeed speed, bool loading)
+		{
+			if (speed.Speed == FetchSpeedEnum.SLOW)
+			{
+				IsBusy = loading;
+			}
+			else {
+				Header.IsLoading = loading;
+			}
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace MyCryptos.view.components
 		public ExchangeRate ExchangeRate
 		{
 			get { return exchangeRate; }
-			set { exchangeRate = value; Detail = MoneyReference != null ? MoneyReference.ToString() : string.Empty; setTapRecognizer(); }
+			set { exchangeRate = value; Detail = MoneyReference != null ? MoneyReference.ToString() : InternationalisationResources.NoExchangeRateFound; setTapRecognizer(); }
 		}
 		public IEnumerable<Tuple<Account, AccountRepository>> Accounts
 		{
@@ -76,7 +76,7 @@ namespace MyCryptos.view.components
 			{
 				if (accounts.ToList().Count > 1)
 				{
-					Navigation.PushAsync(new CoinDetailView(accounts, exchangeRate));
+					Navigation.PushAsync(new CoinDetailView(Currency));
 				}
 				else {
 					var element = accounts.ToList()[0];

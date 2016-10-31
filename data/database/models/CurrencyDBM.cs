@@ -14,13 +14,13 @@ namespace data.database.models
 		[Ignore]
 		public int RepositoryId
 		{
-			get { throw new NotImplementedException(); }
-			set { throw new NotImplementedException(); }
+			get { throw new NotSupportedException(); }
+			set { throw new NotSupportedException(); }
 		}
 
 		public string Name { get; set; }
 
-		[PrimaryKey, MaxLength(3), Column("_id")]
+		[PrimaryKey, Column("_id")]
 		public string Id { get; set; }
 
 		public CurrencyDBM(Currency currency)

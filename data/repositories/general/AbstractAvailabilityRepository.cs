@@ -2,7 +2,7 @@
 {
 	public abstract class AbstractAvailabilityRepository<V> : AbstractRepository
 	{
-		protected AbstractAvailabilityRepository(int repositoryId, string name) : base(repositoryId, name) { }
+		protected AbstractAvailabilityRepository(int repositoryTypeId, string name) : base(repositoryTypeId, name) { }
 
 		public abstract bool IsAvailable(V element);
 	}

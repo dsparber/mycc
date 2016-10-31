@@ -22,7 +22,7 @@ namespace data.repositories.availablerates
 		{
 			return Task.Factory.StartNew(() =>
 			{
-				var repository = CurrencyStorage.Instance.RepositoryOfType<BittrexCurrencyRepository>();
+				var repository = CurrencyStorage.Instance.RepositoryOfType<CryptonatorCurrencyRepository>();
 				var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.RepositoryId == repository.Id).Select(e => e.Code);
 
 				Currencies = CurrencyStorage.Instance.AllElements.Where(e => codes.Contains(e.Code)).ToList();
@@ -32,7 +32,8 @@ namespace data.repositories.availablerates
 
 		public override bool IsAvailable(ExchangeRate element)
 		{
-			return Currencies.Contains(element.ReferenceCurrency) && Currencies.Contains(element.SecondaryCurrency);
+			var x = Currencies.Contains(element.ReferenceCurrency) && Currencies.Contains(element.SecondaryCurrency);
+			return x;
 		}
 
 		public override ExchangeRateRepository ExchangeRateRepository
@@ -47,9 +48,18 @@ namespace data.repositories.availablerates
 		{
 			if (Currencies.Contains(currency))
 			{
-				return new ExchangeRate(currency, Currencies.ToList().Find(c => c.Equals(Currency.BTC)));
+				return new ExchangeRate(currency, Currency.BTC);
 			}
 			return null;
+		}
+
+		public override List<ExchangeRate> ExchangeRatesWithCurrency(Currency currency)
+		{
+			if (Currencies.Contains(currency))
+			{
+				return new List<ExchangeRate> { new ExchangeRate(currency, Currency.BTC), new ExchangeRate(currency, Currency.EUR), new ExchangeRate(currency, Currency.USD) };
+			}
+			return new List<ExchangeRate>();
 		}
 	}
 }

@@ -96,8 +96,8 @@ namespace MyCryptos.models
 		{
 			get
 			{
-				var exchangeRate = new ExchangeRate(SecondaryCurrency, ReferenceCurrency);
-				if (Rate != null)
+				var exchangeRate = new ExchangeRate(SecondaryCurrency, ReferenceCurrency) { RepositoryId = RepositoryId };
+				if (Rate != null && Rate != 0)
 				{
 					exchangeRate.Rate = 1 / Rate;
 				}

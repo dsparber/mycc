@@ -17,10 +17,8 @@ namespace data.database.models
 			set { }
 		}
 
-		[MaxLength(3)]
 		public string ReferenceCurrencyCode { get; set; }
 
-		[MaxLength(3)]
 		public string SecondaryCurrencyCode { get; set; }
 
 		public decimal? Rate { get; set; }
@@ -30,7 +28,7 @@ namespace data.database.models
 		public async Task<ExchangeRate> Resolve()
 		{
 			var db = new CurrencyDatabase();
-			return new ExchangeRate((await db.Get(ReferenceCurrencyCode)) ?? new Currency(ReferenceCurrencyCode), (await db.Get(SecondaryCurrencyCode)) ?? new Currency(SecondaryCurrencyCode), Rate) { Id = Id, RepositoryId = RepositoryId };
+			return new ExchangeRate(await db.Get(ReferenceCurrencyCode), await db.Get(SecondaryCurrencyCode), Rate) { Id = Id, RepositoryId = RepositoryId };
 		}
 
 		public ExchangeRateDBM(ExchangeRate exchangeRate)

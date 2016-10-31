@@ -48,14 +48,12 @@ namespace data.repositories.availablerates
 
 		public override ExchangeRate ExchangeRateWithCurrency(Currency currency)
 		{
-			foreach (var e in Elements)
-			{
-				if (e.Contains(currency))
-				{
-					return e;
-				}
-			}
-			return null;
+			return Elements.ToList().Find(e => e.Contains(currency));
+		}
+
+		public override List<ExchangeRate> ExchangeRatesWithCurrency(Currency currency)
+		{
+			return Elements.Where(e => e.Contains(currency)).ToList();
 		}
 	}
 }

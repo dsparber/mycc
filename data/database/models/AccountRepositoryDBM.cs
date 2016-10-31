@@ -61,7 +61,7 @@ namespace data.database.models
 					case DB_TYPE_BITTREX_REPOSITORY: return new BittrexAccountRepository(Name, Data) { Id = Id };
 					case DB_TYPE_BLOCK_EXPERTS_REPOSITORY: return new BlockExpertsAccountRepository(Name, Data) { Id = Id };
 					case DB_TYPE_BLOCKCHAIN_REPOSITORY: return new BlockchainAccountRepository(Name, Data) { Id = Id };
-					default: throw new NotImplementedException();
+					default: throw new NotSupportedException();
 				}
 			});
 		}

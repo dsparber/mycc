@@ -2,6 +2,7 @@ using System;
 using MyCryptos.models;
 using enums;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace data.settings
 {
@@ -37,6 +38,27 @@ namespace data.settings
 			set
 			{
 				Settings.Set(Settings.KEY_BASE_CURRENCY, JsonConvert.SerializeObject(value));
+			}
+		}
+
+		public static List<Currency> ReferenceCurrencies
+		{
+			get
+			{
+				var currencies = new List<Currency>();
+				currencies.Add(Currency.BTC);
+				currencies.Add(Currency.EUR);
+				currencies.Add(Currency.USD);
+
+				var defaultValue = JsonConvert.SerializeObject(currencies);
+
+				var json = Settings.Get(Settings.KEY_REFERENCE_CURRENCIES, defaultValue);
+				var currency = JsonConvert.DeserializeObject<List<Currency>>(json);
+				return currency;
+			}
+			set
+			{
+				Settings.Set(Settings.KEY_REFERENCE_CURRENCIES, value);
 			}
 		}
 

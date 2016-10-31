@@ -157,7 +157,7 @@ namespace view
 
 		void updateReferenceValues()
 		{
-			var table = new ReferenceCurrenciesTableView { BaseMoney = account.Money };
+			var table = new ReferenceCurrenciesSection(account.Money);
 			ReferenceValueCells.Clear();
 			foreach (var cell in table.Cells)
 			{
@@ -166,19 +166,13 @@ namespace view
 			SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
 		}
 
-		protected async override void OnAppearing()
+		protected override void OnAppearing()
 		{
 			base.OnAppearing();
 			if (!IsNew && account != null)
 			{
-				try
-				{
-					await Task.WhenAll(ReferenceValueCells.Select(async c => await c.Update()));
-				}
-				catch (Exception e)
-				{
-					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
-				}
+				var neededRates = ReferenceValueCells.Where(c => c.IsLoading).Select(c => c.ExchangeRate);
+				AppTasks.Instance.StartMissingRatesTask(neededRates);
 			}
 		}
 

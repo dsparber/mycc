@@ -17,7 +17,6 @@ namespace data.database.models
 
 		public decimal MoneyAmount { get; set; }
 
-		[MaxLength(3)]
 		public string CurrencyCode { get; set; }
 
 		public int RepositoryId { get; set; }

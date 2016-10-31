@@ -5,6 +5,7 @@ using data.settings;
 using data.storage;
 using enums;
 using message;
+using MyCryptos.helpers;
 using MyCryptos.models;
 using Xamarin.Forms;
 
@@ -112,7 +113,7 @@ namespace tasks
 			await AccountStorage.Instance.LocalRepository.Add(account);
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 
-			await ExchangeRateStorage.Instance.GetRate(account.Money.Currency, ApplicationSettings.BaseCurrency, FetchSpeedEnum.FAST);
+			await ExchangeRateHelper.GetRate(account.Money.Currency, ApplicationSettings.BaseCurrency, FetchSpeedEnum.FAST);
 			await ExchangeRateStorage.Instance.FetchNew();
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedExchangeRates);
 		}
@@ -125,14 +126,17 @@ namespace tasks
 
 		async Task missingRatesTask(IEnumerable<ExchangeRate> rates)
 		{
-			MessagingCenter.Send(string.Empty, MessageConstants.StartedFetching);
-			await Task.WhenAll(rates.Select(async r =>
+			if (rates.ToList().Count > 0)
 			{
-				await ExchangeRateStorage.Instance.GetRate(r.ReferenceCurrency, r.SecondaryCurrency, FetchSpeedEnum.FAST);
-			}));
-			await ExchangeRateStorage.Instance.FetchNew();
-			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedExchangeRates);
-			MessagingCenter.Send(string.Empty, MessageConstants.DoneFetching);
+				MessagingCenter.Send(string.Empty, MessageConstants.StartedFetching);
+				await Task.WhenAll(rates.Select(async r =>
+				{
+					await ExchangeRateHelper.GetRate(r.ReferenceCurrency, r.SecondaryCurrency, FetchSpeedEnum.FAST);
+				}));
+				await ExchangeRateStorage.Instance.FetchNew();
+				MessagingCenter.Send(string.Empty, MessageConstants.UpdatedExchangeRates);
+				MessagingCenter.Send(string.Empty, MessageConstants.DoneFetching);
+			}
 		}
 
 

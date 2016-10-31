@@ -22,7 +22,7 @@ namespace data.database.models
 		{
 			return Task.Factory.StartNew(() =>
 			{
-				return new CurrencyRepositoryMap();
+				return new CurrencyRepositoryMap() { Id = Id };
 			});
 		}
 	}

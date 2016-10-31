@@ -53,9 +53,17 @@ namespace MyCryptos.data.database.helper
 
 			return element;
 		}
+		public async Task<V> InsertOrUpdate(V element)
+		{
+			var dbElement = Resolve(element);
+			await (await Connection).InsertOrReplaceAsync(dbElement);
+			element.Id = dbElement.Id;
+
+			return element;
+		}
 		public async Task<IEnumerable<V>> Insert(IEnumerable<V> elemets)
 		{
-			var dbElements = elemets.Select(e => Resolve(e));
+			var dbElements = elemets.Distinct().Select(e => Resolve(e));
 			await (await Connection).InsertAllAsync(dbElements);
 			return await Task.WhenAll(dbElements.Select(e => e.Resolve()));
 		}

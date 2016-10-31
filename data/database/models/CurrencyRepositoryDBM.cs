@@ -42,7 +42,7 @@ namespace data.database.models
 					case DB_TYPE_BTCE_REPOSITORY: return new BtceCurrencyRepository(Name) { Id = Id };
 					case DB_TYPE_CRYPTONATOR_REPOSITORY: return new CryptonatorCurrencyRepository(Name) { Id = Id };
 					case DB_TYPE_BLOCK_EXPERTS_REPOSITORY: return new BlockExpertsCurrencyRepository(Name) { Id = Id };
-					default: throw new NotImplementedException();
+					default: throw new NotSupportedException();
 				}
 			});
 		}

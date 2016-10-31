@@ -40,7 +40,7 @@ namespace data.database.models
 					case DB_TYPE_BITTREX_REPOSITORY: return new BittrexExchangeRateRepository(Name) { Id = Id };
 					case DB_TYPE_BTCE_REPOSITORY: return new BtceExchangeRateRepository(Name) { Id = Id };
 					case DB_TYPE_CRYPTONATOR_REPOSITORY: return new CryptonatorExchangeRateRepository(Name) { Id = Id };
-					default: throw new NotImplementedException();
+					default: throw new NotSupportedException();
 				}
 			});
 		}

@@ -3,6 +3,7 @@ using data.database;
 using data.database.models;
 using System.Threading.Tasks;
 using data.repositories.availablerates;
+using System.Collections.Generic;
 
 namespace data.storage
 {
@@ -43,6 +44,17 @@ namespace data.storage
 				}
 			}
 			return null;
+		}
+
+		public List<ExchangeRate> ExchangeRatesWithCurrency(Currency currency)
+		{
+			var all = new List<ExchangeRate>();
+			foreach (var r in Repositories)
+			{
+				all.AddRange(r.ExchangeRatesWithCurrency(currency));
+
+			}
+			return all;
 		}
 
 		public bool IsAvailable(ExchangeRate exchangeRate)
