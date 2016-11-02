@@ -271,7 +271,7 @@
     <value>Equal to</value>
   </data>
   <data name="ExchangeRate" xml:space="preserve">
-    <value>Exchange Rate: {0:#,0.#####}</value>
+    <value>Exchange Rate: {0:#,0.########}</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -361,7 +361,7 @@
     <value>No Coins</value>
   </data>
   <data name="Blockchain" xml:space="preserve">
-    <value>Blockchain</value>
+    <value>BTC Blockchain</value>
   </data>
   <data name="BlockchainAccount" xml:space="preserve">
     <value>Blockchain account</value>

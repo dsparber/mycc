@@ -85,11 +85,12 @@ namespace view
 			}
 			if (cells.Count == 0)
 			{
-				cells.Add(new CustomViewCell
-				{
-					// TODO Replace with two Action Cells to add a local account and a new source
-					Text = InternationalisationResources.NoCoins
-				});
+                var localAccountCell = new CustomViewCell { Text = InternationalisationResources.AddLocalAccount, IsActionCell = true };
+                localAccountCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AccountDetailView(null, null) { IsNew = true });
+                var addSourceCell = new CustomViewCell { Text = InternationalisationResources.AddSource, IsActionCell = true };
+                addSourceCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AddRepositoryView());
+                cells.Add(localAccountCell);
+                cells.Add(addSourceCell);
 			}
 
 			Cells = cells;

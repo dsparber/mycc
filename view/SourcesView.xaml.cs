@@ -15,17 +15,12 @@ namespace view
 	{
 		List<AccountRepository> repositories;
 
-		public SourcesView(List<AccountRepository> repositories)
+		public SourcesView()
 		{
 			InitializeComponent();
-			this.repositories = repositories;
+			repositories = AccountStorage.Instance.Repositories ?? new List<AccountRepository>();
 
-			if (repositories == null)
-			{
-				repositories = AccountStorage.Instance.Repositories;
-			}
 			setView();
-
 
 			if (Device.OS == TargetPlatform.Android)
 			{
@@ -39,8 +34,6 @@ namespace view
 				setView();
 			});
 		}
-
-		public SourcesView() : this(null) { }
 
 		public async void Done(object sender, EventArgs e)
 		{

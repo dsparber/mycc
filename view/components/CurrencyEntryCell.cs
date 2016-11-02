@@ -181,7 +181,6 @@ namespace MyCryptos.view.components
 
 		class CurrencyOverlay : ContentPage
 		{
-			readonly ActivityIndicator activityIndicator;
 			readonly SearchBar searchBar;
 			readonly TableView currenciesTableView;
 			readonly CurrencyEntryCell parent;
@@ -194,6 +193,7 @@ namespace MyCryptos.view.components
 
 				var type = parent.CurrencyRepositoryType;
 
+                // TODO Fix: no elements with block experts repository
 				var repos = (type != null) ? CurrencyStorage.Instance.RepositoriesOfType(type) : CurrencyStorage.Instance.Repositories;
 				currencies = repos.SelectMany(r => r.Elements).ToList();
 
@@ -209,11 +209,16 @@ namespace MyCryptos.view.components
 				done.Clicked += doneAction;
 				ToolbarItems.Add(done);
 
-				// TODO Fix Android Searchbar Issue
 				searchBar = new SearchBar { Placeholder = InternationalisationResources.SearchCurrencies };
+                if (Device.OS == TargetPlatform.Android)
+                {
+                    searchBar.TextColor = AppConstants.FontColor;
+                    searchBar.PlaceholderColor = AppConstants.FontColorLight;
+                    searchBar.HeightRequest = searchBar.HeightRequest + 50;
+                    searchBar.Margin = new Thickness(0, 0, 0, -51);
+                }
 
 				currenciesTableView = new TableView();
-				currenciesTableView.IsVisible = false;
 
 				var stack = new StackLayout();
 				stack.Children.Add(searchBar);
@@ -250,8 +255,7 @@ namespace MyCryptos.view.components
 				section.Clear();
 				foreach (var c in currenciesSorted)
 				{
-					// TODO Use own Cells
-					var cell = new TextCell { Text = c.Code, Detail = c.Name };
+					var cell = new CustomViewCell { Text = c.Code, Detail = c.Name };
 					cell.Tapped += (sender, e) =>
 					{
 						parent.SelectedCurrency = c;

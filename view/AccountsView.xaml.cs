@@ -10,6 +10,7 @@ using MyCryptos.resources;
 using MyCryptos.view.components;
 using Xamarin.Forms;
 using MyCryptos.helpers;
+using data.repositories.account;
 
 namespace view
 {
@@ -49,7 +50,7 @@ namespace view
 
 		public static async Task OpenSourcesView(INavigation Navigation)
 		{
-			var page = new SourcesView(AccountStorage.Instance.Repositories);
+			var page = new SourcesView();
 
 			await Navigation.PushOrPushModal(page);
 		}
@@ -80,8 +81,15 @@ namespace view
 				}
 				if (cells.Count == 0)
 				{
-					// TODO Replace with Action Cells to add a local account if it is a locacl repository
-					cells.Add(new CustomViewCell { Text = InternationalisationResources.NoAccounts });
+                    if (r is LocalAccountRepository)
+                    {
+                        var localAccountCell = new CustomViewCell { Text = InternationalisationResources.AddLocalAccount, IsActionCell = true };
+                        localAccountCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AccountDetailView(null, null) { IsNew = true });
+                        cells.Add(localAccountCell);
+                    }
+                    else {
+                        cells.Add(new CustomViewCell { Text = InternationalisationResources.NoAccounts });
+                    }
 				}
 				Elements.Add(Tuple.Create(section, cells));
 			}

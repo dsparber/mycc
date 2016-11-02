@@ -271,7 +271,7 @@
     <value>Entspricht</value>
   </data>
   <data name="ExchangeRate" xml:space="preserve">
-    <value>Kurs: {0:#,0.#####}</value>
+    <value>Kurs: {0:#,0.########}</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -325,7 +325,7 @@
     <value>Online</value>
   </data>
   <data name="RepositoryType" xml:space="preserve">
-    <value>Type</value>
+    <value>Typ</value>
   </data>
   <data name="Deleting" xml:space="preserve">
     <value>Löschen</value>
@@ -361,7 +361,7 @@
     <value>Keine Coins</value>
   </data>
   <data name="Blockchain" xml:space="preserve">
-    <value>Blockchain</value>
+    <value>BTC Blockchain</value>
   </data>
   <data name="BlockchainAccount" xml:space="preserve">
     <value>Blockchain Konto</value>
