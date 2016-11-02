@@ -28,8 +28,8 @@ namespace view
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, str => SortHelper.ApplySortOrder(Elements, AccountsTable));
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => SortHelper.ApplySortOrder(Elements, AccountsTable));
 
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => Header.IsLoading = true);
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => Header.IsLoading = false);
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));
 
 			if (Device.OS == TargetPlatform.Android)
 			{
@@ -127,6 +127,17 @@ namespace view
 			else
 			{
 				Header.InfoText = string.Format("{0} {1}", sources, InternationalisationResources.Sources);
+			}
+		}
+
+		void setLoadingAnimation(FetchSpeed speed, bool loading)
+		{
+			if (speed.Speed == FetchSpeedEnum.SLOW)
+			{
+				IsBusy = loading;
+			}
+			else {
+				Header.IsLoading = loading;
 			}
 		}
 	}

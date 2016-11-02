@@ -193,9 +193,18 @@ namespace MyCryptos.view.components
 
 				var type = parent.CurrencyRepositoryType;
 
-                // TODO Fix: no elements with block experts repository
 				var repos = (type != null) ? CurrencyStorage.Instance.RepositoriesOfType(type) : CurrencyStorage.Instance.Repositories;
-				currencies = repos.SelectMany(r => r.Elements).ToList();
+				var allElements = CurrencyStorage.Instance.AllElements;
+
+				if (type != null)
+				{
+					var ids = repos.Select(e => e.Id);
+					var currencyMapCodes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => ids.Contains(e.RepositoryId)).Select(e => e.Code);
+					currencies = allElements.Where(e => currencyMapCodes.Contains(e.Code)).ToList();
+				}
+				else {
+					currencies = allElements;
+				}
 
 				Title = InternationalisationResources.Currency;
 
