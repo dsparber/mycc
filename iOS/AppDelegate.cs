@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using constants;
+﻿using constants;
 using Foundation;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
+using XLabs.Forms.Controls;
 
 namespace MyCryptos.iOS
 {
 	[Register("AppDelegate")]
-	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+	public partial class AppDelegate : FormsApplicationDelegate
 	{
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
-			global::Xamarin.Forms.Forms.Init();
+			Forms.Init();
 
 			LoadApplication(new App());
+			HybridWebViewRenderer.CopyBundleDirectory("Html");
 
 			bool result = base.FinishedLaunching(app, options);
 

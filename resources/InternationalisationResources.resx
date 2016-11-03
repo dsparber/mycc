@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+	<!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,311 +59,539 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="CoinsTitle" xml:space="preserve">
+	<xsd:schema
+		id="root"
+		xmlns=""
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import
+			namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element
+			name="root"
+			msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice
+					maxOccurs="unbounded">
+					<xsd:element
+						name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element
+									name="value"
+									type="xsd:string"
+									minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute
+								name="name"
+								use="required"
+								type="xsd:string" />
+							<xsd:attribute
+								name="type"
+								type="xsd:string" />
+							<xsd:attribute
+								name="mimetype"
+								type="xsd:string" />
+							<xsd:attribute
+								ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element
+						name="assembly">
+						<xsd:complexType>
+							<xsd:attribute
+								name="alias"
+								type="xsd:string" />
+							<xsd:attribute
+								name="name"
+								type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element
+						name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element
+									name="value"
+									type="xsd:string"
+									minOccurs="0"
+									msdata:Ordinal="1" />
+								<xsd:element
+									name="comment"
+									type="xsd:string"
+									minOccurs="0"
+									msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute
+								name="name"
+								type="xsd:string"
+								use="required"
+								msdata:Ordinal="1" />
+							<xsd:attribute
+								name="type"
+								type="xsd:string"
+								msdata:Ordinal="3" />
+							<xsd:attribute
+								name="mimetype"
+								type="xsd:string"
+								msdata:Ordinal="4" />
+							<xsd:attribute
+								ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element
+						name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element
+									name="value"
+									type="xsd:string"
+									minOccurs="0"
+									msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute
+								name="name"
+								type="xsd:string"
+								use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader
+		name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader
+		name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader
+		name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader
+		name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data
+		name="CoinsTitle"
+		xml:space="preserve">
     <value>Coins</value>
   </data>
-  <data name="AccountsTitle" xml:space="preserve">
+	<data
+		name="AccountsTitle"
+		xml:space="preserve">
     <value>Accounts</value>
   </data>
-  <data name="SettingsTitle" xml:space="preserve">
+	<data
+		name="SettingsTitle"
+		xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="TagsTitle" xml:space="preserve">
+	<data
+		name="TagsTitle"
+		xml:space="preserve">
     <value>Tags</value>
   </data>
-  <data name="AddCoinTitle" xml:space="preserve">
+	<data
+		name="AddCoinTitle"
+		xml:space="preserve">
     <value>Add Coin</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
+	<data
+		name="Cancel"
+		xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="Save" xml:space="preserve">
+	<data
+		name="Save"
+		xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="Add" xml:space="preserve">
+	<data
+		name="Add"
+		xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="AddAccountTitle" xml:space="preserve">
+	<data
+		name="AddAccountTitle"
+		xml:space="preserve">
     <value>Add account</value>
   </data>
-  <data name="AppName" xml:space="preserve">
+	<data
+		name="AppName"
+		xml:space="preserve">
     <value>MyCryptos</value>
   </data>
-  <data name="Settings" xml:space="preserve">
+	<data
+		name="Settings"
+		xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="Coins" xml:space="preserve">
+	<data
+		name="Coins"
+		xml:space="preserve">
     <value>Coins</value>
   </data>
-  <data name="Currency" xml:space="preserve">
+	<data
+		name="Currency"
+		xml:space="preserve">
     <value>Currency</value>
   </data>
-  <data name="Value" xml:space="preserve">
+	<data
+		name="Value"
+		xml:space="preserve">
     <value>Value</value>
   </data>
-  <data name="CurrencyExample" xml:space="preserve">
+	<data
+		name="CurrencyExample"
+		xml:space="preserve">
     <value>e.g. BTC</value>
   </data>
-  <data name="ValueExample" xml:space="preserve">
+	<data
+		name="ValueExample"
+		xml:space="preserve">
     <value>e.g. 10</value>
   </data>
-  <data name="Storage" xml:space="preserve">
+	<data
+		name="Storage"
+		xml:space="preserve">
     <value>Storage</value>
   </data>
-  <data name="NewStorage" xml:space="preserve">
+	<data
+		name="NewStorage"
+		xml:space="preserve">
     <value>Create new storage</value>
   </data>
-  <data name="DefaultStorage" xml:space="preserve">
+	<data
+		name="DefaultStorage"
+		xml:space="preserve">
     <value>Local storage</value>
   </data>
-  <data name="Label" xml:space="preserve">
+	<data
+		name="Label"
+		xml:space="preserve">
     <value>Label</value>
   </data>
-  <data name="LabelExample" xml:space="preserve">
+	<data
+		name="LabelExample"
+		xml:space="preserve">
     <value>e.g. Savings</value>
   </data>
-  <data name="Accounts" xml:space="preserve">
+	<data
+		name="Accounts"
+		xml:space="preserve">
     <value>Accounts</value>
   </data>
-  <data name="Account" xml:space="preserve">
+	<data
+		name="Account"
+		xml:space="preserve">
     <value>Account</value>
   </data>
-  <data name="NoAccounts" xml:space="preserve">
+	<data
+		name="NoAccounts"
+		xml:space="preserve">
     <value>No account</value>
   </data>
-  <data name="NoSources" xml:space="preserve">
+	<data
+		name="NoSources"
+		xml:space="preserve">
     <value>No sources</value>
   </data>
-  <data name="Sources" xml:space="preserve">
+	<data
+		name="Sources"
+		xml:space="preserve">
     <value>Sources</value>
   </data>
-  <data name="Source" xml:space="preserve">
+	<data
+		name="Source"
+		xml:space="preserve">
     <value>Source</value>
   </data>
-  <data name="Refreshing" xml:space="preserve">
+	<data
+		name="Refreshing"
+		xml:space="preserve">
     <value>Refreshing</value>
   </data>
-  <data name="ReferenceCurrency" xml:space="preserve">
+	<data
+		name="ReferenceCurrency"
+		xml:space="preserve">
     <value>Reference Currency</value>
   </data>
-  <data name="AddActionChooseTitle" xml:space="preserve">
+	<data
+		name="AddActionChooseTitle"
+		xml:space="preserve">
     <value>Which action should be performed?</value>
   </data>
-  <data name="AddLocalAccount" xml:space="preserve">
+	<data
+		name="AddLocalAccount"
+		xml:space="preserve">
     <value>Add local account</value>
   </data>
-  <data name="SortOrder" xml:space="preserve">
+	<data
+		name="SortOrder"
+		xml:space="preserve">
     <value>Sort order</value>
   </data>
-  <data name="Alphabetical" xml:space="preserve">
+	<data
+		name="Alphabetical"
+		xml:space="preserve">
     <value>Alphabetical</value>
   </data>
-  <data name="ByValue" xml:space="preserve">
+	<data
+		name="ByValue"
+		xml:space="preserve">
     <value>By value</value>
   </data>
-  <data name="ByUnits" xml:space="preserve">
+	<data
+		name="ByUnits"
+		xml:space="preserve">
     <value>By units</value>
   </data>
-  <data name="NoExchangeRateFound" xml:space="preserve">
+	<data
+		name="NoExchangeRateFound"
+		xml:space="preserve">
     <value>No exchange rate found</value>
   </data>
-  <data name="RefreshingDots" xml:space="preserve">
+	<data
+		name="RefreshingDots"
+		xml:space="preserve">
     <value>Refreshing ...</value>
   </data>
-  <data name="SortDirection" xml:space="preserve">
+	<data
+		name="SortDirection"
+		xml:space="preserve">
     <value>Sort direction</value>
   </data>
-  <data name="Ascending" xml:space="preserve">
+	<data
+		name="Ascending"
+		xml:space="preserve">
     <value>Ascending</value>
   </data>
-  <data name="Descending" xml:space="preserve">
+	<data
+		name="Descending"
+		xml:space="preserve">
     <value>Descending</value>
   </data>
-  <data name="AutomaticallyRefresh" xml:space="preserve">
+	<data
+		name="AutomaticallyRefresh"
+		xml:space="preserve">
     <value>Automatically refresh</value>
   </data>
-  <data name="RefreshOnStartup" xml:space="preserve">
+	<data
+		name="RefreshOnStartup"
+		xml:space="preserve">
     <value>Refresh on startup</value>
   </data>
-  <data name="SourceText" xml:space="preserve">
+	<data
+		name="SourceText"
+		xml:space="preserve">
     <value>Source: {0}</value>
   </data>
-  <data name="Tags" xml:space="preserve">
+	<data
+		name="Tags"
+		xml:space="preserve">
     <value>Tags</value>
   </data>
-  <data name="SearchCurrencies" xml:space="preserve">
+	<data
+		name="SearchCurrencies"
+		xml:space="preserve">
     <value>Search currencies</value>
   </data>
-  <data name="Edit" xml:space="preserve">
+	<data
+		name="Edit"
+		xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="Editing" xml:space="preserve">
+	<data
+		name="Editing"
+		xml:space="preserve">
     <value>Editing</value>
   </data>
-  <data name="Delete" xml:space="preserve">
+	<data
+		name="Delete"
+		xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="LocalAccount" xml:space="preserve">
+	<data
+		name="LocalAccount"
+		xml:space="preserve">
     <value>Local account</value>
   </data>
-  <data name="DifferentCoinsCount" xml:space="preserve">
+	<data
+		name="DifferentCoinsCount"
+		xml:space="preserve">
     <value>{0} different Coins</value>
   </data>
-  <data name="EqualTo" xml:space="preserve">
+	<data
+		name="EqualTo"
+		xml:space="preserve">
     <value>Equal to</value>
   </data>
-  <data name="ExchangeRate" xml:space="preserve">
+	<data
+		name="ExchangeRate"
+		xml:space="preserve">
     <value>Exchange Rate: {0:#,0.########}</value>
   </data>
-  <data name="Name" xml:space="preserve">
+	<data
+		name="Name"
+		xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="BittrexAccount" xml:space="preserve">
+	<data
+		name="BittrexAccount"
+		xml:space="preserve">
     <value>Bittrex account</value>
   </data>
-  <data name="BittrexSource" xml:space="preserve">
+	<data
+		name="BittrexSource"
+		xml:space="preserve">
     <value>Bittrex</value>
   </data>
-  <data name="ApiKey" xml:space="preserve">
+	<data
+		name="ApiKey"
+		xml:space="preserve">
     <value>Key</value>
   </data>
-  <data name="SecretApiKey" xml:space="preserve">
+	<data
+		name="SecretApiKey"
+		xml:space="preserve">
     <value>Secret</value>
   </data>
-  <data name="AddRepositoryTitle" xml:space="preserve">
+	<data
+		name="AddRepositoryTitle"
+		xml:space="preserve">
     <value>Add source</value>
   </data>
-  <data name="Bittrex" xml:space="preserve">
+	<data
+		name="Bittrex"
+		xml:space="preserve">
     <value>Bittrex</value>
   </data>
-  <data name="AddBittrexAcoount" xml:space="preserve">
+	<data
+		name="AddBittrexAcoount"
+		xml:space="preserve">
     <value>Add Bittrex account</value>
   </data>
-  <data name="AddSource" xml:space="preserve">
+	<data
+		name="AddSource"
+		xml:space="preserve">
     <value>Add new source</value>
   </data>
-  <data name="GrantAccess" xml:space="preserve">
+	<data
+		name="GrantAccess"
+		xml:space="preserve">
     <value>Grant access</value>
   </data>
-  <data name="Ok" xml:space="preserve">
+	<data
+		name="Ok"
+		xml:space="preserve">
     <value>Ok</value>
   </data>
-  <data name="Error" xml:space="preserve">
+	<data
+		name="Error"
+		xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="FetchingNoSuccessText" xml:space="preserve">
+	<data
+		name="FetchingNoSuccessText"
+		xml:space="preserve">
     <value>Error! Fetching data was not successful. Please verify Your input and internet connection!</value>
   </data>
-  <data name="Testing" xml:space="preserve">
+	<data
+		name="Testing"
+		xml:space="preserve">
     <value>Testing</value>
   </data>
-  <data name="Fetching" xml:space="preserve">
+	<data
+		name="Fetching"
+		xml:space="preserve">
     <value>Fetching</value>
   </data>
-  <data name="Local" xml:space="preserve">
+	<data
+		name="Local"
+		xml:space="preserve">
     <value>Local</value>
   </data>
-  <data name="Online" xml:space="preserve">
+	<data
+		name="Online"
+		xml:space="preserve">
     <value>Online</value>
   </data>
-  <data name="RepositoryType" xml:space="preserve">
+	<data
+		name="RepositoryType"
+		xml:space="preserve">
     <value>Type</value>
   </data>
-  <data name="Deleting" xml:space="preserve">
+	<data
+		name="Deleting"
+		xml:space="preserve">
     <value>Deleting</value>
   </data>
-  <data name="Type" xml:space="preserve">
+	<data
+		name="Type"
+		xml:space="preserve">
     <value>Type</value>
   </data>
-  <data name="Done" xml:space="preserve">
+	<data
+		name="Done"
+		xml:space="preserve">
     <value>Done</value>
   </data>
-  <data name="SelectRepositoryType" xml:space="preserve">
+	<data
+		name="SelectRepositoryType"
+		xml:space="preserve">
     <value>Please choose the desired type</value>
   </data>
-  <data name="BlockExperts" xml:space="preserve">
+	<data
+		name="BlockExperts"
+		xml:space="preserve">
     <value>Block Experts</value>
   </data>
-  <data name="Address" xml:space="preserve">
+	<data
+		name="Address"
+		xml:space="preserve">
     <value>Address</value>
   </data>
-  <data name="AccountInformation" xml:space="preserve">
+	<data
+		name="AccountInformation"
+		xml:space="preserve">
     <value>Account information</value>
   </data>
-  <data name="SelectCurrency" xml:space="preserve">
+	<data
+		name="SelectCurrency"
+		xml:space="preserve">
     <value>Select Currency</value>
   </data>
-  <data name="BlockExpertsAccount" xml:space="preserve">
+	<data
+		name="BlockExpertsAccount"
+		xml:space="preserve">
     <value>Block Experts account</value>
   </data>
-  <data name="NetworkError" xml:space="preserve">
+	<data
+		name="NetworkError"
+		xml:space="preserve">
     <value>An internet connection could not be established. Please verify that your phone has internet access.</value>
   </data>
-  <data name="NoCoins" xml:space="preserve">
+	<data
+		name="NoCoins"
+		xml:space="preserve">
     <value>No Coins</value>
   </data>
-  <data name="Blockchain" xml:space="preserve">
+	<data
+		name="Blockchain"
+		xml:space="preserve">
     <value>BTC Blockchain</value>
   </data>
-  <data name="BlockchainAccount" xml:space="preserve">
+	<data
+		name="BlockchainAccount"
+		xml:space="preserve">
     <value>Blockchain account</value>
+  </data>
+	<data
+		name="Others"
+		xml:space="preserve">
+    <value>{0} others</value>
   </data>
 </root>

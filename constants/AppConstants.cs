@@ -14,6 +14,8 @@ namespace constants
 		public static readonly Color FontColorLight = FontColor.MultiplyAlpha(OpacityDisabledField);
 
 		public static readonly int LabelWidth = 100;
+
+		public static readonly decimal PieGroupThreshold  = 0.03M;
 	}
 }
 
