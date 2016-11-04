@@ -7,26 +7,29 @@ using MyCryptos.models;
 using message;
 using MyCryptos.resources;
 using Xamarin.Forms;
-using MyCryptos.view.components;
-using System.Collections.Generic;
-using helpers;
-using data.repositories.account;
 using MyCryptos.helpers;
+using System.Collections.Generic;
 using tasks;
+using MyCryptos.view;
+using System.Collections.ObjectModel;
 
 namespace view
 {
 	public partial class CoinsView : ContentPage
 	{
-		List<SortableViewCell> Cells;
 
 		public CoinsView()
 		{
 			InitializeComponent();
-			addSubscriber();
 
-			Cells = new List<SortableViewCell>();
-			CoinsSection.Title = InternationalisationResources.Coins;
+            var views = new ObservableCollection<ContentView> {
+                   new CoinsTableView (),
+                   new CoinsGraphView()
+            };
+
+            Carousel.ItemsSource = views;
+
+            addSubscriber();
 
 			if (Device.OS == TargetPlatform.Android)
 			{
@@ -37,80 +40,35 @@ namespace view
 
 		void updateView()
 		{
-			setCells();
+            var sum = moneySum;
+            var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
 
-			Header.TitleText = moneySum.ToString();
-			Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, groups.ToList().Count);
-		}
-
-		IEnumerable<IGrouping<Currency, Tuple<Account, AccountRepository>>> groups
-		{
-			get
-			{
-				var allAccounts = AccountStorage.Instance.AllElementsWithRepositories;
-				return allAccounts.GroupBy(a => a.Item1.Money.Currency);
-			}
-		}
-
-		void setCells()
-		{
-			var cells = new List<SortableViewCell>();
-			var neededRates = new List<ExchangeRate>();
-
-			foreach (var g in groups)
-			{
-				if (g.Key != null)
-				{
-					var cell = Cells.OfType<CoinViewCell>().ToList().Find(e => g.Key.Equals(e.Currency));
-					if (cell == null)
-					{
-						cell = new CoinViewCell(Navigation) { Accounts = g.ToList(), IsLoading = true };
-					}
-					else
-					{
-						cell.Accounts = g.ToList();
-					}
-					var neededRate = new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency);
-					var rate = ExchangeRateHelper.GetRate(neededRate);
-					cell.ExchangeRate = rate;
-					if (rate == null || !rate.Rate.HasValue)
-					{
-						neededRates.Add(neededRate);
-					}
-
-					cell.IsLoading = rate != null && !rate.Rate.HasValue;
-
-					cells.Add(cell);
-				}
-			}
-			if (cells.Count == 0)
-			{
-                var localAccountCell = new CustomViewCell { Text = InternationalisationResources.AddLocalAccount, IsActionCell = true };
-                localAccountCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AccountDetailView(null, null) { IsNew = true });
-                var addSourceCell = new CustomViewCell { Text = InternationalisationResources.AddSource, IsActionCell = true };
-                addSourceCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AddRepositoryView());
-                cells.Add(localAccountCell);
-                cells.Add(addSourceCell);
-			}
-
-			Cells = cells;
-			SortHelper.ApplySortOrder(Cells, CoinsSection);
-			AppTasks.Instance.StartMissingRatesTask(neededRates);
+            Header.TitleText = (sum.Amount > 0) ? sum.ToString() : string.Format("? {0}", sum.Currency.Code);
+			Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, amountDifferentCurrencies);
 		}
 
 		Money moneySum
 		{
 			get
 			{
-				var sum = new Money(0, ApplicationSettings.BaseCurrency);
-				foreach (var c in Cells.OfType<CoinViewCell>())
-				{
-					if (c.MoneyReference != null && sum.Currency.Equals(c.MoneyReference.Currency))
-					{
-						sum += c.MoneyReference;
-					}
-				}
-				return sum;
+                var neededRates = new List<ExchangeRate>();
+
+                var amount = AccountStorage.Instance.AllElements.Select(a =>
+                {
+                    var neededRate = new ExchangeRate(a.Money.Currency, ApplicationSettings.BaseCurrency);
+                    var rate = ExchangeRateHelper.GetRate(neededRate);
+
+                    if (rate == null || !rate.Rate.HasValue)
+                    {
+                        neededRates.Add(neededRate);
+                    }
+
+                    return a.Money.Amount * (rate ?? neededRate).RateNotNull;
+                }).Sum();
+
+                AppTasks.Instance.StartMissingRatesTask(neededRates.Distinct());
+
+                return new Money(amount, ApplicationSettings.BaseCurrency);
 			}
 		}
 
@@ -119,7 +77,6 @@ namespace view
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, str => SortHelper.ApplySortOrder(Cells, CoinsSection));
 
 			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
 			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));

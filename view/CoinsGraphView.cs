@@ -18,7 +18,7 @@ using view;
 
 namespace MyCryptos.view
 {
-	public class CoinsGraphView : ContentPage
+	public class CoinsGraphView : ContentView
 	{
 		HybridWebView WebView;
 
@@ -44,19 +44,15 @@ namespace MyCryptos.view
 
 			Content = WebView;
 
-			updateView();
+            WebView.LoadFromContent("Html/graph.html");
+
+            updateView();
 
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
 		}
-
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
-			WebView.LoadFromContent("Html/graph.html");
-		}
-
+        
 		void updateView()
 		{
 			WebView.CallJsFunction("displayGraph", graphItems.Select(e => e.Item1).ToArray(), graphItems.Select(e => e.Item2).ToArray());
