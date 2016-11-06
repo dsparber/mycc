@@ -4,7 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
-  xmlns:control="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
+  xmlns:controls="clr-namespace:SegmentedControl.FormsPlugin.Abstractions;assembly=SegmentedControl.FormsPlugin.Abstractions"
 	x:Class="view.CoinsView"
 	Title="{i18n:Translate CoinsTitle}">
   <ContentPage.ToolbarItems>
@@ -17,19 +17,18 @@
 			Clicked="SourcesClicked" />
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
-    <StackLayout>
+    <StackLayout x:Name="Stack">
       <StackLayout.BackgroundColor>
         <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
       </StackLayout.BackgroundColor>
       <components:HeaderView
 				x:Name="Header" />
-      <control:CarouselView x:Name="Carousel">
-        <control:CarouselView.ItemTemplate>
-          <DataTemplate>
-            <ContentView Content="{Binding Content}"/>
-          </DataTemplate>
-        </control:CarouselView.ItemTemplate>
-      </control:CarouselView>
+      <controls:SegmentedControl x:Name="TabControl" SelectedSegment="0" ValueChanged="TabChanged">
+        <controls:SegmentedControl.Children>
+          <controls:SegmentedControlOption Text="Tab 1" />
+          <controls:SegmentedControlOption Text="Tab 2" />
+        </controls:SegmentedControl.Children>
+      </controls:SegmentedControl>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

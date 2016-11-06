@@ -12,45 +12,63 @@ using System.Collections.Generic;
 using tasks;
 using MyCryptos.view;
 using System.Collections.ObjectModel;
+using constants;
 
 namespace view
 {
-	public partial class CoinsView : ContentPage
-	{
+    public partial class CoinsView : ContentPage
+    {
 
-		public CoinsView()
-		{
-			InitializeComponent();
+        ContentView TableView;
+        CoinsGraphView GraphView;
 
-            var views = new ObservableCollection<ContentView> {
-                   new CoinsTableView (),
-                   new CoinsGraphView()
+        public CoinsView()
+        {
+            InitializeComponent();
+
+            TableView = new CoinsTableView();
+            GraphView = new CoinsGraphView(Navigation)
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand
             };
 
-            Carousel.ItemsSource = views;
+            Stack.Children.Add(TableView);
+            Stack.Children.Add(GraphView);
+            GraphView.IsVisible = false;
+
+            TabControl.TintColor = AppConstants.ThemeColor;
+            TabControl.BackgroundColor = AppConstants.BackgroundColor;
+            TabControl.Margin = 10;
 
             addSubscriber();
 
-			if (Device.OS == TargetPlatform.Android)
-			{
-				ToolbarItems.Remove(SourcesToolbarItem);
-				Title = string.Empty;
-			}
-		}
+            if (Device.OS == TargetPlatform.Android)
+            {
+                ToolbarItems.Remove(SourcesToolbarItem);
+                Title = string.Empty;
+            }
+        }
 
-		void updateView()
-		{
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            GraphView.OnAppearing();
+        }
+
+        void updateView()
+        {
             var sum = moneySum;
             var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
 
             Header.TitleText = (sum.Amount > 0) ? sum.ToString() : string.Format("? {0}", sum.Currency.Code);
-			Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, amountDifferentCurrencies);
-		}
+            Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, amountDifferentCurrencies);
+        }
 
-		Money moneySum
-		{
-			get
-			{
+        Money moneySum
+        {
+            get
+            {
                 var neededRates = new List<ExchangeRate>();
 
                 var amount = AccountStorage.Instance.AllElements.Select(a =>
@@ -69,38 +87,47 @@ namespace view
                 AppTasks.Instance.StartMissingRatesTask(neededRates.Distinct());
 
                 return new Money(amount, ApplicationSettings.BaseCurrency);
-			}
-		}
+            }
+        }
 
-		void addSubscriber()
-		{
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
+        public void TabChanged(object o, EventArgs e)
+        {
+            var selected = TabControl.SelectedSegment;
 
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));
-		}
+            TableView.IsVisible = (selected == 0);
+            GraphView.IsVisible = (selected == 1);
+        }
 
-		public async void Add(object sender, EventArgs e)
-		{
-			await AccountsView.AddDialog(this);
-		}
+        void addSubscriber()
+        {
+            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
+            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
+            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
 
-		public async void SourcesClicked(object sender, EventArgs e)
-		{
-			await AccountsView.OpenSourcesView(Navigation);
-		}
+            MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
+            MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));
+        }
 
-		void setLoadingAnimation(FetchSpeed speed, bool loading)
-		{
-			if (speed.Speed == FetchSpeedEnum.SLOW)
-			{
-				IsBusy = loading;
-			}
-			else {
-				Header.IsLoading = loading;
-			}
-		}
-	}
+        public async void Add(object sender, EventArgs e)
+        {
+            await AccountsView.AddDialog(this);
+        }
+
+        public async void SourcesClicked(object sender, EventArgs e)
+        {
+            await AccountsView.OpenSourcesView(Navigation);
+        }
+
+        void setLoadingAnimation(FetchSpeed speed, bool loading)
+        {
+            if (speed.Speed == FetchSpeedEnum.SLOW)
+            {
+                IsBusy = loading;
+            }
+            else
+            {
+                Header.IsLoading = loading;
+            }
+        }
+    }
 }
