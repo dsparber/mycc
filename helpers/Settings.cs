@@ -11,7 +11,7 @@ namespace MyCryptos.Helpers
   /// </summary>
   public static class Settings
   {
-    private static ISettings AppSettings
+    static ISettings AppSettings
     {
       get
       {
@@ -21,8 +21,8 @@ namespace MyCryptos.Helpers
 
     #region Setting Constants
 
-    private const string SettingsKey = "settings_key";
-    private static readonly string SettingsDefault = string.Empty;
+    const string SettingsKey = "settings_key";
+    static readonly string SettingsDefault = string.Empty;
 
     #endregion
 
@@ -31,11 +31,11 @@ namespace MyCryptos.Helpers
     {
       get
       {
-        return AppSettings.GetValueOrDefault<string>(SettingsKey, SettingsDefault);
+        return AppSettings.GetValueOrDefault(SettingsKey, SettingsDefault);
       }
       set
       {
-        AppSettings.AddOrUpdateValue<string>(SettingsKey, value);
+        AppSettings.AddOrUpdateValue(SettingsKey, value);
       }
     }
 

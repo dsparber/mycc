@@ -30,7 +30,7 @@ namespace view
 
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str =>
 			{
-				this.repositories = AccountStorage.Instance.Repositories;
+				repositories = AccountStorage.Instance.Repositories;
 				setView();
 			});
 		}

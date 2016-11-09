@@ -2,22 +2,21 @@
 using Foundation;
 using UIKit;
 using Xamarin.Forms;
-using Xamarin.Forms.Platform;
 using Xamarin.Forms.Platform.iOS;
 using XLabs.Forms.Controls;
 
 namespace MyCryptos.iOS
 {
 	[Register("AppDelegate")]
-	public partial class AppDelegate : FormsApplicationDelegate
+	public class AppDelegate : FormsApplicationDelegate
 	{
-		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+		public override bool FinishedLaunching(UIApplication uiApplication, NSDictionary launchOptions)
 		{
 			Forms.Init();
-            LoadApplication(new App());
+			LoadApplication(new App());
 			HybridWebViewRenderer.CopyBundleDirectory("Html");
 
-            bool result = base.FinishedLaunching(app, options);
+			bool result = base.FinishedLaunching(uiApplication, launchOptions);
 
 			UINavigationBar.Appearance.TintColor = AppConstants.ThemeColor.ToUIColor();
 			UITabBar.Appearance.TintColor = AppConstants.ThemeColor.ToUIColor();

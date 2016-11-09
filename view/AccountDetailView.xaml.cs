@@ -10,10 +10,8 @@ using MyCryptos.resources;
 using tasks;
 using Xamarin.Forms;
 using MyCryptos.view.components;
-using System.Threading.Tasks;
 using System.Linq;
 using MyCryptos.helpers;
-using System.Diagnostics;
 
 namespace view
 {

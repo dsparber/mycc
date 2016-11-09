@@ -1,5 +1,4 @@
-﻿using System;
-using data.database.models;
+﻿using data.database.models;
 using data.repositories.availablerates;
 
 namespace data.factories

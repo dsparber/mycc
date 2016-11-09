@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using message;
 using MyCryptos.resources;
 using Xamarin.Forms;

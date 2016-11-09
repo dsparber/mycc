@@ -20,7 +20,7 @@ namespace MyCryptos.view.components
         public string Text
         {
             get { return text; }
-            set { text = value; MasterLabel.Text = text; if (detail == null) DetailLabel.IsVisible = false; }
+			set { text = value; MasterLabel.Text = text; DetailLabel.IsVisible = (detail != null); }
         }
         public string Detail
         {
@@ -80,8 +80,8 @@ namespace MyCryptos.view.components
 
             if (Device.OS == TargetPlatform.Android)
             {
-                var view = new ContentView { Content = mainView, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.White };
-                View = new ContentView { Content = view, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5) };
+                var content = new ContentView { Content = mainView, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.White };
+                View = new ContentView { Content = content, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5) };
             }
             else
             {

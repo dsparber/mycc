@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Linq;
-using data.storage;
-using resources;
+﻿using resources;
 using view;
 using Xamarin.Forms;
 using MyCryptos.message;

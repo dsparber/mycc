@@ -1,4 +1,3 @@
-using MyCryptos.models;
 using Xamarin.Forms;
 
 namespace MyCryptos.view.components

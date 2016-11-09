@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using data.database.models;
 using MyCryptos.models;
-using data.storage;
 using MyCryptos.resources;
 using Newtonsoft.Json;
 using System.Diagnostics;

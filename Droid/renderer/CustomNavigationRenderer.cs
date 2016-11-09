@@ -1,10 +1,5 @@
-﻿using System.ComponentModel;
-using Android.App;
+﻿using Android.App;
 using Android.Graphics.Drawables;
-using Android.OS;
-using Android.Util;
-using Android.Views;
-using Android.Widget;
 using renderer;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;

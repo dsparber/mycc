@@ -9,9 +9,7 @@ using MyCryptos.resources;
 using MyCryptos.view.components;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using tasks;
 using view;
 using Xamarin.Forms;
 

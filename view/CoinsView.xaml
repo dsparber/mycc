@@ -4,31 +4,29 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
-  xmlns:controls="clr-namespace:SegmentedControl.FormsPlugin.Abstractions;assembly=SegmentedControl.FormsPlugin.Abstractions"
 	x:Class="view.CoinsView"
 	Title="{i18n:Translate CoinsTitle}">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
 			Text="{i18n:Translate Add}"
 			Clicked="Add" />
-    <ToolbarItem
+		<ToolbarItem
 			Text="{i18n:Translate Sources}"
-      x:Name="SourcesToolbarItem"
+			x:Name="SourcesToolbarItem"
 			Clicked="SourcesClicked" />
-  </ContentPage.ToolbarItems>
-  <ContentPage.Content>
-    <StackLayout x:Name="Stack">
-      <StackLayout.BackgroundColor>
-        <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
-      </StackLayout.BackgroundColor>
-      <components:HeaderView
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<StackLayout
+			x:Name="Stack">
+			<StackLayout.BackgroundColor>
+				<OnPlatform
+					x:TypeArguments="Color"
+					Android="#EEE" />
+			</StackLayout.BackgroundColor>
+			<components:HeaderView
 				x:Name="Header" />
-      <controls:SegmentedControl x:Name="TabControl" SelectedSegment="0" ValueChanged="TabChanged">
-        <controls:SegmentedControl.Children>
-          <controls:SegmentedControlOption Text="Tab 1" />
-          <controls:SegmentedControlOption Text="Tab 2" />
-        </controls:SegmentedControl.Children>
-      </controls:SegmentedControl>
-    </StackLayout>
-  </ContentPage.Content>
+			<components:SegmentedControl
+				x:Name="Tabs" />
+		</StackLayout>
+	</ContentPage.Content>
 </ContentPage>

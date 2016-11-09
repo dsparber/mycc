@@ -1,5 +1,4 @@
 ﻿using MyCryptos.resources;
-using MyCryptos.view;
 using Xamarin.Forms;
 
 namespace view

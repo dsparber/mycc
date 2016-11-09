@@ -179,6 +179,12 @@
     <Reference Include="XLabs.Serialization.Json.NET">
       <HintPath>..\packages\XLabs.Serialization.JSON.2.3.0-pre02\lib\portable-net45+netcore45+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Serialization.Json.NET.dll</HintPath>
     </Reference>
+    <Reference Include="FreshEssentials">
+      <HintPath>..\packages\FreshEssentials.2.1.2\lib\Xamarin.iOS10\FreshEssentials.dll</HintPath>
+    </Reference>
+    <Reference Include="FreshEssentials.iOS">
+      <HintPath>..\packages\FreshEssentials.2.1.2\lib\Xamarin.iOS10\FreshEssentials.iOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyCryptos.csproj">
@@ -288,6 +294,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\graph.js" />
+    <Content Include="Html\segmentedControl.css" />
+    <Content Include="Html\segmentedControl.html" />
+    <Content Include="Html\segmentedControl.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\Chart.min.js">

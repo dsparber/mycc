@@ -172,6 +172,12 @@
     <Reference Include="XLabs.Serialization.Json.NET">
       <HintPath>..\packages\XLabs.Serialization.JSON.2.3.0-pre02\lib\portable-net45+netcore45+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Serialization.Json.NET.dll</HintPath>
     </Reference>
+    <Reference Include="FreshEssentials">
+      <HintPath>..\packages\FreshEssentials.2.1.2\lib\MonoAndroid10\FreshEssentials.dll</HintPath>
+    </Reference>
+    <Reference Include="FreshEssentials.Droid">
+      <HintPath>..\packages\FreshEssentials.2.1.2\lib\MonoAndroid10\FreshEssentials.Droid.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyCryptos.csproj">
@@ -238,6 +244,9 @@
     <AndroidAsset Include="Assets\Html\graph.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
+    <AndroidAsset Include="Assets\Html\segmentedControl.css" />
+    <AndroidAsset Include="Assets\Html\segmentedControl.html" />
+    <AndroidAsset Include="Assets\Html\segmentedControl.js" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Html\graph.css" />

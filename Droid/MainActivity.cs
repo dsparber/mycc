@@ -9,10 +9,10 @@ namespace MyCryptos.Droid
 	[Activity (Label = "MyCryptos", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : FormsApplicationActivity
 	{
-		protected override void OnCreate (Bundle bundle)
+		protected override void OnCreate (Bundle savedInstanceState)
 		{
-			base.OnCreate (bundle);
-			Forms.Init (this, bundle);
+			base.OnCreate (savedInstanceState);
+			Forms.Init (this, savedInstanceState);
 			LoadApplication (new App ());
 		}
 	}

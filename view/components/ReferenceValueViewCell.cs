@@ -1,6 +1,3 @@
-using System.Threading.Tasks;
-using enums;
-using MyCryptos.helpers;
 using MyCryptos.models;
 using MyCryptos.resources;
 

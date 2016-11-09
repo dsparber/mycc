@@ -2,7 +2,6 @@
 using Xamarin.Forms;
 using MyCryptos.view.components;
 using MyCryptos.resources;
-using data.repositories.currency;
 
 namespace MyCryptos.view.addrepositoryviews
 {

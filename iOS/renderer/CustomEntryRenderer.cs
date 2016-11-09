@@ -1,5 +1,4 @@
-﻿using System;
-using renderer;
+﻿using renderer;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;

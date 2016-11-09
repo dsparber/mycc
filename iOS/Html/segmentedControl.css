@@ -1,0 +1,27 @@
+
+.button {
+    float: left;
+    padding: 5px;
+    border-left: 1px solid;
+    margin: 0px;
+}
+
+div .button:first-child {
+    border-left: none;
+}
+.control {
+    border: 1px solid;
+    display: inline-block;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+body {
+    text-align: center;
+    font-family: "Helvetica", "Arial", sans-serif;
+}
+
+ * {
+     /* For iOS */
+     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+ }

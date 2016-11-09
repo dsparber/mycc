@@ -51,9 +51,9 @@ namespace MyCryptos.view.components
 
             if (Device.OS == TargetPlatform.Android)
             {
-                var view = new StackLayout { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.White };
-                view.Children.Add(stack);
-                View = new ContentView { Content = view, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5)};
+                var content = new StackLayout { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.White };
+				content.Children.Add(stack);
+				View = new ContentView { Content = content, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5)};
             }
             else
             {

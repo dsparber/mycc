@@ -14,14 +14,14 @@ namespace MyCryptos.renderer
             if (Control == null)
                 return;
 
-            var listView = Control as global::Android.Widget.ListView;
+            var listView = Control as Android.Widget.ListView;
             listView.DividerHeight = 0;
             listView.SetHeaderDividersEnabled(false);
         }
 
-        protected override TableViewModelRenderer GetModelRenderer(global::Android.Widget.ListView listView, TableView view)
+        protected override TableViewModelRenderer GetModelRenderer(Android.Widget.ListView listView, TableView view)
         {
-            return new CustomTableViewModelRenderer(this.Context, listView, view);
+            return new CustomTableViewModelRenderer(Context, listView, view);
         }
     }
 }

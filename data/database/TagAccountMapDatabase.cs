@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using data.database.models;
 using SQLite;
 using MyCryptos.data.database.helper;
-using MyCryptos.models;
 
 namespace data.database
 {

@@ -5,7 +5,6 @@ using System;
 using System.Net.Http;
 using data.database.models;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 
 namespace data.repositories.exchangerate
 {

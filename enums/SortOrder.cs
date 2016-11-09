@@ -1,5 +1,4 @@
-﻿using System;
-namespace enums
+﻿namespace enums
 {
 	public enum SortOrder
 	{

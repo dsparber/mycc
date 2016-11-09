@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using MyCryptos.resources;
 using renderer;
@@ -19,7 +18,7 @@ namespace renderer
 			rearrangeButtons();
 		}
 
-		private ToolbarItem GetButtonInfo(IList<ToolbarItem> items, string name)
+		ToolbarItem GetButtonInfo(IList<ToolbarItem> items, string name)
 		{
 			if (string.IsNullOrEmpty(name) || items == null)
 				return null;

@@ -11,123 +11,122 @@ using MyCryptos.helpers;
 using System.Collections.Generic;
 using tasks;
 using MyCryptos.view;
-using System.Collections.ObjectModel;
 using constants;
 
 namespace view
 {
-    public partial class CoinsView : ContentPage
-    {
+	public partial class CoinsView : ContentPage
+	{
 
-        ContentView TableView;
-        CoinsGraphView GraphView;
+		ContentView TableView;
+		CoinsGraphView GraphView;
 
-        public CoinsView()
-        {
-            InitializeComponent();
+		public CoinsView()
+		{
+			InitializeComponent();
 
-            TableView = new CoinsTableView();
-            GraphView = new CoinsGraphView(Navigation)
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand
-            };
+			TableView = new CoinsTableView();
+			GraphView = new CoinsGraphView(Navigation)
+			{
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.FillAndExpand
+			};
 
-            Stack.Children.Add(TableView);
-            Stack.Children.Add(GraphView);
-            GraphView.IsVisible = false;
+			Stack.Children.Add(TableView);
+			Stack.Children.Add(GraphView);
+			GraphView.IsVisible = false;
 
-            TabControl.TintColor = AppConstants.ThemeColor;
-            TabControl.BackgroundColor = AppConstants.BackgroundColor;
-            TabControl.Margin = 10;
+			Tabs.Color = AppConstants.ThemeColor;
+			Tabs.BgColor = AppConstants.BackgroundColor;
+			Tabs.Tabs = new List<string> { "X", "Y" };
 
-            addSubscriber();
+			addSubscriber();
 
-            if (Device.OS == TargetPlatform.Android)
-            {
-                ToolbarItems.Remove(SourcesToolbarItem);
-                Title = string.Empty;
-            }
-        }
+			if (Device.OS == TargetPlatform.Android)
+			{
+				ToolbarItems.Remove(SourcesToolbarItem);
+				Title = string.Empty;
+			}
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            GraphView.OnAppearing();
-        }
+			Tabs.SelectionChanged = selected =>
+			{
+				TableView.IsVisible = (selected == 0);
+				GraphView.IsVisible = (selected == 1);
+			};
+		}
 
-        void updateView()
-        {
-            var sum = moneySum;
-            var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
 
-            Header.TitleText = (sum.Amount > 0) ? sum.ToString() : string.Format("? {0}", sum.Currency.Code);
-            Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, amountDifferentCurrencies);
-        }
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			GraphView.OnAppearing();
+			Tabs.OnAppearing();
+		}
 
-        Money moneySum
-        {
-            get
-            {
-                var neededRates = new List<ExchangeRate>();
+		void updateView()
+		{
+			var sum = moneySum;
+			var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
 
-                var amount = AccountStorage.Instance.AllElements.Select(a =>
-                {
-                    var neededRate = new ExchangeRate(a.Money.Currency, ApplicationSettings.BaseCurrency);
-                    var rate = ExchangeRateHelper.GetRate(neededRate);
+			Header.TitleText = (sum.Amount > 0) ? sum.ToString() : string.Format("? {0}", sum.Currency.Code);
+			Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, amountDifferentCurrencies);
+		}
 
-                    if (rate == null || !rate.Rate.HasValue)
-                    {
-                        neededRates.Add(neededRate);
-                    }
+		Money moneySum
+		{
+			get
+			{
+				var neededRates = new List<ExchangeRate>();
 
-                    return a.Money.Amount * (rate ?? neededRate).RateNotNull;
-                }).Sum();
+				var amount = AccountStorage.Instance.AllElements.Select(a =>
+				{
+					var neededRate = new ExchangeRate(a.Money.Currency, ApplicationSettings.BaseCurrency);
+					var rate = ExchangeRateHelper.GetRate(neededRate);
 
-                AppTasks.Instance.StartMissingRatesTask(neededRates.Distinct());
+					if (rate == null || !rate.Rate.HasValue)
+					{
+						neededRates.Add(neededRate);
+					}
 
-                return new Money(amount, ApplicationSettings.BaseCurrency);
-            }
-        }
+					return a.Money.Amount * (rate ?? neededRate).RateNotNull;
+				}).Sum();
 
-        public void TabChanged(object o, EventArgs e)
-        {
-            var selected = TabControl.SelectedSegment;
+				AppTasks.Instance.StartMissingRatesTask(neededRates.Distinct());
 
-            TableView.IsVisible = (selected == 0);
-            GraphView.IsVisible = (selected == 1);
-        }
+				return new Money(amount, ApplicationSettings.BaseCurrency);
+			}
+		}
 
-        void addSubscriber()
-        {
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
+		void addSubscriber()
+		{
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
 
-            MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
-            MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));
-        }
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));
+		}
 
-        public async void Add(object sender, EventArgs e)
-        {
-            await AccountsView.AddDialog(this);
-        }
+		public async void Add(object sender, EventArgs e)
+		{
+			await AccountsView.AddDialog(this);
+		}
 
-        public async void SourcesClicked(object sender, EventArgs e)
-        {
-            await AccountsView.OpenSourcesView(Navigation);
-        }
+		public async void SourcesClicked(object sender, EventArgs e)
+		{
+			await AccountsView.OpenSourcesView(Navigation);
+		}
 
-        void setLoadingAnimation(FetchSpeed speed, bool loading)
-        {
-            if (speed.Speed == FetchSpeedEnum.SLOW)
-            {
-                IsBusy = loading;
-            }
-            else
-            {
-                Header.IsLoading = loading;
-            }
-        }
-    }
+		void setLoadingAnimation(FetchSpeed speed, bool loading)
+		{
+			if (speed.Speed == FetchSpeedEnum.SLOW)
+			{
+				IsBusy = loading;
+			}
+			else
+			{
+				Header.IsLoading = loading;
+			}
+		}
+	}
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace constants
 {
@@ -10,7 +9,7 @@ namespace constants
 
         public static readonly int AndroidFontSize = 17;
 		public static readonly Color FontColor = Color.FromHex("222");
-		public static readonly Color BackgroundColor = (Device.OS == TargetPlatform.Android) ?  Color.FromHex("EEE") : Color.FromHex("EEE");
+		public static readonly Color BackgroundColor = (Device.OS == TargetPlatform.Android) ?  Color.FromHex("EEE") : Color.FromHex("FFF");
         public static readonly double OpacityDisabledField = 0.5;
 		public static readonly Color FontColorLight = FontColor.MultiplyAlpha(OpacityDisabledField);
 
