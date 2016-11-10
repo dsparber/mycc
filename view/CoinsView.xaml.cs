@@ -21,6 +21,8 @@ namespace view
 		ContentView TableView;
 		CoinsGraphView GraphView;
 
+        bool loadedView;
+
 		public CoinsView()
 		{
 			InitializeComponent();
@@ -36,9 +38,7 @@ namespace view
 			Stack.Children.Add(GraphView);
 			GraphView.IsVisible = false;
 
-			Tabs.Color = AppConstants.ThemeColor;
-			Tabs.BgColor = AppConstants.BackgroundColor;
-			Tabs.Tabs = new List<string> { "X", "Y" };
+			Tabs.Tabs = new List<string> { InternationalisationResources.Table, InternationalisationResources.Graph};
 
 			addSubscriber();
 
@@ -59,8 +59,11 @@ namespace view
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-			GraphView.OnAppearing();
-			Tabs.OnAppearing();
+            if (!loadedView)
+            {
+                loadedView = true;
+                GraphView.OnAppearing();
+            }
 		}
 
 		void updateView()

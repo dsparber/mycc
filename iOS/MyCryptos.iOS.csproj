@@ -80,14 +80,6 @@
     <CodesignProvision>4fa0b4ad-2a04-4e5b-9917-b5b4e499abde</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SegmentedControl.FormsPlugin.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SegmentedControl.FormsPlugin.1.1.0\lib\Xamarin.iOS10\SegmentedControl.FormsPlugin.Abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SegmentedControl.FormsPlugin.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SegmentedControl.FormsPlugin.1.1.0\lib\Xamarin.iOS10\SegmentedControl.FormsPlugin.iOS.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -178,12 +170,6 @@
     </Reference>
     <Reference Include="XLabs.Serialization.Json.NET">
       <HintPath>..\packages\XLabs.Serialization.JSON.2.3.0-pre02\lib\portable-net45+netcore45+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Serialization.Json.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="FreshEssentials">
-      <HintPath>..\packages\FreshEssentials.2.1.2\lib\Xamarin.iOS10\FreshEssentials.dll</HintPath>
-    </Reference>
-    <Reference Include="FreshEssentials.iOS">
-      <HintPath>..\packages\FreshEssentials.2.1.2\lib\Xamarin.iOS10\FreshEssentials.iOS.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -294,9 +280,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\graph.js" />
-    <Content Include="Html\segmentedControl.css" />
-    <Content Include="Html\segmentedControl.html" />
-    <Content Include="Html\segmentedControl.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\Chart.min.js">
