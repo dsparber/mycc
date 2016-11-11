@@ -31,7 +31,9 @@ var data;
 var chart;
 
 /* Display the graph */
-function displayGraph(l, d) {
+function displayGraph(l, d, color) {
+    
+    document.body.style.backgroundColor = color;
     
     labels = l;
     data = d;
@@ -42,45 +44,48 @@ function displayGraph(l, d) {
 
 function generateGraph(){
     
-    /* Remove children*/
-    var canvas =  document.getElementById("chart");
-    var node = document.getElementById('graphWrapper');
-    while (node.hasChildNodes()) {
-        node.removeChild(node.firstChild);
-    }
-    node.appendChild(canvas);  
-    
-    var ctx = document.getElementById("chart");
-    
-    if (chart !== undefined){
-        chart.destroy();
-    }
-    chart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: data,
-                backgroundColor: colors,
-                borderColor: colors,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            tooltips: false,
-            cutoutPercentage: 10,
-            animation: {
-                duration: 0
-            }
+    if (data != undefined) {
+
+        /* Remove children*/
+        var canvas = document.getElementById("chart");
+        var node = document.getElementById('graphWrapper');
+        while (node.hasChildNodes()) {
+            node.removeChild(node.firstChild);
         }
-    });
-    
-    document.getElementById("chart").onclick = function (e) {
-        var activePoint = chart.getElementAtEvent(e);
-        Native("selectedCallback", activePoint[0]._index);
-    };
-    
-    document.getElementById("legend").innerHTML = chart.generateLegend();
+        node.appendChild(canvas);
+
+        var ctx = document.getElementById("chart");
+
+        if (chart !== undefined) {
+            chart.destroy();
+        }
+        chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: colors,
+                    borderColor: colors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                tooltips: false,
+                cutoutPercentage: 10,
+                animation: {
+                    duration: 0
+                }
+            }
+        });
+
+        document.getElementById("chart").onclick = function (e) {
+            var activePoint = chart.getElementAtEvent(e);
+            Native("selectedCallback", activePoint[0]._index);
+        };
+
+        document.getElementById("legend").innerHTML = chart.generateLegend();
+    }
 }
 
 function resize(){

@@ -76,6 +76,7 @@ namespace view
 
 		void setHeader()
 		{
+            Title = currency.Code;
 			Header.TitleText = moneySum.ToString();
 
 			var exchangeRate = ExchangeRates.Find(e => e.SecondaryCurrency.Equals(ApplicationSettings.BaseCurrency));

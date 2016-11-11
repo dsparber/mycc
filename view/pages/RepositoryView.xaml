@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
+  xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
+  BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
+	x:Class="view.RepositoryView">
+	<ContentPage.Content>
+    <AbsoluteLayout>
+
+      <components:HeaderView
+        x:Name="Header"
+        AbsoluteLayout.LayoutBounds="0,0,1,160"
+        AbsoluteLayout.LayoutFlags="WidthProportional" />
+
+      <ScrollView
+        Padding ="0,160,0,0"
+        AbsoluteLayout.LayoutBounds="0,0,1,1"
+        AbsoluteLayout.LayoutFlags="SizeProportional">
+
+        <TableView
+          x:Name="TableView"
+          Intent="Form"
+          Margin="0,-8,0,0">
+          <TableView.BackgroundColor>
+            <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
+          </TableView.BackgroundColor>
+          <TableSection
+            Title="{i18n:Translate Label}">
+            <components:CustomEntryCell
+              x:Name="RepositoryNameEntryCell"
+              Title="{i18n:Translate Name}"
+              Placeholder="{i18n:Translate Name}" />
+          </TableSection>
+          <TableSection
+            x:Name="DeleteSection">
+            <components:CustomViewCell
+              x:Name="DeleteButtonCell"
+              Text="{i18n:Translate Delete}"
+              IsDeleteActionCell="true" />
+          </TableSection>
+        </TableView>
+
+      </ScrollView>
+
+    </AbsoluteLayout>    
+	</ContentPage.Content>
+</ContentPage>

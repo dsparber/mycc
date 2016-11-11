@@ -2,8 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="MyCryptos.view.CoinsTableView">
   <ContentView.Content>
     <TableView
-				Intent="Data"
-        Margin="0,-8,0,0">
+				Intent="Data">
         <TableSection
       		x:Name="CoinsSection" />
       </TableView>

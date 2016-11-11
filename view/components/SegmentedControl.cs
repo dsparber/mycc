@@ -31,12 +31,12 @@ namespace MyCryptos.view.components
             SelectedIndex = 0;
 
             stack = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.Center, Spacing = 1 };
-            var frame = new Frame { Content = stack, Margin = 5, OutlineColor = AppConstants.ThemeColor, BackgroundColor = AppConstants.ThemeColor, HasShadow = false, Padding = 0, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center };
+            var frame = new Frame { Content = stack, OutlineColor = AppConstants.ThemeColor, BackgroundColor = AppConstants.ThemeColor, HasShadow = false, Padding = 0, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center };
             if (Device.OS == TargetPlatform.Android)
             {
                 frame.Padding = 1;
             }
-            Content = new ContentView { Content = frame };
+            Content = new ContentView { Content = frame, BackgroundColor = AppConstants.BackgroundColor, Padding = 10 };
 
             updateView();
         }

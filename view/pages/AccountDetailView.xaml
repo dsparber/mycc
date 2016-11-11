@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
+  xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
+  BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
+	x:Class="view.AccountDetailView">
+  <ContentPage.Content>
+    <AbsoluteLayout>
+
+      <components:HeaderView
+        x:Name="Header"
+        AbsoluteLayout.LayoutBounds="0,0,1,160"
+        AbsoluteLayout.LayoutFlags="WidthProportional" />
+
+      <ScrollView
+        Padding ="0,160,0,0"
+        AbsoluteLayout.LayoutBounds="0,0,1,1"
+        AbsoluteLayout.LayoutFlags="SizeProportional">
+        <StackLayout>
+          <StackLayout.BackgroundColor>
+            <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
+          </StackLayout.BackgroundColor>
+
+
+          <TableView
+            x:Name="DefaultView"
+            Intent="Form">
+            <TableView.BackgroundColor>
+              <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
+            </TableView.BackgroundColor>
+            <TableSection
+              Title="{i18n:Translate EqualTo}"
+              x:Name="EqualsSection">
+            </TableSection>
+          </TableView>
+
+          <TableView
+            x:Name="EditView"
+            Intent="Form"
+            IsVisible="false">
+            <TableView.BackgroundColor>
+              <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
+            </TableView.BackgroundColor>
+            <TableView.Root>
+              <TableSection
+                x:Name="AccountSection">
+                <components:CustomEntryCell
+                  x:Name="AccountName"
+                  Title="{i18n:Translate Name}"
+                  Placeholder="{i18n:Translate LabelExample}" />
+              </TableSection>
+              <TableSection x:Name="DeleteSection">
+                <components:CustomViewCell
+                x:Name="DeleteButtonCell"
+                Text="{i18n:Translate Delete}"
+                IsDeleteActionCell="true" />
+              </TableSection>
+            </TableView.Root>
+          </TableView>
+
+        </StackLayout>
+      </ScrollView>
+    </AbsoluteLayout>
+  </ContentPage.Content>
+</ContentPage>

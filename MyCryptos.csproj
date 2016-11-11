@@ -85,23 +85,23 @@
     <Compile Include="view\addrepositoryviews\AbstractAddRepositoryView.cs" />
     <Compile Include="view\addrepositoryviews\AddBittrexRepositoryView.cs" />
     <Compile Include="view\addrepositoryviews\AddBlockchainRepositoryView.cs" />
-    <Compile Include="view\CoinsTableView.xaml.cs">
+    <Compile Include="view\components\CoinsTableView.xaml.cs">
       <DependentUpon>CoinsTableView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\CoinsView.xaml.cs">
+    <Compile Include="view\pages\CoinsView.xaml.cs">
       <DependentUpon>CoinsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\AccountsView.xaml.cs">
+    <Compile Include="view\pages\AccountsView.xaml.cs">
       <DependentUpon>AccountsView.xaml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="view\components\CustomSwitchCell.cs" />
-    <Compile Include="view\components\CustomPickerCell.cs" />
+    <Compile Include="view\components\cells\CustomSwitchCell.cs" />
+    <Compile Include="view\components\cells\CustomPickerCell.cs" />
     <Compile Include="view\components\HeaderView.xaml.cs">
       <DependentUpon>HeaderView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\MasterDetailContainerView.cs" />
-    <Compile Include="view\SettingsView.xaml.cs">
+    <Compile Include="view\container\MasterDetailContainerView.cs" />
+    <Compile Include="view\pages\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="resources\ILocalise.cs" />
@@ -109,7 +109,7 @@
     <Compile Include="view\TagsView.xaml.cs">
       <DependentUpon>TagsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\TabContainerView.cs" />
+    <Compile Include="view\container\TabContainerView.cs" />
     <Compile Include="resources\InternationalisationResources.Designer.cs">
       <DependentUpon>InternationalisationResources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -122,18 +122,18 @@
     <Compile Include="message\MessageConstants.cs" />
     <Compile Include="enums\SortOrder.cs" />
     <Compile Include="enums\SortDirection.cs" />
-    <Compile Include="view\components\CoinViewCell.cs" />
-    <Compile Include="view\components\CustomIconCell.cs" />
-    <Compile Include="view\CoinDetailView.xaml.cs">
+    <Compile Include="view\components\cells\CoinViewCell.cs" />
+    <Compile Include="view\components\cells\CustomIconCell.cs" />
+    <Compile Include="view\pages\CoinDetailView.xaml.cs">
       <DependentUpon>CoinDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="constants\AppConstants.cs" />
-    <Compile Include="view\components\AccountViewCell.cs" />
+    <Compile Include="view\components\cells\AccountViewCell.cs" />
     <Compile Include="helpers\SortHelper.cs" />
-    <Compile Include="view\AccountDetailView.xaml.cs">
+    <Compile Include="view\pages\AccountDetailView.xaml.cs">
       <DependentUpon>AccountDetailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\components\CurrencyEntryCell.cs" />
+    <Compile Include="view\components\cells\CurrencyEntryCell.cs" />
     <Compile Include="data\repositories\availablerates\AvailableRatesRepository.cs" />
     <Compile Include="data\repositories\availablerates\LocalAvailableRatesRepository.cs" />
     <Compile Include="data\database\models\AvailableRatesRepositoryDBM.cs" />
@@ -149,18 +149,18 @@
     <Compile Include="data\factories\AvailableRatesFactory.cs" />
     <Compile Include="data\database\AvailableRatesRepositoryDatabase.cs" />
     <Compile Include="data\repositories\general\AbstractAvailabilityRepository.cs" />
-    <Compile Include="view\components\CustomViewCell.cs" />
-    <Compile Include="view\components\ReferenceValueViewCell.cs" />
-    <Compile Include="view\components\CustomEntryCell.cs" />
+    <Compile Include="view\components\cells\CustomViewCell.cs" />
+    <Compile Include="view\components\cells\ReferenceValueViewCell.cs" />
+    <Compile Include="view\components\cells\CustomEntryCell.cs" />
     <Compile Include="view\components\ReferenceCurrenciesSection.cs" />
-    <Compile Include="view\components\SortableViewCell.cs" />
-    <Compile Include="view\AddRepositoryView.xaml.cs">
+    <Compile Include="view\components\cells\SortableViewCell.cs" />
+    <Compile Include="view\pages\AddRepositoryView.xaml.cs">
       <DependentUpon>AddRepositoryView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\SourcesView.xaml.cs">
+    <Compile Include="view\pages\SourcesView.xaml.cs">
       <DependentUpon>SourcesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\RepositoryView.xaml.cs">
+    <Compile Include="view\pages\RepositoryView.xaml.cs">
       <DependentUpon>RepositoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="data\repositories\account\BlockExpertsAccountRepository.cs" />
@@ -176,7 +176,7 @@
     <Compile Include="data\database\models\CurrencyRepositoryMapDBM.cs" />
     <Compile Include="data\database\CurrencyRepositoryMapDatabase.cs" />
     <Compile Include="helpers\ExchangeRateHelper.cs" />
-    <Compile Include="view\CoinsGraphView.cs" />
+    <Compile Include="view\components\CoinsGraphView.cs" />
     <Compile Include="view\components\SegmentedControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
@@ -270,15 +270,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="view\CoinsView.xaml">
+    <EmbeddedResource Include="view\pages\CoinsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\AccountsView.xaml">
+    <EmbeddedResource Include="view\pages\AccountsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\SettingsView.xaml">
+    <EmbeddedResource Include="view\pages\SettingsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="view\TagsView.xaml">
@@ -292,25 +292,25 @@
     <EmbeddedResource Include="resources\InternationalisationResources.de.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\CoinDetailView.xaml">
+    <EmbeddedResource Include="view\pages\CoinDetailView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\AccountDetailView.xaml">
+    <EmbeddedResource Include="view\pages\AccountDetailView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\AddRepositoryView.xaml">
+    <EmbeddedResource Include="view\pages\AddRepositoryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\SourcesView.xaml">
+    <EmbeddedResource Include="view\pages\SourcesView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\RepositoryView.xaml">
+    <EmbeddedResource Include="view\pages\RepositoryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="view\CoinsTableView.xaml">
+    <EmbeddedResource Include="view\components\CoinsTableView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
