@@ -42,9 +42,7 @@ namespace view
 			Accounts = accs.Where(t => t.Item1.Money.Currency.Equals(currency)).ToList();
 
 			var currencies = ApplicationSettings.ReferenceCurrencies;
-			currencies.Add(ApplicationSettings.BaseCurrency);
-			currencies = currencies.Distinct().ToList();
-
+			
 			ExchangeRates = new List<ExchangeRate>();
 			foreach (var c in currencies)
 			{
@@ -64,9 +62,13 @@ namespace view
 
 			var table = new ReferenceCurrenciesSection(moneySum);
 			ReferenceValueCells = table.Cells;
+            EqualsSection.Clear();
+            foreach (var c in ReferenceValueCells)
+            {
+                EqualsSection.Add(c);
+            }
 
 			SortHelper.ApplySortOrder(Cells, AccountSection);
-			SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
 
 			var neededRates = ReferenceValueCells.Where(c => c.IsLoading).Select(c => c.ExchangeRate);
 			AppTasks.Instance.StartMissingRatesTask(neededRates);
@@ -113,7 +115,8 @@ namespace view
 				}
 			});
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => loadData());
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => loadData());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrencies, str => loadData());
+            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => loadData());
 		}
 	}
 }

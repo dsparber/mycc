@@ -375,4 +375,22 @@
   <data name="Table" xml:space="preserve">
     <value>Tabelle</value>
   </data>
+  <data name="Appeareance" xml:space="preserve">
+    <value>Darstellung</value>
+  </data>
+  <data name="Sorting" xml:space="preserve">
+    <value>Sortierung</value>
+  </data>
+  <data name="AdditionalReferenceCurrency" xml:space="preserve">
+    <value>Weitere Referenzwährung</value>
+  </data>
+  <data name="AddReferenceCurrency" xml:space="preserve">
+    <value>Referenzwährung hinzufügen</value>
+  </data>
+  <data name="PrimaryReferenceCurrency" xml:space="preserve">
+    <value>Primäre Währung</value>
+  </data>
+  <data name="ReferenceCurrencies" xml:space="preserve">
+    <value>Referenzwährungen</value>
+  </data>
 </root>

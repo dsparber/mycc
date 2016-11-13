@@ -280,6 +280,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\graph.js" />
+    <BundleResource Include="Resources\delete.png" />
+    <BundleResource Include="Resources\delete%402x.png" />
+    <BundleResource Include="Resources\delete%403x.png" />
+    <BundleResource Include="Resources\up.png" />
+    <BundleResource Include="Resources\up%402x.png" />
+    <BundleResource Include="Resources\up%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\Chart.min.js">

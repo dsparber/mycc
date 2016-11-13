@@ -1,5 +1,7 @@
 ﻿using constants;
 using MyCryptos.resources;
+using MyCryptos.view.components.cells;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace MyCryptos.view.components
@@ -10,12 +12,14 @@ namespace MyCryptos.view.components
         protected readonly Label DetailLabel;
         protected readonly StackLayout LoadingView;
         readonly StackLayout stack;
+        readonly StackLayout ActionItemsStack;
         protected readonly Image AccessoryImage;
 
         string text { get; set; }
         string detail { get; set; }
         string image { get; set; }
         bool isLoading { get; set; }
+        List<CustomViewCellActionItem> actions;
 
         public string Text
         {
@@ -32,6 +36,12 @@ namespace MyCryptos.view.components
         {
             get { return image; }
             set { image = value; AccessoryImage.Source = ImageSource.FromFile(image); }
+        }
+
+        public List<CustomViewCellActionItem> ActionItems
+        {
+            get { return actions; }
+            set { actions = value; setActionItems(); }
         }
 
         public bool IsLoading
@@ -72,9 +82,11 @@ namespace MyCryptos.view.components
             stack.Children.Add(LoadingView);
 
             AccessoryImage = new Image { HeightRequest = 20, HorizontalOptions = LayoutOptions.End };
+            ActionItemsStack = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.End };
 
             var mainView = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Fill };
             mainView.Children.Add(stack);
+            mainView.Children.Add(ActionItemsStack);
             mainView.Children.Add(AccessoryImage);
 
 
@@ -89,6 +101,20 @@ namespace MyCryptos.view.components
             }
 
             IsLoading = false;
+        }
+
+        void setActionItems() {
+
+            ActionItemsStack.Children.Clear();
+            foreach (var a in actions)
+            {
+                var image = new Image { Source = ImageSource.FromFile(a.Icon) };
+                var gestureRecognizer = new TapGestureRecognizer ();
+                gestureRecognizer.Tapped += a.Action;
+                gestureRecognizer.CommandParameter = a.Data;
+                image.GestureRecognizers.Add(gestureRecognizer);
+                ActionItemsStack.Children.Add(image);
+            }
         }
 
         public override decimal Units { get { return 0; } }

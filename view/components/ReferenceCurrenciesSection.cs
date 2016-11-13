@@ -22,7 +22,7 @@ namespace MyCryptos.view.components
 				throw new ArgumentNullException();
 			}
 
-			var currencies = ApplicationSettings.ReferenceCurrencies.Concat(new List<Currency> { ApplicationSettings.BaseCurrency }).Distinct();
+            var currencies = ApplicationSettings.ReferenceCurrencies;
 
 			Section = new TableSection { Title = InternationalisationResources.EqualTo };
 			Cells = new List<ReferenceValueViewCell>();
@@ -37,8 +37,6 @@ namespace MyCryptos.view.components
 				Cells.Add(cell);
 				Section.Add(cell);
 			}
-
-			SortHelper.ApplySortOrder(Cells, Section);
 		}
 	}
 }

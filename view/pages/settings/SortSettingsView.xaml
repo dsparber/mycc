@@ -1,22 +1,14 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage
-	xmlns="http://xamarin.com/schemas/2014/forms"
-	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+  xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  x:Class="MyCryptos.view.pages.settings.SortSettingsView"
+  xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
-	x:Class="view.SettingsView"
-	Title="{i18n:Translate SettingsTitle}">
-  <ContentPage.BackgroundColor>
-    <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
-  </ContentPage.BackgroundColor>
-  <ContentPage.Content>
-    <TableView
-        Intent="Settings">
-      <TableSection
-				Title="{i18n:Translate ReferenceCurrency}"
-				x:Name="CurrencySection">
-      </TableSection>
-      <TableSection
+	Title="{i18n:Translate Sorting}">
+  <TableView
+    Intent="Settings">
+    <TableSection
 				Title="{i18n:Translate SortOrder}">
         <components:CustomIconCell
 					x:Name="SortOrderAlphabetical"
@@ -47,12 +39,5 @@
 					Text="{i18n:Translate Descending}"
 					Icon="checkmark.png" />
       </TableSection>
-      <TableSection
-				Title="{i18n:Translate AutomaticallyRefresh}">
-        <components:CustomSwitchCell
-					x:Name="AutoRefresh"
-					Title="{i18n:Translate RefreshOnStartup}" />
-      </TableSection>
-    </TableView>
-  </ContentPage.Content>
+  </TableView>
 </ContentPage>

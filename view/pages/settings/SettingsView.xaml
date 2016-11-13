@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
+	x:Class="view.SettingsView"
+	Title="{i18n:Translate SettingsTitle}">
+  <ContentPage.BackgroundColor>
+    <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
+  </ContentPage.BackgroundColor>
+  <ContentPage.Content>
+    <TableView
+        Intent="Settings">
+      <TableSection
+				Title="{i18n:Translate ReferenceCurrencies}"
+				x:Name="CurrencySection">
+      </TableSection>
+      <TableSection
+        Title="{i18n:Translate Appeareance}">
+        <components:CustomViewCell 
+          Text="{i18n:Translate Sorting}"
+          x:Name="SortingCell" 
+          Image="more.png"/>
+      </TableSection>
+      <TableSection
+				Title="{i18n:Translate AutomaticallyRefresh}">
+        <components:CustomSwitchCell
+					x:Name="AutoRefresh"
+					Title="{i18n:Translate RefreshOnStartup}" />
+      </TableSection>
+    </TableView>
+  </ContentPage.Content>
+</ContentPage>

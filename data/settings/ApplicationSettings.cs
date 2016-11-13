@@ -3,6 +3,8 @@ using MyCryptos.models;
 using enums;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Xamarin.Forms;
+using message;
 
 namespace data.settings
 {
@@ -38,7 +40,8 @@ namespace data.settings
 			set
 			{
 				Settings.Set(Settings.KEY_BASE_CURRENCY, JsonConvert.SerializeObject(value));
-			}
+                MessagingCenter.Send(string.Empty, MessageConstants.UpdatedReferenceCurrency);
+            }
 		}
 
 		public static List<Currency> ReferenceCurrencies
@@ -53,13 +56,16 @@ namespace data.settings
 				var defaultValue = JsonConvert.SerializeObject(currencies);
 
 				var json = Settings.Get(Settings.KEY_REFERENCE_CURRENCIES, defaultValue);
-				var currency = JsonConvert.DeserializeObject<List<Currency>>(json);
-				return currency;
+				var data = JsonConvert.DeserializeObject<List<Currency>>(json);
+                data.RemoveAll(c => c.Equals(BaseCurrency));
+                data.Insert(0, BaseCurrency);
+                return data;
 			}
 			set
 			{
-				Settings.Set(Settings.KEY_REFERENCE_CURRENCIES, value);
-			}
+				Settings.Set(Settings.KEY_REFERENCE_CURRENCIES, JsonConvert.SerializeObject(value));
+                MessagingCenter.Send(string.Empty, MessageConstants.UpdatedReferenceCurrencies);
+            }
 		}
 
 		public static SortOrder SortOrder
@@ -73,8 +79,9 @@ namespace data.settings
 			set
 			{
 				Settings.Set(Settings.KEY_SORT_ORDER, value.ToString());
-			}
-		}
+                MessagingCenter.Send(string.Empty, MessageConstants.UpdatedSortOrder);
+            }
+        }
 
 		public static SortDirection SortDirection
 		{
@@ -87,8 +94,10 @@ namespace data.settings
 			set
 			{
 				Settings.Set(Settings.KEY_SORT_DIRECTION, value.ToString());
-			}
-		}
+                MessagingCenter.Send(string.Empty, MessageConstants.UpdatedSortOrder);
+
+            }
+        }
 
 		public static bool AutoRefreshOnStartup
 		{

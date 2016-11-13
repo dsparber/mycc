@@ -85,9 +85,11 @@
     <Compile Include="view\addrepositoryviews\AbstractAddRepositoryView.cs" />
     <Compile Include="view\addrepositoryviews\AddBittrexRepositoryView.cs" />
     <Compile Include="view\addrepositoryviews\AddBlockchainRepositoryView.cs" />
+    <Compile Include="view\components\cells\CustomViewCellActionItem.cs" />
     <Compile Include="view\components\CoinsTableView.xaml.cs">
       <DependentUpon>CoinsTableView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\overlays\CurrencyOverlay.cs" />
     <Compile Include="view\pages\CoinsView.xaml.cs">
       <DependentUpon>CoinsView.xaml</DependentUpon>
     </Compile>
@@ -101,11 +103,14 @@
       <DependentUpon>HeaderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\container\MasterDetailContainerView.cs" />
-    <Compile Include="view\pages\SettingsView.xaml.cs">
+    <Compile Include="view\pages\settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="resources\ILocalise.cs" />
     <Compile Include="resources\TranslateExtension.cs" />
+    <Compile Include="view\pages\settings\SortSettingsView.xaml.cs">
+      <DependentUpon>SortSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\TagsView.xaml.cs">
       <DependentUpon>TagsView.xaml</DependentUpon>
     </Compile>
@@ -278,7 +283,7 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\SettingsView.xaml">
+    <EmbeddedResource Include="view\pages\settings\SettingsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="view\TagsView.xaml">
@@ -311,6 +316,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="view\components\CoinsTableView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="view\pages\settings\SortSettingsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

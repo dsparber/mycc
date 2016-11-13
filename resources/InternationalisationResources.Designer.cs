@@ -143,11 +143,29 @@ namespace MyCryptos.resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Additional currency.
+        /// </summary>
+        public static string AdditionalReferenceCurrency {
+            get {
+                return ResourceManager.GetString("AdditionalReferenceCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add local account.
         /// </summary>
         public static string AddLocalAccount {
             get {
                 return ResourceManager.GetString("AddLocalAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add reference currency.
+        /// </summary>
+        public static string AddReferenceCurrency {
+            get {
+                return ResourceManager.GetString("AddReferenceCurrency", resourceCulture);
             }
         }
         
@@ -193,6 +211,15 @@ namespace MyCryptos.resources {
         public static string ApiKey {
             get {
                 return ResourceManager.GetString("ApiKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appeareance.
+        /// </summary>
+        public static string Appeareance {
+            get {
+                return ResourceManager.GetString("Appeareance", resourceCulture);
             }
         }
         
@@ -611,6 +638,24 @@ namespace MyCryptos.resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Primary currency.
+        /// </summary>
+        public static string PrimaryReferenceCurrency {
+            get {
+                return ResourceManager.GetString("PrimaryReferenceCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reference currencies.
+        /// </summary>
+        public static string ReferenceCurrencies {
+            get {
+                return ResourceManager.GetString("ReferenceCurrencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reference Currency.
         /// </summary>
         public static string ReferenceCurrency {
@@ -724,6 +769,15 @@ namespace MyCryptos.resources {
         public static string SortDirection {
             get {
                 return ResourceManager.GetString("SortDirection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorting.
+        /// </summary>
+        public static string Sorting {
+            get {
+                return ResourceManager.GetString("Sorting", resourceCulture);
             }
         }
         

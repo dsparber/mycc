@@ -52,10 +52,10 @@ namespace view
 				done.Clicked += DoneEditing;
 				ToolbarItems.Add(edit);
 
-				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, str => SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection));
 				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateReferenceValues());
 				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateReferenceValues());
-			}
+				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrencies, str => updateReferenceValues());
+            }
 			else
 			{
 				setToNewView();
@@ -146,7 +146,6 @@ namespace view
 			{
 				Title = account.Name;
 			}
-			Header.TitleText = account.Money.ToString();
 			Header.InfoText = string.Format(InternationalisationResources.SourceText, repository.Name);
 			currencyEntryCell.SelectedMoney = account.Money;
 
@@ -157,11 +156,13 @@ namespace view
 		{
 			var table = new ReferenceCurrenciesSection(account.Money);
 			ReferenceValueCells.Clear();
+            EqualsSection.Clear();
 			foreach (var cell in table.Cells)
 			{
 				ReferenceValueCells.Add(cell);
+                EqualsSection.Add(cell);
 			}
-			SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
+            Header.TitleText = account.Money.ToString();
 		}
 
 		protected override void OnAppearing()
