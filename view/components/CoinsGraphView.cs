@@ -20,7 +20,7 @@ namespace MyCryptos.view
     public class CoinsGraphView : ContentView
     {
         HybridWebView WebView;
-   
+
         public CoinsGraphView(INavigation navigation)
         {
             var resolverContainer = new SimpleContainer();
@@ -36,10 +36,12 @@ namespace MyCryptos.view
             };
             WebView.RegisterCallback("selectedCallback", t =>
             {
-                var element = graphItems.ToArray()[Convert.ToInt32(t)];
-                var currency = CurrencyStorage.Instance.AllElements.Find(e => e.Code.Equals(element.Item1));
-
-                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinDetailView(currency)));
+                var element = graphItemsGrouped.ToArray()[Convert.ToInt32(t)];
+                if (!element.Item1.Contains(InternationalisationResources.Others.Replace("{0}", string.Empty).Trim()))
+                {
+                    var currency = CurrencyStorage.Instance.AllElements.Find(e => e.Code.Equals(element.Item1));
+                    Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinDetailView(currency)));
+                }
             });
 
             Content = WebView;
@@ -61,12 +63,12 @@ namespace MyCryptos.view
 
         void updateView()
         {
-            var items = graphItems.ToList();
+            var items = graphItemsGrouped.ToList();
 
             if (items.Count > 0)
             {
                 var c = AppConstants.BackgroundColor;
-                WebView.CallJsFunction("displayGraph", items.Select(e => e.Item1).ToArray(), items.Select(e => e.Item2).ToArray(), string.Format("rgba({0},{1},{2},{3})", c.R * 255, c.G * 255, c.B * 255, c.A));                            
+                WebView.CallJsFunction("displayGraph", items.Select(e => e.Item1).ToArray(), items.Select(e => e.Item2).ToArray(), string.Format("rgba({0},{1},{2},{3})", c.R * 255, c.G * 255, c.B * 255, c.A));
             }
         }
 

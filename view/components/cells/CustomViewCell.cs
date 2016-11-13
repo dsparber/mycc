@@ -108,7 +108,7 @@ namespace MyCryptos.view.components
             ActionItemsStack.Children.Clear();
             foreach (var a in actions)
             {
-                var image = new Image { Source = ImageSource.FromFile(a.Icon) };
+                var image = new Image { HeightRequest = 20, Source = ImageSource.FromFile(a.Icon) };
                 var gestureRecognizer = new TapGestureRecognizer ();
                 gestureRecognizer.Tapped += a.Action;
                 gestureRecognizer.CommandParameter = a.Data;
