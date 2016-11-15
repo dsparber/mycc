@@ -41,7 +41,7 @@
     <MtouchUseSGen>true</MtouchUseSGen>
     <CodesignKey>iPhone Developer: daniel.sparber@outlook.at (4Q6DP3DYEC)</CodesignKey>
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
-    <CodesignProvision>7937dbd2-182c-4a59-98bb-249f4dbbf634</CodesignProvision>
+    <CodesignProvision>c38dd08f-5c2d-4ab2-b27a-6bba81dbfcce</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -77,7 +77,7 @@
     <MtouchProfiling>true</MtouchProfiling>
     <IpaPackageName>
     </IpaPackageName>
-    <CodesignProvision>4fa0b4ad-2a04-4e5b-9917-b5b4e499abde</CodesignProvision>
+    <CodesignProvision>473b86a7-be67-4d0c-83bb-78a6badcca63</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

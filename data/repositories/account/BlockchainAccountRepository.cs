@@ -84,7 +84,7 @@ namespace data.repositories.account
 				{
 					var btc = Currency.BTC;
 
-					var existing = Elements.First();
+					var existing = Elements.FirstOrDefault();
 					var money = new Money(balance.Value, btc);
 
 

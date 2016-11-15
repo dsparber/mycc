@@ -9,9 +9,9 @@ using MyCryptos.data.database.helper;
 
 namespace data.storage
 {
-	public abstract class AbstractDatabaseStorage<Ta, Va, T, V, IdType> : AbstractStorage<Ta, Va> where Va : AbstractDatabaseRepository<T,V, IdType> where Ta : IEntityDBM<Va, int> where T : IEntityRepositoryIdDBM<V, IdType> where V : PersistableRepositoryElement<IdType>
+	public abstract class AbstractDatabaseStorage<Ta, Va, T, V, IdType> : AbstractStorage<Ta, Va> where Va : AbstractDatabaseRepository<T, V, IdType> where Ta : IEntityDBM<Va, int> where T : IEntityRepositoryIdDBM<V, IdType> where V : PersistableRepositoryElement<IdType>
 	{
-		protected AbstractDatabaseStorage(AbstractDatabase<Ta, Va, int> database) : base(database) {}
+		protected AbstractDatabaseStorage(AbstractDatabase<Ta, Va, int> database) : base(database) { }
 
 		public List<V> AllElements
 		{
@@ -41,11 +41,11 @@ namespace data.storage
 
 		public override async Task Remove(Va repository)
 		{
-			await base.Remove(repository);
-
 			// Delete all elements
 			var repo = Repositories.Find(r => r.Id == repository.Id);
-			await repo.RemoveAll();
+			await repo?.RemoveAll();
+
+			await base.Remove(repository);
 		}
 
 		public abstract Va LocalRepository { get; }
