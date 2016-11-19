@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using data.database.interfaces;
 using data.repositories.currency;
 using SQLite;
+using MyCryptos.data.repositories.currency;
+
 namespace data.database.models
 {
 	[Table("CurrencyRepositories")]
@@ -13,9 +15,10 @@ namespace data.database.models
 		public const int DB_TYPE_BITTREX_REPOSITORY = 3;
 		public const int DB_TYPE_CRYPTONATOR_REPOSITORY = 4;
 		public const int DB_TYPE_BLOCK_EXPERTS_REPOSITORY = 5;
+		public const int DB_TYPE_CRYPTOID_REPOSITORY = 6;
 
 
-		public CurrencyRepositoryDBM() { }
+        public CurrencyRepositoryDBM() { }
 
 		public CurrencyRepositoryDBM(CurrencyRepository repository)
 		{
@@ -42,7 +45,8 @@ namespace data.database.models
 					case DB_TYPE_BTCE_REPOSITORY: return new BtceCurrencyRepository(Name) { Id = Id };
 					case DB_TYPE_CRYPTONATOR_REPOSITORY: return new CryptonatorCurrencyRepository(Name) { Id = Id };
 					case DB_TYPE_BLOCK_EXPERTS_REPOSITORY: return new BlockExpertsCurrencyRepository(Name) { Id = Id };
-					default: throw new NotSupportedException();
+					case DB_TYPE_CRYPTOID_REPOSITORY: return new CryptoIdCurrencyRepository(Name) { Id = Id };
+                    default: throw new NotSupportedException();
 				}
 			});
 		}

@@ -30,6 +30,9 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="data\repositories\account\AddressAndCoinAccountRepository.cs" />
+    <Compile Include="data\repositories\account\CryptoIdAccountRepository.cs" />
+    <Compile Include="data\repositories\currency\CryptoIdCurrencyRepository.cs" />
     <Compile Include="data\repositories\account\BlockchainAccountRepository.cs" />
     <Compile Include="data\repositories\account\EthereumAccountRepository.cs" />
     <Compile Include="data\repositories\account\SimpleJsonAccountRepository.cs" />
@@ -87,6 +90,8 @@
     <Compile Include="view\addrepositoryviews\AbstractAddRepositoryView.cs" />
     <Compile Include="view\addrepositoryviews\AddBittrexRepositoryView.cs" />
     <Compile Include="view\addrepositoryviews\AddAddressRepositoryView.cs" />
+    <Compile Include="view\addrepositoryviews\AddAddressAndCoinRepositoryView.cs" />
+    <Compile Include="view\addrepositoryviews\AddCryptoIdRepositoryView.cs" />
     <Compile Include="view\addrepositoryviews\AddEtherchainRepositoryView.cs" />
     <Compile Include="view\addrepositoryviews\AddBlockchainRepositoryView.cs" />
     <Compile Include="view\components\cells\CustomViewCellActionItem.cs" />

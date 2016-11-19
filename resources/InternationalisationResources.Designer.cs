@@ -323,6 +323,15 @@ namespace MyCryptos.resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CryptoID.
+        /// </summary>
+        public static string CryptoId {
+            get {
+                return ResourceManager.GetString("CryptoId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Currency.
         /// </summary>
         public static string Currency {
@@ -589,6 +598,33 @@ namespace MyCryptos.resources {
         public static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One account.
+        /// </summary>
+        public static string OneAccount {
+            get {
+                return ResourceManager.GetString("OneAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One coin.
+        /// </summary>
+        public static string OneCoin {
+            get {
+                return ResourceManager.GetString("OneCoin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One source.
+        /// </summary>
+        public static string OneSource {
+            get {
+                return ResourceManager.GetString("OneSource", resourceCulture);
             }
         }
         

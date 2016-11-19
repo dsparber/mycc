@@ -81,7 +81,7 @@ namespace view
 				}
 				if (cells.Count == 0)
 				{
-                    if (r is LocalAccountRepository)
+                    if (r.FirstOrDefault() is LocalAccountRepository)
                     {
                         var localAccountCell = new CustomViewCell { Text = InternationalisationResources.AddLocalAccount, IsActionCell = true };
                         localAccountCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AccountDetailView(null, null) { IsNew = true });
@@ -109,7 +109,7 @@ namespace view
 			}
 			else if (accounts == 1)
 			{
-				Header.TitleText = string.Format("{0} {1}", accounts, InternationalisationResources.Account);
+				Header.TitleText = InternationalisationResources.OneAccount;
 			}
 			else
 			{
@@ -122,8 +122,8 @@ namespace view
 			}
 			else if (sources == 1)
 			{
-				Header.InfoText = string.Format("{0} {1}", sources, InternationalisationResources.Source);
-			}
+				Header.InfoText = InternationalisationResources.OneSource;
+            }
 			else
 			{
 				Header.InfoText = string.Format("{0} {1}", sources, InternationalisationResources.Sources);

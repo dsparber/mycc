@@ -15,6 +15,7 @@ namespace data.database.models
 		public const int DB_TYPE_BLOCK_EXPERTS_REPOSITORY = 3;
 		public const int DB_TYPE_BLOCKCHAIN_REPOSITORY = 4;
         public const int DB_TYPE_ETHEREUM_REPOSITORY = 5;
+        public const int DB_TYPE_CRYPTOID_REPOSITORY = 6;
 
         [PrimaryKey, AutoIncrement, Column("_id")]
 		public int Id { get; set; }
@@ -64,6 +65,7 @@ namespace data.database.models
 					case DB_TYPE_BLOCK_EXPERTS_REPOSITORY: return new BlockExpertsAccountRepository(Name, Data) { Id = Id };
 					case DB_TYPE_BLOCKCHAIN_REPOSITORY: return new BlockchainAccountRepository(Name, Data) { Id = Id };
 					case DB_TYPE_ETHEREUM_REPOSITORY: return new EthereumAccountRepository(Name, Data) { Id = Id };
+					case DB_TYPE_CRYPTOID_REPOSITORY: return new CryptoIdAccountRepository(Name, Data) { Id = Id };
                     default: throw new NotSupportedException();
 				}
 			});

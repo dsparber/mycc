@@ -81,7 +81,18 @@ namespace view
 			var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
 
 			Header.TitleText = (sum.Amount > 0) ? sum.ToString() : string.Format("? {0}", sum.Currency.Code);
-			Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, amountDifferentCurrencies);
+            if (amountDifferentCurrencies == 0)
+            {
+                Header.InfoText = InternationalisationResources.NoCoins;
+            }
+            else if (amountDifferentCurrencies == 1)
+            {
+                Header.InfoText = InternationalisationResources.OneCoin;
+            }
+            else
+            {
+                Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, amountDifferentCurrencies);
+            }
 		}
 
 		Money moneySum

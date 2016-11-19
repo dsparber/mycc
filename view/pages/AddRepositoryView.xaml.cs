@@ -36,6 +36,7 @@ namespace view
 			addViews.Add(new AddBlockExpertsRepositoryView(Navigation));
             addViews.Add(new AddBlockchainRepositoryView());
             addViews.Add(new AddEtherchainRepositoryView());
+            addViews.Add(new AddCryptoIdRepositoryView(Navigation));
 
             addViews = addViews.OrderBy(v => v.DefaultName).ToList();
 			RepositorySpecificView = addViews[0];
@@ -51,13 +52,15 @@ namespace view
 				var old = RepositorySpecificView;
 
 				RepositorySpecificView = addViews[TypePickerCell.Picker.SelectedIndex];
+                RepositoryNameEntryCell.Placeholder = RepositorySpecificView.DefaultName;
 
 				TableView.Root.Remove(old.InputSection);
 				TableView.Root.Add(RepositorySpecificView.InputSection);
 			};
 
 			Header.TitleText = RepositorySpecificView.DefaultName;
-			RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
+            RepositoryNameEntryCell.Placeholder = RepositorySpecificView.DefaultName;
+            RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
 		}
 
 		void Cancel(object sender, EventArgs e)

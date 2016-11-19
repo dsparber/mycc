@@ -4,6 +4,7 @@ using data.repositories.currency;
 using data.database.models;
 using System.Threading.Tasks;
 using System;
+using MyCryptos.data.repositories.currency;
 
 namespace data.storage
 {
@@ -18,7 +19,8 @@ namespace data.storage
 			await Add(new BtceCurrencyRepository(null));
 			await Add(new CryptonatorCurrencyRepository(null));
 			await Add(new BlockExpertsCurrencyRepository(null));
-		}
+			await Add(new CryptoIdCurrencyRepository(null));
+        }
 
 		static CurrencyStorage instance { get; set; }
 

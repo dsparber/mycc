@@ -375,4 +375,16 @@
   <data name="Etherchain" xml:space="preserve">
     <value>Etherchain</value>
   </data>
+  <data name="CryptoId" xml:space="preserve">
+    <value>CryptoID</value>
+  </data>
+  <data name="OneAccount" xml:space="preserve">
+    <value>Ein Account</value>
+  </data>
+  <data name="OneCoin" xml:space="preserve">
+    <value>Eine Währung</value>
+  </data>
+  <data name="OneSource" xml:space="preserve">
+    <value>Eine Quelle</value>
+  </data>
 </root>
