@@ -28,6 +28,7 @@ namespace view
             SortingCell.Tapped += (sender, e) => Navigation.PushAsync(new SortSettingsView());
 
             MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, (str) => setSortCellText());
+            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => setReferenceCurrencyCells());
         }
 
         private void setReferenceCurrencyCells()
@@ -36,66 +37,44 @@ namespace view
 
             var referenceCurrencies = new List<Currency>(ApplicationSettings.ReferenceCurrencies);
 
-            var i = 0;
             foreach (var c in referenceCurrencies)
             {
-                var up = new CustomViewCellActionItem { Icon = "up.png", Data = c };
-                var down = new CustomViewCellActionItem { Icon = "down.png", Data = c };
                 var delete = new CustomViewCellActionItem { Icon = "delete.png", Data = c };
-                var items = new List<CustomViewCellActionItem> { up, down, delete };
+                var items = new List<CustomViewCellActionItem> { delete };
 
-                Action applySettings = () =>
+                delete.Action = (sender, e) =>
                 {
-                    ApplicationSettings.BaseCurrency = referenceCurrencies[0];
+                    var cu = (e as TappedEventArgs).Parameter as Currency;
+                    referenceCurrencies.Remove(cu);
+                    if (cu.Equals(ApplicationSettings.BaseCurrency))
+                    {
+                        ApplicationSettings.BaseCurrency = referenceCurrencies[0];
+                    }
                     ApplicationSettings.ReferenceCurrencies = referenceCurrencies;
                     setReferenceCurrencyCells();
                 };
 
-                Action<Currency, int> move = (currency, relativePosition) =>
-                {
-                    var index = referenceCurrencies.IndexOf(currency);
-                    referenceCurrencies.RemoveAt(index);
-                    referenceCurrencies.Insert(index + relativePosition, currency);
-                    applySettings();
-                };
-
-                delete.Action = (sender, e) =>
-                {
-                    referenceCurrencies.Remove((e as TappedEventArgs).Parameter as Currency);
-                    applySettings();
-                };
-
-                up.Action = (sender, e) =>
-                {
-                    var currency = (e as TappedEventArgs).Parameter as Currency;
-                    move(currency, -1);
-                };
-
-                down.Action = (sender, e) =>
-                {
-                    var currency = (e as TappedEventArgs).Parameter as Currency;
-                    move(currency, 1);
-                };
-
-                if (i == 0)
-                {
-                    items.Remove(up);
-                }
-                if (i == referenceCurrencies.Count - 1)
-                {
-                    items.Remove(down);
-                }
                 if (referenceCurrencies.Count <= 1)
                 {
                     items.Remove(delete);
                 }
 
                 var cell = new CustomViewCell { Text = c.Code, ActionItems = items };
-                cell.Detail = (c.Equals(ApplicationSettings.BaseCurrency)) ? InternationalisationResources.PrimaryReferenceCurrency : InternationalisationResources.AdditionalReferenceCurrency;
+                if (c.Equals(ApplicationSettings.BaseCurrency))
+                {
+                    cell.Detail = InternationalisationResources.PrimaryReferenceCurrency;
+                }else
+                {
+                    cell.Detail = "-";
+                }
+
+                cell.Tapped += (sender, e) =>
+                {
+                    ApplicationSettings.BaseCurrency = referenceCurrencies.Find(x => x.Code.Equals((sender as CustomViewCell).Text));
+                    setReferenceCurrencyCells();
+                };
 
                 CurrencySection.Add(cell);
-
-                i += 1;
             }
 
             var addCurrencyCell = new CustomViewCell { Text = InternationalisationResources.AddReferenceCurrency, IsActionCell = true };

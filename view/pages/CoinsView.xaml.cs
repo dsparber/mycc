@@ -11,7 +11,6 @@ using MyCryptos.helpers;
 using System.Collections.Generic;
 using tasks;
 using MyCryptos.view;
-using constants;
 
 namespace view
 {
@@ -53,7 +52,17 @@ namespace view
 				TableView.IsVisible = (selected == 0);
 				GraphView.IsVisible = (selected == 1);
 			};
-		}
+
+            var recognizer = new TapGestureRecognizer();
+            recognizer.Tapped += (sender, e) => {
+                var currencies = ApplicationSettings.ReferenceCurrencies;
+                var baseCurrency = ApplicationSettings.BaseCurrency;
+                var newIndex = (currencies.IndexOf(baseCurrency) + 1) % currencies.Count;
+                ApplicationSettings.BaseCurrency = currencies[newIndex];
+            };
+
+            TapView.GestureRecognizers.Add(recognizer);
+        }
 
 
 		protected override void OnAppearing()

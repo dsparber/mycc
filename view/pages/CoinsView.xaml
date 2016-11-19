@@ -26,7 +26,6 @@
         AbsoluteLayout.LayoutFlags="WidthProportional" />
 
       <ScrollView
-        Padding ="0,160,0,0"
         AbsoluteLayout.LayoutBounds="0,0,1,1"
         AbsoluteLayout.LayoutFlags="SizeProportional">
         <StackLayout
@@ -37,6 +36,7 @@
               x:TypeArguments="Color"
               Android="#EEE" />
           </StackLayout.BackgroundColor>
+          <ContentView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" x:Name="TapView" HeightRequest="160" />
           <components:SegmentedControl
             x:Name="Tabs"/>
         </StackLayout>

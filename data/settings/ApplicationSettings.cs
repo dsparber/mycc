@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using message;
+using System.Linq;
 
 namespace data.settings
 {
@@ -58,8 +59,8 @@ namespace data.settings
 				var json = Settings.Get(Settings.KEY_REFERENCE_CURRENCIES, defaultValue);
 				var data = JsonConvert.DeserializeObject<List<Currency>>(json);
                 data.RemoveAll(c => c.Equals(BaseCurrency));
-                data.Insert(0, BaseCurrency);
-                return data;
+                data.Add(BaseCurrency);
+                return data.OrderBy(c => c.Code).ToList();
 			}
 			set
 			{

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using data.settings;
+using Xamarin.Forms;
 
 namespace MyCryptos.view.components
 {
@@ -41,7 +42,7 @@ namespace MyCryptos.view.components
 				LoadingIndicator.VerticalOptions = LayoutOptions.Center;
 				TitleLabel.Margin = new Thickness(0, -20, 0, 0);
 			}
-
+                          
 			initialSize = TitleLabel.FontSize;
 		}
 
