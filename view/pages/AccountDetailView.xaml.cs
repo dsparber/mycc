@@ -50,7 +50,10 @@ namespace view
 				ReferenceValueCells = new List<ReferenceValueViewCell>();
 				setToExistingView();
 				done.Clicked += DoneEditing;
-				ToolbarItems.Add(edit);
+                if (repository is LocalAccountRepository)
+                {
+                    ToolbarItems.Add(edit);
+                }
 
 				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateReferenceValues());
 				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateReferenceValues());
@@ -123,7 +126,9 @@ namespace view
 		public void Save(object sender, EventArgs e)
 		{
 			var money = currencyEntryCell.SelectedMoney;
-			account = new Account(AccountName.Text, money);
+            var name = (AccountName.Text ?? InternationalisationResources.LocalAccount).Trim();
+
+            account = new Account(name, money);
 			account.RepositoryId = AccountStorage.Instance.LocalRepository.Id;
 
 			AppTasks.Instance.StartAddAccountTask(account);
@@ -186,7 +191,6 @@ namespace view
 			}
 			Header.TitleText = selectedMoney.ToString();
 			currencyEntryCell.SelectedMoney = selectedMoney;
-			AccountName.Text = InternationalisationResources.LocalAccount;
 			Header.InfoText = AccountName.Text;
 			AccountName.Entry.TextChanged += (sender, e) => Header.InfoText = e.NewTextValue;
 		}

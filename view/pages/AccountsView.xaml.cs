@@ -71,13 +71,13 @@ namespace view
 		{
 			Elements.Clear();
 
-			foreach (var r in AccountStorage.Instance.Repositories)
+			foreach (var r in AccountStorage.Instance.Repositories.GroupBy(r => r.Description))
 			{
 				var cells = new List<SortableViewCell>();
-				var section = new TableSection { Title = r.Name };
-				foreach (var a in r.Elements)
+				var section = new TableSection { Title = r.FirstOrDefault().Description };
+				foreach (var a in r.SelectMany(x => x.Elements))
 				{
-					cells.Add(new AccountViewCell(Navigation) { Account = a, Repository = r });
+					cells.Add(new AccountViewCell(Navigation) { Account = a, Repository = r.FirstOrDefault() });
 				}
 				if (cells.Count == 0)
 				{
@@ -132,6 +132,7 @@ namespace view
 
 		void setLoadingAnimation(FetchSpeed speed, bool loading)
 		{
+            // TODO Online accounts not loaded from db
 			if (speed.Speed == FetchSpeedEnum.SLOW)
 			{
 				IsBusy = loading;

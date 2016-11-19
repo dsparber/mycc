@@ -50,7 +50,7 @@
                 <components:CustomEntryCell
                   x:Name="AccountName"
                   Title="{i18n:Translate Name}"
-                  Placeholder="{i18n:Translate LabelExample}" />
+                  Placeholder="{i18n:Translate Name}" />
               </TableSection>
               <TableSection x:Name="DeleteSection">
                 <components:CustomViewCell

@@ -117,20 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CoinsTitle" xml:space="preserve">
-    <value>Coins</value>
-  </data>
-  <data name="AccountsTitle" xml:space="preserve">
-    <value>Accounts</value>
-  </data>
-  <data name="SettingsTitle" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="TagsTitle" xml:space="preserve">
-    <value>Tags</value>
-  </data>
   <data name="AddCoinTitle" xml:space="preserve">
-    <value>Add Coin</value>
+    <value>Add coin</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -184,7 +172,7 @@
     <value>Accounts</value>
   </data>
   <data name="Account" xml:space="preserve">
-    <value>Account</value>
+    <value>account</value>
   </data>
   <data name="NoAccounts" xml:space="preserve">
     <value>No account</value>
@@ -202,7 +190,7 @@
     <value>Refreshing</value>
   </data>
   <data name="ReferenceCurrency" xml:space="preserve">
-    <value>Reference Currency</value>
+    <value>Reference currency</value>
   </data>
   <data name="AddActionChooseTitle" xml:space="preserve">
     <value>Which action should be performed?</value>
@@ -279,9 +267,6 @@
   <data name="BittrexAccount" xml:space="preserve">
     <value>Bittrex account</value>
   </data>
-  <data name="BittrexSource" xml:space="preserve">
-    <value>Bittrex</value>
-  </data>
   <data name="ApiKey" xml:space="preserve">
     <value>Key</value>
   </data>
@@ -293,9 +278,6 @@
   </data>
   <data name="Bittrex" xml:space="preserve">
     <value>Bittrex</value>
-  </data>
-  <data name="AddBittrexAcoount" xml:space="preserve">
-    <value>Add Bittrex account</value>
   </data>
   <data name="AddSource" xml:space="preserve">
     <value>Add new source</value>
@@ -323,9 +305,6 @@
   </data>
   <data name="Online" xml:space="preserve">
     <value>Online</value>
-  </data>
-  <data name="RepositoryType" xml:space="preserve">
-    <value>Type</value>
   </data>
   <data name="Deleting" xml:space="preserve">
     <value>Deleting</value>
@@ -361,7 +340,7 @@
     <value>No Coins</value>
   </data>
   <data name="Blockchain" xml:space="preserve">
-    <value>BTC Blockchain</value>
+    <value>Blockchain.info</value>
   </data>
   <data name="BlockchainAccount" xml:space="preserve">
     <value>Blockchain account</value>
@@ -392,5 +371,8 @@
   </data>
   <data name="ReferenceCurrencies" xml:space="preserve">
     <value>Reference currencies</value>
+  </data>
+  <data name="Etherchain" xml:space="preserve">
+    <value>Etherchain</value>
   </data>
 </root>

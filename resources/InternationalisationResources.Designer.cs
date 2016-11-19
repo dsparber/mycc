@@ -62,7 +62,7 @@ namespace MyCryptos.resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account.
+        ///   Looks up a localized string similar to account.
         /// </summary>
         public static string Account {
             get {
@@ -85,15 +85,6 @@ namespace MyCryptos.resources {
         public static string Accounts {
             get {
                 return ResourceManager.GetString("Accounts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Accounts.
-        /// </summary>
-        public static string AccountsTitle {
-            get {
-                return ResourceManager.GetString("AccountsTitle", resourceCulture);
             }
         }
         
@@ -125,16 +116,7 @@ namespace MyCryptos.resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Bittrex account.
-        /// </summary>
-        public static string AddBittrexAcoount {
-            get {
-                return ResourceManager.GetString("AddBittrexAcoount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Coin.
+        ///   Looks up a localized string similar to Add coin.
         /// </summary>
         public static string AddCoinTitle {
             get {
@@ -269,16 +251,7 @@ namespace MyCryptos.resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bittrex.
-        /// </summary>
-        public static string BittrexSource {
-            get {
-                return ResourceManager.GetString("BittrexSource", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to BTC Blockchain.
+        ///   Looks up a localized string similar to Blockchain.info.
         /// </summary>
         public static string Blockchain {
             get {
@@ -346,15 +319,6 @@ namespace MyCryptos.resources {
         public static string Coins {
             get {
                 return ResourceManager.GetString("Coins", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Coins.
-        /// </summary>
-        public static string CoinsTitle {
-            get {
-                return ResourceManager.GetString("CoinsTitle", resourceCulture);
             }
         }
         
@@ -463,6 +427,15 @@ namespace MyCryptos.resources {
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etherchain.
+        /// </summary>
+        public static string Etherchain {
+            get {
+                return ResourceManager.GetString("Etherchain", resourceCulture);
             }
         }
         
@@ -656,7 +629,7 @@ namespace MyCryptos.resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reference Currency.
+        ///   Looks up a localized string similar to Reference currency.
         /// </summary>
         public static string ReferenceCurrency {
             get {
@@ -688,15 +661,6 @@ namespace MyCryptos.resources {
         public static string RefreshOnStartup {
             get {
                 return ResourceManager.GetString("RefreshOnStartup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type.
-        /// </summary>
-        public static string RepositoryType {
-            get {
-                return ResourceManager.GetString("RepositoryType", resourceCulture);
             }
         }
         
@@ -751,15 +715,6 @@ namespace MyCryptos.resources {
         public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Settings.
-        /// </summary>
-        public static string SettingsTitle {
-            get {
-                return ResourceManager.GetString("SettingsTitle", resourceCulture);
             }
         }
         
@@ -841,15 +796,6 @@ namespace MyCryptos.resources {
         public static string Tags {
             get {
                 return ResourceManager.GetString("Tags", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tags.
-        /// </summary>
-        public static string TagsTitle {
-            get {
-                return ResourceManager.GetString("TagsTitle", resourceCulture);
             }
         }
         

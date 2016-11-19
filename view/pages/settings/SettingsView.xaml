@@ -5,7 +5,7 @@
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
 	x:Class="view.SettingsView"
-	Title="{i18n:Translate SettingsTitle}">
+	Title="{i18n:Translate Settings}">
   <ContentPage.BackgroundColor>
     <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
   </ContentPage.BackgroundColor>

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using data.database.interfaces;
 using data.repositories.account;
 using SQLite;
+using MyCryptos.data.repositories.account;
 
 namespace data.database.models
 {
@@ -13,8 +14,9 @@ namespace data.database.models
 		public const int DB_TYPE_BITTREX_REPOSITORY = 2;
 		public const int DB_TYPE_BLOCK_EXPERTS_REPOSITORY = 3;
 		public const int DB_TYPE_BLOCKCHAIN_REPOSITORY = 4;
+        public const int DB_TYPE_ETHEREUM_REPOSITORY = 5;
 
-		[PrimaryKey, AutoIncrement, Column("_id")]
+        [PrimaryKey, AutoIncrement, Column("_id")]
 		public int Id { get; set; }
 
 		public string Name { get; set; }
@@ -61,7 +63,8 @@ namespace data.database.models
 					case DB_TYPE_BITTREX_REPOSITORY: return new BittrexAccountRepository(Name, Data) { Id = Id };
 					case DB_TYPE_BLOCK_EXPERTS_REPOSITORY: return new BlockExpertsAccountRepository(Name, Data) { Id = Id };
 					case DB_TYPE_BLOCKCHAIN_REPOSITORY: return new BlockchainAccountRepository(Name, Data) { Id = Id };
-					default: throw new NotSupportedException();
+					case DB_TYPE_ETHEREUM_REPOSITORY: return new EthereumAccountRepository(Name, Data) { Id = Id };
+                    default: throw new NotSupportedException();
 				}
 			});
 		}

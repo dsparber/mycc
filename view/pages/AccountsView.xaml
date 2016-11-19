@@ -7,7 +7,7 @@
   xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
   BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
 	x:Class="view.AccountsView"
-	Title="{i18n:Translate AccountsTitle}">
+	Title="{i18n:Translate Accounts}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Text="{i18n:Translate Add}"

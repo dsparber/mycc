@@ -8,7 +8,7 @@
   xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
   BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
 	x:Class="view.AddRepositoryView"
-	Title="{i18n:Translate AddRepositoryTitle}">
+	Title="{i18n:Translate AddSource}">
   <ContentPage.ToolbarItems>
     <ToolbarItem
 			Text="{i18n:Translate Save}"

@@ -31,6 +31,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="data\repositories\account\BlockchainAccountRepository.cs" />
+    <Compile Include="data\repositories\account\EthereumAccountRepository.cs" />
+    <Compile Include="data\repositories\account\SimpleJsonAccountRepository.cs" />
     <Compile Include="helpers\NavigationHelper.cs" />
     <Compile Include="MyCryptos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,6 +86,8 @@
     <Compile Include="data\repositories\exchangerate\BtceExchangeRateRepository.cs" />
     <Compile Include="view\addrepositoryviews\AbstractAddRepositoryView.cs" />
     <Compile Include="view\addrepositoryviews\AddBittrexRepositoryView.cs" />
+    <Compile Include="view\addrepositoryviews\AddAddressRepositoryView.cs" />
+    <Compile Include="view\addrepositoryviews\AddEtherchainRepositoryView.cs" />
     <Compile Include="view\addrepositoryviews\AddBlockchainRepositoryView.cs" />
     <Compile Include="view\components\cells\CustomViewCellActionItem.cs" />
     <Compile Include="view\components\CoinsTableView.xaml.cs">

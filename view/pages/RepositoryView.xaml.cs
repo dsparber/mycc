@@ -20,7 +20,7 @@ namespace view
 
 			Title = repository.Name;
 			Header.TitleText = repository.Name;
-			Header.InfoText = string.Format("{0}: {1}", InternationalisationResources.RepositoryType, repository.Description);
+			Header.InfoText = string.Format("{0}: {1}", InternationalisationResources.Type, repository.Description);
 			RepositoryNameEntryCell.Text = repository.Name;
             DeleteButtonCell.Tapped += Delete;
 

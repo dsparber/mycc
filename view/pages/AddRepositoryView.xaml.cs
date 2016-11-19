@@ -35,8 +35,9 @@ namespace view
 			addViews.Add(new AddBittrexRepositoryView());
 			addViews.Add(new AddBlockExpertsRepositoryView(Navigation));
             addViews.Add(new AddBlockchainRepositoryView());
+            addViews.Add(new AddEtherchainRepositoryView());
 
-			addViews = addViews.OrderBy(v => v.DefaultName).ToList();
+            addViews = addViews.OrderBy(v => v.DefaultName).ToList();
 			RepositorySpecificView = addViews[0];
 			TableView.Root.Add(RepositorySpecificView.InputSection);
 
@@ -51,18 +52,11 @@ namespace view
 
 				RepositorySpecificView = addViews[TypePickerCell.Picker.SelectedIndex];
 
-				var defaultName = RepositorySpecificView.DefaultName;
-				var oldDefaultName = old.DefaultName;
-				var text = RepositoryNameEntryCell.Text;
-
-				RepositoryNameEntryCell.Entry.Text = oldDefaultName.Equals(text) ? defaultName : text;
-
 				TableView.Root.Remove(old.InputSection);
 				TableView.Root.Add(RepositorySpecificView.InputSection);
 			};
 
 			Header.TitleText = RepositorySpecificView.DefaultName;
-			RepositoryNameEntryCell.Text = RepositorySpecificView.DefaultName;
 			RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
 		}
 
@@ -79,8 +73,8 @@ namespace view
 			TypePickerCell.IsEditable = false;
 			RepositorySpecificView.Enabled = false;
 
-			var nameText = RepositoryNameEntryCell.Text.Trim();
-			var name = nameText.Equals(string.Empty) ? InternationalisationResources.Bittrex : nameText;
+			var nameText = (RepositoryNameEntryCell.Text?? string.Empty).Trim();
+			var name = nameText.Equals(string.Empty) ? RepositorySpecificView.DefaultName : nameText;
 
 			var repository = RepositorySpecificView.GetRepository(name);
 

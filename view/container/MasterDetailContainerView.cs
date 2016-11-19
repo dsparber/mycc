@@ -14,13 +14,13 @@ namespace view
             var masterPageItems = new List<MasterPageItem>();
             masterPageItems.Add(new MasterPageItem
             {
-                Title = InternationalisationResources.CoinsTitle,
+                Title = InternationalisationResources.Coins,
                 IconSource = "coins.png",
                 Page = new CoinsView()
             });
             masterPageItems.Add(new MasterPageItem
             {
-                Title = InternationalisationResources.AccountsTitle,
+                Title = InternationalisationResources.Accounts,
                 IconSource = "accounts.png",
                 Page = new AccountsView()
             });

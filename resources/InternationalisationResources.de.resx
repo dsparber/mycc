@@ -117,18 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CoinsTitle" xml:space="preserve">
-    <value>Coins</value>
-  </data>
-  <data name="AccountsTitle" xml:space="preserve">
-    <value>Konten</value>
-  </data>
-  <data name="SettingsTitle" xml:space="preserve">
-    <value>Einstellungen</value>
-  </data>
-  <data name="TagsTitle" xml:space="preserve">
-    <value>Tags</value>
-  </data>
   <data name="AddCoinTitle" xml:space="preserve">
     <value>Coin hinzufügen</value>
   </data>
@@ -151,7 +139,7 @@
     <value>Einstellungen</value>
   </data>
   <data name="Coins" xml:space="preserve">
-    <value>Geld</value>
+    <value>Coins</value>
   </data>
   <data name="Currency" xml:space="preserve">
     <value>Währung</value>
@@ -276,12 +264,6 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="BittrexAccount" xml:space="preserve">
-    <value>Bittrex Konto</value>
-  </data>
-  <data name="BittrexSource" xml:space="preserve">
-    <value>Bittrex</value>
-  </data>
   <data name="ApiKey" xml:space="preserve">
     <value>Key</value>
   </data>
@@ -323,9 +305,6 @@
   </data>
   <data name="Online" xml:space="preserve">
     <value>Online</value>
-  </data>
-  <data name="RepositoryType" xml:space="preserve">
-    <value>Typ</value>
   </data>
   <data name="Deleting" xml:space="preserve">
     <value>Löschen</value>
@@ -392,5 +371,8 @@
   </data>
   <data name="ReferenceCurrencies" xml:space="preserve">
     <value>Referenzwährungen</value>
+  </data>
+  <data name="Etherchain" xml:space="preserve">
+    <value>Etherchain</value>
   </data>
 </root>
