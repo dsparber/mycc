@@ -387,4 +387,7 @@
   <data name="OneSource" xml:space="preserve">
     <value>Eine Quelle</value>
   </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
 </root>

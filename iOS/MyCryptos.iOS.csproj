@@ -296,6 +296,9 @@
     <BundleResource Include="Resources\sources%403x.png" />
     <BundleResource Include="Resources\sources.png" />
     <BundleResource Include="Resources\sources%402x.png" />
+    <BundleResource Include="Resources\refresh%403x.png" />
+    <BundleResource Include="Resources\refresh.png" />
+    <BundleResource Include="Resources\refresh%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\Chart.min.js">

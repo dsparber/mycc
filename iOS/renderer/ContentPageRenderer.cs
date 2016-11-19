@@ -72,7 +72,11 @@ namespace renderer
 					{
 						systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Cancel);
 					}
-				}
+                    else if (info.Text.Equals(InternationalisationResources.Refresh))
+                    {
+                        nativeItem.Image = new UIImage("refresh.png");
+                    }
+                }
 				if (systemItem != null)
 				{
 					systemItem.Title = nativeItem.Title;
@@ -81,7 +85,12 @@ namespace renderer
 					nativeItem = systemItem;
 				}
 
-				if (info != null && (info.Text.Equals(InternationalisationResources.Cancel) || info.Text.Equals(InternationalisationResources.Sources)))
+                if (nativeItem.Image != null)
+                {
+                    nativeItem.Title = null;
+                }
+
+				if (info != null && (info.Text.Equals(InternationalisationResources.Cancel) || info.Text.Equals(InternationalisationResources.Refresh)))
 				{
 					leftNativeButtons.Add(nativeItem);
 				}

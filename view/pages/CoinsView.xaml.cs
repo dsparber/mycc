@@ -141,7 +141,7 @@ namespace view
 
 		void setLoadingAnimation(FetchSpeed speed, bool loading)
 		{
-			if (speed.Speed == FetchSpeedEnum.SLOW)
+			if (speed.Speed == FetchSpeedEnum.SLOW && false)
 			{
 				IsBusy = loading;
 			}
@@ -150,5 +150,10 @@ namespace view
 				Header.IsLoading = loading;
 			}
 		}
-	}
+
+        void Refresh(object sender, EventArgs e)
+        {
+            AppTasks.Instance.StartFetchTask(false);
+        }
+    }
 }

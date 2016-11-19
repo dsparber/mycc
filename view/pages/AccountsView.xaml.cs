@@ -11,6 +11,7 @@ using MyCryptos.view.components;
 using Xamarin.Forms;
 using MyCryptos.helpers;
 using data.repositories.account;
+using tasks;
 
 namespace view
 {
@@ -132,7 +133,7 @@ namespace view
 		void setLoadingAnimation(FetchSpeed speed, bool loading)
 		{
             // TODO Online accounts not loaded from db
-			if (speed.Speed == FetchSpeedEnum.SLOW)
+			if (speed.Speed == FetchSpeedEnum.SLOW && false)
 			{
 				IsBusy = loading;
 			}
@@ -140,6 +141,11 @@ namespace view
 				Header.IsLoading = loading;
 			}
 		}
+
+        void Refresh(object sender, EventArgs e)
+        {
+            AppTasks.Instance.StartFetchTask(false);
+        }
 	}
 }
 

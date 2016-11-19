@@ -12,6 +12,9 @@
     <ToolbarItem
 			Text="{i18n:Translate Add}"
 			Clicked="Add" />
+    <ToolbarItem
+     Text="{i18n:Translate Refresh}" 
+     Clicked="Refresh"/>
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <StackLayout Spacing="0">
