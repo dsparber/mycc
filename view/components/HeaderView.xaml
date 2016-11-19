@@ -10,12 +10,13 @@
       x:Name="GridView">
 			<Grid.RowDefinitions>
 				<RowDefinition
-					Height="160" />
+					Height="120" />
 			</Grid.RowDefinitions>
 			<ContentView
 				BackgroundColor="{x:Static constants:AppConstants.ThemeColor}">
 				<StackLayout
-					VerticalOptions="CenterAndExpand"
+          Margin="0,20,0,0"
+					VerticalOptions="StartAndExpand"
 					HorizontalOptions="CenterAndExpand">
 					<Label
 						x:Name="TitleLabel"

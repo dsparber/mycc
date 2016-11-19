@@ -11,74 +11,73 @@ using MyCryptos.helpers;
 
 namespace view
 {
-	public partial class SourcesView : ContentPage
-	{
-		List<AccountRepository> repositories;
+    public partial class SourcesView : ContentPage
+    {
+        List<AccountRepository> repositories;
 
-		public SourcesView()
-		{
-			InitializeComponent();
-			repositories = AccountStorage.Instance.Repositories ?? new List<AccountRepository>();
+        public SourcesView()
+        {
+            InitializeComponent();
+            repositories = AccountStorage.Instance.Repositories ?? new List<AccountRepository>();
 
-			setView();
+            setView();
 
-			if (Device.OS == TargetPlatform.Android)
-			{
-				ToolbarItems.Remove(DoneItem);
-				Title = string.Empty;
-			}
+            if (Device.OS == TargetPlatform.Android)
+            {
+                Title = string.Empty;
+            }
 
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str =>
-			{
-				repositories = AccountStorage.Instance.Repositories;
-				setView();
-			});
-		}
+            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str =>
+            {
+                repositories = AccountStorage.Instance.Repositories;
+                setView();
+            });
+        }
 
-		public async void Done(object sender, EventArgs e)
-		{
-			await Navigation.PopOrPopModal();
-		}
+        void setHeader()
+        {
+            var sources = repositories.Count;
+            var local = repositories.Where(r => r is LocalAccountRepository).ToList().Count;
 
-		void setHeader()
-		{
-			var sources = repositories.Count;
-			var local = repositories.Where(r => r is LocalAccountRepository).ToList().Count;
+            Header.TitleText = (sources == 0) ?
+                InternationalisationResources.NoSources :
+                string.Format("{0} {1}", sources, ((sources == 1) ?
+                                                   InternationalisationResources.Source :
+                                                   InternationalisationResources.Sources));
 
-			Header.TitleText = (sources == 0) ?
-				InternationalisationResources.NoSources :
-				string.Format("{0} {1}", sources, ((sources == 1) ?
-												   InternationalisationResources.Source :
-												   InternationalisationResources.Sources));
+            Header.InfoText = string.Format("{0} {1}, {2} {3}", local, InternationalisationResources.Local, (sources - local), InternationalisationResources.Online);
+        }
 
-			Header.InfoText = string.Format("{0} {1}, {2} {3}", local, InternationalisationResources.Local, (sources - local), InternationalisationResources.Online);
-		}
+        void setView()
+        {
+            setHeader();
 
-		void setView()
-		{
-			setHeader();
+            LocalSection.Clear();
+            OnlineSection.Clear();
 
-			LocalSection.Clear();
-			OnlineSection.Clear();
+            foreach (var r in repositories)
+            {
+                var c = new CustomViewCell { Text = r.Name, Detail = r.Description, Image = "more.png" };
+                c.Tapped += (sender, e) => Navigation.PushAsync(new RepositoryView(r));
 
-			foreach (var r in repositories)
-			{
-				var c = new CustomViewCell { Text = r.Name, Detail = r.Description, Image = "more.png" };
-				c.Tapped += (sender, e) => Navigation.PushAsync(new RepositoryView(r));
+                if (r is LocalAccountRepository)
+                {
+                    LocalSection.Add(c);
+                }
+                else
+                {
+                    OnlineSection.Add(c);
+                }
+            }
 
-				if (r is LocalAccountRepository)
-				{
-					LocalSection.Add(c);
-				}
-				else
-				{
-					OnlineSection.Add(c);
-				}
-			}
+            var cell = new CustomViewCell { Text = InternationalisationResources.AddSource, IsActionCell = true };
+            cell.Tapped += Add;
+            OnlineSection.Add(cell);
+        }
 
-			var cell = new CustomViewCell { Text = InternationalisationResources.AddSource, IsActionCell = true };
-			cell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AddRepositoryView());
-			OnlineSection.Add(cell);
-		}
-	}
+        void Add(object sender, EventArgs e)
+        {
+            Navigation.PushOrPushModal(new AddRepositoryView());
+        }
+    }
 }

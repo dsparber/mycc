@@ -10,6 +10,9 @@
     <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
   </ContentPage.BackgroundColor>
   <ContentPage.Content>
+    <StackLayout Spacing="0">
+      <components:HeaderView
+       x:Name="Header" />
     <TableView
         Intent="Settings">
       <TableSection
@@ -30,5 +33,6 @@
 					Title="{i18n:Translate RefreshOnStartup}" />
       </TableSection>
     </TableView>
+    </StackLayout>
   </ContentPage.Content>
 </ContentPage>

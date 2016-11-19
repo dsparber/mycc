@@ -7,22 +7,29 @@ using XLabs.Forms.Controls;
 
 namespace MyCryptos.iOS
 {
-	[Register("AppDelegate")]
-	public class AppDelegate : FormsApplicationDelegate
-	{
-		public override bool FinishedLaunching(UIApplication uiApplication, NSDictionary launchOptions)
-		{
-			Forms.Init();
-			LoadApplication(new App());
-			HybridWebViewRenderer.CopyBundleDirectory("Html");
+    [Register("AppDelegate")]
+    public class AppDelegate : FormsApplicationDelegate
+    {
+        public override bool FinishedLaunching(UIApplication uiApplication, NSDictionary launchOptions)
+        {
+            Forms.Init();
+            LoadApplication(new App());
+            HybridWebViewRenderer.CopyBundleDirectory("Html");
 
-			bool result = base.FinishedLaunching(uiApplication, launchOptions);
+            bool result = base.FinishedLaunching(uiApplication, launchOptions);
 
-			UINavigationBar.Appearance.TintColor = AppConstants.ThemeColor.ToUIColor();
-			UITabBar.Appearance.TintColor = AppConstants.ThemeColor.ToUIColor();
+            UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, false);
+            UINavigationBar.Appearance.TintColor = Color.White.ToUIColor();
+            UINavigationBar.Appearance.BarTintColor = AppConstants.ThemeColor.ToUIColor();
+            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes()
+            {
+                TextColor = UIColor.White
+            });
 
-			return result;
-		}
-	}
+            UITabBar.Appearance.TintColor = AppConstants.ThemeColor.ToUIColor();
+
+            return result;
+        }
+    }
 }
 

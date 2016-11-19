@@ -53,6 +53,8 @@ namespace view
 
 				RepositorySpecificView = addViews[TypePickerCell.Picker.SelectedIndex];
                 RepositoryNameEntryCell.Placeholder = RepositorySpecificView.DefaultName;
+                var txt = RepositoryNameEntryCell.Text?.Trim();
+                Header.TitleText = (string.Empty.Equals(txt) || txt == null) ?  RepositorySpecificView.DefaultName : txt;
 
 				TableView.Root.Remove(old.InputSection);
 				TableView.Root.Add(RepositorySpecificView.InputSection);
@@ -60,7 +62,7 @@ namespace view
 
 			Header.TitleText = RepositorySpecificView.DefaultName;
             RepositoryNameEntryCell.Placeholder = RepositorySpecificView.DefaultName;
-            RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
+            RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = (e.NewTextValue.Length != 0) ? e.NewTextValue : RepositorySpecificView.DefaultName;
 		}
 
 		void Cancel(object sender, EventArgs e)

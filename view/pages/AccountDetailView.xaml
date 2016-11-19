@@ -5,64 +5,56 @@
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
   xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
-  BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
+  BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="view.AccountDetailView">
   <ContentPage.Content>
-    <AbsoluteLayout>
+    <StackLayout Spacing="0">
 
       <components:HeaderView
-        x:Name="Header"
-        AbsoluteLayout.LayoutBounds="0,0,1,160"
-        AbsoluteLayout.LayoutFlags="WidthProportional" />
+        x:Name="Header"/>
 
-      <ScrollView
-        Padding ="0,160,0,0"
-        AbsoluteLayout.LayoutBounds="0,0,1,1"
-        AbsoluteLayout.LayoutFlags="SizeProportional">
-        <StackLayout>
-          <StackLayout.BackgroundColor>
+      <StackLayout Spacing="0">
+        <StackLayout.BackgroundColor>
+          <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
+        </StackLayout.BackgroundColor>
+
+        <TableView
+          x:Name="DefaultView"
+          Intent="Form">
+          <TableView.BackgroundColor>
             <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
-          </StackLayout.BackgroundColor>
+          </TableView.BackgroundColor>
+          <TableSection
+            Title="{i18n:Translate EqualTo}"
+            x:Name="EqualsSection">
+          </TableSection>
+        </TableView>
 
-
-          <TableView
-            x:Name="DefaultView"
-            Intent="Form">
-            <TableView.BackgroundColor>
-              <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
-            </TableView.BackgroundColor>
+        <TableView
+          x:Name="EditView"
+          Intent="Form"
+          IsVisible="false">
+          <TableView.BackgroundColor>
+            <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
+          </TableView.BackgroundColor>
+          <TableView.Root>
             <TableSection
-              Title="{i18n:Translate EqualTo}"
-              x:Name="EqualsSection">
+              x:Name="AccountSection">
+              <components:CustomEntryCell
+                x:Name="AccountName"
+                Title="{i18n:Translate Name}"
+                Placeholder="{i18n:Translate Name}" />
             </TableSection>
-          </TableView>
+            <TableSection x:Name="DeleteSection">
+              <components:CustomViewCell
+              x:Name="DeleteButtonCell"
+              Text="{i18n:Translate Delete}"
+              IsDeleteActionCell="true" />
+            </TableSection>
+          </TableView.Root>
+        </TableView>
 
-          <TableView
-            x:Name="EditView"
-            Intent="Form"
-            IsVisible="false">
-            <TableView.BackgroundColor>
-              <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
-            </TableView.BackgroundColor>
-            <TableView.Root>
-              <TableSection
-                x:Name="AccountSection">
-                <components:CustomEntryCell
-                  x:Name="AccountName"
-                  Title="{i18n:Translate Name}"
-                  Placeholder="{i18n:Translate Name}" />
-              </TableSection>
-              <TableSection x:Name="DeleteSection">
-                <components:CustomViewCell
-                x:Name="DeleteButtonCell"
-                Text="{i18n:Translate Delete}"
-                IsDeleteActionCell="true" />
-              </TableSection>
-            </TableView.Root>
-          </TableView>
-
-        </StackLayout>
-      </ScrollView>
-    </AbsoluteLayout>
+      </StackLayout>
+    </StackLayout>
   </ContentPage.Content>
 </ContentPage>

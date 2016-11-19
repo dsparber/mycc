@@ -235,11 +235,15 @@
     </ImageAsset>
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
+    <InterfaceDefinition Include="Resources\LaunchScreen.xib">
+      <SubType>Designer</SubType>
+    </InterfaceDefinition>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Info.plist" />
+    <None Include="Info.plist">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -251,6 +255,7 @@
     <Compile Include="renderer\ContentPageRenderer.cs" />
     <Compile Include="renderer\CustomEntryRenderer.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="renderer\CustomNavigationRender.cs" />
     <Compile Include="renderer\CustomPickerRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -276,7 +281,9 @@
     <BundleResource Include="Resources\down.png" />
     <BundleResource Include="Resources\down%402x.png" />
     <BundleResource Include="Resources\down%403x.png" />
-    <BundleResource Include="Resources\Icon.png" />
+    <BundleResource Include="Resources\Icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\graph.js" />
@@ -286,6 +293,9 @@
     <BundleResource Include="Resources\up.png" />
     <BundleResource Include="Resources\up%402x.png" />
     <BundleResource Include="Resources\up%403x.png" />
+    <BundleResource Include="Resources\sources%403x.png" />
+    <BundleResource Include="Resources\sources.png" />
+    <BundleResource Include="Resources\sources%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\Chart.min.js">

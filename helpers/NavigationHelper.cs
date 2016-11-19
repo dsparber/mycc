@@ -9,7 +9,7 @@ namespace MyCryptos.helpers
 		{
 			if (Modal)
 			{
-				return navigation.PushModalAsync(new NavigationPage(page));
+				return navigation.PushModalAsync(new NavigationPage(page) { BarTextColor = Color.White });
 			}
 			return navigation.PushAsync(page);
 		}

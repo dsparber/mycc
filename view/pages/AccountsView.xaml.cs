@@ -33,7 +33,6 @@ namespace view
 
 			if (Device.OS == TargetPlatform.Android)
 			{
-				ToolbarItems.Remove(SourcesToolbarItem);
 				Title = string.Empty;
 			}
 		}

@@ -40,7 +40,6 @@ namespace MyCryptos.view.components
 				LoadingIndicator.HeightRequest = 18;
 				LoadingIndicator.WidthRequest = 18;
 				LoadingIndicator.VerticalOptions = LayoutOptions.Center;
-				TitleLabel.Margin = new Thickness(0, -20, 0, 0);
 			}
                           
 			initialSize = TitleLabel.FontSize;

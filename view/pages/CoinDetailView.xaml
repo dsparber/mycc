@@ -5,39 +5,30 @@
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
   xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
-  BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
+  BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="view.CoinDetailView">
-	<ContentPage.Content>
-    <AbsoluteLayout>
+  <ContentPage.Content>
+    <StackLayout Spacing="0">
 
       <components:HeaderView
-        x:Name="Header"
-        AbsoluteLayout.LayoutBounds="0,0,1,160"
-        AbsoluteLayout.LayoutFlags="WidthProportional" />
+        x:Name="Header"/>
 
-      <ScrollView
-        Padding ="0,160,0,0"
-        AbsoluteLayout.LayoutBounds="0,0,1,1"
-        AbsoluteLayout.LayoutFlags="SizeProportional">
+      <TableView
+        Margin="0,-8,0,0"
+        Intent="Form">
+        <TableView.BackgroundColor>
+          <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
+        </TableView.BackgroundColor>
+        <TableSection
+          Title="{i18n:Translate Accounts}"
+          x:Name="AccountSection">
+        </TableSection>
+        <TableSection
+          Title="{i18n:Translate EqualTo}"
+          x:Name="EqualsSection">
+        </TableSection>
+      </TableView>
 
-        <TableView
-          Margin="0,-8,0,0"
-          Intent="Form">
-          <TableView.BackgroundColor>
-            <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
-          </TableView.BackgroundColor>
-          <TableSection
-            Title="{i18n:Translate Accounts}"
-            x:Name="AccountSection">
-          </TableSection>
-          <TableSection
-            Title="{i18n:Translate EqualTo}"
-            x:Name="EqualsSection">
-          </TableSection>
-        </TableView>
-
-      </ScrollView>
-      
-    </AbsoluteLayout>
-	</ContentPage.Content>
+    </StackLayout>
+  </ContentPage.Content>
 </ContentPage>

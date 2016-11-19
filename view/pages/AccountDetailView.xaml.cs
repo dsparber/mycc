@@ -191,8 +191,9 @@ namespace view
 			}
 			Header.TitleText = selectedMoney.ToString();
 			currencyEntryCell.SelectedMoney = selectedMoney;
-			Header.InfoText = AccountName.Text;
-			AccountName.Entry.TextChanged += (sender, e) => Header.InfoText = e.NewTextValue;
+			Header.InfoText = InternationalisationResources.LocalAccount;
+            AccountName.Entry.Placeholder = InternationalisationResources.LocalAccount;
+            AccountName.Entry.TextChanged += (sender, e) => Header.InfoText = (e.NewTextValue.Length != 0) ? e.NewTextValue : InternationalisationResources.LocalAccount;
 		}
 	}
 }

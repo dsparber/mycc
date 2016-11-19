@@ -6,7 +6,7 @@
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
 	xmlns:addrepositoryviews="clr-namespace:MyCryptos.view.addrepositoryviews;assembly=MyCryptos"
   xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
-  BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
+  BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="view.AddRepositoryView"
 	Title="{i18n:Translate AddSource}">
   <ContentPage.ToolbarItems>
@@ -19,39 +19,31 @@
 			x:Name="CancelItem" />
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
-    <AbsoluteLayout>
+    <StackLayout Spacing="0">
 
       <components:HeaderView
-        x:Name="Header"
-        AbsoluteLayout.LayoutBounds="0,0,1,160"
-        AbsoluteLayout.LayoutFlags="WidthProportional" />
+        x:Name="Header" />
 
-      <ScrollView
-        Padding ="0,160,0,0"
-        AbsoluteLayout.LayoutBounds="0,0,1,1"
-        AbsoluteLayout.LayoutFlags="SizeProportional">
+      <TableView
+        x:Name="TableView"
+        Intent="Form">
+        <TableView.BackgroundColor>
+          <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
+        </TableView.BackgroundColor>
+        <TableView.Root>
+          <TableSection
+            Title="{i18n:Translate Source}">
+            <components:CustomPickerCell
+              x:Name="TypePickerCell"
+              Title="{i18n:Translate Type}" />
+            <components:CustomEntryCell
+              x:Name="RepositoryNameEntryCell"
+              Title="{i18n:Translate Name}"
+              Placeholder="{i18n:Translate Name}" />
+          </TableSection>
+        </TableView.Root>
+      </TableView>
 
-        <TableView
-          x:Name="TableView"
-          Intent="Form">
-          <TableView.BackgroundColor>
-            <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
-          </TableView.BackgroundColor>
-          <TableView.Root>
-            <TableSection
-              Title="{i18n:Translate Source}">
-              <components:CustomPickerCell
-                x:Name="TypePickerCell"
-                Title="{i18n:Translate Type}" />
-              <components:CustomEntryCell
-                x:Name="RepositoryNameEntryCell"
-                Title="{i18n:Translate Name}"
-                Placeholder="{i18n:Translate Name}" />
-            </TableSection>
-          </TableView.Root>
-        </TableView>
-      </ScrollView>
-      
-    </AbsoluteLayout>
+    </StackLayout>
   </ContentPage.Content>
 </ContentPage>

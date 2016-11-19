@@ -32,7 +32,7 @@ namespace MyCryptos.view
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 BackgroundColor = Color.White,
-                MinimumHeightRequest = 400
+                MinimumHeightRequest = 500
             };
             WebView.RegisterCallback("selectedCallback", t =>
             {
@@ -46,8 +46,7 @@ namespace MyCryptos.view
 
             Content = WebView;
 
-            // TODO Add size changed callback to js to update this value
-            HeightRequest = 250;
+            HeightRequest = 500;
 
             updateView();
 

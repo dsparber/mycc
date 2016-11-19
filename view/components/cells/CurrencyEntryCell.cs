@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using data.storage;
 using MyCryptos.models;
 using MyCryptos.resources;
 using Xamarin.Forms;
@@ -15,6 +12,7 @@ namespace MyCryptos.view.components
 		readonly Label TitleLabel;
 		readonly Label SelectedCurrencyLabel;
 		readonly Entry AmountEntry;
+        readonly Image Icon;
 
 		readonly INavigation Navigation;
 
@@ -136,14 +134,14 @@ namespace MyCryptos.view.components
 				AmountEntry.FontSize = AppConstants.AndroidFontSize;
 			}
 
-			var icon = new Image { HeightRequest = 20, Source = ImageSource.FromFile("more.png") };
-			icon.HorizontalOptions = LayoutOptions.End;
+			Icon = new Image { HeightRequest = 20, Source = ImageSource.FromFile("more.png") };
+			Icon.HorizontalOptions = LayoutOptions.End;
 
 			var horizontalStack = new StackLayout { Orientation = StackOrientation.Horizontal };
 			horizontalStack.Children.Add(TitleLabel);
 			horizontalStack.Children.Add(AmountEntry);
 			horizontalStack.Children.Add(SelectedCurrencyLabel);
-			horizontalStack.Children.Add(icon);
+			horizontalStack.Children.Add(Icon);
 			horizontalStack.VerticalOptions = LayoutOptions.CenterAndExpand;
 
 			var contentView = new ContentView();
@@ -173,12 +171,17 @@ namespace MyCryptos.view.components
 					Navigation.PushAsync(new CurrencyOverlay(this));
 				}
 			};
-			if (View != null)
+			if (SelectedCurrencyLabel != null)
 			{
-				View.GestureRecognizers.Clear();
-				View.GestureRecognizers.Add(gestureRecognizer);
+                SelectedCurrencyLabel.GestureRecognizers.Clear();
+                SelectedCurrencyLabel.GestureRecognizers.Add(gestureRecognizer);
 			}
-		}
+            if (Icon != null)
+            {
+                Icon.GestureRecognizers.Clear();
+                Icon.GestureRecognizers.Add(gestureRecognizer);
+            }
+        }
 	}
 }
 

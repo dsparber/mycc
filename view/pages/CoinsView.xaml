@@ -5,43 +5,33 @@
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
   xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
-  BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
+  BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="view.CoinsView"
 	Title="{i18n:Translate Coins}">
   <ContentPage.ToolbarItems>
     <ToolbarItem
 			Text="{i18n:Translate Add}"
 			Clicked="Add" />
-    <ToolbarItem
-			Text="{i18n:Translate Sources}"
-			x:Name="SourcesToolbarItem"
-			Clicked="SourcesClicked" />
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
-    <AbsoluteLayout>
+    <StackLayout Spacing="0">
 
       <components:HeaderView
-        x:Name="Header"
-        AbsoluteLayout.LayoutBounds="0,0,1,160"
-        AbsoluteLayout.LayoutFlags="WidthProportional" />
+        x:Name="Header" />
 
-      <ScrollView
-        AbsoluteLayout.LayoutBounds="0,0,1,1"
-        AbsoluteLayout.LayoutFlags="SizeProportional">
-        <StackLayout
-        x:Name="Stack"
-        Spacing="0">
-          <StackLayout.BackgroundColor>
-            <OnPlatform
-              x:TypeArguments="Color"
-              Android="#EEE" />
-          </StackLayout.BackgroundColor>
-          <ContentView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" x:Name="TapView" HeightRequest="160" />
-          <components:SegmentedControl
+      <components:SegmentedControl
             x:Name="Tabs"/>
-        </StackLayout>
-      </ScrollView>
 
-    </AbsoluteLayout>
+      <StackLayout
+      x:Name="Stack"
+      Spacing="0">
+        <StackLayout.BackgroundColor>
+          <OnPlatform
+            x:TypeArguments="Color"
+            Android="#EEE" />
+        </StackLayout.BackgroundColor>
+      </StackLayout>
+
+    </StackLayout>
   </ContentPage.Content>
 </ContentPage>

@@ -23,6 +23,7 @@ namespace view
             setReferenceCurrencyCells();
 
             AutoRefresh.On = ApplicationSettings.AutoRefreshOnStartup;
+            Header.TitleText = InternationalisationResources.AppName;
 
             AutoRefresh.Switch.Toggled += AutoRefreshChanged;
             SortingCell.Tapped += (sender, e) => Navigation.PushAsync(new SortSettingsView());

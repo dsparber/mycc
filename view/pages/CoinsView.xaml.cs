@@ -43,7 +43,6 @@ namespace view
 
 			if (Device.OS == TargetPlatform.Android)
 			{
-				ToolbarItems.Remove(SourcesToolbarItem);
 				Title = string.Empty;
 			}
 
@@ -61,7 +60,7 @@ namespace view
                 ApplicationSettings.BaseCurrency = currencies[newIndex];
             };
 
-            TapView.GestureRecognizers.Add(recognizer);
+            Header.GestureRecognizers.Add(recognizer);
         }
 
 
