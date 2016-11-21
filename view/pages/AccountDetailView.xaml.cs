@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using data.repositories.account;
 using data.settings;
 using data.storage;
-using helpers;
 using message;
 using MyCryptos.models;
 using MyCryptos.resources;
@@ -110,6 +109,9 @@ namespace view
 
 		public async void DoneEditing(object sender, EventArgs e)
 		{
+			AccountName.Entry.Unfocus();
+			currencyEntryCell.Unfocus();
+
 			account.Name = AccountName.Text;
 			account = new Account(account.Id, account.RepositoryId, account.Name, currencyEntryCell.SelectedMoney);
 			await repository.Update(account);
@@ -130,6 +132,9 @@ namespace view
 
 		public void Save(object sender, EventArgs e)
 		{
+			AccountName.Entry.Unfocus();
+			currencyEntryCell.Unfocus();
+
 			var money = currencyEntryCell.SelectedMoney;
 			var name = (AccountName.Text ?? I18N.LocalAccount).Trim();
 
@@ -143,6 +148,9 @@ namespace view
 
 		async void Delete(object sender, EventArgs e)
 		{
+			AccountName.Entry.Unfocus();
+			currencyEntryCell.Unfocus();
+
 			AppTasks.Instance.StartDeleteAccountTask(account);
 			await AppTasks.Instance.DeleteAccountTask;
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);

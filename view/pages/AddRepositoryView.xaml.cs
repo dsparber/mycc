@@ -28,17 +28,17 @@ namespace view
 			if (Device.OS == TargetPlatform.Android)
 			{
 				ToolbarItems.Remove(CancelItem);
-                Title = string.Empty;
+				Title = string.Empty;
 			}
 
 			addViews = new List<AbstractAddRepositoryView>();
 			addViews.Add(new AddBittrexRepositoryView());
 			addViews.Add(new AddBlockExpertsRepositoryView(Navigation));
-            addViews.Add(new AddBlockchainRepositoryView());
-            addViews.Add(new AddEtherchainRepositoryView());
-            addViews.Add(new AddCryptoIdRepositoryView(Navigation));
+			addViews.Add(new AddBlockchainRepositoryView());
+			addViews.Add(new AddEtherchainRepositoryView());
+			addViews.Add(new AddCryptoIdRepositoryView(Navigation));
 
-            addViews = addViews.OrderBy(v => v.DefaultName).ToList();
+			addViews = addViews.OrderBy(v => v.DefaultName).ToList();
 			RepositorySpecificView = addViews[0];
 			TableView.Root.Add(RepositorySpecificView.InputSection);
 
@@ -52,33 +52,35 @@ namespace view
 				var old = RepositorySpecificView;
 
 				RepositorySpecificView = addViews[TypePickerCell.Picker.SelectedIndex];
-                RepositoryNameEntryCell.Placeholder = RepositorySpecificView.DefaultName;
-                var txt = RepositoryNameEntryCell.Text?.Trim();
-                Header.TitleText = (string.Empty.Equals(txt) || txt == null) ?  RepositorySpecificView.DefaultName : txt;
+				RepositoryNameEntryCell.Placeholder = RepositorySpecificView.DefaultName;
+				var txt = RepositoryNameEntryCell.Text?.Trim();
+				Header.TitleText = (string.Empty.Equals(txt) || txt == null) ? RepositorySpecificView.DefaultName : txt;
 
 				TableView.Root.Remove(old.InputSection);
 				TableView.Root.Add(RepositorySpecificView.InputSection);
 			};
 
 			Header.TitleText = RepositorySpecificView.DefaultName;
-            RepositoryNameEntryCell.Placeholder = RepositorySpecificView.DefaultName;
-            RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = (e.NewTextValue.Length != 0) ? e.NewTextValue : RepositorySpecificView.DefaultName;
+			RepositoryNameEntryCell.Placeholder = RepositorySpecificView.DefaultName;
+			RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = (e.NewTextValue.Length != 0) ? e.NewTextValue : RepositorySpecificView.DefaultName;
 		}
 
 		void Cancel(object sender, EventArgs e)
 		{
-            Navigation.PopOrPopModal();
+			UnfocusAll();
+			Navigation.PopOrPopModal();
 		}
 
 		async void Save(object sender, EventArgs e)
 		{
+			UnfocusAll();
 			Header.IsLoading = true;
 
 			RepositoryNameEntryCell.IsEditable = false;
 			TypePickerCell.IsEditable = false;
 			RepositorySpecificView.Enabled = false;
 
-			var nameText = (RepositoryNameEntryCell.Text?? string.Empty).Trim();
+			var nameText = (RepositoryNameEntryCell.Text ?? string.Empty).Trim();
 			var name = nameText.Equals(string.Empty) ? RepositorySpecificView.DefaultName : nameText;
 
 			var repository = RepositorySpecificView.GetRepository(name);
@@ -105,6 +107,13 @@ namespace view
 				TypePickerCell.IsEditable = true;
 				RepositorySpecificView.Enabled = true;
 			}
+		}
+
+		private void UnfocusAll()
+		{
+			RepositoryNameEntryCell.Entry.Unfocus();
+			TypePickerCell.Picker.Unfocus();
+			RepositorySpecificView.Unfocus();
 		}
 	}
 }

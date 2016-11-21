@@ -65,6 +65,8 @@ namespace view
 
 		private async void Delete(object sender, EventArgs e)
 		{
+			UnfocusAll();
+
 			Header.LoadingText = I18N.Deleting;
 			Header.IsLoading = true;
 			RepositoryNameEntryCell.IsEditable = false;
@@ -92,6 +94,8 @@ namespace view
 
 		private async void SaveClicked(object sender, EventArgs e)
 		{
+			UnfocusAll();
+
 			SaveItem.Clicked -= SaveClicked;
 			Header.IsLoading = true;
 			RepositoryNameEntryCell.IsEditable = false;
@@ -111,6 +115,11 @@ namespace view
 			Title = I18N.Accounts;
 			Header.IsLoading = false;
 			SaveItem.Clicked += SaveClicked;
+		}
+
+		private void UnfocusAll()
+		{
+			RepositoryNameEntryCell.Entry.Unfocus();
 		}
 	}
 }

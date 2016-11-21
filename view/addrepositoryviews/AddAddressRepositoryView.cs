@@ -11,7 +11,7 @@ namespace MyCryptos.view.addrepositoryviews
 
 		readonly TableSection section;
 		CustomEntryCell addressEntryCell;
-        protected abstract OnlineAccountRepository repository { get; }
+		protected abstract OnlineAccountRepository repository { get; }
 
 		public AddAddressRepositoryView()
 		{
@@ -28,10 +28,10 @@ namespace MyCryptos.view.addrepositoryviews
 			var address = addressEntryCell.Text ?? string.Empty;
 			return GetRepository(name, address);
 		}
-        protected abstract OnlineAccountRepository GetRepository(string name, string address);
+		protected abstract OnlineAccountRepository GetRepository(string name, string address);
 
 
-        public override bool Enabled
+		public override bool Enabled
 		{
 			set
 			{
@@ -52,6 +52,11 @@ namespace MyCryptos.view.addrepositoryviews
 		public override TableSection InputSection
 		{
 			get { return section; }
+		}
+
+		public override void Unfocus()
+		{
+			addressEntryCell.Entry.Unfocus();
 		}
 	}
 }

@@ -54,5 +54,11 @@ namespace MyCryptos.view.addrepositoryviews
 		{
 			get { return section; }
 		}
+
+		public override void Unfocus()
+		{
+			apiKeyEntryCell.Entry.Unfocus();
+			apiPrivateKeyEntryCell.Entry.Unfocus();
+		}
 	}
 }

@@ -12,7 +12,7 @@ namespace MyCryptos.view.components
 		readonly Label TitleLabel;
 		readonly Label SelectedCurrencyLabel;
 		readonly Entry AmountEntry;
-        readonly Image Icon;
+		readonly Image Icon;
 
 		readonly INavigation Navigation;
 
@@ -112,6 +112,11 @@ namespace MyCryptos.view.components
 			get { return AmountEntry.IsEnabled; }
 		}
 
+		public void Unfocus()
+		{
+			AmountEntry.Unfocus();
+		}
+
 		public CurrencyEntryCell(INavigation navigation)
 		{
 			Navigation = navigation;
@@ -173,15 +178,15 @@ namespace MyCryptos.view.components
 			};
 			if (SelectedCurrencyLabel != null)
 			{
-                SelectedCurrencyLabel.GestureRecognizers.Clear();
-                SelectedCurrencyLabel.GestureRecognizers.Add(gestureRecognizer);
+				SelectedCurrencyLabel.GestureRecognizers.Clear();
+				SelectedCurrencyLabel.GestureRecognizers.Add(gestureRecognizer);
 			}
-            if (Icon != null)
-            {
-                Icon.GestureRecognizers.Clear();
-                Icon.GestureRecognizers.Add(gestureRecognizer);
-            }
-        }
+			if (Icon != null)
+			{
+				Icon.GestureRecognizers.Clear();
+				Icon.GestureRecognizers.Add(gestureRecognizer);
+			}
+		}
 	}
 }
 
