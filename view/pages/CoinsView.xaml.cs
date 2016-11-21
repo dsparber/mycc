@@ -144,11 +144,21 @@ namespace view
 
 		void setLoadingAnimation(FetchSpeed speed, bool loading)
 		{
-			if (speed.Speed == FetchSpeedEnum.SLOW)
+			if (loading)
 			{
 				IsBusy = loading;
+				Header.IsLoading = loading;
 			}
-			Header.IsLoading = loading;
+			else {
+				if (speed.Speed == FetchSpeedEnum.FAST)
+				{
+					Header.IsLoading = false;
+				}
+				else {
+					Header.IsLoading = false;
+					IsBusy = false;
+				}
+			}
 		}
 
 		void Refresh(object sender, EventArgs e)

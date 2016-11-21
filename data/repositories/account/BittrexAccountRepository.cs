@@ -127,12 +127,12 @@ namespace data.repositories.account
 
 							if (existing != null)
 							{
-								existing = new Account(existing.Id, existing.RepositoryId, existing.Name, money);
+								existing = new Account(existing.Id, Id, existing.Name, money);
 								await Update(existing);
 								currentAccounts.Add(existing);
 							}
 							else {
-								var newAccount = new Account(string.Format("{0} ({1})", I18N.BittrexAccount, curr.Code), money);
+								var newAccount = new Account(string.Format("{0} ({1})", I18N.BittrexAccount, curr.Code), money) { RepositoryId = Id };
 								await Add(newAccount);
 								currentAccounts.Add(newAccount);
 							}

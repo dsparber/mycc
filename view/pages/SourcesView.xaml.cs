@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using data.storage;
 using MyCryptos.helpers;
 using tasks;
+using enums;
 
 namespace view
 {
@@ -33,6 +34,8 @@ namespace view
 				repositories = AccountStorage.Instance.Repositories;
 				setView();
 			});
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));
 		}
 
 		void setHeader()
@@ -110,6 +113,25 @@ namespace view
 		{
 			// TODO Only fetch accounts
 			AppTasks.Instance.StartFetchTask(false);
+		}
+
+		void setLoadingAnimation(FetchSpeed speed, bool loading)
+		{
+			if (loading)
+			{
+				IsBusy = loading;
+				Header.IsLoading = loading;
+			}
+			else {
+				if (speed.Speed == FetchSpeedEnum.FAST)
+				{
+					Header.IsLoading = false;
+				}
+				else {
+					Header.IsLoading = false;
+					IsBusy = false;
+				}
+			}
 		}
 	}
 }

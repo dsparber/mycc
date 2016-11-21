@@ -94,10 +94,11 @@ namespace tasks
 
 		async Task fetchTask(bool includeFastFetchTask)
 		{
-			if (includeFastFetchTask) {
+			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.StartedFetching);
+			if (includeFastFetchTask)
+			{
 				await fastFetchTask();
 			}
-			MessagingCenter.Send(new FetchSpeed(FetchSpeedEnum.SLOW), MessageConstants.StartedFetching);
 			await CurrencyRepositoryMapStorage.Instance.Fetch();
 			await CurrencyStorage.Instance.Fetch();
 			await AccountStorage.Instance.Fetch();
