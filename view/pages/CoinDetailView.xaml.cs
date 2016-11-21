@@ -89,7 +89,7 @@ namespace view
 				Header.InfoText = moneyReference.ToString();
 			}
 			else {
-				Header.InfoText = InternationalisationResources.NoExchangeRateFound;
+				Header.InfoText = I18N.NoExchangeRateFound;
 
 			}
 		}

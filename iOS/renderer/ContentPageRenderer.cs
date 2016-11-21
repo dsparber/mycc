@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using MyCryptos.resources;
 using renderer;
@@ -50,29 +50,29 @@ namespace renderer
 
 				if (info != null)
 				{
-					if (info.Text.Equals(InternationalisationResources.Save))
+					if (info.Text.Equals(I18N.Save))
 					{
 						systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Save);
 					}
-                    if (info.Text.Equals(InternationalisationResources.Done))
+                    if (info.Text.Equals(I18N.Done))
                     {
                         systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Done);
                     }
-                    if (info.Text.Equals(InternationalisationResources.Edit))
+                    if (info.Text.Equals(I18N.Edit))
 					{
 						systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Edit);
 					}
-					else if (info.Text.Equals(InternationalisationResources.Add))
+					else if (info.Text.Equals(I18N.Add))
 					{
 						systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Add);
 						var x = UIBarButtonSystemItem.Add;
 						x.ToString();
 					}
-					else if (info.Text.Equals(InternationalisationResources.Cancel))
+					else if (info.Text.Equals(I18N.Cancel))
 					{
 						systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Cancel);
 					}
-                    else if (info.Text.Equals(InternationalisationResources.Refresh))
+                    else if (info.Text.Equals(I18N.Refresh))
                     {
                         nativeItem.Image = new UIImage("refresh.png");
                     }
@@ -90,7 +90,7 @@ namespace renderer
                     nativeItem.Title = null;
                 }
 
-				if (info != null && (info.Text.Equals(InternationalisationResources.Cancel) || info.Text.Equals(InternationalisationResources.Refresh)))
+				if (info != null && (info.Text.Equals(I18N.Cancel) || info.Text.Equals(I18N.Refresh)))
 				{
 					leftNativeButtons.Add(nativeItem);
 				}

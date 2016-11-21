@@ -1,4 +1,4 @@
-﻿using MyCryptos.resources;
+using MyCryptos.resources;
 using Xamarin.Forms;
 
 namespace view
@@ -7,18 +7,14 @@ namespace view
 	{
 		public TabContainerView()
 		{
-			Title = InternationalisationResources.AppName;
-			//var tagPage = new NavigationPage(new TagsView()) { Title = InternationalisationResources.TagsTitle, Icon = "tags.png" };
-			var coinPage = new NavigationPage(new CoinsView()) { Title = InternationalisationResources.Coins, Icon = "coins.png", BarTextColor = Color.White };
-			var accountPage = new NavigationPage(new AccountsView()) { Title = InternationalisationResources.Accounts, Icon = "accounts.png", BarTextColor = Color.White };
-			var sourcesPage = new NavigationPage(new SourcesView()) { Title = InternationalisationResources.Sources, Icon = "sources.png", BarTextColor = Color.White };
-            var settingsPage = new NavigationPage(new SettingsView()) { Title = InternationalisationResources.Settings, Icon = "settings.png", BarTextColor = Color.White };
+			Title = I18N.AppName;
+			var coinPage = new NavigationPage(new CoinsView()) { Title = I18N.Coins, Icon = "coins.png", BarTextColor = Color.White };
+			var sourcesPage = new NavigationPage(new SourcesView()) { Title = I18N.Sources, Icon = "accounts.png", BarTextColor = Color.White };
+			var settingsPage = new NavigationPage(new SettingsView()) { Title = I18N.Settings, Icon = "settings.png", BarTextColor = Color.White };
 
-			//Children.Add(tagPage);
 			Children.Add(coinPage);
-			Children.Add(accountPage);
 			Children.Add(sourcesPage);
-            Children.Add(settingsPage);
+			Children.Add(settingsPage);
 
 			CurrentPage = coinPage;
 		}

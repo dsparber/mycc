@@ -1,4 +1,4 @@
-﻿using data.repositories.account;
+using data.repositories.account;
 using data.settings;
 using data.storage;
 using helpers;
@@ -24,7 +24,7 @@ namespace MyCryptos.view
             InitializeComponent();
 
             Cells = new List<SortableViewCell>();
-            CoinsSection.Title = InternationalisationResources.Coins;
+            CoinsSection.Title = I18N.Coins;
 
             MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
             MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
@@ -75,9 +75,9 @@ namespace MyCryptos.view
             }
             if (cells.Count == 0)
             {
-                var localAccountCell = new CustomViewCell { Text = InternationalisationResources.AddLocalAccount, IsActionCell = true };
+                var localAccountCell = new CustomViewCell { Text = I18N.AddLocalAccount, IsActionCell = true };
                 localAccountCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AccountDetailView(null, null) { IsNew = true });
-                var addSourceCell = new CustomViewCell { Text = InternationalisationResources.AddSource, IsActionCell = true };
+                var addSourceCell = new CustomViewCell { Text = I18N.AddSource, IsActionCell = true };
                 addSourceCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AddRepositoryView());
                 cells.Add(localAccountCell);
                 cells.Add(addSourceCell);

@@ -17,9 +17,9 @@ namespace view
 {
 	public partial class AccountDetailView : ContentPage
 	{
-		ToolbarItem edit = new ToolbarItem { Text = InternationalisationResources.Edit };
-		ToolbarItem done = new ToolbarItem { Text = InternationalisationResources.Save };
-		ToolbarItem cancel = new ToolbarItem { Text = InternationalisationResources.Cancel };
+		ToolbarItem edit = new ToolbarItem { Text = I18N.Edit };
+		ToolbarItem done = new ToolbarItem { Text = I18N.Save };
+		ToolbarItem cancel = new ToolbarItem { Text = I18N.Cancel };
 
 		CurrencyEntryCell currencyEntryCell;
 		public List<ReferenceValueViewCell> ReferenceValueCells;
@@ -29,6 +29,11 @@ namespace view
 		AccountRepository repository;
 
 		public bool IsNew;
+
+		public AccountDetailView() : this(null, null)
+		{
+			IsNew = true;
+		}
 
 		public AccountDetailView(Account account, AccountRepository repository)
 		{
@@ -50,15 +55,15 @@ namespace view
 				ReferenceValueCells = new List<ReferenceValueViewCell>();
 				setToExistingView();
 				done.Clicked += DoneEditing;
-                if (repository is LocalAccountRepository)
-                {
-                    ToolbarItems.Add(edit);
-                }
+				if (repository is LocalAccountRepository)
+				{
+					ToolbarItems.Add(edit);
+				}
 
 				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateReferenceValues());
 				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateReferenceValues());
 				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrencies, str => updateReferenceValues());
-            }
+			}
 			else
 			{
 				setToNewView();
@@ -99,7 +104,7 @@ namespace view
 			ToolbarItems.Add(done);
 			if (Device.OS != TargetPlatform.Android)
 			{
-				Title = InternationalisationResources.Editing;
+				Title = I18N.Editing;
 			}
 		}
 
@@ -126,9 +131,9 @@ namespace view
 		public void Save(object sender, EventArgs e)
 		{
 			var money = currencyEntryCell.SelectedMoney;
-            var name = (AccountName.Text ?? InternationalisationResources.LocalAccount).Trim();
+			var name = (AccountName.Text ?? I18N.LocalAccount).Trim();
 
-            account = new Account(name, money);
+			account = new Account(name, money);
 			account.RepositoryId = AccountStorage.Instance.LocalRepository.Id;
 
 			AppTasks.Instance.StartAddAccountTask(account);
@@ -151,7 +156,7 @@ namespace view
 			{
 				Title = account.Name;
 			}
-			Header.InfoText = string.Format(InternationalisationResources.SourceText, repository.Name);
+			Header.InfoText = string.Format(I18N.SourceText, repository.Name);
 			currencyEntryCell.SelectedMoney = account.Money;
 
 			updateReferenceValues();
@@ -161,13 +166,13 @@ namespace view
 		{
 			var table = new ReferenceCurrenciesSection(account.Money);
 			ReferenceValueCells.Clear();
-            EqualsSection.Clear();
+			EqualsSection.Clear();
 			foreach (var cell in table.Cells)
 			{
 				ReferenceValueCells.Add(cell);
-                EqualsSection.Add(cell);
+				EqualsSection.Add(cell);
 			}
-            Header.TitleText = account.Money.ToString();
+			Header.TitleText = account.Money.ToString();
 		}
 
 		protected override void OnAppearing()
@@ -187,13 +192,13 @@ namespace view
 			DeleteSection.Clear();
 			if (Device.OS != TargetPlatform.Android)
 			{
-				Title = InternationalisationResources.AddAccountTitle;
+				Title = I18N.AddAccountTitle;
 			}
 			Header.TitleText = selectedMoney.ToString();
 			currencyEntryCell.SelectedMoney = selectedMoney;
-			Header.InfoText = InternationalisationResources.LocalAccount;
-            AccountName.Entry.Placeholder = InternationalisationResources.LocalAccount;
-            AccountName.Entry.TextChanged += (sender, e) => Header.InfoText = (e.NewTextValue.Length != 0) ? e.NewTextValue : InternationalisationResources.LocalAccount;
+			Header.InfoText = I18N.LocalAccount;
+			AccountName.Entry.Placeholder = I18N.LocalAccount;
+			AccountName.Entry.TextChanged += (sender, e) => Header.InfoText = (e.NewTextValue.Length != 0) ? e.NewTextValue : I18N.LocalAccount;
 		}
 	}
 }

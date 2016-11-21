@@ -1,4 +1,4 @@
-﻿using data.database.models;
+using data.database.models;
 using MyCryptos.models;
 using MyCryptos.resources;
 using System;
@@ -14,7 +14,7 @@ namespace MyCryptos.data.repositories.account
         public CryptoIdAccountRepository(string name, Currency coin, string address) : base(AccountRepositoryDBM.DB_TYPE_CRYPTOID_REPOSITORY, name, coin, address) { }
 
 
-        protected override string DescriptionName { get { return InternationalisationResources.CryptoId; } }
+        protected override string DescriptionName { get { return I18N.CryptoId; } }
 
         protected override Uri GetUrl(Currency currency, string address)
         {

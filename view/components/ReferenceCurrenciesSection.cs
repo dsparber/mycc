@@ -24,7 +24,7 @@ namespace MyCryptos.view.components
 
             var currencies = ApplicationSettings.ReferenceCurrencies;
 
-			Section = new TableSection { Title = InternationalisationResources.EqualTo };
+			Section = new TableSection { Title = I18N.EqualTo };
 			Cells = new List<ReferenceValueViewCell>();
 
 			foreach (var c in currencies)

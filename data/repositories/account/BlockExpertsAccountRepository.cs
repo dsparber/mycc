@@ -27,6 +27,6 @@ namespace data.repositories.account
             return new Uri(string.Format(BASE_URL, currency.Code, address));
         }
 
-        protected override string DescriptionName { get { return InternationalisationResources.BlockExperts; } }
+        protected override string DescriptionName { get { return I18N.BlockExperts; } }
 	}
 }

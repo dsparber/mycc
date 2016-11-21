@@ -13,7 +13,7 @@ namespace data.storage
 
 		protected override async Task OnFirstLaunch()
 		{
-			var localRepository = new LocalAccountRepository(InternationalisationResources.DefaultStorage);
+			var localRepository = new LocalAccountRepository(I18N.DefaultStorage);
 			await Add(localRepository);
 		}
 

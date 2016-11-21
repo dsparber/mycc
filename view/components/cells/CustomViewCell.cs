@@ -1,4 +1,4 @@
-﻿using constants;
+using constants;
 using MyCryptos.resources;
 using MyCryptos.view.components.cells;
 using System.Collections.Generic;
@@ -74,7 +74,7 @@ namespace MyCryptos.view.components
             DetailLabel = new Label { TextColor = Color.Gray, FontSize = MasterLabel.FontSize * 0.75 };
 
             LoadingView = new StackLayout { Orientation = StackOrientation.Horizontal, Spacing = 0, Padding = new Thickness(0), Margin = new Thickness(0) };
-            LoadingView.Children.Add(new Label { Text = InternationalisationResources.RefreshingDots, TextColor = Color.Gray, FontSize = MasterLabel.FontSize * 0.75, VerticalOptions = LayoutOptions.Center });
+            LoadingView.Children.Add(new Label { Text = I18N.RefreshingDots, TextColor = Color.Gray, FontSize = MasterLabel.FontSize * 0.75, VerticalOptions = LayoutOptions.Center });
 
             stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand };
             stack.Children.Add(MasterLabel);

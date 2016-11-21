@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using message;
 using MyCryptos.resources;
 using Xamarin.Forms;
@@ -24,7 +24,7 @@ namespace MyCryptos.message
 				networkAlertDisplayed = true;
 				Device.BeginInvokeOnMainThread(() =>
 				{
-					Application.Current.MainPage.DisplayAlert(InternationalisationResources.Error, InternationalisationResources.NetworkError, InternationalisationResources.Ok);
+					Application.Current.MainPage.DisplayAlert(I18N.Error, I18N.NetworkError, I18N.Ok);
 				});
 			}
 		}

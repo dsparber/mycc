@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using data.database.models;
 using MyCryptos.resources;
@@ -23,7 +23,7 @@ namespace data.repositories.account
 
 		public override string Data { get { return string.Empty; } }
 
-		public override string Description { get { return InternationalisationResources.Local; } }
+		public override string Description { get { return I18N.LocalStorage; } }
 	}
 }
 

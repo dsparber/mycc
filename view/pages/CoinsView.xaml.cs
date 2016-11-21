@@ -20,7 +20,7 @@ namespace view
 		ContentView TableView;
 		CoinsGraphView GraphView;
 
-        bool loadedView;
+		bool loadedView;
 
 		public CoinsView()
 		{
@@ -37,7 +37,7 @@ namespace view
 			Stack.Children.Add(GraphView);
 			GraphView.IsVisible = false;
 
-			Tabs.Tabs = new List<string> { InternationalisationResources.Table, InternationalisationResources.Graph};
+			Tabs.Tabs = new List<string> { I18N.Table, I18N.Graph };
 
 			addSubscriber();
 
@@ -52,26 +52,27 @@ namespace view
 				GraphView.IsVisible = (selected == 1);
 			};
 
-            var recognizer = new TapGestureRecognizer();
-            recognizer.Tapped += (sender, e) => {
-                var currencies = ApplicationSettings.ReferenceCurrencies;
-                var baseCurrency = ApplicationSettings.BaseCurrency;
-                var newIndex = (currencies.IndexOf(baseCurrency) + 1) % currencies.Count;
-                ApplicationSettings.BaseCurrency = currencies[newIndex];
-            };
+			var recognizer = new TapGestureRecognizer();
+			recognizer.Tapped += (sender, e) =>
+			{
+				var currencies = ApplicationSettings.ReferenceCurrencies;
+				var baseCurrency = ApplicationSettings.BaseCurrency;
+				var newIndex = (currencies.IndexOf(baseCurrency) + 1) % currencies.Count;
+				ApplicationSettings.BaseCurrency = currencies[newIndex];
+			};
 
-            Header.GestureRecognizers.Add(recognizer);
-        }
+			Header.GestureRecognizers.Add(recognizer);
+		}
 
 
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-            if (!loadedView)
-            {
-                loadedView = true;
-                GraphView.OnAppearing();
-            }
+			if (!loadedView)
+			{
+				loadedView = true;
+				GraphView.OnAppearing();
+			}
 		}
 
 		void updateView()
@@ -80,18 +81,18 @@ namespace view
 			var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
 
 			Header.TitleText = (sum.Amount > 0) ? sum.ToString() : string.Format("? {0}", sum.Currency.Code);
-            if (amountDifferentCurrencies == 0)
-            {
-                Header.InfoText = InternationalisationResources.NoCoins;
-            }
-            else if (amountDifferentCurrencies == 1)
-            {
-                Header.InfoText = InternationalisationResources.OneCoin;
-            }
-            else
-            {
-                Header.InfoText = string.Format(InternationalisationResources.DifferentCoinsCount, amountDifferentCurrencies);
-            }
+			if (amountDifferentCurrencies == 0)
+			{
+				Header.InfoText = I18N.NoCoins;
+			}
+			else if (amountDifferentCurrencies == 1)
+			{
+				Header.InfoText = I18N.OneCoin;
+			}
+			else
+			{
+				Header.InfoText = string.Format(I18N.DifferentCoinsCount, amountDifferentCurrencies);
+			}
 		}
 
 		Money moneySum
@@ -131,29 +132,28 @@ namespace view
 
 		public async void Add(object sender, EventArgs e)
 		{
-			await AccountsView.AddDialog(this);
-		}
+			var action = await DisplayActionSheet(I18N.AddActionChooseTitle, I18N.Cancel, null, I18N.AddLocalAccount, I18N.AddSource);
 
-		public async void SourcesClicked(object sender, EventArgs e)
-		{
-			await AccountsView.OpenSourcesView(Navigation);
+			var newPage = (I18N.AddLocalAccount.Equals(action)) ? (ContentPage)new AccountDetailView(null, null) { IsNew = true } : new AddRepositoryView();
+
+			if (I18N.AddLocalAccount.Equals(action) || I18N.AddSource.Equals(action))
+			{
+				await Navigation.PushOrPushModal(newPage);
+			}
 		}
 
 		void setLoadingAnimation(FetchSpeed speed, bool loading)
 		{
-			if (speed.Speed == FetchSpeedEnum.SLOW && false)
+			if (speed.Speed == FetchSpeedEnum.SLOW)
 			{
 				IsBusy = loading;
 			}
-			else
-			{
-				Header.IsLoading = loading;
-			}
+			Header.IsLoading = loading;
 		}
 
-        void Refresh(object sender, EventArgs e)
-        {
-            AppTasks.Instance.StartFetchTask(false);
-        }
-    }
+		void Refresh(object sender, EventArgs e)
+		{
+			AppTasks.Instance.StartFetchTask(false);
+		}
+	}
 }

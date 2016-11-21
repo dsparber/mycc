@@ -21,9 +21,9 @@ namespace view
 		public AddRepositoryView()
 		{
 			InitializeComponent();
-			Title = InternationalisationResources.AddRepositoryTitle;
-			Header.InfoText = InternationalisationResources.AddSource;
-			Header.LoadingText = InternationalisationResources.Testing;
+			Title = I18N.AddRepositoryTitle;
+			Header.InfoText = I18N.AddSource;
+			Header.LoadingText = I18N.Testing;
 
 			if (Device.OS == TargetPlatform.Android)
 			{
@@ -86,7 +86,7 @@ namespace view
 			var success = await repository.Test();
 			if (success)
 			{
-				Header.LoadingText = InternationalisationResources.Fetching;
+				Header.LoadingText = I18N.Fetching;
 				await AccountStorage.Instance.Add(repository);
 				await AccountStorage.Instance.Fetch();
 				MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
@@ -99,7 +99,7 @@ namespace view
 			else
 			{
 				Header.IsLoading = false;
-				await DisplayAlert(InternationalisationResources.Error, InternationalisationResources.FetchingNoSuccessText, InternationalisationResources.Ok);
+				await DisplayAlert(I18N.Error, I18N.FetchingNoSuccessText, I18N.Ok);
 
 				RepositoryNameEntryCell.IsEditable = true;
 				TypePickerCell.IsEditable = true;

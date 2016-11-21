@@ -4,7 +4,8 @@
 	{
 		ALPHABETICAL,
 		BY_VALUE,
-		BY_UNITS
+		BY_UNITS,
+		NONE
 	}
 }
 

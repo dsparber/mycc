@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using constants;
@@ -37,7 +37,7 @@ namespace MyCryptos.view
             WebView.RegisterCallback("selectedCallback", t =>
             {
                 var element = graphItemsGrouped.ToArray()[Convert.ToInt32(t)];
-                if (!element.Item1.Contains(InternationalisationResources.Others.Replace("{0}", string.Empty).Trim()))
+                if (!element.Item1.Contains(I18N.Others.Replace("{0}", string.Empty).Trim()))
                 {
                     var currency = CurrencyStorage.Instance.AllElements.Find(e => e.Code.Equals(element.Item1));
                     Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinDetailView(currency)));
@@ -109,7 +109,7 @@ namespace MyCryptos.view
                 if (smallItems.Count > 1)
                 {
                     items = items.Where(e => !smallItems.Contains(e));
-                    var grouped = Tuple.Create(string.Format(InternationalisationResources.Others, smallItems.Count), smallItems.Sum(e => e.Item2));
+                    var grouped = Tuple.Create(string.Format(I18N.Others, smallItems.Count), smallItems.Sum(e => e.Item2));
 
                     return items.Concat(new List<Tuple<string, decimal>> { grouped });
                 }

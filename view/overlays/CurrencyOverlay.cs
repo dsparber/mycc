@@ -1,4 +1,4 @@
-﻿using constants;
+using constants;
 using data.storage;
 using MyCryptos.models;
 using MyCryptos.resources;
@@ -43,11 +43,11 @@ namespace MyCryptos.view.overlays
                 currencies = allElements;
             }
 
-            Title = InternationalisationResources.Currency;
+            Title = I18N.Currency;
 
             if (parent != null)
             {
-                var done = new ToolbarItem { Text = InternationalisationResources.Save };
+                var done = new ToolbarItem { Text = I18N.Save };
                 done.Clicked += (sender, e) =>
                 {
                     parent.OnSelected(parent.SelectedCurrency);
@@ -57,12 +57,12 @@ namespace MyCryptos.view.overlays
             }
             else
             {
-                var cancel = new ToolbarItem { Text = InternationalisationResources.Cancel };
+                var cancel = new ToolbarItem { Text = I18N.Cancel };
                 cancel.Clicked += (sender, e) => Navigation.PopAsync();
                 ToolbarItems.Add(cancel);
             }
 
-            searchBar = new SearchBar { Placeholder = InternationalisationResources.SearchCurrencies };
+            searchBar = new SearchBar { Placeholder = I18N.SearchCurrencies };
             if (Device.OS == TargetPlatform.Android)
             {
                 searchBar.TextColor = AppConstants.FontColor;

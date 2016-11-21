@@ -132,7 +132,7 @@ namespace data.repositories.account
 								currentAccounts.Add(existing);
 							}
 							else {
-								var newAccount = new Account(string.Format("{0} ({1})", InternationalisationResources.BittrexAccount, curr.Code), money);
+								var newAccount = new Account(string.Format("{0} ({1})", I18N.BittrexAccount, curr.Code), money);
 								await Add(newAccount);
 								currentAccounts.Add(newAccount);
 							}
@@ -178,6 +178,6 @@ namespace data.repositories.account
 			}
 		}
 
-		public override string Description { get { return InternationalisationResources.Bittrex; } }
+		public override string Description { get { return I18N.Bittrex; } }
 	}
 }

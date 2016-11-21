@@ -40,10 +40,10 @@ namespace MyCryptos.view.components
 
 			if (exchangeRate != null && exchangeRate.Rate.HasValue)
 			{
-				Detail = string.Format(InternationalisationResources.ExchangeRate, exchangeRate.Rate);
+				Detail = string.Format(I18N.ExchangeRate, exchangeRate.Rate);
 			}
 			else {
-				Detail = InternationalisationResources.NoExchangeRateFound;
+				Detail = I18N.NoExchangeRateFound;
 			}
 		}
 

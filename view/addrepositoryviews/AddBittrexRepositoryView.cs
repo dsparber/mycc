@@ -1,4 +1,4 @@
-﻿using data.repositories.account;
+using data.repositories.account;
 using Xamarin.Forms;
 using MyCryptos.view.components;
 using MyCryptos.resources;
@@ -13,11 +13,11 @@ namespace MyCryptos.view.addrepositoryviews
 
 		public AddBittrexRepositoryView()
 		{
-			apiKeyEntryCell = new CustomEntryCell { Title = InternationalisationResources.ApiKey, Placeholder = InternationalisationResources.ApiKey };
-			apiPrivateKeyEntryCell = new CustomEntryCell { Title = InternationalisationResources.SecretApiKey, Placeholder = InternationalisationResources.SecretApiKey };
+			apiKeyEntryCell = new CustomEntryCell { Title = I18N.ApiKey, Placeholder = I18N.ApiKey };
+			apiPrivateKeyEntryCell = new CustomEntryCell { Title = I18N.SecretApiKey, Placeholder = I18N.SecretApiKey };
 
 			section = new TableSection();
-			section.Title = InternationalisationResources.GrantAccess;
+			section.Title = I18N.GrantAccess;
 			section.Add(apiKeyEntryCell);
 			section.Add(apiPrivateKeyEntryCell);
 		}
@@ -42,12 +42,12 @@ namespace MyCryptos.view.addrepositoryviews
 
 		public override string DefaultName
 		{
-			get { return InternationalisationResources.BittrexAccount; }
+			get { return I18N.BittrexAccount; }
 		}
 
 		public override string Description
 		{
-			get { return InternationalisationResources.Bittrex; }
+			get { return I18N.Bittrex; }
 		}
 
 		public override TableSection InputSection

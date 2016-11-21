@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
@@ -12,7 +12,7 @@ namespace resources
 	public class TranslateExtension : IMarkupExtension
 	{
 		readonly CultureInfo ci;
-		const string ResourceId = "MyCryptos.resources.InternationalisationResources";
+		const string ResourceId = "MyCryptos.resources.I18N";
 
 		public TranslateExtension()
 		{

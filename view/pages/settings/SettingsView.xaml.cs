@@ -23,7 +23,7 @@ namespace view
             setReferenceCurrencyCells();
 
             AutoRefresh.On = ApplicationSettings.AutoRefreshOnStartup;
-            Header.TitleText = InternationalisationResources.AppName;
+            Header.TitleText = I18N.AppName;
 
             AutoRefresh.Switch.Toggled += AutoRefreshChanged;
             SortingCell.Tapped += (sender, e) => Navigation.PushAsync(new SortSettingsView());
@@ -63,7 +63,7 @@ namespace view
                 var cell = new CustomViewCell { Text = c.Code, ActionItems = items };
                 if (c.Equals(ApplicationSettings.BaseCurrency))
                 {
-                    cell.Detail = InternationalisationResources.PrimaryReferenceCurrency;
+                    cell.Detail = I18N.PrimaryReferenceCurrency;
                 }else
                 {
                     cell.Detail = "-";
@@ -78,7 +78,7 @@ namespace view
                 CurrencySection.Add(cell);
             }
 
-            var addCurrencyCell = new CustomViewCell { Text = InternationalisationResources.AddReferenceCurrency, IsActionCell = true };
+            var addCurrencyCell = new CustomViewCell { Text = I18N.AddReferenceCurrency, IsActionCell = true };
             addCurrencyCell.Tapped += (sender, e) =>
             {
                 var overlay = new CurrencyOverlay();
@@ -103,15 +103,15 @@ namespace view
             var order = string.Empty;
             switch (ApplicationSettings.SortOrder)
             {
-                case SortOrder.ALPHABETICAL: order = InternationalisationResources.Alphabetical; break;
-                case SortOrder.BY_UNITS: order = InternationalisationResources.ByUnits; break;
-                case SortOrder.BY_VALUE: order = InternationalisationResources.ByValue; break;
+                case SortOrder.ALPHABETICAL: order = I18N.Alphabetical; break;
+                case SortOrder.BY_UNITS: order = I18N.ByUnits; break;
+                case SortOrder.BY_VALUE: order = I18N.ByValue; break;
             }
             var direction = string.Empty;
             switch (ApplicationSettings.SortDirection)
             {
-                case SortDirection.ASCENDING: direction = InternationalisationResources.Ascending; break;
-                case SortDirection.DESCENDING: direction = InternationalisationResources.Descending; break;
+                case SortDirection.ASCENDING: direction = I18N.Ascending; break;
+                case SortDirection.DESCENDING: direction = I18N.Descending; break;
             }
             SortingCell.Detail = string.Format("{0} ({1})", order, direction);
         }

@@ -41,7 +41,7 @@ namespace MyCryptos.view.components
 			{
 				selectedCurrency = value;
 
-				SelectedCurrencyLabel.Text = (selectedCurrency != null) ? selectedCurrency.Code : InternationalisationResources.SelectCurrency;
+				SelectedCurrencyLabel.Text = (selectedCurrency != null) ? selectedCurrency.Code : I18N.SelectCurrency;
 				SelectedCurrencyLabel.TextColor = (selectedCurrency != null) ? AppConstants.FontColor : AppConstants.FontColorLight;
 			}
 			get { return selectedCurrency; }
@@ -86,7 +86,7 @@ namespace MyCryptos.view.components
 				isAmountEnabled = value;
 				AmountEntry.IsVisible = value;
 				SelectedCurrencyLabel.HorizontalOptions = value ? LayoutOptions.End : LayoutOptions.EndAndExpand;
-				TitleLabel.Text = value ? InternationalisationResources.Value : InternationalisationResources.Currency;
+				TitleLabel.Text = value ? I18N.Value : I18N.Currency;
 			}
 			get { return isAmountEnabled; }
 		}
@@ -117,14 +117,14 @@ namespace MyCryptos.view.components
 			Navigation = navigation;
 
 			TitleLabel = new Label { TextColor = AppConstants.FontColor, WidthRequest = AppConstants.LabelWidth, VerticalOptions = LayoutOptions.CenterAndExpand };
-			TitleLabel.Text = (IsAmountEnabled) ? InternationalisationResources.Value : InternationalisationResources.Currency;
+			TitleLabel.Text = (IsAmountEnabled) ? I18N.Value : I18N.Currency;
 
 			SelectedCurrencyLabel = new Label { TextColor = AppConstants.FontColor, VerticalOptions = LayoutOptions.CenterAndExpand };
 			SelectedCurrencyLabel.HorizontalOptions = (IsAmountEnabled) ? LayoutOptions.End : (IsFormRepresentation) ? LayoutOptions.FillAndExpand : LayoutOptions.EndAndExpand;
-			SelectedCurrencyLabel.Text = (selectedCurrency != null) ? selectedCurrency.Code : InternationalisationResources.SelectCurrency;
+			SelectedCurrencyLabel.Text = (selectedCurrency != null) ? selectedCurrency.Code : I18N.SelectCurrency;
 			SelectedCurrencyLabel.TextColor = (selectedCurrency != null) ? AppConstants.FontColor : AppConstants.FontColorLight;
 
-			AmountEntry = new Entry { IsVisible = IsAmountEnabled, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand, Keyboard = Keyboard.Numeric, Placeholder = InternationalisationResources.Value };
+			AmountEntry = new Entry { IsVisible = IsAmountEnabled, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand, Keyboard = Keyboard.Numeric, Placeholder = I18N.Value };
 			AmountEntry.TextChanged += (sender, e) => OnTyped(SelectedMoney);
 
 			if (Device.OS == TargetPlatform.Android)

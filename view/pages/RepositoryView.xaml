@@ -4,38 +4,52 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
-  xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
-  BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
+	xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
+	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
+	Title="{i18n:Translate Accounts}"
 	x:Class="view.RepositoryView">
-  <ContentPage.Content>
-    <StackLayout Spacing="0">
-
-      <components:HeaderView
-        x:Name="Header" />
-
-
-      <TableView
-        x:Name="TableView"
-        Intent="Form">
-        <TableView.BackgroundColor>
-          <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
-        </TableView.BackgroundColor>
-        <TableSection
-          Title="{i18n:Translate Label}">
-          <components:CustomEntryCell
-            x:Name="RepositoryNameEntryCell"
-            Title="{i18n:Translate Name}"
-            Placeholder="{i18n:Translate Name}" />
-        </TableSection>
-        <TableSection
-          x:Name="DeleteSection">
-          <components:CustomViewCell
-            x:Name="DeleteButtonCell"
-            Text="{i18n:Translate Delete}"
-            IsDeleteActionCell="true" />
-        </TableSection>
-      </TableView>
-
-    </StackLayout>
-  </ContentPage.Content>
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			x:Name="EditItem"
+			Clicked="EditClicked"
+			Text="{i18n:Translate Edit}" />
+		<ToolbarItem
+			x:Name="SaveItem"
+			Clicked="SaveClicked"
+			Text="{i18n:Translate Save}" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<StackLayout
+			Spacing="0">
+			<components:HeaderView
+				x:Name="Header" />
+			<TableView
+				x:Name="TableView"
+				Intent="Form">
+				<TableView.BackgroundColor>
+					<OnPlatform
+						x:TypeArguments="Color"
+						Android="#EEE" />
+				</TableView.BackgroundColor>
+				<TableSection
+					Title="{i18n:Translate Accounts}"
+					x:Name="AccountsSection" />
+				<TableSection
+					Title="{i18n:Translate Label}"
+					x:Name="NameSection">
+					<components:CustomEntryCell
+						x:Name="RepositoryNameEntryCell"
+						Title="{i18n:Translate Name}"
+						Placeholder="{i18n:Translate Name}" />
+				</TableSection>
+				<TableSection
+					x:Name="DeleteSection">
+					<components:CustomViewCell
+						x:Name="DeleteButtonCell"
+						Text="{i18n:Translate Delete}"
+						IsDeleteActionCell="true" />
+				</TableSection>
+			</TableView>
+		</StackLayout>
+	</ContentPage.Content>
 </ContentPage>

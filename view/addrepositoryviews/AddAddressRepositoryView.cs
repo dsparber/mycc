@@ -1,4 +1,4 @@
-﻿using data.repositories.account;
+using data.repositories.account;
 using Xamarin.Forms;
 using MyCryptos.view.components;
 using MyCryptos.resources;
@@ -15,11 +15,11 @@ namespace MyCryptos.view.addrepositoryviews
 
 		public AddAddressRepositoryView()
 		{
-			addressEntryCell = new CustomEntryCell { Title = InternationalisationResources.Address, Placeholder = InternationalisationResources.Address };
+			addressEntryCell = new CustomEntryCell { Title = I18N.Address, Placeholder = I18N.Address };
 
 			section = new TableSection();
 
-			section.Title = InternationalisationResources.AccountInformation;
+			section.Title = I18N.AccountInformation;
 			section.Add(addressEntryCell);
 		}
 

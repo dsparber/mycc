@@ -1,16 +1,19 @@
-﻿using System;
+using System;
+using System.Linq;
 using data.repositories.account;
 using data.storage;
+using enums;
+using helpers;
 using message;
+using MyCryptos.helpers;
 using MyCryptos.resources;
+using MyCryptos.view.components;
 using Xamarin.Forms;
 
 namespace view
 {
 	public partial class RepositoryView : ContentPage
 	{
-		ToolbarItem saveItem;
-
 		AccountRepository repository;
 
 		public RepositoryView(AccountRepository repository)
@@ -18,45 +21,78 @@ namespace view
 			InitializeComponent();
 			this.repository = repository;
 
-			Title = repository.Name;
 			Header.TitleText = repository.Name;
-			Header.InfoText = string.Format("{0}: {1}", InternationalisationResources.Type, repository.Description);
+			var typeText = $"{I18N.Type}: {repository.Description}";
+			var accountsText = PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, repository.Elements.ToList().Count);
+			Header.InfoText = $"{accountsText} | {typeText}";
+
 			RepositoryNameEntryCell.Text = repository.Name;
-            DeleteButtonCell.Tapped += Delete;
+			DeleteButtonCell.Tapped += Delete;
 
-			saveItem = new ToolbarItem { Text = InternationalisationResources.Save };
-			saveItem.Clicked += save;
+			TableView.Root.Remove(DeleteSection);
+			TableView.Root.Remove(NameSection);
+			ToolbarItems.Remove(SaveItem);
 
-			if (repository is LocalAccountRepository)
+			RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
+
+			if (Device.OS == TargetPlatform.Android)
 			{
-				TableView.Root.Remove(DeleteSection);
+				Title = string.Empty;
 			}
 
-			RepositoryNameEntryCell.Entry.TextChanged += (sender, e) =>
-			{
-				Title = e.NewTextValue;
-				Header.TitleText = e.NewTextValue;
+			SetAccountsView();
 
-				if (!e.NewTextValue.Equals(repository.Name))
-				{
-					if (ToolbarItems.Count == 0)
-					{
-						ToolbarItems.Add(saveItem);
-					}
-				}
-				else {
-					ToolbarItems.Clear();
-				}
-			};
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => SetAccountsView());
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => Header.IsLoading = true);
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => Header.IsLoading = false);
+		}
 
-            if (Device.OS == TargetPlatform.Android)
-            {
-                Title = string.Empty;
-            }
-        }
-
-		async void save(object sender, EventArgs e)
+		private void SetAccountsView()
 		{
+			var cells = repository.Elements.Select(e => new AccountViewCell(Navigation) { Account = e, Repository = repository } as SortableViewCell).OrderBy(e => e.Name).ToList();
+			if (repository is LocalAccountRepository)
+			{
+				var actionCell = new CustomViewCell { Text = I18N.AddLocalAccount, IsActionCell = true };
+				actionCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AccountDetailView());
+				cells.Add(actionCell);
+			}
+			else if (cells.Count == 0)
+			{
+				cells.Add(new CustomViewCell { Text = I18N.NoAccounts });
+			}
+			SortHelper.ApplySortOrder(cells, AccountsSection, SortOrder.NONE);
+		}
+
+		private async void Delete(object sender, EventArgs e)
+		{
+			Header.LoadingText = I18N.Deleting;
+			Header.IsLoading = true;
+			RepositoryNameEntryCell.IsEditable = false;
+
+			await AccountStorage.Instance.Remove(repository);
+			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+			await Navigation.PopAsync();
+		}
+
+		private void EditClicked(object sender, EventArgs e)
+		{
+			TableView.Root.Add(NameSection);
+			if (!(repository is LocalAccountRepository))
+			{
+				TableView.Root.Add(DeleteSection);
+			}
+			TableView.Root.Remove(AccountsSection);
+
+			Title = I18N.Editing;
+			RepositoryNameEntryCell.IsEditable = true;
+
+			ToolbarItems.Remove(EditItem);
+			ToolbarItems.Add(SaveItem);
+		}
+
+		private async void SaveClicked(object sender, EventArgs e)
+		{
+			SaveItem.Clicked -= SaveClicked;
 			Header.IsLoading = true;
 			RepositoryNameEntryCell.IsEditable = false;
 
@@ -64,18 +100,17 @@ namespace view
 			await AccountStorage.Instance.Update(repository);
 			await AccountStorage.Instance.Fetch();
 			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
-			await Navigation.PopAsync();
-		}
 
-		async void Delete(object sender, EventArgs e)
-		{
-			Header.LoadingText = InternationalisationResources.Deleting;
-			Header.IsLoading = true;
-			RepositoryNameEntryCell.IsEditable = false;
+			TableView.Root.Add(AccountsSection);
+			TableView.Root.Remove(NameSection);
+			TableView.Root.Remove(DeleteSection);
 
-			await AccountStorage.Instance.Remove(repository);
-			MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
-			await Navigation.PopAsync();
+			ToolbarItems.Remove(SaveItem);
+			ToolbarItems.Add(EditItem);
+
+			Title = I18N.Accounts;
+			Header.IsLoading = false;
+			SaveItem.Clicked += SaveClicked;
 		}
 	}
 }

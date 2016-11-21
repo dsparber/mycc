@@ -1,4 +1,4 @@
-﻿using data.repositories.account;
+using data.repositories.account;
 using message;
 using MyCryptos.models;
 using MyCryptos.resources;
@@ -71,7 +71,7 @@ namespace MyCryptos.data.repositories.account
                 {
                     var existing = Elements.FirstOrDefault();
 
-                    var name = string.Format("{0} {1}", Name, InternationalisationResources.Account);
+                    var name = string.Format("{0} {1}", Name, I18N.Account);
 
                     if (existing != null)
                     {

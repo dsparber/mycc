@@ -12,11 +12,11 @@ namespace MyCryptos.data.repositories.account
         protected string JsonKeyBalance { get { return "final_balance"; } }
         protected override decimal BalanceFactor { get { return 1e8M; } }
         protected override Currency Currency { get { return Currency.BTC; } }
-        public override string AccountName { get { return string.Format("{0} {1}", Name, InternationalisationResources.Account); } }
-        public override string Description { get { return InternationalisationResources.Blockchain; } }
+        public override string AccountName { get { return string.Format("{0} {1}", Name, I18N.Account); } }
+        public override string Description { get { return I18N.Blockchain; } }
 
         public BlockchainAccountRepository(string name, string address) : base(AccountRepositoryDBM.DB_TYPE_BLOCKCHAIN_REPOSITORY, name, address) { }
-        public BlockchainAccountRepository(string address) : this(InternationalisationResources.Blockchain, address) { }
+        public BlockchainAccountRepository(string address) : this(I18N.Blockchain, address) { }
 
         protected override decimal GetBalance(JObject json)
         {
