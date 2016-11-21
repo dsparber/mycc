@@ -8,86 +8,81 @@ namespace MyCryptos.view.components
 {
     public class CustomViewCell : SortableViewCell
     {
-        protected readonly Label MasterLabel;
-        protected readonly Label DetailLabel;
-        protected readonly StackLayout LoadingView;
-        readonly StackLayout stack;
-        readonly StackLayout ActionItemsStack;
-        protected readonly Image AccessoryImage;
+        private readonly Label masterLabel;
+        private readonly Label detailLabel;
+        private readonly StackLayout loadingView;
+        private readonly StackLayout stack;
+        private readonly StackLayout actionItemsStack;
+        private readonly Image accessoryImage;
 
-        string text { get; set; }
-        string detail { get; set; }
-        string image { get; set; }
-        bool isLoading { get; set; }
-        List<CustomViewCellActionItem> actions;
+        private string text;
+        private string detail;
+        private string image;
+        private bool isLoading;
+        private List<CustomViewCellActionItem> actions;
 
         public string Text
         {
             get { return text; }
-			set { text = value; MasterLabel.Text = text; DetailLabel.IsVisible = (detail != null); }
+            set { text = value; masterLabel.Text = text; detailLabel.IsVisible = (detail != null); }
         }
         public string Detail
         {
-            get { return detail; }
-			set { detail = value; DetailLabel.Text = detail; DetailLabel.IsVisible = !IsLoading; }
+            set { detail = value; detailLabel.Text = detail; detailLabel.IsVisible = !IsLoading; }
         }
 
         public string Image
         {
-            get { return image; }
-            set { image = value; AccessoryImage.Source = ImageSource.FromFile(image); }
+            set { image = value; accessoryImage.Source = ImageSource.FromFile(image); }
         }
 
         public List<CustomViewCellActionItem> ActionItems
         {
-            get { return actions; }
-            set { actions = value; setActionItems(); }
+            set { actions = value; SetActionItems(); }
         }
 
         public bool IsLoading
         {
             get { return isLoading; }
-            set { isLoading = value; DetailLabel.IsVisible = !value; LoadingView.IsVisible = value; }
+            set { isLoading = value; detailLabel.IsVisible = !value; loadingView.IsVisible = value; }
         }
 
         public bool IsActionCell
         {
-            get { return MasterLabel.TextColor.Equals(AppConstants.ThemeColor); }
-            set { MasterLabel.TextColor = value ? AppConstants.ThemeColor : AppConstants.FontColor; if (value) stack.Children.Remove(DetailLabel); }
+            set { masterLabel.TextColor = value ? AppConstants.ThemeColor : AppConstants.FontColor; if (value) stack.Children.Remove(detailLabel); }
         }
 
         public bool IsDeleteActionCell
         {
-            get { return MasterLabel.TextColor.Equals(Color.Red); }
-            set { MasterLabel.TextColor = value ? Color.Red : AppConstants.FontColor; if (value) stack.Children.Remove(DetailLabel); MasterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand; }
+            set { masterLabel.TextColor = value ? Color.Red : AppConstants.FontColor; if (value) stack.Children.Remove(detailLabel); masterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand; }
         }
 
         public CustomViewCell()
         {
-            MasterLabel = new Label { TextColor = Color.FromHex("222") };
+            masterLabel = new Label { TextColor = Color.FromHex("222"), LineBreakMode = LineBreakMode.TailTruncation };
 
             if (Device.OS == TargetPlatform.Android)
             {
-                MasterLabel.FontSize = AppConstants.AndroidFontSize;
+                masterLabel.FontSize = AppConstants.AndroidFontSize;
             }
 
-            DetailLabel = new Label { TextColor = Color.Gray, FontSize = MasterLabel.FontSize * 0.75 };
+            detailLabel = new Label { TextColor = Color.Gray, FontSize = masterLabel.FontSize * 0.75, LineBreakMode = LineBreakMode.TailTruncation };
 
-            LoadingView = new StackLayout { Orientation = StackOrientation.Horizontal, Spacing = 0, Padding = new Thickness(0), Margin = new Thickness(0) };
-            LoadingView.Children.Add(new Label { Text = I18N.RefreshingDots, TextColor = Color.Gray, FontSize = MasterLabel.FontSize * 0.75, VerticalOptions = LayoutOptions.Center });
+            loadingView = new StackLayout { Orientation = StackOrientation.Horizontal, Spacing = 0, Padding = new Thickness(0), Margin = new Thickness(0) };
+            loadingView.Children.Add(new Label { Text = I18N.RefreshingDots, TextColor = Color.Gray, FontSize = masterLabel.FontSize * 0.75, VerticalOptions = LayoutOptions.Center });
 
             stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand };
-            stack.Children.Add(MasterLabel);
-            stack.Children.Add(DetailLabel);
-            stack.Children.Add(LoadingView);
+            stack.Children.Add(masterLabel);
+            stack.Children.Add(detailLabel);
+            stack.Children.Add(loadingView);
 
-            AccessoryImage = new Image { HeightRequest = 20, HorizontalOptions = LayoutOptions.End };
-            ActionItemsStack = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.End };
+            accessoryImage = new Image { HeightRequest = 20, HorizontalOptions = LayoutOptions.End };
+            actionItemsStack = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.End };
 
             var mainView = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Fill };
             mainView.Children.Add(stack);
-            mainView.Children.Add(ActionItemsStack);
-            mainView.Children.Add(AccessoryImage);
+            mainView.Children.Add(actionItemsStack);
+            mainView.Children.Add(accessoryImage);
 
 
             if (Device.OS == TargetPlatform.Android)
@@ -103,22 +98,23 @@ namespace MyCryptos.view.components
             IsLoading = false;
         }
 
-        void setActionItems() {
+        private void SetActionItems()
+        {
 
-            ActionItemsStack.Children.Clear();
+            actionItemsStack.Children.Clear();
             foreach (var a in actions)
             {
-                var image = new Image { HeightRequest = 20, Source = ImageSource.FromFile(a.Icon) };
-                var gestureRecognizer = new TapGestureRecognizer ();
+                var img = new Image { HeightRequest = 20, Source = ImageSource.FromFile(a.Icon) };
+                var gestureRecognizer = new TapGestureRecognizer();
                 gestureRecognizer.Tapped += a.Action;
                 gestureRecognizer.CommandParameter = a.Data;
-                image.GestureRecognizers.Add(gestureRecognizer);
-                ActionItemsStack.Children.Add(image);
+                img.GestureRecognizers.Add(gestureRecognizer);
+                actionItemsStack.Children.Add(img);
             }
         }
 
-        public override decimal Units { get { return 0; } }
-        public override string Name { get { return Text; } }
-        public override decimal Value { get { return 0; } }
+        public override decimal Units => 0;
+        public override string Name => Text;
+        public override decimal Value => 0;
     }
 }

@@ -1,6 +1,5 @@
 using MyCryptos.data.repositories.account;
 using Xamarin.Forms;
-using MyCryptos.view.components;
 using MyCryptos.resources;
 using MyCryptos.models;
 using MyCryptos.data.repositories.currency;

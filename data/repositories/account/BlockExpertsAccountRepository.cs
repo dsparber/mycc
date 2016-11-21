@@ -1,22 +1,18 @@
 using System;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using data.database.models;
 using MyCryptos.models;
-using data.storage;
 using MyCryptos.resources;
 
 using MyCryptos.data.repositories.account;
 
 namespace data.repositories.account
 {
-	public class BlockExpertsAccountRepository : AddressAndCoinAccountRepository
+    public class BlockExpertsAccountRepository : AddressAndCoinAccountRepository
     {
-		readonly string address;
-		Currency coin;
+        readonly string address;
+        Currency coin;
 
-		const string BASE_URL = "https://www.blockexperts.com/api?coin={0}&action=getbalance&address={1}";
+        const string BASE_URL = "https://www.blockexperts.com/api?coin={0}&action=getbalance&address={1}";
 
         public BlockExpertsAccountRepository(string name, string data) : base(AccountRepositoryDBM.DB_TYPE_BLOCK_EXPERTS_REPOSITORY, name, data) { }
 
@@ -28,5 +24,5 @@ namespace data.repositories.account
         }
 
         protected override string DescriptionName { get { return I18N.BlockExperts; } }
-	}
+    }
 }

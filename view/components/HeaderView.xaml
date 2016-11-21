@@ -2,7 +2,7 @@
 <ContentView
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18N="clr-namespace:resources;assembly=MyCryptos"
+	xmlns:i18N="clr-namespace:MyCryptos.resources;assembly=MyCryptos"
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
 	x:Class="MyCryptos.view.components.HeaderView"
   BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"

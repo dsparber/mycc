@@ -1,6 +1,5 @@
 ﻿using data.settings;
 using enums;
-using message;
 using System;
 
 using Xamarin.Forms;

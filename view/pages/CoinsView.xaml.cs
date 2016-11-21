@@ -14,156 +14,158 @@ using MyCryptos.view;
 
 namespace view
 {
-	public partial class CoinsView : ContentPage
-	{
+    public partial class CoinsView : ContentPage
+    {
 
-		ContentView TableView;
-		CoinsGraphView GraphView;
+        ContentView TableView;
+        CoinsGraphView GraphView;
 
-		bool loadedView;
+        bool loadedView;
 
-		public CoinsView()
-		{
-			InitializeComponent();
+        public CoinsView()
+        {
+            InitializeComponent();
 
-			TableView = new CoinsTableView();
-			GraphView = new CoinsGraphView(Navigation)
-			{
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				VerticalOptions = LayoutOptions.FillAndExpand
-			};
+            TableView = new CoinsTableView();
+            GraphView = new CoinsGraphView(Navigation)
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
 
-			Stack.Children.Add(TableView);
-			Stack.Children.Add(GraphView);
-			GraphView.IsVisible = false;
+            Stack.Children.Add(TableView);
+            Stack.Children.Add(GraphView);
+            GraphView.IsVisible = false;
 
-			Tabs.Tabs = new List<string> { I18N.Table, I18N.Graph };
+            Tabs.Tabs = new List<string> { I18N.Table, I18N.Graph };
 
-			addSubscriber();
+            addSubscriber();
 
-			if (Device.OS == TargetPlatform.Android)
-			{
-				Title = string.Empty;
-			}
+            if (Device.OS == TargetPlatform.Android)
+            {
+                Title = string.Empty;
+            }
 
-			Tabs.SelectionChanged = selected =>
-			{
-				TableView.IsVisible = (selected == 0);
-				GraphView.IsVisible = (selected == 1);
-			};
+            Tabs.SelectionChanged = selected =>
+            {
+                TableView.IsVisible = (selected == 0);
+                GraphView.IsVisible = (selected == 1);
+            };
 
-			var recognizer = new TapGestureRecognizer();
-			recognizer.Tapped += (sender, e) =>
-			{
-				var currencies = ApplicationSettings.ReferenceCurrencies;
-				var baseCurrency = ApplicationSettings.BaseCurrency;
-				var newIndex = (currencies.IndexOf(baseCurrency) + 1) % currencies.Count;
-				ApplicationSettings.BaseCurrency = currencies[newIndex];
-			};
+            var recognizer = new TapGestureRecognizer();
+            recognizer.Tapped += (sender, e) =>
+            {
+                var currencies = ApplicationSettings.ReferenceCurrencies;
+                var baseCurrency = ApplicationSettings.BaseCurrency;
+                var newIndex = (currencies.IndexOf(baseCurrency) + 1) % currencies.Count;
+                ApplicationSettings.BaseCurrency = currencies[newIndex];
+            };
 
-			Header.GestureRecognizers.Add(recognizer);
-		}
+            Header.GestureRecognizers.Add(recognizer);
+        }
 
 
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
-			if (!loadedView)
-			{
-				loadedView = true;
-				GraphView.OnAppearing();
-			}
-		}
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (!loadedView)
+            {
+                loadedView = true;
+                GraphView.OnAppearing();
+            }
+        }
 
-		void updateView()
-		{
-			var sum = moneySum;
-			var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
+        void updateView()
+        {
+            var sum = moneySum;
+            var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
 
-			Header.TitleText = (sum.Amount > 0) ? sum.ToString() : string.Format("? {0}", sum.Currency.Code);
-			if (amountDifferentCurrencies == 0)
-			{
-				Header.InfoText = I18N.NoCoins;
-			}
-			else if (amountDifferentCurrencies == 1)
-			{
-				Header.InfoText = I18N.OneCoin;
-			}
-			else
-			{
-				Header.InfoText = string.Format(I18N.DifferentCoinsCount, amountDifferentCurrencies);
-			}
-		}
+            Header.TitleText = (sum.Amount > 0) ? sum.ToString() : string.Format("? {0}", sum.Currency.Code);
+            if (amountDifferentCurrencies == 0)
+            {
+                Header.InfoText = I18N.NoCoins;
+            }
+            else if (amountDifferentCurrencies == 1)
+            {
+                Header.InfoText = I18N.OneCoin;
+            }
+            else
+            {
+                Header.InfoText = string.Format(I18N.DifferentCoinsCount, amountDifferentCurrencies);
+            }
+        }
 
-		Money moneySum
-		{
-			get
-			{
-				var neededRates = new List<ExchangeRate>();
+        Money moneySum
+        {
+            get
+            {
+                var neededRates = new List<ExchangeRate>();
 
-				var amount = AccountStorage.Instance.AllElements.Select(a =>
-				{
-					var neededRate = new ExchangeRate(a.Money.Currency, ApplicationSettings.BaseCurrency);
-					var rate = ExchangeRateHelper.GetRate(neededRate);
+                var amount = AccountStorage.Instance.AllElements.Select(a =>
+                {
+                    var neededRate = new ExchangeRate(a.Money.Currency, ApplicationSettings.BaseCurrency);
+                    var rate = ExchangeRateHelper.GetRate(neededRate);
 
-					if (rate == null || !rate.Rate.HasValue)
-					{
-						neededRates.Add(neededRate);
-					}
+                    if (rate == null || !rate.Rate.HasValue)
+                    {
+                        neededRates.Add(neededRate);
+                    }
 
-					return a.Money.Amount * (rate ?? neededRate).RateNotNull;
-				}).Sum();
+                    return a.Money.Amount * (rate ?? neededRate).RateNotNull;
+                }).Sum();
 
-				AppTasks.Instance.StartMissingRatesTask(neededRates.Distinct());
+                AppTasks.Instance.StartMissingRatesTask(neededRates.Distinct());
 
-				return new Money(amount, ApplicationSettings.BaseCurrency);
-			}
-		}
+                return new Money(amount, ApplicationSettings.BaseCurrency);
+            }
+        }
 
-		void addSubscriber()
-		{
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
+        void addSubscriber()
+        {
+            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
+            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
+            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
 
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));
-		}
+            MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
+            MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));
+        }
 
-		public async void Add(object sender, EventArgs e)
-		{
-			var action = await DisplayActionSheet(I18N.AddActionChooseTitle, I18N.Cancel, null, I18N.AddLocalAccount, I18N.AddSource);
+        public async void Add(object sender, EventArgs e)
+        {
+            var action = await DisplayActionSheet(I18N.AddActionChooseTitle, I18N.Cancel, null, I18N.AddLocalAccount, I18N.AddSource);
 
-			var newPage = (I18N.AddLocalAccount.Equals(action)) ? (ContentPage)new AccountDetailView(null, null) { IsNew = true } : new AddRepositoryView();
+            var newPage = (I18N.AddLocalAccount.Equals(action)) ? (ContentPage)new MyCryptos.view.pages.AccountDetailView(null, null) { IsNew = true } : new AddRepositoryView();
 
-			if (I18N.AddLocalAccount.Equals(action) || I18N.AddSource.Equals(action))
-			{
-				await Navigation.PushOrPushModal(newPage);
-			}
-		}
+            if (I18N.AddLocalAccount.Equals(action) || I18N.AddSource.Equals(action))
+            {
+                await Navigation.PushOrPushModal(newPage);
+            }
+        }
 
-		void setLoadingAnimation(FetchSpeed speed, bool loading)
-		{
-			if (loading)
-			{
-				IsBusy = loading;
-				Header.IsLoading = loading;
-			}
-			else {
-				if (speed.Speed == FetchSpeedEnum.FAST)
-				{
-					Header.IsLoading = false;
-				}
-				else {
-					Header.IsLoading = false;
-					IsBusy = false;
-				}
-			}
-		}
+        void setLoadingAnimation(FetchSpeed speed, bool loading)
+        {
+            if (loading)
+            {
+                IsBusy = loading;
+                Header.IsLoading = loading;
+            }
+            else
+            {
+                if (speed.Speed == FetchSpeedEnum.FAST)
+                {
+                    Header.IsLoading = false;
+                }
+                else
+                {
+                    Header.IsLoading = false;
+                    IsBusy = false;
+                }
+            }
+        }
 
-		void Refresh(object sender, EventArgs e)
-		{
-			AppTasks.Instance.StartFetchTask(false);
-		}
-	}
+        void Refresh(object sender, EventArgs e)
+        {
+            AppTasks.Instance.StartFetchTask(false);
+        }
+    }
 }

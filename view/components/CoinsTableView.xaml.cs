@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using view;
 using Xamarin.Forms;
+using AccountDetailView = MyCryptos.view.pages.AccountDetailView;
 
 namespace MyCryptos.view
 {
@@ -85,7 +86,7 @@ namespace MyCryptos.view
 
             Cells = cells;
             SortHelper.ApplySortOrder(Cells, CoinsSection);
-            
+
         }
     }
 }

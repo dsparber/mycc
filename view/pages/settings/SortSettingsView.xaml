@@ -1,43 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
+<ContentPage
   xmlns="http://xamarin.com/schemas/2014/forms"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   x:Class="MyCryptos.view.pages.settings.SortSettingsView"
-  xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+  xmlns:i18N="clr-namespace:MyCryptos.resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
-	Title="{i18n:Translate Sorting}">
-  <TableView
-    Intent="Settings">
-    <TableSection
-				Title="{i18n:Translate SortOrder}">
+	Title="{i18N:Translate Sorting}">
+  <components:ChangingStackLayout>
+    <components:HeaderView
+      TitleText="{i18N:Translate AppName}"/>
+    <TableView
+      Intent="Settings">
+      <TableSection
+          Title="{i18N:Translate SortOrder}">
         <components:CustomIconCell
 					x:Name="SortOrderAlphabetical"
 					Tapped="SortOrderSelected"
-					Text="{i18n:Translate Alphabetical}"
+					Text="{i18N:Translate Alphabetical}"
 					Icon="checkmark.png" />
         <components:CustomIconCell
 					x:Name="SortOrderByValue"
 					Tapped="SortOrderSelected"
-					Text="{i18n:Translate ByValue}"
+					Text="{i18N:Translate ByValue}"
 					Icon="checkmark.png" />
         <components:CustomIconCell
 					x:Name="SortOrderByUnits"
 					Tapped="SortOrderSelected"
-					Text="{i18n:Translate ByUnits}"
+					Text="{i18N:Translate ByUnits}"
 					Icon="checkmark.png" />
       </TableSection>
       <TableSection
-				Title="{i18n:Translate SortDirection}">
+				Title="{i18N:Translate SortDirection}">
         <components:CustomIconCell
 					x:Name="SortDirectionAscending"
 					Tapped="SortOrderSelected"
-					Text="{i18n:Translate Ascending}"
+					Text="{i18N:Translate Ascending}"
 					Icon="checkmark.png" />
         <components:CustomIconCell
 					x:Name="SortDirectionDescending"
 					Tapped="SortOrderSelected"
-					Text="{i18n:Translate Descending}"
+					Text="{i18N:Translate Descending}"
 					Icon="checkmark.png" />
       </TableSection>
-  </TableView>
+    </TableView>
+  </components:ChangingStackLayout>
 </ContentPage>
