@@ -2,13 +2,13 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+	xmlns:i18N="clr-namespace:resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
   xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
   BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="view.CoinDetailView">
   <ContentPage.Content>
-    <StackLayout Spacing="0">
+    <components:ChangingStackLayout>
 
       <components:HeaderView
         x:Name="Header"/>
@@ -20,15 +20,15 @@
           <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
         </TableView.BackgroundColor>
         <TableSection
-          Title="{i18n:Translate Accounts}"
+          Title="{i18N:Translate Accounts}"
           x:Name="AccountSection">
         </TableSection>
         <TableSection
-          Title="{i18n:Translate EqualTo}"
+          Title="{i18N:Translate EqualTo}"
           x:Name="EqualsSection">
         </TableSection>
       </TableView>
 
-    </StackLayout>
+    </components:ChangingStackLayout>
   </ContentPage.Content>
 </ContentPage>

@@ -2,13 +2,13 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+	xmlns:i18N="clr-namespace:resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
   xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
   BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="view.AccountDetailView">
   <ContentPage.Content>
-    <StackLayout Spacing="0">
+    <components:ChangingStackLayout>
 
       <components:HeaderView
         x:Name="Header"/>
@@ -25,7 +25,7 @@
             <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
           </TableView.BackgroundColor>
           <TableSection
-            Title="{i18n:Translate EqualTo}"
+            Title="{i18N:Translate EqualTo}"
             x:Name="EqualsSection">
           </TableSection>
         </TableView>
@@ -42,19 +42,19 @@
               x:Name="AccountSection">
               <components:CustomEntryCell
                 x:Name="AccountName"
-                Title="{i18n:Translate Name}"
-                Placeholder="{i18n:Translate Name}" />
+                Title="{i18N:Translate Name}"
+                Placeholder="{i18N:Translate Name}" />
             </TableSection>
             <TableSection x:Name="DeleteSection">
               <components:CustomViewCell
               x:Name="DeleteButtonCell"
-              Text="{i18n:Translate Delete}"
+              Text="{i18N:Translate Delete}"
               IsDeleteActionCell="true" />
             </TableSection>
           </TableView.Root>
         </TableView>
 
       </StackLayout>
-    </StackLayout>
+    </components:ChangingStackLayout>
   </ContentPage.Content>
 </ContentPage>

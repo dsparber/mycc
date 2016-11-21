@@ -16,7 +16,7 @@ namespace MyCryptos.iOS
             LoadApplication(new App());
             HybridWebViewRenderer.CopyBundleDirectory("Html");
 
-            bool result = base.FinishedLaunching(uiApplication, launchOptions);
+            var result = base.FinishedLaunching(uiApplication, launchOptions);
 
             UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, false);
             UINavigationBar.Appearance.TintColor = Color.White.ToUIColor();

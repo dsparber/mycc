@@ -2,23 +2,22 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18n="clr-namespace:resources;assembly=MyCryptos"
+	xmlns:i18N="clr-namespace:resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="view.SourcesView"
-	Title="{i18n:Translate Sources}">
+	Title="{i18N:Translate Sources}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
-			Text="{i18n:Translate Add}"
+			Text="{i18N:Translate Add}"
 			Clicked="Add" />
 		<ToolbarItem
-			Text="{i18n:Translate Refresh}"
+			Text="{i18N:Translate Refresh}"
 			Clicked="Refresh" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
-		<StackLayout
-			Spacing="0">
+    <components:ChangingStackLayout>
 			<components:HeaderView
 				x:Name="Header" />
 			<TableView
@@ -30,11 +29,11 @@
 				</TableView.BackgroundColor>
 				<TableSection
 					x:Name="LocalSection"
-					Title="{i18n:Translate Local}" />
+					Title="{i18N:Translate Local}" />
 				<TableSection
 					x:Name="OnlineSection"
-					Title="{i18n:Translate Online}" />
+					Title="{i18N:Translate Online}" />
 			</TableView>
-		</StackLayout>
+		</components:ChangingStackLayout>
 	</ContentPage.Content>
 </ContentPage>
