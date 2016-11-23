@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-	<!-- https://www.materialpalette.com/blue-grey/light-blue -->
-	<color
+  <!-- https://www.materialpalette.com/blue-grey/light-blue -->
+  <color
 		name="primary">#3498db</color>
-	<color
+  <color
 		name="primaryDark">#027ab0</color>
-	<color
+  <color
 		name="accent">#3498db</color>
-	<color
+  <color
 		name="window_background">#FFFFFF</color>
 </resources>

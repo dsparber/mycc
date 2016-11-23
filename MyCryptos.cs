@@ -9,11 +9,11 @@ namespace MyCryptos
 {
     public class App : Application
     {
-		public ErrorMessageHandler errorMessageHandler;
+        public ErrorMessageHandler errorMessageHandler;
 
         public App()
         {
-			errorMessageHandler = ErrorMessageHandler.Instance;
+            errorMessageHandler = ErrorMessageHandler.Instance;
 
             // The root page of your application
             if (Device.OS == TargetPlatform.Android)
@@ -30,13 +30,14 @@ namespace MyCryptos
                 DependencyService.Get<ILocalise>().SetLocale();
             }
 
-			if (ApplicationSettings.AutoRefreshOnStartup)
-			{
-				AppTasks.Instance.StartFetchTask(true);
-			}
-			else {
-				AppTasks.Instance.StartFastFetchTask();
-			}
+            if (ApplicationSettings.AutoRefreshOnStartup)
+            {
+                AppTasks.Instance.StartFetchTask(true);
+            }
+            else
+            {
+                AppTasks.Instance.StartFastFetchTask();
+            }
         }
 
         protected override void OnStart()

@@ -14,8 +14,7 @@
         x:Name="Header"/>
 
       <TableView
-        Margin="0,-8,0,0"
-        Intent="Form">
+          Intent="Form">
         <TableView.BackgroundColor>
           <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
         </TableView.BackgroundColor>
