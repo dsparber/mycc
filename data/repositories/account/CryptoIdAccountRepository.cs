@@ -2,23 +2,30 @@ using data.database.models;
 using MyCryptos.models;
 using MyCryptos.resources;
 using System;
+using System.Collections.Generic;
+using data.storage;
+using MyCryptos.data.repositories.currency;
+using System.Linq;
 
 namespace MyCryptos.data.repositories.account
 {
-    class CryptoIdAccountRepository : AddressAndCoinAccountRepository
-    {
-        const string BASE_URL = "http://chainz.cryptoid.info/{0}/api.dws?q=getbalance&a={1}";
+	class CryptoIdAccountRepository : AddressAndCoinAccountRepository
+	{
+		public override string DescriptionName => I18N.CryptoId;
+		public override IEnumerable<Currency> SupportedCurrencies
+		{
+			get
+			{
+				var id = CurrencyStorage.Instance.RepositoryOfType<CryptoIdCurrencyRepository>().Id;
+				var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.RepositoryId == id).Select(e => e.Code);
+				return CurrencyStorage.Instance.AllElements.Where(c => codes.Any(x => x.Equals(c.Code)));
+			}
+		}
 
-        public CryptoIdAccountRepository(string name, string data) : base(AccountRepositoryDBM.DB_TYPE_CRYPTOID_REPOSITORY, name, data) { }
+		protected override Func<string, decimal> Balance => (httpContent) => decimal.Parse(httpContent);
+		protected override Uri Url => new Uri($"http://chainz.cryptoid.info/{Currency}/api.dws?q=getbalance&a={Address}");
 
-        public CryptoIdAccountRepository(string name, Currency coin, string address) : base(AccountRepositoryDBM.DB_TYPE_CRYPTOID_REPOSITORY, name, coin, address) { }
-
-
-        protected override string DescriptionName { get { return I18N.CryptoId; } }
-
-        protected override Uri GetUrl(Currency currency, string address)
-        {
-            return new Uri(string.Format(BASE_URL, currency.Code.ToLower(), address));
-        }
-    }
+		public CryptoIdAccountRepository(string name, string data) : base(AccountRepositoryDBM.DB_TYPE_CRYPTOID_REPOSITORY, name, data) { }
+		public CryptoIdAccountRepository(string name, Currency coin, string address) : base(AccountRepositoryDBM.DB_TYPE_CRYPTOID_REPOSITORY, name, coin, address) { }
+	}
 }

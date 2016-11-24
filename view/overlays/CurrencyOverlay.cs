@@ -10,117 +10,114 @@ using Xamarin.Forms;
 
 namespace MyCryptos.view.overlays
 {
-    class CurrencyOverlay : ContentPage
-    {
-        public Action<Currency> CurrencySelected;
+	class CurrencyOverlay : ContentPage
+	{
+		public Action<Currency> CurrencySelected;
 
-        readonly SearchBar searchBar;
-        readonly TableView currenciesTableView;
-        readonly CurrencyEntryCell parent;
+		readonly SearchBar searchBar;
+		readonly TableView currenciesTableView;
+		readonly CurrencyEntryCell parent;
 
-        List<Currency> currencies;
+		List<Currency> currencies;
 
-        public CurrencyOverlay() : this(null)
-        { }
+		public CurrencyOverlay() : this(null)
+		{ }
 
-        public CurrencyOverlay(CurrencyEntryCell p)
-        {
-            parent = p;
+		public CurrencyOverlay(CurrencyEntryCell p)
+		{
+			parent = p;
 
-            var type = parent?.CurrencyRepositoryType;
+			var allElements = p?.CurrenciesToSelect.OrderBy(c => c.Code).ToList() ?? CurrencyStorage.Instance.AllElements;
 
-            var repos = (type != null) ? CurrencyStorage.Instance.RepositoriesOfType(type) : CurrencyStorage.Instance.Repositories;
-            var allElements = CurrencyStorage.Instance.AllElements;
+			var type = parent?.CurrencyRepositoryType;
+			if (type != null)
+			{
+				var ids = CurrencyStorage.Instance.RepositoriesOfType(type).Select(e => e.Id);
+				var currencyMapCodes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => ids.Contains(e.RepositoryId)).Select(e => e.Code);
+				allElements.RemoveAll(e => currencyMapCodes.Contains(e.Code));
+			}
 
-            if (type != null)
-            {
-                var ids = repos.Select(e => e.Id);
-                var currencyMapCodes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => ids.Contains(e.RepositoryId)).Select(e => e.Code);
-                currencies = allElements.Where(e => currencyMapCodes.Contains(e.Code)).ToList();
-            }
-            else
-            {
-                currencies = allElements;
-            }
+			currencies = allElements;
 
-            Title = I18N.Currency;
 
-            if (parent != null)
-            {
-                var done = new ToolbarItem { Text = I18N.Save };
-                done.Clicked += (sender, e) =>
-                {
-                    parent.OnSelected(parent.SelectedCurrency);
-                    Navigation.PopAsync();
-                };
-                ToolbarItems.Add(done);
-            }
-            else
-            {
-                var cancel = new ToolbarItem { Text = I18N.Cancel };
-                cancel.Clicked += (sender, e) => Navigation.PopAsync();
-                ToolbarItems.Add(cancel);
-            }
+			Title = I18N.Currency;
 
-            searchBar = new SearchBar { Placeholder = I18N.SearchCurrencies };
-            if (Device.OS == TargetPlatform.Android)
-            {
-                searchBar.TextColor = AppConstants.FontColor;
-                searchBar.PlaceholderColor = AppConstants.FontColorLight;
-                searchBar.HeightRequest = searchBar.HeightRequest + 50;
-                searchBar.Margin = new Thickness(0, 0, 0, -51);
-            }
+			if (parent != null)
+			{
+				var done = new ToolbarItem { Text = I18N.Save };
+				done.Clicked += (sender, e) =>
+				{
+					parent.OnSelected(parent.SelectedCurrency);
+					Navigation.PopAsync();
+				};
+				ToolbarItems.Add(done);
+			}
+			else
+			{
+				var cancel = new ToolbarItem { Text = I18N.Cancel };
+				cancel.Clicked += (sender, e) => Navigation.PopAsync();
+				ToolbarItems.Add(cancel);
+			}
 
-            currenciesTableView = new TableView();
+			searchBar = new SearchBar { Placeholder = I18N.SearchCurrencies };
+			if (Device.OS == TargetPlatform.Android)
+			{
+				searchBar.TextColor = AppConstants.FontColor;
+				searchBar.PlaceholderColor = AppConstants.FontColorLight;
+				searchBar.HeightRequest = searchBar.HeightRequest + 50;
+				searchBar.Margin = new Thickness(0, 0, 0, -51);
+			}
 
-            var stack = new StackLayout();
-            stack.Children.Add(searchBar);
-            stack.Children.Add(currenciesTableView);
+			currenciesTableView = new TableView();
 
-            Content = stack;
+			var stack = new StackLayout();
+			stack.Children.Add(searchBar);
+			stack.Children.Add(currenciesTableView);
 
-            var section = new TableSection();
+			Content = stack;
 
-            var currenciesSorted = currencies.Distinct().OrderBy(c => c.Code);
-            setTableContent(section, currenciesSorted);
+			var section = new TableSection();
 
-            searchBar.TextChanged += (sender, e) =>
-            {
-                var txt = e.NewTextValue;
-                var filtered = currenciesSorted.Where(c => c.Code.ToLower().Contains(txt.ToLower()) || c.Name.ToLower().Contains(txt.ToLower()));
-                setTableContent(section, filtered);
-            };
+			var currenciesSorted = currencies.Distinct().OrderBy(c => c.Code);
+			setTableContent(section, currenciesSorted);
 
-            currenciesTableView.Root.Add(section);
+			searchBar.TextChanged += (sender, e) =>
+			{
+				var txt = e.NewTextValue ?? string.Empty;
+				var filtered = currenciesSorted.Where(c => c.Code.ToLower().Contains(txt.ToLower()) || c.Name.ToLower().Contains(txt.ToLower()));
+				setTableContent(section, filtered);
+			};
 
-            currenciesTableView.IsVisible = true;
-        }
+			currenciesTableView.Root.Add(section);
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
+			currenciesTableView.IsVisible = true;
+		}
 
-            searchBar.Focus();
-        }
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
 
-        void setTableContent(TableSection section, IEnumerable<Currency> currenciesSorted)
-        {
-            section.Clear();
-            foreach (var c in currenciesSorted)
-            {
-                var cell = new CustomViewCell { Text = c.Code, Detail = c.Name };
-                cell.Tapped += (sender, e) =>
-                {
-                    if (parent != null)
-                    {
-                        parent.SelectedCurrency = c;
-                        parent.OnSelected(parent.SelectedCurrency);
-                    }
-                    CurrencySelected?.Invoke(c);
-                    Navigation.PopAsync();
-                };
-                section.Add(cell);
-            }
-        }
-    }
+			searchBar.Focus();
+		}
+
+		void setTableContent(TableSection section, IEnumerable<Currency> currenciesSorted)
+		{
+			section.Clear();
+			foreach (var c in currenciesSorted)
+			{
+				var cell = new CustomViewCell { Text = c.Code, Detail = c.Name };
+				cell.Tapped += (sender, e) =>
+				{
+					if (parent != null)
+					{
+						parent.SelectedCurrency = c;
+						parent.OnSelected(parent.SelectedCurrency);
+					}
+					CurrencySelected?.Invoke(c);
+					Navigation.PopAsync();
+				};
+				section.Add(cell);
+			}
+		}
+	}
 }

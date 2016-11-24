@@ -5,13 +5,13 @@ using MyCryptos.resources;
 
 namespace MyCryptos.view.addrepositoryviews
 {
-	public sealed class AddBittrexRepositoryView : AbstractAddRepositoryView
+	public sealed class AddWithBittrexView : AddSourceView
 	{
 
 		readonly TableSection section;
 		CustomEntryCell apiKeyEntryCell, apiPrivateKeyEntryCell;
 
-		public AddBittrexRepositoryView()
+		public AddWithBittrexView()
 		{
 			apiKeyEntryCell = new CustomEntryCell { Title = I18N.ApiKey, Placeholder = I18N.ApiKey };
 			apiPrivateKeyEntryCell = new CustomEntryCell { Title = I18N.SecretApiKey, Placeholder = I18N.SecretApiKey };

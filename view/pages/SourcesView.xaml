@@ -17,7 +17,7 @@
 			Clicked="Refresh" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
-    <components:ChangingStackLayout>
+		<components:ChangingStackLayout>
 			<components:HeaderView
 				x:Name="Header" />
 			<TableView

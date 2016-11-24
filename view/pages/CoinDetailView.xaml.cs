@@ -48,6 +48,7 @@ namespace view
 			{
 				ExchangeRates.Add(ExchangeRateHelper.GetRate(currency, c));
 			}
+			ExchangeRates.RemoveAll(e => e == null);
 
 
 			if (Accounts.ToList().Count == 0)

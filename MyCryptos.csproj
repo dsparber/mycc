@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -87,13 +86,9 @@
     <Compile Include="data\repositories\general\AbstractRepository.cs" />
     <Compile Include="data\database\helper\AbstractDatabase.cs" />
     <Compile Include="data\repositories\exchangerate\BtceExchangeRateRepository.cs" />
-    <Compile Include="view\addrepositoryviews\AbstractAddRepositoryView.cs" />
-    <Compile Include="view\addrepositoryviews\AddBittrexRepositoryView.cs" />
-    <Compile Include="view\addrepositoryviews\AddAddressRepositoryView.cs" />
-    <Compile Include="view\addrepositoryviews\AddAddressAndCoinRepositoryView.cs" />
-    <Compile Include="view\addrepositoryviews\AddCryptoIdRepositoryView.cs" />
-    <Compile Include="view\addrepositoryviews\AddEtherchainRepositoryView.cs" />
-    <Compile Include="view\addrepositoryviews\AddBlockchainRepositoryView.cs" />
+    <Compile Include="view\addrepositoryviews\AddSourceView.cs" />
+    <Compile Include="view\addrepositoryviews\AddWithBittrexView.cs" />
+    <Compile Include="view\addrepositoryviews\AddWithAddressView.cs" />
     <Compile Include="view\components\cells\CustomViewCellActionItem.cs" />
     <Compile Include="view\components\ChangingStackLayout.cs" />
     <Compile Include="view\components\CoinsTableView.xaml.cs">
@@ -170,7 +165,6 @@
       <DependentUpon>RepositoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="data\repositories\account\BlockExpertsAccountRepository.cs" />
-    <Compile Include="view\addrepositoryviews\AddBlockExpertsRepositoryView.cs" />
     <Compile Include="data\repositories\currency\BlockExpertsCurrencyRepository.cs" />
     <Compile Include="message\ErrorMessageHandler.cs" />
     <Compile Include="models\Persistable.cs" />

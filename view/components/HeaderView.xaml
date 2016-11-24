@@ -5,41 +5,43 @@
 	xmlns:i18N="clr-namespace:MyCryptos.resources;assembly=MyCryptos"
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
 	x:Class="MyCryptos.view.components.HeaderView"
-  BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
-  WidthRequest="280">
-  <ContentView.Content>
-    <StackLayout
-      Margin="10,10,10,20"
-      VerticalOptions="CenterAndExpand"
-      HorizontalOptions="CenterAndExpand">
-      <Label
-        x:Name="TitleLabel"
-        FontSize="36"
-        Margin="5,0,5,0"
-        FontAttributes="Bold"
-        HorizontalTextAlignment="Center"
-        TextColor="White" />
-      <Label
-        x:Name="InfoLabel"
-        FontSize="18"
-        HorizontalTextAlignment="Center"
-        TextColor="White" />
-      <StackLayout
-        x:Name="LoadingPanel"
-        IsVisible="false"
-        Orientation="Horizontal"
-        HorizontalOptions="Center">
-        <Label
-          x:Name="RefreshingLabel"
-          FontSize="18"
-          Text="{i18N:Translate Refreshing}"
-          TextColor="White">
-        </Label>
-        <ActivityIndicator
-          Color="White"
-          x:Name="LoadingIndicator"
-          IsRunning="true" />
-      </StackLayout>
-    </StackLayout>
-  </ContentView.Content>
+	BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
+	WidthRequest="280">
+	<ContentView.Content>
+		<StackLayout
+			Margin="10,10,10,20"
+			VerticalOptions="CenterAndExpand"
+			HorizontalOptions="CenterAndExpand">
+			<Label
+				x:Name="TitleLabel"
+				FontSize="36"
+				Margin="5,0,5,0"
+				FontAttributes="Bold"
+				HorizontalTextAlignment="Center"
+				TextColor="White"
+				LineBreakMode="TailTruncation" />
+			<Label
+				x:Name="InfoLabel"
+				FontSize="18"
+				HorizontalTextAlignment="Center"
+				TextColor="White"
+				LineBreakMode="TailTruncation" />
+			<StackLayout
+				x:Name="LoadingPanel"
+				IsVisible="false"
+				Orientation="Horizontal"
+				HorizontalOptions="Center">
+				<Label
+					x:Name="RefreshingLabel"
+					FontSize="18"
+					Text="{i18N:Translate Refreshing}"
+					TextColor="White">
+				</Label>
+				<ActivityIndicator
+					Color="White"
+					x:Name="LoadingIndicator"
+					IsRunning="true" />
+			</StackLayout>
+		</StackLayout>
+	</ContentView.Content>
 </ContentView>

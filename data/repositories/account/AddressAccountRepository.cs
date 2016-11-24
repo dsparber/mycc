@@ -1,7 +1,6 @@
 ﻿using data.repositories.account;
 using message;
 using MyCryptos.models;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -9,19 +8,21 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Collections.Generic;
+using MyCryptos.resources;
 
 namespace MyCryptos.data.repositories.account
 {
 	public abstract class AddressAccountRepository : OnlineAccountRepository
 	{
-		readonly string Address;
+		protected string Address;
+		protected virtual decimal BalanceFactor => 1;
 
-		protected abstract string BaseUrl { get; }
-		protected abstract decimal BalanceFactor { get; }
+		protected abstract Uri Url { get; }
+		protected abstract Func<string, decimal> Balance { get; }
+
 		protected abstract Currency Currency { get; }
-		public abstract string AccountName { get; }
-
-		protected abstract decimal GetBalance(JObject json);
+		public abstract IEnumerable<Currency> SupportedCurrencies { get; }
 
 		const int BUFFER_SIZE = 256000;
 		readonly HttpClient client;
@@ -37,22 +38,19 @@ namespace MyCryptos.data.repositories.account
 
 		async Task<decimal?> getBalance()
 		{
-			var uri = new Uri(string.Format(BaseUrl, Address));
+			var uri = Url;
 
 			var response = await client.GetAsync(uri);
 
 			if (response.IsSuccessStatusCode)
 			{
 				var content = await response.Content.ReadAsStringAsync();
-
-				var json = JObject.Parse(content);
-				var balance = GetBalance(json);
-				return balance / BalanceFactor;
+				return Balance(content) / BalanceFactor;
 			}
 			return null;
 		}
 
-		public override async Task<bool> Test()
+		public sealed override async Task<bool> Test()
 		{
 			try
 			{
@@ -64,7 +62,7 @@ namespace MyCryptos.data.repositories.account
 			}
 		}
 
-		public override async Task<bool> Fetch()
+		public sealed override async Task<bool> Fetch()
 		{
 			try
 			{
@@ -74,7 +72,7 @@ namespace MyCryptos.data.repositories.account
 				{
 					var existing = Elements.FirstOrDefault();
 					var money = new Money(balance.Value, Currency);
-					var name = AccountName;
+					var name = Name;
 
 
 					if (existing != null)
@@ -99,7 +97,7 @@ namespace MyCryptos.data.repositories.account
 			}
 			catch (Exception e)
 			{
-				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+				Debug.WriteLine($"Error Message:\n{e.Message}\nData:\n{e.Data}\nStack trace:\n{e.StackTrace}");
 			}
 			return false;
 		}

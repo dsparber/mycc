@@ -35,7 +35,7 @@ namespace MyCryptos.view.components
 			}
 			else if (exchangeRate != null && exchangeRate.SecondaryCurrency != null)
 			{
-				Text = string.Format("X {0}", exchangeRate.SecondaryCurrency.Code);
+				Text = string.Format("0 {0}", exchangeRate.SecondaryCurrency.Code);
 			}
 
 			if (exchangeRate != null && exchangeRate.Rate.HasValue)
