@@ -24,7 +24,7 @@ namespace view
 		IEnumerable<Tuple<Account, AccountRepository>> Accounts;
 
 		Currency currency;
-		Money moneySum { get { return new Money(Accounts.Sum(a => a.Item1.Money.Amount), Accounts.First().Item1.Money.Currency); } }
+		Money moneySum { get { return (Accounts.ToList().Count == 0) ? null : new Money(Accounts.Sum(a => a.Item1.Money.Amount), Accounts.First().Item1.Money.Currency); } }
 
 		public CoinDetailView(Currency pageCurrency)
 		{
@@ -49,7 +49,14 @@ namespace view
 				ExchangeRates.Add(ExchangeRateHelper.GetRate(currency, c));
 			}
 
-			updateView();
+
+			if (Accounts.ToList().Count == 0)
+			{
+				Navigation.RemovePage(this);
+			}
+			else {
+				updateView();
+			}
 		}
 
 		void updateView()
@@ -102,18 +109,7 @@ namespace view
 				SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
 			});
 
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str =>
-			{
-				loadData();
-
-				if (Accounts.ToList().Count == 0)
-				{
-					Navigation.RemovePage(this);
-				}
-				else {
-					updateView();
-				}
-			});
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => loadData());
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => loadData());
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrencies, str => loadData());
 			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => loadData());

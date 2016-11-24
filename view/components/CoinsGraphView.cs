@@ -17,104 +17,119 @@ using view;
 
 namespace MyCryptos.view
 {
-    public class CoinsGraphView : ContentView
-    {
-        HybridWebView WebView;
+	public class CoinsGraphView : ContentView
+	{
+		HybridWebView WebView;
+		private Label noCoinsLabel;
+		private bool appeared;
 
-        public CoinsGraphView(INavigation navigation)
-        {
-            var resolverContainer = new SimpleContainer();
+		public CoinsGraphView(INavigation navigation)
+		{
+			var resolverContainer = new SimpleContainer();
 
-            resolverContainer.Register<IJsonSerializer, JsonSerializer>();
+			resolverContainer.Register<IJsonSerializer, JsonSerializer>();
 
-            WebView = new HybridWebView
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = Color.White,
-                MinimumHeightRequest = 500
-            };
-            WebView.RegisterCallback("selectedCallback", t =>
-            {
-                var element = graphItemsGrouped.ToArray()[Convert.ToInt32(t)];
-                if (!element.Item1.Contains(I18N.Others.Replace("{0}", string.Empty).Trim()))
-                {
-                    var currency = CurrencyStorage.Instance.AllElements.Find(e => e.Code.Equals(element.Item1));
-                    Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinDetailView(currency)));
-                }
-            });
+			WebView = new HybridWebView
+			{
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				BackgroundColor = Color.White,
+				MinimumHeightRequest = 500
+			};
+			WebView.RegisterCallback("selectedCallback", t =>
+			{
+				var element = graphItemsGrouped.ToArray()[Convert.ToInt32(t)];
+				if (!element.Item1.Contains(I18N.Others.Replace("{0}", string.Empty).Trim()))
+				{
+					var currency = CurrencyStorage.Instance.AllElements.Find(e => e.Code.Equals(element.Item1));
+					Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinDetailView(currency)));
+				}
+			});
 
-            Content = WebView;
+			noCoinsLabel = new Label { Text = I18N.NoCoins, IsVisible = false, TextColor = AppConstants.FontColorLight, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
 
-            HeightRequest = 500;
+			var stack = new StackLayout();
+			stack.Children.Add(noCoinsLabel);
+			stack.Children.Add(WebView);
+			Content = stack;
 
-            updateView();
+			HeightRequest = 500;
 
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
-        }
+			updateView();
 
-        public void OnAppearing()
-        {
-            WebView.LoadFromContent("Html/graph.html");
-        }
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
+		}
 
-        void updateView()
-        {
-            var items = graphItemsGrouped.ToList();
+		public void OnAppearing()
+		{
+			if (appeared) return;
 
-            if (items.Count > 0)
-            {
-                var c = AppConstants.BackgroundColor;
-                WebView.CallJsFunction("displayGraph", items.Select(e => e.Item1).ToArray(), items.Select(e => e.Item2).ToArray(), string.Format("rgba({0},{1},{2},{3})", c.R * 255, c.G * 255, c.B * 255, c.A));
-            }
-        }
+			appeared = true;
+			WebView.LoadFromContent("Html/graph.html");
+			updateView();
+		}
 
-        IEnumerable<IGrouping<Currency, Account>> groups
-        {
-            get
-            {
-                var allAccounts = AccountStorage.Instance.AllElements;
-                return allAccounts.GroupBy(a => a.Money.Currency);
-            }
-        }
+		void updateView()
+		{
+			var items = graphItemsGrouped.ToList();
+			var itemsExisting = (items.Count > 0);
 
-        IEnumerable<Tuple<string, decimal>> graphItems
-        {
-            get
-            {
-                var elements = groups.Select(i =>
-                {
-                    var neededRate = new ExchangeRate(i.Key, ApplicationSettings.BaseCurrency);
-                    var rate = ExchangeRateHelper.GetRate(neededRate);
-                    if (rate != null && rate.Rate.HasValue)
-                    {
-                        return Tuple.Create(i.First().Money.Currency.Code, i.Sum(e => e.Money.Amount * rate.Rate.Value));
-                    }
-                    return null;
-                });
-                return elements.Where(e => e != null).OrderByDescending(e => e.Item2);
-            }
-        }
+			noCoinsLabel.IsVisible = !itemsExisting;
+			WebView.IsVisible = itemsExisting;
 
-        IEnumerable<Tuple<string, decimal>> graphItemsGrouped
-        {
-            get
-            {
-                var items = graphItems;
-                var reference = items.Sum(e => e.Item2);
-                var smallItems = items.Where(e => (e.Item2 / reference) < AppConstants.PieGroupThreshold).ToList();
+			if (itemsExisting)
+			{
+				var c = AppConstants.BackgroundColor;
+				WebView.CallJsFunction("displayGraph", items.Select(e => e.Item1).ToArray(), items.Select(e => e.Item2).ToArray(), string.Format("rgba({0},{1},{2},{3})", c.R * 255, c.G * 255, c.B * 255, c.A));
+			}
+		}
 
-                if (smallItems.Count > 1)
-                {
-                    items = items.Where(e => !smallItems.Contains(e));
-                    var grouped = Tuple.Create(string.Format(I18N.Others, smallItems.Count), smallItems.Sum(e => e.Item2));
+		IEnumerable<IGrouping<Currency, Account>> groups
+		{
+			get
+			{
+				var allAccounts = AccountStorage.Instance.AllElements;
+				return allAccounts.GroupBy(a => a.Money.Currency);
+			}
+		}
 
-                    return items.Concat(new List<Tuple<string, decimal>> { grouped });
-                }
-                return items;
-            }
-        }
-    }
+		IEnumerable<Tuple<string, decimal>> graphItems
+		{
+			get
+			{
+				var elements = groups.Select(i =>
+				{
+					var neededRate = new ExchangeRate(i.Key, ApplicationSettings.BaseCurrency);
+					var rate = ExchangeRateHelper.GetRate(neededRate);
+					if (rate != null && rate.Rate.HasValue)
+					{
+						return Tuple.Create(i.First().Money.Currency.Code, i.Sum(e => e.Money.Amount * rate.Rate.Value));
+					}
+					return null;
+				});
+				return elements.Where(e => e != null).OrderByDescending(e => e.Item2);
+			}
+		}
+
+		IEnumerable<Tuple<string, decimal>> graphItemsGrouped
+		{
+			get
+			{
+				var items = graphItems;
+				var reference = items.Sum(e => e.Item2);
+				var smallItems = items.Where(e => (e.Item2 / reference) < AppConstants.PieGroupThreshold).ToList();
+
+				if (smallItems.Count > 1)
+				{
+					items = items.Where(e => !smallItems.Contains(e));
+					var grouped = Tuple.Create(string.Format(I18N.Others, smallItems.Count), smallItems.Sum(e => e.Item2));
+
+					return items.Concat(new List<Tuple<string, decimal>> { grouped });
+				}
+				return items;
+			}
+		}
+	}
 }
