@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:i18N="clr-namespace:MyCryptos.resources;assembly=MyCryptos"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
+	x:Class="MyCryptos.view.overlays.PinOverlay">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			Text="{i18N:Translate Cancel}"
+			Clicked="CancelClicked" />
+		<ToolbarItem
+			Text="{i18N:Translate Save}"
+			Clicked="SaveClicked" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<components:ChangingStackLayout>
+			<components:HeaderView
+				x:Name="Header"
+				TitleText="{i18N:Translate AppName}" />
+			<TableView
+				Intent="Form"
+				x:Name="PinTable">
+				<TableSection
+					x:Name="OldPinSection">
+					<components:CustomEntryCell
+						x:Name="OldPinCell"
+						Placeholder="{i18N:Translate OldPin}"
+						Title="{i18N:Translate OldPin}" />
+				</TableSection>
+				<TableSection
+					x:Name="ChangePinSection">
+					<components:CustomEntryCell
+						x:Name="NewPinCell"
+						Placeholder="{i18N:Translate NewPin}"
+						Title="{i18N:Translate NewPin}" />
+					<components:CustomEntryCell
+						x:Name="NewPinRepeatCell"
+						Placeholder="{i18N:Translate RepeatNewPin}"
+						Title="{i18N:Translate RepeatNewPin}" />
+				</TableSection>
+			</TableView>
+		</components:ChangingStackLayout>
+	</ContentPage.Content>
+</ContentPage>

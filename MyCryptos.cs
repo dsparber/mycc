@@ -4,56 +4,79 @@ using Xamarin.Forms;
 using MyCryptos.message;
 using data.settings;
 using tasks;
+using System.Linq;
 
 namespace MyCryptos
 {
-    public class App : Application
-    {
-        public ErrorMessageHandler errorMessageHandler;
+	public class App : Application
+	{
+		public ErrorMessageHandler errorMessageHandler;
 
-        public App()
-        {
-            errorMessageHandler = ErrorMessageHandler.Instance;
+		public App()
+		{
+			errorMessageHandler = ErrorMessageHandler.Instance;
 
-            // The root page of your application
-            if (Device.OS == TargetPlatform.Android)
-            {
-                MainPage = new MasterDetailContainerView();
-            }
-            else
-            {
-                MainPage = new TabContainerView();
-            }
+			Page startPage;
 
-            if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
-            {
-                DependencyService.Get<ILocalise>().SetLocale();
-            }
+			// The root page of your application
+			if (Device.OS == TargetPlatform.Android)
+			{
+				startPage = new MasterDetailContainerView();
+			}
+			else
+			{
+				startPage = new TabContainerView();
+			}
 
-            if (ApplicationSettings.AutoRefreshOnStartup)
-            {
-                AppTasks.Instance.StartFetchTask(true);
-            }
-            else
-            {
-                AppTasks.Instance.StartFastFetchTask();
-            }
-        }
+			if (ApplicationSettings.IsPinSet)
+			{
+				startPage = new PasswordView(startPage);
+			}
 
-        protected override void OnStart()
-        {
-            // Handle when your app starts
-        }
+			MainPage = startPage;
 
-        protected override void OnSleep()
-        {
-            // Handle when your app sleeps
-        }
 
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
-        }
-    }
+
+			if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
+			{
+				DependencyService.Get<ILocalise>().SetLocale();
+			}
+
+			if (ApplicationSettings.AutoRefreshOnStartup)
+			{
+				AppTasks.Instance.StartFetchTask(true);
+			}
+			else
+			{
+				AppTasks.Instance.StartFastFetchTask();
+			}
+		}
+
+		protected override void OnSleep()
+		{
+			if (ApplicationSettings.IsPinSet)
+			{
+				var page = GetCurrentPage();
+				if (page is PasswordView) return;
+
+				page?.Navigation.PushModalAsync(new PasswordView(true), false);
+			}
+		}
+
+		protected async override void OnResume()
+		{
+			await (GetCurrentPage() as PasswordView)?.Authenticate();
+		}
+
+		Page GetCurrentPage()
+		{
+			var page = MainPage.Navigation.ModalStack.LastOrDefault() ?? MainPage;
+			if (page.Navigation.NavigationStack.Count > 0)
+			{
+				page = page.Navigation.NavigationStack.LastOrDefault() ?? page;
+			}
+			return page;
+		}
+	}
 }
 

@@ -659,4 +659,94 @@
 		xml:space="preserve">
     <value>New Source</value>
   </data>
+	<data
+		name="Copyright"
+		xml:space="preserve">
+		<value>© Daniel Sparber</value>
+	</data>
+	<data
+		name="Pin"
+		xml:space="preserve">
+    	<value>PIN</value>
+  </data>
+	<data
+		name="PinActive"
+		xml:space="preserve">
+    	<value>PIN active</value>
+  </data>
+	<data
+		name="FingerprintActive"
+		xml:space="preserve">
+    	<value>PIN and fingerprint active</value>
+  </data>
+	<data
+		name="NotConfigured"
+		xml:space="preserve">
+    	<value>Not configured</value>
+  </data>
+	<data
+		name="PinSettings"
+		xml:space="preserve">
+    	<value>PIN settings</value>
+  </data>
+	<data
+		name="EnablePin"
+		xml:space="preserve">
+    	<value>Enable PIN</value>
+  </data>
+	<data
+		name="DisablePin"
+		xml:space="preserve">
+    	<value>Disable PIN</value>
+  </data>
+	<data
+		name="ChangePin"
+		xml:space="preserve">
+    	<value>Change PIN</value>
+  </data>
+	<data
+		name="OldPin"
+		xml:space="preserve">
+    	<value>Old PIN</value>
+  </data>
+	<data
+		name="NewPin"
+		xml:space="preserve">
+    	<value>New PIN</value>
+  </data>
+	<data
+		name="RepeatNewPin"
+		xml:space="preserve">
+    	<value>Repeat PIN</value>
+  </data>
+	<data
+		name="UseFingerprint"
+		xml:space="preserve">
+    	<value>Use Fingerprint</value>
+  </data>
+	<data
+		name="General"
+		xml:space="preserve">
+    	<value>General</value>
+  </data>
+	<data
+		name="PinToShort"
+		xml:space="preserve">
+    	<value>The entered PIN is to short!</value>
+  </data>
+	<data
+		name="NewPinsDontMatch"
+		xml:space="preserve">
+    	<value>The new PINs do not match!</value>
+  </data>
+	<data
+		name="OldPinWrong"
+		xml:space="preserve">
+    	<value>The entered old PIN is wrong!</value>
+  </data>
+	<data
+		name="UnlockTheApplication"
+		xml:space="preserve">
+    	<value>Unlock the application</value>
+  </data>
 </root>

@@ -17,6 +17,14 @@ namespace data.settings
 
 		public const string KEY_REFERENCE_CURRENCIES = "reference-currencies";
 
+		public const string KEY_PIN = "pin";
+
+		public const string KEY_PIN_LENGTH = "pin-length";
+
+		public const string KEY_PIN_SET = "pin-set";
+
+		public const string KEY_FINGERPRINT_SET = "fingerprint-set";
+
 		public static T Get<T>(string key, T defaultValue)
 		{
 			return AppSettings.GetValueOrDefault(key, defaultValue);

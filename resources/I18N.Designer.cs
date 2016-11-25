@@ -628,5 +628,113 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("NewSource", resourceCulture);
             }
         }
+        
+        public static string Copyright {
+            get {
+                return ResourceManager.GetString("Copyright", resourceCulture);
+            }
+        }
+        
+        public static string Pin {
+            get {
+                return ResourceManager.GetString("Pin", resourceCulture);
+            }
+        }
+        
+        public static string PinActive {
+            get {
+                return ResourceManager.GetString("PinActive", resourceCulture);
+            }
+        }
+        
+        public static string FingerprintActive {
+            get {
+                return ResourceManager.GetString("FingerprintActive", resourceCulture);
+            }
+        }
+        
+        public static string NotConfigured {
+            get {
+                return ResourceManager.GetString("NotConfigured", resourceCulture);
+            }
+        }
+        
+        public static string PinSettings {
+            get {
+                return ResourceManager.GetString("PinSettings", resourceCulture);
+            }
+        }
+        
+        public static string EnablePin {
+            get {
+                return ResourceManager.GetString("EnablePin", resourceCulture);
+            }
+        }
+        
+        public static string DisablePin {
+            get {
+                return ResourceManager.GetString("DisablePin", resourceCulture);
+            }
+        }
+        
+        public static string ChangePin {
+            get {
+                return ResourceManager.GetString("ChangePin", resourceCulture);
+            }
+        }
+        
+        public static string OldPin {
+            get {
+                return ResourceManager.GetString("OldPin", resourceCulture);
+            }
+        }
+        
+        public static string NewPin {
+            get {
+                return ResourceManager.GetString("NewPin", resourceCulture);
+            }
+        }
+        
+        public static string RepeatNewPin {
+            get {
+                return ResourceManager.GetString("RepeatNewPin", resourceCulture);
+            }
+        }
+        
+        public static string UseFingerprint {
+            get {
+                return ResourceManager.GetString("UseFingerprint", resourceCulture);
+            }
+        }
+        
+        public static string General {
+            get {
+                return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        public static string PinToShort {
+            get {
+                return ResourceManager.GetString("PinToShort", resourceCulture);
+            }
+        }
+        
+        public static string NewPinsDontMatch {
+            get {
+                return ResourceManager.GetString("NewPinsDontMatch", resourceCulture);
+            }
+        }
+        
+        public static string OldPinWrong {
+            get {
+                return ResourceManager.GetString("OldPinWrong", resourceCulture);
+            }
+        }
+        
+        public static string UnlockTheApplication {
+            get {
+                return ResourceManager.GetString("UnlockTheApplication", resourceCulture);
+            }
+        }
     }
 }

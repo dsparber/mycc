@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:i18N="clr-namespace:MyCryptos.resources;assembly=MyCryptos"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
+	x:Class="MyCryptos.view.pages.settings.PinSettingsView"
+	Title="{i18N:Translate PinSettings}">
+	<ContentPage.Content>
+		<components:ChangingStackLayout>
+			<components:HeaderView
+				x:Name="Header"
+				TitleText="{i18N:Translate AppName}" />
+			<TableView
+				Intent="Form"
+				x:Name="Table">
+				<TableSection
+					x:Name="ActionSection">
+					<components:CustomViewCell
+						IsActionCell="true"
+						Text="{i18N:Translate EnablePin}"
+						Tapped="EnablePin"
+						x:Name="EnablePinCell" />
+					<components:CustomViewCell
+						IsActionCell="true"
+						Text="{i18N:Translate ChangePin}"
+						Tapped="ChangePin"
+						x:Name="ChangePinCell" />
+					<components:CustomViewCell
+						IsActionCell="true"
+						Text="{i18N:Translate DisablePin}"
+						Tapped="DisablePin"
+						x:Name="DisablePinCell" />
+				</TableSection>
+				<TableSection
+					x:Name="FingerprintSection">
+					<components:CustomSwitchCell
+						Title="{i18N:Translate UseFingerprint}"
+						x:Name="FingerprintCell" />
+				</TableSection>
+			</TableView>
+		</components:ChangingStackLayout>
+	</ContentPage.Content>
+</ContentPage>
