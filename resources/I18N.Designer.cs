@@ -736,5 +736,11 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("UnlockTheApplication", resourceCulture);
             }
         }
+        
+        public static string ScanQrCode {
+            get {
+                return ResourceManager.GetString("ScanQrCode", resourceCulture);
+            }
+        }
     }
 }

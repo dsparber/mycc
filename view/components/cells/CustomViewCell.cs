@@ -57,6 +57,11 @@ namespace MyCryptos.view.components
             set { masterLabel.TextColor = value ? Color.Red : AppConstants.FontColor; if (value) stack.Children.Remove(detailLabel); masterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand; }
         }
 
+		public bool IsCentered
+		{
+			set { masterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand; }
+		}
+
         public CustomViewCell()
         {
             masterLabel = new Label { TextColor = Color.FromHex("222"), LineBreakMode = LineBreakMode.TailTruncation };

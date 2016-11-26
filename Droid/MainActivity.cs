@@ -15,7 +15,13 @@ namespace MyCryptos.Droid
 			base.OnCreate(savedInstanceState);
 			Forms.Init(this, savedInstanceState);
 			CarouselViewRenderer.Init();
+			ZXing.Net.Mobile.Forms.Android.Platform.Init();
 			LoadApplication(new App());
+		}
+
+		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+		{
+			ZXing.Net.Mobile.Forms.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 	}
 }

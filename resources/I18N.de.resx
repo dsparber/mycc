@@ -749,4 +749,9 @@
 		xml:space="preserve">
     	<value>Applikation entsperren</value>
   </data>
+	<data
+		name="ScanQrCode"
+		xml:space="preserve">
+    	<value>QR-Code scannen</value>
+  </data>
 </root>

@@ -749,4 +749,9 @@
 		xml:space="preserve">
     	<value>Unlock the application</value>
   </data>
+	<data
+		name="ScanQrCode"
+		xml:space="preserve">
+    	<value>Scan QR code</value>
+  </data>
 </root>
