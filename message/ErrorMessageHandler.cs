@@ -1,4 +1,4 @@
-using System.Net;
+using System;
 using message;
 using MyCryptos.resources;
 using Xamarin.Forms;
@@ -13,7 +13,7 @@ namespace MyCryptos.message
 
 		public ErrorMessageHandler()
 		{
-			MessagingCenter.Subscribe<WebException>(this, MessageConstants.NetworkError, e => displayNetworkAlert());
+			MessagingCenter.Subscribe<Exception>(this, MessageConstants.NetworkError, e => displayNetworkAlert());
 			MessagingCenter.Subscribe<string>(this, MessageConstants.StartedFetching, str => networkAlertDisplayed = false);
 		}
 

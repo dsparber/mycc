@@ -19,13 +19,17 @@
 				FontAttributes="Bold"
 				HorizontalTextAlignment="Center"
 				TextColor="White"
-				LineBreakMode="TailTruncation" />
+				LineBreakMode="TailTruncation"
+				HeightRequest="36" />
 			<Label
+				HorizontalOptions="FillAndExpand"
 				x:Name="InfoLabel"
 				FontSize="18"
 				HorizontalTextAlignment="Center"
 				TextColor="White"
-				LineBreakMode="TailTruncation" />
+				LineBreakMode="TailTruncation"
+				HeightRequest="18"
+				WidthRequest="1000" />
 			<StackLayout
 				x:Name="LoadingPanel"
 				IsVisible="false"
@@ -35,7 +39,8 @@
 					x:Name="RefreshingLabel"
 					FontSize="18"
 					Text="{i18N:Translate Refreshing}"
-					TextColor="White">
+					TextColor="White"
+					HeightRequest="18">
 				</Label>
 				<ActivityIndicator
 					Color="White"

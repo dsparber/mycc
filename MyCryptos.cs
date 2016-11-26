@@ -65,7 +65,11 @@ namespace MyCryptos
 
 		protected async override void OnResume()
 		{
-			await (GetCurrentPage() as PasswordView)?.Authenticate();
+			var view = (GetCurrentPage() as PasswordView);
+			if (view != null)
+			{
+				await view.Authenticate();
+			}
 		}
 
 		Page GetCurrentPage()

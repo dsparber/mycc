@@ -91,13 +91,15 @@ namespace MyCryptos.data.repositories.account
 				}
 
 			}
-			catch (WebException e)
-			{
-				MessagingCenter.Send(e, MessageConstants.NetworkError);
-			}
 			catch (Exception e)
 			{
-				Debug.WriteLine($"Error Message:\n{e.Message}\nData:\n{e.Data}\nStack trace:\n{e.StackTrace}");
+				if (e is TaskCanceledException || e is WebException)
+				{
+					MessagingCenter.Send(e, MessageConstants.NetworkError);
+				}
+				else {
+					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+				}
 			}
 			return false;
 		}

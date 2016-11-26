@@ -45,14 +45,15 @@ namespace data.repositories.exchangerate
 				await fetch(e => true);
 				return true;
 			}
-			catch (WebException e)
-			{
-				MessagingCenter.Send(e, MessageConstants.NetworkError);
-				return false;
-			}
 			catch (Exception e)
 			{
-				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+				if (e is TaskCanceledException || e is WebException)
+				{
+					MessagingCenter.Send(e, MessageConstants.NetworkError);
+				}
+				else {
+					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+				}
 				return false;
 			}
 		}
@@ -64,14 +65,15 @@ namespace data.repositories.exchangerate
 				await fetch(e => !e.Rate.HasValue);
 				return true;
 			}
-			catch (WebException e)
-			{
-				MessagingCenter.Send(e, MessageConstants.NetworkError);
-				return false;
-			}
 			catch (Exception e)
 			{
-				Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+				if (e is TaskCanceledException || e is WebException)
+				{
+					MessagingCenter.Send(e, MessageConstants.NetworkError);
+				}
+				else {
+					Debug.WriteLine(string.Format("Error Message:\n{0}\nData:\n{1}\nStack trace:\n{2}", e.Message, e.Data, e.StackTrace));
+				}
 				return false;
 			}
 		}

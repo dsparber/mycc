@@ -1,9 +1,7 @@
 using System;
 using System.Linq;
 using data.settings;
-using data.storage;
 using enums;
-using MyCryptos.models;
 using message;
 using MyCryptos.resources;
 using Xamarin.Forms;
@@ -11,12 +9,12 @@ using MyCryptos.helpers;
 using System.Collections.Generic;
 using tasks;
 using MyCryptos.view;
+using MyCryptos.view.components;
 
 namespace view
 {
 	public partial class CoinsView : ContentPage
 	{
-
 		ContentView TableView;
 		CoinsGraphView GraphView;
 
@@ -52,18 +50,19 @@ namespace view
 				GraphView.IsVisible = (selected == 1);
 			};
 
-			var recognizer = new TapGestureRecognizer();
-			recognizer.Tapped += (sender, e) =>
+			var pages = new List<int>();
+			var i = 0;
+			foreach (var c in ApplicationSettings.ReferenceCurrencies)
 			{
-				var currencies = ApplicationSettings.ReferenceCurrencies;
-				var baseCurrency = ApplicationSettings.BaseCurrency;
-				var newIndex = (currencies.IndexOf(baseCurrency) + 1) % currencies.Count;
-				ApplicationSettings.BaseCurrency = currencies[newIndex];
-			};
+				pages.Add(i);
+				i += 1;
+			}
 
-			Header.GestureRecognizers.Add(recognizer);
+			HeaderCarousel.ItemsSource = pages;
+			HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
+			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
+			HeaderCarousel.PositionSelected += PositionSelected;
 		}
-
 
 		protected override void OnAppearing()
 		{
@@ -75,59 +74,32 @@ namespace view
 			}
 		}
 
-		void updateView()
-		{
-			var sum = moneySum;
-			var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
 
-			Header.TitleText = (sum.Amount > 0) ? sum.ToString() : string.Format("0 {0}", sum.Currency.Code);
-			if (amountDifferentCurrencies == 0)
+		public void PositionSelected(object sender, EventArgs e)
+		{
+			var currencies = ApplicationSettings.ReferenceCurrencies;
+			if (HeaderCarousel.Position > 0 && HeaderCarousel.Position < ApplicationSettings.ReferenceCurrencies.Count)
 			{
-				Header.InfoText = I18N.NoCoins;
-			}
-			else if (amountDifferentCurrencies == 1)
-			{
-				Header.InfoText = I18N.OneCoin;
-			}
-			else
-			{
-				Header.InfoText = string.Format(I18N.DifferentCoinsCount, amountDifferentCurrencies);
+				ApplicationSettings.BaseCurrency = currencies[HeaderCarousel.Position];
 			}
 		}
 
-		Money moneySum
+		void SetHeaderCarousel()
 		{
-			get
+			while (HeaderCarousel.ItemsSource.Count > 0)
 			{
-				var neededRates = new List<ExchangeRate>();
-
-				var amount = AccountStorage.Instance.AllElements.Select(a =>
-				{
-					var neededRate = new ExchangeRate(a.Money.Currency, ApplicationSettings.BaseCurrency);
-					var rate = ExchangeRateHelper.GetRate(neededRate);
-
-					if (rate == null || !rate.Rate.HasValue)
-					{
-						neededRates.Add(neededRate);
-					}
-
-					return a.Money.Amount * (rate ?? neededRate).RateNotNull;
-				}).Sum();
-
-				AppTasks.Instance.StartMissingRatesTask(neededRates.Distinct());
-
-				return new Money(amount, ApplicationSettings.BaseCurrency);
+				HeaderCarousel.RemovePage(0);
 			}
-		}
 
-		void addSubscriber()
-		{
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
-			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
+			var x = 0;
+			foreach (var c in ApplicationSettings.ReferenceCurrencies.ToList())
+			{
+				HeaderCarousel.InsertPage(x, HeaderCarousel.ItemsSource.Count - 1);
+				x += 1;
+			}
 
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
-			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));
+			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
+			HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
 		}
 
 		public async void Add(object sender, EventArgs e)
@@ -142,22 +114,25 @@ namespace view
 			}
 		}
 
+		void addSubscriber()
+		{
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
+			MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));
+
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, s => HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency));
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrencies, s => SetHeaderCarousel());
+		}
+
 		void setLoadingAnimation(FetchSpeed speed, bool loading)
 		{
 			if (loading)
 			{
 				IsBusy = loading;
-				Header.IsLoading = loading;
 			}
 			else
 			{
-				if (speed.Speed == FetchSpeedEnum.FAST)
+				if (speed.Speed != FetchSpeedEnum.FAST)
 				{
-					Header.IsLoading = false;
-				}
-				else
-				{
-					Header.IsLoading = false;
 					IsBusy = false;
 				}
 			}
@@ -166,6 +141,21 @@ namespace view
 		void Refresh(object sender, EventArgs e)
 		{
 			AppTasks.Instance.StartFetchTask(false);
+		}
+
+		private class HeaderTemplateSelector : DataTemplateSelector
+		{
+			private readonly List<DataTemplate> templates;
+
+			public HeaderTemplateSelector()
+			{
+				templates = ApplicationSettings.ReferenceCurrencies.Select(e => new DataTemplate(() => new CoinsHeaderView(e))).ToList();
+			}
+
+			protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
+			{
+				return templates[(int)item];
+			}
 		}
 	}
 }
