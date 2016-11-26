@@ -47,7 +47,7 @@ namespace MyCryptos.view.components
 
 			TitleText = (sum.Amount > 0) ? sum.ToString() : string.Format("0 {0}", sum.Currency.Code);
 			InfoTexts[0] = PluralHelper.GetText(I18N.NoCoins, I18N.OneCoin, I18N.Coins, amountDifferentCurrencies);
-			InfoTexts[1] = string.Join(" | ", ApplicationSettings.ReferenceCurrencies.Where(c => !c.Equals(ApplicationSettings.BaseCurrency)).Select(c => MoneySum(c)?.ToString() ?? $"0 {c.Code}"));
+			InfoTexts[1] = string.Join(" | ", ApplicationSettings.ReferenceCurrencies.Where(c => !c.Equals(currency)).Select(c => MoneySum(c)?.ToString() ?? $"0 {c.Code}"));
 			InfoText = InfoTexts[currentInfoText];
 		}
 
