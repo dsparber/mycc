@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using data.storage;
 using data.repositories.currency;
 using System.Linq;
+using System.Globalization;
 
 namespace data.repositories.account
 {
@@ -24,7 +25,7 @@ namespace data.repositories.account
 			}
 		}
 
-		protected override Func<string, decimal> Balance => (httpContent) => decimal.Parse(httpContent);
+		protected override Func<string, decimal> Balance => (httpContent) => decimal.Parse(httpContent, CultureInfo.InvariantCulture);
 		protected override Uri Url => new Uri($"https://www.blockexperts.com/api?coin={Currency}&action=getbalance&address={Address}");
 
 

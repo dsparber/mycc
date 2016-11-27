@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using data.database.models;
 using data.storage;
@@ -19,7 +20,7 @@ namespace MyCryptos.data.repositories.account
 		public override IEnumerable<Currency> SupportedCurrencies => new List<Currency> { Currency };
 
 		protected override decimal BalanceFactor => 1e18M;
-		protected override Func<string, decimal> Balance => (httpContent) => (decimal)(JArray.Parse(httpContent)[0] as JObject)[JsonKeyBalance];
+		protected override Func<string, decimal> Balance => (httpContent) => decimal.Parse((string)(JArray.Parse(httpContent)[0] as JObject)[JsonKeyBalance], CultureInfo.InvariantCulture);
 		protected override Uri Url => new Uri($"https://etherchain.org/api/account/{Currency}");
 
 

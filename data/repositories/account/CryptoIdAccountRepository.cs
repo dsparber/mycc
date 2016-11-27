@@ -2,6 +2,7 @@ using data.database.models;
 using MyCryptos.models;
 using MyCryptos.resources;
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using data.storage;
 using MyCryptos.data.repositories.currency;
@@ -22,7 +23,7 @@ namespace MyCryptos.data.repositories.account
 			}
 		}
 
-		protected override Func<string, decimal> Balance => (httpContent) => decimal.Parse(httpContent);
+		protected override Func<string, decimal> Balance => (httpContent) => decimal.Parse(httpContent, CultureInfo.InvariantCulture);
 		protected override Uri Url => new Uri($"http://chainz.cryptoid.info/{Currency}/api.dws?q=getbalance&a={Address}");
 
 		public CryptoIdAccountRepository(string name, string data) : base(AccountRepositoryDBM.DB_TYPE_CRYPTOID_REPOSITORY, name, data) { }

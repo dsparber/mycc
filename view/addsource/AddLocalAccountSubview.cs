@@ -1,4 +1,5 @@
-﻿using data.storage;
+﻿using System.Globalization;
+using data.storage;
 using MyCryptos.helpers;
 using MyCryptos.models;
 using MyCryptos.resources;
@@ -41,7 +42,8 @@ namespace MyCryptos.view.addrepositoryviews
 			var currency = currencyCell.SelectedCurrency;
 			var amount = decimal.Parse(string.IsNullOrEmpty(amountEntryCell.Text) ? "0" : amountEntryCell.Text);
 
-			if (currency == null) {
+			if (currency == null)
+			{
 				return null;
 			}
 

@@ -16,6 +16,7 @@ using System.Net;
 using Xamarin.Forms;
 using message;
 using System.Linq;
+using System.Globalization;
 
 namespace data.repositories.account
 {
@@ -115,7 +116,7 @@ namespace data.repositories.account
 					foreach (var r in results)
 					{
 						var currencyCode = (string)r[CURRENCY_KEY];
-						var balance = (decimal)r[BALANCE_KEY];
+						var balance = decimal.Parse((string)r[BALANCE_KEY], CultureInfo.InvariantCulture);
 
 						if (balance != 0)
 						{
@@ -127,12 +128,12 @@ namespace data.repositories.account
 
 							if (existing != null)
 							{
-								existing = new Account(existing.Id, Id, existing.Name, money);
+								existing = new Account(existing.Id, Id, $"{Name} ({curr.Code})", money);
 								await Update(existing);
 								currentAccounts.Add(existing);
 							}
 							else {
-								var newAccount = new Account(string.Format("{0} ({1})", I18N.BittrexAccount, curr.Code), money) { RepositoryId = Id };
+								var newAccount = new Account($"{Name} ({curr.Code})", money) { RepositoryId = Id };
 								await Add(newAccount);
 								currentAccounts.Add(newAccount);
 							}

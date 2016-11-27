@@ -26,10 +26,141 @@ namespace MyCryptos.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::PCLCrypto.Resource.String.ApplicationName = global::MyCryptos.Droid.Resource.String.ApplicationName;
+			global::PCLCrypto.Resource.String.Hello = global::MyCryptos.Droid.Resource.String.Hello;
+			global::Plugin.Fingerprint.Resource.Drawable.fingerprint_white = global::MyCryptos.Droid.Resource.Drawable.fingerprint_white;
+			global::Plugin.Fingerprint.Resource.Id.fingerprint_btnCancel = global::MyCryptos.Droid.Resource.Id.fingerprint_btnCancel;
+			global::Plugin.Fingerprint.Resource.Id.fingerprint_btnFallback = global::MyCryptos.Droid.Resource.Id.fingerprint_btnFallback;
+			global::Plugin.Fingerprint.Resource.Id.fingerprint_imgFingerprint = global::MyCryptos.Droid.Resource.Id.fingerprint_imgFingerprint;
+			global::Plugin.Fingerprint.Resource.Id.fingerprint_txtReason = global::MyCryptos.Droid.Resource.Id.fingerprint_txtReason;
+			global::Plugin.Fingerprint.Resource.Layout.FingerprintDialog = global::MyCryptos.Droid.Resource.Layout.FingerprintDialog;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiCentered = global::MyCryptos.Droid.Resource.Attribute.vpiCentered;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiCirclePageIndicatorStyle = global::MyCryptos.Droid.Resource.Attribute.vpiCirclePageIndicatorStyle;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiFillColor = global::MyCryptos.Droid.Resource.Attribute.vpiFillColor;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiOrientation = global::MyCryptos.Droid.Resource.Attribute.vpiOrientation;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiPageColor = global::MyCryptos.Droid.Resource.Attribute.vpiPageColor;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiRadius = global::MyCryptos.Droid.Resource.Attribute.vpiRadius;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiSnap = global::MyCryptos.Droid.Resource.Attribute.vpiSnap;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiStrokeColor = global::MyCryptos.Droid.Resource.Attribute.vpiStrokeColor;
+			global::CarouselView.FormsPlugin.Android.Resource.Attribute.vpiStrokeWidth = global::MyCryptos.Droid.Resource.Attribute.vpiStrokeWidth;
+			global::CarouselView.FormsPlugin.Android.Resource.Boolean.default_circle_indicator_centered = global::MyCryptos.Droid.Resource.Boolean.default_circle_indicator_centered;
+			global::CarouselView.FormsPlugin.Android.Resource.Boolean.default_circle_indicator_snap = global::MyCryptos.Droid.Resource.Boolean.default_circle_indicator_snap;
+			global::CarouselView.FormsPlugin.Android.Resource.Color.default_circle_indicator_fill_color = global::MyCryptos.Droid.Resource.Color.default_circle_indicator_fill_color;
+			global::CarouselView.FormsPlugin.Android.Resource.Color.default_circle_indicator_page_color = global::MyCryptos.Droid.Resource.Color.default_circle_indicator_page_color;
+			global::CarouselView.FormsPlugin.Android.Resource.Color.default_circle_indicator_stroke_color = global::MyCryptos.Droid.Resource.Color.default_circle_indicator_stroke_color;
+			global::CarouselView.FormsPlugin.Android.Resource.Color.vpi__background_holo_dark = global::MyCryptos.Droid.Resource.Color.vpi__background_holo_dark;
+			global::CarouselView.FormsPlugin.Android.Resource.Color.vpi__background_holo_light = global::MyCryptos.Droid.Resource.Color.vpi__background_holo_light;
+			global::CarouselView.FormsPlugin.Android.Resource.Color.vpi__bright_foreground_disabled_holo_dark = global::MyCryptos.Droid.Resource.Color.vpi__bright_foreground_disabled_holo_dark;
+			global::CarouselView.FormsPlugin.Android.Resource.Color.vpi__bright_foreground_disabled_holo_light = global::MyCryptos.Droid.Resource.Color.vpi__bright_foreground_disabled_holo_light;
+			global::CarouselView.FormsPlugin.Android.Resource.Color.vpi__bright_foreground_holo_dark = global::MyCryptos.Droid.Resource.Color.vpi__bright_foreground_holo_dark;
+			global::CarouselView.FormsPlugin.Android.Resource.Color.vpi__bright_foreground_holo_light = global::MyCryptos.Droid.Resource.Color.vpi__bright_foreground_holo_light;
+			global::CarouselView.FormsPlugin.Android.Resource.Color.vpi__bright_foreground_inverse_holo_dark = global::MyCryptos.Droid.Resource.Color.vpi__bright_foreground_inverse_holo_dark;
+			global::CarouselView.FormsPlugin.Android.Resource.Color.vpi__bright_foreground_inverse_holo_light = global::MyCryptos.Droid.Resource.Color.vpi__bright_foreground_inverse_holo_light;
+			global::CarouselView.FormsPlugin.Android.Resource.Dimension.default_circle_indicator_radius = global::MyCryptos.Droid.Resource.Dimension.default_circle_indicator_radius;
+			global::CarouselView.FormsPlugin.Android.Resource.Dimension.default_circle_indicator_stroke_width = global::MyCryptos.Droid.Resource.Dimension.default_circle_indicator_stroke_width;
+			global::CarouselView.FormsPlugin.Android.Resource.Id.horizontal = global::MyCryptos.Droid.Resource.Id.horizontal;
+			global::CarouselView.FormsPlugin.Android.Resource.Id.indicator = global::MyCryptos.Droid.Resource.Id.indicator;
+			global::CarouselView.FormsPlugin.Android.Resource.Id.pager = global::MyCryptos.Droid.Resource.Id.pager;
+			global::CarouselView.FormsPlugin.Android.Resource.Id.title = global::MyCryptos.Droid.Resource.Id.title;
+			global::CarouselView.FormsPlugin.Android.Resource.Id.vertical = global::MyCryptos.Droid.Resource.Id.vertical;
+			global::CarouselView.FormsPlugin.Android.Resource.Integer.default_circle_indicator_orientation = global::MyCryptos.Droid.Resource.Integer.default_circle_indicator_orientation;
+			global::CarouselView.FormsPlugin.Android.Resource.Layout.vertical_viewpager = global::MyCryptos.Droid.Resource.Layout.vertical_viewpager;
+			global::CarouselView.FormsPlugin.Android.Resource.Layout.viewpager = global::MyCryptos.Droid.Resource.Layout.viewpager;
+			global::CarouselView.FormsPlugin.Android.Resource.Style.Theme_PageIndicatorDefaults = global::MyCryptos.Droid.Resource.Style.Theme_PageIndicatorDefaults;
+			global::CarouselView.FormsPlugin.Android.Resource.Style.Widget = global::MyCryptos.Droid.Resource.Style.Widget;
+			global::CarouselView.FormsPlugin.Android.Resource.Style.Widget_CirclePageIndicator = global::MyCryptos.Droid.Resource.Style.Widget_CirclePageIndicator;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator = global::MyCryptos.Droid.Resource.Styleable.CirclePageIndicator;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiCentered = global::MyCryptos.Droid.Resource.Styleable.CirclePageIndicator_vpiCentered;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiFillColor = global::MyCryptos.Droid.Resource.Styleable.CirclePageIndicator_vpiFillColor;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiOrientation = global::MyCryptos.Droid.Resource.Styleable.CirclePageIndicator_vpiOrientation;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiPageColor = global::MyCryptos.Droid.Resource.Styleable.CirclePageIndicator_vpiPageColor;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiRadius = global::MyCryptos.Droid.Resource.Styleable.CirclePageIndicator_vpiRadius;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiSnap = global::MyCryptos.Droid.Resource.Styleable.CirclePageIndicator_vpiSnap;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiStrokeColor = global::MyCryptos.Droid.Resource.Styleable.CirclePageIndicator_vpiStrokeColor;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.CirclePageIndicator_vpiStrokeWidth = global::MyCryptos.Droid.Resource.Styleable.CirclePageIndicator_vpiStrokeWidth;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.ViewPagerIndicator = global::MyCryptos.Droid.Resource.Styleable.ViewPagerIndicator;
+			global::CarouselView.FormsPlugin.Android.Resource.Styleable.ViewPagerIndicator_vpiCirclePageIndicatorStyle = global::MyCryptos.Droid.Resource.Styleable.ViewPagerIndicator_vpiCirclePageIndicatorStyle;
+			global::ZXing.Mobile.Resource.Id.contentFrame = global::MyCryptos.Droid.Resource.Id.contentFrame;
+			global::ZXing.Mobile.Resource.Layout.zxingscanneractivitylayout = global::MyCryptos.Droid.Resource.Layout.zxingscanneractivitylayout;
+			global::ZXing.Mobile.Resource.Layout.zxingscannerfragmentlayout = global::MyCryptos.Droid.Resource.Layout.zxingscannerfragmentlayout;
+			global::ZXing.Net.Mobile.Forms.Android.Resource.Layout.zxingscanneractivitylayout = global::MyCryptos.Droid.Resource.Layout.zxingscanneractivitylayout;
+			global::ZXing.Net.Mobile.Forms.Android.Resource.Layout.zxingscannerfragmentlayout = global::MyCryptos.Droid.Resource.Layout.zxingscannerfragmentlayout;
+			global::ZXing.Net.Mobile.Forms.Android.Resource.String.library_name = global::MyCryptos.Droid.Resource.String.library_name;
+			global::XLabs.Platform.Resource.String.ApplicationName = global::MyCryptos.Droid.Resource.String.ApplicationName;
+			global::XLabs.Platform.Resource.String.Hello = global::MyCryptos.Droid.Resource.String.Hello;
+			global::XLabs.Forms.Droid.Resource.Color.calendar_active_month_bg = global::MyCryptos.Droid.Resource.Color.calendar_active_month_bg;
+			global::XLabs.Forms.Droid.Resource.Color.calendar_bg = global::MyCryptos.Droid.Resource.Color.calendar_bg;
+			global::XLabs.Forms.Droid.Resource.Color.calendar_divider = global::MyCryptos.Droid.Resource.Color.calendar_divider;
+			global::XLabs.Forms.Droid.Resource.Color.calendar_highlighted_day_bg = global::MyCryptos.Droid.Resource.Color.calendar_highlighted_day_bg;
+			global::XLabs.Forms.Droid.Resource.Color.calendar_inactive_month_bg = global::MyCryptos.Droid.Resource.Color.calendar_inactive_month_bg;
+			global::XLabs.Forms.Droid.Resource.Color.calendar_selected_day_bg = global::MyCryptos.Droid.Resource.Color.calendar_selected_day_bg;
+			global::XLabs.Forms.Droid.Resource.Color.calendar_selected_range_bg = global::MyCryptos.Droid.Resource.Color.calendar_selected_range_bg;
+			global::XLabs.Forms.Droid.Resource.Color.calendar_text_active = global::MyCryptos.Droid.Resource.Color.calendar_text_active;
+			global::XLabs.Forms.Droid.Resource.Color.calendar_text_inactive = global::MyCryptos.Droid.Resource.Color.calendar_text_inactive;
+			global::XLabs.Forms.Droid.Resource.Color.calendar_text_selected = global::MyCryptos.Droid.Resource.Color.calendar_text_selected;
+			global::XLabs.Forms.Droid.Resource.Color.calendar_text_selector = global::MyCryptos.Droid.Resource.Color.calendar_text_selector;
+			global::XLabs.Forms.Droid.Resource.Color.calendar_text_unselectable = global::MyCryptos.Droid.Resource.Color.calendar_text_unselectable;
+			global::XLabs.Forms.Droid.Resource.Dimension.calendar_day_headers_paddingbottom = global::MyCryptos.Droid.Resource.Dimension.calendar_day_headers_paddingbottom;
+			global::XLabs.Forms.Droid.Resource.Dimension.calendar_month_title_bottommargin = global::MyCryptos.Droid.Resource.Dimension.calendar_month_title_bottommargin;
+			global::XLabs.Forms.Droid.Resource.Dimension.calendar_month_topmargin = global::MyCryptos.Droid.Resource.Dimension.calendar_month_topmargin;
+			global::XLabs.Forms.Droid.Resource.Dimension.calendar_text_medium = global::MyCryptos.Droid.Resource.Dimension.calendar_text_medium;
+			global::XLabs.Forms.Droid.Resource.Dimension.calendar_text_small = global::MyCryptos.Droid.Resource.Dimension.calendar_text_small;
+			global::XLabs.Forms.Droid.Resource.Drawable.ad16 = global::MyCryptos.Droid.Resource.Drawable.ad16;
+			global::XLabs.Forms.Droid.Resource.Drawable.calendar_bg_selector = global::MyCryptos.Droid.Resource.Drawable.calendar_bg_selector;
+			global::XLabs.Forms.Droid.Resource.Id.calendar_grid = global::MyCryptos.Droid.Resource.Id.calendar_grid;
+			global::XLabs.Forms.Droid.Resource.Id.calendar_view = global::MyCryptos.Droid.Resource.Id.calendar_view;
+			global::XLabs.Forms.Droid.Resource.Id.calendarr_pager = global::MyCryptos.Droid.Resource.Id.calendarr_pager;
+			global::XLabs.Forms.Droid.Resource.Id.left_arrow = global::MyCryptos.Droid.Resource.Id.left_arrow;
+			global::XLabs.Forms.Droid.Resource.Id.right_arrow = global::MyCryptos.Droid.Resource.Id.right_arrow;
+			global::XLabs.Forms.Droid.Resource.Id.title = global::MyCryptos.Droid.Resource.Id.title;
+			global::XLabs.Forms.Droid.Resource.Layout.calendar_pager = global::MyCryptos.Droid.Resource.Layout.calendar_pager;
+			global::XLabs.Forms.Droid.Resource.Layout.calendar_pager_layout = global::MyCryptos.Droid.Resource.Layout.calendar_pager_layout;
+			global::XLabs.Forms.Droid.Resource.Layout.calendar_picker = global::MyCryptos.Droid.Resource.Layout.calendar_picker;
+			global::XLabs.Forms.Droid.Resource.Layout.dialog = global::MyCryptos.Droid.Resource.Layout.dialog;
+			global::XLabs.Forms.Droid.Resource.Layout.month = global::MyCryptos.Droid.Resource.Layout.month;
+			global::XLabs.Forms.Droid.Resource.Layout.week = global::MyCryptos.Droid.Resource.Layout.week;
+			global::XLabs.Forms.Droid.Resource.String.ApplicationName = global::MyCryptos.Droid.Resource.String.ApplicationName;
+			global::XLabs.Forms.Droid.Resource.String.Hello = global::MyCryptos.Droid.Resource.String.Hello;
+			global::XLabs.Forms.Droid.Resource.String.day_name_format = global::MyCryptos.Droid.Resource.String.day_name_format;
+			global::XLabs.Forms.Droid.Resource.String.full_date_format = global::MyCryptos.Droid.Resource.String.full_date_format;
+			global::XLabs.Forms.Droid.Resource.String.invalid_date = global::MyCryptos.Droid.Resource.String.invalid_date;
+			global::XLabs.Forms.Droid.Resource.String.library_name = global::MyCryptos.Droid.Resource.String.library_name;
+			global::XLabs.Forms.Droid.Resource.String.month_name_format = global::MyCryptos.Droid.Resource.String.month_name_format;
+			global::XLabs.Forms.Droid.Resource.Style.CalendarCell = global::MyCryptos.Droid.Resource.Style.CalendarCell;
+			global::XLabs.Forms.Droid.Resource.Style.CalendarCell_CalendarDate = global::MyCryptos.Droid.Resource.Style.CalendarCell_CalendarDate;
+			global::XLabs.Forms.Droid.Resource.Style.CalendarCell_DayHeader = global::MyCryptos.Droid.Resource.Style.CalendarCell_DayHeader;
+			global::XLabs.Forms.Droid.Resource.Style.CalendarTitle = global::MyCryptos.Droid.Resource.Style.CalendarTitle;
 		}
 		
 		public partial class Attribute
 		{
+			
+			// aapt resource value: 0x7f010001
+			public const int vpiCentered = 2130771969;
+			
+			// aapt resource value: 0x7f010000
+			public const int vpiCirclePageIndicatorStyle = 2130771968;
+			
+			// aapt resource value: 0x7f010006
+			public const int vpiFillColor = 2130771974;
+			
+			// aapt resource value: 0x7f010003
+			public const int vpiOrientation = 2130771971;
+			
+			// aapt resource value: 0x7f010002
+			public const int vpiPageColor = 2130771970;
+			
+			// aapt resource value: 0x7f010005
+			public const int vpiRadius = 2130771973;
+			
+			// aapt resource value: 0x7f010004
+			public const int vpiSnap = 2130771972;
+			
+			// aapt resource value: 0x7f010007
+			public const int vpiStrokeColor = 2130771975;
+			
+			// aapt resource value: 0x7f010008
+			public const int vpiStrokeWidth = 2130771976;
 			
 			static Attribute()
 			{
@@ -41,20 +172,108 @@ namespace MyCryptos.Droid
 			}
 		}
 		
+		public partial class Boolean
+		{
+			
+			// aapt resource value: 0x7f080000
+			public const int default_circle_indicator_centered = 2131230720;
+			
+			// aapt resource value: 0x7f080001
+			public const int default_circle_indicator_snap = 2131230721;
+			
+			static Boolean()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Boolean()
+			{
+			}
+		}
+		
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f030002
-			public const int accent = 2130903042;
+			// aapt resource value: 0x7f040018
+			public const int accent = 2130968600;
 			
-			// aapt resource value: 0x7f030000
-			public const int primary = 2130903040;
+			// aapt resource value: 0x7f040000
+			public const int calendar_active_month_bg = 2130968576;
 			
-			// aapt resource value: 0x7f030001
-			public const int primaryDark = 2130903041;
+			// aapt resource value: 0x7f040001
+			public const int calendar_bg = 2130968577;
 			
-			// aapt resource value: 0x7f030003
-			public const int window_background = 2130903043;
+			// aapt resource value: 0x7f040002
+			public const int calendar_divider = 2130968578;
+			
+			// aapt resource value: 0x7f040005
+			public const int calendar_highlighted_day_bg = 2130968581;
+			
+			// aapt resource value: 0x7f040003
+			public const int calendar_inactive_month_bg = 2130968579;
+			
+			// aapt resource value: 0x7f040004
+			public const int calendar_selected_day_bg = 2130968580;
+			
+			// aapt resource value: 0x7f040006
+			public const int calendar_selected_range_bg = 2130968582;
+			
+			// aapt resource value: 0x7f040008
+			public const int calendar_text_active = 2130968584;
+			
+			// aapt resource value: 0x7f040007
+			public const int calendar_text_inactive = 2130968583;
+			
+			// aapt resource value: 0x7f040009
+			public const int calendar_text_selected = 2130968585;
+			
+			// aapt resource value: 0x7f04001a
+			public const int calendar_text_selector = 2130968602;
+			
+			// aapt resource value: 0x7f04000a
+			public const int calendar_text_unselectable = 2130968586;
+			
+			// aapt resource value: 0x7f040013
+			public const int default_circle_indicator_fill_color = 2130968595;
+			
+			// aapt resource value: 0x7f040014
+			public const int default_circle_indicator_page_color = 2130968596;
+			
+			// aapt resource value: 0x7f040015
+			public const int default_circle_indicator_stroke_color = 2130968597;
+			
+			// aapt resource value: 0x7f040016
+			public const int primary = 2130968598;
+			
+			// aapt resource value: 0x7f040017
+			public const int primaryDark = 2130968599;
+			
+			// aapt resource value: 0x7f04000b
+			public const int vpi__background_holo_dark = 2130968587;
+			
+			// aapt resource value: 0x7f04000c
+			public const int vpi__background_holo_light = 2130968588;
+			
+			// aapt resource value: 0x7f04000f
+			public const int vpi__bright_foreground_disabled_holo_dark = 2130968591;
+			
+			// aapt resource value: 0x7f040010
+			public const int vpi__bright_foreground_disabled_holo_light = 2130968592;
+			
+			// aapt resource value: 0x7f04000d
+			public const int vpi__bright_foreground_holo_dark = 2130968589;
+			
+			// aapt resource value: 0x7f04000e
+			public const int vpi__bright_foreground_holo_light = 2130968590;
+			
+			// aapt resource value: 0x7f040011
+			public const int vpi__bright_foreground_inverse_holo_dark = 2130968593;
+			
+			// aapt resource value: 0x7f040012
+			public const int vpi__bright_foreground_inverse_holo_light = 2130968594;
+			
+			// aapt resource value: 0x7f040019
+			public const int window_background = 2130968601;
 			
 			static Color()
 			{
@@ -66,6 +285,40 @@ namespace MyCryptos.Droid
 			}
 		}
 		
+		public partial class Dimension
+		{
+			
+			// aapt resource value: 0x7f050000
+			public const int calendar_day_headers_paddingbottom = 2131034112;
+			
+			// aapt resource value: 0x7f050002
+			public const int calendar_month_title_bottommargin = 2131034114;
+			
+			// aapt resource value: 0x7f050001
+			public const int calendar_month_topmargin = 2131034113;
+			
+			// aapt resource value: 0x7f050003
+			public const int calendar_text_medium = 2131034115;
+			
+			// aapt resource value: 0x7f050004
+			public const int calendar_text_small = 2131034116;
+			
+			// aapt resource value: 0x7f050005
+			public const int default_circle_indicator_radius = 2131034117;
+			
+			// aapt resource value: 0x7f050006
+			public const int default_circle_indicator_stroke_width = 2131034118;
+			
+			static Dimension()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Dimension()
+			{
+			}
+		}
+		
 		public partial class Drawable
 		{
 			
@@ -73,40 +326,49 @@ namespace MyCryptos.Droid
 			public const int accounts = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int add = 2130837505;
+			public const int ad16 = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int checkmark = 2130837506;
+			public const int add = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int coins = 2130837507;
+			public const int calendar_bg_selector = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int delete = 2130837508;
+			public const int checkmark = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int down = 2130837509;
+			public const int coins = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int hamburger = 2130837510;
+			public const int delete = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int Icon = 2130837511;
+			public const int down = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int more = 2130837512;
+			public const int fingerprint_white = 2130837512;
 			
 			// aapt resource value: 0x7f020009
-			public const int settings = 2130837513;
+			public const int hamburger = 2130837513;
 			
 			// aapt resource value: 0x7f02000a
-			public const int sources = 2130837514;
+			public const int Icon = 2130837514;
 			
 			// aapt resource value: 0x7f02000b
-			public const int tags = 2130837515;
+			public const int more = 2130837515;
 			
 			// aapt resource value: 0x7f02000c
-			public const int up = 2130837516;
+			public const int settings = 2130837516;
+			
+			// aapt resource value: 0x7f02000d
+			public const int sources = 2130837517;
+			
+			// aapt resource value: 0x7f02000e
+			public const int tags = 2130837518;
+			
+			// aapt resource value: 0x7f02000f
+			public const int up = 2130837519;
 			
 			static Drawable()
 			{
@@ -118,14 +380,189 @@ namespace MyCryptos.Droid
 			}
 		}
 		
+		public partial class Id
+		{
+			
+			// aapt resource value: 0x7f0a000b
+			public const int calendar_grid = 2131361803;
+			
+			// aapt resource value: 0x7f0a0004
+			public const int calendar_view = 2131361796;
+			
+			// aapt resource value: 0x7f0a0002
+			public const int calendarr_pager = 2131361794;
+			
+			// aapt resource value: 0x7f0a000e
+			public const int contentFrame = 2131361806;
+			
+			// aapt resource value: 0x7f0a0009
+			public const int fingerprint_btnCancel = 2131361801;
+			
+			// aapt resource value: 0x7f0a000a
+			public const int fingerprint_btnFallback = 2131361802;
+			
+			// aapt resource value: 0x7f0a0007
+			public const int fingerprint_imgFingerprint = 2131361799;
+			
+			// aapt resource value: 0x7f0a0008
+			public const int fingerprint_txtReason = 2131361800;
+			
+			// aapt resource value: 0x7f0a0000
+			public const int horizontal = 2131361792;
+			
+			// aapt resource value: 0x7f0a000d
+			public const int indicator = 2131361805;
+			
+			// aapt resource value: 0x7f0a0006
+			public const int left_arrow = 2131361798;
+			
+			// aapt resource value: 0x7f0a000c
+			public const int pager = 2131361804;
+			
+			// aapt resource value: 0x7f0a0005
+			public const int right_arrow = 2131361797;
+			
+			// aapt resource value: 0x7f0a0003
+			public const int title = 2131361795;
+			
+			// aapt resource value: 0x7f0a0001
+			public const int vertical = 2131361793;
+			
+			static Id()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Id()
+			{
+			}
+		}
+		
+		public partial class Integer
+		{
+			
+			// aapt resource value: 0x7f090000
+			public const int default_circle_indicator_orientation = 2131296256;
+			
+			static Integer()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Integer()
+			{
+			}
+		}
+		
+		public partial class Layout
+		{
+			
+			// aapt resource value: 0x7f030000
+			public const int calendar_pager = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int calendar_pager_layout = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int calendar_picker = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int dialog = 2130903043;
+			
+			// aapt resource value: 0x7f030004
+			public const int FingerprintDialog = 2130903044;
+			
+			// aapt resource value: 0x7f030005
+			public const int month = 2130903045;
+			
+			// aapt resource value: 0x7f030006
+			public const int vertical_viewpager = 2130903046;
+			
+			// aapt resource value: 0x7f030007
+			public const int viewpager = 2130903047;
+			
+			// aapt resource value: 0x7f030008
+			public const int week = 2130903048;
+			
+			// aapt resource value: 0x7f030009
+			public const int zxingscanneractivitylayout = 2130903049;
+			
+			// aapt resource value: 0x7f03000a
+			public const int zxingscannerfragmentlayout = 2130903050;
+			
+			static Layout()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Layout()
+			{
+			}
+		}
+		
+		public partial class String
+		{
+			
+			// aapt resource value: 0x7f060006
+			public const int ApplicationName = 2131099654;
+			
+			// aapt resource value: 0x7f060005
+			public const int Hello = 2131099653;
+			
+			// aapt resource value: 0x7f060001
+			public const int day_name_format = 2131099649;
+			
+			// aapt resource value: 0x7f060004
+			public const int full_date_format = 2131099652;
+			
+			// aapt resource value: 0x7f060002
+			public const int invalid_date = 2131099650;
+			
+			// aapt resource value: 0x7f060000
+			public const int library_name = 2131099648;
+			
+			// aapt resource value: 0x7f060003
+			public const int month_name_format = 2131099651;
+			
+			static String()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private String()
+			{
+			}
+		}
+		
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f040001
-			public const int MyActionBar = 2130968577;
+			// aapt resource value: 0x7f070001
+			public const int CalendarCell = 2131165185;
 			
-			// aapt resource value: 0x7f040000
-			public const int MyCryptosTheme = 2130968576;
+			// aapt resource value: 0x7f070003
+			public const int CalendarCell_CalendarDate = 2131165187;
+			
+			// aapt resource value: 0x7f070002
+			public const int CalendarCell_DayHeader = 2131165186;
+			
+			// aapt resource value: 0x7f070000
+			public const int CalendarTitle = 2131165184;
+			
+			// aapt resource value: 0x7f070008
+			public const int MyActionBar = 2131165192;
+			
+			// aapt resource value: 0x7f070007
+			public const int MyCryptosTheme = 2131165191;
+			
+			// aapt resource value: 0x7f070004
+			public const int Theme_PageIndicatorDefaults = 2131165188;
+			
+			// aapt resource value: 0x7f070005
+			public const int Widget = 2131165189;
+			
+			// aapt resource value: 0x7f070006
+			public const int Widget_CirclePageIndicator = 2131165190;
 			
 			static Style()
 			{
@@ -133,6 +570,61 @@ namespace MyCryptos.Droid
 			}
 			
 			private Style()
+			{
+			}
+		}
+		
+		public partial class Styleable
+		{
+			
+			public static int[] CirclePageIndicator = new int[]
+			{
+					2130771969,
+					2130771970,
+					2130771971,
+					2130771972,
+					2130771973,
+					2130771974,
+					2130771975,
+					2130771976};
+			
+			// aapt resource value: 0
+			public const int CirclePageIndicator_vpiCentered = 0;
+			
+			// aapt resource value: 5
+			public const int CirclePageIndicator_vpiFillColor = 5;
+			
+			// aapt resource value: 2
+			public const int CirclePageIndicator_vpiOrientation = 2;
+			
+			// aapt resource value: 1
+			public const int CirclePageIndicator_vpiPageColor = 1;
+			
+			// aapt resource value: 4
+			public const int CirclePageIndicator_vpiRadius = 4;
+			
+			// aapt resource value: 3
+			public const int CirclePageIndicator_vpiSnap = 3;
+			
+			// aapt resource value: 6
+			public const int CirclePageIndicator_vpiStrokeColor = 6;
+			
+			// aapt resource value: 7
+			public const int CirclePageIndicator_vpiStrokeWidth = 7;
+			
+			public static int[] ViewPagerIndicator = new int[]
+			{
+					2130771968};
+			
+			// aapt resource value: 0
+			public const int ViewPagerIndicator_vpiCirclePageIndicatorStyle = 0;
+			
+			static Styleable()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Styleable()
 			{
 			}
 		}

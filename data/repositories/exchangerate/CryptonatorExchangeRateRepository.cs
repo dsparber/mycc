@@ -5,6 +5,7 @@ using System;
 using System.Net.Http;
 using data.database.models;
 using Newtonsoft.Json.Linq;
+using System.Globalization;
 
 namespace data.repositories.exchangerate
 {
@@ -37,7 +38,7 @@ namespace data.repositories.exchangerate
 				JToken rateJson = json[RESULT_KEY];
 				if (rateJson.ToList().Count != 0)
 				{
-					var rate = (decimal)rateJson[RATE_KEY];
+					var rate = decimal.Parse((string)rateJson[RATE_KEY], CultureInfo.InvariantCulture);
 					exchangeRate.Rate = rate;
 				}
 			}

@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using data.database.models;
 using MyCryptos.models;
@@ -17,7 +18,7 @@ namespace MyCryptos.data.repositories.account
 		public override IEnumerable<Currency> SupportedCurrencies => new List<Currency> { Currency };
 
 		protected override decimal BalanceFactor => 1e8M;
-		protected override Func<string, decimal> Balance => (httpContent) => (decimal)JObject.Parse(httpContent)[JsonKeyBalance];
+		protected override Func<string, decimal> Balance => (httpContent) => decimal.Parse((string)JObject.Parse(httpContent)[JsonKeyBalance], CultureInfo.InvariantCulture);
 		protected override Uri Url => new Uri($"https://blockchain.info/de/address/{Address}?format=json&limit=0");
 
 		public BlockchainAccountRepository(string name, string address) : base(AccountRepositoryDBM.DB_TYPE_BLOCKCHAIN_REPOSITORY, name, address) { }

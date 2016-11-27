@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using data.database.models;
@@ -32,7 +33,7 @@ namespace data.repositories.exchangerate
 				var content = await response.Content.ReadAsStringAsync();
 				var json = JObject.Parse(content);
 				JToken rateJson = json[RateToUrl(exchangeRate)];
-				var rate = (decimal)rateJson[KEY];
+				var rate = decimal.Parse((string)rateJson[KEY], CultureInfo.InvariantCulture);
 				exchangeRate.Rate = rate;
 			}
 		}
