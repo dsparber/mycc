@@ -754,4 +754,19 @@
 		xml:space="preserve">
     	<value>Scan QR code</value>
   </data>
+	<data
+		name="AmountAndCurrency"
+		xml:space="preserve">
+    	<value>Amount and currency</value>
+  </data>
+	<data
+		name="VerifyInput"
+		xml:space="preserve">
+    	<value>Please verify your input!</value>
+  </data>
+	<data
+		name="Amount"
+		xml:space="preserve">
+    	<value>Amount</value>
+  </data>
 </root>

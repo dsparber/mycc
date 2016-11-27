@@ -6,20 +6,17 @@ using MyCryptos.resources;
 using Xamarin.Forms;
 using MyCryptos.view.addrepositoryviews;
 using System.Collections.Generic;
-using MyCryptos.models;
-using data.settings;
-using tasks;
 using MyCryptos.helpers;
 using constants;
 
 namespace view
 {
-	public partial class AddRepositoryView : ContentPage
+	public partial class AddSourceView : ContentPage
 	{
-		private List<AddSourceView> addViews;
-		private AddSourceView specificAddView;
+		private List<AddSourceSubview> addViews;
+		private AddSourceSubview specificAddView;
 
-		public AddRepositoryView()
+		public AddSourceView(bool local = false)
 		{
 			InitializeComponent();
 			Title = I18N.AddRepositoryTitle;
@@ -32,8 +29,9 @@ namespace view
 				Title = string.Empty;
 			}
 
-			addViews = new List<AddSourceView>();
-			addViews.Add(new AddWithAddressView(Navigation)
+			addViews = new List<AddSourceSubview>();
+			addViews.Add(new AddLocalAccountSubview(Navigation));
+			addViews.Add(new AddAddressSubview(Navigation)
 			{
 				NameChanged = () =>
 				{
@@ -41,13 +39,14 @@ namespace view
 					NameEntryCell.Placeholder = specificAddView.DefaultName;
 				}
 			});
-			addViews.Add(new AddWithBittrexView());
+			addViews.Add(new AddBittrexSubview());
 
-			specificAddView = addViews[0];
+			specificAddView = addViews[local ? 0 : 1];
 			TableViewComponent.Root.Add(specificAddView.InputSection);
 
 			SegmentedControl.BackgroundColor = AppConstants.TableBackgroundColor;
 			SegmentedControl.Tabs = addViews.Select(v => v.Description).ToList();
+			SegmentedControl.SelectedIndex = local ? 0 : 1;
 			SegmentedControl.SelectionChanged = (index) =>
 			{
 				var old = specificAddView;
@@ -83,28 +82,55 @@ namespace view
 			var nameText = (NameEntryCell.Text ?? string.Empty).Trim();
 			var name = nameText.Equals(string.Empty) ? specificAddView.DefaultName : nameText;
 
-			var repository = specificAddView.GetRepository(name);
-
-			var success = repository != null && await repository.Test();
-			if (success)
+			if (specificAddView is AddRepositorySubview)
 			{
-				Header.LoadingText = I18N.Fetching;
-				await AccountStorage.Instance.Add(repository);
-				await AccountStorage.Instance.Fetch();
-				MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+				var repository = ((AddRepositorySubview)specificAddView).GetRepository(name);
 
-				var newRates = repository.Elements.Select(a => new ExchangeRate(a.Money.Currency, ApplicationSettings.BaseCurrency));
-				AppTasks.Instance.StartMissingRatesTask(newRates);
+				if (repository == null)
+				{
+					await DisplayAlert(I18N.Error, I18N.VerifyInput, I18N.Cancel);
+				}
+				else
+				{
+					var success = await repository.Test();
+					if (success)
+					{
+						Header.LoadingText = I18N.Fetching;
+						await AccountStorage.Instance.Add(repository);
+						await AccountStorage.Instance.Fetch();
+						MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 
-				await Navigation.PopOrPopModal();
+						await Navigation.PopOrPopModal();
+					}
+					else
+					{
+						Header.IsLoading = false;
+						await DisplayAlert(I18N.Error, I18N.FetchingNoSuccessText, I18N.Ok);
+
+						NameEntryCell.IsEditable = true;
+						specificAddView.Enabled = true;
+					}
+				}
 			}
-			else
+			else if (specificAddView is AddAccountSubview)
 			{
-				Header.IsLoading = false;
-				await DisplayAlert(I18N.Error, I18N.FetchingNoSuccessText, I18N.Ok);
+				var account = ((AddAccountSubview)specificAddView).GetAccount(name);
 
-				NameEntryCell.IsEditable = true;
-				specificAddView.Enabled = true;
+				if (account != null)
+				{
+					await AccountStorage.Instance.LocalRepository.Add(account);
+					MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+
+					await Navigation.PopOrPopModal();
+				}
+				else
+				{
+					Header.IsLoading = false;
+					await DisplayAlert(I18N.Error, I18N.VerifyInput, I18N.Ok);
+
+					NameEntryCell.IsEditable = true;
+					specificAddView.Enabled = true;
+				}
 			}
 		}
 

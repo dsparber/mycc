@@ -754,4 +754,19 @@
 		xml:space="preserve">
     	<value>QR-Code scannen</value>
   </data>
+	<data
+		name="AmountAndCurrency"
+		xml:space="preserve">
+    	<value>Betrag und Währung</value>
+  </data>
+	<data
+		name="VerifyInput"
+		xml:space="preserve">
+    	<value>Bitte überprüfen Sie Ihre Eingabe!</value>
+  </data>
+	<data
+		name="Amount"
+		xml:space="preserve">
+    	<value>Betrag</value>
+  </data>
 </root>

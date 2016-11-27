@@ -13,7 +13,7 @@ using ZXing;
 
 namespace MyCryptos.view.addrepositoryviews
 {
-	public class AddWithAddressView : AddSourceView
+	public class AddAddressSubview : AddRepositorySubview
 	{
 		private readonly List<Func<string, Currency, string, AddressAccountRepository>> availableRepositories;
 		private readonly IEnumerable<Currency> supportedCurrencies;
@@ -23,7 +23,7 @@ namespace MyCryptos.view.addrepositoryviews
 		private readonly CustomEntryCell addressEntryCell;
 		private readonly CustomViewCell scanActionCell;
 
-		public AddWithAddressView(INavigation navigation)
+		public AddAddressSubview(INavigation navigation)
 		{
 			availableRepositories = new List<Func<string, Currency, string, AddressAccountRepository>> {
 				(name, coin, address) => new BlockchainAccountRepository(name, address),

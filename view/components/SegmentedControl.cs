@@ -11,6 +11,11 @@ namespace MyCryptos.view.components
 
 		private int selectedIndex;
 
+		public int SelectedIndex
+		{
+			set { selectedIndex = value; UpdateView(); }
+		}
+
 		private readonly StackLayout stack;
 
 		private List<string> tabs;

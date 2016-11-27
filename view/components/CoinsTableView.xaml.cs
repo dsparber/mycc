@@ -76,11 +76,8 @@ namespace MyCryptos.view
             }
             if (cells.Count == 0)
             {
-                var localAccountCell = new CustomViewCell { Text = I18N.AddLocalAccount, IsActionCell = true };
-                localAccountCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AccountDetailView(null, null) { IsNew = true });
                 var addSourceCell = new CustomViewCell { Text = I18N.AddSource, IsActionCell = true };
-                addSourceCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AddRepositoryView());
-                cells.Add(localAccountCell);
+                addSourceCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AddSourceView());
                 cells.Add(addSourceCell);
             }
 

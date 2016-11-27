@@ -104,14 +104,7 @@ namespace view
 
 		public async void Add(object sender, EventArgs e)
 		{
-			var action = await DisplayActionSheet(I18N.AddActionChooseTitle, I18N.Cancel, null, I18N.AddLocalAccount, I18N.AddSource);
-
-			var newPage = (I18N.AddLocalAccount.Equals(action)) ? (ContentPage)new MyCryptos.view.pages.AccountDetailView(null, null) { IsNew = true } : new AddRepositoryView();
-
-			if (I18N.AddLocalAccount.Equals(action) || I18N.AddSource.Equals(action))
-			{
-				await Navigation.PushOrPushModal(newPage);
-			}
+			await Navigation.PushOrPushModal(new AddSourceView());
 		}
 
 		void addSubscriber()

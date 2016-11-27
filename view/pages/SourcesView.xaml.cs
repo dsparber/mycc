@@ -95,7 +95,7 @@ namespace MyCryptos.view.pages
 
 		private void Add(object sender, EventArgs e)
 		{
-			Navigation.PushOrPushModal(new AddRepositoryView());
+			Navigation.PushOrPushModal(new AddSourceView());
 		}
 
 		private void Refresh(object sender, EventArgs e)

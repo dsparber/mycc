@@ -742,5 +742,23 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("ScanQrCode", resourceCulture);
             }
         }
+        
+        public static string AmountAndCurrency {
+            get {
+                return ResourceManager.GetString("AmountAndCurrency", resourceCulture);
+            }
+        }
+        
+        public static string VerifyInput {
+            get {
+                return ResourceManager.GetString("VerifyInput", resourceCulture);
+            }
+        }
+        
+        public static string Amount {
+            get {
+                return ResourceManager.GetString("Amount", resourceCulture);
+            }
+        }
     }
 }

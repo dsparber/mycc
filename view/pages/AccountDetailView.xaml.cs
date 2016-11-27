@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using data.repositories.account;
-using data.settings;
 using data.storage;
 using message;
 using MyCryptos.helpers;
@@ -18,21 +17,13 @@ namespace MyCryptos.view.pages
 	{
 		private readonly ToolbarItem edit = new ToolbarItem { Text = I18N.Edit };
 		private readonly ToolbarItem done = new ToolbarItem { Text = I18N.Save };
-		private readonly ToolbarItem cancel = new ToolbarItem { Text = I18N.Cancel };
 
 		private readonly CurrencyEntryCell currencyEntryCell;
 		private readonly List<ReferenceValueViewCell> referenceValueCells;
 
 		private Account account;
-		private readonly Money selectedMoney;
 		private readonly AccountRepository repository;
 
-		public bool IsNew;
-
-		public AccountDetailView() : this(null, null)
-		{
-			IsNew = true;
-		}
 
 		public AccountDetailView(Account account, AccountRepository repository)
 		{
@@ -45,34 +36,21 @@ namespace MyCryptos.view.pages
 			AccountSection.Add(currencyEntryCell);
 
 			edit.Clicked += StartEditing;
-			selectedMoney = new Money(0, ApplicationSettings.BaseCurrency);
 			DeleteButtonCell.Tapped += Delete;
 
-			if (!IsNew && account != null)
-			{
-				referenceValueCells = new List<ReferenceValueViewCell>();
-				SetToExistingView();
-				done.Clicked += DoneEditing;
-				if (repository is LocalAccountRepository)
-				{
-					ToolbarItems.Add(edit);
-				}
 
-				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => UpdateReferenceValues());
-				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => UpdateReferenceValues());
-				MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrencies, str => UpdateReferenceValues());
-			}
-			else
+			referenceValueCells = new List<ReferenceValueViewCell>();
+			SetToExistingView();
+			done.Clicked += DoneEditing;
+			if (repository is LocalAccountRepository)
 			{
-				SetToNewView();
-				done.Clicked += Save;
-				cancel.Clicked += (sender, e) => Navigation.PopOrPopModal();
-				if (Device.OS != TargetPlatform.Android)
-				{
-					ToolbarItems.Add(cancel);
-				}
-				ToolbarItems.Add(done);
+				ToolbarItems.Add(edit);
 			}
+
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => UpdateReferenceValues());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => UpdateReferenceValues());
+			MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrencies, str => UpdateReferenceValues());
+
 
 			currencyEntryCell.OnSelected = (c) => Header.TitleText = currencyEntryCell.SelectedMoney.ToString();
 			currencyEntryCell.OnTyped = (m) => Header.TitleText = m.ToString();
@@ -185,26 +163,10 @@ namespace MyCryptos.view.pages
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-			if (IsNew || account == null) return;
+			if (account == null) return;
 
 			var neededRates = referenceValueCells.Where(c => c.IsLoading).Select(c => c.ExchangeRate);
 			AppTasks.Instance.StartMissingRatesTask(neededRates);
-		}
-
-		private void SetToNewView()
-		{
-			EditView.IsVisible = true;
-			DefaultView.IsVisible = false;
-			DeleteSection.Clear();
-			if (Device.OS != TargetPlatform.Android)
-			{
-				Title = I18N.AddAccountTitle;
-			}
-			Header.TitleText = selectedMoney.ToString();
-			currencyEntryCell.SelectedMoney = selectedMoney;
-			Header.InfoText = I18N.LocalAccount;
-			AccountName.Entry.Placeholder = I18N.LocalAccount;
-			AccountName.Entry.TextChanged += (sender, e) => Header.InfoText = (e.NewTextValue.Length != 0) ? e.NewTextValue : I18N.LocalAccount;
 		}
 	}
 }

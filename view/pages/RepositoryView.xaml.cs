@@ -51,7 +51,7 @@ namespace view
 			if (repository is LocalAccountRepository)
 			{
 				var actionCell = new CustomViewCell { Text = I18N.AddLocalAccount, IsActionCell = true };
-				actionCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new MyCryptos.view.pages.AccountDetailView());
+				actionCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AddSourceView(true));
 				cells.Add(actionCell);
 			}
 			else if (cells.Count == 0)

@@ -86,9 +86,9 @@
     <Compile Include="data\repositories\general\AbstractRepository.cs" />
     <Compile Include="data\database\helper\AbstractDatabase.cs" />
     <Compile Include="data\repositories\exchangerate\BtceExchangeRateRepository.cs" />
-    <Compile Include="view\addrepositoryviews\AddSourceView.cs" />
-    <Compile Include="view\addrepositoryviews\AddWithBittrexView.cs" />
-    <Compile Include="view\addrepositoryviews\AddWithAddressView.cs" />
+    <Compile Include="view\addsource\AddSourceSubview.cs" />
+    <Compile Include="view\addsource\AddBittrexSubview.cs" />
+    <Compile Include="view\addsource\AddAddressSubview.cs" />
     <Compile Include="view\components\cells\CustomViewCellActionItem.cs" />
     <Compile Include="view\components\ChangingStackLayout.cs" />
     <Compile Include="view\components\CoinsTableView.xaml.cs">
@@ -155,7 +155,7 @@
     <Compile Include="view\components\cells\CustomEntryCell.cs" />
     <Compile Include="view\components\ReferenceCurrenciesSection.cs" />
     <Compile Include="view\components\cells\SortableViewCell.cs" />
-    <Compile Include="view\pages\AddRepositoryView.xaml.cs">
+    <Compile Include="view\pages\AddSourceView.xaml.cs">
       <DependentUpon>AddRepositoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\pages\SourcesView.xaml.cs">
@@ -195,6 +195,10 @@
     </Compile>
     <Compile Include="enums\PinAction.cs" />
     <Compile Include="view\components\CoinsHeaderView.cs" />
+    <Compile Include="view\addsource\AddRepositorySubview.cs" />
+    <Compile Include="view\addsource\AddAccountSubview.cs" />
+    <Compile Include="view\addsource\AddLocalAccountSubview.cs" />
+    <Compile Include="helpers\StringHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
