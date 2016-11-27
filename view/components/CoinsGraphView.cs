@@ -119,6 +119,10 @@ namespace MyCryptos.view
 			{
 				var items = graphItems;
 				var reference = items.Sum(e => e.Item2);
+				if (reference == 0) {
+					return new List<Tuple<string, decimal>>();
+				}
+
 				var smallItems = items.Where(e => (e.Item2 / reference) < AppConstants.PieGroupThreshold).ToList();
 
 				if (smallItems.Count > 1)

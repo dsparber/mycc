@@ -6,7 +6,8 @@
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos"
 	x:Class="MyCryptos.view.components.HeaderView"
 	BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
-	WidthRequest="280">
+	WidthRequest="280"
+	Margin="0,-1,0,0">
 	<ContentView.Content>
 		<StackLayout
 			Margin="10,10,10,20"
@@ -20,7 +21,7 @@
 				HorizontalTextAlignment="Center"
 				TextColor="White"
 				LineBreakMode="TailTruncation"
-				HeightRequest="36" />
+				HeightRequest="44" />
 			<Label
 				HorizontalOptions="FillAndExpand"
 				x:Name="InfoLabel"
@@ -28,7 +29,7 @@
 				HorizontalTextAlignment="Center"
 				TextColor="White"
 				LineBreakMode="TailTruncation"
-				HeightRequest="18"
+				HeightRequest="22"
 				WidthRequest="1000" />
 			<StackLayout
 				x:Name="LoadingPanel"
@@ -40,7 +41,7 @@
 					FontSize="18"
 					Text="{i18N:Translate Refreshing}"
 					TextColor="White"
-					HeightRequest="18">
+					HeightRequest="22">
 				</Label>
 				<ActivityIndicator
 					Color="White"

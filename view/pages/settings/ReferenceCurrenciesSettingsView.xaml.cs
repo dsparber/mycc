@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using data.settings;
+using data.storage;
 using message;
 using MyCryptos.models;
 using MyCryptos.resources;
@@ -67,9 +69,11 @@ namespace MyCryptos.view.pages.settings
             var addCurrencyCell = new CustomViewCell { Text = I18N.AddReferenceCurrency, IsActionCell = true };
             addCurrencyCell.Tapped += (sender, e) =>
             {
-                var overlay = new CurrencyOverlay
+				var currencies = CurrencyStorage.Instance.AllElements.Where(c => !referenceCurrencies.Contains(c)).ToList();
+
+				var overlay = new CurrencyOverlay(currencies)
                 {
-                    CurrencySelected = (c) =>
+					CurrencySelected = (c) =>
                     {
                         referenceCurrencies.Add(c);
                         if (referenceCurrencies.Count == 1)

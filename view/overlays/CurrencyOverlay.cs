@@ -20,14 +20,14 @@ namespace MyCryptos.view.overlays
 
 		List<Currency> currencies;
 
-		public CurrencyOverlay() : this(null)
+		public CurrencyOverlay(List<Currency> currenciesToSelect = null) : this(null, currenciesToSelect)
 		{ }
 
-		public CurrencyOverlay(CurrencyEntryCell p)
+		public CurrencyOverlay(CurrencyEntryCell p, List<Currency> currenciesToSelect = null)
 		{
 			parent = p;
 
-			var allElements = p?.CurrenciesToSelect?.OrderBy(c => c.Code).ToList() ?? CurrencyStorage.Instance.AllElements;
+			var allElements = currenciesToSelect ?? p?.CurrenciesToSelect?.OrderBy(c => c.Code).ToList() ?? CurrencyStorage.Instance.AllElements;
 
 			var type = parent?.CurrencyRepositoryType;
 			if (type != null)
