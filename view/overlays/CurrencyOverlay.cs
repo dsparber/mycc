@@ -27,7 +27,7 @@ namespace MyCryptos.view.overlays
 		{
 			parent = p;
 
-			var allElements = p?.CurrenciesToSelect.OrderBy(c => c.Code).ToList() ?? CurrencyStorage.Instance.AllElements;
+			var allElements = p?.CurrenciesToSelect?.OrderBy(c => c.Code).ToList() ?? CurrencyStorage.Instance.AllElements;
 
 			var type = parent?.CurrencyRepositoryType;
 			if (type != null)

@@ -85,7 +85,7 @@ namespace view
 
 			var repository = specificAddView.GetRepository(name);
 
-			var success = await repository.Test();
+			var success = repository != null && await repository.Test();
 			if (success)
 			{
 				Header.LoadingText = I18N.Fetching;

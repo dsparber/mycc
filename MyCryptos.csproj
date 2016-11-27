@@ -251,27 +251,6 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>packages\Xamarin.Forms.2.3.3.168\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
-    <Reference Include="ExifLib">
-      <HintPath>packages\ExifLib.PCL.1.0.2-pre01\lib\netstandard1.0\ExifLib.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Core">
-      <HintPath>packages\XLabs.Core.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.IOC">
-      <HintPath>packages\XLabs.IoC.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.IOC.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Serialization">
-      <HintPath>packages\XLabs.Serialization.2.3.0-pre05\lib\portable-net45+netcore45+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Platform">
-      <HintPath>packages\XLabs.Platform.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10\XLabs.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Forms">
-      <HintPath>packages\XLabs.Forms.2.3.0-pre05\lib\portable-net45+win8+wpa81+monoandroid+MonoTouch+xamarinios10\XLabs.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Serialization.Json.NET">
-      <HintPath>packages\XLabs.Serialization.JSON.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Serialization.Json.NET.dll</HintPath>
-    </Reference>
     <Reference Include="PInvoke.Windows.Core">
       <HintPath>packages\PInvoke.Windows.Core.0.3.152\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.Windows.Core.dll</HintPath>
     </Reference>
@@ -286,15 +265,47 @@
     </Reference>
     <Reference Include="ZXing.Net.Mobile.Core">
       <HintPath>packages\ZXing.Net.Mobile.2.1.47\lib\portable-net45+netcore45+wpa81+wp8\ZXing.Net.Mobile.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="zxing.portable">
       <HintPath>packages\ZXing.Net.Mobile.2.1.47\lib\portable-net45+netcore45+wpa81+wp8\zxing.portable.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ZXingNetMobile">
       <HintPath>packages\ZXing.Net.Mobile.2.1.47\lib\portable-net45+netcore45+wpa81+wp8\ZXingNetMobile.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ZXing.Net.Mobile.Forms">
       <HintPath>packages\ZXing.Net.Mobile.Forms.2.1.47\lib\portable-net45+netcore45+wpa81+wp8\ZXing.Net.Mobile.Forms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ExifLib">
+      <HintPath>packages\ExifLib.PCL.1.0.2-pre01\lib\netstandard1.0\ExifLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.Core">
+      <HintPath>packages\XLabs.Core.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.IOC">
+      <HintPath>packages\XLabs.IoC.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.IOC.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.Serialization">
+      <HintPath>packages\XLabs.Serialization.2.3.0-pre05\lib\portable-net45+netcore45+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Serialization.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.Platform">
+      <HintPath>packages\XLabs.Platform.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10\XLabs.Platform.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.Forms">
+      <HintPath>packages\XLabs.Forms.2.3.0-pre05\lib\portable-net45+win8+wpa81+monoandroid+MonoTouch+xamarinios10\XLabs.Forms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.Serialization.Json.NET">
+      <HintPath>packages\XLabs.Serialization.JSON.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Serialization.Json.NET.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

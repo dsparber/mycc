@@ -176,47 +176,61 @@
     <Reference Include="CarouselView.FormsPlugin.iOS">
       <HintPath>..\packages\CarouselView.FormsPlugin.2.3.2\lib\Xamarin.iOS10\CarouselView.FormsPlugin.iOS.dll</HintPath>
     </Reference>
-    <Reference Include="ExifLib">
-      <HintPath>..\packages\ExifLib.PCL.1.0.2-pre01\lib\netstandard1.0\ExifLib.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Core">
-      <HintPath>..\packages\XLabs.Core.2.3.0-pre05\lib\netstandard1.0\XLabs.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.IOC">
-      <HintPath>..\packages\XLabs.IoC.2.3.0-pre05\lib\netstandard1.0\XLabs.IOC.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Serialization">
-      <HintPath>..\packages\XLabs.Serialization.2.3.0-pre05\lib\NETStandard1.0\XLabs.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Platform">
-      <HintPath>..\packages\XLabs.Platform.2.3.0-pre05\lib\xamarinios10\XLabs.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Platform.iOS">
-      <HintPath>..\packages\XLabs.Platform.2.3.0-pre05\lib\xamarinios10\XLabs.Platform.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Forms">
-      <HintPath>..\packages\XLabs.Forms.2.3.0-pre05\lib\xamarinios10\XLabs.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Forms.iOS">
-      <HintPath>..\packages\XLabs.Forms.2.3.0-pre05\lib\xamarinios10\XLabs.Forms.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Serialization.Json.NET">
-      <HintPath>..\packages\XLabs.Serialization.JSON.2.3.0-pre05\lib\netstandard1.0\XLabs.Serialization.Json.NET.dll</HintPath>
-    </Reference>
     <Reference Include="ZXing.Net.Mobile.Core">
       <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\Xamarin.iOS10\ZXing.Net.Mobile.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="zxing.portable">
       <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\Xamarin.iOS10\zxing.portable.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ZXingNetMobile">
       <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\Xamarin.iOS10\ZXingNetMobile.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ZXing.Net.Mobile.Forms">
       <HintPath>..\packages\ZXing.Net.Mobile.Forms.2.1.47\lib\Xamarin.iOS10\ZXing.Net.Mobile.Forms.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ZXing.Net.Mobile.Forms.iOS">
       <HintPath>..\packages\ZXing.Net.Mobile.Forms.2.1.47\lib\Xamarin.iOS10\ZXing.Net.Mobile.Forms.iOS.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ExifLib">
+      <HintPath>..\packages\ExifLib.PCL.1.0.2-pre01\lib\netstandard1.0\ExifLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.Core">
+      <HintPath>..\packages\XLabs.Core.2.3.0-pre05\lib\netstandard1.0\XLabs.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.IOC">
+      <HintPath>..\packages\XLabs.IoC.2.3.0-pre05\lib\netstandard1.0\XLabs.IOC.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.Serialization">
+      <HintPath>..\packages\XLabs.Serialization.2.3.0-pre05\lib\NETStandard1.0\XLabs.Serialization.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.Platform">
+      <HintPath>..\packages\XLabs.Platform.2.3.0-pre05\lib\xamarinios10\XLabs.Platform.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.Platform.iOS">
+      <HintPath>..\packages\XLabs.Platform.2.3.0-pre05\lib\xamarinios10\XLabs.Platform.iOS.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.Forms">
+      <HintPath>..\packages\XLabs.Forms.2.3.0-pre05\lib\xamarinios10\XLabs.Forms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.Forms.iOS">
+      <HintPath>..\packages\XLabs.Forms.2.3.0-pre05\lib\xamarinios10\XLabs.Forms.iOS.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="XLabs.Serialization.Json.NET">
+      <HintPath>..\packages\XLabs.Serialization.JSON.2.3.0-pre05\lib\netstandard1.0\XLabs.Serialization.Json.NET.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

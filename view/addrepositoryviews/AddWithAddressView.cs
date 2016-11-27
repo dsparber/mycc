@@ -36,7 +36,7 @@ namespace MyCryptos.view.addrepositoryviews
 
 			currencyEntryCell = new CurrencyEntryCell(navigation) { IsAmountEnabled = false, CurrenciesToSelect = supportedCurrencies, IsFormRepresentation = true };
 			addressEntryCell = new CustomEntryCell { Title = I18N.Address, Placeholder = I18N.Address };
-			scanActionCell = new CustomViewCell { Text = I18N.ScanQrCode, IsActionCell = true, IsCentered = true};
+			scanActionCell = new CustomViewCell { Text = I18N.ScanQrCode, IsActionCell = true, IsCentered = true };
 
 			section = new TableSection();
 
@@ -61,17 +61,21 @@ namespace MyCryptos.view.addrepositoryviews
 				{
 					scanPage.IsScanning = false;
 
-					Device.BeginInvokeOnMainThread(() => navigation.PopAsync());
-
-					if (result.Text.Contains(':'))
+					Device.BeginInvokeOnMainThread(() =>
 					{
-						var split = result.Text.Split(':');
-						currencyEntryCell.SelectedCurrency = supportedCurrencies.FirstOrDefault(c => c.Name.ToLower().Equals(split[0])) ?? currencyEntryCell.SelectedCurrency;
-						addressEntryCell.Text = split[1];
-					}
-
-					addressEntryCell.Text = result.Text;
-
+						if (result.Text.Contains(':'))
+						{
+							var split = result.Text.Split(':');
+							currencyEntryCell.SelectedCurrency = supportedCurrencies.FirstOrDefault(c => c.Name.ToLower().Equals(split[0])) ?? currencyEntryCell.SelectedCurrency;
+							addressEntryCell.Text = split[1];
+						}
+						else
+						{
+							addressEntryCell.Text = result.Text;
+						}
+						NameChanged();
+						navigation.PopAsync();
+					});
 				};
 				navigation.PushAsync(scanPage);
 			};
