@@ -131,6 +131,18 @@ namespace data.settings
 			}
 		}
 
+		public static bool ShowGraphOnStartUp
+		{
+			get
+			{
+				return Settings.Get(Settings.KEY_SHOW_GRAPH_ON_STARTUP, false);
+			}
+			set
+			{
+				Settings.Set(Settings.KEY_SHOW_GRAPH_ON_STARTUP, value);
+			}
+		}
+
 		public static int PinLength
 		{
 			get

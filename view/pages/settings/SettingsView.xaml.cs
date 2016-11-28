@@ -16,9 +16,11 @@ namespace MyCryptos.view.pages.settings
 			SetSortCellText();
 
 			AutoRefresh.On = ApplicationSettings.AutoRefreshOnStartup;
+			GraphOnStartup.On = ApplicationSettings.ShowGraphOnStartUp;
 			Header.TitleText = I18N.AppName;
 
 			AutoRefresh.Switch.Toggled += AutoRefreshChanged;
+			GraphOnStartup.Switch.Toggled += (sender, e) => ApplicationSettings.ShowGraphOnStartUp = e.Value;
 			SortingCell.Tapped += (sender, e) => Navigation.PushAsync(new SortSettingsView());
 			ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new ReferenceCurrenciesSettingsView());
 			ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.ReferenceCurrencies);

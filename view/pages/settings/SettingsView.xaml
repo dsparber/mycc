@@ -36,6 +36,9 @@
 						x:Name="SortingCell"
 						Image="more.png" />
 					<components:CustomSwitchCell
+						x:Name="GraphOnStartup"
+						Title="{i18N:Translate ShowGraphOnStartup}" />
+					<components:CustomSwitchCell
 						x:Name="AutoRefresh"
 						Title="{i18N:Translate RefreshOnStartup}" />
 				</TableSection>

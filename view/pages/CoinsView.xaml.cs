@@ -33,9 +33,11 @@ namespace view
 
 			Stack.Children.Add(TableView);
 			Stack.Children.Add(GraphView);
-			GraphView.IsVisible = false;
+			GraphView.IsVisible = ApplicationSettings.ShowGraphOnStartUp;
+			TableView.IsVisible = !ApplicationSettings.ShowGraphOnStartUp;
 
 			Tabs.Tabs = new List<string> { I18N.Table, I18N.Graph };
+			Tabs.SelectedIndex = ApplicationSettings.ShowGraphOnStartUp ? 1 : 0;
 
 			addSubscriber();
 

@@ -25,6 +25,8 @@ namespace data.settings
 
 		public const string KEY_FINGERPRINT_SET = "fingerprint-set";
 
+		public const string KEY_SHOW_GRAPH_ON_STARTUP = "show-graph-on-startup";
+
 		public static T Get<T>(string key, T defaultValue)
 		{
 			return AppSettings.GetValueOrDefault(key, defaultValue);

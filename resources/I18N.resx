@@ -769,4 +769,9 @@
 		xml:space="preserve">
     	<value>Amount</value>
   </data>
+	<data
+		name="ShowGraphOnStartup"
+		xml:space="preserve">
+    	<value>Show graph on startup</value>
+  </data>
 </root>

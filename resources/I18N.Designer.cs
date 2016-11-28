@@ -760,5 +760,11 @@ namespace MyCryptos.resources {
                 return ResourceManager.GetString("Amount", resourceCulture);
             }
         }
+        
+        public static string ShowGraphOnStartup {
+            get {
+                return ResourceManager.GetString("ShowGraphOnStartup", resourceCulture);
+            }
+        }
     }
 }
