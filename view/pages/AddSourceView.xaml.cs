@@ -8,6 +8,9 @@ using MyCryptos.view.addrepositoryviews;
 using System.Collections.Generic;
 using MyCryptos.helpers;
 using constants;
+using data.settings;
+using MyCryptos.models;
+using tasks;
 
 namespace view
 {
@@ -98,6 +101,11 @@ namespace view
 						Header.LoadingText = I18N.Fetching;
 						await AccountStorage.Instance.Add(repository);
 						await AccountStorage.Instance.Fetch();
+
+						var referenceCurrencies = ApplicationSettings.ReferenceCurrencies.ToList();
+						var neededRates = repository.Elements.SelectMany(a => referenceCurrencies.Select(c => new ExchangeRate(a.Money.Currency, c)));
+						AppTasks.Instance.StartMissingRatesTask(neededRates);
+
 						MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 
 						await Navigation.PopOrPopModal();
@@ -119,6 +127,11 @@ namespace view
 				if (account != null)
 				{
 					await AccountStorage.Instance.LocalRepository.Add(account);
+
+					var referenceCurrencies = ApplicationSettings.ReferenceCurrencies.ToList();
+					var neededRates = referenceCurrencies.Select(c => new ExchangeRate(account.Money.Currency, c));
+					AppTasks.Instance.StartMissingRatesTask(neededRates);
+
 					MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
 
 					await Navigation.PopOrPopModal();

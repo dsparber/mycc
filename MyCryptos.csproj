@@ -156,7 +156,7 @@
     <Compile Include="view\components\ReferenceCurrenciesSection.cs" />
     <Compile Include="view\components\cells\SortableViewCell.cs" />
     <Compile Include="view\pages\AddSourceView.xaml.cs">
-      <DependentUpon>AddRepositoryView.xaml</DependentUpon>
+      <DependentUpon>AddSourceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\pages\SourcesView.xaml.cs">
       <DependentUpon>SourcesView.xaml</DependentUpon>
@@ -354,7 +354,7 @@
     <EmbeddedResource Include="view\pages\AccountDetailView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\AddRepositoryView.xaml">
+    <EmbeddedResource Include="view\pages\AddSourceView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="view\pages\SourcesView.xaml">
