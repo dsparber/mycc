@@ -226,6 +226,7 @@
     <Compile Include="Localise.cs" />
     <Compile Include="renderer\CustomNavigationRenderer.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Helpers\AndroidTextSizeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

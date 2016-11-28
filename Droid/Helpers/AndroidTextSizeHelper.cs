@@ -1,0 +1,30 @@
+﻿using System;
+using Android.Content.Res;
+using Android.Graphics;
+using Android.Widget;
+using MyCryptos.Droid.Helpers;
+using MyCryptos.helpers;
+using Xamarin.Forms;
+
+[assembly: Dependency(typeof(AndroidTextSizeHelper))]
+namespace MyCryptos.Droid.Helpers
+{
+	public class AndroidTextSizeHelper : TextSizeHelper
+	{
+		public Tuple<double, double> calculateWidth(string text, float? fontsize = null, bool bold = false)
+		{
+			var bounds = new Rect();
+			var textView = new TextView(Forms.Context);
+			if (fontsize.HasValue)
+			{
+				textView.TextSize = fontsize.Value;
+			}
+			textView.Typeface = bold ? Typeface.DefaultBold : Typeface.Default;
+			textView.Paint.GetTextBounds(text, 0, text.Length, bounds);
+			var length = bounds.Width() / Resources.System.DisplayMetrics.ScaledDensity;
+			var height = bounds.Width() / Resources.System.DisplayMetrics.ScaledDensity;
+			return Tuple.Create((double)height, (double)length);
+		}
+
+	}
+}

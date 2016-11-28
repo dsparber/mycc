@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using MyCryptos.helpers;
+using Xamarin.Forms;
 
 namespace MyCryptos.view.components
 {
@@ -7,19 +8,37 @@ namespace MyCryptos.view.components
 		public string TitleText
 		{
 			private get { return TitleLabel.Text; }
-			set { TitleLabel.Text = GetText(value); }
+			set
+			{
+				TitleLabel.Text = GetText(value);
+				var size = DependencyService.Get<TextSizeHelper>().calculateWidth(GetText(value), (float)TitleLabel.FontSize, true);
+				TitleLabel.HeightRequest = size.Item1;
+				TitleLabel.WidthRequest = size.Item2;
+			}
 		}
 
 		public string InfoText
 		{
 			private get { return InfoLabel.Text; }
-			set { InfoLabel.Text = GetText(value); }
+			set
+			{
+				InfoLabel.Text = GetText(value);
+				var size = DependencyService.Get<TextSizeHelper>().calculateWidth(GetText(value), (float)InfoLabel.FontSize);
+				InfoLabel.HeightRequest = size.Item1;
+				InfoLabel.WidthRequest = size.Item2;
+			}
 		}
 
 		public string LoadingText
 		{
 			private get { return RefreshingLabel.Text; }
-			set { RefreshingLabel.Text = GetText(value); }
+			set
+			{
+				RefreshingLabel.Text = GetText(value);
+				var size = DependencyService.Get<TextSizeHelper>().calculateWidth(GetText(value), (float)RefreshingLabel.FontSize);
+				RefreshingLabel.HeightRequest = size.Item1;
+				RefreshingLabel.WidthRequest = size.Item2;
+			}
 		}
 
 		public bool IsLoading
@@ -31,10 +50,11 @@ namespace MyCryptos.view.components
 		{
 			InitializeComponent();
 
+			LoadingIndicator.HeightRequest = 18;
+			LoadingIndicator.WidthRequest = 18;
 			if (Device.OS == TargetPlatform.Android)
 			{
-				LoadingIndicator.HeightRequest = 18;
-				LoadingIndicator.WidthRequest = 18;
+
 				LoadingIndicator.VerticalOptions = LayoutOptions.Center;
 			}
 

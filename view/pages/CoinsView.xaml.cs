@@ -50,16 +50,7 @@ namespace view
 				GraphView.IsVisible = (selected == 1);
 			};
 
-			var pages = new List<int>();
-			var i = 0;
-			foreach (var c in ApplicationSettings.ReferenceCurrencies)
-			{
-				pages.Add(i);
-				i += 1;
-			}
-
-			HeaderCarousel.ItemsSource = pages;
-			HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
+			SetHeaderCarousel();
 			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
 			HeaderCarousel.PositionSelected += PositionSelected;
 		}
@@ -78,7 +69,7 @@ namespace view
 		public void PositionSelected(object sender, EventArgs e)
 		{
 			var currencies = ApplicationSettings.ReferenceCurrencies;
-			if (HeaderCarousel.Position > 0 && HeaderCarousel.Position < ApplicationSettings.ReferenceCurrencies.Count)
+			if (HeaderCarousel.Position >= 0 && HeaderCarousel.Position < ApplicationSettings.ReferenceCurrencies.Count)
 			{
 				ApplicationSettings.BaseCurrency = currencies[HeaderCarousel.Position];
 			}
@@ -86,19 +77,7 @@ namespace view
 
 		void SetHeaderCarousel()
 		{
-			while (HeaderCarousel.ItemsSource.Count > 0)
-			{
-				HeaderCarousel.RemovePage(0);
-			}
-
-			var x = 0;
-			foreach (var c in ApplicationSettings.ReferenceCurrencies.ToList())
-			{
-				HeaderCarousel.InsertPage(x, HeaderCarousel.ItemsSource.Count - 1);
-				x += 1;
-			}
-
-			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
+			HeaderCarousel.ItemsSource = ApplicationSettings.ReferenceCurrencies.Select(c => new CoinsHeaderView(c)).ToList();
 			HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
 		}
 
@@ -138,17 +117,7 @@ namespace view
 
 		private class HeaderTemplateSelector : DataTemplateSelector
 		{
-			private readonly List<DataTemplate> templates;
-
-			public HeaderTemplateSelector()
-			{
-				templates = ApplicationSettings.ReferenceCurrencies.Select(e => new DataTemplate(() => new CoinsHeaderView(e))).ToList();
-			}
-
-			protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
-			{
-				return templates[(int)item];
-			}
+			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => (CoinsHeaderView)item);
 		}
 	}
 }

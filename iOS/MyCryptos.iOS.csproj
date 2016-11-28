@@ -319,6 +319,7 @@
     <Compile Include="renderer\CustomNavigationRender.cs" />
     <Compile Include="renderer\CustomPickerRenderer.cs" />
     <Compile Include="renderer\FrameRenderer.cs" />
+    <Compile Include="Helpers\iOSTextSizeHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
