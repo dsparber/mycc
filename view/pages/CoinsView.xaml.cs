@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using tasks;
 using MyCryptos.view;
 using MyCryptos.view.components;
+using MyCryptos.models;
 
 namespace view
 {
@@ -53,8 +54,6 @@ namespace view
 			};
 
 			SetHeaderCarousel();
-			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
-			HeaderCarousel.PositionSelected += PositionSelected;
 		}
 
 		protected override void OnAppearing()
@@ -79,8 +78,14 @@ namespace view
 
 		void SetHeaderCarousel()
 		{
-			HeaderCarousel.ItemsSource = ApplicationSettings.ReferenceCurrencies.Select(c => new CoinsHeaderView(c)).ToList();
+			HeaderCarousel.ItemsSource = ApplicationSettings.ReferenceCurrencies.ToList();
 			HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
+			if (HeaderCarousel.ItemTemplate == null)
+			{
+				HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
+				HeaderCarousel.PositionSelected += PositionSelected;
+			}
+
 		}
 
 		public async void Add(object sender, EventArgs e)
@@ -119,7 +124,27 @@ namespace view
 
 		private class HeaderTemplateSelector : DataTemplateSelector
 		{
-			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => (CoinsHeaderView)item);
+			private List<Tuple<Currency, CoinsHeaderView>> existingViews;
+
+			public HeaderTemplateSelector()
+			{
+				existingViews = new List<Tuple<Currency, CoinsHeaderView>>();
+			}
+
+			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() =>
+			{
+				var currency = (Currency)item;
+				var cell = existingViews.Find(t => t.Item1.Equals(currency))?.Item2;
+				if (cell == null)
+				{
+					cell = new CoinsHeaderView(currency);
+					existingViews.Add(Tuple.Create(currency, cell));
+				}
+				else {
+					cell = new CoinsHeaderView(currency) { IsLoading = cell.IsLoading };
+				}
+				return cell;
+			});
 		}
 	}
 }

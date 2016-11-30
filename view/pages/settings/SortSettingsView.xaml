@@ -1,47 +1,47 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage
-  xmlns="http://xamarin.com/schemas/2014/forms"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  x:Class="MyCryptos.view.pages.settings.SortSettingsView"
-  xmlns:i18N="clr-namespace:MyCryptos.resources;assembly=MyCryptos"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Class="MyCryptos.view.pages.settings.SortSettingsView"
+	xmlns:i18N="clr-namespace:MyCryptos.resources;assembly=MyCryptos"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos"
 	Title="{i18N:Translate Sorting}">
-  <components:ChangingStackLayout>
-    <components:HeaderView
-      TitleText="{i18N:Translate AppName}"/>
-    <TableView
-      Intent="Settings">
-      <TableSection
-          Title="{i18N:Translate SortOrder}">
-        <components:CustomIconCell
+	<components:ChangingStackLayout>
+		<components:HeaderView
+			TitleText="{i18N:Translate AppName}" />
+		<TableView
+			Intent="Settings">
+			<TableSection
+				Title="{i18N:Translate SortOrder}">
+				<components:CustomViewCell
 					x:Name="SortOrderAlphabetical"
 					Tapped="SortOrderSelected"
 					Text="{i18N:Translate Alphabetical}"
-					Icon="checkmark.png" />
-        <components:CustomIconCell
+					Image="checkmark.png" />
+				<components:CustomViewCell
 					x:Name="SortOrderByValue"
 					Tapped="SortOrderSelected"
 					Text="{i18N:Translate ByValue}"
-					Icon="checkmark.png" />
-        <components:CustomIconCell
+					Image="checkmark.png" />
+				<components:CustomViewCell
 					x:Name="SortOrderByUnits"
 					Tapped="SortOrderSelected"
 					Text="{i18N:Translate ByUnits}"
-					Icon="checkmark.png" />
-      </TableSection>
-      <TableSection
+					Image="checkmark.png" />
+			</TableSection>
+			<TableSection
 				Title="{i18N:Translate SortDirection}">
-        <components:CustomIconCell
+				<components:CustomViewCell
 					x:Name="SortDirectionAscending"
 					Tapped="SortOrderSelected"
 					Text="{i18N:Translate Ascending}"
-					Icon="checkmark.png" />
-        <components:CustomIconCell
+					Image="checkmark.png" />
+				<components:CustomViewCell
 					x:Name="SortDirectionDescending"
 					Tapped="SortOrderSelected"
 					Text="{i18N:Translate Descending}"
-					Icon="checkmark.png" />
-      </TableSection>
-    </TableView>
-  </components:ChangingStackLayout>
+					Image="checkmark.png" />
+			</TableSection>
+		</TableView>
+	</components:ChangingStackLayout>
 </ContentPage>

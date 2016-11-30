@@ -43,6 +43,7 @@ namespace MyCryptos.view.components
 
 		public bool IsLoading
 		{
+			get { return LoadingIndicator.IsRunning; }
 			set { LoadingPanel.IsVisible = value; LoadingIndicator.IsRunning = value; InfoLabel.IsVisible = !value; }
 		}
 
