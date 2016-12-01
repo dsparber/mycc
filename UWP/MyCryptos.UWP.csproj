@@ -95,6 +95,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="data\database\SQLiteConnectionUwp.cs" />
+    <Compile Include="Helpers\UwpTextSizeHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -107,6 +109,21 @@
     <None Include="MyCryptos.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Assets\accounts.png" />
+    <AndroidResource Include="Assets\add.png" />
+    <AndroidResource Include="Assets\checkmark.png" />
+    <AndroidResource Include="Assets\coins.png" />
+    <AndroidResource Include="Assets\delete.png" />
+    <AndroidResource Include="Assets\down.png" />
+    <AndroidResource Include="Assets\hamburger.png" />
+    <AndroidResource Include="Assets\Icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidResource>
+    <AndroidResource Include="Assets\more.png" />
+    <AndroidResource Include="Assets\settings.png" />
+    <AndroidResource Include="Assets\sources.png" />
+    <AndroidResource Include="Assets\tags.png" />
+    <AndroidResource Include="Assets\up.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
