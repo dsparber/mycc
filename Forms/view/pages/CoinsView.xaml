@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
+	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
+	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
+	xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+	x:Class="view.CoinsView"
+	Title="{i18N:Translate Coins}">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem
+			Text="{i18N:Translate Add}"
+			Clicked="Add" />
+    <ToolbarItem
+			Text="{i18N:Translate Refresh}"
+			Clicked="Refresh" />
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <components:ChangingStackLayout>
+      <carousel:CarouselViewControl
+				x:Name="HeaderCarousel"
+				Arrows="true"
+				InterPageSpacing="0"
+				PageIndicators="true"
+				HeightRequest="120"
+				WidthRequest="280"
+				PageIndicatorTintColor="#5FFF"
+				CurrentPageIndicatorTintColor="White"
+				BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}" />
+      <StackLayout
+				x:Name="Stack"
+				Spacing="0"
+				HorizontalOptions="FillAndExpand">
+        <StackLayout.BackgroundColor>
+          <OnPlatform
+						x:TypeArguments="Color"
+						Android="#EEE" />
+        </StackLayout.BackgroundColor>
+        <StackLayout.Children>
+          <components:SegmentedControl
+						x:Name="Tabs" />
+        </StackLayout.Children>
+      </StackLayout>
+    </components:ChangingStackLayout>
+  </ContentPage.Content>
+</ContentPage>

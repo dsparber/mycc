@@ -1,20 +1,21 @@
-﻿namespace enums
+﻿namespace MyCryptos.Core.Enums
 {
-	public class FetchSpeed {
-		
-		public FetchSpeedEnum Speed;
+    public class FetchSpeed
+    {
 
-		public FetchSpeed(FetchSpeedEnum speed)
-		{
-			Speed = speed;
-		}
-	}
+        public FetchSpeedEnum Speed;
 
-	public enum FetchSpeedEnum
-	{
-		FAST,
-		SLOW,
-		MEDIUM
-	}
+        public FetchSpeed(FetchSpeedEnum speed)
+        {
+            Speed = speed;
+        }
+    }
+
+    public enum FetchSpeedEnum
+    {
+        FAST,
+        SLOW,
+        MEDIUM
+    }
 }
 

@@ -6,8 +6,8 @@
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{92708D96-5841-4408-A7EE-B2D02C716F89}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>MyCryptos</RootNamespace>
-    <AssemblyName>MyCryptos</AssemblyName>
+    <RootNamespace>MyCryptos.Core</RootNamespace>
+    <AssemblyName>MyCryptos.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile151</TargetFrameworkProfile>
     <NuGetPackageImportStamp>
@@ -32,189 +32,109 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="data\repositories\account\AddressAndCoinAccountRepository.cs" />
-    <Compile Include="data\repositories\account\AddressAccountRepository.cs" />
-    <Compile Include="data\repositories\account\CryptoIdAccountRepository.cs" />
-    <Compile Include="data\repositories\currency\CryptoIdCurrencyRepository.cs" />
-    <Compile Include="data\repositories\account\BlockchainAccountRepository.cs" />
-    <Compile Include="data\repositories\account\EthereumAccountRepository.cs" />
-    <Compile Include="helpers\NavigationHelper.cs" />
-    <Compile Include="MyCryptos.cs" />
+    <Compile Include="Repositories\Account\AddressAndCoinAccountRepository.cs" />
+    <Compile Include="Repositories\Account\AddressAccountRepository.cs" />
+    <Compile Include="Repositories\Account\CryptoIdAccountRepository.cs" />
+    <Compile Include="Repositories\Currency\CryptoIdCurrencyRepository.cs" />
+    <Compile Include="Repositories\Account\BlockchainAccountRepository.cs" />
+    <Compile Include="Repositories\Account\EthereumAccountRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="models\Account.cs" />
-    <Compile Include="models\Currency.cs" />
-    <Compile Include="models\ExchangeRate.cs" />
-    <Compile Include="models\Money.cs" />
-    <Compile Include="data\repositories\account\AccountRepository.cs" />
-    <Compile Include="data\repositories\account\LocalAccountRepository.cs" />
-    <Compile Include="data\repositories\account\OnlineAccountRepository.cs" />
-    <Compile Include="data\repositories\account\BittrexAccountRepository.cs" />
-    <Compile Include="data\repositories\currency\CurrencyRepository.cs" />
-    <Compile Include="data\repositories\currency\LocalCurrencyRepository.cs" />
-    <Compile Include="data\repositories\currency\OnlineCurrencyRepository.cs" />
-    <Compile Include="data\repositories\exchangerate\ExchangeRateRepository.cs" />
-    <Compile Include="data\repositories\exchangerate\BittrexExchangeRateRepository.cs" />
-    <Compile Include="data\repositories\exchangerate\LocalExchangeRateRepository.cs" />
-    <Compile Include="data\repositories\exchangerate\OnlineExchangeRateRepository.cs" />
-    <Compile Include="data\database\AccountDatabase.cs" />
-    <Compile Include="data\database\models\AccountDBM.cs" />
-    <Compile Include="data\database\models\AccountRepositoryDBM.cs" />
-    <Compile Include="data\storage\AccountStorage.cs" />
-    <Compile Include="data\database\AccountRepositoryDatabase.cs" />
-    <Compile Include="models\Tag.cs" />
-    <Compile Include="models\TagIdentifier.cs" />
-    <Compile Include="data\database\models\TagIdentifierDBM.cs" />
-    <Compile Include="data\database\models\TagDBM.cs" />
-    <Compile Include="data\database\models\TagAccountMapDBM.cs" />
-    <Compile Include="data\database\TagIdentifierDatabase.cs" />
-    <Compile Include="data\database\TagDatabase.cs" />
-    <Compile Include="data\database\TagAccountMapDatabase.cs" />
-    <Compile Include="data\storage\CurrencyStorage.cs" />
-    <Compile Include="data\database\CurrencyRepositoryDatabase.cs" />
-    <Compile Include="data\database\models\CurrencyRepositoryDBM.cs" />
-    <Compile Include="data\database\CurrencyDatabase.cs" />
-    <Compile Include="data\database\models\CurrencyDBM.cs" />
-    <Compile Include="data\storage\ExchangeRateStorage.cs" />
-    <Compile Include="data\database\ExchangeRateRepositoryDatabase.cs" />
-    <Compile Include="data\database\models\ExchangeRateRepositoryDBM.cs" />
-    <Compile Include="data\factories\ExchangeRateRepositoryFactory.cs" />
-    <Compile Include="data\database\ExchangeRateDatabase.cs" />
-    <Compile Include="data\database\models\ExchangeRateDBM.cs" />
-    <Compile Include="data\repositories\currency\BittrexCurrencyRepository.cs" />
-    <Compile Include="data\database\interfaces\IEntityDBM.cs" />
-    <Compile Include="data\database\interfaces\IEntityRepositoryIdDBM.cs" />
-    <Compile Include="data\database\interfaces\ISQLiteConnection.cs" />
-    <Compile Include="data\storage\AbstractStorage.cs" />
-    <Compile Include="data\repositories\general\AbstractRepository.cs" />
-    <Compile Include="data\database\helper\AbstractDatabase.cs" />
-    <Compile Include="data\repositories\exchangerate\BtceExchangeRateRepository.cs" />
-    <Compile Include="view\addsource\AddSourceSubview.cs" />
-    <Compile Include="view\addsource\AddBittrexSubview.cs" />
-    <Compile Include="view\addsource\AddAddressSubview.cs" />
-    <Compile Include="view\components\cells\CustomViewCellActionItem.cs" />
-    <Compile Include="view\components\ChangingStackLayout.cs" />
-    <Compile Include="view\components\CoinsTableView.xaml.cs">
-      <DependentUpon>CoinsTableView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\overlays\CurrencyOverlay.cs" />
-    <Compile Include="view\pages\CoinsView.xaml.cs">
-      <DependentUpon>CoinsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\components\cells\CustomSwitchCell.cs" />
-    <Compile Include="view\components\cells\CustomPickerCell.cs" />
-    <Compile Include="view\components\HeaderView.xaml.cs">
-      <DependentUpon>HeaderView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\container\MasterDetailContainerView.cs" />
-    <Compile Include="view\pages\settings\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="resources\ILocalise.cs" />
-    <Compile Include="resources\TranslateExtension.cs" />
-    <Compile Include="view\pages\settings\ReferenceCurrenciesSettingsView.xaml.cs">
-      <DependentUpon>ReferenceCurrenciesSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\pages\settings\SortSettingsView.xaml.cs">
-      <DependentUpon>SortSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\container\TabContainerView.cs" />
-    <Compile Include="tasks\AppTasks.cs" />
-    <Compile Include="enums\FetchSpeed.cs" />
-    <Compile Include="data\repositories\currency\BtceCurrencyRepository.cs" />
-    <Compile Include="message\MessageConstants.cs" />
-    <Compile Include="enums\SortOrder.cs" />
-    <Compile Include="enums\SortDirection.cs" />
-    <Compile Include="view\components\cells\CoinViewCell.cs" />
-    <Compile Include="view\pages\CoinDetailView.xaml.cs">
-      <DependentUpon>CoinDetailView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="constants\AppConstants.cs" />
-    <Compile Include="view\components\cells\AccountViewCell.cs" />
-    <Compile Include="helpers\SortHelper.cs" />
-    <Compile Include="view\pages\AccountDetailView.xaml.cs">
-      <DependentUpon>AccountDetailView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\components\cells\CurrencyEntryCell.cs" />
-    <Compile Include="data\repositories\availablerates\AvailableRatesRepository.cs" />
-    <Compile Include="data\repositories\availablerates\LocalAvailableRatesRepository.cs" />
-    <Compile Include="data\database\models\AvailableRatesRepositoryDBM.cs" />
-    <Compile Include="data\repositories\general\AbstractDatabaseRepository.cs" />
-    <Compile Include="data\repositories\availablerates\OnlineAvailableRatesRepository.cs" />
-    <Compile Include="data\repositories\availablerates\BittrexAvailableRatesRepository.cs" />
-    <Compile Include="data\repositories\availablerates\BtceAvailableRatesRepository.cs" />
-    <Compile Include="data\repositories\availablerates\CryptonatorAvailableRatesRepository.cs" />
-    <Compile Include="data\repositories\exchangerate\CryptonatorExchangeRateRepository.cs" />
-    <Compile Include="data\repositories\currency\CryptonatorCurrencyRepository.cs" />
-    <Compile Include="data\storage\AvailableRatesStorage.cs" />
-    <Compile Include="data\storage\AbstractDatabaseStorage.cs" />
-    <Compile Include="data\factories\AvailableRatesFactory.cs" />
-    <Compile Include="data\database\AvailableRatesRepositoryDatabase.cs" />
-    <Compile Include="data\repositories\general\AbstractAvailabilityRepository.cs" />
-    <Compile Include="view\components\cells\CustomViewCell.cs" />
-    <Compile Include="view\components\cells\ReferenceValueViewCell.cs" />
-    <Compile Include="view\components\cells\CustomEntryCell.cs" />
-    <Compile Include="view\components\ReferenceCurrenciesSection.cs" />
-    <Compile Include="view\components\cells\SortableViewCell.cs" />
-    <Compile Include="view\pages\AddSourceView.xaml.cs">
-      <DependentUpon>AddSourceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\pages\SourcesView.xaml.cs">
-      <DependentUpon>SourcesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\pages\RepositoryView.xaml.cs">
-      <DependentUpon>RepositoryView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="data\repositories\account\BlockExpertsAccountRepository.cs" />
-    <Compile Include="data\repositories\currency\BlockExpertsCurrencyRepository.cs" />
-    <Compile Include="message\ErrorMessageHandler.cs" />
-    <Compile Include="models\Persistable.cs" />
-    <Compile Include="models\PersistableRepositoryElement.cs" />
-    <Compile Include="data\database\models\CurrencyRepositoryElementDBM.cs" />
-    <Compile Include="data\storage\CurrencyRepositoryMapStorage.cs" />
-    <Compile Include="data\repositories\currency\CurrencyRepositoryMap.cs" />
-    <Compile Include="data\database\CurrencyMapDatabase.cs" />
-    <Compile Include="data\database\models\CurrencyRepositoryMapDBM.cs" />
-    <Compile Include="data\database\CurrencyRepositoryMapDatabase.cs" />
-    <Compile Include="helpers\ExchangeRateHelper.cs" />
-    <Compile Include="view\components\CoinsGraphView.cs" />
-    <Compile Include="view\components\SegmentedControl.cs" />
-    <Compile Include="helpers\PluralHelper.cs" />
-    <Compile Include="resources\I18N.Designer.cs">
-      <DependentUpon>I18N.resx</DependentUpon>
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Currency.cs" />
+    <Compile Include="Models\ExchangeRate.cs" />
+    <Compile Include="Models\Money.cs" />
+    <Compile Include="Repositories\Account\AccountRepository.cs" />
+    <Compile Include="Repositories\Account\LocalAccountRepository.cs" />
+    <Compile Include="Repositories\Account\OnlineAccountRepository.cs" />
+    <Compile Include="Repositories\Account\BittrexAccountRepository.cs" />
+    <Compile Include="Repositories\Currency\CurrencyRepository.cs" />
+    <Compile Include="Repositories\Currency\LocalCurrencyRepository.cs" />
+    <Compile Include="Repositories\Currency\OnlineCurrencyRepository.cs" />
+    <Compile Include="Repositories\ExchangeRates\ExchangeRateRepository.cs" />
+    <Compile Include="Repositories\ExchangeRates\BittrexExchangeRateRepository.cs" />
+    <Compile Include="Repositories\ExchangeRates\LocalExchangeRateRepository.cs" />
+    <Compile Include="Repositories\ExchangeRates\OnlineExchangeRateRepository.cs" />
+    <Compile Include="Database\AccountDatabase.cs" />
+    <Compile Include="Database\Models\AccountDBM.cs" />
+    <Compile Include="Database\Models\AccountRepositoryDBM.cs" />
+    <Compile Include="Storage\AccountStorage.cs" />
+    <Compile Include="Database\AccountRepositoryDatabase.cs" />
+    <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\TagIdentifier.cs" />
+    <Compile Include="Database\Models\TagIdentifierDBM.cs" />
+    <Compile Include="Database\Models\TagDBM.cs" />
+    <Compile Include="Database\Models\TagAccountMapDBM.cs" />
+    <Compile Include="Database\TagIdentifierDatabase.cs" />
+    <Compile Include="Database\TagDatabase.cs" />
+    <Compile Include="Database\TagAccountMapDatabase.cs" />
+    <Compile Include="Storage\CurrencyStorage.cs" />
+    <Compile Include="Database\CurrencyRepositoryDatabase.cs" />
+    <Compile Include="Database\Models\CurrencyRepositoryDBM.cs" />
+    <Compile Include="Database\CurrencyDatabase.cs" />
+    <Compile Include="Database\Models\CurrencyDBM.cs" />
+    <Compile Include="Storage\ExchangeRateStorage.cs" />
+    <Compile Include="Database\ExchangeRateRepositoryDatabase.cs" />
+    <Compile Include="Database\Models\ExchangeRateRepositoryDBM.cs" />
+    <Compile Include="Database\ExchangeRateDatabase.cs" />
+    <Compile Include="Database\Models\ExchangeRateDBM.cs" />
+    <Compile Include="Repositories\Currency\BittrexCurrencyRepository.cs" />
+    <Compile Include="Database\Interfaces\IEntityDBM.cs" />
+    <Compile Include="Database\Interfaces\IEntityRepositoryIdDBM.cs" />
+    <Compile Include="Database\Interfaces\ISQLiteConnection.cs" />
+    <Compile Include="Storage\AbstractStorage.cs" />
+    <Compile Include="Repositories\Core\AbstractRepository.cs" />
+    <Compile Include="Database\Helper\AbstractDatabase.cs" />
+    <Compile Include="Repositories\ExchangeRates\BtceExchangeRateRepository.cs" />
+    <Compile Include="Resources\I18N.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>I18N.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\PasswordView.xaml.cs">
-      <DependentUpon>PasswordView.xaml</DependentUpon>
+    <Compile Include="Resources\I18N.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>I18N.resx</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\settings\PinSettingsView.xaml.cs">
-      <DependentUpon>PinSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\overlays\PinOverlay.xaml.cs">
-      <DependentUpon>PinOverlay.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="enums\PinAction.cs" />
-    <Compile Include="view\components\CoinsHeaderView.cs" />
-    <Compile Include="view\addsource\AddRepositorySubview.cs" />
-    <Compile Include="view\addsource\AddAccountSubview.cs" />
-    <Compile Include="view\addsource\AddLocalAccountSubview.cs" />
-    <Compile Include="helpers\StringHelper.cs" />
-    <Compile Include="helpers\TextSizeHelper.cs" />
-    <Compile Include="settings\ApplicationSettings.cs" />
-    <Compile Include="settings\Settings.cs" />
+    <Compile Include="Resources\ILocalise.cs" />
+    <Compile Include="Tasks\AppTasks.cs" />
+    <Compile Include="Enums\FetchSpeed.cs" />
+    <Compile Include="Repositories\Currency\BtceCurrencyRepository.cs" />
+    <Compile Include="Constants\MessageConstants.cs" />
+    <Compile Include="Enums\SortOrder.cs" />
+    <Compile Include="Enums\SortDirection.cs" />
+    <Compile Include="Repositories\AvailableRates\AvailableRatesRepository.cs" />
+    <Compile Include="Repositories\AvailableRates\LocalAvailableRatesRepository.cs" />
+    <Compile Include="Database\Models\AvailableRatesRepositoryDBM.cs" />
+    <Compile Include="Repositories\Core\AbstractDatabaseRepository.cs" />
+    <Compile Include="Repositories\AvailableRates\OnlineAvailableRatesRepository.cs" />
+    <Compile Include="Repositories\AvailableRates\BittrexAvailableRatesRepository.cs" />
+    <Compile Include="Repositories\AvailableRates\BtceAvailableRatesRepository.cs" />
+    <Compile Include="Repositories\AvailableRates\CryptonatorAvailableRatesRepository.cs" />
+    <Compile Include="Repositories\ExchangeRates\CryptonatorExchangeRateRepository.cs" />
+    <Compile Include="Repositories\Currency\CryptonatorCurrencyRepository.cs" />
+    <Compile Include="Storage\AvailableRatesStorage.cs" />
+    <Compile Include="Storage\AbstractDatabaseStorage.cs" />
+    <Compile Include="Database\AvailableRatesRepositoryDatabase.cs" />
+    <Compile Include="Repositories\Core\AbstractAvailabilityRepository.cs" />
+    <Compile Include="Repositories\Account\BlockExpertsAccountRepository.cs" />
+    <Compile Include="Repositories\Currency\BlockExpertsCurrencyRepository.cs" />
+    <Compile Include="Models\Persistable.cs" />
+    <Compile Include="Models\PersistableRepositoryElement.cs" />
+    <Compile Include="Database\Models\CurrencyRepositoryElementDBM.cs" />
+    <Compile Include="Storage\CurrencyRepositoryMapStorage.cs" />
+    <Compile Include="Repositories\Currency\CurrencyRepositoryMap.cs" />
+    <Compile Include="Database\CurrencyMapDatabase.cs" />
+    <Compile Include="Database\Models\CurrencyRepositoryMapDBM.cs" />
+    <Compile Include="Database\CurrencyRepositoryMapDatabase.cs" />
+    <Compile Include="Helpers\ExchangeRateHelper.cs" />
+    <Compile Include="Enums\PinAction.cs" />
+    <Compile Include="Settings\ApplicationSettings.cs" />
+    <Compile Include="Settings\Settings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Import Project="packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <ItemGroup>
-    <Reference Include="CarouselView.FormsPlugin.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CarouselView.FormsPlugin.2.5.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10\CarouselView.FormsPlugin.Abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ExifLib, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExifLib.PCL.1.0.2-pre01\lib\netstandard1.0\ExifLib.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -223,12 +143,20 @@
       <HintPath>..\packages\PCLCrypto.2.0.147\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\PCLCrypto.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Plugin.Fingerprint, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Plugin.Fingerprint.1.3.0\lib\portable-net45+win8+wpa81+wp8\Plugin.Fingerprint.dll</HintPath>
+    <Reference Include="PInvoke.BCrypt, Version=0.3.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
+      <HintPath>..\packages\PInvoke.BCrypt.0.3.152\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.BCrypt.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Plugin.Fingerprint.Abstractions, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Plugin.Fingerprint.1.3.0\lib\portable-net45+win8+wpa81+wp8\Plugin.Fingerprint.Abstractions.dll</HintPath>
+    <Reference Include="PInvoke.Kernel32, Version=0.3.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
+      <HintPath>..\packages\PInvoke.Kernel32.0.3.152\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.Kernel32.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PInvoke.NCrypt, Version=0.3.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
+      <HintPath>..\packages\PInvoke.NCrypt.0.3.152\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.NCrypt.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PInvoke.Windows.Core, Version=0.3.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
+      <HintPath>..\packages\PInvoke.Windows.Core.0.3.152\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.Windows.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Plugin.Settings, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -243,35 +171,21 @@
       <HintPath>..\packages\sqlite-net-pcl.1.2.1\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SQLitePCL.batteries">
-      <HintPath>packages\SQLitePCL.bundle_green.0.9.3\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCL.batteries.dll</HintPath>
+    <Reference Include="SQLitePCLRaw.batteries_green, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.1\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_green.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="SQLitePCLRaw.batteries_green">
-      <HintPath>packages\SQLitePCLRaw.bundle_green.1.1.0\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_green.dll</HintPath>
+    <Reference Include="SQLitePCLRaw.batteries_v2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.1\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_v2.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="SQLitePCLRaw.batteries_v2">
-      <HintPath>packages\SQLitePCLRaw.bundle_green.1.1.0\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_v2.dll</HintPath>
+    <Reference Include="SQLitePCLRaw.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.core.1.1.1\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="SQLitePCLRaw.core">
-      <HintPath>packages\SQLitePCLRaw.core.1.1.0\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.core.dll</HintPath>
-    </Reference>
-    <Reference Include="Validation">
-      <HintPath>packages\Validation.2.3.7\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Validation.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLitePCL.raw">
-      <HintPath>packages\SQLitePCL.raw.0.9.3\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCL.raw.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.Windows.Core">
-      <HintPath>packages\PInvoke.Windows.Core.0.3.152\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.Windows.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.Kernel32">
-      <HintPath>packages\PInvoke.Kernel32.0.3.152\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.Kernel32.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.BCrypt">
-      <HintPath>packages\PInvoke.BCrypt.0.3.152\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.BCrypt.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.NCrypt">
-      <HintPath>packages\PInvoke.NCrypt.0.3.152\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.NCrypt.dll</HintPath>
+    <Reference Include="Validation, Version=2.3.0.0, Culture=neutral, PublicKeyToken=2fc06f0d701809a7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Validation.2.3.7\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Validation.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Forms.2.3.2.127\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
@@ -285,118 +199,21 @@
       <HintPath>..\packages\Xamarin.Forms.2.3.2.127\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="XLabs.Core, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XLabs.Core.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="XLabs.Forms, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XLabs.Forms.2.3.0-pre05\lib\portable-net45+win8+wpa81+monoandroid+MonoTouch+xamarinios10\XLabs.Forms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="XLabs.IOC, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XLabs.IoC.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.IOC.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="XLabs.Platform, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XLabs.Platform.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10\XLabs.Platform.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="XLabs.Serialization, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XLabs.Serialization.2.3.0-pre05\lib\portable-net45+netcore45+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Serialization.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="XLabs.Serialization.Json.NET">
-      <HintPath>..\packages\XLabs.Serialization.JSON.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Serialization.Json.NET.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ZXing.Net.Mobile.Core, Version=2.1.47.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\portable-net45+netcore45+wpa81+wp8\ZXing.Net.Mobile.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ZXing.Net.Mobile.Forms, Version=2.1.47.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ZXing.Net.Mobile.Forms.2.1.47\lib\portable-net45+netcore45+wpa81+wp8\ZXing.Net.Mobile.Forms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="zxing.portable, Version=2.1.47.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\portable-net45+netcore45+wpa81+wp8\zxing.portable.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ZXingNetMobile, Version=2.1.47.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\portable-net45+netcore45+wpa81+wp8\ZXingNetMobile.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="view\components\HeaderView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Resources\I18N.de.resx">
+      <LastGenOutput>I18N.de.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="resources\I18N.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+    <EmbeddedResource Include="Resources\I18N.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>I18N.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\PasswordView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\settings\PinSettingsView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\overlays\PinOverlay.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\pages\CoinsView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\settings\SettingsView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="resources\I18N.de.resx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\CoinDetailView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\AccountDetailView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\AddSourceView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\SourcesView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\RepositoryView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\components\CoinsTableView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\pages\settings\SortSettingsView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\pages\settings\ReferenceCurrenciesSettingsView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Import Project="..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

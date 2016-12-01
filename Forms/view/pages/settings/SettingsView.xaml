@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
+	x:Class="MyCryptos.view.pages.settings.SettingsView"
+	Title="{i18N:Translate Settings}">
+  <ContentPage.BackgroundColor>
+    <OnPlatform
+			x:TypeArguments="Color"
+			Android="#EEE" />
+  </ContentPage.BackgroundColor>
+  <ContentPage.Content>
+    <components:ChangingStackLayout>
+      <components:HeaderView
+				x:Name="Header" />
+      <TableView
+				Intent="Settings">
+        <TableSection
+					Title="{i18N:Translate ReferenceCurrencies}">
+          <components:CustomViewCell
+						Text="{i18N:Translate ReferenceCurrencies}"
+						x:Name="ReferenceCurrenciesCell"
+						Image="more.png" />
+        </TableSection>
+        <TableSection
+					Title="{i18N:Translate General}">
+          <components:CustomViewCell
+						Text="{i18N:Translate Pin}"
+						x:Name="PinSettingsCell"
+						Tapped="PinCellTapped"
+						Image="more.png" />
+          <components:CustomViewCell
+						Text="{i18N:Translate Sorting}"
+						x:Name="SortingCell"
+						Image="more.png" />
+          <components:CustomSwitchCell
+						x:Name="GraphOnStartup"
+						Title="{i18N:Translate ShowGraphOnStartup}" />
+          <components:CustomSwitchCell
+						x:Name="AutoRefresh"
+						Title="{i18N:Translate RefreshOnStartup}" />
+        </TableSection>
+      </TableView>
+    </components:ChangingStackLayout>
+  </ContentPage.Content>
+</ContentPage>

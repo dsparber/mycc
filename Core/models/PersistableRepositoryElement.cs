@@ -1,7 +1,7 @@
-﻿namespace MyCryptos.models
+﻿namespace MyCryptos.Core.Models
 {
-	public interface PersistableRepositoryElement<IdType> : Persistable<IdType>
-	{
-		int RepositoryId { get; set; }
-	}
+    public interface PersistableRepositoryElement<IdType> : Persistable<IdType>
+    {
+        int RepositoryId { get; set; }
+    }
 }

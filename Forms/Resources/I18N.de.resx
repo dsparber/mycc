@@ -1,0 +1,777 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema
+		id="root"
+		xmlns=""
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import
+			namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element
+			name="root"
+			msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice
+					maxOccurs="unbounded">
+					<xsd:element
+						name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element
+									name="value"
+									type="xsd:string"
+									minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute
+								name="name"
+								use="required"
+								type="xsd:string" />
+							<xsd:attribute
+								name="type"
+								type="xsd:string" />
+							<xsd:attribute
+								name="mimetype"
+								type="xsd:string" />
+							<xsd:attribute
+								ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element
+						name="assembly">
+						<xsd:complexType>
+							<xsd:attribute
+								name="alias"
+								type="xsd:string" />
+							<xsd:attribute
+								name="name"
+								type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element
+						name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element
+									name="value"
+									type="xsd:string"
+									minOccurs="0"
+									msdata:Ordinal="1" />
+								<xsd:element
+									name="comment"
+									type="xsd:string"
+									minOccurs="0"
+									msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute
+								name="name"
+								type="xsd:string"
+								use="required"
+								msdata:Ordinal="1" />
+							<xsd:attribute
+								name="type"
+								type="xsd:string"
+								msdata:Ordinal="3" />
+							<xsd:attribute
+								name="mimetype"
+								type="xsd:string"
+								msdata:Ordinal="4" />
+							<xsd:attribute
+								ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element
+						name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element
+									name="value"
+									type="xsd:string"
+									minOccurs="0"
+									msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute
+								name="name"
+								type="xsd:string"
+								use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader
+		name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader
+		name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader
+		name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader
+		name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data
+		name="AddCoinTitle"
+		xml:space="preserve">
+    <value>Coin hinzufügen</value>
+  </data>
+	<data
+		name="Cancel"
+		xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+	<data
+		name="Save"
+		xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+	<data
+		name="Add"
+		xml:space="preserve">
+    <value>Neu</value>
+  </data>
+	<data
+		name="AddAccountTitle"
+		xml:space="preserve">
+    <value>Konto hinzufügen</value>
+  </data>
+	<data
+		name="AppName"
+		xml:space="preserve">
+    <value>MyCryptos</value>
+  </data>
+	<data
+		name="Settings"
+		xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+	<data
+		name="Coins"
+		xml:space="preserve">
+    <value>Coins</value>
+  </data>
+	<data
+		name="Currency"
+		xml:space="preserve">
+    <value>Währung</value>
+  </data>
+	<data
+		name="Value"
+		xml:space="preserve">
+    <value>Betrag</value>
+  </data>
+	<data
+		name="CurrencyExample"
+		xml:space="preserve">
+    <value>z.B. BTC</value>
+  </data>
+	<data
+		name="ValueExample"
+		xml:space="preserve">
+    <value>z.B. 10</value>
+  </data>
+	<data
+		name="Storage"
+		xml:space="preserve">
+    <value>Speicher</value>
+  </data>
+	<data
+		name="NewStorage"
+		xml:space="preserve">
+    <value>Neuen Speicher erzeugen</value>
+  </data>
+	<data
+		name="DefaultStorage"
+		xml:space="preserve">
+    <value>Lokaler Speicher</value>
+  </data>
+	<data
+		name="Label"
+		xml:space="preserve">
+    <value>Bezeichnung</value>
+  </data>
+	<data
+		name="LabelExample"
+		xml:space="preserve">
+    <value>z.B. Ersparnisse</value>
+  </data>
+	<data
+		name="Accounts"
+		xml:space="preserve">
+    <value>Konten</value>
+  </data>
+	<data
+		name="Account"
+		xml:space="preserve">
+    <value>Konto</value>
+  </data>
+	<data
+		name="NoAccounts"
+		xml:space="preserve">
+    <value>Keine Konten</value>
+  </data>
+	<data
+		name="NoSources"
+		xml:space="preserve">
+    <value>Keine Quellen</value>
+  </data>
+	<data
+		name="Sources"
+		xml:space="preserve">
+    <value>Quellen</value>
+  </data>
+	<data
+		name="Source"
+		xml:space="preserve">
+    <value>Quelle</value>
+  </data>
+	<data
+		name="Refreshing"
+		xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+	<data
+		name="ReferenceCurrency"
+		xml:space="preserve">
+    <value>Referenz Währung</value>
+  </data>
+	<data
+		name="AddActionChooseTitle"
+		xml:space="preserve">
+    <value>Welche Aktion wollen Sie ausführen?</value>
+  </data>
+	<data
+		name="AddLocalAccount"
+		xml:space="preserve">
+    <value>Lokales Konto hinzufügen</value>
+  </data>
+	<data
+		name="SortOrder"
+		xml:space="preserve">
+    <value>Sortierreihenfolge</value>
+  </data>
+	<data
+		name="Alphabetical"
+		xml:space="preserve">
+    <value>Alphabetisch</value>
+  </data>
+	<data
+		name="ByValue"
+		xml:space="preserve">
+    <value>Nach Wert</value>
+  </data>
+	<data
+		name="ByUnits"
+		xml:space="preserve">
+    <value>Nach Einheiten</value>
+  </data>
+	<data
+		name="NoExchangeRateFound"
+		xml:space="preserve">
+    <value>Kein Wechselkurs gefunden</value>
+  </data>
+	<data
+		name="RefreshingDots"
+		xml:space="preserve">
+    <value>Aktualisieren ...</value>
+  </data>
+	<data
+		name="SortDirection"
+		xml:space="preserve">
+    <value>Sortierrichtung</value>
+  </data>
+	<data
+		name="Ascending"
+		xml:space="preserve">
+    <value>Aufsteigend</value>
+  </data>
+	<data
+		name="Descending"
+		xml:space="preserve">
+    <value>Absteigend</value>
+  </data>
+	<data
+		name="AutomaticallyRefresh"
+		xml:space="preserve">
+    <value>Automatisches Aktualisieren</value>
+  </data>
+	<data
+		name="RefreshOnStartup"
+		xml:space="preserve">
+    <value>Aktualiserung beim Start</value>
+  </data>
+	<data
+		name="SourceText"
+		xml:space="preserve">
+    <value>Quelle: {0}</value>
+  </data>
+	<data
+		name="Tags"
+		xml:space="preserve">
+    <value>Tags</value>
+  </data>
+	<data
+		name="SearchCurrencies"
+		xml:space="preserve">
+    <value>Währungen durchsuchen</value>
+  </data>
+	<data
+		name="Edit"
+		xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+	<data
+		name="Editing"
+		xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+	<data
+		name="Delete"
+		xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+	<data
+		name="LocalAccount"
+		xml:space="preserve">
+    <value>Lokales Konto</value>
+  </data>
+	<data
+		name="DifferentCoinsCount"
+		xml:space="preserve">
+    <value>{0} verschiedene Coins</value>
+  </data>
+	<data
+		name="EqualTo"
+		xml:space="preserve">
+    <value>Entspricht</value>
+  </data>
+	<data
+		name="ExchangeRate"
+		xml:space="preserve">
+    <value>Kurs: {0:#,0.########}</value>
+  </data>
+	<data
+		name="Name"
+		xml:space="preserve">
+    <value>Name</value>
+  </data>
+	<data
+		name="ApiKey"
+		xml:space="preserve">
+    <value>Key</value>
+  </data>
+	<data
+		name="SecretApiKey"
+		xml:space="preserve">
+    <value>Secret</value>
+  </data>
+	<data
+		name="AddRepositoryTitle"
+		xml:space="preserve">
+    <value>Quelle hinzufügen</value>
+  </data>
+	<data
+		name="Bittrex"
+		xml:space="preserve">
+    <value>Bittrex</value>
+  </data>
+	<data
+		name="AddBittrexAcoount"
+		xml:space="preserve">
+    <value>Bittrex Konto hinzufügen</value>
+  </data>
+	<data
+		name="AddSource"
+		xml:space="preserve">
+    <value>Neue Quelle hinzufügen</value>
+  </data>
+	<data
+		name="GrantAccess"
+		xml:space="preserve">
+    <value>Zugriff erlauben</value>
+  </data>
+	<data
+		name="Ok"
+		xml:space="preserve">
+    <value>Ok</value>
+  </data>
+	<data
+		name="Error"
+		xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+	<data
+		name="FetchingNoSuccessText"
+		xml:space="preserve">
+    <value>Fehler! Daten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Eingabe und Internetverbindung!</value>
+  </data>
+	<data
+		name="Testing"
+		xml:space="preserve">
+    <value>Testen</value>
+  </data>
+	<data
+		name="Fetching"
+		xml:space="preserve">
+    <value>Daten laden</value>
+  </data>
+	<data
+		name="Local"
+		xml:space="preserve">
+    <value>lokal</value>
+  </data>
+	<data
+		name="Online"
+		xml:space="preserve">
+    <value>online</value>
+  </data>
+	<data
+		name="Deleting"
+		xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+	<data
+		name="Type"
+		xml:space="preserve">
+    <value>Typ</value>
+  </data>
+	<data
+		name="Done"
+		xml:space="preserve">
+    <value>Fertig</value>
+  </data>
+	<data
+		name="SelectRepositoryType"
+		xml:space="preserve">
+    <value>Wählen Sie bitte den gewünschten Typ aus</value>
+  </data>
+	<data
+		name="BlockExperts"
+		xml:space="preserve">
+    <value>Block Experts</value>
+  </data>
+	<data
+		name="Address"
+		xml:space="preserve">
+    <value>Adresse</value>
+  </data>
+	<data
+		name="AccountInformation"
+		xml:space="preserve">
+    <value>Kontoinformation</value>
+  </data>
+	<data
+		name="SelectCurrency"
+		xml:space="preserve">
+    <value>Währung auswählen</value>
+  </data>
+	<data
+		name="BlockExpertsAccount"
+		xml:space="preserve">
+    <value>Block Experts Konto</value>
+  </data>
+	<data
+		name="NetworkError"
+		xml:space="preserve">
+    <value>Keine Verbindung zum Internet! Bitte stellen Sie sicher, dass Ihr Handy Internetzugriff hat.</value>
+  </data>
+	<data
+		name="NoCoins"
+		xml:space="preserve">
+    <value>Keine Coins</value>
+  </data>
+	<data
+		name="Blockchain"
+		xml:space="preserve">
+    <value>BTC Blockchain</value>
+  </data>
+	<data
+		name="BlockchainAccount"
+		xml:space="preserve">
+    <value>Blockchain Konto</value>
+  </data>
+	<data
+		name="Others"
+		xml:space="preserve">
+    <value>{0} weitere</value>
+  </data>
+	<data
+		name="Graph"
+		xml:space="preserve">
+    <value>Graph</value>
+  </data>
+	<data
+		name="Table"
+		xml:space="preserve">
+    <value>Tabelle</value>
+  </data>
+	<data
+		name="Appeareance"
+		xml:space="preserve">
+    <value>Darstellung</value>
+  </data>
+	<data
+		name="Sorting"
+		xml:space="preserve">
+    <value>Sortierung</value>
+  </data>
+	<data
+		name="AdditionalReferenceCurrency"
+		xml:space="preserve">
+    <value>Weitere Referenzwährung</value>
+  </data>
+	<data
+		name="AddReferenceCurrency"
+		xml:space="preserve">
+    <value>Referenzwährung hinzufügen</value>
+  </data>
+	<data
+		name="PrimaryReferenceCurrency"
+		xml:space="preserve">
+    <value>Primäre Währung</value>
+  </data>
+	<data
+		name="ReferenceCurrencies"
+		xml:space="preserve">
+    <value>Referenzwährungen</value>
+  </data>
+	<data
+		name="Etherchain"
+		xml:space="preserve">
+    <value>Etherchain</value>
+  </data>
+	<data
+		name="CryptoId"
+		xml:space="preserve">
+    <value>CryptoID</value>
+  </data>
+	<data
+		name="OneAccount"
+		xml:space="preserve">
+    <value>Ein Account</value>
+  </data>
+	<data
+		name="OneCoin"
+		xml:space="preserve">
+    <value>Eine Währung</value>
+  </data>
+	<data
+		name="OneSource"
+		xml:space="preserve">
+    <value>Eine Quelle</value>
+  </data>
+	<data
+		name="Refresh"
+		xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+	<data
+		name="LocalStorage"
+		xml:space="preserve">
+    <value>Lokaler speicher</value>
+  </data>
+	<data
+		name="Currencies"
+		xml:space="preserve">
+    <value>Währungen</value>
+  </data>
+	<data
+		name="AddWithAddress"
+		xml:space="preserve">
+    <value>Adresse hinzufügen</value>
+  </data>
+	<data
+		name="AddWithBittrexAccount"
+		xml:space="preserve">
+    <value>Bittrex Konto hinzufügen</value>
+  </data>
+	<data
+		name="Unnamed"
+		xml:space="preserve">
+    	<value>Unbenannt</value>
+	</data>
+	<data
+		name="NewSource"
+		xml:space="preserve">
+    <value>Neue Quelle</value>
+  </data>
+	<data
+		name="Copyright"
+		xml:space="preserve">
+    <value>© Daniel Sparber</value>
+  </data>
+	<data
+		name="Pin"
+		xml:space="preserve">
+    	<value>PIN</value>
+  </data>
+	<data
+		name="PinActive"
+		xml:space="preserve">
+    	<value>PIN aktiviert</value>
+  </data>
+	<data
+		name="FingerprintActive"
+		xml:space="preserve">
+    	<value>PIN und Fingerprint aktiviert</value>
+  </data>
+	<data
+		name="NotConfigured"
+		xml:space="preserve">
+    	<value>Nicht konfiguriert</value>
+  </data>
+	<data
+		name="PinSettings"
+		xml:space="preserve">
+    	<value>PIN Einstellungen</value>
+  </data>
+	<data
+		name="EnablePin"
+		xml:space="preserve">
+    	<value>PIN aktivieren</value>
+  </data>
+	<data
+		name="DisablePin"
+		xml:space="preserve">
+    	<value>PIN deaktivieren</value>
+  </data>
+	<data
+		name="ChangePin"
+		xml:space="preserve">
+    	<value>PIN ändern</value>
+  </data>
+	<data
+		name="OldPin"
+		xml:space="preserve">
+    	<value>Alte PIN</value>
+  </data>
+	<data
+		name="NewPin"
+		xml:space="preserve">
+    	<value>Neue PIN</value>
+  </data>
+	<data
+		name="RepeatNewPin"
+		xml:space="preserve">
+    	<value>Wiederholen</value>
+  </data>
+	<data
+		name="UseFingerprint"
+		xml:space="preserve">
+    	<value>Fingerprint verwenden</value>
+  </data>
+	<data
+		name="General"
+		xml:space="preserve">
+    	<value>Allgemeines</value>
+  </data>
+	<data
+		name="PinToShort"
+		xml:space="preserve">
+    	<value>Die eingegebene PIN ist zu kurz!</value>
+  </data>
+	<data
+		name="NewPinsDontMatch"
+		xml:space="preserve">
+    	<value>Die neuen PINs stimmen nicht überein!</value>
+  </data>
+	<data
+		name="OldPinWrong"
+		xml:space="preserve">
+    	<value>Die eingegebene alte PIN ist nicht korrekt!</value>
+  </data>
+	<data
+		name="UnlockTheApplication"
+		xml:space="preserve">
+    	<value>Applikation entsperren</value>
+  </data>
+	<data
+		name="ScanQrCode"
+		xml:space="preserve">
+    	<value>QR-Code scannen</value>
+  </data>
+	<data
+		name="AmountAndCurrency"
+		xml:space="preserve">
+    	<value>Betrag und Währung</value>
+  </data>
+	<data
+		name="VerifyInput"
+		xml:space="preserve">
+    	<value>Bitte überprüfen Sie Ihre Eingabe!</value>
+  </data>
+	<data
+		name="Amount"
+		xml:space="preserve">
+    	<value>Betrag</value>
+  </data>
+	<data
+		name="ShowGraphOnStartup"
+		xml:space="preserve">
+    	<value>Graph beim Start anzeigen</value>
+  </data>
+</root>

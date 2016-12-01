@@ -1,12 +1,12 @@
 ﻿using System.Globalization;
 
-namespace resources
+namespace MyCryptos.Core.Resources
 {
-	public interface ILocalise
-	{
-		CultureInfo GetCurrentCultureInfo();
+    public interface ILocalise
+    {
+        CultureInfo GetCurrentCultureInfo();
 
-		void SetLocale();
-	}
+        void SetLocale();
+    }
 }
 
