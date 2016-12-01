@@ -16,7 +16,8 @@
     <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
     <AssemblyName>MyCryptos.Droid</AssemblyName>
     <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
-    <AndroidTlsProvider></AndroidTlsProvider>
+    <AndroidTlsProvider>
+    </AndroidTlsProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -211,9 +212,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MyCryptos.csproj">
+    <ProjectReference Include="..\Core\MyCryptos.Core.csproj">
       <Project>{92708D96-5841-4408-A7EE-B2D02C716F89}</Project>
-      <Name>MyCryptos</Name>
+      <Name>MyCryptos.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
