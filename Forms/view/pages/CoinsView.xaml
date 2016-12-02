@@ -7,7 +7,7 @@
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
-	x:Class="view.CoinsView"
+	x:Class="MyCryptos.Forms.view.pages.CoinsView"
 	Title="{i18N:Translate Coins}">
   <ContentPage.ToolbarItems>
     <ToolbarItem

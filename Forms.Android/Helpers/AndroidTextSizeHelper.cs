@@ -9,9 +9,9 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(AndroidTextSizeHelper))]
 namespace MyCryptos.Droid.Helpers
 {
-    public class AndroidTextSizeHelper : TextSizeHelper
+    public class AndroidTextSizeHelper : ITextSizeHelper
     {
-        public Tuple<double, double> calculateWidth(string text, float? fontsize = null, bool bold = false)
+        public Tuple<double, double> CalculateWidth(string text, float? fontsize = null, bool bold = false)
         {
             var bounds = new Rect();
             var textView = new TextView(Xamarin.Forms.Forms.Context);

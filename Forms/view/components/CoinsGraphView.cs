@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using constants;
-using MyCryptos.Core.Constants;
 using MyCryptos.Core.Helpers;
 using MyCryptos.Core.Models;
 using MyCryptos.Core.Settings;
 using MyCryptos.Core.Storage;
+using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
@@ -57,9 +57,9 @@ namespace MyCryptos.view
 
             updateView();
 
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
+            Messaging.UpdatingExchangeRates.SubscribeFinished(this, updateView);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, updateView);
+            Messaging.ReferenceCurrency.SubscribeFinished(this, updateView);
         }
 
         public void OnAppearing()

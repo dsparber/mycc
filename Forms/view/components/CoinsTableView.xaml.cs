@@ -1,40 +1,43 @@
-using MyCryptos.view.components;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using MyCryptos.Core.Constants;
 using MyCryptos.Core.Helpers;
 using MyCryptos.Core.Models;
 using MyCryptos.Core.Repositories.Account;
 using MyCryptos.Core.Settings;
 using MyCryptos.Core.Storage;
 using MyCryptos.Forms.helpers;
+using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
+using MyCryptos.view.components;
 using view;
 using Xamarin.Forms;
 
-namespace MyCryptos.view
+namespace MyCryptos.Forms.view.components
 {
-    public partial class CoinsTableView : ContentView
+    public partial class CoinsTableView
     {
-        List<SortableViewCell> Cells;
+        private List<SortableViewCell> cells;
 
         public CoinsTableView()
         {
             InitializeComponent();
 
-            Cells = new List<SortableViewCell>();
+            cells = new List<SortableViewCell>();
             CoinsSection.Title = I18N.Coins;
 
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => updateView());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => updateView());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => updateView());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, str => SortHelper.ApplySortOrder(Cells, CoinsSection));
+            Messaging.Loading.SubscribeFinished(this, UpdateView);
+            Messaging.UpdatingExchangeRates.SubscribeFinished(this, UpdateView);
+
+            Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
+            Messaging.SortOrder.SubscribeValueChanged(this, () => SortHelper.ApplySortOrder(cells, CoinsSection));
         }
 
-        void updateView()
+        private void UpdateView()
         {
-            setCells();
+            SetCells();
         }
 
         IEnumerable<IGrouping<Currency, Tuple<Account, AccountRepository>>> groups
@@ -46,43 +49,41 @@ namespace MyCryptos.view
             }
         }
 
-        void setCells()
+        private void SetCells()
         {
-            var cells = new List<SortableViewCell>();
+            var cs = new List<SortableViewCell>();
 
             foreach (var g in groups)
             {
-                if (g.Key != null)
+                if (g.Key == null) continue;
+
+                var cell = cells.OfType<CoinViewCell>().ToList().Find(e => g.Key.Equals(e.Currency));
+                if (cell == null)
                 {
-                    var cell = Cells.OfType<CoinViewCell>().ToList().Find(e => g.Key.Equals(e.Currency));
-                    if (cell == null)
-                    {
-                        cell = new CoinViewCell(Navigation) { Accounts = g.ToList(), IsLoading = true };
-                    }
-                    else
-                    {
-                        cell.Accounts = g.ToList();
-                    }
-
-                    var neededRate = new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency);
-                    var rate = ExchangeRateHelper.GetRate(neededRate);
-                    cell.ExchangeRate = rate;
-
-                    cell.IsLoading = rate != null && !rate.Rate.HasValue;
-
-                    cells.Add(cell);
+                    cell = new CoinViewCell(Navigation) { Accounts = g.ToList(), IsLoading = true };
                 }
+                else
+                {
+                    cell.Accounts = g.ToList();
+                }
+
+                var neededRate = new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency);
+                var rate = ExchangeRateHelper.GetRate(neededRate);
+                cell.ExchangeRate = rate;
+
+                cell.IsLoading = rate != null && !rate.Rate.HasValue;
+
+                cs.Add(cell);
             }
-            if (cells.Count == 0)
+            if (cs.Count == 0)
             {
                 var addSourceCell = new CustomViewCell { Text = I18N.AddSource, IsActionCell = true };
                 addSourceCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AddSourceView());
-                cells.Add(addSourceCell);
+                cs.Add(addSourceCell);
             }
 
-            Cells = cells;
-            SortHelper.ApplySortOrder(Cells, CoinsSection);
-
+            cells = cs;
+            SortHelper.ApplySortOrder(cells, CoinsSection);
         }
     }
 }

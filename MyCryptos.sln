@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCryptos.Core", "Core\MyCryptos.Core.csproj", "{92708D96-5841-4408-A7EE-B2D02C716F89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCryptos.Froms.Android", "Forms.Android\MyCryptos.Froms.Android.csproj", "{BA81C78F-C991-499E-B504-422EEDAAB3EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCryptos.Forms.Android", "Forms.Android\MyCryptos.Forms.Android.csproj", "{BA81C78F-C991-499E-B504-422EEDAAB3EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCryptos.Forms.iOS", "Forms.iOS\MyCryptos.Forms.iOS.csproj", "{2F18BB0F-A007-454B-A5B7-048D7F65FEAD}"
 EndProject

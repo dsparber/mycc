@@ -31,7 +31,7 @@ namespace MyCryptos.Forms.helpers
                 default: cells = cells.OrderBy(sortLambda); break;
             }
 
-            return cells;
+            return cells.ToList();
         }
 
         public static void ApplySortOrder<T>(IEnumerable<T> cells, TableSection section, SortOrder? order = null, SortDirection? direction = null) where T : SortableViewCell

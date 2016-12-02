@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MyCryptos.Core.Constants;
 using MyCryptos.Core.Models;
 using Xamarin.Forms;
 
@@ -62,45 +61,28 @@ namespace MyCryptos.Core.Repositories.Account
 
         public sealed override async Task<bool> Fetch()
         {
-            try
+
+            var balance = await getBalance();
+
+            if (!balance.HasValue) return false;
+
+            var existing = Elements.FirstOrDefault();
+            var money = new Money(balance.Value, Currency);
+            var name = Name;
+
+            if (existing != null)
             {
-                var balance = await getBalance();
-
-                if (balance.HasValue)
-                {
-                    var existing = Elements.FirstOrDefault();
-                    var money = new Money(balance.Value, Currency);
-                    var name = Name;
-
-
-                    if (existing != null)
-                    {
-                        existing = new Models.Account(existing.Id, Id, name, money);
-                        await Update(existing);
-                    }
-                    else
-                    {
-                        var newAccount = new Models.Account(name, money) { RepositoryId = Id };
-                        await Add(newAccount);
-                    }
-
-                    LastFetch = DateTime.Now;
-                    return true;
-                }
-
+                existing = new Models.Account(existing.Id, Id, name, money);
+                await Update(existing);
             }
-            catch (Exception e)
+            else
             {
-                if (e is TaskCanceledException || e is WebException)
-                {
-                    MessagingCenter.Send(e, MessageConstants.NetworkError);
-                }
-                else
-                {
-                    Debug.WriteLine($"Error Message:\n{e.Message}\nData:\n{e.Data}\nStack trace:\n{e.StackTrace}");
-                }
+                var newAccount = new Models.Account(name, money) { RepositoryId = Id };
+                await Add(newAccount);
             }
-            return false;
+
+            LastFetch = DateTime.Now;
+            return true;
         }
     }
 }

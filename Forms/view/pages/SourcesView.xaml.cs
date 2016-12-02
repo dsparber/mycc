@@ -1,18 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MyCryptos.Core.Constants;
-using MyCryptos.Core.Enums;
 using MyCryptos.Core.Repositories.Account;
 using MyCryptos.Core.Storage;
-using MyCryptos.Core.Tasks;
 using MyCryptos.Forms.helpers;
+using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using MyCryptos.view.components;
 using view;
 using Xamarin.Forms;
 
-namespace MyCryptos.view.pages
+namespace MyCryptos.Forms.view.pages
 {
     public partial class SourcesView
     {
@@ -21,7 +19,6 @@ namespace MyCryptos.view.pages
         public SourcesView()
         {
             InitializeComponent();
-            repositories = AccountStorage.Instance.Repositories ?? new List<AccountRepository>();
 
             SetView();
 
@@ -30,13 +27,8 @@ namespace MyCryptos.view.pages
                 Title = string.Empty;
             }
 
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str =>
-            {
-                repositories = AccountStorage.Instance.Repositories;
-                SetView();
-            });
-            MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => SetLoadingAnimation(speed, true));
-            MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => SetLoadingAnimation(speed, false));
+            Messaging.Loading.SubscribeFinished(this, SetView);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, SetView);
         }
 
         private void SetHeader()
@@ -68,6 +60,8 @@ namespace MyCryptos.view.pages
 
         private void SetView()
         {
+            repositories = AccountStorage.Instance.Repositories ?? new List<AccountRepository>();
+
             SetHeader();
 
             LocalSection.Clear();
@@ -98,31 +92,10 @@ namespace MyCryptos.view.pages
             Navigation.PushOrPushModal(new AddSourceView());
         }
 
-        private void Refresh(object sender, EventArgs e)
+        private void SetLoadingAnimation(bool loading)
         {
-            // TODO Only fetch accounts
-            AppTasks.Instance.StartFetchTask(false);
-        }
-
-        private void SetLoadingAnimation(FetchSpeed speed, bool loading)
-        {
-            if (loading)
-            {
-                IsBusy = true;
-                Header.IsLoading = true;
-            }
-            else
-            {
-                if (speed.Speed == FetchSpeedEnum.FAST)
-                {
-                    Header.IsLoading = false;
-                }
-                else
-                {
-                    Header.IsLoading = false;
-                    IsBusy = false;
-                }
-            }
+            IsBusy = loading;
+            Header.IsLoading = loading;
         }
     }
 }

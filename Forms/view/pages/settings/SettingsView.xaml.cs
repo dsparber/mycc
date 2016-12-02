@@ -1,11 +1,10 @@
 using System;
-using MyCryptos.Core.Constants;
 using MyCryptos.Core.Enums;
 using MyCryptos.Core.Settings;
+using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
-using Xamarin.Forms;
 
-namespace MyCryptos.view.pages.settings
+namespace MyCryptos.Forms.view.pages.settings
 {
     public partial class SettingsView
     {
@@ -21,14 +20,14 @@ namespace MyCryptos.view.pages.settings
 
             AutoRefresh.Switch.Toggled += AutoRefreshChanged;
             GraphOnStartup.Switch.Toggled += (sender, e) => ApplicationSettings.ShowGraphOnStartUp = e.Value;
-            SortingCell.Tapped += (sender, e) => Navigation.PushAsync(new SortSettingsView());
-            ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new ReferenceCurrenciesSettingsView());
+            SortingCell.Tapped += (sender, e) => Navigation.PushAsync(new Forms.view.pages.settings.SortSettingsView());
+            ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new Forms.view.pages.settings.ReferenceCurrenciesSettingsView());
             ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.ReferenceCurrencies);
             SetPinCellText();
 
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, (str) => SetSortCellText());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedPin, (str) => SetPinCellText());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrencies, str => ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.ReferenceCurrencies));
+            Messaging.Pin.SubscribeValueChanged(this, SetPinCellText);
+            Messaging.SortOrder.SubscribeValueChanged(this, SetSortCellText);
+            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, () => ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.ReferenceCurrencies));
         }
 
         private void SetSortCellText()
@@ -59,7 +58,7 @@ namespace MyCryptos.view.pages.settings
 
         void PinCellTapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new PinSettingsView());
+            Navigation.PushAsync(new Forms.view.pages.settings.PinSettingsView());
         }
 
         void SetPinCellText()

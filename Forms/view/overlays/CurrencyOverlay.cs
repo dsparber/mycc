@@ -27,7 +27,7 @@ namespace MyCryptos.view.overlays
         {
             parent = p;
 
-            var allElements = currenciesToSelect ?? p?.CurrenciesToSelect?.OrderBy(c => c.Code).ToList() ?? CurrencyStorage.Instance.AllElements;
+            var allElements = currenciesToSelect ?? p?.CurrenciesToSelect?.OrderBy(c => c?.Code).ToList() ?? CurrencyStorage.Instance.AllElements;
 
             var type = parent?.CurrencyRepositoryType;
             if (type != null)
@@ -78,7 +78,7 @@ namespace MyCryptos.view.overlays
 
             var section = new TableSection();
 
-            var currenciesSorted = currencies.Distinct().OrderBy(c => c.Code);
+            var currenciesSorted = currencies.Where(c => c != null).Distinct().OrderBy(c => c.Code);
             setTableContent(section, currenciesSorted);
 
             searchBar.TextChanged += (sender, e) =>

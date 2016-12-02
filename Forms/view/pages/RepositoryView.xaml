@@ -7,7 +7,7 @@
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	Title="{i18N:Translate Accounts}"
-	x:Class="view.RepositoryView">
+	x:Class="MyCryptos.Forms.view.pages.RepositoryView">
   <ContentPage.ToolbarItems>
     <ToolbarItem
 			x:Name="EditItem"

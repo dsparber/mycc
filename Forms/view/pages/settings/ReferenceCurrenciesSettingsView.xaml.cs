@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MyCryptos.Core.Constants;
 using MyCryptos.Core.Models;
 using MyCryptos.Core.Settings;
 using MyCryptos.Core.Storage;
+using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using MyCryptos.view.components;
 using MyCryptos.view.components.cells;
 using MyCryptos.view.overlays;
 using Xamarin.Forms;
 
-namespace MyCryptos.view.pages.settings
+namespace MyCryptos.Forms.view.pages.settings
 {
     public partial class ReferenceCurrenciesSettingsView
     {
@@ -19,7 +19,7 @@ namespace MyCryptos.view.pages.settings
             InitializeComponent();
             SetReferenceCurrencyCells();
 
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => SetReferenceCurrencyCells());
+            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetReferenceCurrencyCells);
         }
 
         private void SetReferenceCurrencyCells()
@@ -40,8 +40,10 @@ namespace MyCryptos.view.pages.settings
                     if (ApplicationSettings.BaseCurrency.Equals(cu))
                     {
                         ApplicationSettings.BaseCurrency = referenceCurrencies[0];
+                        Messaging.ReferenceCurrency.SendValueChanged();
                     }
                     ApplicationSettings.ReferenceCurrencies = referenceCurrencies;
+                    Messaging.ReferenceCurrencies.SendValueChanged();
                     SetReferenceCurrencyCells();
                 };
 
@@ -60,6 +62,7 @@ namespace MyCryptos.view.pages.settings
                 cell.Tapped += (sender, e) =>
                 {
                     ApplicationSettings.BaseCurrency = referenceCurrencies.Find(x => x.Code.Equals((sender as CustomViewCell)?.Text));
+                    Messaging.ReferenceCurrency.SendValueChanged();
                     SetReferenceCurrencyCells();
                 };
 
@@ -79,8 +82,10 @@ namespace MyCryptos.view.pages.settings
                         if (referenceCurrencies.Count == 1)
                         {
                             ApplicationSettings.BaseCurrency = c;
+                            Messaging.ReferenceCurrency.SendValueChanged();
                         }
                         ApplicationSettings.ReferenceCurrencies = referenceCurrencies;
+                        Messaging.ReferenceCurrencies.SendValueChanged();
                         SetReferenceCurrencyCells();
                     }
                 };

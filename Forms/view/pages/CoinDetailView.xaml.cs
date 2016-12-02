@@ -3,7 +3,6 @@ using Xamarin.Forms;
 using System.Linq;
 using MyCryptos.view.components;
 using System;
-using MyCryptos.Core.Constants;
 using MyCryptos.Core.Helpers;
 using MyCryptos.Core.Models;
 using MyCryptos.Core.Repositories.Account;
@@ -11,6 +10,7 @@ using MyCryptos.Core.Settings;
 using MyCryptos.Core.Storage;
 using MyCryptos.Core.Tasks;
 using MyCryptos.Forms.helpers;
+using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 
 namespace view
@@ -80,7 +80,10 @@ namespace view
             SortHelper.ApplySortOrder(Cells, AccountSection);
 
             var neededRates = ReferenceValueCells.Where(c => c.IsLoading).Select(c => c.ExchangeRate);
-            AppTasks.Instance.StartMissingRatesTask(neededRates);
+
+            Messaging.UpdatingExchangeRates.SendStarted();
+            var task = ApplicationTasks.FetchMissingRates(neededRates);
+            task.ContinueWith(t => Messaging.UpdatingExchangeRates.SendFinished());
 
             setHeader();
         }
@@ -106,16 +109,17 @@ namespace view
 
         void subscribe()
         {
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedSortOrder, (str) =>
+            Messaging.SortOrder.SubscribeValueChanged(this, () =>
             {
                 SortHelper.ApplySortOrder(Cells, AccountSection);
                 SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
             });
 
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => loadData());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => loadData());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrencies, str => loadData());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => loadData());
+            Messaging.UpdatingAccounts.SubscribeFinished(this, loadData);
+            Messaging.UpdatingExchangeRates.SubscribeFinished(this, loadData);
+
+            Messaging.ReferenceCurrency.SubscribeValueChanged(this, loadData);
+            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, loadData);
         }
     }
 }

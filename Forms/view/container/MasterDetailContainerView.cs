@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using MyCryptos.Forms.Resources;
+using MyCryptos.Forms.view.pages;
+using MyCryptos.Forms.view.pages.settings;
 using Xamarin.Forms;
 
 namespace view
@@ -16,19 +18,19 @@ namespace view
             {
                 Title = I18N.Coins,
                 IconSource = "coins.png",
-                Page = new CoinsView()
+                Page = new MyCryptos.Forms.view.pages.CoinsView()
             });
             masterPageItems.Add(new MasterPageItem
             {
                 Title = I18N.Sources,
                 IconSource = "accounts.png",
-                Page = new MyCryptos.view.pages.SourcesView()
+                Page = new SourcesView()
             });
             masterPageItems.Add(new MasterPageItem
             {
                 Title = I18N.Settings,
                 IconSource = "settings.png",
-                Page = new MyCryptos.view.pages.settings.SettingsView()
+                Page = new SettingsView()
             });
 
             masterPage = new MasterPage(masterPageItems);

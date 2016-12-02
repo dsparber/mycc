@@ -15,7 +15,7 @@ namespace MyCryptos.Core.Repositories.Account
 
         public override string Description => I18N.Etherchain;
 
-        protected override Models.Currency Currency => CurrencyStorage.Instance.AllElements.Find(c => c.Code.Equals("ETH"));
+        protected override Models.Currency Currency => CurrencyStorage.Instance.AllElements.Find(c => c?.Code.Equals("ETH") ?? false);
         public override IEnumerable<Models.Currency> SupportedCurrencies => new List<Models.Currency> { Currency };
 
         protected override decimal BalanceFactor => 1e18M;

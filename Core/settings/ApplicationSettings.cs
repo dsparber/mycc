@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MyCryptos.Core.Constants;
 using MyCryptos.Core.Enums;
 using MyCryptos.Core.Models;
 using Newtonsoft.Json;
@@ -13,16 +12,20 @@ namespace MyCryptos.Core.Settings
 {
     public static class ApplicationSettings
     {
+        private static bool? firstLaunch;
         public static bool FirstLaunch
         {
             get
             {
+                if (firstLaunch.HasValue) return firstLaunch.Value;
+
                 var persitedValue = Settings.Get(Settings.KeyFirstLaunch, true);
                 if (persitedValue)
                 {
                     Settings.Set(Settings.KeyFirstLaunch, false);
                 }
-                return persitedValue;
+                firstLaunch = persitedValue;
+                return firstLaunch.Value;
             }
         }
 
@@ -37,7 +40,6 @@ namespace MyCryptos.Core.Settings
             set
             {
                 Settings.Set(Settings.KeyBaseCurrency, JsonConvert.SerializeObject(value));
-                MessagingCenter.Send(string.Empty, MessageConstants.UpdatedReferenceCurrency);
             }
         }
 
@@ -47,7 +49,6 @@ namespace MyCryptos.Core.Settings
             {
                 PinLength = string.IsNullOrEmpty(value) ? -1 : value.Length;
                 Settings.Set(Settings.KeyPin, Hash(value ?? string.Empty));
-                MessagingCenter.Send(string.Empty, MessageConstants.UpdatedPin);
             }
         }
 
@@ -74,7 +75,6 @@ namespace MyCryptos.Core.Settings
             set
             {
                 Settings.Set(Settings.KeyReferenceCurrencies, JsonConvert.SerializeObject(value));
-                MessagingCenter.Send(string.Empty, MessageConstants.UpdatedReferenceCurrencies);
             }
         }
 
@@ -89,7 +89,6 @@ namespace MyCryptos.Core.Settings
             set
             {
                 Settings.Set(Settings.KeySortOrder, value.ToString());
-                MessagingCenter.Send(string.Empty, MessageConstants.UpdatedSortOrder);
             }
         }
 
@@ -104,8 +103,6 @@ namespace MyCryptos.Core.Settings
             set
             {
                 Settings.Set(Settings.KeySortDirection, value.ToString());
-                MessagingCenter.Send(string.Empty, MessageConstants.UpdatedSortOrder);
-
             }
         }
 
@@ -156,7 +153,6 @@ namespace MyCryptos.Core.Settings
             set
             {
                 Settings.Set(Settings.KeyFingerprintSet, value);
-                MessagingCenter.Send(string.Empty, MessageConstants.UpdatedPin);
             }
         }
 

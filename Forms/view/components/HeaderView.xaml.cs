@@ -11,7 +11,7 @@ namespace MyCryptos.view.components
             set
             {
                 TitleLabel.Text = GetText(value);
-                var size = DependencyService.Get<TextSizeHelper>().calculateWidth(GetText(value), (float)TitleLabel.FontSize, true);
+                var size = DependencyService.Get<ITextSizeHelper>().CalculateWidth(GetText(value), (float)TitleLabel.FontSize, true);
                 TitleLabel.HeightRequest = size.Item1;
                 TitleLabel.WidthRequest = size.Item2;
             }
@@ -23,7 +23,7 @@ namespace MyCryptos.view.components
             set
             {
                 InfoLabel.Text = GetText(value);
-                var size = DependencyService.Get<TextSizeHelper>().calculateWidth(GetText(value), (float)InfoLabel.FontSize);
+                var size = DependencyService.Get<ITextSizeHelper>().CalculateWidth(GetText(value), (float)InfoLabel.FontSize);
                 InfoLabel.HeightRequest = size.Item1;
                 InfoLabel.WidthRequest = size.Item2;
             }
@@ -35,7 +35,7 @@ namespace MyCryptos.view.components
             set
             {
                 RefreshingLabel.Text = GetText(value);
-                var size = DependencyService.Get<TextSizeHelper>().calculateWidth(GetText(value), (float)RefreshingLabel.FontSize);
+                var size = DependencyService.Get<ITextSizeHelper>().CalculateWidth(GetText(value), (float)RefreshingLabel.FontSize);
                 RefreshingLabel.HeightRequest = size.Item1;
                 RefreshingLabel.WidthRequest = size.Item2;
             }

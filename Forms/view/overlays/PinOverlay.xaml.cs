@@ -2,6 +2,7 @@
 using MyCryptos.Core.Enums;
 using MyCryptos.Core.Settings;
 using MyCryptos.Forms.helpers;
+using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using Xamarin.Forms;
 
@@ -27,25 +28,25 @@ namespace MyCryptos.view.overlays
 
             OldPinCell.Entry.TextChanged += (sender, e) =>
             {
-                if (e.NewTextValue.Length == ApplicationSettings.PinLength)
+                if (e.NewTextValue.Length != ApplicationSettings.PinLength) return;
+
+                if (ApplicationSettings.IsPinValid(e.NewTextValue))
                 {
-                    if (ApplicationSettings.IsPinValid(e.NewTextValue))
+                    if (pinAction == PinAction.DISABLE)
                     {
-                        if (pinAction == PinAction.DISABLE)
-                        {
-                            ApplicationSettings.Pin = null;
-                            Navigation.PopOrPopModal();
-                        }
-                        else
-                        {
-                            NewPinCell.Entry.Focus();
-                        }
+                        ApplicationSettings.Pin = null;
+                        Messaging.Pin.SendValueChanged();
+                        Navigation.PopOrPopModal();
                     }
                     else
                     {
-                        DisplayAlert(I18N.Error, I18N.OldPinWrong, I18N.Cancel);
-                        OldPinCell.Entry.Text = string.Empty;
+                        NewPinCell.Entry.Focus();
                     }
+                }
+                else
+                {
+                    DisplayAlert(I18N.Error, I18N.OldPinWrong, I18N.Cancel);
+                    OldPinCell.Entry.Text = string.Empty;
                 }
             };
 
@@ -103,6 +104,7 @@ namespace MyCryptos.view.overlays
             }
 
             ApplicationSettings.Pin = newPin;
+            Messaging.Pin.SendValueChanged();
             Navigation.PopOrPopModal();
 
         }

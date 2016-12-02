@@ -6,15 +6,12 @@
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	x:Class="MyCryptos.view.pages.SourcesView"
+	x:Class="MyCryptos.Forms.view.pages.SourcesView"
 	Title="{i18N:Translate Sources}">
   <ContentPage.ToolbarItems>
     <ToolbarItem
 			Text="{i18N:Translate Add}"
 			Clicked="Add" />
-    <ToolbarItem
-			Text="{i18N:Translate Refresh}"
-			Clicked="Refresh" />
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <components:ChangingStackLayout>

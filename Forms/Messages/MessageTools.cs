@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using Xamarin.Forms;
+
+namespace MyCryptos.Forms.Messages
+{
+    public static class MessageTools
+    {
+        public static void Subscribe(this string message, object subscriber, List<Tuple<MessageInfo, Action>> actions = null)
+        {
+            Debug.WriteLine($"{subscriber}: {message}, Listener: {string.Join(",", actions.Select(e => e.Item1))}");
+
+            MessagingCenter.Unsubscribe<MessageInfo>(subscriber, message);
+            MessagingCenter.Subscribe<MessageInfo>(subscriber, message, i =>
+            {
+
+                Debug.WriteLine($"{subscriber}: {message} ({i})");
+                var action = actions.FirstOrDefault(a => a.Item1.Equals(i));
+
+                action?.Item2();
+            });
+        }
+
+        public static void SubscribeValueChanged(this string message, object subscriber, Action action)
+        {
+            Subscribe(message, subscriber, new List<Tuple<MessageInfo, Action>> { Tuple.Create(MessageInfo.ValueChanged, action) });
+        }
+
+        public static void SubscribeFinished(this string message, object subscriber, Action action)
+        {
+            Subscribe(message, subscriber, new List<Tuple<MessageInfo, Action>> { Tuple.Create(MessageInfo.Finished, action) });
+        }
+
+        public static void SubscribeStartedAndFinished(this string message, object subscriber, Action startedAction, Action finishedAction)
+        {
+            Subscribe(message, subscriber, new List<Tuple<MessageInfo, Action>> { Tuple.Create(MessageInfo.Finished, finishedAction), Tuple.Create(MessageInfo.Started, startedAction) });
+        }
+
+
+        public static void SendValueChanged(this string message)
+        {
+            Debug.WriteLine($"Sent: {message} {MessageInfo.ValueChanged}");
+            MessagingCenter.Send(MessageInfo.ValueChanged, message);
+
+        }
+        public static void SendStarted(this string message)
+        {
+            Debug.WriteLine($"Sent: {message} {MessageInfo.Started}");
+
+            MessagingCenter.Send(MessageInfo.Started, message);
+        }
+
+        public static void SendFinished(this string message)
+        {
+            Debug.WriteLine($"Sent: {message} {MessageInfo.Finished}");
+
+            MessagingCenter.Send(MessageInfo.Finished, message);
+
+        }
+    }
+}

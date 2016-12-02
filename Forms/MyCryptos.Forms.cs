@@ -1,10 +1,11 @@
 ﻿using view;
 using Xamarin.Forms;
-using MyCryptos.message;
 using System.Linq;
+using System.Threading.Tasks;
 using MyCryptos.Core.Resources;
 using MyCryptos.Core.Settings;
 using MyCryptos.Core.Tasks;
+using MyCryptos.Forms.Messages;
 
 namespace MyCryptos
 {
@@ -35,35 +36,36 @@ namespace MyCryptos
 
             MainPage = startPage;
 
-
-
             if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
             {
                 DependencyService.Get<ILocalise>().SetLocale();
             }
 
-            if (ApplicationSettings.AutoRefreshOnStartup)
-            {
-                AppTasks.Instance.StartFetchTask(true);
-            }
-            else
-            {
-                AppTasks.Instance.StartFastFetchTask();
-            }
+            var loadTask = ApplicationTasks.LoadEverything();
+            loadTask.ContinueWith(t => Messaging.Loading.SendFinished());
+
+            var currencyTask = ApplicationTasks.FetchCurrenciesAndAvailableRates();
+            currencyTask.ContinueWith(t => Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished());
+
+            if (!ApplicationSettings.AutoRefreshOnStartup) return;
+
+            Messaging.UpdatingExchangeRates.SendStarted();
+            var task = ApplicationTasks.FetchAllExchangeRates();
+            task.ContinueWith(t => Messaging.UpdatingExchangeRates.SendFinished());
+
         }
 
         protected override void OnSleep()
         {
-            if (ApplicationSettings.IsPinSet)
-            {
-                var page = GetCurrentPage();
-                if (page is PasswordView) return;
+            if (!ApplicationSettings.IsPinSet) return;
 
-                page?.Navigation.PushModalAsync(new PasswordView(true), false);
-            }
+            var page = GetCurrentPage();
+            if (page is PasswordView) return;
+
+            page?.Navigation.PushModalAsync(new PasswordView(true), false);
         }
 
-        protected async override void OnResume()
+        protected override async void OnResume()
         {
             var view = (GetCurrentPage() as PasswordView);
             if (view != null)
@@ -72,7 +74,7 @@ namespace MyCryptos
             }
         }
 
-        Page GetCurrentPage()
+        private Page GetCurrentPage()
         {
             var page = MainPage.Navigation.ModalStack.LastOrDefault() ?? MainPage;
             if (page.Navigation.NavigationStack.Count > 0)

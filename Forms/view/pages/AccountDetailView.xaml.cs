@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MyCryptos.Core.Constants;
 using MyCryptos.Core.Models;
 using MyCryptos.Core.Repositories.Account;
 using MyCryptos.Core.Storage;
 using MyCryptos.Core.Tasks;
 using MyCryptos.Forms.helpers;
+using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using MyCryptos.view.components;
 using Xamarin.Forms;
 
-namespace MyCryptos.view.pages
+namespace MyCryptos.Forms.view.pages
 {
     public partial class AccountDetailView
     {
@@ -47,10 +47,9 @@ namespace MyCryptos.view.pages
                 ToolbarItems.Add(edit);
             }
 
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedExchangeRates, str => UpdateReferenceValues());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, str => UpdateReferenceValues());
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrencies, str => UpdateReferenceValues());
-
+            Messaging.UpdatingExchangeRates.SubscribeFinished(this, UpdateReferenceValues);
+            Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateReferenceValues);
+            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, UpdateReferenceValues);
 
             currencyEntryCell.OnSelected = (c) => Header.TitleText = currencyEntryCell.SelectedMoney.ToString();
             currencyEntryCell.OnTyped = (m) => Header.TitleText = m.ToString();
@@ -93,7 +92,7 @@ namespace MyCryptos.view.pages
             account = new Account(account.Id, account.RepositoryId, account.Name, currencyEntryCell.SelectedMoney);
             await repository.Update(account);
 
-            MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+            Messaging.UpdatingAccounts.SendFinished();
 
             if (Device.OS != TargetPlatform.Android)
             {
@@ -117,8 +116,8 @@ namespace MyCryptos.view.pages
             var name = string.IsNullOrEmpty(AccountName.Text?.Trim()) ? I18N.LocalAccount : AccountName.Text.Trim();
 
             account = new Account(name, money) { RepositoryId = AccountStorage.Instance.LocalRepository.Id };
-
-            AppTasks.Instance.StartAddAccountTask(account);
+            var addTask = AccountStorage.Instance.LocalRepository.Add(account);
+            addTask.ContinueWith(t => Messaging.UpdatingAccounts.SendFinished());
 
             Navigation.PopOrPopModal();
         }
@@ -128,9 +127,8 @@ namespace MyCryptos.view.pages
             AccountName.Entry.Unfocus();
             currencyEntryCell.Unfocus();
 
-            AppTasks.Instance.StartDeleteAccountTask(account);
-            await AppTasks.Instance.DeleteAccountTask;
-            MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+            await AccountStorage.Instance.LocalRepository.Remove(account);
+            Messaging.UpdatingAccounts.SendFinished();
 
             await Navigation.PopAsync();
         }
@@ -166,7 +164,10 @@ namespace MyCryptos.view.pages
             if (account == null) return;
 
             var neededRates = referenceValueCells.Where(c => c.IsLoading).Select(c => c.ExchangeRate);
-            AppTasks.Instance.StartMissingRatesTask(neededRates);
+
+            Messaging.UpdatingExchangeRates.SendStarted();
+            var task = ApplicationTasks.FetchMissingRates(neededRates);
+            task.ContinueWith(t => Messaging.UpdatingExchangeRates.SendFinished());
         }
     }
 }

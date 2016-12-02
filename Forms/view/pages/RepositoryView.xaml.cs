@@ -1,19 +1,20 @@
 using System;
 using System.Linq;
-using MyCryptos.Core.Constants;
 using MyCryptos.Core.Enums;
 using MyCryptos.Core.Repositories.Account;
 using MyCryptos.Core.Storage;
 using MyCryptos.Forms.helpers;
+using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using MyCryptos.view.components;
+using view;
 using Xamarin.Forms;
 
-namespace view
+namespace MyCryptos.Forms.view.pages
 {
-    public partial class RepositoryView : ContentPage
+    public partial class RepositoryView
     {
-        AccountRepository repository;
+        private readonly AccountRepository repository;
 
         public RepositoryView(AccountRepository repository)
         {
@@ -39,9 +40,7 @@ namespace view
 
             SetAccountsView();
 
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedAccounts, str => SetAccountsView());
-            MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => Header.IsLoading = true);
-            MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => Header.IsLoading = false);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, SetAccountsView);
         }
 
         private void SetAccountsView()
@@ -69,7 +68,7 @@ namespace view
             RepositoryNameEntryCell.IsEditable = false;
 
             await AccountStorage.Instance.Remove(repository);
-            MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+            Messaging.UpdatingAccounts.SendFinished();
             await Navigation.PopAsync();
         }
 
@@ -100,7 +99,7 @@ namespace view
             repository.Name = RepositoryNameEntryCell.Text ?? string.Empty;
             await AccountStorage.Instance.Update(repository);
             await AccountStorage.Instance.Fetch();
-            MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+            Messaging.UpdatingAccounts.SendFinished();
 
             TableView.Root.Add(AccountsSection);
             TableView.Root.Remove(NameSection);

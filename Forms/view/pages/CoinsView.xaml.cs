@@ -1,18 +1,19 @@
 using System;
-using System.Linq;
-using Xamarin.Forms;
 using System.Collections.Generic;
-using MyCryptos.Core.Constants;
-using MyCryptos.Core.Enums;
+using System.Linq;
 using MyCryptos.Core.Models;
 using MyCryptos.Core.Settings;
 using MyCryptos.Core.Tasks;
 using MyCryptos.Forms.helpers;
+using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using MyCryptos.view;
 using MyCryptos.view.components;
+using view;
+using Xamarin.Forms;
+using CoinsTableView = MyCryptos.Forms.view.components.CoinsTableView;
 
-namespace view
+namespace MyCryptos.Forms.view.pages
 {
     public partial class CoinsView : ContentPage
     {
@@ -40,7 +41,7 @@ namespace view
             Tabs.Tabs = new List<string> { I18N.Table, I18N.Graph };
             Tabs.SelectedIndex = ApplicationSettings.ShowGraphOnStartUp ? 1 : 0;
 
-            addSubscriber();
+            AddSubscriber();
 
             if (Device.OS == TargetPlatform.Android)
             {
@@ -67,13 +68,12 @@ namespace view
         }
 
 
-        public void PositionSelected(object sender, EventArgs e)
+        private void PositionSelected(object sender, EventArgs e)
         {
             var currencies = ApplicationSettings.ReferenceCurrencies;
-            if (HeaderCarousel.Position >= 0 && HeaderCarousel.Position < ApplicationSettings.ReferenceCurrencies.Count)
-            {
-                ApplicationSettings.BaseCurrency = currencies[HeaderCarousel.Position];
-            }
+
+            ApplicationSettings.BaseCurrency = currencies[HeaderCarousel.Position];
+            MessagingCenter.Send(MessageInfo.ValueChanged, Messaging.ReferenceCurrency);
         }
 
         void SetHeaderCarousel()
@@ -88,64 +88,28 @@ namespace view
 
         }
 
-        public async void Add(object sender, EventArgs e)
+        private void Add(object sender, EventArgs e)
         {
-            await Navigation.PushOrPushModal(new AddSourceView());
+            Navigation.PushOrPushModal(new AddSourceView());
         }
 
-        void addSubscriber()
+        private void AddSubscriber()
         {
-            MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.StartedFetching, speed => setLoadingAnimation(speed, true));
-            MessagingCenter.Subscribe<FetchSpeed>(this, MessageConstants.DoneFetching, speed => setLoadingAnimation(speed, false));
-
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrency, s => HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency));
-            MessagingCenter.Subscribe<string>(this, MessageConstants.UpdatedReferenceCurrencies, s => SetHeaderCarousel());
+            Messaging.UpdatingExchangeRates.SubscribeFinished(this, () => IsBusy = false);
+            Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency));
+            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
         }
 
-        void setLoadingAnimation(FetchSpeed speed, bool loading)
+        private async void Refresh(object sender, EventArgs e)
         {
-            if (loading)
-            {
-                IsBusy = loading;
-            }
-            else
-            {
-                if (speed.Speed != FetchSpeedEnum.FAST)
-                {
-                    IsBusy = false;
-                }
-            }
-        }
-
-        void Refresh(object sender, EventArgs e)
-        {
-            AppTasks.Instance.StartFetchTask(false);
+            Messaging.UpdatingExchangeRates.SendStarted();
+            await ApplicationTasks.FetchAllExchangeRates();
+            Messaging.UpdatingExchangeRates.SendFinished();
         }
 
         private class HeaderTemplateSelector : DataTemplateSelector
         {
-            private List<Tuple<Currency, CoinsHeaderView>> existingViews;
-
-            public HeaderTemplateSelector()
-            {
-                existingViews = new List<Tuple<Currency, CoinsHeaderView>>();
-            }
-
-            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() =>
-            {
-                var currency = (Currency)item;
-                var cell = existingViews.Find(t => t.Item1.Equals(currency))?.Item2;
-                if (cell == null)
-                {
-                    cell = new CoinsHeaderView(currency);
-                    existingViews.Add(Tuple.Create(currency, cell));
-                }
-                else
-                {
-                    cell = new CoinsHeaderView(currency) { IsLoading = cell.IsLoading };
-                }
-                return cell;
-            });
+            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinsHeaderView((Currency)item));
         }
     }
 }

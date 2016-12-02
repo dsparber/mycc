@@ -6,7 +6,7 @@
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
   xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
   BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	x:Class="MyCryptos.view.pages.AccountDetailView">
+	x:Class="MyCryptos.Forms.view.pages.AccountDetailView">
   <ContentPage.Content>
     <components:ChangingStackLayout>
 

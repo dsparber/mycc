@@ -4,12 +4,12 @@ using Xamarin.Forms;
 using MyCryptos.view.addrepositoryviews;
 using System.Collections.Generic;
 using constants;
-using MyCryptos.Core.Constants;
 using MyCryptos.Core.Models;
 using MyCryptos.Core.Settings;
 using MyCryptos.Core.Storage;
 using MyCryptos.Core.Tasks;
 using MyCryptos.Forms.helpers;
+using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 
 namespace view
@@ -101,12 +101,14 @@ namespace view
                         Header.LoadingText = I18N.Fetching;
                         await AccountStorage.Instance.Add(repository);
                         await AccountStorage.Instance.Fetch();
+                        Messaging.UpdatingAccounts.SendFinished();
 
                         var referenceCurrencies = ApplicationSettings.ReferenceCurrencies.ToList();
                         var neededRates = repository.Elements.SelectMany(a => referenceCurrencies.Select(c => new ExchangeRate(a.Money.Currency, c)));
-                        AppTasks.Instance.StartMissingRatesTask(neededRates);
 
-                        MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+                        Messaging.UpdatingExchangeRates.SendStarted();
+                        await ApplicationTasks.FetchMissingRates(neededRates);
+                        Messaging.UpdatingExchangeRates.SendFinished();
 
                         await Navigation.PopOrPopModal();
                     }
@@ -130,9 +132,12 @@ namespace view
 
                     var referenceCurrencies = ApplicationSettings.ReferenceCurrencies.ToList();
                     var neededRates = referenceCurrencies.Select(c => new ExchangeRate(account.Money.Currency, c));
-                    AppTasks.Instance.StartMissingRatesTask(neededRates);
 
-                    MessagingCenter.Send(string.Empty, MessageConstants.UpdatedAccounts);
+                    Messaging.UpdatingExchangeRates.SendStarted();
+                    await ApplicationTasks.FetchMissingRates(neededRates);
+                    Messaging.UpdatingExchangeRates.SendFinished();
+
+                    Messaging.UpdatingAccounts.SendFinished();
 
                     await Navigation.PopOrPopModal();
                 }

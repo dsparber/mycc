@@ -1,11 +1,12 @@
 ﻿using System;
 using MyCryptos.Core.Enums;
 using MyCryptos.Core.Settings;
+using MyCryptos.Forms.Messages;
 using Xamarin.Forms;
 
-namespace MyCryptos.view.pages.settings
+namespace MyCryptos.Forms.view.pages.settings
 {
-    public partial class SortSettingsView : ContentPage
+    public partial class SortSettingsView
     {
         public SortSettingsView()
         {
@@ -13,7 +14,7 @@ namespace MyCryptos.view.pages.settings
             updateCheckmarks();
         }
 
-        void SortOrderSelected(object sender, EventArgs e)
+        private void SortOrderSelected(object sender, EventArgs e)
         {
             if (sender.Equals(SortOrderAlphabetical))
             {
@@ -35,6 +36,7 @@ namespace MyCryptos.view.pages.settings
             {
                 ApplicationSettings.SortDirection = SortDirection.DESCENDING;
             }
+            Messaging.SortOrder.SendValueChanged();
             updateCheckmarks();
         }
 

@@ -7,7 +7,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using MyCryptos.Core.Constants;
 using MyCryptos.Core.Database.Models;
 using MyCryptos.Core.Models;
 using MyCryptos.Core.Storage;
@@ -104,60 +103,44 @@ namespace MyCryptos.Core.Repositories.Account
 
         public override async Task<bool> Fetch()
         {
-            try
+            var results = await getResult();
+
+            if (results == null) return false;
+
+            var currentAccounts = new List<Models.Account>();
+
+            foreach (var r in results)
             {
-                var results = await getResult();
+                var currencyCode = (string)r[CURRENCY_KEY];
+                var balance = decimal.Parse((string)r[BALANCE_KEY], CultureInfo.InvariantCulture);
 
-                if (results != null)
+                if (balance != 0)
                 {
-                    var currentAccounts = new List<Models.Account>();
 
-                    foreach (var r in results)
+                    var curr = CurrencyStorage.Instance.Find(new Models.Currency(currencyCode));
+
+                    var money = new Money(balance, curr);
+                    var existing = Elements.ToList().Find(a => a.Money.Currency.Equals(money.Currency));
+
+                    if (existing != null)
                     {
-                        var currencyCode = (string)r[CURRENCY_KEY];
-                        var balance = decimal.Parse((string)r[BALANCE_KEY], CultureInfo.InvariantCulture);
-
-                        if (balance != 0)
-                        {
-
-                            var curr = CurrencyStorage.Instance.Find(new Models.Currency(currencyCode));
-
-                            var money = new Money(balance, curr);
-                            var existing = Elements.ToList().Find(a => a.Money.Currency.Equals(money.Currency));
-
-                            if (existing != null)
-                            {
-                                existing = new Models.Account(existing.Id, Id, $"{Name} ({curr.Code})", money);
-                                await Update(existing);
-                                currentAccounts.Add(existing);
-                            }
-                            else
-                            {
-                                var newAccount = new Models.Account($"{Name} ({curr.Code})", money) { RepositoryId = Id };
-                                await Add(newAccount);
-                                currentAccounts.Add(newAccount);
-                            }
-                        }
+                        existing = new Models.Account(existing.Id, Id, $"{Name} ({curr.Code})", money);
+                        await Update(existing);
+                        currentAccounts.Add(existing);
                     }
-                    Func<Models.Account, bool> notInCurrentAccounts = e => !currentAccounts.Select(a => a.Money.Currency).Contains(e.Money.Currency);
-                    await Task.WhenAll(Elements.Where(notInCurrentAccounts).Select(e => Remove(e)));
+                    else
+                    {
+                        var newAccount = new Models.Account($"{Name} ({curr.Code})", money) { RepositoryId = Id };
+                        await Add(newAccount);
+                        currentAccounts.Add(newAccount);
+                    }
+                }
+            }
+            Func<Models.Account, bool> notInCurrentAccounts = e => !currentAccounts.Select(a => a.Money.Currency).Contains(e.Money.Currency);
+            await Task.WhenAll(Elements.Where(notInCurrentAccounts).Select(Remove));
 
-                    LastFetch = DateTime.Now;
-                    return true;
-                }
-            }
-            catch (Exception e)
-            {
-                if (e is TaskCanceledException || e is WebException)
-                {
-                    MessagingCenter.Send(e, MessageConstants.NetworkError);
-                }
-                else
-                {
-                    Debug.WriteLine($"Error Message:\n{e.Message}\nData:\n{e.Data}\nStack trace:\n{e.StackTrace}");
-                }
-            }
-            return false;
+            LastFetch = DateTime.Now;
+            return true;
         }
 
         static string ByteToString(byte[] buff)

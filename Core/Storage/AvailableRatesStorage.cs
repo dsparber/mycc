@@ -14,7 +14,6 @@ namespace MyCryptos.Core.Storage
         protected override async Task OnFirstLaunch()
         {
             await Add(new BittrexAvailableRatesRepository(null));
-            await Add(new LocalAvailableRatesRepository(null));
             await Add(new BtceAvailableRatesRepository(null));
             await Add(new CryptonatorAvailableRatesRepository(null));
         }

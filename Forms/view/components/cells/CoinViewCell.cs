@@ -6,7 +6,7 @@ using MyCryptos.Core.Repositories.Account;
 using MyCryptos.Forms.Resources;
 using Xamarin.Forms;
 using view;
-using AccountDetailView = MyCryptos.view.pages.AccountDetailView;
+using AccountDetailView = MyCryptos.Forms.view.pages.AccountDetailView;
 
 namespace MyCryptos.view.components
 {
