@@ -24,21 +24,37 @@ namespace MyCryptos.view.components
         public string Text
         {
             get { return text; }
-            set { text = value; masterLabel.Text = text; detailLabel.IsVisible = (detail != null); }
+            set
+            {
+                text = value;
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    masterLabel.Text = text;
+                    detailLabel.IsVisible = (detail != null);
+                });
+            }
         }
         public string Detail
         {
-            set { detail = value; detailLabel.Text = detail; detailLabel.IsVisible = !IsLoading; }
+            set
+            {
+                detail = value;
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    detailLabel.Text = detail;
+                    detailLabel.IsVisible = !IsLoading;
+                });
+            }
         }
 
         public string Image
         {
-            set { image = value; accessoryImage.Source = ImageSource.FromFile(image); }
+            set { image = value; Device.BeginInvokeOnMainThread(() => accessoryImage.Source = ImageSource.FromFile(image)); }
         }
 
         public bool ShowIcon
         {
-            set { accessoryImage.IsVisible = value; }
+            set { Device.BeginInvokeOnMainThread(() => accessoryImage.IsVisible = value); }
         }
 
         public List<CustomViewCellActionItem> ActionItems
@@ -49,22 +65,45 @@ namespace MyCryptos.view.components
         public bool IsLoading
         {
             get { return isLoading; }
-            set { isLoading = value; detailLabel.IsVisible = !value; loadingView.IsVisible = value; }
+            set
+            {
+                isLoading = value;
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    detailLabel.IsVisible = !value;
+                    loadingView.IsVisible = value;
+                });
+            }
         }
 
         public bool IsActionCell
         {
-            set { masterLabel.TextColor = value ? AppConstants.ThemeColor : AppConstants.FontColor; if (value) stack.Children.Remove(detailLabel); }
+            set
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    masterLabel.TextColor = value ? AppConstants.ThemeColor : AppConstants.FontColor;
+                    if (value) stack.Children.Remove(detailLabel);
+                });
+            }
         }
 
         public bool IsDeleteActionCell
         {
-            set { masterLabel.TextColor = value ? Color.Red : AppConstants.FontColor; if (value) stack.Children.Remove(detailLabel); masterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand; }
+            set
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    masterLabel.TextColor = value ? Color.Red : AppConstants.FontColor;
+                    if (value) stack.Children.Remove(detailLabel);
+                    masterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand;
+                });
+            }
         }
 
         public bool IsCentered
         {
-            set { masterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand; }
+            set { Device.BeginInvokeOnMainThread(() => masterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand); }
         }
 
         public CustomViewCell()
@@ -96,32 +135,37 @@ namespace MyCryptos.view.components
 
             var content = new ContentView { Content = mainView, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.White };
 
-            if (Device.OS == TargetPlatform.Android)
-            {
-                View = new ContentView { Content = content, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5) };
-            }
-            else
-            {
-                View = content;
-            }
+            View = (Device.OS == TargetPlatform.Android) ? new ContentView { Content = content, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5) } : content;
 
             IsLoading = false;
         }
 
         private void SetActionItems()
         {
-
-            actionItemsStack.Children.Clear();
-            foreach (var a in actions)
+            Device.BeginInvokeOnMainThread(() =>
             {
-                var img = new Image { HeightRequest = 20, Source = ImageSource.FromFile(a.Icon), VerticalOptions = LayoutOptions.Center };
-                var content = new ContentView { Content = img, Padding = new Thickness(10, 0), VerticalOptions = LayoutOptions.FillAndExpand };
-                var gestureRecognizer = new TapGestureRecognizer();
-                gestureRecognizer.Tapped += a.Action;
-                gestureRecognizer.CommandParameter = a.Data;
-                content.GestureRecognizers.Add(gestureRecognizer);
-                actionItemsStack.Children.Add(content);
-            }
+                actionItemsStack.Children.Clear();
+                foreach (var a in actions)
+                {
+                    var img = new Image
+                    {
+                        HeightRequest = 20,
+                        Source = ImageSource.FromFile(a.Icon),
+                        VerticalOptions = LayoutOptions.Center
+                    };
+                    var content = new ContentView
+                    {
+                        Content = img,
+                        Padding = new Thickness(10, 0),
+                        VerticalOptions = LayoutOptions.FillAndExpand
+                    };
+                    var gestureRecognizer = new TapGestureRecognizer();
+                    gestureRecognizer.Tapped += a.Action;
+                    gestureRecognizer.CommandParameter = a.Data;
+                    content.GestureRecognizers.Add(gestureRecognizer);
+                    actionItemsStack.Children.Add(content);
+                }
+            });
         }
 
         public override decimal Units => 0;

@@ -13,161 +13,165 @@ using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.pages
 {
-	public partial class AccountDetailView
-	{
-		private readonly ToolbarItem edit = new ToolbarItem { Text = I18N.Edit };
-		private readonly ToolbarItem done = new ToolbarItem { Text = I18N.Save };
+    public partial class AccountDetailView
+    {
+        private readonly ToolbarItem edit = new ToolbarItem { Text = I18N.Edit };
+        private readonly ToolbarItem done = new ToolbarItem { Text = I18N.Save };
 
-		private readonly CurrencyEntryCell currencyEntryCell;
-		private readonly List<ReferenceValueViewCell> referenceValueCells;
+        private readonly CurrencyEntryCell currencyEntryCell;
+        private readonly List<ReferenceValueViewCell> referenceValueCells;
 
-		private Account account;
-		private readonly AccountRepository repository;
-
-
-		public AccountDetailView(Account account, AccountRepository repository)
-		{
-			InitializeComponent();
-
-			this.account = account;
-			this.repository = repository;
-
-			currencyEntryCell = new CurrencyEntryCell(Navigation) { IsAmountEnabled = true };
-			AccountSection.Add(currencyEntryCell);
-
-			edit.Clicked += StartEditing;
-			DeleteButtonCell.Tapped += Delete;
+        private Account account;
+        private readonly AccountRepository repository;
 
 
-			referenceValueCells = new List<ReferenceValueViewCell>();
-			SetToExistingView();
-			done.Clicked += DoneEditing;
-			if (repository is LocalAccountRepository)
-			{
-				ToolbarItems.Add(edit);
-			}
+        public AccountDetailView(Account account, AccountRepository repository)
+        {
+            InitializeComponent();
 
-			Messaging.UpdatingExchangeRates.SubscribeFinished(this, UpdateReferenceValues);
-			Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateReferenceValues);
-			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, UpdateReferenceValues);
+            this.account = account;
+            this.repository = repository;
 
-			currencyEntryCell.OnSelected = (c) => Header.TitleText = currencyEntryCell.SelectedMoney.ToString();
-			currencyEntryCell.OnTyped = (m) => Header.TitleText = m.ToString();
+            currencyEntryCell = new CurrencyEntryCell(Navigation) { IsAmountEnabled = true };
+            AccountSection.Add(currencyEntryCell);
 
-			if (Device.OS == TargetPlatform.Android)
-			{
-				Title = string.Empty;
-			}
-		}
+            edit.Clicked += StartEditing;
+            DeleteButtonCell.Tapped += Delete;
 
-		private void StartEditing(object sender, EventArgs e)
-		{
-			AccountName.Text = account.Name;
-			currencyEntryCell.SelectedMoney = account.Money;
 
-			var isLocal = repository is LocalAccountRepository;
+            referenceValueCells = new List<ReferenceValueViewCell>();
+            SetToExistingView();
+            done.Clicked += DoneEditing;
+            if (repository is LocalAccountRepository)
+            {
+                ToolbarItems.Add(edit);
+            }
 
-			currencyEntryCell.IsEditable = isLocal;
-			if (!isLocal)
-			{
-				EditView.Root.Remove(DeleteSection);
-			}
+            Messaging.UpdatingExchangeRates.SubscribeFinished(this, UpdateReferenceValues);
+            Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateReferenceValues);
+            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, UpdateReferenceValues);
 
-			EditView.IsVisible = true;
-			DefaultView.IsVisible = false;
-			ToolbarItems.Clear();
-			ToolbarItems.Add(done);
-			if (Device.OS != TargetPlatform.Android)
-			{
-				Title = I18N.Editing;
-			}
-		}
+            currencyEntryCell.OnSelected = (c) => Header.TitleText = currencyEntryCell.SelectedMoney.ToString();
+            currencyEntryCell.OnTyped = (m) => Header.TitleText = m.ToString();
 
-		private async void DoneEditing(object sender, EventArgs e)
-		{
-			AccountName.Entry.Unfocus();
-			currencyEntryCell.Unfocus();
+            if (Device.OS == TargetPlatform.Android)
+            {
+                Title = string.Empty;
+            }
+        }
 
-			account.Name = AccountName.Text;
-			account = new Account(account.Id, account.RepositoryId, account.Name, currencyEntryCell.SelectedMoney);
-			await repository.Update(account);
+        private void StartEditing(object sender, EventArgs e)
+        {
+            AccountName.Text = account.Name;
+            currencyEntryCell.SelectedMoney = account.Money;
 
-			Messaging.UpdatingAccounts.SendFinished();
+            var isLocal = repository is LocalAccountRepository;
 
-			if (Device.OS != TargetPlatform.Android)
-			{
-				Title = account.Name;
-			}
-			Header.TitleText = account.Money.ToString();
+            currencyEntryCell.IsEditable = isLocal;
+            if (!isLocal)
+            {
+                EditView.Root.Remove(DeleteSection);
+            }
 
-			UpdateReferenceValues();
-			DefaultView.IsVisible = true;
-			EditView.IsVisible = false;
-			ToolbarItems.Clear();
-			ToolbarItems.Add(edit);
-		}
+            EditView.IsVisible = true;
+            DefaultView.IsVisible = false;
+            ToolbarItems.Clear();
+            ToolbarItems.Add(done);
+            if (Device.OS != TargetPlatform.Android)
+            {
+                Title = I18N.Editing;
+            }
+        }
 
-		private void Save(object sender, EventArgs e)
-		{
-			AccountName.Entry.Unfocus();
-			currencyEntryCell.Unfocus();
+        private async void DoneEditing(object sender, EventArgs e)
+        {
+            AccountName.Entry.Unfocus();
+            currencyEntryCell.Unfocus();
 
-			var money = currencyEntryCell.SelectedMoney;
-			var name = string.IsNullOrEmpty(AccountName.Text?.Trim()) ? I18N.LocalAccount : AccountName.Text.Trim();
+            account.Name = AccountName.Text;
+            account = new Account(account.Id, account.RepositoryId, account.Name, currencyEntryCell.SelectedMoney);
+            await repository.Update(account);
 
-			account = new Account(name, money) { RepositoryId = AccountStorage.Instance.LocalRepository.Id };
-			var addTask = AccountStorage.Instance.LocalRepository.Add(account);
-			addTask.ContinueWith(t => Messaging.UpdatingAccounts.SendFinished());
+            Messaging.UpdatingAccounts.SendFinished();
 
-			Navigation.PopOrPopModal();
-		}
+            if (Device.OS != TargetPlatform.Android)
+            {
+                Title = account.Name;
+            }
+            Header.TitleText = account.Money.ToString();
 
-		private async void Delete(object sender, EventArgs e)
-		{
-			AccountName.Entry.Unfocus();
-			currencyEntryCell.Unfocus();
+            UpdateReferenceValues();
+            DefaultView.IsVisible = true;
+            EditView.IsVisible = false;
+            ToolbarItems.Clear();
+            ToolbarItems.Add(edit);
+        }
 
-			await AccountStorage.Instance.LocalRepository.Remove(account);
-			Messaging.UpdatingAccounts.SendFinished();
+        private void Save(object sender, EventArgs e)
+        {
+            AccountName.Entry.Unfocus();
+            currencyEntryCell.Unfocus();
 
-			await Navigation.PopAsync();
-		}
+            var money = currencyEntryCell.SelectedMoney;
+            var name = string.IsNullOrEmpty(AccountName.Text?.Trim()) ? I18N.LocalAccount : AccountName.Text.Trim();
 
-		private void SetToExistingView()
-		{
-			if (Device.OS != TargetPlatform.Android)
-			{
-				Title = account.Name;
-			}
-			Header.InfoText = string.Format(I18N.SourceText, repository.Name);
-			currencyEntryCell.SelectedMoney = account.Money;
+            account = new Account(name, money) { RepositoryId = AccountStorage.Instance.LocalRepository.Id };
+            var addTask = AccountStorage.Instance.LocalRepository.Add(account);
+            addTask.ContinueWith(t => Messaging.UpdatingAccounts.SendFinished());
 
-			UpdateReferenceValues();
-		}
+            Navigation.PopOrPopModal();
+        }
 
-		private void UpdateReferenceValues()
-		{
-			var table = new ReferenceCurrenciesSection(account.Money);
-			referenceValueCells.Clear();
-			EqualsSection.Clear();
-			foreach (var cell in table.Cells)
-			{
-				referenceValueCells.Add(cell);
-				EqualsSection.Add(cell);
-			}
-			Header.TitleText = account.Money.ToString();
-		}
+        private async void Delete(object sender, EventArgs e)
+        {
+            AccountName.Entry.Unfocus();
+            currencyEntryCell.Unfocus();
 
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
-			if (account == null) return;
+            await AccountStorage.Instance.LocalRepository.Remove(account);
+            Messaging.UpdatingAccounts.SendFinished();
 
-			var neededRates = referenceValueCells.Where(c => c.IsLoading).Select(c => c.ExchangeRate);
+            await Navigation.PopAsync();
+        }
 
-			Messaging.UpdatingExchangeRates.SendStarted();
-			var task = ApplicationTasks.FetchMissingRates(neededRates, Messaging.UpdatingExchangeRates.SendFinished);
-		}
-	}
+        private void SetToExistingView()
+        {
+            if (Device.OS != TargetPlatform.Android)
+            {
+                Title = account.Name;
+            }
+            Header.InfoText = string.Format(I18N.SourceText, repository.Name);
+            currencyEntryCell.SelectedMoney = account.Money;
+
+            UpdateReferenceValues();
+        }
+
+        private void UpdateReferenceValues()
+        {
+            var table = new ReferenceCurrenciesSection(account.Money);
+            referenceValueCells.Clear();
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                EqualsSection.Clear();
+                foreach (var cell in table.Cells)
+                {
+                    referenceValueCells.Add(cell);
+                    EqualsSection.Add(cell);
+                }
+                Header.TitleText = account.Money.ToString();
+            });
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (account == null) return;
+
+            var neededRates = referenceValueCells.Where(c => c.IsLoading).Select(c => c.ExchangeRate);
+
+            Messaging.UpdatingExchangeRates.SendStarted();
+            var task = ApplicationTasks.FetchMissingRates(neededRates, Messaging.UpdatingExchangeRates.SendFinished);
+        }
+    }
 }
 

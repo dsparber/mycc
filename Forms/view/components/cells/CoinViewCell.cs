@@ -12,89 +12,64 @@ namespace MyCryptos.view.components
 {
     public class CoinViewCell : CustomViewCell
     {
-        readonly INavigation Navigation;
+        private readonly INavigation navigation;
 
-        IEnumerable<Tuple<Account, AccountRepository>> accounts;
-        ExchangeRate exchangeRate;
+        private IEnumerable<Tuple<Account, AccountRepository>> accounts;
+        private ExchangeRate exchangeRate;
 
         public ExchangeRate ExchangeRate
         {
-            get { return exchangeRate; }
-            set { exchangeRate = value; Detail = MoneyReference != null ? MoneyReference.ToString() : I18N.NoExchangeRateFound; setTapRecognizer(); }
+            private get { return exchangeRate; }
+            set { exchangeRate = value; Detail = MoneyReference != null ? MoneyReference.ToString() : I18N.NoExchangeRateFound; SetTapRecognizer(); }
         }
         public IEnumerable<Tuple<Account, AccountRepository>> Accounts
         {
-            get { if (accounts == null) { accounts = new List<Tuple<Account, AccountRepository>>(); } return accounts; }
-            set { accounts = value; Text = MoneySum != null ? MoneySum.ToString() : string.Empty; setTapRecognizer(); }
+            private get { return accounts ?? (accounts = new List<Tuple<Account, AccountRepository>>()); }
+            set { accounts = value; Text = MoneySum != null ? MoneySum.ToString() : string.Empty; SetTapRecognizer(); }
         }
 
-        public AccountRepository repository(Account account)
-        {
-            return Accounts.ToList().Find(t => t.Item1 == account).Item2;
-        }
+        public Currency Currency => Accounts.ToList().Count > 0 ? Accounts.First().Item1.Money.Currency : null;
 
-        public Currency Currency
-        {
-            get { return Accounts.ToList().Count > 0 ? Accounts.First().Item1.Money.Currency : null; }
-        }
+        private Money MoneySum => Accounts.ToList().Count > 0 ? new Money(Accounts.Sum(a => a.Item1.Money.Amount), Accounts.First().Item1.Money.Currency) : null;
 
-        public Money MoneySum
-        {
-            get
-            {
-                if (Accounts.ToList().Count > 0)
-                {
-                    return new Money(Accounts.Sum(a => a.Item1.Money.Amount), Accounts.First().Item1.Money.Currency);
-                }
-                return null;
-            }
-        }
-
-        public Money MoneyReference
-        {
-            get
-            {
-                if (exchangeRate != null && exchangeRate.Rate.HasValue && MoneySum != null)
-                {
-                    return new Money(MoneySum.Amount * exchangeRate.Rate.Value, exchangeRate.SecondaryCurrency);
-                }
-                return null;
-            }
-        }
+        private Money MoneyReference => (exchangeRate?.Rate != null && MoneySum != null) ? new Money(MoneySum.Amount * exchangeRate.Rate.Value, exchangeRate.SecondaryCurrency) : null;
 
         public CoinViewCell(INavigation navigation)
         {
-            Navigation = navigation;
+            this.navigation = navigation;
             Image = "more.png";
             Detail = I18N.NoExchangeRateFound;
-            setTapRecognizer();
+            SetTapRecognizer();
         }
 
-        void setTapRecognizer()
+        private void SetTapRecognizer()
         {
             var gestureRecognizer = new TapGestureRecognizer();
             gestureRecognizer.Tapped += (sender, e) =>
             {
                 if (accounts.ToList().Count > 1)
                 {
-                    Navigation.PushAsync(new CoinDetailView(Currency));
+                    navigation.PushAsync(new CoinDetailView(Currency));
                 }
                 else
                 {
                     var element = accounts.ToList()[0];
-                    Navigation.PushAsync(new AccountDetailView(element.Item1, element.Item2));
+                    navigation.PushAsync(new AccountDetailView(element.Item1, element.Item2));
                 }
             };
             if (View != null)
             {
-                View.GestureRecognizers.Clear();
-                View.GestureRecognizers.Add(gestureRecognizer);
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    View.GestureRecognizers.Clear();
+                    View.GestureRecognizers.Add(gestureRecognizer);
+                });
             }
         }
 
-        public override decimal Units { get { return MoneySum.Amount; } }
-        public override string Name { get { return MoneySum.Currency.Code; } }
-        public override decimal Value { get { return MoneySum.Amount * (ExchangeRate != null ? ExchangeRate.RateNotNull : 0); } }
+        public override decimal Units => MoneySum.Amount;
+        public override string Name => MoneySum.Currency.Code;
+        public override decimal Value => MoneySum.Amount * (ExchangeRate?.RateNotNull ?? 0);
     }
 }
 
