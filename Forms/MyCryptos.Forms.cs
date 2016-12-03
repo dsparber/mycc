@@ -9,80 +9,81 @@ using MyCryptos.Forms.Messages;
 
 namespace MyCryptos
 {
-    public class App : Application
-    {
-        public ErrorMessageHandler errorMessageHandler;
+	public class App : Application
+	{
+		public ErrorMessageHandler errorMessageHandler;
 
-        public App()
-        {
-            errorMessageHandler = ErrorMessageHandler.Instance;
+		public App()
+		{
+			errorMessageHandler = ErrorMessageHandler.Instance;
 
-            Page startPage;
+			Page startPage;
 
-            // The root page of your application
-            if (Device.OS == TargetPlatform.Android)
-            {
-                startPage = new MasterDetailContainerView();
-            }
-            else
-            {
-                startPage = new TabContainerView();
-            }
+			// The root page of your application
+			if (Device.OS == TargetPlatform.Android)
+			{
+				startPage = new MasterDetailContainerView();
+			}
+			else
+			{
+				startPage = new TabContainerView();
+			}
 
-            if (ApplicationSettings.IsPinSet)
-            {
-                startPage = new PasswordView(startPage);
-            }
+			if (ApplicationSettings.IsPinSet)
+			{
+				startPage = new PasswordView(startPage);
+			}
 
-            MainPage = startPage;
+			MainPage = startPage;
 
-            if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
-            {
-                DependencyService.Get<ILocalise>().SetLocale();
-            }
+			if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
+			{
+				DependencyService.Get<ILocalise>().SetLocale();
+			}
+		}
 
-            var loadTask = ApplicationTasks.LoadEverything();
-            loadTask.ContinueWith(t => Messaging.Loading.SendFinished());
+		protected override async void OnStart()
+		{
+			base.OnStart();
 
-            var currencyTask = ApplicationTasks.FetchCurrenciesAndAvailableRates();
-            currencyTask.ContinueWith(t => Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished());
+			await ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished);
 
-            if (!ApplicationSettings.AutoRefreshOnStartup) return;
+			await ApplicationTasks.FetchCurrenciesAndAvailableRates(Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished);
 
-            Messaging.UpdatingExchangeRates.SendStarted();
-            var task = ApplicationTasks.FetchAllExchangeRates();
-            task.ContinueWith(t => Messaging.UpdatingExchangeRates.SendFinished());
+			if (!ApplicationSettings.AutoRefreshOnStartup) return;
 
-        }
+			Messaging.UpdatingExchangeRates.SendStarted();
+			await ApplicationTasks.FetchAllExchangeRates(Messaging.UpdatingExchangeRates.SendFinished);
+		}
 
-        protected override void OnSleep()
-        {
-            if (!ApplicationSettings.IsPinSet) return;
+		protected override void OnSleep()
+		{
+			if (!ApplicationSettings.IsPinSet) return;
 
-            var page = GetCurrentPage();
-            if (page is PasswordView) return;
+			var page = GetCurrentPage();
+			if (page is PasswordView) return;
 
-            page?.Navigation.PushModalAsync(new PasswordView(true), false);
-        }
+			page?.Navigation.PushModalAsync(new PasswordView(true), false);
+		}
 
-        protected override async void OnResume()
-        {
-            var view = (GetCurrentPage() as PasswordView);
-            if (view != null)
-            {
-                await view.Authenticate();
-            }
-        }
+		protected override async void OnResume()
+		{
+			var view = (GetCurrentPage() as PasswordView);
+			if (view != null)
+			{
+				await view.Authenticate();
+			}
+		}
 
-        private Page GetCurrentPage()
-        {
-            var page = MainPage.Navigation.ModalStack.LastOrDefault() ?? MainPage;
-            if (page.Navigation.NavigationStack.Count > 0)
-            {
-                page = page.Navigation.NavigationStack.LastOrDefault() ?? page;
-            }
-            return page;
-        }
-    }
+		private Page GetCurrentPage()
+		{
+			var page = MainPage.Navigation.ModalStack.LastOrDefault() ?? MainPage;
+			if (page.Navigation.NavigationStack.Count > 0)
+			{
+				page = page.Navigation.NavigationStack.LastOrDefault() ?? page;
+			}
+			return page;
+		}
+	}
 }
 
