@@ -11,12 +11,8 @@ namespace MyCryptos
 {
 	public class App : Application
 	{
-		public ErrorMessageHandler errorMessageHandler;
-
 		public App()
 		{
-			errorMessageHandler = ErrorMessageHandler.Instance;
-
 			Page startPage;
 
 			// The root page of your application
@@ -48,12 +44,12 @@ namespace MyCryptos
 
 			await ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished);
 
-			await ApplicationTasks.FetchCurrenciesAndAvailableRates(Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished);
+			await ApplicationTasks.FetchCurrenciesAndAvailableRates(Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display);
 
 			if (!ApplicationSettings.AutoRefreshOnStartup) return;
 
 			Messaging.UpdatingExchangeRates.SendStarted();
-			await ApplicationTasks.FetchAllExchangeRates(Messaging.UpdatingExchangeRates.SendFinished);
+			await ApplicationTasks.FetchAllExchangeRates(Messaging.UpdatingExchangeRates.SendFinished, ErrorOverlay.Display);
 		}
 
 		protected override void OnSleep()

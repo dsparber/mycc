@@ -51,7 +51,7 @@ namespace MyCryptos.Forms.view.components
 			{
 				if (g.Key == null) continue;
 
-				var cell = cells.OfType<CoinViewCell>().ToList().Find(e => g.Key.Equals(e.Currency));
+				var cell = cells?.OfType<CoinViewCell>().ToList().Find(e => g.Key.Equals(e.Currency));
 				if (cell == null)
 				{
 					cell = new CoinViewCell(Navigation) { Accounts = g.ToList(), IsLoading = true };

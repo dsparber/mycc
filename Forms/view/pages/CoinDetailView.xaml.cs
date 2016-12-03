@@ -82,7 +82,7 @@ namespace view
 			var neededRates = ReferenceValueCells.Where(c => c.IsLoading).Select(c => c.ExchangeRate);
 
 			Messaging.UpdatingExchangeRates.SendStarted();
-			ApplicationTasks.FetchMissingRates(neededRates, Messaging.UpdatingExchangeRates.SendFinished);
+			ApplicationTasks.FetchMissingRates(neededRates, Messaging.UpdatingExchangeRates.SendFinished, ErrorOverlay.Display);
 
 			setHeader();
 		}

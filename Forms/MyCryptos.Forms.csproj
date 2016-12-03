@@ -41,7 +41,6 @@
     <Compile Include="helpers\SortHelper.cs" />
     <Compile Include="helpers\StringHelper.cs" />
     <Compile Include="helpers\ITextSizeHelper.cs" />
-    <Compile Include="Messages\ErrorMessageHandler.cs" />
     <Compile Include="Messages\MessageInfo.cs" />
     <Compile Include="Messages\Messaging.cs" />
     <Compile Include="Messages\MessageTools.cs" />
@@ -124,6 +123,7 @@
     <Compile Include="view\pages\SourcesView.xaml.cs">
       <DependentUpon>SourcesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\overlays\ErrorOverlay.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

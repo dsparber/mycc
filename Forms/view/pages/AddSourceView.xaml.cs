@@ -111,7 +111,7 @@ namespace view
 							var neededRates = repository.Elements.SelectMany(a => referenceCurrencies.Select(c => new ExchangeRate(a.Money.Currency, c)));
 
 							Messaging.UpdatingExchangeRates.SendStarted();
-							await ApplicationTasks.FetchMissingRates(neededRates, Messaging.UpdatingExchangeRates.SendFinished);
+							await ApplicationTasks.FetchMissingRates(neededRates, Messaging.UpdatingExchangeRates.SendFinished, ErrorOverlay.Display);
 							await Navigation.PopOrPopModal();
 
 						}
@@ -139,7 +139,7 @@ namespace view
 						var neededRates = referenceCurrencies.Select(c => new ExchangeRate(account.Money.Currency, c));
 
 						Messaging.UpdatingExchangeRates.SendStarted();
-						await ApplicationTasks.FetchMissingRates(neededRates, Messaging.UpdatingExchangeRates.SendFinished);
+						await ApplicationTasks.FetchMissingRates(neededRates, Messaging.UpdatingExchangeRates.SendFinished, ErrorOverlay.Display);
 						await Navigation.PopOrPopModal();
 
 					}
