@@ -99,7 +99,7 @@ namespace MyCryptos.Forms.view.pages
 
             repository.Name = RepositoryNameEntryCell.Text ?? string.Empty;
             await AccountStorage.Instance.Update(repository);
-            await AccountStorage.Instance.Fetch();
+            await AccountStorage.Instance.FetchOnline();
             Messaging.UpdatingAccounts.SendFinished();
 
             TableView.Root.Add(AccountsSection);

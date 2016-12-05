@@ -6,27 +6,27 @@ using SQLite;
 
 namespace MyCryptos.Core.Account.Database
 {
-    public class AccountRepositoryDatabase : AbstractDatabase<AccountRepositoryDBM, AccountRepository, int>
+    public class AccountRepositoryDatabase : AbstractDatabase<AccountRepositoryDbm, AccountRepository, int>
     {
-        public override async Task<IEnumerable<AccountRepositoryDBM>> GetAllDbObjects()
+        public override async Task<IEnumerable<AccountRepositoryDbm>> GetAllDbObjects()
         {
-            return await (await Connection).Table<AccountRepositoryDBM>().ToListAsync();
+            return await (await Connection).Table<AccountRepositoryDbm>().ToListAsync();
         }
 
-        public override async Task<AccountRepositoryDBM> GetDbObject(int id)
+        public override async Task<AccountRepositoryDbm> GetDbObject(int id)
         {
-            return await (await Connection).FindAsync<AccountRepositoryDBM>(p => p.Id == id);
+            return await (await Connection).FindAsync<AccountRepositoryDbm>(p => p.Id == id);
         }
 
         protected override Task Create(SQLiteAsyncConnection connection)
         {
-            return connection.CreateTableAsync<AccountRepositoryDBM>();
+            return connection.CreateTableAsync<AccountRepositoryDbm>();
 
         }
 
-        protected override AccountRepositoryDBM Resolve(AccountRepository element)
+        protected override AccountRepositoryDbm Resolve(AccountRepository element)
         {
-            return new AccountRepositoryDBM(element);
+            return new AccountRepositoryDbm(element);
         }
     }
 }

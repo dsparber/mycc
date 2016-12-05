@@ -14,104 +14,103 @@ using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.pages
 {
-    public partial class CoinsView
-    {
-        private readonly ContentView tableView;
-        private readonly CoinsGraphView graphView;
+	public partial class CoinsView
+	{
+		private readonly ContentView tableView;
+		private readonly CoinsGraphView graphView;
 
-        private bool loadedView;
+		private bool loadedView;
 
-        public CoinsView()
-        {
-            InitializeComponent();
+		public CoinsView()
+		{
+			InitializeComponent();
 
-            tableView = new CoinsTableView();
-            graphView = new CoinsGraphView(Navigation)
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand
-            };
+			tableView = new CoinsTableView();
+			graphView = new CoinsGraphView(Navigation)
+			{
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.FillAndExpand
+			};
 
-            Stack.Children.Add(tableView);
-            Stack.Children.Add(graphView);
-            graphView.IsVisible = ApplicationSettings.ShowGraphOnStartUp;
-            tableView.IsVisible = !ApplicationSettings.ShowGraphOnStartUp;
+			Stack.Children.Add(tableView);
+			Stack.Children.Add(graphView);
+			graphView.IsVisible = ApplicationSettings.ShowGraphOnStartUp;
+			tableView.IsVisible = !ApplicationSettings.ShowGraphOnStartUp;
 
-            Tabs.Tabs = new List<string> { I18N.Table, I18N.Graph };
-            Tabs.SelectedIndex = ApplicationSettings.ShowGraphOnStartUp ? 1 : 0;
+			Tabs.Tabs = new List<string> { I18N.Table, I18N.Graph };
+			Tabs.SelectedIndex = ApplicationSettings.ShowGraphOnStartUp ? 1 : 0;
 
-            AddSubscriber();
+			AddSubscriber();
 
-            if (Device.OS == TargetPlatform.Android)
-            {
-                Title = string.Empty;
-            }
+			if (Device.OS == TargetPlatform.Android)
+			{
+				Title = string.Empty;
+			}
 
-            Tabs.SelectionChanged = selected =>
-            {
-                tableView.IsVisible = (selected == 0);
-                graphView.IsVisible = (selected == 1);
-            };
+			Tabs.SelectionChanged = selected =>
+			{
+				tableView.IsVisible = (selected == 0);
+				graphView.IsVisible = (selected == 1);
+			};
 
-            SetHeaderCarousel();
-        }
+			SetHeaderCarousel();
+		}
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            if (loadedView) return;
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			if (loadedView) return;
 
-            loadedView = true;
-            graphView.OnAppearing();
-        }
+			loadedView = true;
+			graphView.OnAppearing();
+		}
 
 
-        private void PositionSelected(object sender, EventArgs e)
-        {
-            var currencies = ApplicationSettings.ReferenceCurrencies;
+		private void PositionSelected(object sender, EventArgs e)
+		{
+			var currencies = ApplicationSettings.ReferenceCurrencies;
 
-            ApplicationSettings.BaseCurrency = currencies[HeaderCarousel.Position];
-            MessagingCenter.Send(MessageInfo.ValueChanged, Messaging.ReferenceCurrency);
-        }
+			ApplicationSettings.BaseCurrency = currencies[HeaderCarousel.Position];
+			MessagingCenter.Send(MessageInfo.ValueChanged, Messaging.ReferenceCurrency);
+		}
 
-        private void SetHeaderCarousel()
-        {
-            HeaderCarousel.ItemsSource = ApplicationSettings.ReferenceCurrencies.ToList();
-            HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
-            if (HeaderCarousel.ItemTemplate != null) return;
+		private void SetHeaderCarousel()
+		{
+			HeaderCarousel.ItemsSource = ApplicationSettings.ReferenceCurrencies.ToList();
+			HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
+			if (HeaderCarousel.ItemTemplate != null) return;
 
-            HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
-            HeaderCarousel.PositionSelected += PositionSelected;
-        }
+			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
+			HeaderCarousel.PositionSelected += PositionSelected;
+		}
 
-        private void Add(object sender, EventArgs e)
-        {
-            Navigation.PushOrPushModal(new AddSourceView());
-        }
+		private void Add(object sender, EventArgs e)
+		{
+			Navigation.PushOrPushModal(new AddSourceView());
+		}
 
-        private void AddSubscriber()
-        {
-            Messaging.UpdatingExchangeRates.SubscribeFinished(this, () => IsBusy = false);
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency));
-            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
-        }
+		private void AddSubscriber()
+		{
+			Messaging.FetchMissingRates.SubscribeFinished(this, () => IsBusy = false);
+			Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency));
+			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
+		}
 
-        private async void Refresh(object sender, EventArgs e)
-        {
-            Messaging.UpdatingExchangeRates.SendStarted();
-            await ApplicationTasks.FetchBalancesAndExchangeRates(Messaging.UpdatingExchangeRates.SendFinished, ErrorOverlay.Display);
-        }
+		private async void Refresh(object sender, EventArgs e)
+		{
+			await ApplicationTasks.FetchBalancesAndExchangeRates(Messaging.UpdatingAccountsAndRates.SendStarted, Messaging.UpdatingAccountsAndRates.SendFinished, ErrorOverlay.Display);
+		}
 
-        private class HeaderTemplateSelector : DataTemplateSelector
-        {
-            private bool isUpdatingExchangeRates;
+		private class HeaderTemplateSelector : DataTemplateSelector
+		{
+			private bool isUpdatingExchangeRates;
 
-            public HeaderTemplateSelector()
-            {
-                Messaging.UpdatingExchangeRates.SubscribeStartedAndFinished(this, () => isUpdatingExchangeRates = true, () => isUpdatingExchangeRates = false);
-            }
+			public HeaderTemplateSelector()
+			{
+				Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => isUpdatingExchangeRates = true, () => isUpdatingExchangeRates = false);
+			}
 
-            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinsHeaderView((Currency)item) { IsLoading = isUpdatingExchangeRates });
-        }
-    }
+			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinsHeaderView((Currency)item) { IsLoading = isUpdatingExchangeRates });
+		}
+	}
 }

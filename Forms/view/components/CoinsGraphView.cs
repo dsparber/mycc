@@ -60,7 +60,7 @@ namespace MyCryptos.view
 
             updateView();
 
-            Messaging.UpdatingExchangeRates.SubscribeFinished(this, updateView);
+            Messaging.FetchMissingRates.SubscribeFinished(this, updateView);
             Messaging.UpdatingAccounts.SubscribeFinished(this, updateView);
             Messaging.ReferenceCurrency.SubscribeFinished(this, updateView);
             Messaging.Loading.SubscribeFinished(this, updateView);

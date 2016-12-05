@@ -12,11 +12,11 @@ namespace MyCryptos.Core.tasks
 
         public static Task LoadEverything(Action whenFinished) => loadAllEverythingTask = loadAllEverythingTask.GetTask(async () =>
         {
-            await CurrencyRepositoryMapStorage.Instance.FetchFast();
-            await CurrencyStorage.Instance.FetchFast();
-            await AccountStorage.Instance.FetchFast();
-            await ExchangeRateStorage.Instance.FetchFast();
-            await AvailableRatesStorage.Instance.FetchFast();
+            await CurrencyRepositoryMapStorage.Instance.LoadFromDatabase();
+            await CurrencyStorage.Instance.LoadFromDatabase();
+            await AccountStorage.Instance.LoadFromDatabase();
+            await ExchangeRateStorage.Instance.LoadFromDatabase();
+            await AvailableRatesStorage.Instance.LoadFromDatabase();
             whenFinished();
         });
     }

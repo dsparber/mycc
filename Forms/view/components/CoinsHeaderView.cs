@@ -15,94 +15,114 @@ using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.components
 {
-    public class CoinsHeaderView : HeaderView
-    {
+	public class CoinsHeaderView : HeaderView
+	{
 
-        private readonly Currency currency;
-        private readonly List<string> infoTexts;
+		private readonly Currency currency;
+		private readonly bool useOnlyThisCurrency;
+		private readonly List<string> infoTexts;
 
-        private static int currentInfoText = 1;
-        private static bool dataLoaded;
+		private static int currentInfoText = 1;
+		private static bool dataLoaded;
+		private bool shouldBeLoading = true;
 
-        public CoinsHeaderView(Currency currency)
-        {
-            this.currency = currency ?? ApplicationSettings.BaseCurrency;
+		public CoinsHeaderView(Currency currency = null, bool useOnlyThisCurrency = false) : this()
+		{
+			this.currency = currency ?? ApplicationSettings.BaseCurrency;
+			this.useOnlyThisCurrency = useOnlyThisCurrency;
 
-            var recognizer = new TapGestureRecognizer();
-            recognizer.Tapped += (sender, e) =>
-            {
-                currentInfoText = (currentInfoText + 1) % infoTexts.Count;
-                InfoText = infoTexts[currentInfoText];
-            };
+			UpdateView();
+		}
 
-            infoTexts = new List<string> { string.Empty, string.Empty };
+		private CoinsHeaderView()
+		{
+			var recognizer = new TapGestureRecognizer();
+			recognizer.Tapped += (sender, e) =>
+			{
+				currentInfoText = (currentInfoText + 1) % infoTexts.Count;
+				InfoText = infoTexts[currentInfoText];
+			};
 
-            Padding = new Thickness(0, 0, 0, 20);
+			infoTexts = new List<string> { string.Empty, string.Empty };
 
-            GestureRecognizers.Add(recognizer);
-            AddSubscriber();
-            UpdateView();
-        }
+			Padding = new Thickness(0, 0, 0, 20);
 
-        private void UpdateView()
-        {
-            var sum = MoneySum;
-            var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
+			GestureRecognizers.Add(recognizer);
+			AddSubscriber();
+		}
 
-            infoTexts[0] = PluralHelper.GetText(I18N.NoCoins, I18N.OneCoin, I18N.Coins, amountDifferentCurrencies);
-            infoTexts[1] = string.Join(" | ", ApplicationSettings.ReferenceCurrencies.Where(c => !c.Equals(currency)).Select(c => MoneySumOf(c)?.ToString() ?? $"0 {c.Code}"));
+		private void UpdateView()
+		{
+			var sum = useOnlyThisCurrency ? coinSum : MoneySum;
+			var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
 
-
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                if (dataLoaded)
-                {
-                    TitleText = (sum.Amount > 0) ? sum.ToString() : $"0 {sum.Currency.Code}";
-                    InfoText = infoTexts[currentInfoText];
-                }
-                else
-                {
-                    IsLoading = true;
-                }
-            });
+			if (useOnlyThisCurrency)
+			{
+				infoTexts[0] = PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, AccountStorage.Instance.AllElements.Where(a => currency.Equals(a.Money.Currency)).ToList().Count);
+			}
+			else {
+				infoTexts[0] = PluralHelper.GetText(I18N.NoCoins, I18N.OneCoin, I18N.Coins, amountDifferentCurrencies);
+			}
+			infoTexts[1] = string.Join(" | ", ApplicationSettings.ReferenceCurrencies.Where(c => !c.Equals(currency)).Select(c => MoneySumOf(c)?.ToString() ?? $"0 {c.Code}"));
 
 
-        }
+			Device.BeginInvokeOnMainThread(() =>
+			{
+				if (dataLoaded)
+				{
+					TitleText = (sum.Amount > 0) ? sum.ToString() : $"0 {sum.Currency.Code}";
+					InfoText = infoTexts[currentInfoText];
+					if (!shouldBeLoading)
+					{
+						IsLoading = false;
+					}
+				}
+				else
+				{
+					shouldBeLoading = IsLoading;
+					IsLoading = true;
+				}
+			});
 
-        private Money MoneySum => MoneySumOf(currency);
 
-        private static Money MoneySumOf(Currency currency)
-        {
-            var neededRates = new List<ExchangeRate>();
+		}
 
-            var amount = AccountStorage.Instance.AllElements.Select(a =>
-            {
-                var neededRate = new ExchangeRate(a.Money.Currency, currency);
-                var rate = ExchangeRateHelper.GetRate(neededRate);
+		private Money coinSum => new Money(AccountStorage.Instance.AllElements.Where(a => currency.Equals(a.Money.Currency)).Sum(a => a.Money.Amount), currency);
 
-                if (rate?.Rate == null)
-                {
-                    neededRates.Add(neededRate);
-                }
+		private Money MoneySum => MoneySumOf(currency);
 
-                return a.Money.Amount * (rate ?? neededRate).RateNotNull;
-            }).Sum();
+		private static Money MoneySumOf(Currency currency)
+		{
+			var neededRates = new List<ExchangeRate>();
 
-            if (neededRates.Count == 0) return new Money(amount, currency);
+			var amount = AccountStorage.Instance.AllElements.Select(a =>
+			{
+				var neededRate = new ExchangeRate(a.Money.Currency, currency);
+				var rate = ExchangeRateHelper.GetRate(neededRate);
 
-            Messaging.UpdatingExchangeRates.SendStarted();
-            ApplicationTasks.FetchMissingRates(neededRates, Messaging.UpdatingExchangeRates.SendFinished, ErrorOverlay.Display);
+				if (rate?.Rate == null)
+				{
+					neededRates.Add(neededRate);
+				}
 
-            return new Money(amount, currency);
-        }
+				return a.Money.Amount * (rate ?? neededRate).RateNotNull;
+			}).Sum();
 
-        private void AddSubscriber()
-        {
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
-            Messaging.Loading.SubscribeFinished(this, () => { dataLoaded = true; UpdateView(); });
+			if (neededRates.Count == 0) return new Money(amount, currency);
 
-            Messaging.UpdatingExchangeRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
-        }
-    }
+			ApplicationTasks.FetchMissingRates(neededRates, Messaging.FetchMissingRates.SendStarted, Messaging.FetchMissingRates.SendFinished, ErrorOverlay.Display);
+
+			return new Money(amount, currency);
+		}
+
+		private void AddSubscriber()
+		{
+			Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
+			Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
+			Messaging.Loading.SubscribeFinished(this, () => { dataLoaded = true; UpdateView(); });
+
+			Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
+			Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
+		}
+	}
 }

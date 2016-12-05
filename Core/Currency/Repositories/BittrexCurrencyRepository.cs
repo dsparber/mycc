@@ -8,54 +8,56 @@ using Newtonsoft.Json.Linq;
 
 namespace MyCryptos.Core.Currency.Repositories
 {
-    public class BittrexCurrencyRepository : OnlineCurrencyRepository
-    {
-        const string URL_CURRENCY_LIST = "https://bittrex.com/api/v1.1/public/getcurrencies";
+	public class BittrexCurrencyRepository : OnlineCurrencyRepository
+	{
+		const string URL_CURRENCY_LIST = "https://bittrex.com/api/v1.1/public/getcurrencies";
 
-        const string CURRENCY_LIST_RESULT = "result";
-        const string CURRENCY_LIST_RESULT_NAME = "CurrencyLong";
-        const string CURRENCY_LIST_RESULT_CURRENCY = "Currency";
+		const string CURRENCY_LIST_RESULT = "result";
+		const string CURRENCY_LIST_RESULT_NAME = "CurrencyLong";
+		const string CURRENCY_LIST_RESULT_CURRENCY = "Currency";
 
-        const int BUFFER_SIZE = 256000;
+		const int BUFFER_SIZE = 256000;
 
-        readonly HttpClient client;
+		readonly HttpClient client;
 
-        public BittrexCurrencyRepository(string name) : base(CurrencyRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY, name)
-        {
-            client = new HttpClient();
-            client.MaxResponseContentBufferSize = BUFFER_SIZE;
-        }
+		public BittrexCurrencyRepository(int id) : base(id)
+		{
+			client = new HttpClient();
+			client.MaxResponseContentBufferSize = BUFFER_SIZE;
+		}
 
-        protected override async Task<IEnumerable<Model.Currency>> GetCurrencies()
-        {
-            var uri = new Uri(URL_CURRENCY_LIST);
+		public override int RepositoryTypeId => CurrencyRepositoryDbm.DB_TYPE_BITTREX_REPOSITORY;
 
-            var response = await client.GetAsync(uri);
+		protected override async Task<IEnumerable<Model.Currency>> GetCurrencies()
+		{
+			var uri = new Uri(URL_CURRENCY_LIST);
 
-            if (response.IsSuccessStatusCode)
-            {
+			var response = await client.GetAsync(uri);
 
-                var content = await response.Content.ReadAsStringAsync();
-                var json = JObject.Parse(content);
-                var result = (JArray)json[CURRENCY_LIST_RESULT];
+			if (response.IsSuccessStatusCode)
+			{
 
-                var currentElements = new List<Model.Currency>();
+				var content = await response.Content.ReadAsStringAsync();
+				var json = JObject.Parse(content);
+				var result = (JArray)json[CURRENCY_LIST_RESULT];
 
-                foreach (var token in result)
-                {
-                    var name = (string)token[CURRENCY_LIST_RESULT_NAME];
-                    var code = (string)token[CURRENCY_LIST_RESULT_CURRENCY];
-                    var c = new Model.Currency(code, name);
-                    currentElements.Add(c);
+				var currentElements = new List<Model.Currency>();
 
-                }
+				foreach (var token in result)
+				{
+					var name = (string)token[CURRENCY_LIST_RESULT_NAME];
+					var code = (string)token[CURRENCY_LIST_RESULT_CURRENCY];
+					var c = new Model.Currency(code, name);
+					currentElements.Add(c);
 
-                await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(e => Remove(e)));
+				}
 
-                LastFetch = DateTime.Now;
-                return currentElements;
-            }
-            return null;
-        }
-    }
+				await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(e => Remove(e)));
+
+				LastFetch = DateTime.Now;
+				return currentElements;
+			}
+			return null;
+		}
+	}
 }

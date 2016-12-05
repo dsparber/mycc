@@ -6,27 +6,27 @@ using SQLite;
 
 namespace MyCryptos.Core.ExchangeRate.Database
 {
-    public class ExchangeRateRepositoryDatabase : AbstractDatabase<ExchangeRateRepositoryDBM, ExchangeRateRepository, int>
+    public class ExchangeRateRepositoryDatabase : AbstractDatabase<ExchangeRateRepositoryDbm, ExchangeRateRepository, int>
     {
-        public override async Task<IEnumerable<ExchangeRateRepositoryDBM>> GetAllDbObjects()
+        public override async Task<IEnumerable<ExchangeRateRepositoryDbm>> GetAllDbObjects()
         {
-            return await (await Connection).Table<ExchangeRateRepositoryDBM>().ToListAsync();
+            return await (await Connection).Table<ExchangeRateRepositoryDbm>().ToListAsync();
         }
 
-        public override async Task<ExchangeRateRepositoryDBM> GetDbObject(int id)
+        public override async Task<ExchangeRateRepositoryDbm> GetDbObject(int id)
         {
-            return await (await Connection).FindAsync<ExchangeRateRepositoryDBM>(p => p.Id == id);
+            return await (await Connection).FindAsync<ExchangeRateRepositoryDbm>(p => p.Id == id);
         }
 
         protected override Task Create(SQLiteAsyncConnection connection)
         {
-            return connection.CreateTableAsync<ExchangeRateRepositoryDBM>();
+            return connection.CreateTableAsync<ExchangeRateRepositoryDbm>();
 
         }
 
-        protected override ExchangeRateRepositoryDBM Resolve(ExchangeRateRepository element)
+        protected override ExchangeRateRepositoryDbm Resolve(ExchangeRateRepository element)
         {
-            return new ExchangeRateRepositoryDBM(element);
+            return new ExchangeRateRepositoryDbm(element);
         }
     }
 }

@@ -11,23 +11,24 @@ using Newtonsoft.Json.Linq;
 
 namespace MyCryptos.Core.Account.Repositories.Implementations
 {
-    public class EthereumAccountRepository : AddressAccountRepository
-    {
-        const string JsonKeyBalance = "balance";
-        const string JsonKeyData = "data";
+	public class EthereumAccountRepository : AddressAccountRepository
+	{
+		const string JsonKeyBalance = "balance";
+		const string JsonKeyData = "data";
 
-        public override string Description => I18N.Etherchain;
+		public override string Description => I18N.Etherchain;
 
-        protected override Currency.Model.Currency Currency => CurrencyStorage.Instance.AllElements.Find(c => c?.Code.Equals("ETH") ?? false);
-        public override IEnumerable<Currency.Model.Currency> SupportedCurrencies => new List<Currency.Model.Currency> { Currency };
+		protected override Currency.Model.Currency Currency => CurrencyStorage.Instance.AllElements.Find(c => c?.Code.Equals("ETH") ?? false);
+		public override IEnumerable<Currency.Model.Currency> SupportedCurrencies => new List<Currency.Model.Currency> { Currency };
 
-        protected override decimal BalanceFactor => 1e18M;
-        protected override Func<string, decimal> Balance => (httpContent) => decimal.Parse((string)(JArray.Parse(httpContent)[0] as JObject)[JsonKeyBalance], CultureInfo.InvariantCulture);
-        protected override Uri Url => new Uri($"https://etherchain.org/api/account/{Currency}");
+		protected override decimal BalanceFactor => 1e18M;
+		protected override Func<string, decimal> Balance => (httpContent) => decimal.Parse((string)(JArray.Parse(httpContent)[0] as JObject)[JsonKeyBalance], CultureInfo.InvariantCulture);
+		protected override Uri Url => new Uri($"https://etherchain.org/api/account/{Currency}");
 
 
-        public EthereumAccountRepository(string name, string address) : base(AccountRepositoryDBM.DB_TYPE_ETHEREUM_REPOSITORY, name, address) { }
+		public EthereumAccountRepository(int id, string name, string address) : base(id, name, address) { }
+		public override int RepositoryTypeId => AccountRepositoryDbm.DB_TYPE_ETHEREUM_REPOSITORY;
 
-        protected override FunctionalAccount GetAccount(int? id, string name, Money money) => new EthereumAccount(id, name, money, this);
-    }
+		protected override FunctionalAccount GetAccount(int? id, string name, Money money) => new EthereumAccount(id, name, money, this);
+	}
 }

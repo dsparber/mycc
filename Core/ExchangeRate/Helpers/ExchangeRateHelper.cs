@@ -158,9 +158,9 @@ namespace MyCryptos.Core.ExchangeRate.Helpers
         {
             switch (speed)
             {
-                case FetchSpeedEnum.Slow: await ExchangeRateStorage.Instance.Fetch(); break;
+                case FetchSpeedEnum.Slow: await ExchangeRateStorage.Instance.FetchOnline(); break;
                 case FetchSpeedEnum.Medium: await ExchangeRateStorage.Instance.FetchNew(); break;
-                case FetchSpeedEnum.Fast: await ExchangeRateStorage.Instance.FetchFast(); break;
+                case FetchSpeedEnum.Fast: await ExchangeRateStorage.Instance.LoadFromDatabase(); break;
                 default: throw new ArgumentOutOfRangeException(nameof(speed), speed, null);
             }
         }

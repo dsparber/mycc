@@ -5,26 +5,26 @@ using SQLite;
 
 namespace MyCryptos.Core.ExchangeRate.Database
 {
-    public class ExchangeRateDatabase : AbstractDatabase<ExchangeRateDBM, Model.ExchangeRate, string>
+    public class ExchangeRateDatabase : AbstractDatabase<ExchangeRateDbm, Model.ExchangeRate, string>
     {
-        public override async Task<IEnumerable<ExchangeRateDBM>> GetAllDbObjects()
+        public override async Task<IEnumerable<ExchangeRateDbm>> GetAllDbObjects()
         {
-            return await (await Connection).Table<ExchangeRateDBM>().ToListAsync();
+            return await (await Connection).Table<ExchangeRateDbm>().ToListAsync();
         }
 
         protected override async Task Create(SQLiteAsyncConnection connection)
         {
-            await connection.CreateTableAsync<ExchangeRateDBM>();
+            await connection.CreateTableAsync<ExchangeRateDbm>();
         }
 
-        public override async Task<ExchangeRateDBM> GetDbObject(string id)
+        public override async Task<ExchangeRateDbm> GetDbObject(string id)
         {
-            return await (await Connection).FindAsync<ExchangeRateDBM>(p => p.Id.Equals(id));
+            return await (await Connection).FindAsync<ExchangeRateDbm>(p => p.Id.Equals(id));
         }
 
-        protected override ExchangeRateDBM Resolve(Model.ExchangeRate element)
+        protected override ExchangeRateDbm Resolve(Model.ExchangeRate element)
         {
-            return new ExchangeRateDBM(element);
+            return new ExchangeRateDbm(element);
         }
     }
 }

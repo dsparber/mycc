@@ -6,7 +6,7 @@ using MyCryptos.Core.Currency.Repositories;
 // TODO Refactor -> Remove this class or make it private
 namespace MyCryptos.Core.Currency.Storage
 {
-    public class CurrencyRepositoryMapStorage : AbstractDatabaseStorage<CurrencyMapRepositoryDBM, CurrencyRepositoryMap, CurrencyMapDBM, CurrencyMapDBM, string>
+    public class CurrencyRepositoryMapStorage : AbstractDatabaseStorage<CurrencyMapRepositoryDbm, CurrencyRepositoryMap, CurrencyMapDbm, CurrencyMapDbm, string>
     {
         public CurrencyRepositoryMapStorage() : base(new CurrencyMapRepositoryDatabase()) { }
 

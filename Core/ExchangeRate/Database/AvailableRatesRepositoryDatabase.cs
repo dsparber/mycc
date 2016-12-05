@@ -6,26 +6,26 @@ using SQLite;
 
 namespace MyCryptos.Core.ExchangeRate.Database
 {
-    public class AvailableRatesRepositoryDatabase : AbstractDatabase<AvailableRatesRepositoryDBM, AvailableRatesRepository, int>
+    public class AvailableRatesRepositoryDatabase : AbstractDatabase<AvailableRatesRepositoryDbm, AvailableRatesRepository, int>
     {
-        public override async Task<IEnumerable<AvailableRatesRepositoryDBM>> GetAllDbObjects()
+        public override async Task<IEnumerable<AvailableRatesRepositoryDbm>> GetAllDbObjects()
         {
-            return await (await Connection).Table<AvailableRatesRepositoryDBM>().ToListAsync();
+            return await (await Connection).Table<AvailableRatesRepositoryDbm>().ToListAsync();
         }
 
         protected override async Task Create(SQLiteAsyncConnection connection)
         {
-            await connection.CreateTableAsync<AvailableRatesRepositoryDBM>();
+            await connection.CreateTableAsync<AvailableRatesRepositoryDbm>();
         }
 
-        public override async Task<AvailableRatesRepositoryDBM> GetDbObject(int id)
+        public override async Task<AvailableRatesRepositoryDbm> GetDbObject(int id)
         {
-            return await (await Connection).FindAsync<AvailableRatesRepositoryDBM>(p => p.Id == id);
+            return await (await Connection).FindAsync<AvailableRatesRepositoryDbm>(p => p.Id == id);
         }
 
-        protected override AvailableRatesRepositoryDBM Resolve(AvailableRatesRepository element)
+        protected override AvailableRatesRepositoryDbm Resolve(AvailableRatesRepository element)
         {
-            return new AvailableRatesRepositoryDBM(element);
+            return new AvailableRatesRepositoryDbm(element);
         }
     }
 }

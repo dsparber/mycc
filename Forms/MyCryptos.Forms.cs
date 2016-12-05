@@ -1,7 +1,6 @@
 ﻿using view;
 using Xamarin.Forms;
 using System.Linq;
-using System.Threading.Tasks;
 using MyCryptos.Core.Resources;
 using MyCryptos.Core.settings;
 using MyCryptos.Core.tasks;
@@ -9,77 +8,83 @@ using MyCryptos.Forms.Messages;
 
 namespace MyCryptos
 {
-    public class App : Application
-    {
-        public App()
-        {
-            Page startPage;
+	public class App : Application
+	{
+		public App()
+		{
+			Page startPage;
 
-            // The root page of your application
-            if (Device.OS == TargetPlatform.Android)
-            {
-                startPage = new MasterDetailContainerView();
-            }
-            else
-            {
-                startPage = new TabContainerView();
-            }
+			// The root page of your application
+			if (Device.OS == TargetPlatform.Android)
+			{
+				startPage = new MasterDetailContainerView();
+			}
+			else
+			{
+				startPage = new TabContainerView();
+			}
 
-            if (ApplicationSettings.IsPinSet)
-            {
-                startPage = new PasswordView(startPage);
-            }
+			if (ApplicationSettings.IsPinSet)
+			{
+				startPage = new PasswordView(startPage);
+			}
 
-            MainPage = startPage;
+			MainPage = startPage;
 
-            if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
-            {
-                DependencyService.Get<ILocalise>().SetLocale();
-            }
-        }
+			if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
+			{
+				DependencyService.Get<ILocalise>().SetLocale();
+			}
 
-        protected override async void OnStart()
-        {
-            base.OnStart();
+			if (ApplicationSettings.FirstLaunch)
+			{
+				ApplicationTasks.FetchCurrenciesAndAvailableRates(Messaging.UpdatingCurrenciesAndAvailableRates.SendStarted, Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display);
+			}
+			else {
+				if (ApplicationSettings.AutoRefreshOnStartup)
+				{
+					Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, () =>
+					{
+						Messaging.UpdatingAccountsAndRates.Unsubscribe(this);
+						ApplicationTasks.FetchCurrenciesAndAvailableRates(Messaging.UpdatingCurrenciesAndAvailableRates.SendStarted, Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display);
+					});
+					Messaging.Loading.SubscribeFinished(this, () => ApplicationTasks.FetchBalancesAndExchangeRates(Messaging.UpdatingAccountsAndRates.SendStarted, Messaging.UpdatingAccountsAndRates.SendFinished, ErrorOverlay.Display));
+				}
+				else {
+					Messaging.Loading.SubscribeFinished(this, () => ApplicationTasks.FetchCurrenciesAndAvailableRates(Messaging.UpdatingCurrenciesAndAvailableRates.SendStarted, Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display));
+				}
+				ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished);
+			}
+		}
 
-            await ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished);
+		protected override void OnSleep()
+		{
+			if (!ApplicationSettings.IsPinSet) return;
 
-            await ApplicationTasks.FetchCurrenciesAndAvailableRates(Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display);
+			var page = GetCurrentPage();
+			if (page is PasswordView) return;
 
-            if (!ApplicationSettings.AutoRefreshOnStartup) return;
+			page?.Navigation.PushModalAsync(new PasswordView(true), false);
+		}
 
-            Messaging.UpdatingExchangeRates.SendStarted();
-            await ApplicationTasks.FetchBalancesAndExchangeRates(Messaging.UpdatingExchangeRates.SendFinished, ErrorOverlay.Display);
-        }
+		protected override async void OnResume()
+		{
+			var passwordView = (GetCurrentPage() as PasswordView);
+			if (passwordView != null)
+			{
+				await passwordView.Authenticate();
+			}
+		}
 
-        protected override void OnSleep()
-        {
-            if (!ApplicationSettings.IsPinSet) return;
-
-            var page = GetCurrentPage();
-            if (page is PasswordView) return;
-
-            page?.Navigation.PushModalAsync(new PasswordView(true), false);
-        }
-
-        protected override async void OnResume()
-        {
-            var view = (GetCurrentPage() as PasswordView);
-            if (view != null)
-            {
-                await view.Authenticate();
-            }
-        }
-
-        private Page GetCurrentPage()
-        {
-            var page = MainPage.Navigation.ModalStack.LastOrDefault() ?? MainPage;
-            if (page.Navigation.NavigationStack.Count > 0)
-            {
-                page = page.Navigation.NavigationStack.LastOrDefault() ?? page;
-            }
-            return page;
-        }
-    }
+		private Page GetCurrentPage()
+		{
+			var page = MainPage.Navigation.ModalStack.LastOrDefault() ?? MainPage;
+			if (page.Navigation.NavigationStack.Count > 0)
+			{
+				page = page.Navigation.NavigationStack.LastOrDefault() ?? page;
+			}
+			return page;
+		}
+	}
 }
 

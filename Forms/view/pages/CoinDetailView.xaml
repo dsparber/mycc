@@ -7,26 +7,25 @@
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="view.CoinDetailView">
-  <ContentPage.Content>
-    <components:ChangingStackLayout>
-      <components:HeaderView
-				x:Name="Header" />
-      <TableView
+	<ContentPage.Content>
+		<components:ChangingStackLayout
+			x:Name="ChangingStack">
+			<TableView
 				Intent="Form">
-        <TableView.BackgroundColor>
-          <OnPlatform
+				<TableView.BackgroundColor>
+					<OnPlatform
 						x:TypeArguments="Color"
 						Android="#EEE" />
-        </TableView.BackgroundColor>
-        <TableSection
+				</TableView.BackgroundColor>
+				<TableSection
 					Title="{i18N:Translate Accounts}"
 					x:Name="AccountSection">
-        </TableSection>
-        <TableSection
+				</TableSection>
+				<TableSection
 					Title="{i18N:Translate EqualTo}"
 					x:Name="EqualsSection">
-        </TableSection>
-      </TableView>
-    </components:ChangingStackLayout>
-  </ContentPage.Content>
+				</TableSection>
+			</TableView>
+		</components:ChangingStackLayout>
+	</ContentPage.Content>
 </ContentPage>

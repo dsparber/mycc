@@ -5,26 +5,26 @@ using SQLite;
 
 namespace MyCryptos.Core.Currency.Database
 {
-    public class CurrencyDatabase : AbstractDatabase<CurrencyDBM, Model.Currency, string>
+    public class CurrencyDatabase : AbstractDatabase<CurrencyDbm, Model.Currency, string>
     {
-        public override async Task<IEnumerable<CurrencyDBM>> GetAllDbObjects()
+        public override async Task<IEnumerable<CurrencyDbm>> GetAllDbObjects()
         {
-            return await (await Connection).Table<CurrencyDBM>().ToListAsync();
+            return await (await Connection).Table<CurrencyDbm>().ToListAsync();
         }
 
         protected override async Task Create(SQLiteAsyncConnection connection)
         {
-            await connection.CreateTableAsync<CurrencyDBM>();
+            await connection.CreateTableAsync<CurrencyDbm>();
         }
 
-        public override async Task<CurrencyDBM> GetDbObject(string id)
+        public override async Task<CurrencyDbm> GetDbObject(string id)
         {
-            return await (await Connection).FindAsync<CurrencyDBM>(p => p.Id.Equals(id));
+            return await (await Connection).FindAsync<CurrencyDbm>(p => p.Id.Equals(id));
         }
 
-        protected override CurrencyDBM Resolve(Model.Currency element)
+        protected override CurrencyDbm Resolve(Model.Currency element)
         {
-            return new CurrencyDBM(element);
+            return new CurrencyDbm(element);
         }
     }
 }

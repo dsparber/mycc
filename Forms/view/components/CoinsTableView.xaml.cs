@@ -30,7 +30,7 @@ namespace MyCryptos.Forms.view.components
             CoinsSection.Title = I18N.Coins;
 
             Messaging.Loading.SubscribeFinished(this, SetCells);
-            Messaging.UpdatingExchangeRates.SubscribeFinished(this, SetCells);
+            Messaging.FetchMissingRates.SubscribeFinished(this, SetCells);
 
             Messaging.ReferenceCurrency.SubscribeValueChanged(this, SetCells);
             Messaging.UpdatingAccounts.SubscribeFinished(this, SetCells);

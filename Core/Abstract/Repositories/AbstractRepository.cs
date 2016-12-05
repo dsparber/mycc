@@ -3,21 +3,19 @@ using MyCryptos.Core.Abstract.Models;
 
 namespace MyCryptos.Core.Abstract.Repositories
 {
-    public abstract class AbstractRepository : Persistable<int>
-    {
-        public string Name;
-        public int RepositoryTypeId;
+	public abstract class AbstractRepository : Persistable<int>
+	{
+		public abstract int RepositoryTypeId { get; }
 
-        public int Id { get; set; }
+		public int Id { get; set; }
 
-        public abstract Task<bool> FetchOnline();
+		public abstract Task<bool> FetchOnline();
 
-        public abstract Task<bool> LoadFromDatabase();
+		public abstract Task<bool> LoadFromDatabase();
 
-        protected AbstractRepository(int repositoryTypeId, string name)
-        {
-            RepositoryTypeId = repositoryTypeId;
-            Name = name;
-        }
-    }
+		protected AbstractRepository(int id)
+		{
+			Id = id;
+		}
+	}
 }

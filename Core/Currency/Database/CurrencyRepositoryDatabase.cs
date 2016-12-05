@@ -6,27 +6,27 @@ using SQLite;
 
 namespace MyCryptos.Core.Currency.Database
 {
-    public class CurrencyRepositoryDatabase : AbstractDatabase<CurrencyRepositoryDBM, CurrencyRepository, int>
-    {
-        public override async Task<IEnumerable<CurrencyRepositoryDBM>> GetAllDbObjects()
-        {
-            return await (await Connection).Table<CurrencyRepositoryDBM>().ToListAsync();
-        }
+	public class CurrencyRepositoryDatabase : AbstractDatabase<CurrencyRepositoryDbm, CurrencyRepository, int>
+	{
+		public override async Task<IEnumerable<CurrencyRepositoryDbm>> GetAllDbObjects()
+		{
+			return await (await Connection).Table<CurrencyRepositoryDbm>().ToListAsync();
+		}
 
-        protected override async Task Create(SQLiteAsyncConnection connection)
-        {
-            await connection.CreateTableAsync<CurrencyRepositoryDBM>();
-        }
+		protected override async Task Create(SQLiteAsyncConnection connection)
+		{
+			await connection.CreateTableAsync<CurrencyRepositoryDbm>();
+		}
 
-        public override async Task<CurrencyRepositoryDBM> GetDbObject(int id)
-        {
-            return await (await Connection).FindAsync<CurrencyRepositoryDBM>(p => p.Id == id);
-        }
+		public override async Task<CurrencyRepositoryDbm> GetDbObject(int id)
+		{
+			return await (await Connection).FindAsync<CurrencyRepositoryDbm>(p => p.Id == id);
+		}
 
-        protected override CurrencyRepositoryDBM Resolve(CurrencyRepository element)
-        {
-            return new CurrencyRepositoryDBM(element);
-        }
-    }
+		protected override CurrencyRepositoryDbm Resolve(CurrencyRepository element)
+		{
+			return new CurrencyRepositoryDbm(element);
+		}
+	}
 }
 
