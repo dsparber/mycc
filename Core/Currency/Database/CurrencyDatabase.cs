@@ -17,7 +17,7 @@ namespace MyCryptos.Core.Currency.Database
             await connection.CreateTableAsync<CurrencyDBM>();
         }
 
-        public async override Task<CurrencyDBM> GetDbObject(string id)
+        public override async Task<CurrencyDBM> GetDbObject(string id)
         {
             return await (await Connection).FindAsync<CurrencyDBM>(p => p.Id.Equals(id));
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.Currency.Storage;
 using MyCryptos.Core.ExchangeRate.Helpers;
 using MyCryptos.Core.ExchangeRate.Storage;
@@ -15,12 +16,13 @@ namespace MyCryptos.Core.tasks
         private static Task fetchMissingRatesTask;
         private static Task fetchCurrenciesAndAvailableRatesTask;
 
-        public static Task FetchAllExchangeRates(Action whenFinished, Action<Exception> onError)
+        public static Task FetchBalancesAndExchangeRates(Action whenFinished, Action<Exception> onError)
         => fetchAllExchangeRatesTask = fetchAllExchangeRatesTask.GetTask(async () =>
         {
             try
             {
                 await ExchangeRateStorage.Instance.Fetch();
+                await AccountStorage.Instance.Fetch();
             }
             catch (Exception e)
             {

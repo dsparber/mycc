@@ -26,7 +26,7 @@ namespace MyCryptos.Core.Currency.Repositories
             client.MaxResponseContentBufferSize = BUFFER_SIZE;
         }
 
-        protected async override Task<IEnumerable<Model.Currency>> GetCurrencies()
+        protected override async Task<IEnumerable<Model.Currency>> GetCurrencies()
         {
             var uri = new Uri(URL_CURRENCY_LIST);
 

@@ -16,7 +16,7 @@ namespace MyCryptos.Core.Account.Models.Implementations
 
         public override Task FetchBalanceOnline()
         {
-            throw new NotImplementedException();
+            return repository.FetchOnline();
         }
 
         public override Task FetchTransactionsOnline()

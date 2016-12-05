@@ -49,7 +49,7 @@ namespace MyCryptos
             if (!ApplicationSettings.AutoRefreshOnStartup) return;
 
             Messaging.UpdatingExchangeRates.SendStarted();
-            await ApplicationTasks.FetchAllExchangeRates(Messaging.UpdatingExchangeRates.SendFinished, ErrorOverlay.Display);
+            await ApplicationTasks.FetchBalancesAndExchangeRates(Messaging.UpdatingExchangeRates.SendFinished, ErrorOverlay.Display);
         }
 
         protected override void OnSleep()

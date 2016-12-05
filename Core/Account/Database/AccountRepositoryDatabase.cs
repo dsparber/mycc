@@ -8,12 +8,12 @@ namespace MyCryptos.Core.Account.Database
 {
     public class AccountRepositoryDatabase : AbstractDatabase<AccountRepositoryDBM, AccountRepository, int>
     {
-        public async override Task<IEnumerable<AccountRepositoryDBM>> GetAllDbObjects()
+        public override async Task<IEnumerable<AccountRepositoryDBM>> GetAllDbObjects()
         {
             return await (await Connection).Table<AccountRepositoryDBM>().ToListAsync();
         }
 
-        public async override Task<AccountRepositoryDBM> GetDbObject(int id)
+        public override async Task<AccountRepositoryDBM> GetDbObject(int id)
         {
             return await (await Connection).FindAsync<AccountRepositoryDBM>(p => p.Id == id);
         }

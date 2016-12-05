@@ -13,7 +13,7 @@ namespace MyCryptos.Core.Account.Database
     {
         public TransactionDbm() { }
 
-        [PrimaryKey, AutoIncrement, Column("_id")]
+        [PrimaryKey, Column("_id")]
         public string Id { get; set; }
 
         [Column("Timestamp")]

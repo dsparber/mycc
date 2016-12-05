@@ -12,7 +12,7 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 {
     public class BlockchainAccountRepository : AddressAccountRepository
     {
-        const string JsonKeyBalance = "final_balance";
+        private const string JsonKeyBalance = "final_balance";
 
         public override string Description => I18N.Blockchain;
 

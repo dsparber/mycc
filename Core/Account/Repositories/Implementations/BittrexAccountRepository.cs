@@ -23,46 +23,42 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
         // const string API_KEY = "51bb7379ae6645af87a8005f74fd272c";
         // const string API_KEY_SECRET = "8eea5afc2a7340079143b8dae4e9b46f";
 
-        string apiKey, apiKeyPrivate;
+        private readonly string apiKey;
+        private readonly string privateApiKey;
 
-        const string BASE_URL = "https://bittrex.com/api/v1.1/account/getbalances?apikey={0}&nonce={1}";
-        const string SIGNING = "apisign";
+        private const string BaseUrl = "https://bittrex.com/api/v1.1/account/getbalances?apikey={0}&nonce={1}";
+        private const string Signing = "apisign";
 
-        const string RESULT_KEY = "result";
-        const string CURRENCY_KEY = "Currency";
-        const string BALANCE_KEY = "Balance";
+        private const string ResultKey = "result";
+        private const string CurrencyKey = "Currency";
+        private const string BalanceKey = "Balance";
 
-        const int BUFFER_SIZE = 256000;
-        readonly HttpClient client;
+        private const int BufferSize = 256000;
 
-        public override string Data { get { return JsonConvert.SerializeObject(new KeyData(apiKey, apiKeyPrivate)); } }
+        public override string Data => JsonConvert.SerializeObject(new KeyData(apiKey, privateApiKey));
 
         public BittrexAccountRepository(string name, string data) : this(name)
         {
             var keys = JsonConvert.DeserializeObject<KeyData>(data);
 
-            apiKey = keys.key;
-            apiKeyPrivate = keys.privateKey;
+            apiKey = keys.Key;
+            privateApiKey = keys.PrivateKey;
         }
 
-        public BittrexAccountRepository(string name, string apiKey, string apiKeyPrivate) : this(name)
+        public BittrexAccountRepository(string name, string apiKey, string privateApiKey) : this(name)
         {
             this.apiKey = apiKey;
-            this.apiKeyPrivate = apiKeyPrivate;
+            this.privateApiKey = privateApiKey;
         }
 
-        BittrexAccountRepository(string name) : base(AccountRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY, name)
-        {
-            client = new HttpClient();
-            client.MaxResponseContentBufferSize = BUFFER_SIZE;
-        }
+        private BittrexAccountRepository(string name) : base(AccountRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY, name) { }
 
-        async Task<JArray> getResult()
+        public async Task<JArray> GetResult(Currency.Model.Currency currency = null)
         {
             var nounce = Convert.ToUInt64((DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds);
-            var uri = new Uri(string.Format(BASE_URL, apiKey, nounce));
+            var uri = new Uri($"{string.Format(BaseUrl, apiKey, nounce)}{(currency != null ? $"&currency={currency.Code}" : string.Empty)}");
 
-            var keyBytes = Encoding.UTF8.GetBytes(apiKeyPrivate);
+            var keyBytes = Encoding.UTF8.GetBytes(privateApiKey);
             var dataBytes = Encoding.UTF8.GetBytes(uri.AbsoluteUri);
 
             var algorithm = WinRTCrypto.MacAlgorithmProvider.OpenAlgorithm(MacAlgorithm.HmacSha512);
@@ -70,29 +66,27 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
             hasher.Append(dataBytes);
             var hash = ByteToString(hasher.GetValueAndReset());
 
-            client.DefaultRequestHeaders.Remove(SIGNING);
-            client.DefaultRequestHeaders.Add(SIGNING, hash);
+            var client = new HttpClient { MaxResponseContentBufferSize = BufferSize };
 
+            client.DefaultRequestHeaders.Remove(Signing);
+            client.DefaultRequestHeaders.Add(Signing, hash);
 
             var response = await client.GetAsync(uri);
 
-            if (response.IsSuccessStatusCode)
-            {
+            if (!response.IsSuccessStatusCode) return null;
 
-                var content = await response.Content.ReadAsStringAsync();
-                var json = JObject.Parse(content);
+            var content = await response.Content.ReadAsStringAsync();
+            var json = JObject.Parse(content);
 
-                var results = (JArray)json[RESULT_KEY];
-                return results;
-            }
-            return null;
+            var results = (JArray)json[ResultKey];
+            return results;
         }
 
         public override async Task<bool> Test()
         {
             try
             {
-                return (await getResult()) != null;
+                return (await GetResult()) != null;
             }
             catch (Exception)
             {
@@ -102,7 +96,7 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 
         public override async Task<bool> FetchOnline()
         {
-            var results = await getResult();
+            var results = await GetResult();
 
             if (results == null) return false;
 
@@ -110,29 +104,27 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 
             foreach (var r in results)
             {
-                var currencyCode = (string)r[CURRENCY_KEY];
-                var balance = decimal.Parse((string)r[BALANCE_KEY], CultureInfo.InvariantCulture);
+                var currencyCode = (string)r[CurrencyKey];
+                var balance = decimal.Parse((string)r[BalanceKey], CultureInfo.InvariantCulture);
 
-                if (balance != 0)
+                if (balance == 0) continue;
+
+                var curr = CurrencyStorage.Instance.Find(new Currency.Model.Currency(currencyCode));
+
+                var money = new Money(balance, curr);
+                var existing = Elements.ToList().Find(a => a.Money.Currency.Equals(money.Currency));
+
+                var newAccount = new BittrexAccount(existing?.Id, $"{Name} ({curr.Code})", money, this);
+
+                if (existing != null)
                 {
-
-                    var curr = CurrencyStorage.Instance.Find(new Currency.Model.Currency(currencyCode));
-
-                    var money = new Money(balance, curr);
-                    var existing = Elements.ToList().Find(a => a.Money.Currency.Equals(money.Currency));
-
-                    var newAccount = new BittrexAccount(existing?.Id, $"{Name} ({curr.Code})", money, this);
-
-                    if (existing != null)
-                    {
-                        await Update(newAccount);
-                    }
-                    else
-                    {
-                        await Add(newAccount);
-                    }
-                    currentAccounts.Add(newAccount);
+                    await Update(newAccount);
                 }
+                else
+                {
+                    await Add(newAccount);
+                }
+                currentAccounts.Add(newAccount);
             }
             Func<FunctionalAccount, bool> notInCurrentAccounts = e => !currentAccounts.Select(a => a.Money.Currency).Contains(e.Money.Currency);
             await Task.WhenAll(Elements.Where(notInCurrentAccounts).Select(Remove));
@@ -141,28 +133,29 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
             return true;
         }
 
-        static string ByteToString(byte[] buff)
+        private static string ByteToString(IEnumerable<byte> buff)
         {
             var sBuilder = new StringBuilder();
-            for (var i = 0; i < buff.Length; i++)
+            foreach (var t in buff)
             {
-                sBuilder.Append(buff[i].ToString("X2"));
+                sBuilder.Append(t.ToString("X2"));
             }
             return sBuilder.ToString().ToLower();
         }
 
-        class KeyData
+        private class KeyData
         {
 
-            public string key, privateKey;
+            public readonly string Key;
+            public readonly string PrivateKey;
 
             public KeyData(string key, string privateKey)
             {
-                this.key = key;
-                this.privateKey = privateKey;
+                Key = key;
+                PrivateKey = privateKey;
             }
         }
 
-        public override string Description { get { return I18N.Bittrex; } }
+        public override string Description => I18N.Bittrex;
     }
 }

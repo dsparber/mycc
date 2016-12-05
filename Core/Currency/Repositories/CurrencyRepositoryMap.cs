@@ -9,13 +9,13 @@ namespace MyCryptos.Core.Currency.Repositories
     {
         public CurrencyRepositoryMap() : base(0, null, new CurrencyMapDatabase()) { }
 
-        public async override Task<bool> FetchOnline()
+        public override async Task<bool> FetchOnline()
         {
             LastFastFetch = DateTime.Now;
             return await FetchFromDatabase();
         }
 
-        public async override Task<bool> LoadFromDatabase()
+        public override async Task<bool> LoadFromDatabase()
         {
             return await FetchOnline();
         }

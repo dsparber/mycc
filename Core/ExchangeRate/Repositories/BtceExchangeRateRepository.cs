@@ -22,7 +22,7 @@ namespace MyCryptos.Core.ExchangeRate.Repositories
             client.MaxResponseContentBufferSize = BUFFER_SIZE;
         }
 
-        protected async override Task GetFetchTask(Model.ExchangeRate exchangeRate)
+        protected override async Task GetFetchTask(Model.ExchangeRate exchangeRate)
         {
             var uri = new Uri(string.Format(URL, RateToUrl(exchangeRate)));
             var response = await client.GetAsync(uri);

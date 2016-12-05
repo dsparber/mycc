@@ -8,7 +8,7 @@ namespace MyCryptos.Core.Currency.Repositories
     {
         public BlockExpertsCurrencyRepository(string name) : base(CurrencyRepositoryDBM.DB_TYPE_BLOCK_EXPERTS_REPOSITORY, name) { }
 
-        protected async override Task<IEnumerable<Model.Currency>> GetCurrencies()
+        protected override async Task<IEnumerable<Model.Currency>> GetCurrencies()
         {
             var list = await Task.Factory.StartNew(() =>
              {

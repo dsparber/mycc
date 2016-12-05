@@ -17,7 +17,7 @@ namespace MyCryptos.Core.ExchangeRate.Database
             await connection.CreateTableAsync<ExchangeRateDBM>();
         }
 
-        public async override Task<ExchangeRateDBM> GetDbObject(string id)
+        public override async Task<ExchangeRateDBM> GetDbObject(string id)
         {
             return await (await Connection).FindAsync<ExchangeRateDBM>(p => p.Id.Equals(id));
         }

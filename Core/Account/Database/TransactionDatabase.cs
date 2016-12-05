@@ -18,7 +18,7 @@ namespace MyCryptos.Core.Account.Database
             await connection.CreateTableAsync<TransactionDbm>();
         }
 
-        public async override Task<TransactionDbm> GetDbObject(string id)
+        public override async Task<TransactionDbm> GetDbObject(string id)
         {
             return await (await Connection).FindAsync<TransactionDbm>(p => p.Id.Equals(id));
         }
