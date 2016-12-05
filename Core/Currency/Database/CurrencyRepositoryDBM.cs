@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Interfaces;
-using MyCryptos.Core.Repositories.Currency;
+using MyCryptos.Core.Abstract.Database;
+using MyCryptos.Core.Currency.Repositories;
 using SQLite;
 
-namespace MyCryptos.Core.Database.Models
+namespace MyCryptos.Core.Currency.Database
 {
     [Table("CurrencyRepositories")]
     public class CurrencyRepositoryDBM : IEntityDBM<CurrencyRepository, int>

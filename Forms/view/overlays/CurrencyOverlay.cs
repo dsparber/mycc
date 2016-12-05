@@ -3,8 +3,8 @@ using MyCryptos.view.components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MyCryptos.Core.Models;
-using MyCryptos.Core.Storage;
+using MyCryptos.Core.Currency.Model;
+using MyCryptos.Core.Currency.Storage;
 using MyCryptos.Forms.Resources;
 using Xamarin.Forms;
 

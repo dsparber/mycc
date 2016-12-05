@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Storage;
-using Xamarin.Forms;
+using MyCryptos.Core.Currency.Database;
+using MyCryptos.Core.Currency.Storage;
 
-namespace MyCryptos.Core.Repositories.Currency
+namespace MyCryptos.Core.Currency.Repositories
 {
     public abstract class OnlineCurrencyRepository : CurrencyRepository
     {
@@ -20,7 +17,7 @@ namespace MyCryptos.Core.Repositories.Currency
             return await FetchFromDatabase();
         }
 
-        protected abstract Task<IEnumerable<Models.Currency>> GetCurrencies();
+        protected abstract Task<IEnumerable<Model.Currency>> GetCurrencies();
 
         public override async Task<bool> FetchOnline()
         {

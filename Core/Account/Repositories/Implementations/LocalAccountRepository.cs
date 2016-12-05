@@ -1,9 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Models;
+using MyCryptos.Core.Account.Database;
+using MyCryptos.Core.Account.Repositories.Base;
 using MyCryptos.Core.Resources;
 
-namespace MyCryptos.Core.Repositories.Account
+namespace MyCryptos.Core.Account.Repositories.Implementations
 {
     public class LocalAccountRepository : AccountRepository
     {

@@ -1,23 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Models;
-using MyCryptos.Core.Repositories.ExchangeRates;
-using MyCryptos.Core.Storage;
+using MyCryptos.Core.ExchangeRate.Database;
+using MyCryptos.Core.ExchangeRate.Storage;
 
-namespace MyCryptos.Core.Repositories.AvailableRates
+namespace MyCryptos.Core.ExchangeRate.Repositories
 {
     public class LocalAvailableRatesRepository : AvailableRatesRepository
     {
-        IEnumerable<ExchangeRate> Elements;
+        IEnumerable<Model.ExchangeRate> Elements;
 
         public LocalAvailableRatesRepository(string name) : base(AvailableRatesRepositoryDBM.DB_TYPE_LOCAL_REPOSITORY, name)
         {
-            Elements = new List<ExchangeRate>();
+            Elements = new List<Model.ExchangeRate>();
         }
 
-        public override bool IsAvailable(ExchangeRate element)
+        public override bool IsAvailable(Model.ExchangeRate element)
         {
             return Elements.Contains(element);
         }
@@ -44,12 +42,12 @@ namespace MyCryptos.Core.Repositories.AvailableRates
             }
         }
 
-        public override ExchangeRate ExchangeRateWithCurrency(Models.Currency currency)
+        public override Model.ExchangeRate ExchangeRateWithCurrency(Currency.Model.Currency currency)
         {
             return Elements.ToList().Find(e => e.Contains(currency));
         }
 
-        public override List<ExchangeRate> ExchangeRatesWithCurrency(Models.Currency currency)
+        public override List<Model.ExchangeRate> ExchangeRatesWithCurrency(Currency.Model.Currency currency)
         {
             return Elements.Where(e => e.Contains(currency)).ToList();
         }

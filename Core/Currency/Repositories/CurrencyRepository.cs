@@ -1,10 +1,9 @@
-﻿using MyCryptos.Core.Database;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Repositories.Core;
+﻿using MyCryptos.Core.Abstract.Repositories;
+using MyCryptos.Core.Currency.Database;
 
-namespace MyCryptos.Core.Repositories.Currency
+namespace MyCryptos.Core.Currency.Repositories
 {
-    public abstract class CurrencyRepository : AbstractDatabaseRepository<CurrencyDBM, Models.Currency, string>
+    public abstract class CurrencyRepository : AbstractDatabaseRepository<CurrencyDBM, Model.Currency, string>
     {
         protected CurrencyRepository(int repositoryId, string name) : base(repositoryId, name, new CurrencyDatabase()) { }
     }

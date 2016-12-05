@@ -1,24 +1,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Models;
-using MyCryptos.Core.Repositories.Currency;
-using MyCryptos.Core.Repositories.ExchangeRates;
-using MyCryptos.Core.Storage;
+using MyCryptos.Core.Currency.Repositories;
+using MyCryptos.Core.Currency.Storage;
+using MyCryptos.Core.ExchangeRate.Database;
+using MyCryptos.Core.ExchangeRate.Storage;
 
-namespace MyCryptos.Core.Repositories.AvailableRates
+namespace MyCryptos.Core.ExchangeRate.Repositories
 {
     public class BittrexAvailableRatesRepository : AvailableRatesRepository
     {
-        List<ExchangeRate> Elements;
+        List<Model.ExchangeRate> Elements;
 
         public BittrexAvailableRatesRepository(string name) : base(AvailableRatesRepositoryDBM.DB_TYPE_BITTREX_REPOSITORY, name)
         {
-            Elements = new List<ExchangeRate>();
+            Elements = new List<Model.ExchangeRate>();
         }
 
-        public override bool IsAvailable(ExchangeRate element)
+        public override bool IsAvailable(Model.ExchangeRate element)
         {
             return Elements.Contains(element);
         }
@@ -30,7 +29,7 @@ namespace MyCryptos.Core.Repositories.AvailableRates
                 var repository = CurrencyStorage.Instance.RepositoryOfType<BittrexCurrencyRepository>();
                 var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == repository.Id).Select(e => e.Code);
 
-                Elements = CurrencyStorage.Instance.AllElements.Where(e => codes.Contains(e?.Code)).Select(e => new ExchangeRate(Models.Currency.BTC, e)).ToList();
+                Elements = CurrencyStorage.Instance.AllElements.Where(e => codes.Contains(e?.Code)).Select(e => new Model.ExchangeRate(Currency.Model.Currency.BTC, e)).ToList();
                 return true;
             });
         }
@@ -43,12 +42,12 @@ namespace MyCryptos.Core.Repositories.AvailableRates
             }
         }
 
-        public override ExchangeRate ExchangeRateWithCurrency(Models.Currency currency)
+        public override Model.ExchangeRate ExchangeRateWithCurrency(Currency.Model.Currency currency)
         {
             return Elements.ToList().Find(e => e.Contains(currency));
         }
 
-        public override List<ExchangeRate> ExchangeRatesWithCurrency(Models.Currency currency)
+        public override List<Model.ExchangeRate> ExchangeRatesWithCurrency(Currency.Model.Currency currency)
         {
             return Elements.Where(e => e.Contains(currency)).ToList();
         }

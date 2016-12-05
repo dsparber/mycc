@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Interfaces;
-using MyCryptos.Core.Repositories.ExchangeRates;
+using MyCryptos.Core.Abstract.Database;
+using MyCryptos.Core.ExchangeRate.Repositories;
 using SQLite;
 
-namespace MyCryptos.Core.Database.Models
+namespace MyCryptos.Core.ExchangeRate.Database
 {
     [Table("ExchangeRateRepositories")]
     public class ExchangeRateRepositoryDBM : IEntityDBM<ExchangeRateRepository, int>

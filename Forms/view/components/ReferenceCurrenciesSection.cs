@@ -1,9 +1,10 @@
 using Xamarin.Forms;
 using System.Collections.Generic;
 using System;
-using MyCryptos.Core.Helpers;
-using MyCryptos.Core.Models;
-using MyCryptos.Core.Settings;
+using MyCryptos.Core.Account.Models.Base;
+using MyCryptos.Core.ExchangeRate.Helpers;
+using MyCryptos.Core.ExchangeRate.Model;
+using MyCryptos.Core.settings;
 using MyCryptos.Forms.Resources;
 
 namespace MyCryptos.view.components

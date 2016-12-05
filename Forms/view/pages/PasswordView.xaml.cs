@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using MyCryptos.Core.Settings;
+using MyCryptos.Core.settings;
 using MyCryptos.Forms.Resources;
 using Plugin.Fingerprint;
 using Xamarin.Forms;

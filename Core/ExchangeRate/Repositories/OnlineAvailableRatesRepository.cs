@@ -1,4 +1,4 @@
-﻿namespace MyCryptos.Core.Repositories.AvailableRates
+﻿namespace MyCryptos.Core.ExchangeRate.Repositories
 {
     public abstract class OnlineAvailableRatesRepository : AvailableRatesRepository
     {

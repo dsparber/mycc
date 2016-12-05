@@ -1,9 +1,9 @@
-﻿namespace MyCryptos.Core.Enums
+﻿namespace MyCryptos.Core.Types
 {
     public enum SortDirection
     {
-        ASCENDING,
-        DESCENDING
+        Ascending,
+        Descending
     }
 }
 

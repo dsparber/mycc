@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MyCryptos.Core.Models;
-using MyCryptos.Core.Repositories.Core;
-using MyCryptos.Core.Repositories.ExchangeRates;
+using MyCryptos.Core.Abstract.Repositories;
 
-namespace MyCryptos.Core.Repositories.AvailableRates
+namespace MyCryptos.Core.ExchangeRate.Repositories
 {
-    public abstract class AvailableRatesRepository : AbstractAvailabilityRepository<ExchangeRate>
+    public abstract class AvailableRatesRepository : AbstractAvailabilityRepository<Model.ExchangeRate>
     {
         protected AvailableRatesRepository(int repositoryTypeId, string name) : base(repositoryTypeId, name) { }
 
@@ -17,9 +15,9 @@ namespace MyCryptos.Core.Repositories.AvailableRates
 
         public abstract ExchangeRateRepository ExchangeRateRepository { get; }
 
-        public abstract ExchangeRate ExchangeRateWithCurrency(Models.Currency currency);
+        public abstract Model.ExchangeRate ExchangeRateWithCurrency(Currency.Model.Currency currency);
 
-        public abstract List<ExchangeRate> ExchangeRatesWithCurrency(Models.Currency currency);
+        public abstract List<Model.ExchangeRate> ExchangeRatesWithCurrency(Currency.Model.Currency currency);
     }
 }
 

@@ -1,7 +1,7 @@
-﻿namespace MyCryptos.Core.Enums
+﻿namespace MyCryptos.Core.Types
 {
     public enum PinAction
     {
-        ENABLE, DISABLE, CHANGE
+        Enable, Disable, Change
     }
 }

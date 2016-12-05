@@ -1,8 +1,9 @@
 using System;
 using System.Linq;
-using MyCryptos.Core.Enums;
-using MyCryptos.Core.Repositories.Account;
-using MyCryptos.Core.Storage;
+using MyCryptos.Core.Account.Repositories.Base;
+using MyCryptos.Core.Account.Repositories.Implementations;
+using MyCryptos.Core.Account.Storage;
+using MyCryptos.Core.Types;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
@@ -56,7 +57,7 @@ namespace MyCryptos.Forms.view.pages
             {
                 cells.Add(new CustomViewCell { Text = I18N.NoAccounts });
             }
-            SortHelper.ApplySortOrder(cells, AccountsSection, SortOrder.NONE);
+            SortHelper.ApplySortOrder(cells, AccountsSection, SortOrder.None);
         }
 
         private async void Delete(object sender, EventArgs e)

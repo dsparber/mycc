@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Models;
+using MyCryptos.Core.ExchangeRate.Database;
 
-namespace MyCryptos.Core.Repositories.ExchangeRates
+namespace MyCryptos.Core.ExchangeRate.Repositories
 {
     public class LocalExchangeRateRepository : ExchangeRateRepository
     {

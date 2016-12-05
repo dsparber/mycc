@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Helper;
-using MyCryptos.Core.Database.Interfaces;
-using MyCryptos.Core.Models;
-using MyCryptos.Core.Repositories.Core;
+using MyCryptos.Core.Abstract.Database;
+using MyCryptos.Core.Abstract.Models;
+using MyCryptos.Core.Abstract.Repositories;
 
-namespace MyCryptos.Core.Storage
+namespace MyCryptos.Core.Abstract.Storage
 {
     public abstract class AbstractDatabaseStorage<Ta, Va, T, V, IdType> : AbstractStorage<Ta, Va> where Va : AbstractDatabaseRepository<T, V, IdType> where Ta : IEntityDBM<Va, int> where T : IEntityRepositoryIdDBM<V, IdType> where V : IPersistableWithParent<IdType>
     {

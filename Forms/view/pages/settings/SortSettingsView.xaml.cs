@@ -1,6 +1,6 @@
 ﻿using System;
-using MyCryptos.Core.Enums;
-using MyCryptos.Core.Settings;
+using MyCryptos.Core.settings;
+using MyCryptos.Core.Types;
 using MyCryptos.Forms.Messages;
 using Xamarin.Forms;
 
@@ -18,23 +18,23 @@ namespace MyCryptos.Forms.view.pages.settings
         {
             if (sender.Equals(SortOrderAlphabetical))
             {
-                ApplicationSettings.SortOrder = SortOrder.ALPHABETICAL;
+                ApplicationSettings.SortOrder = SortOrder.Alphabetical;
             }
             else if (sender.Equals(SortOrderByUnits))
             {
-                ApplicationSettings.SortOrder = SortOrder.BY_UNITS;
+                ApplicationSettings.SortOrder = SortOrder.ByUnits;
             }
             else if (sender.Equals(SortOrderByValue))
             {
-                ApplicationSettings.SortOrder = SortOrder.BY_VALUE;
+                ApplicationSettings.SortOrder = SortOrder.ByValue;
             }
             else if (sender.Equals(SortDirectionAscending))
             {
-                ApplicationSettings.SortDirection = SortDirection.ASCENDING;
+                ApplicationSettings.SortDirection = SortDirection.Ascending;
             }
             else if (sender.Equals(SortDirectionDescending))
             {
-                ApplicationSettings.SortDirection = SortDirection.DESCENDING;
+                ApplicationSettings.SortDirection = SortDirection.Descending;
             }
             Messaging.SortOrder.SendValueChanged();
             updateCheckmarks();
@@ -42,11 +42,11 @@ namespace MyCryptos.Forms.view.pages.settings
 
         void updateCheckmarks()
         {
-            SortOrderAlphabetical.ShowIcon = ApplicationSettings.SortOrder.Equals(SortOrder.ALPHABETICAL);
-            SortOrderByUnits.ShowIcon = ApplicationSettings.SortOrder.Equals(SortOrder.BY_UNITS);
-            SortOrderByValue.ShowIcon = ApplicationSettings.SortOrder.Equals(SortOrder.BY_VALUE);
-            SortDirectionAscending.ShowIcon = ApplicationSettings.SortDirection.Equals(SortDirection.ASCENDING);
-            SortDirectionDescending.ShowIcon = ApplicationSettings.SortDirection.Equals(SortDirection.DESCENDING);
+            SortOrderAlphabetical.ShowIcon = ApplicationSettings.SortOrder.Equals(SortOrder.Alphabetical);
+            SortOrderByUnits.ShowIcon = ApplicationSettings.SortOrder.Equals(SortOrder.ByUnits);
+            SortOrderByValue.ShowIcon = ApplicationSettings.SortOrder.Equals(SortOrder.ByValue);
+            SortDirectionAscending.ShowIcon = ApplicationSettings.SortDirection.Equals(SortDirection.Ascending);
+            SortDirectionDescending.ShowIcon = ApplicationSettings.SortDirection.Equals(SortDirection.Descending);
         }
     }
 }

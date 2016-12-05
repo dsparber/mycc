@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Helper;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Models;
+using MyCryptos.Core.Abstract.Database;
 using SQLite;
 
-namespace MyCryptos.Core.Database
+namespace MyCryptos.Core.Currency.Database
 {
-    public class CurrencyDatabase : AbstractDatabase<CurrencyDBM, Currency, string>
+    public class CurrencyDatabase : AbstractDatabase<CurrencyDBM, Model.Currency, string>
     {
         public override async Task<IEnumerable<CurrencyDBM>> GetAllDbObjects()
         {
@@ -24,7 +22,7 @@ namespace MyCryptos.Core.Database
             return await (await Connection).FindAsync<CurrencyDBM>(p => p.Id.Equals(id));
         }
 
-        protected override CurrencyDBM Resolve(Currency element)
+        protected override CurrencyDBM Resolve(Model.Currency element)
         {
             return new CurrencyDBM(element);
         }

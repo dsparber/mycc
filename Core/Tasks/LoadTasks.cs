@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MyCryptos.Core.Storage;
+using MyCryptos.Core.Account.Storage;
+using MyCryptos.Core.Currency.Storage;
+using MyCryptos.Core.ExchangeRate.Storage;
 
-namespace MyCryptos.Core.Tasks
+namespace MyCryptos.Core.tasks
 {
-	public static partial class ApplicationTasks
-	{
-		private static Task loadAllEverythingTask;
+    public static partial class ApplicationTasks
+    {
+        private static Task loadAllEverythingTask;
 
-		public static Task LoadEverything(Action whenFinished) => loadAllEverythingTask = loadAllEverythingTask.GetTask(async () =>
-		{
-			await CurrencyRepositoryMapStorage.Instance.FetchFast();
-			await CurrencyStorage.Instance.FetchFast();
-			await AccountStorage.Instance.FetchFast();
-			await ExchangeRateStorage.Instance.FetchFast();
-			await AvailableRatesStorage.Instance.FetchFast();
-			whenFinished();
-		});
-	}
+        public static Task LoadEverything(Action whenFinished) => loadAllEverythingTask = loadAllEverythingTask.GetTask(async () =>
+        {
+            await CurrencyRepositoryMapStorage.Instance.FetchFast();
+            await CurrencyStorage.Instance.FetchFast();
+            await AccountStorage.Instance.FetchFast();
+            await ExchangeRateStorage.Instance.FetchFast();
+            await AvailableRatesStorage.Instance.FetchFast();
+            whenFinished();
+        });
+    }
 }

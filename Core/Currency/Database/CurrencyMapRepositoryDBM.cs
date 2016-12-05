@@ -1,31 +1,31 @@
 ﻿using System.Threading.Tasks;
-using MyCryptos.Core.Database.Interfaces;
-using MyCryptos.Core.Repositories.Currency;
+using MyCryptos.Core.Abstract.Database;
+using MyCryptos.Core.Currency.Repositories;
 using SQLite;
 
-namespace MyCryptos.Core.Database.Models
+namespace MyCryptos.Core.Currency.Database
 {
-	[Table("CurrencyRepositoryMap")]
-	public class CurrencyMapRepositoryDBM : IEntityDBM<CurrencyRepositoryMap, int>
-	{
+    [Table("CurrencyRepositoryMap")]
+    public class CurrencyMapRepositoryDBM : IEntityDBM<CurrencyRepositoryMap, int>
+    {
 
-		public CurrencyMapRepositoryDBM() { }
+        public CurrencyMapRepositoryDBM() { }
 
-		public CurrencyMapRepositoryDBM(CurrencyRepositoryMap repository)
-		{
-			Id = repository.Id;
-		}
+        public CurrencyMapRepositoryDBM(CurrencyRepositoryMap repository)
+        {
+            Id = repository.Id;
+        }
 
-		[PrimaryKey, AutoIncrement, Column("_id")]
-		public int Id { get; set; }
+        [PrimaryKey, AutoIncrement, Column("_id")]
+        public int Id { get; set; }
 
-		public Task<CurrencyRepositoryMap> Resolve()
-		{
-			return Task.Factory.StartNew(() =>
-			{
-				return new CurrencyRepositoryMap { Id = Id };
-			});
-		}
-	}
+        public Task<CurrencyRepositoryMap> Resolve()
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                return new CurrencyRepositoryMap { Id = Id };
+            });
+        }
+    }
 }
 

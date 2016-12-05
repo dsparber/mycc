@@ -1,7 +1,7 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
-namespace MyCryptos.Core.Settings
+namespace MyCryptos.Core.settings
 {
     public static class Settings
     {

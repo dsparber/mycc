@@ -1,6 +1,6 @@
 ﻿using System;
-using MyCryptos.Core.Enums;
-using MyCryptos.Core.Settings;
+using MyCryptos.Core.settings;
+using MyCryptos.Core.Types;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
@@ -32,7 +32,7 @@ namespace MyCryptos.view.overlays
 
                 if (ApplicationSettings.IsPinValid(e.NewTextValue))
                 {
-                    if (pinAction == PinAction.DISABLE)
+                    if (pinAction == PinAction.Disable)
                     {
                         ApplicationSettings.Pin = null;
                         Messaging.Pin.SendValueChanged();
@@ -52,9 +52,9 @@ namespace MyCryptos.view.overlays
 
             switch (pinAction)
             {
-                case PinAction.ENABLE: Title = I18N.EnablePin; PinTable.Root.Remove(OldPinSection); break;
-                case PinAction.DISABLE: Title = I18N.DisablePin; PinTable.Root.Remove(ChangePinSection); break;
-                case PinAction.CHANGE: Title = I18N.ChangePin; break;
+                case PinAction.Enable: Title = I18N.EnablePin; PinTable.Root.Remove(OldPinSection); break;
+                case PinAction.Disable: Title = I18N.DisablePin; PinTable.Root.Remove(ChangePinSection); break;
+                case PinAction.Change: Title = I18N.ChangePin; break;
             }
         }
 
@@ -62,7 +62,7 @@ namespace MyCryptos.view.overlays
         {
             base.OnAppearing();
 
-            if (pinAction == PinAction.ENABLE)
+            if (pinAction == PinAction.Enable)
             {
                 NewPinCell.Entry.Focus();
             }
@@ -82,9 +82,9 @@ namespace MyCryptos.view.overlays
             var oldPin = OldPinCell.Entry.Text ?? string.Empty;
             var newPin = NewPinCell.Entry.Text ?? string.Empty;
 
-            var repeatOk = newPin.Equals(NewPinRepeatCell.Entry.Text) || pinAction == PinAction.DISABLE;
-            var oldPinOk = ApplicationSettings.IsPinValid(oldPin) || pinAction == PinAction.ENABLE;
-            var pinLongEnough = newPin.Length >= 4 || pinAction == PinAction.DISABLE;
+            var repeatOk = newPin.Equals(NewPinRepeatCell.Entry.Text) || pinAction == PinAction.Disable;
+            var oldPinOk = ApplicationSettings.IsPinValid(oldPin) || pinAction == PinAction.Enable;
+            var pinLongEnough = newPin.Length >= 4 || pinAction == PinAction.Disable;
 
 
             if (!oldPinOk)

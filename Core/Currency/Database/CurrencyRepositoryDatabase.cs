@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Helper;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Repositories.Currency;
+using MyCryptos.Core.Abstract.Database;
+using MyCryptos.Core.Currency.Repositories;
 using SQLite;
 
-namespace MyCryptos.Core.Database
+namespace MyCryptos.Core.Currency.Database
 {
     public class CurrencyRepositoryDatabase : AbstractDatabase<CurrencyRepositoryDBM, CurrencyRepository, int>
     {

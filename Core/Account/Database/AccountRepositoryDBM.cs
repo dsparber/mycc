@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Interfaces;
-using MyCryptos.Core.Repositories.Account;
+using MyCryptos.Core.Abstract.Database;
+using MyCryptos.Core.Account.Repositories.Base;
+using MyCryptos.Core.Account.Repositories.Implementations;
 using SQLite;
 
-namespace MyCryptos.Core.Database.Models
+namespace MyCryptos.Core.Account.Database
 {
     [Table("AccountRepositories")]
     public class AccountRepositoryDBM : IEntityDBM<AccountRepository, int>

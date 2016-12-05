@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MyCryptos.Core.Models;
-using MyCryptos.Core.Settings;
-using MyCryptos.Core.Storage;
+using MyCryptos.Core.Currency.Model;
+using MyCryptos.Core.Currency.Storage;
+using MyCryptos.Core.settings;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using MyCryptos.view.components;

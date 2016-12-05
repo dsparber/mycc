@@ -1,11 +1,11 @@
-﻿namespace MyCryptos.Core.Enums
+﻿namespace MyCryptos.Core.Types
 {
     public enum SortOrder
     {
-        ALPHABETICAL,
-        BY_VALUE,
-        BY_UNITS,
-        NONE
+        Alphabetical,
+        ByValue,
+        ByUnits,
+        None
     }
 }
 

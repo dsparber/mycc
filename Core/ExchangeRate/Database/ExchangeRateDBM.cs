@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
-using MyCryptos.Core.Database.Interfaces;
-using MyCryptos.Core.Models;
+using MyCryptos.Core.Abstract.Database;
+using MyCryptos.Core.Currency.Database;
 using SQLite;
 
-namespace MyCryptos.Core.Database.Models
+namespace MyCryptos.Core.ExchangeRate.Database
 {
     [Table("ExchangeRates")]
-    public class ExchangeRateDBM : IEntityRepositoryIdDBM<ExchangeRate, string>
+    public class ExchangeRateDBM : IEntityRepositoryIdDBM<Model.ExchangeRate, string>
     {
         public ExchangeRateDBM() { }
 
@@ -32,13 +32,13 @@ namespace MyCryptos.Core.Database.Models
 
         public int ParentId { get; set; }
 
-        public async Task<ExchangeRate> Resolve()
+        public async Task<Model.ExchangeRate> Resolve()
         {
             var db = new CurrencyDatabase();
-            return new ExchangeRate(await db.Get(ReferenceCurrencyCode), await db.Get(SecondaryCurrencyCode), Rate) { Id = Id, ParentId = ParentId };
+            return new Model.ExchangeRate(await db.Get(ReferenceCurrencyCode), await db.Get(SecondaryCurrencyCode), Rate) { Id = Id, ParentId = ParentId };
         }
 
-        public ExchangeRateDBM(ExchangeRate exchangeRate)
+        public ExchangeRateDBM(Model.ExchangeRate exchangeRate)
         {
 
             Id = exchangeRate.Id;

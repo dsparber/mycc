@@ -1,4 +1,5 @@
-using MyCryptos.Core.Models;
+using MyCryptos.Core.Account.Models.Base;
+using MyCryptos.Core.ExchangeRate.Model;
 using MyCryptos.Forms.Resources;
 
 namespace MyCryptos.view.components

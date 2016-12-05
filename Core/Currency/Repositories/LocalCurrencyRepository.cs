@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Models;
+using MyCryptos.Core.Currency.Database;
 
-namespace MyCryptos.Core.Repositories.Currency
+namespace MyCryptos.Core.Currency.Repositories
 {
     public class LocalCurrencyRepository : CurrencyRepository
     {
@@ -20,7 +20,7 @@ namespace MyCryptos.Core.Repositories.Currency
             return await FetchOnline();
         }
 
-        protected override Func<Models.Currency, bool> DatabaseFilter
+        protected override Func<Model.Currency, bool> DatabaseFilter
         {
             get { return v => true; }
         }

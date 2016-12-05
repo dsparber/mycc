@@ -1,7 +1,7 @@
-﻿namespace MyCryptos.Core.Models
+﻿namespace MyCryptos.Core.Abstract.Models
 {
-	public interface IPersistableWithParent<IdType> : Persistable<IdType>
-	{
-		int ParentId { get; set; }
-	}
+    public interface IPersistableWithParent<IdType> : Persistable<IdType>
+    {
+        int ParentId { get; set; }
+    }
 }

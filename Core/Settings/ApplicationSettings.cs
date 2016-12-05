@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MyCryptos.Core.Enums;
-using MyCryptos.Core.Models;
+using MyCryptos.Core.Types;
 using Newtonsoft.Json;
 using PCLCrypto;
-using Xamarin.Forms;
 
-namespace MyCryptos.Core.Settings
+namespace MyCryptos.Core.settings
 {
     public static class ApplicationSettings
     {
@@ -29,12 +27,12 @@ namespace MyCryptos.Core.Settings
             }
         }
 
-        public static Currency BaseCurrency
+        public static Currency.Model.Currency BaseCurrency
         {
             get
             {
-                var json = Settings.Get(Settings.KeyBaseCurrency, JsonConvert.SerializeObject(Currency.BTC));
-                var currency = JsonConvert.DeserializeObject<Currency>(json);
+                var json = Settings.Get(Settings.KeyBaseCurrency, JsonConvert.SerializeObject(Currency.Model.Currency.BTC));
+                var currency = JsonConvert.DeserializeObject<Currency.Model.Currency>(json);
                 return currency;
             }
             set
@@ -58,16 +56,16 @@ namespace MyCryptos.Core.Settings
             return hash.Equals(Hash(pin));
         }
 
-        public static List<Currency> ReferenceCurrencies
+        public static List<Currency.Model.Currency> ReferenceCurrencies
         {
             get
             {
-                var currencies = new List<Currency> { Currency.BTC, Currency.EUR, Currency.USD };
+                var currencies = new List<Currency.Model.Currency> { Currency.Model.Currency.BTC, Currency.Model.Currency.EUR, Currency.Model.Currency.USD };
 
                 var defaultValue = JsonConvert.SerializeObject(currencies);
 
                 var json = Settings.Get(Settings.KeyReferenceCurrencies, defaultValue);
-                var data = JsonConvert.DeserializeObject<List<Currency>>(json);
+                var data = JsonConvert.DeserializeObject<List<Currency.Model.Currency>>(json);
                 data.RemoveAll(c => c.Equals(BaseCurrency));
                 data.Add(BaseCurrency);
                 return data.OrderBy(c => c.Code).ToList();
@@ -82,7 +80,7 @@ namespace MyCryptos.Core.Settings
         {
             get
             {
-                var defaultValue = SortOrder.ALPHABETICAL.ToString();
+                var defaultValue = SortOrder.Alphabetical.ToString();
                 var stringValue = Settings.Get(Settings.KeySortOrder, defaultValue);
                 return (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
             }
@@ -96,7 +94,7 @@ namespace MyCryptos.Core.Settings
         {
             get
             {
-                var defaultValue = SortDirection.ASCENDING.ToString();
+                var defaultValue = SortDirection.Ascending.ToString();
                 var stringValue = Settings.Get(Settings.KeySortDirection, defaultValue);
                 return (SortDirection)Enum.Parse(typeof(SortDirection), stringValue);
             }

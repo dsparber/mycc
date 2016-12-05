@@ -1,6 +1,7 @@
 using System;
+using MyCryptos.Core.Abstract.Models;
 
-namespace MyCryptos.Core.Models
+namespace MyCryptos.Core.ExchangeRate.Model
 {
 
     /// <summary>
@@ -15,7 +16,7 @@ namespace MyCryptos.Core.Models
         /// <param name="referenceCurrency">Reference currency.</param>
         /// <param name="secondaryCurrency">Secondary currency.</param>
         /// <param name="rate">Exchange rate.</param>
-        public ExchangeRate(Currency referenceCurrency, Currency secondaryCurrency, decimal? rate)
+        public ExchangeRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency, decimal? rate)
         {
             if (referenceCurrency == null || secondaryCurrency == null)
             {
@@ -31,7 +32,7 @@ namespace MyCryptos.Core.Models
         /// </summary>
         /// <param name="referenceCurrency">Reference currency.</param>
         /// <param name="secondaryCurrency">Secondary currency.</param>
-        public ExchangeRate(Currency referenceCurrency, Currency secondaryCurrency) : this(referenceCurrency, secondaryCurrency, null) { }
+        public ExchangeRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency) : this(referenceCurrency, secondaryCurrency, null) { }
 
         /// <summary>
         /// Gets or sets the identifier.
@@ -52,12 +53,12 @@ namespace MyCryptos.Core.Models
         /// <summary>
         /// The reference currency.
         /// </summary>
-        public Currency ReferenceCurrency { get; private set; }
+        public Currency.Model.Currency ReferenceCurrency { get; private set; }
 
         /// <summary>
         /// The secondary currency.
         /// </summary>
-        public Currency SecondaryCurrency { get; private set; }
+        public Currency.Model.Currency SecondaryCurrency { get; private set; }
 
         /// <summary>
         /// The rate, can not be not null. No value equals 0
@@ -109,7 +110,7 @@ namespace MyCryptos.Core.Models
         /// Returns if the exchange rate contains the specified currency.
         /// </summary>
         /// <param name="currency">The specified currency.</param>
-        public bool Contains(Currency currency)
+        public bool Contains(Currency.Model.Currency currency)
         {
             return (ReferenceCurrency != null && ReferenceCurrency.Equals(currency)) || (SecondaryCurrency != null && SecondaryCurrency.Equals(currency));
         }

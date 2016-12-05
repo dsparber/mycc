@@ -1,6 +1,6 @@
 using System;
 
-namespace MyCryptos.Core.Models
+namespace MyCryptos.Core.Account.Models.Base
 {
     /// <summary>
     /// Simple Model for Money, includes basic arithmetics
@@ -14,7 +14,7 @@ namespace MyCryptos.Core.Models
         /// </summary>
         /// <param name="amount">Units of the currency for initialisation</param>
         /// <param name="currency">Desired currency</param>
-        public Money(decimal amount, Currency currency)
+        public Money(decimal amount, Currency.Model.Currency currency)
         {
             if (currency == null)
             {
@@ -28,13 +28,13 @@ namespace MyCryptos.Core.Models
         /// Initializes a new instance of the <see cref="T:Money"/> class. The amount will be 0
         /// </summary>
         /// <param name="currency">Desired currency</param>
-        public Money(Currency currency) : this(0, currency) { }
+        public Money(Currency.Model.Currency currency) : this(0, currency) { }
 
         /// <summary>
         /// Holds the currency of the account
         /// </summary>
         /// <value>The currency to be set</value>
-        public Currency Currency { get; private set; }
+        public Currency.Model.Currency Currency { get; private set; }
 
         /// <summary>
         /// The current amount

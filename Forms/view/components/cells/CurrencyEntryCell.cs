@@ -3,7 +3,8 @@ using Xamarin.Forms;
 using constants;
 using MyCryptos.view.overlays;
 using System.Collections.Generic;
-using MyCryptos.Core.Models;
+using MyCryptos.Core.Account.Models.Base;
+using MyCryptos.Core.Currency.Model;
 using MyCryptos.Forms.Resources;
 
 namespace MyCryptos.view.components

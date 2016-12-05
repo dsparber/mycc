@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Interfaces;
-using MyCryptos.Core.Models;
+using MyCryptos.Core.Abstract.Database;
 using SQLite;
 
-namespace MyCryptos.Core.Database.Models
+namespace MyCryptos.Core.Currency.Database
 {
     [Table("Currencies")]
-    public class CurrencyDBM : IEntityRepositoryIdDBM<Currency, string>
+    public class CurrencyDBM : IEntityRepositoryIdDBM<Model.Currency, string>
     {
         public CurrencyDBM() { }
 
@@ -23,15 +22,15 @@ namespace MyCryptos.Core.Database.Models
         [PrimaryKey, Column("_id")]
         public string Id { get; set; }
 
-        public CurrencyDBM(Currency currency)
+        public CurrencyDBM(Model.Currency currency)
         {
             Name = currency.Name;
             Id = currency.Code;
         }
 
-        public Task<Currency> Resolve()
+        public Task<Model.Currency> Resolve()
         {
-            return Task.Factory.StartNew(() => new Currency(Id, Name));
+            return Task.Factory.StartNew(() => new Model.Currency(Id, Name));
         }
     }
 }

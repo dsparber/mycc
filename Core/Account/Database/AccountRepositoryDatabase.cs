@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Helper;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Repositories.Account;
+using MyCryptos.Core.Abstract.Database;
+using MyCryptos.Core.Account.Repositories.Base;
 using SQLite;
 
-namespace MyCryptos.Core.Database
+namespace MyCryptos.Core.Account.Database
 {
     public class AccountRepositoryDatabase : AbstractDatabase<AccountRepositoryDBM, AccountRepository, int>
     {

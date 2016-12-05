@@ -3,11 +3,10 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Models;
+using MyCryptos.Core.ExchangeRate.Database;
 using Newtonsoft.Json.Linq;
 
-namespace MyCryptos.Core.Repositories.ExchangeRates
+namespace MyCryptos.Core.ExchangeRate.Repositories
 {
     public class CryptonatorExchangeRateRepository : OnlineExchangeRateRepository
     {
@@ -26,7 +25,7 @@ namespace MyCryptos.Core.Repositories.ExchangeRates
             client.MaxResponseContentBufferSize = BUFFER_SIZE;
         }
 
-        protected override async Task GetFetchTask(ExchangeRate exchangeRate)
+        protected override async Task GetFetchTask(Model.ExchangeRate exchangeRate)
         {
             var uri = new Uri(string.Format(URL_RATE, ToUrl(exchangeRate)));
             var response = await client.GetAsync(uri);
@@ -44,7 +43,7 @@ namespace MyCryptos.Core.Repositories.ExchangeRates
             }
         }
 
-        static string ToUrl(ExchangeRate exchangeRate)
+        static string ToUrl(Model.ExchangeRate exchangeRate)
         {
             return exchangeRate.ReferenceCurrency.Code.ToLower() + "-" + exchangeRate.SecondaryCurrency.Code.ToLower();
         }

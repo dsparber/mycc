@@ -1,4 +1,4 @@
-using MyCryptos.Core.Repositories.Account;
+using MyCryptos.Core.Account.Repositories.Base;
 
 namespace MyCryptos.view.addrepositoryviews
 {

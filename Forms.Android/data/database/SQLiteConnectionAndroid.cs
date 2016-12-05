@@ -2,7 +2,7 @@
 using SQLite;
 using Xamarin.Forms;
 using data.database;
-using MyCryptos.Core.Database.Interfaces;
+using MyCryptos.Core.Abstract.Database;
 
 [assembly: Dependency(typeof(SQLiteConnectionAndroid))]
 namespace data.database

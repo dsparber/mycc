@@ -1,11 +1,11 @@
 using Newtonsoft.Json;
 
-namespace MyCryptos.Core.Repositories.Account
+namespace MyCryptos.Core.Account.Repositories.Base
 {
     public abstract class AddressAndCoinAccountRepository : AddressAccountRepository
     {
-        private readonly Models.Currency coin;
-        protected sealed override Models.Currency Currency => coin;
+        private readonly Currency.Model.Currency coin;
+        protected sealed override Currency.Model.Currency Currency => coin;
 
         public override string Data { get { return JsonConvert.SerializeObject(new KeyData(coin, Address)); } }
 
@@ -17,7 +17,7 @@ namespace MyCryptos.Core.Repositories.Account
             Address = keyData.address;
         }
 
-        protected AddressAndCoinAccountRepository(int type, string name, Models.Currency coin, string address) : base(type, name, address)
+        protected AddressAndCoinAccountRepository(int type, string name, Currency.Model.Currency coin, string address) : base(type, name, address)
         {
             this.coin = coin;
         }
@@ -26,9 +26,9 @@ namespace MyCryptos.Core.Repositories.Account
         {
 
             public string address;
-            public Models.Currency coin;
+            public Currency.Model.Currency coin;
 
-            public KeyData(Models.Currency coin, string address)
+            public KeyData(Currency.Model.Currency coin, string address)
             {
                 this.coin = coin;
                 this.address = address;

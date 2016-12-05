@@ -1,4 +1,5 @@
-using MyCryptos.Core.Repositories.Account;
+using MyCryptos.Core.Account.Repositories.Base;
+using MyCryptos.Core.Account.Repositories.Implementations;
 using MyCryptos.Forms.Resources;
 using Xamarin.Forms;
 using MyCryptos.view.components;

@@ -1,13 +1,12 @@
 using System.Linq;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Models;
-using MyCryptos.Core.Repositories.ExchangeRates;
+using MyCryptos.Core.Abstract.Storage;
+using MyCryptos.Core.ExchangeRate.Database;
+using MyCryptos.Core.ExchangeRate.Repositories;
 
-namespace MyCryptos.Core.Storage
+namespace MyCryptos.Core.ExchangeRate.Storage
 {
-    public class ExchangeRateStorage : AbstractDatabaseStorage<ExchangeRateRepositoryDBM, ExchangeRateRepository, ExchangeRateDBM, ExchangeRate, string>
+    public class ExchangeRateStorage : AbstractDatabaseStorage<ExchangeRateRepositoryDBM, ExchangeRateRepository, ExchangeRateDBM, Model.ExchangeRate, string>
     {
         public ExchangeRateStorage() : base(new ExchangeRateRepositoryDatabase()) { }
 

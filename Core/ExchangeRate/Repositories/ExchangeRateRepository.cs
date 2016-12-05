@@ -1,12 +1,10 @@
 using System.Threading.Tasks;
-using MyCryptos.Core.Database;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Models;
-using MyCryptos.Core.Repositories.Core;
+using MyCryptos.Core.Abstract.Repositories;
+using MyCryptos.Core.ExchangeRate.Database;
 
-namespace MyCryptos.Core.Repositories.ExchangeRates
+namespace MyCryptos.Core.ExchangeRate.Repositories
 {
-    public abstract class ExchangeRateRepository : AbstractDatabaseRepository<ExchangeRateDBM, ExchangeRate, string>
+    public abstract class ExchangeRateRepository : AbstractDatabaseRepository<ExchangeRateDBM, Model.ExchangeRate, string>
     {
         protected ExchangeRateRepository(int repositoryId, string name) : base(repositoryId, name, new ExchangeRateDatabase()) { }
 

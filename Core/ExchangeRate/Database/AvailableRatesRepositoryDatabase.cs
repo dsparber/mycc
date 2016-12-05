@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Helper;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Repositories.AvailableRates;
+using MyCryptos.Core.Abstract.Database;
+using MyCryptos.Core.ExchangeRate.Repositories;
 using SQLite;
 
-namespace MyCryptos.Core.Database
+namespace MyCryptos.Core.ExchangeRate.Database
 {
     public class AvailableRatesRepositoryDatabase : AbstractDatabase<AvailableRatesRepositoryDBM, AvailableRatesRepository, int>
     {

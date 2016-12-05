@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Models;
+using MyCryptos.Core.Currency.Database;
 using Newtonsoft.Json.Linq;
 
-namespace MyCryptos.Core.Repositories.Currency
+namespace MyCryptos.Core.Currency.Repositories
 {
     class CryptoIdCurrencyRepository : OnlineCurrencyRepository
     {
@@ -23,7 +23,7 @@ namespace MyCryptos.Core.Repositories.Currency
             client.MaxResponseContentBufferSize = BUFFER_SIZE;
         }
 
-        protected async override Task<IEnumerable<Models.Currency>> GetCurrencies()
+        protected async override Task<IEnumerable<Model.Currency>> GetCurrencies()
         {
             var uri = new Uri(URL_CURRENCY_LIST);
 
@@ -35,12 +35,12 @@ namespace MyCryptos.Core.Repositories.Currency
                 var content = await response.Content.ReadAsStringAsync();
                 var json = JObject.Parse(content);
 
-                var currentElements = new List<Models.Currency>();
+                var currentElements = new List<Model.Currency>();
 
                 foreach (var key in json.Properties().Select(p => p.Name))
                 {
                     var name = (string)(json[key] as JObject)[JSON_KEY_NAME];
-                    var c = new Models.Currency(key, name);
+                    var c = new Model.Currency(key, name);
                     currentElements.Add(c);
                 }
                 await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(e => Remove(e)));

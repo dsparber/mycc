@@ -1,13 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Models;
-using MyCryptos.Core.Repositories.Currency;
+using MyCryptos.Core.Abstract.Storage;
+using MyCryptos.Core.Currency.Database;
+using MyCryptos.Core.Currency.Repositories;
 
-namespace MyCryptos.Core.Storage
+namespace MyCryptos.Core.Currency.Storage
 {
-    public class CurrencyStorage : AbstractDatabaseStorage<CurrencyRepositoryDBM, CurrencyRepository, CurrencyDBM, Currency, string>
+    public class CurrencyStorage : AbstractDatabaseStorage<CurrencyRepositoryDBM, CurrencyRepository, CurrencyDBM, Model.Currency, string>
     {
         public CurrencyStorage() : base(new CurrencyRepositoryDatabase()) { }
 
@@ -35,7 +34,7 @@ namespace MyCryptos.Core.Storage
             }
         }
 
-        public Currency GetByString(string s)
+        public Model.Currency GetByString(string s)
         {
             return AllElements.Find(c => string.Equals(s, c.Code, StringComparison.OrdinalIgnoreCase) || string.Equals(s, c.Name, StringComparison.OrdinalIgnoreCase));
         }

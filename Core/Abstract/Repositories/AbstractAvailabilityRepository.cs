@@ -1,4 +1,4 @@
-﻿namespace MyCryptos.Core.Repositories.Core
+﻿namespace MyCryptos.Core.Abstract.Repositories
 {
     public abstract class AbstractAvailabilityRepository<V> : AbstractRepository
     {

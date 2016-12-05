@@ -1,6 +1,6 @@
 ﻿using System;
-using MyCryptos.Core.Enums;
-using MyCryptos.Core.Settings;
+using MyCryptos.Core.settings;
+using MyCryptos.Core.Types;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.view.overlays;
@@ -63,17 +63,17 @@ namespace MyCryptos.Forms.view.pages.settings
 
         private void EnablePin(object sender, EventArgs e)
         {
-            Navigation.PushOrPushModal(new PinOverlay(PinAction.ENABLE));
+            Navigation.PushOrPushModal(new PinOverlay(PinAction.Enable));
         }
 
         private void DisablePin(object sender, EventArgs e)
         {
-            Navigation.PushOrPushModal(new PinOverlay(PinAction.DISABLE));
+            Navigation.PushOrPushModal(new PinOverlay(PinAction.Disable));
         }
 
         private void ChangePin(object sender, EventArgs e)
         {
-            Navigation.PushOrPushModal(new PinOverlay(PinAction.CHANGE));
+            Navigation.PushOrPushModal(new PinOverlay(PinAction.Change));
         }
     }
 }

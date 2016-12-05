@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace MyCryptos.Core.Repositories.Account
+namespace MyCryptos.Core.Account.Repositories.Base
 {
     public abstract class OnlineAccountRepository : AccountRepository
     {

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Models;
+using MyCryptos.Core.Currency.Database;
 using Newtonsoft.Json.Linq;
 
-namespace MyCryptos.Core.Repositories.Currency
+namespace MyCryptos.Core.Currency.Repositories
 {
     public class CryptonatorCurrencyRepository : OnlineCurrencyRepository
     {
@@ -25,7 +25,7 @@ namespace MyCryptos.Core.Repositories.Currency
             client.MaxResponseContentBufferSize = BUFFER_SIZE;
         }
 
-        protected async override Task<IEnumerable<Models.Currency>> GetCurrencies()
+        protected async override Task<IEnumerable<Model.Currency>> GetCurrencies()
         {
             var uri = new Uri(URL_CURRENCY_LIST);
 
@@ -37,13 +37,13 @@ namespace MyCryptos.Core.Repositories.Currency
                 var json = JObject.Parse(content);
                 var result = (JArray)json[CURRENCY_LIST_RESULT];
 
-                var currentElements = new List<Models.Currency>();
+                var currentElements = new List<Model.Currency>();
 
                 foreach (var token in result)
                 {
                     var name = (string)token[CURRENCY_LIST_RESULT_NAME];
                     var code = (string)token[CURRENCY_LIST_RESULT_CURRENCY];
-                    var c = new Models.Currency(code, name);
+                    var c = new Model.Currency(code, name);
 
                     currentElements.Add(c);
                 }

@@ -1,6 +1,6 @@
 using System;
-using MyCryptos.Core.Enums;
-using MyCryptos.Core.Settings;
+using MyCryptos.Core.settings;
+using MyCryptos.Core.Types;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 
@@ -35,15 +35,15 @@ namespace MyCryptos.Forms.view.pages.settings
             var order = string.Empty;
             switch (ApplicationSettings.SortOrder)
             {
-                case SortOrder.ALPHABETICAL: order = I18N.Alphabetical; break;
-                case SortOrder.BY_UNITS: order = I18N.ByUnits; break;
-                case SortOrder.BY_VALUE: order = I18N.ByValue; break;
+                case SortOrder.Alphabetical: order = I18N.Alphabetical; break;
+                case SortOrder.ByUnits: order = I18N.ByUnits; break;
+                case SortOrder.ByValue: order = I18N.ByValue; break;
             }
             var direction = string.Empty;
             switch (ApplicationSettings.SortDirection)
             {
-                case SortDirection.ASCENDING: direction = I18N.Ascending; break;
-                case SortDirection.DESCENDING: direction = I18N.Descending; break;
+                case SortDirection.Ascending: direction = I18N.Ascending; break;
+                case SortDirection.Descending: direction = I18N.Descending; break;
             }
             SortingCell.Detail = $"{order} ({direction})";
         }

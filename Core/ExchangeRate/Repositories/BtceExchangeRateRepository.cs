@@ -2,11 +2,10 @@ using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MyCryptos.Core.Database.Models;
-using MyCryptos.Core.Models;
+using MyCryptos.Core.ExchangeRate.Database;
 using Newtonsoft.Json.Linq;
 
-namespace MyCryptos.Core.Repositories.ExchangeRates
+namespace MyCryptos.Core.ExchangeRate.Repositories
 {
     public class BtceExchangeRateRepository : OnlineExchangeRateRepository
     {
@@ -23,7 +22,7 @@ namespace MyCryptos.Core.Repositories.ExchangeRates
             client.MaxResponseContentBufferSize = BUFFER_SIZE;
         }
 
-        protected async override Task GetFetchTask(ExchangeRate exchangeRate)
+        protected async override Task GetFetchTask(Model.ExchangeRate exchangeRate)
         {
             var uri = new Uri(string.Format(URL, RateToUrl(exchangeRate)));
             var response = await client.GetAsync(uri);
@@ -38,7 +37,7 @@ namespace MyCryptos.Core.Repositories.ExchangeRates
             }
         }
 
-        string RateToUrl(ExchangeRate exchangeRate)
+        string RateToUrl(Model.ExchangeRate exchangeRate)
         {
             return exchangeRate.ReferenceCurrency.Code.ToLower() + "_" + exchangeRate.SecondaryCurrency.Code.ToLower();
         }
