@@ -3,9 +3,9 @@ using MyCryptos.Core.Models;
 
 namespace MyCryptos.Core.Database.Interfaces
 {
-	public interface IEntityRepositoryIdDBM<T, IDType> : IEntityDBM<T, IDType> where T : PersistableRepositoryElement<IDType>
+	public interface IEntityRepositoryIdDBM<T, IDType> : IEntityDBM<T, IDType> where T : IPersistableWithParent<IDType>
 	{
-		int RepositoryId { get; set; }
+		int ParentId { get; set; }
 	}
 }
 

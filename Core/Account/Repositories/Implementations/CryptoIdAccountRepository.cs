@@ -20,7 +20,7 @@ namespace MyCryptos.Core.Repositories.Account
 			get
 			{
 				var id = CurrencyStorage.Instance.RepositoryOfType<CryptoIdCurrencyRepository>().Id;
-				var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.RepositoryId == id).Select(e => e.Code);
+				var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == id).Select(e => e.Code);
 				return CurrencyStorage.Instance.AllElements.Where(c => codes.Any(x => x.Equals(c?.Code)));
 			}
 		}

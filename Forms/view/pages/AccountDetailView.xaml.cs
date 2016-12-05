@@ -92,7 +92,7 @@ namespace MyCryptos.Forms.view.pages
 
 			account.Name = AccountName.Text;
 
-			account = new LocalAccount(account.Id, account.Name, currencyEntryCell.SelectedMoney, account.RepositoryId);
+			account = new LocalAccount(account.Id, account.Name, currencyEntryCell.SelectedMoney, account.ParentId);
 			await repository.Update(account);
 
 			Messaging.UpdatingAccounts.SendFinished();

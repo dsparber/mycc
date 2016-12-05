@@ -135,7 +135,7 @@ namespace MyCryptos.Core.Helpers
             {
                 if (!r.IsAvailable(exchangeRate)) continue;
 
-                exchangeRate.RepositoryId = r.ExchangeRateRepository.Id;
+                exchangeRate.ParentId = r.ExchangeRateRepository.Id;
                 return r.ExchangeRateRepository.AddOrUpdate(exchangeRate);
             }
             return Task.Factory.StartNew(() => { });

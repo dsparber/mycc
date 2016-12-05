@@ -38,9 +38,9 @@ namespace MyCryptos.Core.Repositories.Currency
                 }
                 await CurrencyStorage.Instance.LocalRepository.AddOrUpdate(c);
 
-                var mapEntry = new CurrencyMapDBM { Code = c.Code, RepositoryId = Id };
+                var mapEntry = new CurrencyMapDBM { Code = c.Code, ParentId = Id };
                 var all = CurrencyRepositoryMapStorage.Instance.AllElements;
-                var existingMapEntry = all.Find(e => e.Code.Equals(c.Code) && e.RepositoryId == Id);
+                var existingMapEntry = all.Find(e => e.Code.Equals(c.Code) && e.ParentId == Id);
 
                 mapElements.Add(existingMapEntry ?? mapEntry);
 
@@ -50,9 +50,9 @@ namespace MyCryptos.Core.Repositories.Currency
                 }
             }
 
-            var toDelete = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.RepositoryId == Id).Where(e => !mapElements.Contains(e));
+            var toDelete = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == Id).Where(e => !mapElements.Contains(e));
             await Task.WhenAll(toDelete.Select(e => CurrencyRepositoryMapStorage.Instance.LocalRepository.Remove(e)));
-            await Task.WhenAll(Elements.Where(e => toDelete.Contains(new CurrencyMapDBM { Code = e.Code, RepositoryId = Id })).Select(Remove));
+            await Task.WhenAll(Elements.Where(e => toDelete.Contains(new CurrencyMapDBM { Code = e.Code, ParentId = Id })).Select(Remove));
 
             LastFetch = DateTime.Now;
             return true;

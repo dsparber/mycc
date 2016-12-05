@@ -23,15 +23,5 @@ namespace MyCryptos.Core.Account.Models.Implementations
 		{
 			throw new NotImplementedException();
 		}
-
-		public override Task LoadBalanceFromDatabase()
-		{
-			throw new NotImplementedException();
-		}
-
-		public override Task LoadTransactionsFromDatabase()
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

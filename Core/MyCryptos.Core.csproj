@@ -113,7 +113,7 @@
     <Compile Include="Abstract\Database\ISQLiteConnection.cs" />
     <Compile Include="ExchangeRate\Helpers\ExchangeRateHelper.cs" />
     <Compile Include="Abstract\Models\Persistable.cs" />
-    <Compile Include="Abstract\Models\PersistableRepositoryElement.cs" />
+    <Compile Include="Abstract\Models\IPersistableWithParent.cs" />
     <Compile Include="Abstract\Repositories\AbstractAvailabilityRepository.cs" />
     <Compile Include="Abstract\Repositories\AbstractDatabaseRepository.cs" />
     <Compile Include="Abstract\Repositories\AbstractRepository.cs" />
@@ -130,6 +130,8 @@
     <Compile Include="Account\Models\Implementations\BlockExpertsAccount.cs" />
     <Compile Include="Account\Models\Implementations\CryptoIdAccount.cs" />
     <Compile Include="Account\Models\Base\OnlineFunctionalAccount.cs" />
+    <Compile Include="Account\Database\TransactionDbm.cs" />
+    <Compile Include="Account\Database\TransactionDatabase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

@@ -12,7 +12,7 @@ namespace MyCryptos.Core.Database.Models
         public CurrencyDBM() { }
 
         [Ignore]
-        public int RepositoryId
+        public int ParentId
         {
             get { throw new NotSupportedException(); }
             set { throw new NotSupportedException(); }

@@ -3,15 +3,20 @@ using MyCryptos.Core.Models;
 
 namespace MyCryptos.Core.Account.Models
 {
-	public class Transaction
+	public class Transaction : IPersistableWithParent<string>
 	{
 		public readonly DateTime Timestamp;
 		public readonly Money Money;
 
-		public Transaction(DateTime dateTime, Money money)
+		public int ParentId { get; set; }
+		public string Id { get; set; }
+
+		public Transaction(string id, DateTime dateTime, Money money, int accountId)
 		{
 			Timestamp = dateTime;
 			Money = money;
+			Id = id;
+			ParentId = accountId;
 		}
 	}
 }

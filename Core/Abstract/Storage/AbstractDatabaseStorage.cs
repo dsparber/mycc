@@ -9,7 +9,7 @@ using MyCryptos.Core.Repositories.Core;
 
 namespace MyCryptos.Core.Storage
 {
-    public abstract class AbstractDatabaseStorage<Ta, Va, T, V, IdType> : AbstractStorage<Ta, Va> where Va : AbstractDatabaseRepository<T, V, IdType> where Ta : IEntityDBM<Va, int> where T : IEntityRepositoryIdDBM<V, IdType> where V : PersistableRepositoryElement<IdType>
+    public abstract class AbstractDatabaseStorage<Ta, Va, T, V, IdType> : AbstractStorage<Ta, Va> where Va : AbstractDatabaseRepository<T, V, IdType> where Ta : IEntityDBM<Va, int> where T : IEntityRepositoryIdDBM<V, IdType> where V : IPersistableWithParent<IdType>
     {
         protected AbstractDatabaseStorage(AbstractDatabase<Ta, Va, int> database) : base(database) { }
 

@@ -23,7 +23,7 @@ namespace MyCryptos.Core.Repositories.AvailableRates
             return Task.Factory.StartNew(() =>
             {
                 var repository = CurrencyStorage.Instance.RepositoryOfType<CryptonatorCurrencyRepository>();
-                var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.RepositoryId == repository.Id).Select(e => e.Code);
+                var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == repository.Id).Select(e => e.Code);
 
                 Currencies = CurrencyStorage.Instance.AllElements.Where(e => codes.Contains(e?.Code)).ToList();
                 return true;

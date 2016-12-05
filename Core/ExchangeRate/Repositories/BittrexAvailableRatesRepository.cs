@@ -28,7 +28,7 @@ namespace MyCryptos.Core.Repositories.AvailableRates
             return Task.Factory.StartNew(() =>
             {
                 var repository = CurrencyStorage.Instance.RepositoryOfType<BittrexCurrencyRepository>();
-                var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.RepositoryId == repository.Id).Select(e => e.Code);
+                var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == repository.Id).Select(e => e.Code);
 
                 Elements = CurrencyStorage.Instance.AllElements.Where(e => codes.Contains(e?.Code)).Select(e => new ExchangeRate(Models.Currency.BTC, e)).ToList();
                 return true;

@@ -33,7 +33,7 @@ namespace MyCryptos.view.overlays
             if (type != null)
             {
                 var ids = CurrencyStorage.Instance.RepositoriesOfType(type).Select(e => e.Id);
-                var currencyMapCodes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => ids.Contains(e.RepositoryId)).Select(e => e.Code);
+                var currencyMapCodes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => ids.Contains(e.ParentId)).Select(e => e.Code);
                 allElements.RemoveAll(e => currencyMapCodes.Contains(e.Code));
             }
 

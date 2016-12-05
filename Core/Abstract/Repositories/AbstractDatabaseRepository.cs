@@ -9,7 +9,7 @@ using MyCryptos.Core.Models;
 
 namespace MyCryptos.Core.Repositories.Core
 {
-	public abstract class AbstractDatabaseRepository<TDatabaseModel, TModel, TId> : AbstractRepository where TDatabaseModel : IEntityRepositoryIdDBM<TModel, TId> where TModel : PersistableRepositoryElement<TId>
+	public abstract class AbstractDatabaseRepository<TDatabaseModel, TModel, TId> : AbstractRepository where TDatabaseModel : IEntityRepositoryIdDBM<TModel, TId> where TModel : IPersistableWithParent<TId>
 	{
 		List<TModel> elements;
 
@@ -31,7 +31,7 @@ namespace MyCryptos.Core.Repositories.Core
 
 		protected virtual Func<TModel, bool> DatabaseFilter
 		{
-			get { return v => v.RepositoryId == Id; }
+			get { return v => v.ParentId == Id; }
 		}
 
 		protected virtual async Task<bool> FetchFromDatabase()

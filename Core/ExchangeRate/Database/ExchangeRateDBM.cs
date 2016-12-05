@@ -30,12 +30,12 @@ namespace MyCryptos.Core.Database.Models
 
         public decimal? Rate { get; set; }
 
-        public int RepositoryId { get; set; }
+        public int ParentId { get; set; }
 
         public async Task<ExchangeRate> Resolve()
         {
             var db = new CurrencyDatabase();
-            return new ExchangeRate(await db.Get(ReferenceCurrencyCode), await db.Get(SecondaryCurrencyCode), Rate) { Id = Id, RepositoryId = RepositoryId };
+            return new ExchangeRate(await db.Get(ReferenceCurrencyCode), await db.Get(SecondaryCurrencyCode), Rate) { Id = Id, ParentId = ParentId };
         }
 
         public ExchangeRateDBM(ExchangeRate exchangeRate)
@@ -53,7 +53,7 @@ namespace MyCryptos.Core.Database.Models
             }
 
             Rate = exchangeRate.Rate;
-            RepositoryId = exchangeRate.RepositoryId;
+            ParentId = exchangeRate.ParentId;
         }
     }
 }

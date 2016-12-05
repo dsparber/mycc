@@ -6,7 +6,7 @@ namespace MyCryptos.Core.Models
     /// <summary>
     /// Simple exchange rate model
     /// </summary>
-    public class ExchangeRate : PersistableRepositoryElement<string>
+    public class ExchangeRate : IPersistableWithParent<string>
     {
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace MyCryptos.Core.Models
         /// Gets or sets the repository identifier.
         /// </summary>
         /// <value>The identifier.</value>
-        public int RepositoryId { get; set; }
+        public int ParentId { get; set; }
 
         /// <summary>
         /// The reference currency.
@@ -96,7 +96,7 @@ namespace MyCryptos.Core.Models
         {
             get
             {
-                var exchangeRate = new ExchangeRate(SecondaryCurrency, ReferenceCurrency) { RepositoryId = RepositoryId };
+                var exchangeRate = new ExchangeRate(SecondaryCurrency, ReferenceCurrency) { ParentId = ParentId };
                 if (Rate != null && Rate != 0)
                 {
                     exchangeRate.Rate = 1 / Rate;

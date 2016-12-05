@@ -5,7 +5,7 @@ namespace MyCryptos.Core.Models
 	/// <summary>
 	/// Model for a simple account
 	/// </summary>
-	public class Account : PersistableRepositoryElement<int>
+	public class Account : IPersistableWithParent<int>
 	{
 
 		/// <summary>
@@ -15,10 +15,6 @@ namespace MyCryptos.Core.Models
 		/// <param name="money">Money of the account to be initialised with</param>
 		public Account(string name, Money money)
 		{
-			if (money == null)
-			{
-				throw new ArgumentNullException();
-			}
 			Name = name;
 			Money = money;
 		}
@@ -43,7 +39,7 @@ namespace MyCryptos.Core.Models
 		/// <param name="money">Money.</param>
 		public Account(int id, int repositoryId, string name, Money money) : this(id, name, money)
 		{
-			RepositoryId = repositoryId;
+			ParentId = repositoryId;
 		}
 
 		/// <summary>
@@ -56,12 +52,27 @@ namespace MyCryptos.Core.Models
 		/// Gets or sets the identifier.
 		/// </summary>
 		/// <value>The identifier of the repository</value>
-		public int RepositoryId { get; set; }
+		public int ParentId { get; set; }
 
 		/// <summary>
 		/// Money of the account
 		/// </summary>
-		public Money Money { get; }
+		private Money money;
+		public Money Money
+		{
+			get
+			{
+				return money;
+			}
+			protected set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException();
+				}
+				money = value;
+			}
+		}
 
 		/// <summary>
 		/// The name of the account

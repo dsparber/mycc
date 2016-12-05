@@ -23,7 +23,7 @@ namespace MyCryptos.Core.Database.Models
 
 		public string CurrencyCode { get; set; }
 
-		public int RepositoryId { get; set; }
+		public int ParentId { get; set; }
 
 		public async Task<FunctionalAccount> Resolve()
 		{
@@ -34,11 +34,11 @@ namespace MyCryptos.Core.Database.Models
 				currency = await db.Get(CurrencyCode);
 			}
 
-			var repository = AccountStorage.Instance.Repositories.Find(r => r.Id == RepositoryId);
+			var repository = AccountStorage.Instance.Repositories.Find(r => r.Id == ParentId);
 			if (repository == null)
 			{
 				var db = new AccountRepositoryDatabase();
-				repository = await db.Get(RepositoryId);
+				repository = await db.Get(ParentId);
 			}
 
 			var money = new Money(MoneyAmount, currency);
@@ -63,7 +63,7 @@ namespace MyCryptos.Core.Database.Models
 			}
 			Name = account.Name;
 			MoneyAmount = account.Money.Amount;
-			RepositoryId = account.RepositoryId;
+			ParentId = account.ParentId;
 		}
 	}
 }
