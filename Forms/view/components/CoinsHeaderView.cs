@@ -45,8 +45,6 @@ namespace MyCryptos.Forms.view.components
 
 			infoTexts = new List<string> { string.Empty, string.Empty };
 
-			Padding = new Thickness(0, 0, 0, 20);
-
 			GestureRecognizers.Add(recognizer);
 			AddSubscriber();
 		}

@@ -50,6 +50,8 @@ namespace MyCryptos.view.components
 				LoadingIndicator.VerticalOptions = LayoutOptions.Center;
 			}
 
+			Padding = new Thickness(0, 0, 0, 10);
+
 			TitleText = TitleText;
 			InfoText = InfoText;
 			LoadingText = LoadingText;

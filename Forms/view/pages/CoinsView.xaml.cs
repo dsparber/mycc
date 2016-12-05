@@ -82,6 +82,7 @@ namespace MyCryptos.Forms.view.pages
 
 			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
 			HeaderCarousel.PositionSelected += PositionSelected;
+			HeaderCarousel.HeightRequest = 120;// new CoinsHeaderView().HeightRequest;
 		}
 
 		private void Add(object sender, EventArgs e)
