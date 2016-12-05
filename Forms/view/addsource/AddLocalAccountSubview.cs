@@ -1,4 +1,7 @@
-﻿using MyCryptos.Core.Models;
+﻿using MyCryptos.Core.Account.Models;
+using MyCryptos.Core.Account.Models.Implementations;
+using MyCryptos.Core.Models;
+using MyCryptos.Core.Repositories.Account;
 using MyCryptos.Core.Storage;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Resources;
@@ -7,51 +10,51 @@ using Xamarin.Forms;
 
 namespace MyCryptos.view.addrepositoryviews
 {
-    public class AddLocalAccountSubview : AddAccountSubview
-    {
-        private readonly TableSection inputSection;
-        private readonly CurrencyEntryCell currencyCell;
-        private readonly CustomEntryCell amountEntryCell;
+	public class AddLocalAccountSubview : AddAccountSubview
+	{
+		private readonly TableSection inputSection;
+		private readonly CurrencyEntryCell currencyCell;
+		private readonly CustomEntryCell amountEntryCell;
 
-        public AddLocalAccountSubview(INavigation navigation)
-        {
-            inputSection = new TableSection { Title = I18N.AmountAndCurrency };
-            amountEntryCell = new CustomEntryCell { Title = I18N.Amount, Placeholder = "0" };
-            amountEntryCell.Entry.Keyboard = Keyboard.Numeric;
-            currencyCell = new CurrencyEntryCell(navigation) { IsAmountEnabled = false, IsFormRepresentation = true };
-            inputSection.Add(amountEntryCell);
-            inputSection.Add(currencyCell);
+		public AddLocalAccountSubview(INavigation navigation)
+		{
+			inputSection = new TableSection { Title = I18N.AmountAndCurrency };
+			amountEntryCell = new CustomEntryCell { Title = I18N.Amount, Placeholder = "0" };
+			amountEntryCell.Entry.Keyboard = Keyboard.Numeric;
+			currencyCell = new CurrencyEntryCell(navigation) { IsAmountEnabled = false, IsFormRepresentation = true };
+			inputSection.Add(amountEntryCell);
+			inputSection.Add(currencyCell);
 
-        }
+		}
 
-        public override TableSection InputSection => inputSection;
-        public override string DefaultName => I18N.LocalAccount;
-        public override string Description => I18N.Local.CapitalizeFirstLetter();
+		public override TableSection InputSection => inputSection;
+		public override string DefaultName => I18N.LocalAccount;
+		public override string Description => I18N.Local.CapitalizeFirstLetter();
 
-        public override bool Enabled
-        {
-            set
-            {
-                currencyCell.IsEditable = value;
-            }
-        }
+		public override bool Enabled
+		{
+			set
+			{
+				currencyCell.IsEditable = value;
+			}
+		}
 
-        public override Account GetAccount(string name)
-        {
-            var currency = currencyCell.SelectedCurrency;
-            var amount = decimal.Parse(string.IsNullOrEmpty(amountEntryCell.Text) ? "0" : amountEntryCell.Text);
+		public override FunctionalAccount GetAccount(string name)
+		{
+			var currency = currencyCell.SelectedCurrency;
+			var amount = decimal.Parse(string.IsNullOrEmpty(amountEntryCell.Text) ? "0" : amountEntryCell.Text);
 
-            if (currency == null)
-            {
-                return null;
-            }
+			if (currency == null)
+			{
+				return null;
+			}
 
-            return new Account(name, new Money(amount, currency)) { RepositoryId = AccountStorage.Instance.LocalRepository.Id };
-        }
+			return new LocalAccount(null, name, new Money(amount, currency), AccountStorage.Instance.LocalRepository.Id);
+		}
 
-        public override void Unfocus()
-        {
-            currencyCell.Unfocus();
-        }
-    }
+		public override void Unfocus()
+		{
+			currencyCell.Unfocus();
+		}
+	}
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using MyCryptos.Core.Account.Models;
 using MyCryptos.Core.Helpers;
 using MyCryptos.Core.Models;
 using MyCryptos.Core.Repositories.Account;
@@ -34,7 +35,7 @@ namespace MyCryptos.Forms.view.components
 			Messaging.SortOrder.SubscribeValueChanged(this, () => SortHelper.ApplySortOrder(cells, CoinsSection));
 		}
 
-		IEnumerable<IGrouping<Currency, Tuple<Account, AccountRepository>>> groups
+		IEnumerable<IGrouping<Currency, Tuple<FunctionalAccount, AccountRepository>>> groups
 		{
 			get
 			{

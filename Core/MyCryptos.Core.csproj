@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,8 +9,7 @@
     <AssemblyName>MyCryptos.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile151</TargetFrameworkProfile>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <NuGetPackageImportStamp></NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,59 +30,7 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Repositories\Account\AddressAndCoinAccountRepository.cs" />
-    <Compile Include="Repositories\Account\AddressAccountRepository.cs" />
-    <Compile Include="Repositories\Account\CryptoIdAccountRepository.cs" />
-    <Compile Include="Repositories\Currency\CryptoIdCurrencyRepository.cs" />
-    <Compile Include="Repositories\Account\BlockchainAccountRepository.cs" />
-    <Compile Include="Repositories\Account\EthereumAccountRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\Currency.cs" />
-    <Compile Include="Models\ExchangeRate.cs" />
-    <Compile Include="Models\Money.cs" />
-    <Compile Include="Repositories\Account\AccountRepository.cs" />
-    <Compile Include="Repositories\Account\LocalAccountRepository.cs" />
-    <Compile Include="Repositories\Account\OnlineAccountRepository.cs" />
-    <Compile Include="Repositories\Account\BittrexAccountRepository.cs" />
-    <Compile Include="Repositories\Currency\CurrencyRepository.cs" />
-    <Compile Include="Repositories\Currency\LocalCurrencyRepository.cs" />
-    <Compile Include="Repositories\Currency\OnlineCurrencyRepository.cs" />
-    <Compile Include="Repositories\ExchangeRates\ExchangeRateRepository.cs" />
-    <Compile Include="Repositories\ExchangeRates\BittrexExchangeRateRepository.cs" />
-    <Compile Include="Repositories\ExchangeRates\LocalExchangeRateRepository.cs" />
-    <Compile Include="Repositories\ExchangeRates\OnlineExchangeRateRepository.cs" />
-    <Compile Include="Database\AccountDatabase.cs" />
-    <Compile Include="Database\Models\AccountDBM.cs" />
-    <Compile Include="Database\Models\AccountRepositoryDBM.cs" />
-    <Compile Include="Storage\AccountStorage.cs" />
-    <Compile Include="Database\AccountRepositoryDatabase.cs" />
-    <Compile Include="Models\Tag.cs" />
-    <Compile Include="Models\TagIdentifier.cs" />
-    <Compile Include="Database\Models\TagIdentifierDBM.cs" />
-    <Compile Include="Database\Models\TagDBM.cs" />
-    <Compile Include="Database\Models\TagAccountMapDBM.cs" />
-    <Compile Include="Database\TagIdentifierDatabase.cs" />
-    <Compile Include="Database\TagDatabase.cs" />
-    <Compile Include="Database\TagAccountMapDatabase.cs" />
-    <Compile Include="Storage\CurrencyStorage.cs" />
-    <Compile Include="Database\CurrencyRepositoryDatabase.cs" />
-    <Compile Include="Database\Models\CurrencyRepositoryDBM.cs" />
-    <Compile Include="Database\CurrencyDatabase.cs" />
-    <Compile Include="Database\Models\CurrencyDBM.cs" />
-    <Compile Include="Storage\ExchangeRateStorage.cs" />
-    <Compile Include="Database\ExchangeRateRepositoryDatabase.cs" />
-    <Compile Include="Database\Models\ExchangeRateRepositoryDBM.cs" />
-    <Compile Include="Database\ExchangeRateDatabase.cs" />
-    <Compile Include="Database\Models\ExchangeRateDBM.cs" />
-    <Compile Include="Repositories\Currency\BittrexCurrencyRepository.cs" />
-    <Compile Include="Database\Interfaces\IEntityDBM.cs" />
-    <Compile Include="Database\Interfaces\IEntityRepositoryIdDBM.cs" />
-    <Compile Include="Database\Interfaces\ISQLiteConnection.cs" />
-    <Compile Include="Storage\AbstractStorage.cs" />
-    <Compile Include="Repositories\Core\AbstractRepository.cs" />
-    <Compile Include="Database\Helper\AbstractDatabase.cs" />
-    <Compile Include="Repositories\ExchangeRates\BtceExchangeRateRepository.cs" />
     <Compile Include="Resources\I18N.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -96,41 +42,94 @@
       <DependentUpon>I18N.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\ILocalise.cs" />
-    <Compile Include="Enums\FetchSpeed.cs" />
-    <Compile Include="Repositories\Currency\BtceCurrencyRepository.cs" />
-    <Compile Include="Enums\SortOrder.cs" />
-    <Compile Include="Enums\SortDirection.cs" />
-    <Compile Include="Repositories\AvailableRates\AvailableRatesRepository.cs" />
-    <Compile Include="Repositories\AvailableRates\LocalAvailableRatesRepository.cs" />
-    <Compile Include="Database\Models\AvailableRatesRepositoryDBM.cs" />
-    <Compile Include="Repositories\Core\AbstractDatabaseRepository.cs" />
-    <Compile Include="Repositories\AvailableRates\OnlineAvailableRatesRepository.cs" />
-    <Compile Include="Repositories\AvailableRates\BittrexAvailableRatesRepository.cs" />
-    <Compile Include="Repositories\AvailableRates\BtceAvailableRatesRepository.cs" />
-    <Compile Include="Repositories\AvailableRates\CryptonatorAvailableRatesRepository.cs" />
-    <Compile Include="Repositories\ExchangeRates\CryptonatorExchangeRateRepository.cs" />
-    <Compile Include="Repositories\Currency\CryptonatorCurrencyRepository.cs" />
-    <Compile Include="Storage\AvailableRatesStorage.cs" />
-    <Compile Include="Storage\AbstractDatabaseStorage.cs" />
-    <Compile Include="Database\AvailableRatesRepositoryDatabase.cs" />
-    <Compile Include="Repositories\Core\AbstractAvailabilityRepository.cs" />
-    <Compile Include="Repositories\Account\BlockExpertsAccountRepository.cs" />
-    <Compile Include="Repositories\Currency\BlockExpertsCurrencyRepository.cs" />
-    <Compile Include="Models\Persistable.cs" />
-    <Compile Include="Models\PersistableRepositoryElement.cs" />
-    <Compile Include="Database\Models\CurrencyRepositoryElementDBM.cs" />
-    <Compile Include="Storage\CurrencyRepositoryMapStorage.cs" />
-    <Compile Include="Repositories\Currency\CurrencyRepositoryMap.cs" />
-    <Compile Include="Database\CurrencyMapDatabase.cs" />
-    <Compile Include="Database\Models\CurrencyRepositoryMapDBM.cs" />
-    <Compile Include="Database\CurrencyRepositoryMapDatabase.cs" />
-    <Compile Include="Helpers\ExchangeRateHelper.cs" />
-    <Compile Include="Enums\PinAction.cs" />
+    <Compile Include="Types\FetchSpeed.cs" />
+    <Compile Include="Types\SortOrder.cs" />
+    <Compile Include="Types\SortDirection.cs" />
+    <Compile Include="Types\PinAction.cs" />
     <Compile Include="Settings\ApplicationSettings.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Tasks\ApplicationTasksHelper.cs" />
     <Compile Include="Tasks\LoadTasks.cs" />
     <Compile Include="Tasks\FetchTasks.cs" />
+    <Compile Include="Account\Repositories\Base\AccountRepository.cs" />
+    <Compile Include="Account\Repositories\Base\AddressAccountRepository.cs" />
+    <Compile Include="Account\Repositories\Base\AddressAndCoinAccountRepository.cs" />
+    <Compile Include="Account\Repositories\Base\OnlineAccountRepository.cs" />
+    <Compile Include="Account\Repositories\Implementations\BittrexAccountRepository.cs" />
+    <Compile Include="Account\Repositories\Implementations\BlockchainAccountRepository.cs" />
+    <Compile Include="Account\Repositories\Implementations\BlockExpertsAccountRepository.cs" />
+    <Compile Include="Account\Repositories\Implementations\CryptoIdAccountRepository.cs" />
+    <Compile Include="Account\Repositories\Implementations\EthereumAccountRepository.cs" />
+    <Compile Include="Account\Repositories\Implementations\LocalAccountRepository.cs" />
+    <Compile Include="Account\Storage\AccountStorage.cs" />
+    <Compile Include="Account\Database\AccountDatabase.cs" />
+    <Compile Include="Account\Database\AccountRepositoryDatabase.cs" />
+    <Compile Include="Account\Database\AccountDBM.cs" />
+    <Compile Include="Account\Database\AccountRepositoryDBM.cs" />
+    <Compile Include="Currency\Model\Currency.cs" />
+    <Compile Include="Currency\Database\CurrencyDatabase.cs" />
+    <Compile Include="Currency\Database\CurrencyRepositoryDatabase.cs" />
+    <Compile Include="Currency\Database\CurrencyMapRepositoryDatabase.cs" />
+    <Compile Include="Currency\Database\CurrencyDBM.cs" />
+    <Compile Include="Currency\Database\CurrencyRepositoryDBM.cs" />
+    <Compile Include="Currency\Database\CurrencyMapDatabase.cs" />
+    <Compile Include="Currency\Database\CurrencyMapDBM.cs" />
+    <Compile Include="Currency\Database\CurrencyMapRepositoryDBM.cs" />
+    <Compile Include="Currency\Storage\CurrencyRepositoryMapStorage.cs" />
+    <Compile Include="Currency\Storage\CurrencyStorage.cs" />
+    <Compile Include="Currency\Repositories\BittrexCurrencyRepository.cs" />
+    <Compile Include="Currency\Repositories\BlockExpertsCurrencyRepository.cs" />
+    <Compile Include="Currency\Repositories\BtceCurrencyRepository.cs" />
+    <Compile Include="Currency\Repositories\CryptoIdCurrencyRepository.cs" />
+    <Compile Include="Currency\Repositories\CryptonatorCurrencyRepository.cs" />
+    <Compile Include="Currency\Repositories\CurrencyRepository.cs" />
+    <Compile Include="Currency\Repositories\CurrencyRepositoryMap.cs" />
+    <Compile Include="Currency\Repositories\LocalCurrencyRepository.cs" />
+    <Compile Include="Currency\Repositories\OnlineCurrencyRepository.cs" />
+    <Compile Include="ExchangeRate\Storage\AvailableRatesStorage.cs" />
+    <Compile Include="ExchangeRate\Storage\ExchangeRateStorage.cs" />
+    <Compile Include="ExchangeRate\Repositories\AvailableRatesRepository.cs" />
+    <Compile Include="ExchangeRate\Repositories\BittrexAvailableRatesRepository.cs" />
+    <Compile Include="ExchangeRate\Repositories\BtceAvailableRatesRepository.cs" />
+    <Compile Include="ExchangeRate\Repositories\CryptonatorAvailableRatesRepository.cs" />
+    <Compile Include="ExchangeRate\Repositories\LocalAvailableRatesRepository.cs" />
+    <Compile Include="ExchangeRate\Repositories\OnlineAvailableRatesRepository.cs" />
+    <Compile Include="ExchangeRate\Repositories\BittrexExchangeRateRepository.cs" />
+    <Compile Include="ExchangeRate\Repositories\BtceExchangeRateRepository.cs" />
+    <Compile Include="ExchangeRate\Repositories\CryptonatorExchangeRateRepository.cs" />
+    <Compile Include="ExchangeRate\Repositories\ExchangeRateRepository.cs" />
+    <Compile Include="ExchangeRate\Repositories\LocalExchangeRateRepository.cs" />
+    <Compile Include="ExchangeRate\Repositories\OnlineExchangeRateRepository.cs" />
+    <Compile Include="ExchangeRate\Model\ExchangeRate.cs" />
+    <Compile Include="ExchangeRate\Database\AvailableRatesRepositoryDBM.cs" />
+    <Compile Include="ExchangeRate\Database\ExchangeRateDBM.cs" />
+    <Compile Include="ExchangeRate\Database\ExchangeRateRepositoryDBM.cs" />
+    <Compile Include="ExchangeRate\Database\AvailableRatesRepositoryDatabase.cs" />
+    <Compile Include="ExchangeRate\Database\ExchangeRateDatabase.cs" />
+    <Compile Include="ExchangeRate\Database\ExchangeRateRepositoryDatabase.cs" />
+    <Compile Include="Abstract\Database\AbstractDatabase.cs" />
+    <Compile Include="Abstract\Database\IEntityDBM.cs" />
+    <Compile Include="Abstract\Database\IEntityRepositoryIdDBM.cs" />
+    <Compile Include="Abstract\Database\ISQLiteConnection.cs" />
+    <Compile Include="ExchangeRate\Helpers\ExchangeRateHelper.cs" />
+    <Compile Include="Abstract\Models\Persistable.cs" />
+    <Compile Include="Abstract\Models\PersistableRepositoryElement.cs" />
+    <Compile Include="Abstract\Repositories\AbstractAvailabilityRepository.cs" />
+    <Compile Include="Abstract\Repositories\AbstractDatabaseRepository.cs" />
+    <Compile Include="Abstract\Repositories\AbstractRepository.cs" />
+    <Compile Include="Abstract\Storage\AbstractDatabaseStorage.cs" />
+    <Compile Include="Abstract\Storage\AbstractStorage.cs" />
+    <Compile Include="Account\Models\Base\Account.cs" />
+    <Compile Include="Account\Models\Base\Money.cs" />
+    <Compile Include="Account\Models\Base\Transaction.cs" />
+    <Compile Include="Account\Models\Implementations\BittrexAccount.cs" />
+    <Compile Include="Account\Models\Base\FunctionalAccount.cs" />
+    <Compile Include="Account\Models\Implementations\EthereumAccount.cs" />
+    <Compile Include="Account\Models\Implementations\LocalAccount.cs" />
+    <Compile Include="Account\Models\Implementations\BlockchainAccount.cs" />
+    <Compile Include="Account\Models\Implementations\BlockExpertsAccount.cs" />
+    <Compile Include="Account\Models\Implementations\CryptoIdAccount.cs" />
+    <Compile Include="Account\Models\Base\OnlineFunctionalAccount.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -214,6 +213,33 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>I18N.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Account\" />
+    <Folder Include="Account\Repositories\" />
+    <Folder Include="Account\Repositories\Base\" />
+    <Folder Include="Account\Repositories\Implementations\" />
+    <Folder Include="Account\Storage\" />
+    <Folder Include="Account\Database\" />
+    <Folder Include="Account\Models\" />
+    <Folder Include="Currency\" />
+    <Folder Include="Currency\Model\" />
+    <Folder Include="Currency\Database\" />
+    <Folder Include="Currency\Storage\" />
+    <Folder Include="Currency\Repositories\" />
+    <Folder Include="ExchangeRate\" />
+    <Folder Include="ExchangeRate\Database\" />
+    <Folder Include="ExchangeRate\Model\" />
+    <Folder Include="ExchangeRate\Repositories\" />
+    <Folder Include="ExchangeRate\Storage\" />
+    <Folder Include="Abstract\" />
+    <Folder Include="Abstract\Database\" />
+    <Folder Include="ExchangeRate\Helpers\" />
+    <Folder Include="Abstract\Models\" />
+    <Folder Include="Abstract\Repositories\" />
+    <Folder Include="Abstract\Storage\" />
+    <Folder Include="Account\Models\Base\" />
+    <Folder Include="Account\Models\Implementations\" />
   </ItemGroup>
   <Import Project="packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Import Project="..\packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

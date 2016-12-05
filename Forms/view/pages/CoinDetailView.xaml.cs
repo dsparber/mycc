@@ -12,6 +12,7 @@ using MyCryptos.Core.Tasks;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
+using MyCryptos.Core.Account.Models;
 
 namespace view
 {
@@ -21,7 +22,7 @@ namespace view
 		List<ReferenceValueViewCell> ReferenceValueCells;
 
 		List<ExchangeRate> ExchangeRates;
-		IEnumerable<Tuple<Account, AccountRepository>> Accounts;
+		IEnumerable<Tuple<FunctionalAccount, AccountRepository>> Accounts;
 
 		Currency currency;
 		Money moneySum { get { return (Accounts.ToList().Count == 0) ? null : new Money(Accounts.Sum(a => a.Item1.Money.Amount), Accounts.First().Item1.Money.Currency); } }

@@ -1,10 +1,10 @@
-using MyCryptos.Core.Models;
+using MyCryptos.Core.Account.Models;
 
 namespace MyCryptos.view.addrepositoryviews
 {
 
-    public abstract class AddAccountSubview : AddSourceSubview
-    {
-        public abstract Account GetAccount(string name);
-    }
+	public abstract class AddAccountSubview : AddSourceSubview
+	{
+		public abstract FunctionalAccount GetAccount(string name);
+	}
 }

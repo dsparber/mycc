@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyCryptos.Core.Account.Models;
+using MyCryptos.Core.Account.Models.Implementations;
 using MyCryptos.Core.Models;
 using MyCryptos.Core.Repositories.Account;
 using MyCryptos.Core.Storage;
@@ -21,11 +23,11 @@ namespace MyCryptos.Forms.view.pages
 		private readonly CurrencyEntryCell currencyEntryCell;
 		private readonly List<ReferenceValueViewCell> referenceValueCells;
 
-		private Account account;
+		private FunctionalAccount account;
 		private readonly AccountRepository repository;
 
 
-		public AccountDetailView(Account account, AccountRepository repository)
+		public AccountDetailView(FunctionalAccount account, AccountRepository repository)
 		{
 			InitializeComponent();
 
@@ -89,7 +91,8 @@ namespace MyCryptos.Forms.view.pages
 			currencyEntryCell.Unfocus();
 
 			account.Name = AccountName.Text;
-			account = new Account(account.Id, account.RepositoryId, account.Name, currencyEntryCell.SelectedMoney);
+
+			account = new LocalAccount(account.Id, account.Name, currencyEntryCell.SelectedMoney, account.RepositoryId);
 			await repository.Update(account);
 
 			Messaging.UpdatingAccounts.SendFinished();
@@ -115,7 +118,7 @@ namespace MyCryptos.Forms.view.pages
 			var money = currencyEntryCell.SelectedMoney;
 			var name = string.IsNullOrEmpty(AccountName.Text?.Trim()) ? I18N.LocalAccount : AccountName.Text.Trim();
 
-			account = new Account(name, money) { RepositoryId = AccountStorage.Instance.LocalRepository.Id };
+			account = new LocalAccount(null, name, money, AccountStorage.Instance.LocalRepository.Id);
 			var addTask = AccountStorage.Instance.LocalRepository.Add(account);
 			addTask.ContinueWith(t => Messaging.UpdatingAccounts.SendFinished());
 
