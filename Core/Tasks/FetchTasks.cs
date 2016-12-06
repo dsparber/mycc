@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyCryptos.Core.Account.Models.Base;
+using MyCryptos.Core.Account.Repositories.Base;
 using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.Currency.Storage;
 using MyCryptos.Core.ExchangeRate.Helpers;
@@ -16,7 +18,7 @@ namespace MyCryptos.Core.tasks
 		private static Task fetchMissingRatesTask;
 		private static Task fetchCurrenciesAndAvailableRatesTask;
 
-		public static Task FetchBalancesAndExchangeRates(Action onStarted, Action onFinished, Action<Exception> onError)
+		public static Task FetchBalancesAndRates(Action onStarted, Action onFinished, Action<Exception> onError)
 		=> fetchAllExchangeRatesTask = fetchAllExchangeRatesTask.GetTask(async () =>
 		{
 			try
@@ -76,5 +78,75 @@ namespace MyCryptos.Core.tasks
 				onFinished();
 			}
 		});
+
+		public static async Task FetchBalanceAndRates(OnlineFunctionalAccount account, Action onStarted, Action onFinished, Action<Exception> onError)
+		{
+			try
+			{
+				onStarted();
+				await account.FetchBalanceOnline();
+				// TODO Fetch rates for specific currency
+			}
+			catch (Exception e)
+			{
+				onError(e);
+			}
+			finally
+			{
+				onFinished();
+			}
+		}
+
+		public static async Task FetchBalanceAndRates(Currency.Model.Currency currency, Action onStarted, Action onFinished, Action<Exception> onError)
+		{
+			try
+			{
+				onStarted();
+				await Task.WhenAll(AccountStorage.Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).OfType<OnlineFunctionalAccount>().Select(a => a.FetchBalanceOnline()));
+				// TODO Fetch rates for specific currency
+			}
+			catch (Exception e)
+			{
+				onError(e);
+			}
+			finally
+			{
+				onFinished();
+			}
+		}
+
+		public static async Task FetchBalances(OnlineAccountRepository repository, Action onStarted, Action onFinished, Action<Exception> onError)
+		{
+			try
+			{
+				onStarted();
+				await repository.FetchOnline();
+			}
+			catch (Exception e)
+			{
+				onError(e);
+			}
+			finally
+			{
+				onFinished();
+			}
+		}
+
+		public static async Task FetchAccounts(Action onStarted, Action onFinished, Action<Exception> onError)
+		{
+			try
+			{
+				onStarted();
+				await AccountStorage.Instance.FetchOnline();
+			}
+			catch (Exception e)
+			{
+				onError(e);
+			}
+			finally
+			{
+				onFinished();
+			}
+		}
 	}
 }

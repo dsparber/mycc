@@ -8,47 +8,52 @@
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	Title="{i18N:Translate Accounts}"
 	x:Class="MyCryptos.Forms.view.pages.RepositoryView">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
 			x:Name="EditItem"
 			Clicked="EditClicked"
 			Text="{i18N:Translate Edit}" />
-    <ToolbarItem
+		<ToolbarItem
 			x:Name="SaveItem"
 			Clicked="SaveClicked"
 			Text="{i18N:Translate Save}" />
-  </ContentPage.ToolbarItems>
-  <ContentPage.Content>
-    <components:ChangingStackLayout>
-      <components:HeaderView
+		<ToolbarItem
+			Text="{i18N:Translate Refresh}"
+			Clicked="Refresh"
+			x:Name="RefreshItem"
+			Icon="refresh.png" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<components:ChangingStackLayout>
+			<components:HeaderView
 				x:Name="Header" />
-      <TableView
+			<TableView
 				x:Name="TableView"
 				Intent="Form">
-        <TableView.BackgroundColor>
-          <OnPlatform
+				<TableView.BackgroundColor>
+					<OnPlatform
 						x:TypeArguments="Color"
 						Android="#EEE" />
-        </TableView.BackgroundColor>
-        <TableSection
+				</TableView.BackgroundColor>
+				<TableSection
 					Title="{i18N:Translate Accounts}"
 					x:Name="AccountsSection" />
-        <TableSection
+				<TableSection
 					Title="{i18N:Translate Label}"
 					x:Name="NameSection">
-          <components:CustomEntryCell
+					<components:CustomEntryCell
 						x:Name="RepositoryNameEntryCell"
 						Title="{i18N:Translate Name}"
 						Placeholder="{i18N:Translate Name}" />
-        </TableSection>
-        <TableSection
+				</TableSection>
+				<TableSection
 					x:Name="DeleteSection">
-          <components:CustomViewCell
+					<components:CustomViewCell
 						x:Name="DeleteButtonCell"
 						Text="{i18N:Translate Delete}"
 						IsDeleteActionCell="true" />
-        </TableSection>
-      </TableView>
-    </components:ChangingStackLayout>
-  </ContentPage.Content>
+				</TableSection>
+			</TableView>
+		</components:ChangingStackLayout>
+	</ContentPage.Content>
 </ContentPage>

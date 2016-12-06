@@ -99,7 +99,7 @@ namespace MyCryptos.Forms.view.pages
 
 		private async void Refresh(object sender, EventArgs e)
 		{
-			await ApplicationTasks.FetchBalancesAndExchangeRates(Messaging.UpdatingAccountsAndRates.SendStarted, Messaging.UpdatingAccountsAndRates.SendFinished, ErrorOverlay.Display);
+			await ApplicationTasks.FetchBalancesAndRates(Messaging.UpdatingAccountsAndRates.SendStarted, Messaging.UpdatingAccountsAndRates.SendFinished, ErrorOverlay.Display);
 		}
 
 		private class HeaderTemplateSelector : DataTemplateSelector

@@ -107,10 +107,16 @@ namespace view
 			});
 
 			Messaging.UpdatingAccounts.SubscribeFinished(this, loadData);
+			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, loadData);
 			Messaging.FetchMissingRates.SubscribeFinished(this, loadData);
 
 			Messaging.ReferenceCurrency.SubscribeValueChanged(this, loadData);
 			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, loadData);
+		}
+
+		private async void Refresh(object sender, EventArgs args)
+		{
+			await ApplicationTasks.FetchBalanceAndRates(currency, Messaging.UpdatingAccountsAndRates.SendStarted, Messaging.UpdatingAccountsAndRates.SendFinished, ErrorOverlay.Display);
 		}
 	}
 }

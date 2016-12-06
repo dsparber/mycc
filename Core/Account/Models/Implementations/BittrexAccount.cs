@@ -19,7 +19,7 @@ namespace MyCryptos.Core.Account.Models.Implementations
 
 		public override async Task FetchBalanceOnline()
 		{
-			var result = (await repository.GetResult(Money.Currency))[0];
+			var result = (await repository.GetResult(Money.Currency));
 			var balance = decimal.Parse((string)result[BalanceKey], CultureInfo.InvariantCulture);
 			Money = new Money(balance, Money.Currency);
 			await accountDatabase.Update(this);

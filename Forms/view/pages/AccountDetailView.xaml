@@ -4,57 +4,67 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
-  xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
-  BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
+	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
+	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="MyCryptos.Forms.view.pages.AccountDetailView">
-  <ContentPage.Content>
-    <components:ChangingStackLayout>
-
-      <components:HeaderView
-        x:Name="Header"/>
-
-      <StackLayout Spacing="0">
-        <StackLayout.BackgroundColor>
-          <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
-        </StackLayout.BackgroundColor>
-
-        <TableView
-          x:Name="DefaultView"
-          Intent="Form">
-          <TableView.BackgroundColor>
-            <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
-          </TableView.BackgroundColor>
-          <TableSection
-            Title="{i18N:Translate EqualTo}"
-            x:Name="EqualsSection">
-          </TableSection>
-        </TableView>
-
-        <TableView
-          x:Name="EditView"
-          Intent="Form"
-          IsVisible="false">
-          <TableView.BackgroundColor>
-            <OnPlatform x:TypeArguments="Color" Android="#EEE"/>
-          </TableView.BackgroundColor>
-          <TableView.Root>
-            <TableSection
-              x:Name="AccountSection">
-              <components:CustomEntryCell
-                x:Name="AccountName"
-                Title="{i18N:Translate Name}"
-                Placeholder="{i18N:Translate Name}" />
-            </TableSection>
-            <TableSection x:Name="DeleteSection">
-              <components:CustomViewCell
-              x:Name="DeleteButtonCell"
-              Text="{i18N:Translate Delete}"
-              IsDeleteActionCell="true" />
-            </TableSection>
-          </TableView.Root>
-        </TableView>
-
-      </StackLayout>
-    </components:ChangingStackLayout>
-  </ContentPage.Content>
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			Text="{i18N:Translate Refresh}"
+			Clicked="Refresh"
+			x:Name="RefreshItem"
+			Icon="refresh.png" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<components:ChangingStackLayout>
+			<components:HeaderView
+				x:Name="Header" />
+			<StackLayout
+				Spacing="0">
+				<StackLayout.BackgroundColor>
+					<OnPlatform
+						x:TypeArguments="Color"
+						Android="#EEE" />
+				</StackLayout.BackgroundColor>
+				<TableView
+					x:Name="DefaultView"
+					Intent="Form">
+					<TableView.BackgroundColor>
+						<OnPlatform
+							x:TypeArguments="Color"
+							Android="#EEE" />
+					</TableView.BackgroundColor>
+					<TableSection
+						Title="{i18N:Translate EqualTo}"
+						x:Name="EqualsSection">
+					</TableSection>
+				</TableView>
+				<TableView
+					x:Name="EditView"
+					Intent="Form"
+					IsVisible="false">
+					<TableView.BackgroundColor>
+						<OnPlatform
+							x:TypeArguments="Color"
+							Android="#EEE" />
+					</TableView.BackgroundColor>
+					<TableView.Root>
+						<TableSection
+							x:Name="AccountSection">
+							<components:CustomEntryCell
+								x:Name="AccountName"
+								Title="{i18N:Translate Name}"
+								Placeholder="{i18N:Translate Name}" />
+						</TableSection>
+						<TableSection
+							x:Name="DeleteSection">
+							<components:CustomViewCell
+								x:Name="DeleteButtonCell"
+								Text="{i18N:Translate Delete}"
+								IsDeleteActionCell="true" />
+						</TableSection>
+					</TableView.Root>
+				</TableView>
+			</StackLayout>
+		</components:ChangingStackLayout>
+	</ContentPage.Content>
 </ContentPage>

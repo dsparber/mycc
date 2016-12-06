@@ -50,10 +50,7 @@ namespace MyCryptos.view.components
 			var gestureRecognizer = new TapGestureRecognizer();
 			gestureRecognizer.Tapped += (sender, e) =>
 			{
-				if (accounts.ToList().Count > 1)
-				{
-					navigation.PushAsync(new CoinDetailView(Currency));
-				}
+				navigation.PushAsync(new CoinDetailView(Currency));
 			};
 			if (View != null)
 			{

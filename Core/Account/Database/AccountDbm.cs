@@ -32,7 +32,7 @@ namespace MyCryptos.Core.Account.Database
 
 		public async Task<FunctionalAccount> Resolve()
 		{
-			var currency = CurrencyStorage.Instance.AllElements.Find(c => c.Code.Equals(CurrencyCode));
+			var currency = CurrencyStorage.Instance.AllElements.Find(c => c?.Code.Equals(CurrencyCode) ?? false);
 			if (currency == null)
 			{
 				var db = new CurrencyDatabase();

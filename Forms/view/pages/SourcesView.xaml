@@ -8,29 +8,33 @@
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="MyCryptos.Forms.view.pages.SourcesView"
 	Title="{i18N:Translate Sources}">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
 			Text="{i18N:Translate Add}"
 			Clicked="Add" />
-  </ContentPage.ToolbarItems>
-  <ContentPage.Content>
-    <components:ChangingStackLayout>
-      <components:HeaderView
+		<ToolbarItem
+			Text="{i18N:Translate Refresh}"
+			Clicked="Refresh"
+			Icon="refresh.png" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<components:ChangingStackLayout>
+			<components:HeaderView
 				x:Name="Header" />
-      <TableView
+			<TableView
 				Intent="Form">
-        <TableView.BackgroundColor>
-          <OnPlatform
+				<TableView.BackgroundColor>
+					<OnPlatform
 						x:TypeArguments="Color"
 						Android="#EEE" />
-        </TableView.BackgroundColor>
-        <TableSection
+				</TableView.BackgroundColor>
+				<TableSection
 					x:Name="LocalSection"
 					Title="{i18N:Translate Local}" />
-        <TableSection
+				<TableSection
 					x:Name="OnlineSection"
 					Title="{i18N:Translate Online}" />
-      </TableView>
-    </components:ChangingStackLayout>
-  </ContentPage.Content>
+			</TableView>
+		</components:ChangingStackLayout>
+	</ContentPage.Content>
 </ContentPage>

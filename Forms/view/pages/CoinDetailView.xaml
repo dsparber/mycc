@@ -7,6 +7,12 @@
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="view.CoinDetailView">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			Text="{i18N:Translate Refresh}"
+			Clicked="Refresh"
+			Icon="refresh.png" />
+	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<components:ChangingStackLayout
 			x:Name="ChangingStack">

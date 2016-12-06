@@ -15,7 +15,8 @@
 			Clicked="Add" />
 		<ToolbarItem
 			Text="{i18N:Translate Refresh}"
-			Clicked="Refresh" />
+			Clicked="Refresh"
+			Icon="refresh.png" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<components:ChangingStackLayout>

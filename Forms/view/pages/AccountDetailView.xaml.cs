@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MyCryptos.Core.Account.Models;
 using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Models.Implementations;
 using MyCryptos.Core.Account.Repositories.Base;
@@ -49,10 +48,17 @@ namespace MyCryptos.Forms.view.pages
 			{
 				ToolbarItems.Add(edit);
 			}
+			if (!(account is OnlineFunctionalAccount))
+			{
+				ToolbarItems.Remove(RefreshItem);
+			}
 
-			Messaging.FetchMissingRates.SubscribeFinished(this, UpdateReferenceValues);
-			Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateReferenceValues);
-			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, UpdateReferenceValues);
+			Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => Update());
+			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, () => Update());
+
+			Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => Update(true), () => Update(false));
+			Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Update(true), () => Update(false));
+			Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Update(true), () => Update(false));
 
 			currencyEntryCell.OnSelected = (c) => Header.TitleText = currencyEntryCell.SelectedMoney.ToString();
 			currencyEntryCell.OnTyped = (m) => Header.TitleText = m.ToString();
@@ -104,7 +110,7 @@ namespace MyCryptos.Forms.view.pages
 			}
 			Header.TitleText = account.Money.ToString();
 
-			UpdateReferenceValues();
+			Update();
 			DefaultView.IsVisible = true;
 			EditView.IsVisible = false;
 			ToolbarItems.Clear();
@@ -146,10 +152,10 @@ namespace MyCryptos.Forms.view.pages
 			Header.InfoText = string.Format(I18N.SourceText, repository.Name);
 			currencyEntryCell.SelectedMoney = account.Money;
 
-			UpdateReferenceValues();
+			Update();
 		}
 
-		private void UpdateReferenceValues()
+		private void Update(bool loading = false)
 		{
 			var table = new ReferenceCurrenciesSection(account.Money);
 			referenceValueCells.Clear();
@@ -163,6 +169,7 @@ namespace MyCryptos.Forms.view.pages
 					EqualsSection.Add(cell);
 				}
 				Header.TitleText = account.Money.ToString();
+				Header.IsLoading = loading;
 			});
 		}
 
@@ -177,6 +184,11 @@ namespace MyCryptos.Forms.view.pages
 			{
 				ApplicationTasks.FetchMissingRates(neededRates, Messaging.FetchMissingRates.SendStarted, Messaging.FetchMissingRates.SendFinished, ErrorOverlay.Display);
 			}
+		}
+
+		private async void Refresh(object sender, EventArgs args)
+		{
+			await ApplicationTasks.FetchBalanceAndRates(account as OnlineFunctionalAccount, Messaging.UpdatingAccountsAndRates.SendStarted, Messaging.UpdatingAccountsAndRates.SendFinished, ErrorOverlay.Display);
 		}
 	}
 }

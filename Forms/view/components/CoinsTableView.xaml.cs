@@ -19,69 +19,71 @@ using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.components
 {
-    public partial class CoinsTableView
-    {
-        private List<SortableViewCell> cells;
+	public partial class CoinsTableView
+	{
+		private List<SortableViewCell> cells;
 
-        public CoinsTableView()
-        {
-            InitializeComponent();
+		public CoinsTableView()
+		{
+			InitializeComponent();
 
-            CoinsSection.Title = I18N.Coins;
+			CoinsSection.Title = I18N.Coins;
 
-            Messaging.Loading.SubscribeFinished(this, SetCells);
-            Messaging.FetchMissingRates.SubscribeFinished(this, SetCells);
+			Messaging.Loading.SubscribeFinished(this, SetCells);
 
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, SetCells);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, SetCells);
-            Messaging.SortOrder.SubscribeValueChanged(this, () => SortHelper.ApplySortOrder(cells, CoinsSection));
-        }
+			Messaging.FetchMissingRates.SubscribeFinished(this, SetCells);
+			Messaging.UpdatingAccounts.SubscribeFinished(this, SetCells);
+			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetCells);
 
-        IEnumerable<IGrouping<Currency, Tuple<FunctionalAccount, AccountRepository>>> groups
-        {
-            get
-            {
-                var allAccounts = AccountStorage.Instance.AllElementsWithRepositories;
-                return allAccounts.GroupBy(a => a.Item1.Money.Currency);
-            }
-        }
+			Messaging.ReferenceCurrency.SubscribeValueChanged(this, SetCells);
+			Messaging.SortOrder.SubscribeValueChanged(this, () => SortHelper.ApplySortOrder(cells, CoinsSection));
+		}
 
-        private void SetCells()
-        {
-            var cs = new List<SortableViewCell>();
+		IEnumerable<IGrouping<Currency, Tuple<FunctionalAccount, AccountRepository>>> groups
+		{
+			get
+			{
+				var allAccounts = AccountStorage.Instance.AllElementsWithRepositories;
+				return allAccounts.GroupBy(a => a.Item1.Money.Currency);
+			}
+		}
 
-            foreach (var g in groups)
-            {
-                if (g.Key == null) continue;
+		private void SetCells()
+		{
+			var cs = new List<SortableViewCell>();
 
-                var cell = cells?.OfType<CoinViewCell>().ToList().Find(e => g.Key.Equals(e.Currency));
-                if (cell == null)
-                {
-                    cell = new CoinViewCell(Navigation) { Accounts = g.ToList(), IsLoading = true };
-                }
-                else
-                {
-                    cell.Accounts = g.ToList();
-                }
+			foreach (var g in groups)
+			{
+				if (g.Key == null) continue;
 
-                var neededRate = new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency);
-                var rate = ExchangeRateHelper.GetRate(neededRate);
-                cell.ExchangeRate = rate;
+				var cell = cells?.OfType<CoinViewCell>().ToList().Find(e => g.Key.Equals(e.Currency));
+				if (cell == null)
+				{
+					cell = new CoinViewCell(Navigation) { Accounts = g.ToList(), IsLoading = true };
+				}
+				else
+				{
+					cell.Accounts = g.ToList();
+				}
 
-                cell.IsLoading = rate != null && !rate.Rate.HasValue;
+				var neededRate = new ExchangeRate(cell.Currency, ApplicationSettings.BaseCurrency);
+				var rate = ExchangeRateHelper.GetRate(neededRate);
+				cell.ExchangeRate = rate;
 
-                cs.Add(cell);
-            }
-            if (cs.Count == 0)
-            {
-                var addSourceCell = new CustomViewCell { Text = I18N.AddSource, IsActionCell = true };
-                addSourceCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AddSourceView());
-                cs.Add(addSourceCell);
-            }
+				cell.IsLoading = rate != null && !rate.Rate.HasValue;
 
-            cells = cs;
+				cs.Add(cell);
+			}
+			if (cs.Count == 0)
+			{
+				var addSourceCell = new CustomViewCell { Text = I18N.AddSource, IsActionCell = true };
+				addSourceCell.Tapped += (sender, e) => Navigation.PushOrPushModal(new AddSourceView());
+				cs.Add(addSourceCell);
+			}
 
-            Device.BeginInvokeOnMainThread(() => SortHelper.ApplySortOrder(cells, CoinsSection));
-        }
-    }
+			cells = cs;
+
+			Device.BeginInvokeOnMainThread(() => SortHelper.ApplySortOrder(cells, CoinsSection));
+		}
+	}
 }

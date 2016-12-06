@@ -9,6 +9,7 @@ using MyCryptos.Core.Account.Database;
 using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Models.Implementations;
 using MyCryptos.Core.Account.Repositories.Base;
+using MyCryptos.Core.Currency.Database;
 using MyCryptos.Core.Currency.Storage;
 using MyCryptos.Core.Resources;
 using Newtonsoft.Json;
@@ -26,7 +27,7 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 		private readonly string apiKey;
 		private readonly string privateApiKey;
 
-		private const string BaseUrl = "https://bittrex.com/api/v1.1/account/getbalances?apikey={0}&nonce={1}";
+		private const string BaseUrl = "https://bittrex.com/api/v1.1/account/getbalance{2}apikey={0}&nonce={1}";
 		private const string Signing = "apisign";
 
 		private const string ResultKey = "result";
@@ -53,10 +54,10 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 
 		public override int RepositoryTypeId => AccountRepositoryDbm.DB_TYPE_BITTREX_REPOSITORY;
 
-		public async Task<JArray> GetResult(Currency.Model.Currency currency = null)
+		public async Task<JToken> GetResult(Currency.Model.Currency currency = null)
 		{
 			var nounce = Convert.ToUInt64((DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds);
-			var uri = new Uri($"{string.Format(BaseUrl, apiKey, nounce)}{(currency != null ? $"&currency={currency.Code}" : string.Empty)}");
+			var uri = new Uri(string.Format(BaseUrl, apiKey, nounce, (currency != null ? $"?currency={currency.Code}&" : "s?")));
 
 			var keyBytes = Encoding.UTF8.GetBytes(privateApiKey);
 			var dataBytes = Encoding.UTF8.GetBytes(uri.AbsoluteUri);
@@ -78,7 +79,7 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 			var content = await response.Content.ReadAsStringAsync();
 			var json = JObject.Parse(content);
 
-			var results = (JArray)json[ResultKey];
+			var results = json[ResultKey];
 			return results;
 		}
 
@@ -109,7 +110,7 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 
 				if (balance == 0) continue;
 
-				var curr = CurrencyStorage.Instance.Find(new Currency.Model.Currency(currencyCode));
+				var curr = CurrencyStorage.Instance.Find(new Currency.Model.Currency(currencyCode)) ?? await new CurrencyDatabase().Get(currencyCode) ?? new Currency.Model.Currency(currencyCode);
 
 				var money = new Money(balance, curr);
 				var existing = Elements.ToList().Find(a => a.Money.Currency.Equals(money.Currency));
