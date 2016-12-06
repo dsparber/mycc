@@ -31,7 +31,7 @@ namespace MyCryptos.Core.settings
         {
             get
             {
-                var json = Settings.Get(Settings.KeyBaseCurrency, JsonConvert.SerializeObject(Currency.Model.Currency.BTC));
+                var json = Settings.Get(Settings.KeyBaseCurrency, JsonConvert.SerializeObject(Currency.Model.Currency.Btc));
                 var currency = JsonConvert.DeserializeObject<Currency.Model.Currency>(json);
                 return currency;
             }
@@ -60,7 +60,7 @@ namespace MyCryptos.Core.settings
         {
             get
             {
-                var currencies = new List<Currency.Model.Currency> { Currency.Model.Currency.BTC, Currency.Model.Currency.EUR, Currency.Model.Currency.USD };
+                var currencies = new List<Currency.Model.Currency> { Currency.Model.Currency.Btc, Currency.Model.Currency.Eur, Currency.Model.Currency.Usd };
 
                 var defaultValue = JsonConvert.SerializeObject(currencies);
 

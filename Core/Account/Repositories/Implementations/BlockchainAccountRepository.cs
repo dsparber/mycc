@@ -16,7 +16,7 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 
 		public override string Description => I18N.Blockchain;
 
-		protected override Currency.Model.Currency Currency => Core.Currency.Model.Currency.BTC;
+		protected override Currency.Model.Currency Currency => Core.Currency.Model.Currency.Btc;
 		public override IEnumerable<Currency.Model.Currency> SupportedCurrencies => new List<Currency.Model.Currency> { Currency };
 
 		protected override decimal BalanceFactor => 1e8M;

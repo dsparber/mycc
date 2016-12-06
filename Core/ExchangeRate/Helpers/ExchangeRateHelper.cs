@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using MyCryptos.Core.ExchangeRate.Storage;
 using MyCryptos.Core.Types;
@@ -13,25 +12,25 @@ namespace MyCryptos.Core.ExchangeRate.Helpers
             return GetRate(rate.ReferenceCurrency, rate.SecondaryCurrency);
         }
 
-        public static Model.ExchangeRate GetRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency)
+        public static Model.ExchangeRate GetRate(Currency.Model.Currency referenceCurrency,
+            Currency.Model.Currency secondaryCurrency)
         {
             if (referenceCurrency == null || secondaryCurrency == null)
             {
                 return null;
             }
 
-            var rate = GetDirectRate(referenceCurrency, secondaryCurrency);
+            var rateReference = GetDirectRate(referenceCurrency, Currency.Model.Currency.Btc);
+            var rateSecondary = GetDirectRate(Currency.Model.Currency.Btc, secondaryCurrency);
 
-            if (rate != null)
+            if (rateReference == null || rateSecondary == null)
             {
-                return rate;
+                return null;
             }
 
-            // Indirect match (one intermediate currency)
-            var referenceCurrencyRates = AvailableRatesStorage.Instance.ExchangeRatesWithCurrency(referenceCurrency);
-            var secondaryCurrencyRates = AvailableRatesStorage.Instance.ExchangeRatesWithCurrency(secondaryCurrency);
+            var rate = GetCombinedRate(rateReference, rateSecondary);
 
-            return (from r1 in referenceCurrencyRates from r2 in secondaryCurrencyRates where FindMatch(r1, r2, referenceCurrency, secondaryCurrency) let e1 = ExchangeRateStorage.Instance.Find(r1) ?? r1 let e2 = ExchangeRateStorage.Instance.Find(r2) ?? r2 select GetCombinedRate(e1, e2)).FirstOrDefault();
+            return Equals(rate.ReferenceCurrency, referenceCurrency) ? rate : rate.Inverse;
         }
 
         private static Model.ExchangeRate GetDirectRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency)
@@ -43,15 +42,12 @@ namespace MyCryptos.Core.ExchangeRate.Helpers
 
             var exchangeRate = new Model.ExchangeRate(referenceCurrency, secondaryCurrency);
 
-            if (!AvailableRatesStorage.Instance.IsAvailable(exchangeRate) && !AvailableRatesStorage.Instance.IsAvailable(exchangeRate.Inverse)) return null;
+            var available = AvailableRatesStorage.Instance.IsAvailable(exchangeRate);
+            var availableInverse = AvailableRatesStorage.Instance.IsAvailable(exchangeRate.Inverse);
 
-            if (AvailableRatesStorage.Instance.IsAvailable(exchangeRate))
-            {
-                return ExchangeRateStorage.Instance.Find(exchangeRate);
-            }
+            if (!available && !availableInverse) return null;
 
-            var e = ExchangeRateStorage.Instance.Find(exchangeRate.Inverse);
-            return e?.Inverse;
+            return available ? ExchangeRateStorage.Instance.Find(exchangeRate) : ExchangeRateStorage.Instance.Find(exchangeRate.Inverse)?.Inverse;
         }
 
         public static Task<Model.ExchangeRate> GetRate(Model.ExchangeRate rate, FetchSpeedEnum speed)
@@ -59,43 +55,25 @@ namespace MyCryptos.Core.ExchangeRate.Helpers
             return GetRate(rate.ReferenceCurrency, rate.SecondaryCurrency, speed);
         }
 
-        public static async Task<Model.ExchangeRate> GetRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency, FetchSpeedEnum speed)
+        private static async Task<Model.ExchangeRate> GetRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency, FetchSpeedEnum speed)
         {
             if (referenceCurrency == null || secondaryCurrency == null)
             {
                 return null;
             }
 
-            var rate = await GetDirectRate(referenceCurrency, secondaryCurrency, speed);
+            var rateReference = await GetDirectRate(referenceCurrency, Currency.Model.Currency.Btc, speed);
+            var rateSecondary = await GetDirectRate(Currency.Model.Currency.Btc, secondaryCurrency, speed);
 
-            if (rate != null)
+            if (rateReference == null || rateSecondary == null)
             {
-                return rate;
+                return null;
             }
 
-            // Indirect match (one intermediate currency)
-            var referenceCurrencyRates = AvailableRatesStorage.Instance.ExchangeRatesWithCurrency(referenceCurrency);
-            var secondaryCurrencyRates = AvailableRatesStorage.Instance.ExchangeRatesWithCurrency(secondaryCurrency);
+            var rate = GetCombinedRate(rateReference, rateSecondary);
 
+            return Equals(rate.ReferenceCurrency, referenceCurrency) ? rate : rate.Inverse;
 
-            foreach (var r1 in referenceCurrencyRates)
-            {
-                foreach (var r2 in secondaryCurrencyRates)
-                {
-                    if (FindMatch(r1, r2, referenceCurrency, secondaryCurrency))
-                    {
-                        await AddRate(r1);
-                        await AddRate(r2);
-                        await Fetch(speed);
-
-                        var e1 = ExchangeRateStorage.Instance.Find(r1) ?? r1;
-                        var e2 = ExchangeRateStorage.Instance.Find(r2) ?? r2;
-
-                        return GetCombinedRate(e1, e2);
-                    }
-                }
-            }
-            return null;
         }
 
         private static async Task<Model.ExchangeRate> GetDirectRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency, FetchSpeedEnum speed)
@@ -110,17 +88,11 @@ namespace MyCryptos.Core.ExchangeRate.Helpers
             var exists = AvailableRatesStorage.Instance.IsAvailable(exchangeRate);
             var existsInverse = AvailableRatesStorage.Instance.IsAvailable(exchangeRate.Inverse);
 
-            if (exists || existsInverse)
-            {
-                await AddAndFetch(!exists, speed, exchangeRate);
+            if (!exists && !existsInverse) return null;
 
-                if (exists)
-                {
-                    return ExchangeRateStorage.Instance.Find(exchangeRate);
-                }
-                return ExchangeRateStorage.Instance.Find(exchangeRate.Inverse).Inverse;
-            }
-            return null;
+            await AddAndFetch(!exists, speed, exchangeRate);
+
+            return exists ? ExchangeRateStorage.Instance.Find(exchangeRate) : ExchangeRateStorage.Instance.Find(exchangeRate.Inverse).Inverse;
         }
 
         private static Task AddRate(Model.ExchangeRate exchangeRate)
@@ -163,11 +135,6 @@ namespace MyCryptos.Core.ExchangeRate.Helpers
                 case FetchSpeedEnum.Fast: await ExchangeRateStorage.Instance.LoadFromDatabase(); break;
                 default: throw new ArgumentOutOfRangeException(nameof(speed), speed, null);
             }
-        }
-
-        private static bool FindMatch(Model.ExchangeRate r1, Model.ExchangeRate r2, Currency.Model.Currency ref1, Currency.Model.Currency ref2)
-        {
-            return (r1.Contains(r2.ReferenceCurrency) || r1.Contains(r2.SecondaryCurrency)) && !CommonCurrency(r1, r2).Equals(ref1) && !CommonCurrency(r1, r2).Equals(ref2);
         }
 
         private static Model.ExchangeRate GetCombinedRate(Model.ExchangeRate rate1, Model.ExchangeRate rate2)

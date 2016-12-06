@@ -4,7 +4,7 @@ using MyCryptos.Forms.Resources;
 using Plugin.Fingerprint;
 using Xamarin.Forms;
 
-namespace MyCryptos
+namespace MyCryptos.Forms.view.pages
 {
     public partial class PasswordView : ContentPage
     {

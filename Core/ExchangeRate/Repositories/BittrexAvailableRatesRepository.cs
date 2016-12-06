@@ -30,7 +30,7 @@ namespace MyCryptos.Core.ExchangeRate.Repositories
 				var repository = CurrencyStorage.Instance.RepositoryOfType<BittrexCurrencyRepository>();
 				var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == repository.Id).Select(e => e.Code);
 
-				Elements = CurrencyStorage.Instance.AllElements.Where(e => codes.Contains(e?.Code)).Select(e => new Model.ExchangeRate(Currency.Model.Currency.BTC, e)).ToList();
+				Elements = CurrencyStorage.Instance.AllElements.Where(e => codes.Contains(e?.Code)).Select(e => new Model.ExchangeRate(Currency.Model.Currency.Btc, e)).ToList();
 				return true;
 			});
 		}

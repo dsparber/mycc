@@ -14,8 +14,8 @@ namespace MyCryptos.Core.Currency.Repositories
 			return Task.Factory.StartNew<IEnumerable<Model.Currency>>(() =>
 			   {
 				   var currentElements = new List<Model.Currency>();
-				   currentElements.Add(Model.Currency.EUR);
-				   currentElements.Add(Model.Currency.USD);
+				   currentElements.Add(Model.Currency.Eur);
+				   currentElements.Add(Model.Currency.Usd);
 				   return currentElements;
 			   });
 		}

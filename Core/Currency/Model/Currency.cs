@@ -1,3 +1,4 @@
+using System;
 using MyCryptos.Core.Abstract.Models;
 using Newtonsoft.Json;
 
@@ -52,7 +53,21 @@ namespace MyCryptos.Core.Currency.Model
         /// Stores the unique code for the currency
         /// </summary>
         /// <value>The abbreviation.</value>
-        public string Code { get; private set; }
+        public string Code
+        {
+            get { return code; }
+            private set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException();
+
+                }
+                code = value;
+            }
+        }
+
+        private string code;
 
         /// <summary>
         /// Equals the specified obj.
@@ -60,7 +75,7 @@ namespace MyCryptos.Core.Currency.Model
         /// <param name="obj">Object.</param>
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is Currency))
+            if (!(obj is Currency))
             {
                 return false;
             }
@@ -87,8 +102,8 @@ namespace MyCryptos.Core.Currency.Model
             return Code;
         }
 
-        public static readonly Currency BTC = new Currency("BTC", "Bitcoin");
-        public static readonly Currency EUR = new Currency("EUR", "Euro");
-        public static readonly Currency USD = new Currency("USD", "US Dollar");
+        public static readonly Currency Btc = new Currency("BTC", "Bitcoin");
+        public static readonly Currency Eur = new Currency("EUR", "Euro");
+        public static readonly Currency Usd = new Currency("USD", "US Dollar");
     }
 }

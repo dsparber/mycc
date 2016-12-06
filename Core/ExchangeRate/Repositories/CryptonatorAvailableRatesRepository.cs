@@ -48,7 +48,7 @@ namespace MyCryptos.Core.ExchangeRate.Repositories
 		{
 			if (Currencies.Contains(currency))
 			{
-				return new Model.ExchangeRate(currency, Currency.Model.Currency.BTC);
+				return new Model.ExchangeRate(currency, Currency.Model.Currency.Btc);
 			}
 			return null;
 		}
@@ -57,7 +57,7 @@ namespace MyCryptos.Core.ExchangeRate.Repositories
 		{
 			if (Currencies.Contains(currency))
 			{
-				return new List<Model.ExchangeRate> { new Model.ExchangeRate(currency, Currency.Model.Currency.BTC), new Model.ExchangeRate(currency, Currency.Model.Currency.EUR), new Model.ExchangeRate(currency, Currency.Model.Currency.USD) }.Where(e => !e.ReferenceCurrency.Equals(e.SecondaryCurrency)).ToList();
+				return new List<Model.ExchangeRate> { new Model.ExchangeRate(currency, Currency.Model.Currency.Btc), new Model.ExchangeRate(currency, Currency.Model.Currency.Eur), new Model.ExchangeRate(currency, Currency.Model.Currency.Usd) }.Where(e => !e.ReferenceCurrency.Equals(e.SecondaryCurrency)).ToList();
 			}
 			return new List<Model.ExchangeRate>();
 		}
