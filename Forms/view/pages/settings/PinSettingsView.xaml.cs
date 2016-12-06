@@ -3,7 +3,7 @@ using MyCryptos.Core.settings;
 using MyCryptos.Core.Types;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
-using MyCryptos.view.overlays;
+using MyCryptos.Forms.view.overlays;
 using Plugin.Fingerprint;
 
 namespace MyCryptos.Forms.view.pages.settings

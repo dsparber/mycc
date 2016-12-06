@@ -1,10 +1,11 @@
-﻿using view;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using System.Linq;
 using MyCryptos.Core.Resources;
 using MyCryptos.Core.settings;
 using MyCryptos.Core.tasks;
 using MyCryptos.Forms.Messages;
+using MyCryptos.Forms.view.container;
+using MyCryptos.Forms.view.overlays;
 
 namespace MyCryptos
 {

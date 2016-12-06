@@ -2,7 +2,6 @@
 using MyCryptos.Core.settings;
 using MyCryptos.Core.Types;
 using MyCryptos.Forms.Messages;
-using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.pages.settings
 {

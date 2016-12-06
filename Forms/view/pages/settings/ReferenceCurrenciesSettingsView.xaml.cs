@@ -5,9 +5,9 @@ using MyCryptos.Core.Currency.Storage;
 using MyCryptos.Core.settings;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
+using MyCryptos.Forms.view.overlays;
 using MyCryptos.view.components;
 using MyCryptos.view.components.cells;
-using MyCryptos.view.overlays;
 using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.pages.settings

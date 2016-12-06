@@ -39,7 +39,7 @@ namespace MyCryptos.Core.Account.Models.Base
         /// <summary>
         /// The current amount
         /// </summary>
-        public decimal Amount;
+        public readonly decimal Amount;
 
         /// <summary>
         /// Formats the money as string
@@ -47,16 +47,12 @@ namespace MyCryptos.Core.Account.Models.Base
         /// <returns>Money object as string</returns>
         public override string ToString()
         {
-            return $"{Amount:#,0.##} {(Currency != null ? Currency.Code : "")}";
+            return $"{Amount:#,0.########} {Currency.Code}";
         }
 
-        /// <summary>
-        /// Formats the money as string
-        /// </summary>
-        /// <returns>Money object as string</returns>
-        public string ToStringWithoutCurrency()
+        public string ToStringTwoDigits()
         {
-            return $"{Amount:#,0.##}";
+            return $"{(Amount < 0.01M && Amount > 0 ? $"> {0.01}" : $"{Amount:#,0.00}")} {Currency.Code}";
         }
 
         /// <summary>
@@ -67,7 +63,7 @@ namespace MyCryptos.Core.Account.Models.Base
         /// <returns>The <see cref="T:Money"/> that is the sum of the values of <c>m1</c> and <c>m2</c>.</returns>
         public static Money operator +(Money m1, Money m2)
         {
-            checkForCurrencyMissmatch(m1, m2);
+            CheckForCurrencyMissmatch(m1, m2);
             return new Money((m1.Amount + m2.Amount), m1.Currency);
         }
 
@@ -79,7 +75,7 @@ namespace MyCryptos.Core.Account.Models.Base
         /// <returns>The <see cref="T:Money"/> that is the <c>m1</c> minus <c>m2</c>.</returns>
         public static Money operator -(Money m1, Money m2)
         {
-            checkForCurrencyMissmatch(m1, m2);
+            CheckForCurrencyMissmatch(m1, m2);
             return new Money((m1.Amount - m2.Amount), m1.Currency);
         }
 
@@ -91,7 +87,7 @@ namespace MyCryptos.Core.Account.Models.Base
         /// <returns>The <see cref="T:Money"/> that is the <c>m1</c> * <c>m2</c>.</returns>
         public static Money operator *(Money m1, Money m2)
         {
-            checkForCurrencyMissmatch(m1, m2);
+            CheckForCurrencyMissmatch(m1, m2);
             return new Money((m1.Amount * m2.Amount), m1.Currency);
         }
 
@@ -103,7 +99,7 @@ namespace MyCryptos.Core.Account.Models.Base
         /// <returns>The <see cref="T:Money"/> that is the <c>m1</c> / <c>m2</c>.</returns>
         public static Money operator /(Money m1, Money m2)
         {
-            checkForCurrencyMissmatch(m1, m2);
+            CheckForCurrencyMissmatch(m1, m2);
             return new Money((m1.Amount / m2.Amount), m1.Currency);
         }
 
@@ -112,7 +108,7 @@ namespace MyCryptos.Core.Account.Models.Base
         /// </summary>
         /// <param name="m1">The first money instance</param>
         /// <param name="m2">The second money instance</param>
-        static void checkForCurrencyMissmatch(Money m1, Money m2)
+        private static void CheckForCurrencyMissmatch(Money m1, Money m2)
         {
             if (!m1.Currency.Equals(m2.Currency))
             {

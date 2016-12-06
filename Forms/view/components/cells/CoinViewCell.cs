@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using MyCryptos.Forms.Resources;
 using Xamarin.Forms;
-using view;
-using AccountDetailView = MyCryptos.Forms.view.pages.AccountDetailView;
-using MyCryptos.Core.Account.Models;
 using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Repositories.Base;
 using MyCryptos.Core.Currency.Model;
 using MyCryptos.Core.ExchangeRate.Model;
-using CoinDetailView = MyCryptos.Forms.view.pages.CoinDetailView;
+using MyCryptos.Forms.view.pages;
 
 namespace MyCryptos.view.components
 {
@@ -24,7 +21,7 @@ namespace MyCryptos.view.components
         public ExchangeRate ExchangeRate
         {
             private get { return exchangeRate; }
-            set { exchangeRate = value; Detail = MoneyReference != null ? MoneyReference.ToString() : I18N.NoExchangeRateFound; SetTapRecognizer(); }
+            set { exchangeRate = value; Detail = MoneyReference != null ? MoneyReference.ToStringTwoDigits() : I18N.NoExchangeRateFound; SetTapRecognizer(); }
         }
         public IEnumerable<Tuple<FunctionalAccount, AccountRepository>> Accounts
         {

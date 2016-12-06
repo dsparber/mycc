@@ -6,7 +6,7 @@ using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using Xamarin.Forms;
 
-namespace MyCryptos.view.overlays
+namespace MyCryptos.Forms.view.overlays
 {
     public partial class PinOverlay : ContentPage
     {

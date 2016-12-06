@@ -1,8 +1,6 @@
-﻿using MyCryptos.Core.Account.Models;
-using MyCryptos.Core.Account.Models.Base;
+﻿using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Models.Implementations;
 using MyCryptos.Core.Account.Storage;
-using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Resources;
 using MyCryptos.view.components;
 using Xamarin.Forms;
@@ -28,7 +26,7 @@ namespace MyCryptos.view.addrepositoryviews
 
         public override TableSection InputSection => inputSection;
         public override string DefaultName => I18N.LocalAccount;
-        public override string Description => I18N.Local.CapitalizeFirstLetter();
+        public override string Description => I18N.Manually;
 
         public override bool Enabled
         {
@@ -43,12 +41,7 @@ namespace MyCryptos.view.addrepositoryviews
             var currency = currencyCell.SelectedCurrency;
             var amount = decimal.Parse(string.IsNullOrEmpty(amountEntryCell.Text) ? "0" : amountEntryCell.Text);
 
-            if (currency == null)
-            {
-                return null;
-            }
-
-            return new LocalAccount(null, name, new Money(amount, currency), AccountStorage.Instance.LocalRepository.Id);
+            return currency == null ? null : new LocalAccount(null, name, new Money(amount, currency), AccountStorage.Instance.LocalRepository.Id);
         }
 
         public override void Unfocus()

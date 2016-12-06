@@ -10,6 +10,7 @@ using MyCryptos.Core.tasks;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
+using MyCryptos.Forms.view.overlays;
 using MyCryptos.view.addrepositoryviews;
 using Xamarin.Forms;
 
@@ -35,7 +36,6 @@ namespace MyCryptos.Forms.view.pages
 
             addViews = new List<AddSourceSubview>
             {
-                new AddLocalAccountSubview(Navigation),
                 new AddAddressSubview(Navigation)
                 {
                     NameChanged = () =>
@@ -44,15 +44,16 @@ namespace MyCryptos.Forms.view.pages
                         NameEntryCell.Placeholder = specificAddView.DefaultName;
                     }
                 },
-                new AddBittrexSubview()
+                new AddBittrexSubview(),
+                new AddLocalAccountSubview(Navigation)
             };
 
-            specificAddView = addViews[local ? 0 : 1];
-            TableViewComponent.Root.Add(specificAddView.InputSection);
+            specificAddView = addViews[local ? 2 : 0];
+            TableViewComponent.Root.Insert(0, specificAddView.InputSection);
 
             SegmentedControl.BackgroundColor = AppConstants.TableBackgroundColor;
             SegmentedControl.Tabs = addViews.Select(v => v.Description).ToList();
-            SegmentedControl.SelectedIndex = local ? 0 : 1;
+            SegmentedControl.SelectedIndex = local ? 2 : 0;
             SegmentedControl.SelectionChanged = (index) =>
             {
                 var old = specificAddView;
@@ -63,7 +64,7 @@ namespace MyCryptos.Forms.view.pages
                 Header.InfoText = (string.Empty.Equals(txt) || txt == null) ? specificAddView.DefaultName : txt;
 
                 TableViewComponent.Root.Remove(old.InputSection);
-                TableViewComponent.Root.Add(specificAddView.InputSection);
+                TableViewComponent.Root.Insert(0, specificAddView.InputSection);
             };
 
             Header.InfoText = specificAddView.DefaultName;

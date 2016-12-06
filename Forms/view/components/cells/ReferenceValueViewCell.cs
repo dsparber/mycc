@@ -1,56 +1,50 @@
 using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.ExchangeRate.Model;
 using MyCryptos.Forms.Resources;
+using MyCryptos.view.components;
 
-namespace MyCryptos.view.components
+namespace MyCryptos.Forms.view.components.cells
 {
     public class ReferenceValueViewCell : CustomViewCell
     {
-        Money money;
-        ExchangeRate exchangeRate;
+        private Money money;
+        private ExchangeRate exchangeRate;
 
         public Money Money
         {
-            get { return money; }
-            set { money = value; setView(); }
+            private get { return money; }
+            set { money = value; SetView(); }
         }
 
         public ExchangeRate ExchangeRate
         {
             get { return exchangeRate; }
-            set { exchangeRate = value; setView(); }
+            set { exchangeRate = value; SetView(); }
         }
 
         public ReferenceValueViewCell()
         {
-            setView();
+            SetView();
         }
 
-        void setView()
+        private void SetView()
         {
             IsLoading = true;
-            if (exchangeRate != null && exchangeRate.Rate.HasValue && money != null)
+            if (exchangeRate?.Rate != null && money != null)
             {
-                Text = new Money(money.Amount * exchangeRate.RateNotNull, exchangeRate.SecondaryCurrency).ToString();
+                Text = new Money(money.Amount * exchangeRate.RateNotNull, exchangeRate.SecondaryCurrency).ToStringTwoDigits();
                 IsLoading = false;
             }
-            else if (exchangeRate != null && exchangeRate.SecondaryCurrency != null)
+            else if (exchangeRate?.SecondaryCurrency != null)
             {
-                Text = string.Format("0 {0}", exchangeRate.SecondaryCurrency.Code);
+                Text = new Money(0, exchangeRate.SecondaryCurrency).ToStringTwoDigits();
             }
 
-            if (exchangeRate != null && exchangeRate.Rate.HasValue)
-            {
-                Detail = string.Format(I18N.ExchangeRate, exchangeRate.Rate);
-            }
-            else
-            {
-                Detail = I18N.NoExchangeRateFound;
-            }
+            Detail = exchangeRate?.Rate != null ? string.Format(I18N.ExchangeRate, exchangeRate.Rate) : I18N.NoExchangeRateFound;
         }
 
-        public override decimal Units { get { return Money.Amount * (ExchangeRate != null ? ExchangeRate.RateNotNull : 0); } }
-        public override string Name { get { return (ExchangeRate != null) ? ExchangeRate.SecondaryCurrency.Code : string.Empty; } }
-        public override decimal Value { get { return Money.Amount * (ExchangeRate != null ? ExchangeRate.RateNotNull : 0); } }
+        public override decimal Units => Money.Amount * (ExchangeRate?.RateNotNull ?? 0);
+        public override string Name => (ExchangeRate != null) ? ExchangeRate.SecondaryCurrency.Code : string.Empty;
+        public override decimal Value => Money.Amount * (ExchangeRate?.RateNotNull ?? 0);
     }
 }

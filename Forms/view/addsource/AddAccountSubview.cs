@@ -1,4 +1,3 @@
-using MyCryptos.Core.Account.Models;
 using MyCryptos.Core.Account.Models.Base;
 
 namespace MyCryptos.view.addrepositoryviews

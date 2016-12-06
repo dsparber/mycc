@@ -8,33 +8,39 @@
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="MyCryptos.Forms.view.pages.SourcesView"
 	Title="{i18N:Translate Sources}">
-	<ContentPage.ToolbarItems>
-		<ToolbarItem
+  <ContentPage.ToolbarItems>
+    <ToolbarItem
 			Text="{i18N:Translate Add}"
 			Clicked="Add" />
-		<ToolbarItem
-			Text="{i18N:Translate Refresh}"
-			Clicked="Refresh"
-			Icon="refresh.png" />
-	</ContentPage.ToolbarItems>
-	<ContentPage.Content>
-		<components:ChangingStackLayout>
-			<components:HeaderView
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <components:ChangingStackLayout>
+      <components:HeaderView
 				x:Name="Header" />
-			<TableView
-				Intent="Form">
-				<TableView.BackgroundColor>
-					<OnPlatform
-						x:TypeArguments="Color"
-						Android="#EEE" />
-				</TableView.BackgroundColor>
-				<TableSection
-					x:Name="LocalSection"
-					Title="{i18N:Translate Local}" />
-				<TableSection
-					x:Name="OnlineSection"
-					Title="{i18N:Translate Online}" />
-			</TableView>
-		</components:ChangingStackLayout>
-	</ContentPage.Content>
+      <StackLayout x:Name="ContentView" VerticalOptions="FillAndExpand">
+        <TableView
+          Intent="Form"
+          x:Name="Table"
+          VerticalOptions="FillAndExpand">
+          <TableView.BackgroundColor>
+            <OnPlatform
+              x:TypeArguments="Color"
+              Android="#EEE" />
+          </TableView.BackgroundColor>
+          <TableSection
+            x:Name="LocalSection"
+            Title="{i18N:Translate Local}" />
+          <TableSection
+            x:Name="OnlineSection"
+            Title="{i18N:Translate Online}" />
+        </TableView>
+        <ContentView x:Name="NoSourcesView" VerticalOptions="FillAndExpand" BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
+          <StackLayout VerticalOptions="CenterAndExpand" Margin="40">
+            <Label Text="{i18N:Translate NoSources}" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="{x:Static constants:AppConstants.FontColorLight}" />
+            <Label Text="{i18N:Translate NoSourcesDescriptionAdd}" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="150" TextColor="{x:Static constants:AppConstants.FontColorLight}"/>
+          </StackLayout>
+        </ContentView>
+      </StackLayout>
+    </components:ChangingStackLayout>
+  </ContentPage.Content>
 </ContentPage>

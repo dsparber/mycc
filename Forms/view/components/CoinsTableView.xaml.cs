@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using MyCryptos.Core.Account.Models;
 using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Repositories.Base;
 using MyCryptos.Core.Account.Storage;
@@ -14,7 +12,6 @@ using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using MyCryptos.view.components;
-using view;
 using Xamarin.Forms;
 using AddSourceView = MyCryptos.Forms.view.pages.AddSourceView;
 
@@ -40,7 +37,7 @@ namespace MyCryptos.Forms.view.components
             Messaging.SortOrder.SubscribeValueChanged(this, () => SortHelper.ApplySortOrder(cells, CoinsSection));
         }
 
-        IEnumerable<IGrouping<Currency, Tuple<FunctionalAccount, AccountRepository>>> groups
+        private static IEnumerable<IGrouping<Currency, Tuple<FunctionalAccount, AccountRepository>>> Groups
         {
             get
             {
@@ -53,7 +50,7 @@ namespace MyCryptos.Forms.view.components
         {
             var cs = new List<SortableViewCell>();
 
-            foreach (var g in groups)
+            foreach (var g in Groups)
             {
                 if (g.Key == null) continue;
 

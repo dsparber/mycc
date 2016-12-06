@@ -1,4 +1,3 @@
-using MyCryptos.Core.Account.Models;
 using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Repositories.Base;
 using MyCryptos.Core.ExchangeRate.Helpers;

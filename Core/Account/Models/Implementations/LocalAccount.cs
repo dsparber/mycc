@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using MyCryptos.Core.Account.Models.Base;
+﻿using MyCryptos.Core.Account.Models.Base;
 
 namespace MyCryptos.Core.Account.Models.Implementations
 {

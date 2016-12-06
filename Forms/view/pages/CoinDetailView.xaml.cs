@@ -12,6 +12,8 @@ using MyCryptos.Core.tasks;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.view.components;
+using MyCryptos.Forms.view.components.cells;
+using MyCryptos.Forms.view.overlays;
 using MyCryptos.view.components;
 using Xamarin.Forms;
 

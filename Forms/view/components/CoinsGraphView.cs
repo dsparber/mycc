@@ -48,7 +48,7 @@ namespace MyCryptos.Forms.view.components
                 Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinDetailView(currency)));
             });
 
-            noCoinsLabel = new Label { Text = I18N.NoCoins, IsVisible = false, TextColor = AppConstants.FontColorLight, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
+            noCoinsLabel = new Label { Text = I18N.NoDataToDisplay, IsVisible = false, TextColor = AppConstants.FontColorLight, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
 
             var stack = new StackLayout();
             stack.Children.Add(noCoinsLabel);

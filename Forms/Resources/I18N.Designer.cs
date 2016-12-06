@@ -575,6 +575,15 @@ namespace MyCryptos.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die You can go to the sources page to add data. ähnelt.
+        /// </summary>
+        public static string GoToSourcesToAddAccount {
+            get {
+                return ResourceManager.GetString("GoToSourcesToAddAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Grant access ähnelt.
         /// </summary>
         public static string GrantAccess {
@@ -634,6 +643,15 @@ namespace MyCryptos.Forms.Resources {
         public static string LocalStorage {
             get {
                 return ResourceManager.GetString("LocalStorage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Manually ähnelt.
+        /// </summary>
+        public static string Manually {
+            get {
+                return ResourceManager.GetString("Manually", resourceCulture);
             }
         }
         
@@ -710,6 +728,15 @@ namespace MyCryptos.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No data to display ähnelt.
+        /// </summary>
+        public static string NoDataToDisplay {
+            get {
+                return ResourceManager.GetString("NoDataToDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No exchange rate found ähnelt.
         /// </summary>
         public static string NoExchangeRateFound {
@@ -724,6 +751,15 @@ namespace MyCryptos.Forms.Resources {
         public static string NoSources {
             get {
                 return ResourceManager.GetString("NoSources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die You can simply add a source by pressing the add button (+) in the top right corner. ähnelt.
+        /// </summary>
+        public static string NoSourcesDescriptionAdd {
+            get {
+                return ResourceManager.GetString("NoSourcesDescriptionAdd", resourceCulture);
             }
         }
         

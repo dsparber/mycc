@@ -142,8 +142,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\I18N.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>I18N.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>I18N1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="view\components\CoinsTableView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
