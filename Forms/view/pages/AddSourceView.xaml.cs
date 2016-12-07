@@ -10,8 +10,8 @@ using MyCryptos.Core.tasks;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
+using MyCryptos.Forms.view.addsource;
 using MyCryptos.Forms.view.overlays;
-using MyCryptos.view.addrepositoryviews;
 using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.pages
@@ -36,7 +36,7 @@ namespace MyCryptos.Forms.view.pages
 
             addViews = new List<AddSourceSubview>
             {
-                new AddAddressSubview(Navigation)
+                new AddAddressSubview(Navigation, NameEntryCell.Entry)
                 {
                     NameChanged = () =>
                     {

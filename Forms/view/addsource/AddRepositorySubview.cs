@@ -1,6 +1,6 @@
 using MyCryptos.Core.Account.Repositories.Base;
 
-namespace MyCryptos.view.addrepositoryviews
+namespace MyCryptos.Forms.view.addsource
 {
 
     public abstract class AddRepositorySubview : AddSourceSubview

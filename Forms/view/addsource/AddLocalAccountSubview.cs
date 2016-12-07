@@ -5,7 +5,7 @@ using MyCryptos.Forms.Resources;
 using MyCryptos.view.components;
 using Xamarin.Forms;
 
-namespace MyCryptos.view.addrepositoryviews
+namespace MyCryptos.Forms.view.addsource
 {
     public class AddLocalAccountSubview : AddAccountSubview
     {
