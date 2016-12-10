@@ -13,7 +13,7 @@ namespace MyCryptos.Core.Account.Helper
             var i2 = qrCodeText.IndexOf('?');
             i2 = i2 > 0 ? i2 : qrCodeText.Length - 1;
 
-            var address = qrCodeText.Substring(i1, i2);
+            var address = qrCodeText.Substring(i1 + 1, i2 - i1 - 1);
             var currencyString = i1 != 0 ? qrCodeText.Split(':')[0] : null;
             var argsText = i2 != qrCodeText.Length ? qrCodeText.Split('?')[1] : null;
 
@@ -24,6 +24,7 @@ namespace MyCryptos.Core.Account.Helper
                .ToDictionary(split => split[0], split => split[1]);
 
             var name = args?.GetValueOrDefault("label", null);
+            name = Uri.UnescapeDataString(name);
 
             return Tuple.Create(address, currency, name);
         }

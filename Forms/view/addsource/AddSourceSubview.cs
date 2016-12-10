@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.addsource
@@ -6,7 +7,7 @@ namespace MyCryptos.Forms.view.addsource
 
     public abstract class AddSourceSubview
     {
-        public abstract TableSection InputSection { get; }
+        public abstract List<TableSection> InputSections { get; }
         public abstract bool Enabled { set; }
         public abstract string Description { get; }
         public abstract string DefaultName { get; }

@@ -49,22 +49,29 @@ namespace MyCryptos.Forms.view.pages
             };
 
             specificAddView = addViews[local ? 2 : 0];
-            TableViewComponent.Root.Insert(0, specificAddView.InputSection);
+            TableViewComponent.Root.Clear();
+            foreach (var s in specificAddView.InputSections)
+            {
+                TableViewComponent.Root.Add(s);
+            }
+            TableViewComponent.Root.Add(NameSection);
 
             SegmentedControl.BackgroundColor = AppConstants.TableBackgroundColor;
             SegmentedControl.Tabs = addViews.Select(v => v.Description).ToList();
             SegmentedControl.SelectedIndex = local ? 2 : 0;
             SegmentedControl.SelectionChanged = (index) =>
             {
-                var old = specificAddView;
-
                 specificAddView = addViews[index];
                 NameEntryCell.Placeholder = specificAddView.DefaultName;
                 var txt = NameEntryCell.Text?.Trim();
                 Header.InfoText = (string.Empty.Equals(txt) || txt == null) ? specificAddView.DefaultName : txt;
 
-                TableViewComponent.Root.Remove(old.InputSection);
-                TableViewComponent.Root.Insert(0, specificAddView.InputSection);
+                TableViewComponent.Root.Clear();
+                foreach (var s in specificAddView.InputSections)
+                {
+                    TableViewComponent.Root.Add(s);
+                }
+                TableViewComponent.Root.Add(NameSection);
             };
 
             Header.InfoText = specificAddView.DefaultName;

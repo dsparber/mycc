@@ -19,7 +19,7 @@ namespace MyCryptos.Forms.view.addsource
         private readonly List<Func<string, Currency, string, AddressAccountRepository>> availableRepositories;
         private readonly IEnumerable<Currency> supportedCurrencies;
 
-        private readonly TableSection section;
+        private readonly List<TableSection> sections;
         private readonly CurrencyEntryCell currencyEntryCell;
         private readonly CustomEntryCell addressEntryCell;
 
@@ -38,12 +38,14 @@ namespace MyCryptos.Forms.view.addsource
             addressEntryCell = new CustomEntryCell { Title = I18N.Address, Placeholder = I18N.Address };
             var scanActionCell = new CustomViewCell { Text = I18N.ScanQrCode, IsActionCell = true, IsCentered = true };
 
-            section = new TableSection { Title = I18N.AccountInformation };
+            var sectionQr = new TableSection();
+            var sectionInfo = new TableSection { Title = I18N.AccountInformation };
 
-            section.Add(scanActionCell);
-            section.Add(currencyEntryCell);
-            section.Add(addressEntryCell);
+            sectionQr.Add(scanActionCell);
+            sectionInfo.Add(currencyEntryCell);
+            sectionInfo.Add(addressEntryCell);
 
+            sections = new List<TableSection> { sectionQr, sectionInfo };
 
             currencyEntryCell.OnSelected = (c) => NameChanged();
             scanActionCell.Tapped += (sender, e) =>
@@ -98,7 +100,7 @@ namespace MyCryptos.Forms.view.addsource
             }
         }
 
-        public override TableSection InputSection => section;
+        public override List<TableSection> InputSections => sections;
 
         public sealed override string DefaultName => GetRepository(null)?.Description ?? I18N.Unnamed;
 

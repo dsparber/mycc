@@ -1,4 +1,5 @@
-﻿using MyCryptos.Core.Account.Models.Base;
+﻿using System.Collections.Generic;
+using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Models.Implementations;
 using MyCryptos.Core.Account.Storage;
 using MyCryptos.Forms.Resources;
@@ -24,7 +25,7 @@ namespace MyCryptos.Forms.view.addsource
 
         }
 
-        public override TableSection InputSection => inputSection;
+        public override List<TableSection> InputSections => new List<TableSection> { inputSection };
         public override string DefaultName => I18N.LocalAccount;
         public override string Description => I18N.Manually;
 

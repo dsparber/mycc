@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MyCryptos.Core.Account.Repositories.Base;
 using MyCryptos.Core.Account.Repositories.Implementations;
 using MyCryptos.Forms.Resources;
@@ -17,8 +18,7 @@ namespace MyCryptos.Forms.view.addsource
             apiKeyEntryCell = new CustomEntryCell { Title = I18N.ApiKey, Placeholder = I18N.ApiKey };
             apiPrivateKeyEntryCell = new CustomEntryCell { Title = I18N.SecretApiKey, Placeholder = I18N.SecretApiKey };
 
-            section = new TableSection();
-            section.Title = I18N.GrantAccess;
+            section = new TableSection { Title = I18N.GrantAccess };
             section.Add(apiKeyEntryCell);
             section.Add(apiPrivateKeyEntryCell);
         }
@@ -41,20 +41,11 @@ namespace MyCryptos.Forms.view.addsource
             }
         }
 
-        public override string DefaultName
-        {
-            get { return I18N.BittrexAccount; }
-        }
+        public override string DefaultName => I18N.BittrexAccount;
 
-        public override string Description
-        {
-            get { return I18N.Bittrex; }
-        }
+        public override string Description => I18N.Bittrex;
 
-        public override TableSection InputSection
-        {
-            get { return section; }
-        }
+        public override List<TableSection> InputSections => new List<TableSection> { section };
 
         public override void Unfocus()
         {

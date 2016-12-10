@@ -41,7 +41,7 @@
             </TableView.BackgroundColor>
             <TableView.Root>
               <TableSection
-								Title="{i18N:Translate Name}">
+								Title="{i18N:Translate Name}" x:Name="NameSection">
                 <components:CustomEntryCell
 									x:Name="NameEntryCell"
 									Title="{i18N:Translate Name}"
