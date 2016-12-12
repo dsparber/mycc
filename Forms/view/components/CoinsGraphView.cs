@@ -16,7 +16,7 @@ using XLabs.Forms.Controls;
 using XLabs.Ioc;
 using XLabs.Serialization;
 using XLabs.Serialization.JsonNET;
-using CoinDetailView = MyCryptos.Forms.view.pages.CoinDetailView;
+using MyCryptos.Forms.view.pages;
 
 namespace MyCryptos.Forms.view.components
 {
@@ -45,7 +45,9 @@ namespace MyCryptos.Forms.view.components
                 if (element.Item1.Contains(I18N.Others.Replace("{0}", string.Empty).Trim())) return;
 
                 var currency = CurrencyStorage.Instance.AllElements.Find(e => e.Code.Equals(element.Item1));
-                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinDetailView(currency)));
+                var accounts = AccountStorage.AccountsWithCurrency(currency);
+
+                Device.BeginInvokeOnMainThread(() => navigation.PushAsync((accounts.Count == 1) ? (Page)new AccountDetailView(accounts[0], AccountStorage.RepositoryOf(accounts[0])) : new CoinDetailView(currency)));
             });
 
             noCoinsLabel = new Label { Text = I18N.NoDataToDisplay, IsVisible = false, TextColor = AppConstants.FontColorLight, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };

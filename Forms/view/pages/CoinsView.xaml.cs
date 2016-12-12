@@ -5,6 +5,7 @@ using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.Currency.Model;
 using MyCryptos.Core.settings;
 using MyCryptos.Core.tasks;
+using MyCryptos.Core.Types;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using MyCryptos.Forms.view.components;
@@ -15,7 +16,8 @@ namespace MyCryptos.Forms.view.pages
 {
     public partial class CoinsView
     {
-        private readonly ContentView tableView;
+        private readonly ContentView listView;
+        private readonly CoinsTableView tableView;
         private readonly CoinsGraphView graphView;
 
         private bool loadedView;
@@ -24,20 +26,23 @@ namespace MyCryptos.Forms.view.pages
         {
             InitializeComponent();
 
-            tableView = new CoinsTableView();
+            listView = new CoinsListView();
+            tableView = new CoinsTableView(Navigation);
             graphView = new CoinsGraphView(Navigation)
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
 
+            Stack.Children.Add(listView);
             Stack.Children.Add(tableView);
             Stack.Children.Add(graphView);
-            graphView.IsVisible = ApplicationSettings.ShowGraphOnStartUp;
-            tableView.IsVisible = !ApplicationSettings.ShowGraphOnStartUp;
+            listView.IsVisible = ApplicationSettings.DefaultPage.Equals(StartupPage.ListView);
+            graphView.IsVisible = ApplicationSettings.DefaultPage.Equals(StartupPage.GraphView);
+            tableView.IsVisible = ApplicationSettings.DefaultPage.Equals(StartupPage.TableView);
 
-            Tabs.Tabs = new List<string> { I18N.Table, I18N.Graph };
-            Tabs.SelectedIndex = ApplicationSettings.ShowGraphOnStartUp ? 1 : 0;
+            Tabs.Tabs = new List<string> { I18N.List, I18N.Table, I18N.Graph };
+            Tabs.SelectedIndex = ApplicationSettings.DefaultPage.Equals(StartupPage.ListView) ? 0 : ApplicationSettings.DefaultPage.Equals(StartupPage.TableView) ? 1 : 2;
 
             AddSubscriber();
 
@@ -48,8 +53,9 @@ namespace MyCryptos.Forms.view.pages
 
             Tabs.SelectionChanged = selected =>
             {
-                tableView.IsVisible = (selected == 0);
-                graphView.IsVisible = (selected == 1);
+                listView.IsVisible = (selected == 0);
+                tableView.IsVisible = (selected == 1);
+                graphView.IsVisible = (selected == 2);
             };
 
             SetHeaderCarousel();
@@ -64,6 +70,7 @@ namespace MyCryptos.Forms.view.pages
 
             loadedView = true;
             graphView.OnAppearing();
+            tableView.OnAppearing();
         }
 
 
@@ -97,10 +104,11 @@ namespace MyCryptos.Forms.view.pages
 
         private void AddSubscriber()
         {
-            Messaging.FetchMissingRates.SubscribeFinished(this, () => IsBusy = false);
             Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency));
             Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
 
+            Messaging.Loading.SubscribeFinished(this, SetNoSourcesView);
+            Messaging.FetchMissingRates.SubscribeFinished(this, SetNoSourcesView);
             Messaging.UpdatingAccounts.SubscribeFinished(this, SetNoSourcesView);
             Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoSourcesView);
         }

@@ -23,7 +23,7 @@ namespace MyCryptos.Core.settings
 
         public const string KeyFingerprintSet = "fingerprint-set";
 
-        public const string KeyShowGraphOnStartup = "show-graph-on-startup";
+        public const string DefaultPage = "default-page";
 
         public static T Get<T>(string key, T defaultValue)
         {

@@ -6,10 +6,10 @@ using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.pages
 {
-    public partial class PasswordView : ContentPage
+    public partial class PasswordView
     {
-        private Page nextPage;
-        private bool goesToBckground;
+        private readonly Page nextStartupPage;
+        private readonly bool goesToBckground;
 
         public PasswordView(bool background = false)
         {
@@ -19,10 +19,10 @@ namespace MyCryptos.Forms.view.pages
 
         public PasswordView(Page page, bool background = false) : this(background)
         {
-            nextPage = page;
+            nextStartupPage = page;
         }
 
-        protected async override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
@@ -69,9 +69,9 @@ namespace MyCryptos.Forms.view.pages
 
         private async Task Disappear()
         {
-            if (nextPage != null)
+            if (nextStartupPage != null)
             {
-                await Navigation.PushModalAsync(nextPage);
+                await Navigation.PushModalAsync(nextStartupPage);
             }
             else
             {

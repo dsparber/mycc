@@ -30,7 +30,7 @@
         <StackLayout
 				x:Name="Stack"
 				Spacing="0"
-				HorizontalOptions="FillAndExpand">
+				HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
           <StackLayout.BackgroundColor>
             <OnPlatform
               x:TypeArguments="Color"

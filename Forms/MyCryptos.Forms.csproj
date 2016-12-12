@@ -74,10 +74,11 @@
     <Compile Include="view\components\cells\ReferenceValueViewCell.cs" />
     <Compile Include="view\components\cells\SortableViewCell.cs" />
     <Compile Include="view\components\ChangingStackLayout.cs" />
+    <Compile Include="view\components\CoinsTableView.cs" />
     <Compile Include="view\components\CoinsGraphView.cs" />
     <Compile Include="view\components\CoinsHeaderView.cs" />
-    <Compile Include="view\components\CoinsTableView.xaml.cs">
-      <DependentUpon>CoinsTableView.xaml</DependentUpon>
+    <Compile Include="view\components\CoinsListView.xaml.cs">
+      <DependentUpon>CoinsListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\components\HeaderView.xaml.cs">
       <DependentUpon>HeaderView.xaml</DependentUpon>
@@ -117,8 +118,8 @@
     <Compile Include="view\pages\settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\settings\SortSettingsView.xaml.cs">
-      <DependentUpon>SortSettingsView.xaml</DependentUpon>
+    <Compile Include="view\pages\settings\DefaultPageSettingsView.xaml.cs">
+      <DependentUpon>DefaultPageSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\pages\SourcesView.xaml.cs">
       <DependentUpon>SourcesView.xaml</DependentUpon>
@@ -145,7 +146,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>I18N1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\components\CoinsTableView.xaml">
+    <EmbeddedResource Include="view\components\CoinsListView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -227,7 +228,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="view\pages\settings\SortSettingsView.xaml">
+    <EmbeddedResource Include="view\pages\settings\DefaultPageSettingsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

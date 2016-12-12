@@ -19,69 +19,67 @@ using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.pages
 {
-    public partial class CoinDetailView : ContentPage
+    public partial class CoinDetailView
     {
-        private readonly CoinsHeaderView Header;
+        private List<AccountViewCell> cells;
+        private List<ReferenceValueViewCell> referenceValueCells;
 
-        List<AccountViewCell> Cells;
-        List<ReferenceValueViewCell> ReferenceValueCells;
+        private List<ExchangeRate> exchangeRates;
+        private IEnumerable<Tuple<FunctionalAccount, AccountRepository>> accounts;
 
-        List<ExchangeRate> ExchangeRates;
-        IEnumerable<Tuple<FunctionalAccount, AccountRepository>> Accounts;
-
-        Currency currency;
-        Money moneySum { get { return (Accounts.ToList().Count == 0) ? null : new Money(Accounts.Sum(a => a.Item1.Money.Amount), Accounts.First().Item1.Money.Currency); } }
+        private readonly Currency currency;
+        private Money MoneySum => (accounts.ToList().Count == 0) ? null : new Money(accounts.Sum(a => a.Item1.Money.Amount), accounts.First().Item1.Money.Currency);
 
         public CoinDetailView(Currency pageCurrency)
         {
             InitializeComponent();
 
-            Header = new CoinsHeaderView(pageCurrency, true);
-            ChangingStack.Children.Insert(0, Header);
+            var header = new CoinsHeaderView(pageCurrency, true);
+            ChangingStack.Children.Insert(0, header);
 
             currency = pageCurrency;
 
-            subscribe();
-            loadData();
+            Subscribe();
+            LoadData();
         }
 
-        void loadData()
+        private void LoadData()
         {
             var accs = AccountStorage.Instance.AllElementsWithRepositories;
-            Accounts = accs.Where(t => t.Item1.Money.Currency.Equals(currency)).ToList();
+            accounts = accs.Where(t => t.Item1.Money.Currency.Equals(currency)).ToList();
 
             var currencies = ApplicationSettings.ReferenceCurrencies;
 
-            ExchangeRates = new List<ExchangeRate>();
+            exchangeRates = new List<ExchangeRate>();
             foreach (var c in currencies)
             {
-                ExchangeRates.Add(ExchangeRateHelper.GetRate(currency, c));
+                exchangeRates.Add(ExchangeRateHelper.GetRate(currency, c));
             }
-            ExchangeRates.RemoveAll(e => e == null);
+            exchangeRates.RemoveAll(e => e == null);
 
 
-            if (Accounts.ToList().Count == 0)
+            if (accounts.ToList().Count == 0)
             {
                 Navigation.RemovePage(this);
             }
             else
             {
-                updateView();
+                UpdateView();
             }
         }
 
-        void updateView()
+        private void UpdateView()
         {
-            Cells = new List<AccountViewCell>();
-            foreach (var a in Accounts)
+            cells = new List<AccountViewCell>();
+            foreach (var a in accounts)
             {
-                Cells.Add(new AccountViewCell(Navigation) { Account = a.Item1, Repository = a.Item2 });
+                cells.Add(new AccountViewCell(Navigation) { Account = a.Item1, Repository = a.Item2 });
             }
 
-            var table = new ReferenceCurrenciesSection(moneySum);
-            ReferenceValueCells = table.Cells;
+            var table = new ReferenceCurrenciesSection(MoneySum);
+            referenceValueCells = table.Cells;
 
-            var neededRates = ReferenceValueCells.Where(c => c.IsLoading).Select(c => c.ExchangeRate).ToList();
+            var neededRates = referenceValueCells.Where(c => c.IsLoading).Select(c => c.ExchangeRate).ToList();
 
             if (neededRates.Count > 0)
             {
@@ -91,29 +89,23 @@ namespace MyCryptos.Forms.view.pages
             Device.BeginInvokeOnMainThread(() =>
             {
                 EqualsSection.Clear();
-                foreach (var c in ReferenceValueCells)
+                foreach (var c in referenceValueCells)
                 {
                     EqualsSection.Add(c);
                 }
 
-                SortHelper.ApplySortOrder(Cells, AccountSection);
+                SortHelper.ApplySortOrder(cells, AccountSection);
             });
         }
 
-        void subscribe()
+        private void Subscribe()
         {
-            Messaging.SortOrder.SubscribeValueChanged(this, () =>
-            {
-                SortHelper.ApplySortOrder(Cells, AccountSection);
-                SortHelper.ApplySortOrder(ReferenceValueCells, EqualsSection);
-            });
+            Messaging.UpdatingAccounts.SubscribeFinished(this, LoadData);
+            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, LoadData);
+            Messaging.FetchMissingRates.SubscribeFinished(this, LoadData);
 
-            Messaging.UpdatingAccounts.SubscribeFinished(this, loadData);
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, loadData);
-            Messaging.FetchMissingRates.SubscribeFinished(this, loadData);
-
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, loadData);
-            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, loadData);
+            Messaging.ReferenceCurrency.SubscribeValueChanged(this, LoadData);
+            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, LoadData);
         }
 
         private async void Refresh(object sender, EventArgs args)

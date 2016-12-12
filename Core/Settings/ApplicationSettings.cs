@@ -116,15 +116,15 @@ namespace MyCryptos.Core.settings
             }
         }
 
-        public static bool ShowGraphOnStartUp
+        public static StartupPage DefaultPage
         {
             get
             {
-                return Settings.Get(Settings.KeyShowGraphOnStartup, false);
+                return Settings.Get(Settings.DefaultPage, StartupPage.TableView);
             }
             set
             {
-                Settings.Set(Settings.KeyShowGraphOnStartup, value);
+                Settings.Set(Settings.DefaultPage, value);
             }
         }
 

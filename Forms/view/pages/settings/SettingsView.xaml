@@ -32,12 +32,10 @@
 						Tapped="PinCellTapped"
 						Image="more.png" />
           <components:CustomViewCell
-						Text="{i18N:Translate Sorting}"
-						x:Name="SortingCell"
+						Text="{i18N:Translate DefaultView}"
+						x:Name="DefaultViewCell"
+						Tapped="OpenDefaultViewPage"
 						Image="more.png" />
-          <components:CustomSwitchCell
-						x:Name="GraphOnStartup"
-						Title="{i18N:Translate ShowGraphOnStartup}" />
           <components:CustomSwitchCell
 						x:Name="AutoRefresh"
 						Title="{i18N:Translate RefreshOnStartup}" />

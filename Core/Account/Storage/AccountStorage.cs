@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCryptos.Core.Abstract.Storage;
@@ -9,36 +10,31 @@ using MyCryptos.Core.Resources;
 
 namespace MyCryptos.Core.Account.Storage
 {
-	public class AccountStorage : AbstractDatabaseStorage<AccountRepositoryDbm, AccountRepository, AccountDbm, FunctionalAccount, int>
-	{
-		public AccountStorage() : base(new AccountRepositoryDatabase()) { }
+    public class AccountStorage : AbstractDatabaseStorage<AccountRepositoryDbm, AccountRepository, AccountDbm, FunctionalAccount, int>
+    {
+        private AccountStorage() : base(new AccountRepositoryDatabase()) { }
 
-		protected override async Task OnFirstLaunch()
-		{
-			var localRepository = new LocalAccountRepository(default(int), I18N.DefaultStorage);
-			await Add(localRepository);
-		}
+        protected override async Task OnFirstLaunch()
+        {
+            var localRepository = new LocalAccountRepository(default(int), I18N.DefaultStorage);
+            await Add(localRepository);
+        }
 
-		public override AccountRepository LocalRepository
-		{
-			get
-			{
-				return Repositories.OfType<LocalAccountRepository>().FirstOrDefault();
-			}
-		}
+        public override AccountRepository LocalRepository => Repositories.OfType<LocalAccountRepository>().FirstOrDefault();
 
-		static AccountStorage instance { get; set; }
+        public static readonly AccountStorage Instance = new AccountStorage();
 
-		public static AccountStorage Instance
-		{
-			get
-			{
-				if (instance == null)
-				{
-					instance = new AccountStorage();
-				}
-				return instance;
-			}
-		}
-	}
+        public static List<FunctionalAccount> AccountsWithCurrency(Currency.Model.Currency currency)
+        {
+            return Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).ToList();
+        }
+
+        public static AccountRepository RepositoryOf(FunctionalAccount account)
+        {
+            return Instance.Repositories.FirstOrDefault(r => r.Elements.Contains(account));
+        }
+
+        public static IEnumerable<IGrouping<Currency.Model.Currency, Models.Base.Account>> AccountsGroupedByCurrency => Instance.AllElements.GroupBy(a => a.Money.Currency);
+
+    }
 }

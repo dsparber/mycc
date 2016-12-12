@@ -260,6 +260,15 @@ namespace MyCryptos.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die as {0} ähnelt.
+        /// </summary>
+        public static string AsCurrency {
+            get {
+                return ResourceManager.GetString("AsCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Automatically refresh ähnelt.
         /// </summary>
         public static string AutomaticallyRefresh {
@@ -418,6 +427,15 @@ namespace MyCryptos.Forms.Resources {
         public static string DefaultStorage {
             get {
                 return ResourceManager.GetString("DefaultStorage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DefaultView ähnelt.
+        /// </summary>
+        public static string DefaultView {
+            get {
+                return ResourceManager.GetString("DefaultView", resourceCulture);
             }
         }
         
@@ -616,6 +634,15 @@ namespace MyCryptos.Forms.Resources {
         public static string LabelExample {
             get {
                 return ResourceManager.GetString("LabelExample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die List ähnelt.
+        /// </summary>
+        public static string List {
+            get {
+                return ResourceManager.GetString("List", resourceCulture);
             }
         }
         

@@ -489,4 +489,13 @@
   <data name="Manually" xml:space="preserve">
     <value>Manuell</value>
   </data>
+  <data name="List" xml:space="preserve">
+    <value>Liste</value>
+  </data>
+  <data name="AsCurrency" xml:space="preserve">
+    <value>in {0}</value>
+  </data>
+  <data name="DefaultView" xml:space="preserve">
+    <value>Standardansicht</value>
+  </data>
 </root>

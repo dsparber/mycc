@@ -354,6 +354,10 @@
     </BundleResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Html\coinTable.css" />
+    <Content Include="Html\coinTable.html" />
+    <Content Include="Html\coinTable.js" />
+    <Content Include="Html\down.svg" />
     <Content Include="Html\graph.js" />
     <BundleResource Include="Resources\delete.png" />
     <BundleResource Include="Resources\delete%402x.png" />
@@ -367,6 +371,10 @@
     <BundleResource Include="Resources\refresh%403x.png" />
     <BundleResource Include="Resources\refresh.png" />
     <BundleResource Include="Resources\refresh%402x.png" />
+    <Content Include="Html\jquery-latest.min.js" />
+    <BundleResource Include="Html\more.png" />
+    <Content Include="Html\up.svg" />
+    <Content Include="Html\upDown.svg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\Chart.min.js">

@@ -17,11 +17,11 @@ using AddSourceView = MyCryptos.Forms.view.pages.AddSourceView;
 
 namespace MyCryptos.Forms.view.components
 {
-    public partial class CoinsTableView
+    public partial class CoinsListView
     {
         private List<SortableViewCell> cells;
 
-        public CoinsTableView()
+        public CoinsListView()
         {
             InitializeComponent();
 
@@ -34,7 +34,6 @@ namespace MyCryptos.Forms.view.components
             Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetCells);
 
             Messaging.ReferenceCurrency.SubscribeValueChanged(this, SetCells);
-            Messaging.SortOrder.SubscribeValueChanged(this, () => SortHelper.ApplySortOrder(cells, CoinsSection));
         }
 
         private static IEnumerable<IGrouping<Currency, Tuple<FunctionalAccount, AccountRepository>>> Groups

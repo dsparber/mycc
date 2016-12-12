@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /* Disable scrolling with keys */
 window.addEventListener("keydown", function (e) {
@@ -10,19 +10,19 @@ window.addEventListener("keydown", function (e) {
 
 /* Chart settings */
 Chart.defaults.global.responsive = true;
-Chart.defaults.global.legend.position = 'none';
+Chart.defaults.global.legend.position = "none";
 Chart.defaults.global.legend.labels.fontFamily = "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
 
 /* Graph colors */
 var colors = [
-        '#5DA5DA', '#FAA43A', '#60BD68', '#ed7d55',
-        '#F17CB0', '#B2912F', '#B276B2', '#DECF3F',
-        '#F15854', '#D444D4', '#0b7891', '#811b1b',
-        '#0BD686', '#17CB0F', '#3a2db4', '#a23e0a',
-        '#3CF3FD', '#15854F', '#838383', '#8e2258',
-        '#8b0d0d', '#411a41', '#57801f', '#03b261',
-        '#09171a', '#4D4D4D'
-    ];
+        "#5DA5DA", "#FAA43A", "#60BD68", "#ed7d55",
+        "#F17CB0", "#B2912F", "#B276B2", "#DECF3F",
+        "#F15854", "#D444D4", "#0b7891", "#811b1b",
+        "#0BD686", "#17CB0F", "#3a2db4", "#a23e0a",
+        "#3CF3FD", "#15854F", "#838383", "#8e2258",
+        "#8b0d0d", "#411a41", "#57801f", "#03b261",
+        "#09171a", "#4D4D4D"
+];
 
 
 /* Global variables for labels, data and the chart */
@@ -32,23 +32,23 @@ var chart;
 
 /* Display the graph */
 function displayGraph(l, d, color) {
-    
+
     document.body.style.backgroundColor = color;
-    
+
     labels = l;
     data = d;
-    
+
     resize();
     generateGraph();
 }
 
-function generateGraph(){
-    
+function generateGraph() {
+
     if (data != undefined) {
 
         /* Remove children*/
         var canvas = document.getElementById("chart");
-        var node = document.getElementById('graphWrapper');
+        var node = document.getElementById("graphWrapper");
         while (node.hasChildNodes()) {
             node.removeChild(node.firstChild);
         }
@@ -60,7 +60,7 @@ function generateGraph(){
             chart.destroy();
         }
         chart = new Chart(ctx, {
-            type: 'pie',
+            type: "pie",
             data: {
                 labels: labels,
                 datasets: [{
@@ -88,14 +88,14 @@ function generateGraph(){
     }
 }
 
-function resize(){
-    var wrapper = document.getElementById("graphWrapper");    
+function resize() {
+    var wrapper = document.getElementById("graphWrapper");
     var legend = document.getElementById("legend");
 
     var h = document.body.offsetHeight - legend.offsetHeight - 40;
-        
+
     if (h < document.body.offsetWidth * 0.8) {
-        wrapper.setAttribute("style","width: " + h + ";");
+        wrapper.setAttribute("style", "width: " + h + ";");
     } else {
         wrapper.removeAttribute("style");
     }

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Class="MyCryptos.Forms.view.pages.settings.DefaultPageSettingsView"
+	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
+	Title="{i18N:Translate DefaultView}">
+  <components:ChangingStackLayout>
+    <components:HeaderView
+			TitleText="{i18N:Translate AppName}" />
+    <TableView
+			Intent="Settings">
+      <TableSection
+				Title="{i18N:Translate List}">
+        <components:CustomViewCell
+					x:Name="ListOptionCell"
+					Tapped="SelectionChanged"
+					Text="{i18N:Translate List}"
+					Image="checkmark.png" />
+        <components:CustomViewCell
+					x:Name="TableOptionCell"
+					Tapped="SelectionChanged"
+					Text="{i18N:Translate Table}"
+					Image="checkmark.png" />
+        <components:CustomViewCell
+					x:Name="GraphOptionCell"
+					Tapped="SelectionChanged"
+					Text="{i18N:Translate Graph}"
+					Image="checkmark.png" />
+      </TableSection>
+    </TableView>
+  </components:ChangingStackLayout>
+</ContentPage>

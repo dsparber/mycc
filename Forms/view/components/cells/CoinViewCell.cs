@@ -48,7 +48,9 @@ namespace MyCryptos.view.components
             var gestureRecognizer = new TapGestureRecognizer();
             gestureRecognizer.Tapped += (sender, e) =>
             {
-                navigation.PushAsync(new CoinDetailView(Currency));
+                var accs = Accounts.ToList();
+
+                navigation.PushAsync((accs.Count == 1) ? (Page)new AccountDetailView(accs[0].Item1, accs[0].Item2) : new CoinDetailView(Currency));
             };
             if (View != null)
             {
