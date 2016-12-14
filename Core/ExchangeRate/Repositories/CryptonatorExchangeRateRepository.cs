@@ -36,7 +36,7 @@ namespace MyCryptos.Core.ExchangeRate.Repositories
 				var content = await response.Content.ReadAsStringAsync();
 				var json = JObject.Parse(content);
 				var rateJson = json[RESULT_KEY];
-				if (rateJson.ToList().Count != 0)
+				if (rateJson != null && rateJson.ToList().Count > 0)
 				{
 					var rate = decimal.Parse((string)rateJson[RATE_KEY], CultureInfo.InvariantCulture);
 					exchangeRate.Rate = rate;

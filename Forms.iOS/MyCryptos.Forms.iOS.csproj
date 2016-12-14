@@ -43,7 +43,7 @@
     <MtouchUseSGen>True</MtouchUseSGen>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchUseRefCounting>True</MtouchUseRefCounting>
-    <CodesignProvision>75e735f5-5d84-4d81-8966-8d3b8b959b27</CodesignProvision>
+    <CodesignProvision>e209da28-2e7a-4613-b0af-31658720221c</CodesignProvision>
     <MtouchSdkVersion>10.1</MtouchSdkVersion>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>False</MtouchDebug>
