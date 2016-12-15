@@ -13,10 +13,11 @@ namespace MyCryptos.Forms.Messages
 			// MessagingCenter.Unsubscribe<MessageInfo>(subscriber, message);
 			MessagingCenter.Subscribe<MessageInfo>(subscriber, message, i =>
 			{
-				//Debug.WriteLine($"{subscriber}: {message} ({i})");
+				Debug.WriteLine($"{subscriber}: {message} ({i})");
 				var action = actions.FirstOrDefault(a => a.Item1.Equals(i));
 
 				action?.Item2();
+				Debug.WriteLine($"{subscriber}: {message} ({i}) - done");
 			});
 		}
 

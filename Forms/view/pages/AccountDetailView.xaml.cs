@@ -181,18 +181,12 @@ namespace MyCryptos.Forms.view.pages
 		{
 			base.OnAppearing();
 			if (account == null) return;
-
-			var neededRates = referenceValueCells.Where(c => c.IsLoading).Select(c => c.ExchangeRate).ToList();
-
-			if (neededRates.Count > 0)
-			{
-				ApplicationTasks.FetchMissingRates(neededRates, Messaging.FetchMissingRates.SendStarted, Messaging.FetchMissingRates.SendFinished, ErrorOverlay.Display);
-			}
 		}
 
 		private async void Refresh(object sender, EventArgs args)
 		{
 			await AppTaskHelper.FetchBalanceAndRates(account as OnlineFunctionalAccount);
+			await AppTaskHelper.FetchMissingRates();
 		}
 	}
 }

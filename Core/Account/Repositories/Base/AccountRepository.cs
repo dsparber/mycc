@@ -16,5 +16,7 @@ namespace MyCryptos.Core.Account.Repositories.Base
 		public abstract string Data { get; }
 
 		public abstract string Description { get; }
+
+		public abstract string Info { get; }
 	}
 }

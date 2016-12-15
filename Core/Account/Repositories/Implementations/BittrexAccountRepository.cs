@@ -115,7 +115,7 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 				var money = new Money(balance, curr);
 				var existing = Elements.ToList().Find(a => a.Money.Currency.Equals(money.Currency));
 
-				var newAccount = new BittrexAccount(existing?.Id, $"{Name} ({curr.Code})", money, this);
+				var newAccount = new BittrexAccount(existing?.Id, Name, money, this);
 
 				if (existing != null)
 				{
@@ -158,5 +158,7 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 		}
 
 		public override string Description => I18N.Bittrex;
+
+		public override string Info => Name;
 	}
 }

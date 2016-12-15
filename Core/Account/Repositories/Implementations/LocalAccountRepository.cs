@@ -25,7 +25,9 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 
 		public override string Data { get { return string.Empty; } }
 
-		public override string Description { get { return I18N.LocalStorage; } }
+		public override string Description { get { return I18N.ManuallyAdded; } }
+
+		public override string Info => Name;
 	}
 }
 

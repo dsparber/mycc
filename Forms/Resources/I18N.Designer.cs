@@ -814,5 +814,23 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("GeneralError", resourceCulture);
             }
         }
+        
+        public static string ManuallyAdded {
+            get {
+                return ResourceManager.GetString("ManuallyAdded", resourceCulture);
+            }
+        }
+        
+        public static string AddressAdded {
+            get {
+                return ResourceManager.GetString("AddressAdded", resourceCulture);
+            }
+        }
+        
+        public static string BittrexAdded {
+            get {
+                return ResourceManager.GetString("BittrexAdded", resourceCulture);
+            }
+        }
     }
 }

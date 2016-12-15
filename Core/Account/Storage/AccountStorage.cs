@@ -18,7 +18,7 @@ namespace MyCryptos.Core.Account.Storage
 
 		protected override async Task OnFirstLaunch()
 		{
-			var localRepository = new LocalAccountRepository(default(int), I18N.DefaultStorage);
+			var localRepository = new LocalAccountRepository(default(int), I18N.LocalStorage);
 			await Add(localRepository);
 		}
 
@@ -26,7 +26,7 @@ namespace MyCryptos.Core.Account.Storage
 
 		public static readonly AccountStorage Instance = new AccountStorage();
 
-		public static List<Currency.Model.Currency> UsedCurrencies => Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList();
+		public static List<Currency.Model.Currency> UsedCurrencies => Instance.AllElements.Select(a => a?.Money?.Currency).Distinct().Where(e => e != null).ToList();
 		public static IEnumerable<IGrouping<Currency.Model.Currency, Models.Base.Account>> AccountsGroupedByCurrency => Instance.AllElements.GroupBy(a => a.Money.Currency);
 		public static List<FunctionalAccount> AccountsWithCurrency(Currency.Model.Currency currency) => Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).ToList();
 

@@ -814,4 +814,19 @@
 		xml:space="preserve">
     <value>Es trat ein unerwarteter Fehler auf</value>
   </data>
+	<data
+		name="ManuallyAdded"
+		xml:space="preserve">
+    <value>Manuell hinzugefügt</value>
+  </data>
+	<data
+		name="AddressAdded"
+		xml:space="preserve">
+    <value>Mit Adresse hinzugefügt</value>
+  </data>
+	<data
+		name="BittrexAdded"
+		xml:space="preserve">
+    <value>Über Bittrex hinzugefügt</value>
+  </data>
 </root>

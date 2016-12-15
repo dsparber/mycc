@@ -4,12 +4,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using MyCryptos.Core.Account.Models.Base;
+using MyCryptos.Core.Resources;
 
 namespace MyCryptos.Core.Account.Repositories.Base
 {
 	public abstract class AddressAccountRepository : OnlineAccountRepository
 	{
-		protected string Address;
+		public string Address;
 		protected virtual decimal BalanceFactor => 1;
 
 		protected abstract Uri Url { get; }
@@ -83,5 +84,7 @@ namespace MyCryptos.Core.Account.Repositories.Base
 		}
 
 		protected abstract FunctionalAccount GetAccount(int? id, string name, Money money);
+
+		public override string Info => $"{I18N.Address}: {Address}";
 	}
 }

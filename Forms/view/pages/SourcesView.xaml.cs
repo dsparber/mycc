@@ -12,120 +12,149 @@ using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.pages
 {
-    public partial class SourcesView
-    {
-        private List<AccountRepository> repositories;
+	public partial class SourcesView
+	{
+		private List<AccountRepository> repositories;
 
-        public SourcesView()
-        {
-            InitializeComponent();
+		public SourcesView()
+		{
+			InitializeComponent();
 
-            SetView();
+			SetView();
 
-            if (Device.OS == TargetPlatform.Android)
-            {
-                Title = string.Empty;
-            }
+			if (Device.OS == TargetPlatform.Android)
+			{
+				Title = string.Empty;
+			}
 
-            Messaging.Loading.SubscribeFinished(this, SetView);
-            Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetView);
-            Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetView);
-        }
+			ManualSection.Title = I18N.ManuallyAdded;
+			BittrexSection.Title = I18N.BittrexAdded;
+			AddressSection.Title = I18N.AddressAdded;
 
-        private void SetHeader()
-        {
-            var sources = repositories.Count - (AnyLocalAccounts ? 0 : 1);
-            var local = repositories.Where(r => r is LocalAccountRepository).ToList().Count - (AnyLocalAccounts ? 0 : 1);
+			Messaging.Loading.SubscribeFinished(this, SetView);
+			Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetView);
+			Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetView);
+		}
 
-            Header.TitleText = AccountsText(AccountStorage.Instance.AllElements.Count);
-            Func<int, string> sourcesText = (count) => PluralHelper.GetText(I18N.NoSources, I18N.OneSource, I18N.Sources, count);
-            var localOnlineText = string.Empty;
+		private void SetHeader()
+		{
+			var sources = repositories.Count - (AnyLocalAccounts ? 0 : 1);
+			var local = repositories.Where(r => r is LocalAccountRepository).ToList().Count - (AnyLocalAccounts ? 0 : 1);
 
-            if (local >= 1 && (sources - local) >= 1)
-            {
-                localOnlineText = $" ({local} {I18N.Local}, {(sources - local)} {I18N.Online})";
-            }
-            else if (local >= 1)
-            {
-                localOnlineText = local == 1 ? $" ({I18N.Local})" : $" ({local} {I18N.Local})";
-            }
-            else if ((sources - local) >= 1)
-            {
-                localOnlineText = (sources - local) == 1 ? $" ({I18N.Online})" : $" ({(sources - local)} {I18N.Online})";
-            }
+			Header.TitleText = AccountsText(AccountStorage.Instance.AllElements.Count);
+			Func<int, string> sourcesText = (count) => PluralHelper.GetText(I18N.NoSources, I18N.OneSource, I18N.Sources, count);
+			var localOnlineText = string.Empty;
 
-            Header.InfoText = $"{sourcesText(sources)}{localOnlineText}";
-            Header.IsLoading = false;
-        }
+			if (local >= 1 && (sources - local) >= 1)
+			{
+				localOnlineText = $" ({local} {I18N.Local}, {(sources - local)} {I18N.Online})";
+			}
+			else if (local >= 1)
+			{
+				localOnlineText = local == 1 ? $" ({I18N.Local})" : $" ({local} {I18N.Local})";
+			}
+			else if ((sources - local) >= 1)
+			{
+				localOnlineText = (sources - local) == 1 ? $" ({I18N.Online})" : $" ({(sources - local)} {I18N.Online})";
+			}
 
-        private static Func<int, string> AccountsText => (count) => PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, count);
+			Header.InfoText = $"{sourcesText(sources)}{localOnlineText}";
+			Header.IsLoading = false;
+		}
 
-        private void SetView()
-        {
-            repositories = AccountStorage.Instance.Repositories ?? new List<AccountRepository>();
+		private static Func<int, string> AccountsText => (count) => PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, count);
 
-            var onlineCells = new List<CustomViewCell>();
-            var localCells = new List<CustomViewCell>();
+		private void SetView()
+		{
+			repositories = AccountStorage.Instance.Repositories ?? new List<AccountRepository>();
 
-            foreach (var r in repositories)
-            {
-                var c = new CustomViewCell { Text = r.Name, Detail = $"{AccountsText(r.Elements.ToList().Count)} | {I18N.Type}: {r.Description}", Image = "more.png" };
-                c.Tapped += (sender, e) => Navigation.PushAsync(new RepositoryView(r));
+			Func<AccountRepository, CustomViewCell> GetCell = r =>
+		   	{
+				   var c = new CustomViewCell { Image = "more.png", Text = r.Name };
+				   c.Tapped += (sender, e) => Navigation.PushAsync(new RepositoryView(r));
+				   return c;
+		   	};
 
-                if (r is LocalAccountRepository)
-                {
-                    localCells.Add(c);
-                }
-                else
-                {
-                    onlineCells.Add(c);
-                }
-            }
+			var manualCells = repositories.OfType<LocalAccountRepository>().Where(r => r.Elements.ToList().Count > 0).Select(r =>
+			{
+				var c = GetCell(r);
+				c.Detail = $"{PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, r.Elements.ToList().Count)}";
+				c.Text = r.Description;
+				return c;
+			}).ToList();
+			var bittrexCells = repositories.OfType<BittrexAccountRepository>().Select(r =>
+			{
+				var c = GetCell(r);
+				c.Detail = $"{PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, r.Elements.ToList().Count)}";
+				return c;
+			}).ToList();
+			var addressCells = repositories.OfType<AddressAccountRepository>().Select(r =>
+			{
+				var c = GetCell(r);
+				c.Detail = $"{I18N.Address}: {r.Address}";
+				return c;
+			}).ToList();
 
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                SetHeader();
+			Device.BeginInvokeOnMainThread(() =>
+				{
+					SetHeader();
 
-                NoSourcesView.IsVisible = AccountStorage.Instance.AllElements.Count == 0;
-                Table.IsVisible = AccountStorage.Instance.AllElements.Count > 0;
+					NoSourcesView.IsVisible = AccountStorage.Instance.AllElements.Count == 0;
+					Table.IsVisible = AccountStorage.Instance.AllElements.Count > 0;
 
-                if (AccountStorage.Instance.AllElements.Count <= 0) return;
+					if (AccountStorage.Instance.AllElements.Count <= 0) return;
 
-                LocalSection.Clear();
-                OnlineSection.Clear();
-                LocalSection.Add(localCells);
-                OnlineSection.Add(onlineCells);
+					ManualSection.Clear();
+					BittrexSection.Clear();
+					AddressSection.Clear();
 
-                if (onlineCells.Count == 0)
-                {
-                    Table.Root.Remove(OnlineSection);
-                }
-                else
-                {
-                    if (!Table.Root.Contains(OnlineSection))
-                    {
-                        Table.Root.Add(OnlineSection);
-                    }
-                }
-                if (localCells.Count == 0)
-                {
-                    Table.Root.Remove(LocalSection);
-                }
-                else
-                {
-                    if (!Table.Root.Contains(LocalSection))
-                    {
-                        Table.Root.Add(LocalSection);
-                    }
-                }
-            });
-        }
+					AddressSection.Add(addressCells);
+					BittrexSection.Add(bittrexCells);
+					ManualSection.Add(manualCells);
 
-        private static bool AnyLocalAccounts => AccountStorage.Instance.LocalRepository?.Elements.ToList().Count > 0;
+					if (addressCells.Count == 0)
+					{
+						Table.Root.Remove(AddressSection);
+					}
+					else
+					{
+						if (!Table.Root.Contains(AddressSection))
+						{
+							Table.Root.Add(AddressSection);
+						}
+					}
 
-        private void Add(object sender, EventArgs e)
-        {
-            Navigation.PushOrPushModal(new AddSourceView());
-        }
-    }
+					if (bittrexCells.Count == 0)
+					{
+						Table.Root.Remove(BittrexSection);
+					}
+					else
+					{
+						if (!Table.Root.Contains(BittrexSection))
+						{
+							Table.Root.Add(BittrexSection);
+						}
+					}
+
+					if (manualCells.Count == 0)
+					{
+						Table.Root.Remove(ManualSection);
+					}
+					else
+					{
+						if (!Table.Root.Contains(ManualSection))
+						{
+							Table.Root.Add(ManualSection);
+						}
+					}
+				});
+		}
+
+		private static bool AnyLocalAccounts => AccountStorage.Instance.LocalRepository?.Elements.ToList().Count > 0;
+
+		private void Add(object sender, EventArgs e)
+		{
+			Navigation.PushOrPushModal(new AddSourceView());
+		}
+	}
 }
