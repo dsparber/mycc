@@ -6,11 +6,9 @@ using MyCryptos.Core.Currency.Model;
 using MyCryptos.Core.ExchangeRate.Helpers;
 using MyCryptos.Core.ExchangeRate.Model;
 using MyCryptos.Core.settings;
-using MyCryptos.Core.tasks;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
-using MyCryptos.Forms.view.overlays;
 using MyCryptos.view.components;
 using Xamarin.Forms;
 
@@ -24,9 +22,6 @@ namespace MyCryptos.Forms.view.components
 		private readonly List<string> infoTexts;
 
 		private static int currentInfoText = 1;
-		private static bool dataLoaded;
-		private static bool sentMissing;
-		private bool shouldBeLoading = true;
 
 		public CoinsHeaderView(Currency currency = null, bool useOnlyThisCurrency = false) : this()
 		{
@@ -69,20 +64,9 @@ namespace MyCryptos.Forms.view.components
 
 			Device.BeginInvokeOnMainThread(() =>
 			{
-				if (dataLoaded)
-				{
-					TitleText = useOnlyThisCurrency ? sum.ToString() : sum.ToStringTwoDigits();
-					InfoText = infoTexts[currentInfoText];
-					if (!shouldBeLoading)
-					{
-						IsLoading = false;
-					}
-				}
-				else
-				{
-					shouldBeLoading = IsLoading;
-					IsLoading = true;
-				}
+				TitleText = useOnlyThisCurrency ? sum.ToString() : sum.ToStringTwoDigits();
+				InfoText = infoTexts[currentInfoText];
+
 				if (isLoading.HasValue)
 				{
 					IsLoading = isLoading.Value;
@@ -111,23 +95,6 @@ namespace MyCryptos.Forms.view.components
 				return a.Money.Amount * (rate ?? neededRate).RateNotNull;
 			});
 
-			var neededRates = AccountStorage.NeededRates;
-
-			if (neededRates.Count == 0) return new Money(amount, currency);
-
-			if (!sentMissing)
-			{
-				ApplicationTasks.FetchMissingRates(neededRates, () =>
-				{
-					Messaging.FetchMissingRates.SendStarted();
-					sentMissing = true;
-				}, () =>
-				{
-					Messaging.FetchMissingRates.SendFinished();
-					sentMissing = false;
-				}, ErrorOverlay.Display);
-			}
-
 			return new Money(amount, currency);
 		}
 
@@ -135,7 +102,7 @@ namespace MyCryptos.Forms.view.components
 		{
 			Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => UpdateView());
 			Messaging.UpdatingAccounts.SubscribeFinished(this, () => UpdateView());
-			Messaging.Loading.SubscribeFinished(this, () => { dataLoaded = true; UpdateView(); });
+			Messaging.Loading.SubscribeFinished(this, () => UpdateView());
 
 			Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => UpdateView(false));
 			Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => UpdateView(false));

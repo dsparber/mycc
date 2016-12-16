@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -118,17 +117,17 @@ namespace MyCryptos.Forms.view.components
 
 			if (!itemsExisting || !appeared) return;
 
-			Func<Data, object> sortLambda;
-			switch (ApplicationSettings.SortOrder)
-			{
-				case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
-				case SortOrder.ByUnits: sortLambda = d => d.Amount; break;
-				case SortOrder.ByValue: sortLambda = d => d.Reference; break;
-				case SortOrder.None: sortLambda = d => 1; break;
-				default: sortLambda = d => 1; break;
-			}
+			//Func<Data, object> sortLambda;
+			//switch (ApplicationSettings.SortOrder)
+			//{
+			//	case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
+			//	case SortOrder.ByUnits: sortLambda = d => d.Amount; break;
+			//	case SortOrder.ByValue: sortLambda = d => d.Reference; break;
+			//	case SortOrder.None: sortLambda = d => 1; break;
+			//	default: sortLambda = d => 1; break;
+			//}
 
-			items = ApplicationSettings.SortDirection == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
+			//items = ApplicationSettings.SortDirection == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
 			webView.CallJsFunction("setHeader", new[]{
 				new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
@@ -162,6 +161,11 @@ namespace MyCryptos.Forms.view.components
 				Amount = sum;
 				Reference = sum * rate.RateNotNull;
 				Name = currency.Name;
+			}
+
+			public override string ToString()
+			{
+				return string.Format($"{Amount} {Code}\t= {Reference}");
 			}
 		}
 

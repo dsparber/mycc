@@ -1,19 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Models.Implementations;
 using MyCryptos.Core.Account.Repositories.Base;
 using MyCryptos.Core.Account.Repositories.Implementations;
 using MyCryptos.Core.Account.Storage;
-using MyCryptos.Core.tasks;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using MyCryptos.Forms.Tasks;
 using MyCryptos.Forms.view.components;
 using MyCryptos.Forms.view.components.cells;
-using MyCryptos.Forms.view.overlays;
 using MyCryptos.view.components;
 using Xamarin.Forms;
 

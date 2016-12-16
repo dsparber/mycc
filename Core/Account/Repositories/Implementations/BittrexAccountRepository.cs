@@ -127,7 +127,7 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 				}
 				currentAccounts.Add(newAccount);
 			}
-			Func<FunctionalAccount, bool> notInCurrentAccounts = e => !currentAccounts.Select(a => a.Money.Currency).Contains(e.Money.Currency);
+			Func<FunctionalAccount, bool> notInCurrentAccounts = e => !currentAccounts.Select(a => a.Id).Contains(e.Id);
 			await Task.WhenAll(Elements.Where(notInCurrentAccounts).Select(Remove));
 
 			LastFetch = DateTime.Now;

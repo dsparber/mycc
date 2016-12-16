@@ -20,8 +20,8 @@ namespace MyCryptos.Forms.view.overlays
 			else
 			{
 				message = I18N.GeneralError;
-				Debug.WriteLine(e);
 			}
+			Debug.WriteLine(e);
 
 			Device.BeginInvokeOnMainThread(() =>
 			{

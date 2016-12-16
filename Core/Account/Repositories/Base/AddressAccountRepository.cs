@@ -22,7 +22,7 @@ namespace MyCryptos.Core.Account.Repositories.Base
 		const int BUFFER_SIZE = 256000;
 		readonly HttpClient client;
 
-		public override string Data { get { return Address; } }
+		public override string Data => Address;
 
 		protected AddressAccountRepository(int id, string name, string address) : base(id, name)
 		{
@@ -78,6 +78,9 @@ namespace MyCryptos.Core.Account.Repositories.Base
 			{
 				await Add(newAccount);
 			}
+
+			await Task.WhenAll(Elements.Where(a => a.Id != newAccount.Id).Select(async a => await Remove(a)));
+
 
 			LastFetch = DateTime.Now;
 			return true;

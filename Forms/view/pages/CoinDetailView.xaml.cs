@@ -80,20 +80,15 @@ namespace MyCryptos.Forms.view.pages
 			var table = new ReferenceCurrenciesSection(MoneySum);
 			referenceValueCells = table.Cells;
 
-			var fetch = AppTaskHelper.FetchMissingRates();
-
-			fetch.ContinueWith(t =>
+			Device.BeginInvokeOnMainThread(() =>
 			{
-				Device.BeginInvokeOnMainThread(() =>
+				EqualsSection.Clear();
+				foreach (var c in referenceValueCells)
 				{
-					EqualsSection.Clear();
-					foreach (var c in referenceValueCells)
-					{
-						EqualsSection.Add(c);
-					}
+					EqualsSection.Add(c);
+				}
 
-					SortHelper.ApplySortOrder(cells, AccountSection);
-				});
+				SortHelper.ApplySortOrder(cells, AccountSection, Core.Types.SortOrder.Alphabetical, Core.Types.SortDirection.Ascending);
 			});
 		}
 

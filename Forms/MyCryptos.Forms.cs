@@ -6,7 +6,6 @@ using MyCryptos.Core.tasks;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.view.container;
 using MyCryptos.Forms.view.overlays;
-using MyCryptos.Forms.Tasks;
 
 namespace MyCryptos
 {
