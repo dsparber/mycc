@@ -19,7 +19,7 @@ td:first-child, th:first-child {
     padding-left: 8px;
 }
 
-th:first-child+th, td:first-child+td, th:first-child+th+th, td:first-child+td+td {
+td:first-child+td, td:first-child+td+td {
     text-align: right;
 }
 
@@ -73,4 +73,10 @@ thead td.down span {
 
 thead td.up span {
     background-image: url("up.svg");
+}
+
+@media (max-width: 374px){
+    td:first-child+td+td {
+        display: none;
+    }
 }
