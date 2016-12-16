@@ -60,7 +60,7 @@ namespace MyCryptos.Forms.view.pages
 
 		private void SetView()
 		{
-			var cells = repository.Elements.Select(e =>
+			var cells = repository.Elements.OrderBy(e => e.Money.Currency.Code).Select(e =>
 			{
 				var cell = new CustomViewCell { Text = e.Money.ToString() };
 				if (repository is LocalAccountRepository)
@@ -70,7 +70,7 @@ namespace MyCryptos.Forms.view.pages
 					cell.Tapped += (sender, eventArgs) => Navigation.PushAsync(new AccountEditView(e, repository as LocalAccountRepository));
 				}
 				return cell;
-			}).OrderBy(e => e.Name).ToList();
+			}).ToList();
 
 			if (cells.Count == 0)
 			{
