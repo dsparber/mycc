@@ -817,7 +817,7 @@
 	<data
 		name="ManuallyAdded"
 		xml:space="preserve">
-    <value>Manuelly added</value>
+    <value>Manually added</value>
   </data>
 	<data
 		name="AddressAdded"
@@ -828,5 +828,10 @@
 		name="BittrexAdded"
 		xml:space="preserve">
     <value>Added with Bittrex</value>
+  </data>
+	<data
+		name="Info"
+		xml:space="preserve">
+    <value>Info</value>
   </data>
 </root>

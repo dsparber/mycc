@@ -6,13 +6,16 @@
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	x:Class="MyCryptos.Forms.view.pages.AccountDetailView">
+	x:Class="MyCryptos.Forms.view.pages.AccountEditView">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
-			Text="{i18N:Translate Refresh}"
-			Clicked="Refresh"
-			x:Name="RefreshItem"
-			Icon="refresh.png" />
+			x:Name="EditItem"
+			Text="{i18N:Translate Edit}"
+			Clicked="StartEditing" />
+		<ToolbarItem
+			x:Name="SaveItem"
+			Text="{i18N:Translate Save}"
+			Clicked="DoneEditing" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<components:ChangingStackLayout>
@@ -26,17 +29,30 @@
 						Android="#EEE" />
 				</StackLayout.BackgroundColor>
 				<TableView
-					x:Name="DefaultView"
+					x:Name="EditView"
 					Intent="Form">
 					<TableView.BackgroundColor>
 						<OnPlatform
 							x:TypeArguments="Color"
 							Android="#EEE" />
 					</TableView.BackgroundColor>
-					<TableSection
-						Title="{i18N:Translate EqualTo}"
-						x:Name="EqualsSection">
-					</TableSection>
+					<TableView.Root>
+						<TableSection
+							x:Name="AccountSection">
+							<components:CustomEntryCell
+								x:Name="AccountName"
+								Title="{i18N:Translate Name}"
+								Placeholder="{i18N:Translate Name}"
+								IsEditable="false" />
+						</TableSection>
+						<TableSection
+							x:Name="DeleteSection">
+							<components:CustomViewCell
+								x:Name="DeleteButtonCell"
+								Text="{i18N:Translate Delete}"
+								IsDeleteActionCell="true" />
+						</TableSection>
+					</TableView.Root>
 				</TableView>
 			</StackLayout>
 		</components:ChangingStackLayout>

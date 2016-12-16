@@ -46,7 +46,20 @@ namespace MyCryptos.Core.Account.Storage
 
 		public static AccountRepository RepositoryOf(FunctionalAccount account) => Instance.Repositories.FirstOrDefault(r => r.Elements.Contains(account));
 
-
+		public static async Task<bool> AddRepository(OnlineAccountRepository repository)
+		{
+			var success = await repository.Test();
+			if (success)
+			{
+				await Instance.Add(repository);
+				await Instance.FetchOnline();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 
 	}
 }

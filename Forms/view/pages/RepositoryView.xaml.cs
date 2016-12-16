@@ -7,6 +7,7 @@ using MyCryptos.Core.Types;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
+using MyCryptos.Forms.Tasks;
 using MyCryptos.view.components;
 using Xamarin.Forms;
 
@@ -21,14 +22,27 @@ namespace MyCryptos.Forms.view.pages
 			InitializeComponent();
 			this.repository = repository;
 
-			Header.TitleText = repository.Name;
-			Header.InfoText = $"{I18N.Type}: {repository.Description}";
+			Header.TitleText = repository is LocalAccountRepository ? I18N.ManuallyAdded : repository.Name;
+			if (repository is AddressAccountRepository)
+			{
+				Header.InfoText = $"{I18N.Source}: {repository.Description}";
+			}
+			else
+			{
+				Header.InfoText = PluralHelper.GetTextCoins(repository.ElementsCount);
+				GeneralSection.Remove(AddressEntryCell);
+			}
+
+			if (repository is LocalAccountRepository)
+			{
+				TableView.Root.Remove(GeneralSection);
+				ToolbarItems.Remove(EditItem);
+			}
 
 			RepositoryNameEntryCell.Text = repository.Name;
 			DeleteButtonCell.Tapped += Delete;
 
 			TableView.Root.Remove(DeleteSection);
-			TableView.Root.Remove(NameSection);
 			ToolbarItems.Remove(SaveItem);
 
 			RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
@@ -38,24 +52,47 @@ namespace MyCryptos.Forms.view.pages
 				Title = string.Empty;
 			}
 
-			SetAccountsView();
+			SetView();
 
-			Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetAccountsView);
-			Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetAccountsView);
+			Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetView);
+			Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetView);
 		}
 
-		private void SetAccountsView()
+		private void SetView()
 		{
-			var cells = repository.Elements.Select(e => new AccountViewCell(Navigation) { Account = e, Repository = repository } as SortableViewCell).OrderBy(e => e.Name).ToList();
+			var cells = repository.Elements.Select(e =>
+			{
+				var cell = new CustomViewCell { Text = e.Money.ToString() };
+				if (repository is LocalAccountRepository)
+				{
+					cell.Image = "more.png";
+					cell.Detail = e.Name;
+					cell.Tapped += (sender, eventArgs) => Navigation.PushAsync(new AccountEditView(e, repository as LocalAccountRepository));
+				}
+				return cell;
+			}).OrderBy(e => e.Name).ToList();
+
 			if (cells.Count == 0)
 			{
-				cells.Add(new CustomViewCell { Text = I18N.NoAccounts });
+				cells.Add(new CustomViewCell
+				{
+					Text = I18N.NoAccounts
+				});
 			}
 			Device.BeginInvokeOnMainThread(() =>
 			{
 				Header.IsLoading = false;
 				SortHelper.ApplySortOrder(cells, AccountsSection, SortOrder.Alphabetical);
 			});
+
+			if (repository is AddressAccountRepository)
+			{
+				Device.BeginInvokeOnMainThread(() =>
+				{
+					AddressEntryCell.Text = (repository as AddressAccountRepository).Address;
+					Header.IsLoading = false;
+				});
+			}
 		}
 
 		private async void Delete(object sender, EventArgs e)
@@ -73,7 +110,7 @@ namespace MyCryptos.Forms.view.pages
 
 		private void EditClicked(object sender, EventArgs e)
 		{
-			TableView.Root.Add(NameSection);
+			RepositoryNameEntryCell.IsEditable = true;
 			if (!(repository is LocalAccountRepository))
 			{
 				TableView.Root.Add(DeleteSection);
@@ -82,6 +119,7 @@ namespace MyCryptos.Forms.view.pages
 
 			Title = I18N.Editing;
 			RepositoryNameEntryCell.IsEditable = true;
+			AddressEntryCell.IsEditable = true;
 
 			ToolbarItems.Remove(EditItem);
 			ToolbarItems.Add(SaveItem);
@@ -94,25 +132,69 @@ namespace MyCryptos.Forms.view.pages
 			SaveItem.Clicked -= SaveClicked;
 			Header.IsLoading = true;
 			RepositoryNameEntryCell.IsEditable = false;
+			AddressEntryCell.IsEditable = false;
+
+			Action revertChanges = () => { };
+			var success = true;
+			var changed = false;
 
 			repository.Name = RepositoryNameEntryCell.Text ?? string.Empty;
-			await AccountStorage.Instance.Update(repository);
-			if (repository is OnlineAccountRepository)
+			if (repository is AddressAccountRepository)
 			{
-				await repository.FetchOnline();
-				Messaging.UpdatingAccounts.SendFinished();
+				var addressReposiotry = repository as AddressAccountRepository;
+				var oldAddress = addressReposiotry.Address;
+				var addressText = AddressEntryCell.Text ?? string.Empty;
+				if (!addressText.Equals(addressReposiotry.Address))
+				{
+					addressReposiotry.Address = addressText;
+					changed = true;
+				}
+				revertChanges = () => addressReposiotry.Address = oldAddress;
+			}
+			else if (repository is BittrexAccountRepository)
+			{
+				// TODO Api Keys
 			}
 
-			TableView.Root.Add(AccountsSection);
-			TableView.Root.Remove(NameSection);
-			TableView.Root.Remove(DeleteSection);
+			if (changed && repository is OnlineAccountRepository)
+			{
+				var successful = await AccountStorage.AddRepository(repository as OnlineAccountRepository);
+				if (successful)
+				{
+					await AppTaskHelper.FetchMissingRates();
+				}
+				else
+				{
+					await DisplayAlert(I18N.Error, I18N.FetchingNoSuccessText, I18N.Ok);
+					success = false;
 
-			ToolbarItems.Remove(SaveItem);
-			ToolbarItems.Add(EditItem);
+					revertChanges();
+				}
+			}
 
-			Title = I18N.Accounts;
-			Header.IsLoading = false;
+			if (success)
+			{
+
+				await AccountStorage.Instance.Update(repository);
+				Messaging.UpdatingAccounts.SendFinished();
+
+				RepositoryNameEntryCell.IsEditable = false;
+				AddressEntryCell.IsEditable = false;
+
+				TableView.Root.Add(AccountsSection);
+				TableView.Root.Remove(DeleteSection);
+
+				ToolbarItems.Remove(SaveItem);
+				ToolbarItems.Add(EditItem);
+
+				Title = I18N.Accounts;
+			}
+			else {
+				RepositoryNameEntryCell.IsEditable = true;
+				AddressEntryCell.IsEditable = true;
+			}
 			SaveItem.Clicked += SaveClicked;
+			Header.IsLoading = false;
 		}
 
 		private void UnfocusAll()

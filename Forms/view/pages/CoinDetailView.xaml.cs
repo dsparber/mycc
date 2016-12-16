@@ -8,13 +8,11 @@ using MyCryptos.Core.Currency.Model;
 using MyCryptos.Core.ExchangeRate.Helpers;
 using MyCryptos.Core.ExchangeRate.Model;
 using MyCryptos.Core.settings;
-using MyCryptos.Core.tasks;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Tasks;
 using MyCryptos.Forms.view.components;
 using MyCryptos.Forms.view.components.cells;
-using MyCryptos.Forms.view.overlays;
 using MyCryptos.view.components;
 using Xamarin.Forms;
 
@@ -39,6 +37,7 @@ namespace MyCryptos.Forms.view.pages
 			ChangingStack.Children.Insert(0, header);
 
 			currency = pageCurrency;
+			Title = currency.Code;
 
 			Subscribe();
 			LoadData();

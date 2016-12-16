@@ -829,4 +829,9 @@
 		xml:space="preserve">
     <value>Über Bittrex hinzugefügt</value>
   </data>
+	<data
+		name="Info"
+		xml:space="preserve">
+    <value>Info</value>
+  </data>
 </root>

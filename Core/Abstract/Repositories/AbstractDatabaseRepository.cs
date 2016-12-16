@@ -17,6 +17,8 @@ namespace MyCryptos.Core.Abstract.Repositories
 			get { return elements.FindAll(e => true); }
 		}
 
+		public int ElementsCount => Elements.ToList().Count;
+
 		public DateTime LastFastFetch { get; protected set; }
 		public DateTime LastFetch { get; protected set; }
 

@@ -832,5 +832,11 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("BittrexAdded", resourceCulture);
             }
         }
+        
+        public static string Info {
+            get {
+                return ResourceManager.GetString("Info", resourceCulture);
+            }
+        }
     }
 }

@@ -31,16 +31,21 @@
 						Android="#EEE" />
 				</TableView.BackgroundColor>
 				<TableSection
-					Title="{i18N:Translate Accounts}"
-					x:Name="AccountsSection" />
-				<TableSection
-					Title="{i18N:Translate Label}"
-					x:Name="NameSection">
+					Title="{i18N:Translate Info}"
+					x:Name="GeneralSection">
 					<components:CustomEntryCell
 						x:Name="RepositoryNameEntryCell"
 						Title="{i18N:Translate Name}"
+						IsEditable="false"
 						Placeholder="{i18N:Translate Name}" />
+					<components:CustomEntryCell
+						x:Name="AddressEntryCell"
+						IsEditable="false"
+						Title="{i18N:Translate Address}" />
 				</TableSection>
+				<TableSection
+					Title="{i18N:Translate Coins}"
+					x:Name="AccountsSection" />
 				<TableSection
 					x:Name="DeleteSection">
 					<components:CustomViewCell

@@ -78,14 +78,14 @@ namespace MyCryptos.Forms.view.pages
 			var manualCells = repositories.OfType<LocalAccountRepository>().Where(r => r.Elements.ToList().Count > 0).Select(r =>
 			{
 				var c = GetCell(r);
-				c.Detail = $"{PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, r.Elements.ToList().Count)}";
+				c.Detail = PluralHelper.GetTextCoins(r.Elements.ToList().Count);
 				c.Text = r.Description;
 				return c;
 			}).ToList();
 			var bittrexCells = repositories.OfType<BittrexAccountRepository>().Select(r =>
 			{
 				var c = GetCell(r);
-				c.Detail = $"{PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, r.Elements.ToList().Count)}";
+				c.Detail = PluralHelper.GetTextCoins(r.Elements.ToList().Count);
 				return c;
 			}).ToList();
 			var addressCells = repositories.OfType<AddressAccountRepository>().Select(r =>

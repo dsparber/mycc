@@ -126,6 +126,9 @@
     </Compile>
     <Compile Include="view\overlays\ErrorOverlay.cs" />
     <Compile Include="Tasks\AppTaskHelper.cs" />
+    <Compile Include="view\pages\AccountEditView.cs">
+      <DependentUpon>AccountEditView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -150,6 +153,10 @@
     <EmbeddedResource Include="view\components\CoinsListView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\pages\AccountEditView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType></SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

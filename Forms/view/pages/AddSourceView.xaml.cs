@@ -110,22 +110,13 @@ namespace MyCryptos.Forms.view.pages
 					}
 					else
 					{
-						var success = await repository.Test();
+
+						var success = await AccountStorage.AddRepository(repository);
 						if (success)
 						{
 							Header.LoadingText = I18N.Fetching;
-
-							await AccountStorage.Instance.Add(repository);
-							await AccountStorage.Instance.FetchOnline();
 							Messaging.UpdatingAccounts.SendFinished();
-
-							var referenceCurrencies = ApplicationSettings.ReferenceCurrencies.ToList();
-							var neededRates = repository.Elements.SelectMany(a => referenceCurrencies.Select(c => new ExchangeRate(a.Money.Currency, c))).ToList();
-
-							if (neededRates.Count > 0)
-							{
-								await AppTaskHelper.FetchMissingRates();
-							}
+							await AppTaskHelper.FetchMissingRates();
 							await Navigation.PopOrPopModal();
 
 						}

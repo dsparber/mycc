@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MyCryptos.Core.Account.Models.Base;
-using MyCryptos.Core.Account.Models.Implementations;
 using MyCryptos.Core.Account.Repositories.Base;
-using MyCryptos.Core.Account.Repositories.Implementations;
-using MyCryptos.Core.Account.Storage;
-using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using MyCryptos.Forms.Tasks;
@@ -18,9 +14,6 @@ namespace MyCryptos.Forms.view.pages
 {
 	public partial class AccountDetailView
 	{
-		private readonly ToolbarItem edit = new ToolbarItem { Text = I18N.Edit };
-		private readonly ToolbarItem done = new ToolbarItem { Text = I18N.Save };
-
 		private readonly CurrencyEntryCell currencyEntryCell;
 		private readonly List<ReferenceValueViewCell> referenceValueCells;
 
@@ -36,19 +29,10 @@ namespace MyCryptos.Forms.view.pages
 			this.repository = repository;
 
 			currencyEntryCell = new CurrencyEntryCell(Navigation) { IsAmountEnabled = true };
-			AccountSection.Add(currencyEntryCell);
-
-			edit.Clicked += StartEditing;
-			DeleteButtonCell.Tapped += Delete;
-
 
 			referenceValueCells = new List<ReferenceValueViewCell>();
-			SetToExistingView();
-			done.Clicked += DoneEditing;
-			if (repository is LocalAccountRepository)
-			{
-				ToolbarItems.Add(edit);
-			}
+			SetView();
+
 			if (!(account is OnlineFunctionalAccount))
 			{
 				ToolbarItems.Remove(RefreshItem);
@@ -70,85 +54,11 @@ namespace MyCryptos.Forms.view.pages
 			}
 		}
 
-		private void StartEditing(object sender, EventArgs e)
-		{
-			AccountName.Text = account.Name;
-			currencyEntryCell.SelectedMoney = account.Money;
-
-			var isLocal = repository is LocalAccountRepository;
-
-			currencyEntryCell.IsEditable = isLocal;
-			if (!isLocal)
-			{
-				EditView.Root.Remove(DeleteSection);
-			}
-
-			EditView.IsVisible = true;
-			DefaultView.IsVisible = false;
-			ToolbarItems.Clear();
-			ToolbarItems.Add(done);
-			if (Device.OS != TargetPlatform.Android)
-			{
-				Title = I18N.Editing;
-			}
-		}
-
-		private async void DoneEditing(object sender, EventArgs e)
-		{
-			AccountName.Entry.Unfocus();
-			currencyEntryCell.Unfocus();
-
-			account.Name = AccountName.Text;
-
-			account = new LocalAccount(account.Id, account.Name, currencyEntryCell.SelectedMoney, account.ParentId);
-			await repository.Update(account);
-
-			Messaging.UpdatingAccounts.SendFinished();
-
-			if (Device.OS != TargetPlatform.Android)
-			{
-				Title = account.Name;
-			}
-			Header.TitleText = account.Money.ToString();
-
-			Update();
-			DefaultView.IsVisible = true;
-			EditView.IsVisible = false;
-			ToolbarItems.Clear();
-			ToolbarItems.Add(edit);
-		}
-
-		private void Save(object sender, EventArgs e)
-		{
-			AccountName.Entry.Unfocus();
-			currencyEntryCell.Unfocus();
-
-			var money = currencyEntryCell.SelectedMoney;
-			var name = string.IsNullOrEmpty(AccountName.Text?.Trim()) ? I18N.LocalAccount : AccountName.Text.Trim();
-
-			account = new LocalAccount(null, name, money, AccountStorage.Instance.LocalRepository.Id);
-			var addTask = AccountStorage.Instance.LocalRepository.Add(account);
-			addTask.ContinueWith(t => Messaging.UpdatingAccounts.SendFinished());
-
-			Navigation.PopOrPopModal();
-		}
-
-		private async void Delete(object sender, EventArgs e)
-		{
-			AccountName.Entry.Unfocus();
-			currencyEntryCell.Unfocus();
-
-			await AccountStorage.Instance.LocalRepository.Remove(account);
-			Messaging.UpdatingAccounts.SendFinished();
-
-			await Navigation.PopAsync();
-		}
-
-		private void SetToExistingView()
+		private void SetView()
 		{
 			if (Device.OS != TargetPlatform.Android)
 			{
-				Title = account.Name;
+				Title = account.Money.Currency.Code;
 			}
 			Header.InfoText = string.Format(I18N.SourceText, repository.Name);
 			currencyEntryCell.SelectedMoney = account.Money;
