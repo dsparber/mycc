@@ -15,6 +15,7 @@ using XLabs.Ioc;
 using XLabs.Serialization;
 using XLabs.Serialization.JsonNET;
 using MyCryptos.Forms.view.pages;
+using System.Diagnostics;
 
 namespace MyCryptos.Forms.view.components
 {
@@ -78,16 +79,23 @@ namespace MyCryptos.Forms.view.components
 
 		private void UpdateView()
 		{
-			var items = GraphItemsGrouped.ToList();
-			var itemsExisting = (items.Count > 0);
+			try
+			{
+				var items = GraphItemsGrouped.ToList();
+				var itemsExisting = (items.Count > 0);
 
-			noCoinsLabel.IsVisible = !itemsExisting;
-			webView.IsVisible = itemsExisting;
+				noCoinsLabel.IsVisible = !itemsExisting;
+				webView.IsVisible = itemsExisting;
 
-			if (!itemsExisting) return;
+				if (!itemsExisting) return;
 
-			var c = AppConstants.BackgroundColor;
-			webView.CallJsFunction("displayGraph", items.Select(e => e.Item1).ToArray(), items.Select(e => e.Item2).ToArray(), $"rgba({c.R * 255},{c.G * 255},{c.B * 255},{c.A})");
+				var c = AppConstants.BackgroundColor;
+				webView.CallJsFunction("displayGraph", items.Select(e => e.Item1).ToArray(), items.Select(e => e.Item2).ToArray(), $"rgba({c.R * 255},{c.G * 255},{c.B * 255},{c.A})");
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(e);
+			}
 		}
 
 		private static IEnumerable<Tuple<string, decimal>> GraphItems

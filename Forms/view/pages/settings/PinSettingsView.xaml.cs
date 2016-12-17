@@ -3,77 +3,77 @@ using MyCryptos.Core.settings;
 using MyCryptos.Core.Types;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
+using MyCryptos.Forms.Resources;
 using MyCryptos.Forms.view.overlays;
 using Plugin.Fingerprint;
 
 namespace MyCryptos.Forms.view.pages.settings
 {
-    public partial class PinSettingsView
-    {
-        public PinSettingsView()
-        {
-            InitializeComponent();
+	public partial class PinSettingsView
+	{
+		public PinSettingsView()
+		{
+			InitializeComponent();
 
-            SetPinCells();
+			SetPinCells();
 
-            FingerprintCell.Switch.Toggled += (sender, e) => { ApplicationSettings.IsFingerprintEnabled = e.Value; Messaging.Pin.SendValueChanged(); };
+			FingerprintCell.Switch.Toggled += (sender, e) => { ApplicationSettings.IsFingerprintEnabled = e.Value; Messaging.Pin.SendValueChanged(); };
 
-            if (ApplicationSettings.IsFingerprintEnabled)
-            {
-                FingerprintCell.Switch.IsToggled = true;
-            }
-            else
-            {
-                Table.Root.Remove(FingerprintSection);
-            }
+			if (ApplicationSettings.IsFingerprintEnabled)
+			{
+				FingerprintCell.Switch.IsToggled = true;
+			}
+			else
+			{
+				Table.Root.Remove(FingerprintSection);
+			}
 
-            Messaging.Pin.SubscribeValueChanged(this, SetPinCells);
-        }
+			Messaging.Pin.SubscribeValueChanged(this, SetPinCells);
+		}
 
-        private void SetPinCells()
-        {
-            ActionSection.Remove(EnablePinCell);
-            ActionSection.Remove(DisablePinCell);
-            ActionSection.Remove(ChangePinCell);
+		private void SetPinCells()
+		{
 
-            if (!ApplicationSettings.IsPinSet)
-            {
-                ActionSection.Add(EnablePinCell);
-                FingerprintCell.Switch.IsEnabled = false;
-            }
-            else
-            {
-                ActionSection.Add(DisablePinCell);
-                ActionSection.Add(ChangePinCell);
-                FingerprintCell.Switch.IsEnabled = true;
-            }
-        }
+			if (!ApplicationSettings.IsPinSet)
+			{
+				EnableDisablePinCell.Text = I18N.EnablePin;
+				if (ActionSection.Contains(ChangePinCell))
+				{
+					ActionSection.Remove(ChangePinCell);
+				}
+			}
+			else
+			{
+				EnableDisablePinCell.Text = I18N.DisablePin;
+				if (!ActionSection.Contains(ChangePinCell))
+				{
+					ActionSection.Add(ChangePinCell);
+				}
+			}
 
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
+			FingerprintCell.Switch.IsEnabled = ApplicationSettings.IsPinSet;
+		}
 
-            if (!await CrossFingerprint.Current.IsAvailableAsync()) return;
+		protected override async void OnAppearing()
+		{
+			base.OnAppearing();
 
-            if (!Table.Root.Contains(FingerprintSection))
-            {
-                Table.Root.Add(FingerprintSection);
-            }
-        }
+			if (!await CrossFingerprint.Current.IsAvailableAsync()) return;
 
-        private void EnablePin(object sender, EventArgs e)
-        {
-            Navigation.PushOrPushModal(new PinOverlay(PinAction.Enable));
-        }
+			if (!Table.Root.Contains(FingerprintSection))
+			{
+				Table.Root.Add(FingerprintSection);
+			}
+		}
 
-        private void DisablePin(object sender, EventArgs e)
-        {
-            Navigation.PushOrPushModal(new PinOverlay(PinAction.Disable));
-        }
+		private void EnableDisablePin(object sender, EventArgs e)
+		{
+			Navigation.PushOrPushModal(new PinOverlay(PinAction.EnableOrDisable));
+		}
 
-        private void ChangePin(object sender, EventArgs e)
-        {
-            Navigation.PushOrPushModal(new PinOverlay(PinAction.Change));
-        }
-    }
+		private void ChangePin(object sender, EventArgs e)
+		{
+			Navigation.PushOrPushModal(new PinOverlay(PinAction.Change));
+		}
+	}
 }

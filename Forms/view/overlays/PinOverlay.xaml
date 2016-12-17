@@ -5,41 +5,40 @@
 	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
 	x:Class="MyCryptos.Forms.view.overlays.PinOverlay">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
 			Text="{i18N:Translate Cancel}"
 			Clicked="CancelClicked" />
-    <ToolbarItem
+		<ToolbarItem
 			Text="{i18N:Translate Save}"
 			Clicked="SaveClicked" />
-  </ContentPage.ToolbarItems>
-  <ContentPage.Content>
-    <components:ChangingStackLayout>
-      <components:HeaderView
-				x:Name="Header"
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<components:ChangingStackLayout>
+			<components:HeaderView
 				TitleText="{i18N:Translate AppName}" />
-      <TableView
+			<TableView
 				Intent="Form"
 				x:Name="PinTable">
-        <TableSection
+				<TableSection
 					x:Name="OldPinSection">
-          <components:CustomEntryCell
+					<components:CustomEntryCell
 						x:Name="OldPinCell"
 						Placeholder="{i18N:Translate OldPin}"
 						Title="{i18N:Translate OldPin}" />
-        </TableSection>
-        <TableSection
+				</TableSection>
+				<TableSection
 					x:Name="ChangePinSection">
-          <components:CustomEntryCell
+					<components:CustomEntryCell
 						x:Name="NewPinCell"
 						Placeholder="{i18N:Translate NewPin}"
 						Title="{i18N:Translate NewPin}" />
-          <components:CustomEntryCell
+					<components:CustomEntryCell
 						x:Name="NewPinRepeatCell"
 						Placeholder="{i18N:Translate RepeatNewPin}"
 						Title="{i18N:Translate RepeatNewPin}" />
-        </TableSection>
-      </TableView>
-    </components:ChangingStackLayout>
-  </ContentPage.Content>
+				</TableSection>
+			</TableView>
+		</components:ChangingStackLayout>
+	</ContentPage.Content>
 </ContentPage>

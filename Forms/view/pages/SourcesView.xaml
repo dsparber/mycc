@@ -18,7 +18,6 @@
 			<components:HeaderView
 				x:Name="Header" />
 			<StackLayout
-				x:Name="ContentView"
 				VerticalOptions="FillAndExpand">
 				<TableView
 					Intent="Form"
