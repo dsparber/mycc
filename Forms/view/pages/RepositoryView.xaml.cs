@@ -62,7 +62,7 @@ namespace MyCryptos.Forms.view.pages
 		{
 			var cells = repository.Elements.OrderBy(e => e.Money.Currency.Code).Select(e =>
 			{
-				var cell = new CustomViewCell { Text = e.Money.ToString() };
+				var cell = new CustomViewCell { Text = e.Money.ToString(), Detail = e.Money.Currency.Name };
 				if (repository is LocalAccountRepository)
 				{
 					cell.Image = "more.png";
@@ -82,7 +82,7 @@ namespace MyCryptos.Forms.view.pages
 			Device.BeginInvokeOnMainThread(() =>
 			{
 				Header.IsLoading = false;
-				SortHelper.ApplySortOrder(cells, AccountsSection, SortOrder.Alphabetical);
+				SortHelper.ApplySortOrder(cells, AccountsSection, SortOrder.None);
 			});
 
 			if (repository is AddressAccountRepository)
