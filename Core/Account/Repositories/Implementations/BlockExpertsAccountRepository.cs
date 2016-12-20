@@ -26,7 +26,7 @@ namespace MyCryptos.Core.Account.Repositories.Implementations
 		}
 
 		protected override Func<string, decimal> Balance => (httpContent) => decimal.Parse(httpContent, CultureInfo.InvariantCulture);
-		protected override Uri Url => new Uri($"https://www.blockexperts.com/api?coin={Currency}&action=getbalance&address={Address}");
+		protected override Uri Url => new Uri($"https://www.blockexperts.com/api?coin={Currency.Code.ToLower()}&action=getbalance&address={Address}");
 
 
 		public BlockExpertsAccountRepository(int id, string name, string data) : base(id, name, data) { }

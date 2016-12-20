@@ -20,7 +20,8 @@
 				FontAttributes="Bold"
 				HorizontalTextAlignment="Center"
 				TextColor="White"
-				LineBreakMode="TailTruncation" />
+				LineBreakMode="TailTruncation"
+				WidthRequest="1000" />
 			<Label
 				HorizontalOptions="FillAndExpand"
 				x:Name="InfoLabel"

@@ -316,7 +316,7 @@
       <HintPath>..\packages\Xamarin.Forms.2.3.3.175\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
     <Reference Include="CarouselView.FormsPlugin.Abstractions">
-      <HintPath>..\packages\CarouselView.FormsPlugin.2.6.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10\CarouselView.FormsPlugin.Abstractions.dll</HintPath>
+      <HintPath>..\packages\CarouselView.FormsPlugin.2.7.1\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10\CarouselView.FormsPlugin.Abstractions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

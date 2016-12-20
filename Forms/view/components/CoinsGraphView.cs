@@ -84,8 +84,11 @@ namespace MyCryptos.Forms.view.components
 				var items = GraphItemsGrouped.ToList();
 				var itemsExisting = (items.Count > 0);
 
-				noCoinsLabel.IsVisible = !itemsExisting;
-				webView.IsVisible = itemsExisting;
+				Device.BeginInvokeOnMainThread(() =>
+				{
+					noCoinsLabel.IsVisible = !itemsExisting;
+					webView.IsVisible = itemsExisting;
+				});
 
 				if (!itemsExisting) return;
 

@@ -81,19 +81,19 @@ namespace MyCryptos.Forms.view.pages
 				c.Detail = PluralHelper.GetTextCoins(r.Elements.ToList().Count);
 				c.Text = r.Description;
 				return c;
-			}).ToList();
+			}).OrderBy(c => c.Text).ToList();
 			var bittrexCells = repositories.OfType<BittrexAccountRepository>().Select(r =>
 			{
 				var c = GetCell(r);
 				c.Detail = PluralHelper.GetTextCoins(r.Elements.ToList().Count);
 				return c;
-			}).ToList();
+			}).OrderBy(c => c.Text).ToList();
 			var addressCells = repositories.OfType<AddressAccountRepository>().Select(r =>
 			{
 				var c = GetCell(r);
 				c.Detail = $"{I18N.Address}: {r.Address}";
 				return c;
-			}).ToList();
+			}).OrderBy(c => c.Text).ToList();
 
 			Device.BeginInvokeOnMainThread(() =>
 				{

@@ -115,8 +115,11 @@ namespace MyCryptos.Forms.view.components
 				var items = AccountStorage.UsedCurrencies.Select(c => new Data(c)).ToList();
 				var itemsExisting = (items.Count > 0);
 
-				noDataLabel.IsVisible = !itemsExisting;
-				webView.IsVisible = itemsExisting;
+				Device.BeginInvokeOnMainThread(() =>
+				{
+					noDataLabel.IsVisible = !itemsExisting;
+					webView.IsVisible = itemsExisting;
+				});
 
 				if (!itemsExisting || !appeared) return;
 
