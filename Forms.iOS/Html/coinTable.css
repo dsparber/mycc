@@ -68,11 +68,11 @@ thead td span {
 }
 
 thead td.down span {
-    background-image: url("down.svg");
+    background-image: url("up.svg");
 }
 
 thead td.up span {
-    background-image: url("up.svg");
+    background-image: url("down.svg");
 }
 
 @media (max-width: 374px){
