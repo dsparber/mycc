@@ -13,35 +13,23 @@ using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.pages
 {
-	public partial class CoinsView
+	public partial class CoinGraphView
 	{
-		private readonly ContentView listView;
-		private readonly CoinsTableView tableView;
-		private readonly CoinsGraphView graphView;
+		private readonly CoinGraphComponent graphView;
 
 		private bool loadedView;
 
-		public CoinsView()
+		public CoinGraphView()
 		{
 			InitializeComponent();
 
-			listView = new CoinsListView();
-			tableView = new CoinsTableView(Navigation);
-			graphView = new CoinsGraphView(Navigation)
+			graphView = new CoinGraphComponent(Navigation)
 			{
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				VerticalOptions = LayoutOptions.FillAndExpand
 			};
 
-			Stack.Children.Add(listView);
-			Stack.Children.Add(tableView);
 			Stack.Children.Add(graphView);
-			listView.IsVisible = ApplicationSettings.DefaultPage.Equals(StartupPage.ListView);
-			graphView.IsVisible = ApplicationSettings.DefaultPage.Equals(StartupPage.GraphView);
-			tableView.IsVisible = ApplicationSettings.DefaultPage.Equals(StartupPage.TableView);
-
-			Tabs.Tabs = new List<string> { I18N.List, I18N.Table, I18N.Graph };
-			Tabs.SelectedIndex = ApplicationSettings.DefaultPage.Equals(StartupPage.ListView) ? 0 : ApplicationSettings.DefaultPage.Equals(StartupPage.TableView) ? 1 : 2;
 
 			AddSubscriber();
 
@@ -50,13 +38,6 @@ namespace MyCryptos.Forms.view.pages
 				Title = string.Empty;
 			}
 
-			Tabs.SelectionChanged = selected =>
-			{
-				listView.IsVisible = (selected == 0);
-				tableView.IsVisible = (selected == 1);
-				graphView.IsVisible = (selected == 2);
-			};
-
 			SetHeaderCarousel();
 			SetNoSourcesView();
 		}
@@ -64,14 +45,8 @@ namespace MyCryptos.Forms.view.pages
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-
-			if (loadedView) return;
-
-			loadedView = true;
 			graphView.OnAppearing();
-			tableView.OnAppearing();
 		}
-
 
 		private void PositionSelected(object sender, EventArgs e)
 		{
@@ -127,7 +102,7 @@ namespace MyCryptos.Forms.view.pages
 				Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => isUpdatingExchangeRates = true, () => isUpdatingExchangeRates = false);
 			}
 
-			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinsHeaderView((Currency)item) { IsLoading = isUpdatingExchangeRates });
+			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent((Currency)item) { IsLoading = isUpdatingExchangeRates });
 		}
 	}
 }

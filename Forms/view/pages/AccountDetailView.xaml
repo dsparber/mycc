@@ -15,9 +15,8 @@
 			Icon="refresh.png" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
-		<components:ChangingStackLayout>
-			<components:HeaderView
-				x:Name="Header" />
+		<components:ChangingStackLayout
+			x:Name="ChangingStack">
 			<StackLayout
 				Spacing="0">
 				<StackLayout.BackgroundColor>

@@ -8,89 +8,94 @@ using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.container
 {
-    public class MasterDetailContainerView : MasterDetailPage
-    {
-        private readonly MasterPage masterPage;
+	public class MasterDetailContainerView : MasterDetailPage
+	{
+		private readonly MasterPage masterPage;
 
-        public MasterDetailContainerView()
-        {
+		public MasterDetailContainerView()
+		{
 
-            var masterPageItems = new List<MasterPageItem>
-            {
-                new MasterPageItem
-                {
-                    Title = I18N.Coins,
-                    IconSource = "coins.png",
-                    Page = new CoinsView()
-                },
-                new MasterPageItem
-                {
-                    Title = I18N.Sources,
-                    IconSource = "accounts.png",
-                    Page = new SourcesView()
-                },
-                new MasterPageItem
-                {
-                    Title = I18N.Settings,
-                    IconSource = "settings.png",
-                    Page = new SettingsView()
-                }
-            };
+			var masterPageItems = new List<MasterPageItem>
+			{
+				new MasterPageItem
+				{
+					Title = I18N.Graph,
+					IconSource = "graph.png",
+					Page = new CoinGraphView()
+				},new MasterPageItem
+				{
+					Title = I18N.Table,
+					IconSource = "table.png",
+					Page = new CoinTableView()
+				},
+				new MasterPageItem
+				{
+					Title = I18N.Sources,
+					IconSource = "accounts.png",
+					Page = new SourcesView()
+				},
+				new MasterPageItem
+				{
+					Title = I18N.Settings,
+					IconSource = "settings.png",
+					Page = new SettingsView()
+				}
+			};
 
-            masterPage = new MasterPage(masterPageItems);
-            Master = masterPage;
-            Detail = new NavigationPage(masterPageItems[ApplicationSettings.FirstLaunch ? 1 : 0].Page);
+			masterPage = new MasterPage(masterPageItems);
+			Master = masterPage;
+			Detail = new NavigationPage(masterPageItems[ApplicationSettings.FirstLaunch ? 1 : 0].Page);
 
-            masterPage.ListView.ItemSelected += OnItemSelected;
-        }
+			masterPage.ListView.ItemSelected += OnItemSelected;
+		}
 
-        private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            var item = e.SelectedItem as MasterPageItem;
-            if (item == null) return;
+		private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+		{
+			var item = e.SelectedItem as MasterPageItem;
+			if (item == null) return;
 
-            Detail = new NavigationPage(item.Page);
-            masterPage.ListView.SelectedItem = null;
-            IsPresented = false;
-        }
+			Detail = new NavigationPage(item.Page);
+			masterPage.ListView.SelectedItem = null;
+			IsPresented = false;
+		}
 
-        [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
-        private class MasterPageItem
-        {
-            public string Title { get; set; }
-            public string IconSource { get; set; }
-            public Page Page { get; set; }
-        }
+		[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
+		private class MasterPageItem
+		{
+			public string Title { get; set; }
+			public string IconSource { get; set; }
+			public Page Page { get; set; }
+		}
 
-        private class MasterPage : ContentPage
-        {
-            public ListView ListView { get; }
+		private class MasterPage : ContentPage
+		{
+			public ListView ListView { get; }
 
-            public MasterPage(IEnumerable<MasterPageItem> masterPageItems)
-            {
-                ListView = new ListView
-                {
-                    ItemsSource = masterPageItems,
-                    ItemTemplate = new DataTemplate(() =>
-                    {
-                        var imageCell = new ImageCell();
-                        imageCell.SetBinding(TextCell.TextProperty, "Title");
-                        imageCell.SetBinding(ImageCell.ImageSourceProperty, "IconSource");
-                        imageCell.TextColor = Color.Black;
+			public MasterPage(IEnumerable<MasterPageItem> masterPageItems)
+			{
+				ListView = new ListView
+				{
+					ItemsSource = masterPageItems,
+					ItemTemplate = new DataTemplate(() =>
+					{
+						var imageCell = new ImageCell();
+						imageCell.SetBinding(TextCell.TextProperty, "Title");
+						imageCell.SetBinding(ImageCell.ImageSourceProperty, "IconSource");
+						imageCell.TextColor = Color.Black;
 
-                        return imageCell;
-                    }),
-                    VerticalOptions = LayoutOptions.FillAndExpand
-                };
+						return imageCell;
+					}),
+					VerticalOptions = LayoutOptions.FillAndExpand
+				};
 
-                Icon = "hamburger.png";
-                Title = I18N.AppName;
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.FillAndExpand,
-                    Children = { ListView }
-                };
-            }
-        }
-    }
+				Icon = "hamburger.png";
+				Title = I18N.AppName;
+				Content = new StackLayout
+				{
+					VerticalOptions = LayoutOptions.FillAndExpand,
+					Children = { ListView }
+				};
+			}
+		}
+	}
 }

@@ -74,12 +74,9 @@
     <Compile Include="view\components\cells\ReferenceValueViewCell.cs" />
     <Compile Include="view\components\cells\SortableViewCell.cs" />
     <Compile Include="view\components\ChangingStackLayout.cs" />
-    <Compile Include="view\components\CoinsTableView.cs" />
-    <Compile Include="view\components\CoinsGraphView.cs" />
-    <Compile Include="view\components\CoinsHeaderView.cs" />
-    <Compile Include="view\components\CoinsListView.xaml.cs">
-      <DependentUpon>CoinsListView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="view\components\CoinTableComponent.cs" />
+    <Compile Include="view\components\CoinGraphComponent.cs" />
+    <Compile Include="view\components\CoinHeaderComponent.cs" />
     <Compile Include="view\components\HeaderView.xaml.cs">
       <DependentUpon>HeaderView.xaml</DependentUpon>
     </Compile>
@@ -100,8 +97,8 @@
     <Compile Include="view\pages\CoinDetailView.xaml.cs">
       <DependentUpon>CoinDetailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\CoinsView.xaml.cs">
-      <DependentUpon>CoinsView.xaml</DependentUpon>
+    <Compile Include="view\pages\CoinGraphView.xaml.cs">
+      <DependentUpon>CoinGraphView.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\pages\PasswordView.xaml.cs">
       <DependentUpon>PasswordView.xaml</DependentUpon>
@@ -129,6 +126,9 @@
     <Compile Include="view\pages\AccountEditView.cs">
       <DependentUpon>AccountEditView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\pages\CoinTableView.xaml.cs">
+      <DependentUpon>CoinTableView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -150,13 +150,14 @@
       <SubType>Designer</SubType>
       <LastGenOutput>I18N.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\components\CoinsListView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="view\pages\AccountEditView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType></SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\pages\CoinTableView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType></SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -194,7 +195,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="view\pages\CoinsView.xaml">
+    <EmbeddedResource Include="view\pages\CoinGraphView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
       </SubType>

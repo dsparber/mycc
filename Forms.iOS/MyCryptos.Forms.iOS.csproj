@@ -340,6 +340,12 @@
     <BundleResource Include="Resources\Icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
+    <BundleResource Include="Resources\table.png" />
+    <BundleResource Include="Resources\table%402x.png" />
+    <BundleResource Include="Resources\table%403x.png" />
+    <BundleResource Include="Resources\graph%403x.png" />
+    <BundleResource Include="Resources\graph%402x.png" />
+    <BundleResource Include="Resources\graph.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\coinTable.css" />

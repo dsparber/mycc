@@ -19,6 +19,7 @@ namespace MyCryptos.Forms.view.pages
 
 		private FunctionalAccount account;
 		private readonly AccountRepository repository;
+		private readonly CoinHeaderComponent header;
 
 
 		public AccountDetailView(FunctionalAccount account, AccountRepository repository)
@@ -27,6 +28,9 @@ namespace MyCryptos.Forms.view.pages
 
 			this.account = account;
 			this.repository = repository;
+
+			header = new CoinHeaderComponent(account);
+			ChangingStack.Children.Insert(0, header);
 
 			currencyEntryCell = new CurrencyEntryCell(Navigation) { IsAmountEnabled = true };
 
@@ -45,8 +49,8 @@ namespace MyCryptos.Forms.view.pages
 			Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Update(true), () => Update(false));
 			Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Update(true), () => Update(false));
 
-			currencyEntryCell.OnSelected = (c) => Header.TitleText = currencyEntryCell.SelectedMoney.ToString();
-			currencyEntryCell.OnTyped = (m) => Header.TitleText = m.ToString();
+			currencyEntryCell.OnSelected = (c) => header.TitleText = currencyEntryCell.SelectedMoney.ToString();
+			currencyEntryCell.OnTyped = (m) => header.TitleText = m.ToString();
 
 			if (Device.OS == TargetPlatform.Android)
 			{
@@ -58,9 +62,8 @@ namespace MyCryptos.Forms.view.pages
 		{
 			if (Device.OS != TargetPlatform.Android)
 			{
-				Title = account.Money.Currency.Code;
+				Title = account.Name;
 			}
-			Header.InfoText = string.Format(I18N.SourceText, repository.Name);
 			currencyEntryCell.SelectedMoney = account.Money;
 
 			Update();
@@ -79,8 +82,7 @@ namespace MyCryptos.Forms.view.pages
 					referenceValueCells.Add(cell);
 					EqualsSection.Add(cell);
 				}
-				Header.TitleText = account.Money.ToString();
-				Header.IsLoading = loading;
+				header.IsLoading = loading;
 			});
 		}
 

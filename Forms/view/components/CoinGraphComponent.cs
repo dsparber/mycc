@@ -16,16 +16,17 @@ using XLabs.Serialization;
 using XLabs.Serialization.JsonNET;
 using MyCryptos.Forms.view.pages;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace MyCryptos.Forms.view.components
 {
-	public class CoinsGraphView : ContentView
+	public class CoinGraphComponent : ContentView
 	{
 		private readonly HybridWebView webView;
 		private readonly Label noCoinsLabel;
 		private bool appeared;
 
-		public CoinsGraphView(INavigation navigation)
+		public CoinGraphComponent(INavigation navigation)
 		{
 			var resolverContainer = new SimpleContainer();
 
@@ -43,11 +44,14 @@ namespace MyCryptos.Forms.view.components
 				var element = GraphItemsGrouped.ToArray()[Convert.ToInt32(t)];
 				if (element.Item1.Contains(I18N.Others.Replace("{0}", string.Empty).Trim())) return;
 
-				var currency = CurrencyStorage.Instance.AllElements.Find(e => e.Code.Equals(element.Item1));
+				var currency = CurrencyStorage.Instance.AllElements.Find(e => element.Item1.Equals(e?.Code));
 				var accounts = AccountStorage.AccountsWithCurrency(currency);
 
 				Device.BeginInvokeOnMainThread(() => navigation.PushAsync((accounts.Count == 1) ? (Page)new AccountDetailView(accounts[0], AccountStorage.RepositoryOf(accounts[0])) : new CoinDetailView(currency)));
 			});
+
+			webView.RegisterCallback("appeared", t => UpdateView());
+
 
 			noCoinsLabel = new Label { Text = I18N.NoDataToDisplay, IsVisible = false, TextColor = AppConstants.FontColorLight, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
 
@@ -70,14 +74,16 @@ namespace MyCryptos.Forms.view.components
 
 		public void OnAppearing()
 		{
-			if (appeared) return;
-
-			appeared = true;
-			webView.LoadFromContent("Html/graph.html");
+			if (!appeared)
+			{
+				appeared = true;
+				webView.LoadFromContent("Html/graph.html");
+				Task.Delay(500).ContinueWith(t => UpdateView());
+			}
 			UpdateView();
 		}
 
-		private void UpdateView()
+		public void UpdateView()
 		{
 			try
 			{

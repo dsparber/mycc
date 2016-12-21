@@ -33,11 +33,11 @@ namespace MyCryptos.Forms.view.pages
 		{
 			InitializeComponent();
 
-			var header = new CoinsHeaderView(pageCurrency, true);
+			var header = new CoinHeaderComponent(pageCurrency, true);
 			ChangingStack.Children.Insert(0, header);
 
 			currency = pageCurrency;
-			Title = currency.Code;
+			Title = PluralHelper.GetTextAccounts(AccountStorage.AccountsWithCurrency(currency).Count);
 
 			Subscribe();
 			LoadData();

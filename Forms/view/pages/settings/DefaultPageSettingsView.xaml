@@ -14,11 +14,6 @@
 			<TableSection
 				Title="{i18N:Translate DefaultView}">
 				<components:CustomViewCell
-					x:Name="ListOptionCell"
-					Tapped="SelectionChanged"
-					Text="{i18N:Translate List}"
-					Image="checkmark.png" />
-				<components:CustomViewCell
 					x:Name="TableOptionCell"
 					Tapped="SelectionChanged"
 					Text="{i18N:Translate Table}"

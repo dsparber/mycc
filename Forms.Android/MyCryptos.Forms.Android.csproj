@@ -243,6 +243,8 @@
     <AndroidResource Include="Resources\drawable\Icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AndroidResource>
+    <AndroidResource Include="Resources\drawable\graph.png" />
+    <AndroidResource Include="Resources\drawable\table.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\icon.png" />

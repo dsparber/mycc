@@ -7,7 +7,7 @@
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
-	x:Class="MyCryptos.Forms.view.pages.CoinsView"
+	x:Class="MyCryptos.Forms.view.pages.CoinTableView"
 	Title="{i18N:Translate Coins}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
@@ -38,10 +38,6 @@
 							x:TypeArguments="Color"
 							Android="#EEE" />
 					</StackLayout.BackgroundColor>
-					<StackLayout.Children>
-						<components:SegmentedControl
-							x:Name="Tabs" />
-					</StackLayout.Children>
 				</StackLayout>
 				<ContentView
 					x:Name="NoSourcesView"

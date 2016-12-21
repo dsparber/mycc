@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using constants;
 using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.Currency.Model;
@@ -24,13 +25,13 @@ using CoinDetailView = MyCryptos.Forms.view.pages.CoinDetailView;
 
 namespace MyCryptos.Forms.view.components
 {
-	public class CoinsTableView : ContentView
+	public class CoinTableComponent : ContentView
 	{
 		private readonly HybridWebView webView;
 		private readonly Label noDataLabel;
 		private bool appeared;
 
-		public CoinsTableView(INavigation navigation)
+		public CoinTableComponent(INavigation navigation)
 		{
 			var resolverContainer = new SimpleContainer();
 
@@ -101,14 +102,16 @@ namespace MyCryptos.Forms.view.components
 
 		public void OnAppearing()
 		{
-			if (appeared) return;
-
-			appeared = true;
-			webView.LoadFromContent("Html/coinTable.html");
+			if (!appeared)
+			{
+				appeared = true;
+				webView.LoadFromContent("Html/coinTable.html");
+				Task.Delay(200).ContinueWith(t => UpdateView());
+			}
 			UpdateView();
 		}
 
-		private void UpdateView()
+		public void UpdateView()
 		{
 			try
 			{

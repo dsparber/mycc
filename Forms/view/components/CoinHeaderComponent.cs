@@ -8,22 +8,30 @@ using MyCryptos.Core.ExchangeRate.Model;
 using MyCryptos.Core.settings;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
-using MyCryptos.Forms.Resources;
 using MyCryptos.view.components;
 using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.components
 {
-	public class CoinsHeaderView : HeaderView
+	public class CoinHeaderComponent : HeaderView
 	{
 
 		private readonly Currency currency;
+		private readonly FunctionalAccount account;
 		private readonly bool useOnlyThisCurrency;
 		private readonly List<string> infoTexts;
 
 		private static int currentInfoText = 1;
 
-		public CoinsHeaderView(Currency currency = null, bool useOnlyThisCurrency = false) : this()
+		public CoinHeaderComponent(FunctionalAccount account) : this()
+		{
+			this.account = account;
+			useOnlyThisCurrency = true;
+
+			UpdateView();
+		}
+
+		public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false) : this()
 		{
 			this.currency = currency ?? ApplicationSettings.BaseCurrency;
 			this.useOnlyThisCurrency = useOnlyThisCurrency;
@@ -31,7 +39,7 @@ namespace MyCryptos.Forms.view.components
 			UpdateView();
 		}
 
-		private CoinsHeaderView()
+		private CoinHeaderComponent()
 		{
 			var recognizer = new TapGestureRecognizer();
 			recognizer.Tapped += (sender, e) =>
@@ -48,16 +56,20 @@ namespace MyCryptos.Forms.view.components
 
 		private void UpdateView(bool? isLoading = null)
 		{
-			var sum = (useOnlyThisCurrency ? CoinSum : MoneySum) ?? new Money(0, currency);
+			var sum = account != null ? account.Money : (useOnlyThisCurrency ? CoinSum : MoneySum) ?? new Money(0, currency);
 			var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
 
-			if (useOnlyThisCurrency)
+			if (account != null)
 			{
-				infoTexts[0] = PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, AccountStorage.Instance.AllElements.Where(a => currency.Equals(a.Money.Currency)).ToList().Count);
+				infoTexts[0] = PluralHelper.GetTextAccounts(1);
+			}
+			else if (useOnlyThisCurrency)
+			{
+				infoTexts[0] = PluralHelper.GetTextAccounts(AccountStorage.AccountsWithCurrency(currency).Count);
 			}
 			else
 			{
-				infoTexts[0] = PluralHelper.GetText(I18N.NoCoins, I18N.OneCoin, I18N.Coins, amountDifferentCurrencies);
+				infoTexts[0] = PluralHelper.GetTextCoins(amountDifferentCurrencies);
 			}
 			infoTexts[1] = string.Join(" / ", ApplicationSettings.ReferenceCurrencies.Where(c => !c.Equals(currency)).Select(c => ((useOnlyThisCurrency ? CoinSumAs(c) : MoneySumOf(c)) ?? new Money(0, c)).ToStringTwoDigits()));
 
@@ -76,7 +88,7 @@ namespace MyCryptos.Forms.view.components
 
 		}
 
-		private Money CoinSum => new Money(AccountStorage.Instance.AllElements.Where(a => currency.Equals(a.Money.Currency)).Sum(a => a.Money.Amount), currency);
+		private Money CoinSum => account != null ? account.Money : new Money(AccountStorage.Instance.AllElements.Where(a => currency.Equals(a.Money.Currency)).Sum(a => a.Money.Amount), currency);
 		private Money CoinSumAs(Currency c) => new Money(CoinSum.Amount * (ExchangeRateHelper.GetRate(CoinSum.Currency, c)?.RateNotNull ?? 0), c);
 
 		private Money MoneySum => MoneySumOf(currency);
