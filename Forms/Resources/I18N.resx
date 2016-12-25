@@ -849,4 +849,9 @@
 		xml:space="preserve">
     <value>Otherwise numers are truncated</value>
   </data>
+	<data
+		name="RepositoryAlreadyAdded"
+		xml:space="preserve">
+    <value>The entered source was already added!</value>
+  </data>
 </root>

@@ -856,5 +856,11 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("OtherwiseTruncate", resourceCulture);
             }
         }
+        
+        public static string RepositoryAlreadyAdded {
+            get {
+                return ResourceManager.GetString("RepositoryAlreadyAdded", resourceCulture);
+            }
+        }
     }
 }

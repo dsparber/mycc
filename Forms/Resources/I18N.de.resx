@@ -849,4 +849,9 @@
 		xml:space="preserve">
     <value>Anderenfalls werden Zahlen abgeschnitten</value>
   </data>
+	<data
+		name="RepositoryAlreadyAdded"
+		xml:space="preserve">
+    <value>Die eingegebene Quelle wurde bereits hinzugefügt!</value>
+  </data>
 </root>

@@ -102,11 +102,16 @@ namespace MyCryptos.Forms.view.pages
 				var view = specificAddView as AddRepositorySubview;
 				if (view != null)
 				{
+					view.Enabled = false;
 					var repository = view.GetRepository(name);
 
 					if (repository == null)
 					{
 						await DisplayAlert(I18N.Error, I18N.VerifyInput, I18N.Cancel);
+					}
+					else if (AccountStorage.Instance.RepositoriesOfType(repository.GetType()).Any(r => r.Data.Equals(repository.Data)))
+					{
+						await DisplayAlert(I18N.Error, I18N.RepositoryAlreadyAdded, I18N.Cancel);
 					}
 					else
 					{
@@ -124,11 +129,13 @@ namespace MyCryptos.Forms.view.pages
 						{
 							Header.IsLoading = false;
 							await DisplayAlert(I18N.Error, I18N.FetchingNoSuccessText, I18N.Ok);
-
-							NameEntryCell.IsEditable = true;
-							view.Enabled = true;
 						}
 					}
+					Header.IsLoading = false;
+
+					NameEntryCell.IsEditable = true;
+					specificAddView.Enabled = true;
+					view.Enabled = true;
 				}
 				else if (specificAddView is AddAccountSubview)
 				{
