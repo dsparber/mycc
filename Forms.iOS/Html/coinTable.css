@@ -15,8 +15,8 @@ table {
     border-collapse: collapse;
 }
 
-td:first-child, th:first-child {
-    padding-left: 8px;
+td:first-child {
+  padding-left: 8px;
 }
 
 td:first-child+td, td:first-child+td+td {
@@ -37,7 +37,7 @@ tbody td:last-child {
 td {
     white-space: nowrap;
     text-align: left;
-    padding: 8px 2px;
+    padding: 8px 4px;
     cursor: pointer;
 }
 

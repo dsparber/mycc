@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using constants;
+using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.Currency.Model;
 using MyCryptos.Core.Currency.Storage;
@@ -96,6 +97,7 @@ namespace MyCryptos.Forms.view.components
 			Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
 			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
 
+			Messaging.RoundNumbers.SubscribeValueChanged(this, UpdateView);
 			Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
 			Messaging.Loading.SubscribeFinished(this, UpdateView);
 		}
@@ -130,8 +132,8 @@ namespace MyCryptos.Forms.view.components
 				switch (ApplicationSettings.SortOrder)
 				{
 					case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
-					case SortOrder.ByUnits: sortLambda = d => d.Amount; break;
-					case SortOrder.ByValue: sortLambda = d => d.Reference; break;
+					case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("<", string.Empty)); break;
+					case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Reference.Replace("<", string.Empty)); break;
 					case SortOrder.None: sortLambda = d => 1; break;
 					default: sortLambda = d => 1; break;
 				}
@@ -161,9 +163,9 @@ namespace MyCryptos.Forms.view.components
 			[DataMember]
 			public readonly string Name;
 			[DataMember]
-			public readonly decimal Amount;
+			public readonly string Amount;
 			[DataMember]
-			public readonly decimal Reference;
+			public readonly string Reference;
 
 			public Data(Currency currency)
 			{
@@ -172,8 +174,8 @@ namespace MyCryptos.Forms.view.components
 				var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
 
 				Code = currency.Code;
-				Amount = sum;
-				Reference = sum * rate.RateNotNull;
+				Amount = new Money(sum, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
+				Reference = new Money(sum * rate.RateNotNull, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
 				Name = currency.Name;
 			}
 

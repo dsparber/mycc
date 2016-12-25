@@ -3,6 +3,7 @@ using MyCryptos.Core.Account.Repositories.Base;
 using MyCryptos.Core.ExchangeRate.Helpers;
 using MyCryptos.Core.ExchangeRate.Model;
 using MyCryptos.Core.settings;
+using MyCryptos.Forms.Messages;
 using Xamarin.Forms;
 using AccountDetailView = MyCryptos.Forms.view.pages.AccountDetailView;
 

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using MyCryptos.Core.Types;
@@ -81,13 +80,9 @@ namespace MyCryptos.Core.settings
 		{
 			get
 			{
-				Debug.WriteLine("Getting Sort Order");
 				var defaultValue = SortOrder.Alphabetical;
-				Debug.WriteLine($"defaultValue: {defaultValue}");
 				var stringValue = Settings.Get(Settings.KeySortOrder, defaultValue.ToString());
-				Debug.WriteLine($"stringValue: {stringValue}");
 				var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
-				Debug.WriteLine($"enumValue: {enumValue}");
 				return enumValue;
 			}
 			set
@@ -119,6 +114,18 @@ namespace MyCryptos.Core.settings
 			set
 			{
 				Settings.Set(Settings.KeyAutoRefreshOnStartup, value);
+			}
+		}
+
+		public static bool RoundMoney
+		{
+			get
+			{
+				return Settings.Get(Settings.RoundMoney, false);
+			}
+			set
+			{
+				Settings.Set(Settings.RoundMoney, value);
 			}
 		}
 

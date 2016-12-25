@@ -64,7 +64,6 @@
     <Compile Include="view\addsource\AddRepositorySubview.cs" />
     <Compile Include="view\addsource\AddSourceSubview.cs" />
     <Compile Include="view\components\cells\AccountViewCell.cs" />
-    <Compile Include="view\components\cells\CoinViewCell.cs" />
     <Compile Include="view\components\cells\CurrencyEntryCell.cs" />
     <Compile Include="view\components\cells\CustomEntryCell.cs" />
     <Compile Include="view\components\cells\CustomPickerCell.cs" />

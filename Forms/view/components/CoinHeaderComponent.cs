@@ -71,12 +71,12 @@ namespace MyCryptos.Forms.view.components
 			{
 				infoTexts[0] = PluralHelper.GetTextCoins(amountDifferentCurrencies);
 			}
-			infoTexts[1] = string.Join(" / ", ApplicationSettings.ReferenceCurrencies.Where(c => !c.Equals(currency)).Select(c => ((useOnlyThisCurrency ? CoinSumAs(c) : MoneySumOf(c)) ?? new Money(0, c)).ToStringTwoDigits()));
+			infoTexts[1] = string.Join(" / ", ApplicationSettings.ReferenceCurrencies.Where(c => !c.Equals(currency)).Select(c => ((useOnlyThisCurrency ? CoinSumAs(c) : MoneySumOf(c)) ?? new Money(0, c)).ToStringTwoDigits(ApplicationSettings.RoundMoney)));
 
 
 			Device.BeginInvokeOnMainThread(() =>
 			{
-				TitleText = useOnlyThisCurrency ? sum.ToString() : sum.ToStringTwoDigits();
+				TitleText = useOnlyThisCurrency ? sum.ToString() : sum.ToStringTwoDigits(ApplicationSettings.RoundMoney);
 				InfoText = infoTexts[currentInfoText];
 
 				if (isLoading.HasValue)
@@ -113,6 +113,7 @@ namespace MyCryptos.Forms.view.components
 		private void AddSubscriber()
 		{
 			Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => UpdateView());
+			Messaging.RoundNumbers.SubscribeValueChanged(this, () => UpdateView());
 			Messaging.UpdatingAccounts.SubscribeFinished(this, () => UpdateView());
 			Messaging.Loading.SubscribeFinished(this, () => UpdateView());
 

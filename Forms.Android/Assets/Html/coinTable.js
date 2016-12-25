@@ -3,18 +3,18 @@
 var testData = [{
     "Code": "BTC",
     "Name": "Bitcoin",
-    "Amount": 23525.2131,
+    "Amount": "23,525.31",
     "Reference": 213.96
 }, {
     "Code": "ETH",
     "Name": "Ethereum",
     "Amount": 986.2425,
-    "Reference": 347852.23
+    "Reference": "347,852.23"
 }, {
     "Code": "PVC",
     "Name": "PuraVidaCoin",
-    "Amount": 45845.8978,
-    "Reference": 478.654
+    "Amount": "45,845.78",
+    "Reference": 478.54
 }];
 
 var testColumns = [{
@@ -51,7 +51,7 @@ function setHeader(columns) {
     row.insertCell(columns.length);
 }
 
-function updateTable(data, sort, local) {
+function updateTable(data, sort) {
 
     var coinTable = document.getElementById("coinTable");
     clearTable(coinTable);
@@ -65,14 +65,8 @@ function updateTable(data, sort, local) {
         var referenceCell = row.insertCell(2);
         row.insertCell(3); // For Arrow
         codeCell.innerHTML = data[i]["Code"];
-        amountCell.innerHTML = data[i]["Amount"].toLocaleString(local, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        });
-        referenceCell.innerHTML = data[i]["Reference"].toLocaleString(local, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        });
+        amountCell.innerHTML = data[i]["Amount"];
+        referenceCell.innerHTML = data[i]["Reference"];
 
         row.onclick = rowClicked(data[i]["Code"]);
     }

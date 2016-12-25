@@ -15,9 +15,11 @@ namespace MyCryptos.Forms.view.pages.settings
 			SetDefaultPageCellText();
 
 			AutoRefresh.On = ApplicationSettings.AutoRefreshOnStartup;
+			RoundNumbers.On = ApplicationSettings.RoundMoney;
 			Header.TitleText = I18N.AppName;
 
 			AutoRefresh.Switch.Toggled += AutoRefreshChanged;
+			RoundNumbers.Switch.Toggled += RoundNumbersChanged;
 			ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new ReferenceCurrenciesSettingsView());
 			ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.ReferenceCurrencies);
 			SetPinCellText();
@@ -43,6 +45,12 @@ namespace MyCryptos.Forms.view.pages.settings
 			{
 				ApplicationSettings.AutoRefreshOnStartup = AutoRefresh.On;
 			}
+		}
+
+		private void RoundNumbersChanged(object sender, EventArgs e)
+		{
+			ApplicationSettings.RoundMoney = RoundNumbers.On;
+			Messaging.RoundNumbers.SendValueChanged();
 		}
 
 		private void PinCellTapped(object sender, EventArgs e)

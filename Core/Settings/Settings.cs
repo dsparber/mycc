@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
@@ -28,6 +27,8 @@ namespace MyCryptos.Core.settings
 		public const string KeyFingerprintSet = "fingerprint-set";
 
 		public const string DefaultPage = "default-page";
+
+		public const string RoundMoney = "round-money";
 
 		public static T Get<T>(string key, T defaultValue)
 		{

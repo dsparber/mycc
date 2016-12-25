@@ -838,5 +838,23 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("Info", resourceCulture);
             }
         }
+        
+        internal static string LoadRatesAndBalancesOnStartup {
+            get {
+                return ResourceManager.GetString("LoadRatesAndBalancesOnStartup", resourceCulture);
+            }
+        }
+        
+        internal static string RoundNumbers {
+            get {
+                return ResourceManager.GetString("RoundNumbers", resourceCulture);
+            }
+        }
+        
+        internal static string OtherwiseTruncate {
+            get {
+                return ResourceManager.GetString("OtherwiseTruncate", resourceCulture);
+            }
+        }
     }
 }

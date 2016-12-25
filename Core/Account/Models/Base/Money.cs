@@ -50,9 +50,10 @@ namespace MyCryptos.Core.Account.Models.Base
 			return $"{Amount:#,0.########} {Currency.Code}";
 		}
 
-		public string ToStringTwoDigits()
+		public string ToStringTwoDigits(bool round, bool showCurrency = true)
 		{
-			return $"{(Amount < 0.01M && Amount > 0 ? $"< {0.01}" : $"{Amount:#,0.00}")} {Currency.Code}";
+			var amount = round ? Math.Round(Amount, 2) : Math.Truncate(Amount * 100) / 100;
+			return $"{(round && Amount < 0.01M && Amount > 0 ? $"< {0.01}" : $"{amount:#,0.00}")}{ (showCurrency ? $" {Currency.Code}" : string.Empty)}";
 		}
 
 		/// <summary>

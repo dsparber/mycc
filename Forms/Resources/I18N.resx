@@ -834,4 +834,19 @@
 		xml:space="preserve">
     <value>Info</value>
   </data>
+	<data
+		name="LoadRatesAndBalancesOnStartup"
+		xml:space="preserve">
+    <value>Refresh rates and balances on startup</value>
+  </data>
+	<data
+		name="RoundNumbers"
+		xml:space="preserve">
+    <value>Round numbers</value>
+  </data>
+	<data
+		name="OtherwiseTruncate"
+		xml:space="preserve">
+    <value>Otherwise numers are truncated</value>
+  </data>
 </root>

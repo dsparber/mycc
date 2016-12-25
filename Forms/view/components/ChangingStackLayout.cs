@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using MyCryptos.Forms.Messages;
+using Xamarin.Forms;
 
 namespace MyCryptos.view.components
 {
@@ -13,7 +14,12 @@ namespace MyCryptos.view.components
 		protected override void OnSizeAllocated(double width, double height)
 		{
 			base.OnSizeAllocated(width, height);
-			Orientation = width > height ? StackOrientation.Horizontal : StackOrientation.Vertical;
+			var orientation = width > height ? StackOrientation.Horizontal : StackOrientation.Vertical;
+			if (orientation != Orientation)
+			{
+				Orientation = orientation;
+				Messaging.Layout.SendValueChanged();
+			}
 		}
 
 		protected override void OnChildAdded(Element child)

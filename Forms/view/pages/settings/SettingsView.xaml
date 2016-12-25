@@ -6,41 +6,46 @@
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
 	x:Class="MyCryptos.Forms.view.pages.settings.SettingsView"
 	Title="{i18N:Translate Settings}">
-  <ContentPage.BackgroundColor>
-    <OnPlatform
+	<ContentPage.BackgroundColor>
+		<OnPlatform
 			x:TypeArguments="Color"
 			Android="#EEE" />
-  </ContentPage.BackgroundColor>
-  <ContentPage.Content>
-    <components:ChangingStackLayout>
-      <components:HeaderView
+	</ContentPage.BackgroundColor>
+	<ContentPage.Content>
+		<components:ChangingStackLayout>
+			<components:HeaderView
 				x:Name="Header" />
-      <TableView
+			<TableView
 				Intent="Settings">
-        <TableSection
+				<TableSection
 					Title="{i18N:Translate ReferenceCurrencies}">
-          <components:CustomViewCell
+					<components:CustomViewCell
 						Text="{i18N:Translate ReferenceCurrencies}"
 						x:Name="ReferenceCurrenciesCell"
 						Image="more.png" />
-        </TableSection>
-        <TableSection
+				</TableSection>
+				<TableSection
 					Title="{i18N:Translate General}">
-          <components:CustomViewCell
+					<components:CustomViewCell
 						Text="{i18N:Translate Pin}"
 						x:Name="PinSettingsCell"
 						Tapped="PinCellTapped"
 						Image="more.png" />
-          <components:CustomViewCell
+					<components:CustomViewCell
 						Text="{i18N:Translate DefaultView}"
 						x:Name="DefaultViewCell"
 						Tapped="OpenDefaultViewPage"
 						Image="more.png" />
-          <components:CustomSwitchCell
+					<components:CustomSwitchCell
 						x:Name="AutoRefresh"
-						Title="{i18N:Translate RefreshOnStartup}" />
-        </TableSection>
-      </TableView>
-    </components:ChangingStackLayout>
-  </ContentPage.Content>
+						Title="{i18N:Translate RefreshOnStartup}"
+						Info="{i18N:Translate LoadRatesAndBalancesOnStartup}" />
+					<components:CustomSwitchCell
+						x:Name="RoundNumbers"
+						Title="{i18N:Translate RoundNumbers}"
+						Info="{i18N:Translate OtherwiseTruncate}" />
+				</TableSection>
+			</TableView>
+		</components:ChangingStackLayout>
+	</ContentPage.Content>
 </ContentPage>

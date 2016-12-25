@@ -1,5 +1,7 @@
 using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.ExchangeRate.Model;
+using MyCryptos.Core.settings;
+using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using MyCryptos.view.components;
 
@@ -25,17 +27,19 @@ namespace MyCryptos.Forms.view.components.cells
 		public ReferenceValueViewCell()
 		{
 			SetView();
+
+			Messaging.RoundNumbers.SubscribeValueChanged(this, SetView);
 		}
 
 		private void SetView()
 		{
 			if (exchangeRate?.Rate != null && money != null)
 			{
-				Text = new Money(money.Amount * exchangeRate.RateNotNull, exchangeRate.SecondaryCurrency).ToStringTwoDigits();
+				Text = new Money(money.Amount * exchangeRate.RateNotNull, exchangeRate.SecondaryCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
 			}
 			else if (exchangeRate?.SecondaryCurrency != null)
 			{
-				Text = new Money(0, exchangeRate.SecondaryCurrency).ToStringTwoDigits();
+				Text = new Money(0, exchangeRate.SecondaryCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
 			}
 
 			Detail = exchangeRate?.Rate != null ? string.Format(I18N.ExchangeRate, exchangeRate.Rate) : I18N.NoExchangeRateFound;

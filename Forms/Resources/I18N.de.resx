@@ -834,4 +834,19 @@
 		xml:space="preserve">
     <value>Info</value>
   </data>
+	<data
+		name="LoadRatesAndBalancesOnStartup"
+		xml:space="preserve">
+    <value>Kurse und Kontostände aktualisieren</value>
+  </data>
+	<data
+		name="RoundNumbers"
+		xml:space="preserve">
+    <value>Zahlen runden</value>
+  </data>
+	<data
+		name="OtherwiseTruncate"
+		xml:space="preserve">
+    <value>Anderenfalls werden Zahlen abgeschnitten</value>
+  </data>
 </root>
