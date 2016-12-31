@@ -38,7 +38,8 @@ namespace MyCryptos.Core.ExchangeRate.Repositories
 				var rateJson = json[RESULT_KEY];
 				if (rateJson.ToList().Count != 0)
 				{
-					var rate = 1 / decimal.Parse((string)rateJson[RATE_KEY], CultureInfo.InvariantCulture);
+					var value = (string)rateJson[RATE_KEY];
+					var rate = 1 / decimal.Parse(value, NumberStyles.Float, CultureInfo.InvariantCulture);
 					exchangeRate.Rate = rate;
 				}
 			}

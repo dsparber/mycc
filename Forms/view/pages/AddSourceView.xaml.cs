@@ -147,7 +147,7 @@ namespace MyCryptos.Forms.view.pages
 						await AccountStorage.Instance.LocalRepository.Add(account);
 						Messaging.UpdatingAccounts.SendFinished();
 
-						var referenceCurrencies = ApplicationSettings.ReferenceCurrencies.ToList();
+						var referenceCurrencies = ApplicationSettings.AllReferenceCurrencies.ToList();
 						var neededRates = referenceCurrencies.Select(c => new ExchangeRate(account.Money.Currency, c)).ToList();
 
 						if (neededRates.Count > 0)

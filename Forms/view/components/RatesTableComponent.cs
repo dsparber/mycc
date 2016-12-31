@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using constants;
 using MyCryptos.Core.Account.Models.Base;
@@ -22,17 +23,16 @@ using XLabs.Forms.Controls;
 using XLabs.Ioc;
 using XLabs.Serialization;
 using XLabs.Serialization.JsonNET;
-using CoinDetailView = MyCryptos.Forms.view.pages.CoinDetailView;
 
 namespace MyCryptos.Forms.view.components
 {
-	public class CoinTableComponent : ContentView
+	public class RatesTableComponent : ContentView
 	{
 		private readonly HybridWebView webView;
 		private readonly Label noDataLabel;
 		private bool appeared;
 
-		public CoinTableComponent(INavigation navigation)
+		public RatesTableComponent(INavigation navigation)
 		{
 			var resolverContainer = new SimpleContainer();
 
@@ -48,13 +48,8 @@ namespace MyCryptos.Forms.view.components
 			webView.RegisterCallback("Callback", code =>
 			{
 				var currency = CurrencyStorage.Find(code);
-				var accounts = AccountStorage.AccountsWithCurrency(currency);
 
-				Device.BeginInvokeOnMainThread(
-					() =>
-						navigation.PushAsync((accounts.Count == 1)
-							? (Page)new AccountDetailView(accounts[0])
-							: new CoinDetailView(currency)));
+				Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinDetailView(currency, 1)));
 			});
 
 			webView.RegisterCallback("HeaderClickedCallback", type =>
@@ -94,11 +89,9 @@ namespace MyCryptos.Forms.view.components
 			UpdateView();
 
 			Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
-			Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
 			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
 
-			Messaging.RoundNumbers.SubscribeValueChanged(this, UpdateView);
-			Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
+			Messaging.RatesPageCurrency.SubscribeValueChanged(this, UpdateView);
 			Messaging.Loading.SubscribeFinished(this, UpdateView);
 		}
 
@@ -107,7 +100,7 @@ namespace MyCryptos.Forms.view.components
 			if (!appeared)
 			{
 				appeared = true;
-				webView.LoadFromContent("Html/coinTable.html");
+				webView.LoadFromContent("Html/ratesTable.html");
 				Task.Delay(500).ContinueWith(t => UpdateView());
 			}
 			UpdateView();
@@ -117,7 +110,7 @@ namespace MyCryptos.Forms.view.components
 		{
 			try
 			{
-				var items = AccountStorage.UsedCurrencies.Select(c => new Data(c)).ToList();
+				var items = ApplicationSettings.AllReferenceCurrencies.Select(c => new Data(c)).ToList();
 				var itemsExisting = (items.Count > 0);
 
 				Device.BeginInvokeOnMainThread(() =>
@@ -132,8 +125,8 @@ namespace MyCryptos.Forms.view.components
 				switch (ApplicationSettings.SortOrder)
 				{
 					case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
-					case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("<", string.Empty)); break;
-					case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Reference.Replace("<", string.Empty)); break;
+					case SortOrder.ByUnits: sortLambda = d => decimal.Parse(Regex.Replace(d.Reference, "[A-Z]", "").Trim()); break;
+					case SortOrder.ByValue: sortLambda = d => decimal.Parse(Regex.Replace(d.Reference, "[A-Z]", "").Trim()); break;
 					case SortOrder.None: sortLambda = d => 1; break;
 					default: sortLambda = d => 1; break;
 				}
@@ -142,8 +135,7 @@ namespace MyCryptos.Forms.view.components
 
 				webView.CallJsFunction("setHeader", new[]{
 					new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
-					new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
-					new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.BaseCurrency.Code), SortOrder.ByValue.ToString())
+					new HeaderData(I18N.EqualTo, SortOrder.ByValue.ToString())
 				}, string.Empty);
 				webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
 			}
@@ -161,27 +153,21 @@ namespace MyCryptos.Forms.view.components
 			[DataMember]
 			public readonly string Code;
 			[DataMember]
-			public readonly string Name;
-			[DataMember]
-			public readonly string Amount;
-			[DataMember]
 			public readonly string Reference;
 
 			public Data(Currency currency)
 			{
-				var sum = AccountStorage.AccountsWithCurrency(currency).Sum(a => a.Money.Amount);
-				var neededRate = new ExchangeRate(currency, ApplicationSettings.BaseCurrency);
+				var neededRate = new ExchangeRate(currency, ApplicationSettings.SelectedRatePageCurrency);
 				var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
+				Debug.WriteLine(rate.ToString());
 
 				Code = currency.Code;
-				Amount = new Money(sum, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
-				Reference = new Money(sum * rate.RateNotNull, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
-				Name = currency.Name;
+				Reference = new Money(rate.RateNotNull, ApplicationSettings.SelectedRatePageCurrency).ToString8Digits(ApplicationSettings.RoundMoney);
 			}
 
 			public override string ToString()
 			{
-				return string.Format($"{Amount} {Code}\t= {Reference}");
+				return string.Format($"{Code}: {Reference}");
 			}
 		}
 

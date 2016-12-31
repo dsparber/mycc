@@ -17,6 +17,7 @@ namespace MyCryptos.Forms.view.components
 	{
 
 		private readonly Currency currency;
+		private readonly decimal? amount;
 		private readonly FunctionalAccount account;
 		private readonly bool useOnlyThisCurrency;
 		private readonly List<string> infoTexts;
@@ -31,15 +32,16 @@ namespace MyCryptos.Forms.view.components
 			UpdateView();
 		}
 
-		public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false) : this()
+		public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false, decimal? amount = null) : this()
 		{
 			this.currency = currency ?? ApplicationSettings.BaseCurrency;
-			this.useOnlyThisCurrency = useOnlyThisCurrency;
+			this.amount = amount;
+			this.useOnlyThisCurrency = useOnlyThisCurrency || amount != null;
 
 			UpdateView();
 		}
 
-		private CoinHeaderComponent()
+		private CoinHeaderComponent() : base(true)
 		{
 			var recognizer = new TapGestureRecognizer();
 			recognizer.Tapped += (sender, e) =>
@@ -56,10 +58,14 @@ namespace MyCryptos.Forms.view.components
 
 		private void UpdateView(bool? isLoading = null)
 		{
-			var sum = account != null ? account.Money : (useOnlyThisCurrency ? CoinSum : MoneySum) ?? new Money(0, currency);
+			var sum = amount != null ? new Money(amount.Value, currency) : account != null ? account.Money : (useOnlyThisCurrency ? CoinSum : MoneySum) ?? new Money(0, currency);
 			var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
 
-			if (account != null)
+			if (amount != null)
+			{
+				infoTexts[0] = string.Empty;
+			}
+			else if (account != null)
 			{
 				infoTexts[0] = PluralHelper.GetTextAccounts(1);
 			}
@@ -71,7 +77,12 @@ namespace MyCryptos.Forms.view.components
 			{
 				infoTexts[0] = PluralHelper.GetTextCoins(amountDifferentCurrencies);
 			}
-			infoTexts[1] = string.Join(" / ", ApplicationSettings.ReferenceCurrencies.Where(c => !c.Equals(currency)).Select(c => ((useOnlyThisCurrency ? CoinSumAs(c) : MoneySumOf(c)) ?? new Money(0, c)).ToStringTwoDigits(ApplicationSettings.RoundMoney)));
+			infoTexts[1] = string.Join(" / ", ApplicationSettings.MainReferenceCurrencies
+									   .Where(c => !c.Equals(currency))
+									   .Select(c => (amount != null ? new Money(ExchangeRateHelper.GetRate(CoinSum.Currency, c)?.RateNotNull ?? 0, c)
+													 : (useOnlyThisCurrency ? CoinSumAs(c)
+														: MoneySumOf(c)) ?? new Money(0, c))
+											   .ToStringTwoDigits(ApplicationSettings.RoundMoney)));
 
 
 			Device.BeginInvokeOnMainThread(() =>
@@ -116,10 +127,6 @@ namespace MyCryptos.Forms.view.components
 			Messaging.RoundNumbers.SubscribeValueChanged(this, () => UpdateView());
 			Messaging.UpdatingAccounts.SubscribeFinished(this, () => UpdateView());
 			Messaging.Loading.SubscribeFinished(this, () => UpdateView());
-
-			Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => UpdateView(false));
-			Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => UpdateView(false));
-			Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => UpdateView(false));
 		}
 	}
 }

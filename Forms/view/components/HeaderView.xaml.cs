@@ -43,6 +43,17 @@ namespace MyCryptos.view.components
 			set { LoadingPanel.IsVisible = value; LoadingIndicator.IsRunning = value; InfoLabel.IsVisible = !value; }
 		}
 
+		public HeaderView(bool subscribeToRefresh) : this()
+		{
+			if (subscribeToRefresh)
+			{
+				Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
+				Messaging.Loading.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
+				Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
+				Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
+			}
+		}
+
 		public HeaderView()
 		{
 			InitializeComponent();

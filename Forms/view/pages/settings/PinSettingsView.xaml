@@ -5,7 +5,7 @@
 	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
 	x:Class="MyCryptos.Forms.view.pages.settings.PinSettingsView"
-	Title="{i18N:Translate PinSettings}">
+	Title="{i18N:Translate Pin}">
 	<ContentPage.Content>
 		<components:ChangingStackLayout>
 			<components:HeaderView

@@ -1,0 +1,77 @@
+
+html, body {
+    font-family:  "Droid Sans Mono", "Courier New", Consolas, monospace;
+    font-size: 8pt;
+    font-weight: lighter;
+    margin: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td:first-child {
+  padding-left: 8px;
+    width: 1px;
+}
+
+td:first-child, td:first-child+td+td {
+    text-align: right;
+}
+
+th:last-child, td:last-child {
+    width: 30px;
+}
+
+tbody td:last-child {
+    background-image: url('more.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 20px;
+}
+
+td {
+    white-space: nowrap;
+    text-align: left;
+    padding: 8px 4px;
+    cursor: pointer;
+}
+
+tr:first-child {
+    border-top: 1px solid #ccc;
+}
+
+tr {
+    border-bottom: 1px solid #ccc;
+}
+
+thead tr {
+    background-color: #eee;
+}
+
+thead td {
+    border-right: 1px solid lightgray;
+    padding-right: 0.35em;
+}
+
+thead td span {
+    display: block;
+    background-image: url("upDown.svg");
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: auto 1em;
+    padding-right: 1.25em;
+}
+
+thead td.down span {
+    background-image: url("up.svg");
+}
+
+thead td.up span {
+    background-image: url("down.svg");
+}

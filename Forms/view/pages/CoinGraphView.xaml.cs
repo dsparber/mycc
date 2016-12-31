@@ -17,8 +17,6 @@ namespace MyCryptos.Forms.view.pages
 	{
 		private readonly CoinGraphComponent graphView;
 
-		private bool loadedView;
-
 		public CoinGraphView()
 		{
 			InitializeComponent();
@@ -50,7 +48,7 @@ namespace MyCryptos.Forms.view.pages
 
 		private void PositionSelected(object sender, EventArgs e)
 		{
-			var currencies = ApplicationSettings.ReferenceCurrencies;
+			var currencies = ApplicationSettings.MainReferenceCurrencies;
 
 			ApplicationSettings.BaseCurrency = currencies[HeaderCarousel.Position];
 			MessagingCenter.Send(MessageInfo.ValueChanged, Messaging.ReferenceCurrency);
@@ -58,8 +56,8 @@ namespace MyCryptos.Forms.view.pages
 
 		private void SetHeaderCarousel()
 		{
-			HeaderCarousel.ItemsSource = ApplicationSettings.ReferenceCurrencies.ToList();
-			HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
+			HeaderCarousel.ItemsSource = ApplicationSettings.MainReferenceCurrencies.ToList();
+			HeaderCarousel.Position = ApplicationSettings.MainReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
 			if (HeaderCarousel.ItemTemplate != null) return;
 
 			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
@@ -78,7 +76,7 @@ namespace MyCryptos.Forms.view.pages
 
 		private void AddSubscriber()
 		{
-			Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.ReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency));
+			Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.MainReferenceCurrencies.IndexOf(ApplicationSettings.BaseCurrency));
 			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
 
 			Messaging.Loading.SubscribeFinished(this, SetNoSourcesView);

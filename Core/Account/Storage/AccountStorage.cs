@@ -31,12 +31,12 @@ namespace MyCryptos.Core.Account.Storage
 		public static List<FunctionalAccount> AccountsWithCurrency(Currency.Model.Currency currency) => Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).ToList();
 
 		public static List<ExchangeRate.Model.ExchangeRate> NeededRates => UsedCurrencies.Distinct()
-									   .SelectMany(c => ApplicationSettings.ReferenceCurrencies.Select(cref => new ExchangeRate.Model.ExchangeRate(c, cref)))
+									   .SelectMany(c => ApplicationSettings.AllReferenceCurrencies.Select(cref => new ExchangeRate.Model.ExchangeRate(c, cref)))
 									   .Select(e => ExchangeRateHelper.GetRate(e) ?? e)
 									   .Where(r => r?.Rate == null)
 									   .ToList();
 
-		public static List<ExchangeRate.Model.ExchangeRate> NeededRatesFor(Currency.Model.Currency accountCurrency) => ApplicationSettings.ReferenceCurrencies
+		public static List<ExchangeRate.Model.ExchangeRate> NeededRatesFor(Currency.Model.Currency accountCurrency) => ApplicationSettings.AllReferenceCurrencies
 									   .Select(c => new ExchangeRate.Model.ExchangeRate(accountCurrency, c))
 									   .Select(e => ExchangeRateHelper.GetRate(e) ?? e)
 									   .Where(r => r?.Rate == null)

@@ -56,6 +56,12 @@ namespace MyCryptos.Core.Account.Models.Base
 			return $"{(round && Amount < 0.01M && Amount > 0 ? $"< {0.01}" : $"{amount:#,0.00}")}{ (showCurrency ? $" {Currency.Code}" : string.Empty)}";
 		}
 
+		public string ToString8Digits(bool round, bool showCurrency = true)
+		{
+			var amount = round ? Math.Round(Amount, 8) : Math.Truncate(Amount * 100000000) / 100000000;
+			return $"{(round && Amount < 0.00000001M && Amount > 0 ? $"< {0.00000001}" : $"{amount:#,0.00000000}")}{ (showCurrency ? $" {Currency.Code}" : string.Empty)}";
+		}
+
 		/// <summary>
 		/// Adds a <see cref="Money"/> to a <see cref="Money"/>, yielding a new <see cref="T:Money"/>.
 		/// </summary>

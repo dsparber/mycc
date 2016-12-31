@@ -1,6 +1,8 @@
 using System;
+using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.settings;
 using MyCryptos.Core.Types;
+using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 
@@ -21,17 +23,21 @@ namespace MyCryptos.Forms.view.pages.settings
 			AutoRefresh.Switch.Toggled += AutoRefreshChanged;
 			RoundNumbers.Switch.Toggled += RoundNumbersChanged;
 			ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new ReferenceCurrenciesSettingsView());
-			ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.ReferenceCurrencies);
+			ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies);
+			SourcesCell.Tapped += (sender, e) => Navigation.PushAsync(new SourcesView());
+			SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
 			SetPinCellText();
 
 			Messaging.Pin.SubscribeValueChanged(this, SetPinCellText);
 			Messaging.DefaultView.SubscribeValueChanged(this, SetDefaultPageCellText);
-			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, () => ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.ReferenceCurrencies));
+			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, () => ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies));
+			Messaging.UpdatingAccounts.SubscribeFinished(this, () => SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count));
+			Messaging.Loading.SubscribeFinished(this, () => SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count));
 		}
 
 		private void SetDefaultPageCellText()
 		{
-			DefaultViewCell.Detail = ApplicationSettings.DefaultPage == StartupPage.TableView ? I18N.Table : I18N.Graph;
+			DefaultViewCell.Detail = ApplicationSettings.DefaultPage == StartupPage.TableView ? I18N.Table : ApplicationSettings.DefaultPage == StartupPage.GraphView ? I18N.Graph : I18N.Rates;
 		}
 
 		private void OpenDefaultViewPage(object sender, EventArgs e)

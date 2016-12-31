@@ -22,6 +22,10 @@ namespace MyCryptos.Forms.view.pages.settings
 			{
 				ApplicationSettings.DefaultPage = Core.Types.StartupPage.TableView;
 			}
+			else if (sender.Equals(RatesOptionCell))
+			{
+				ApplicationSettings.DefaultPage = Core.Types.StartupPage.RatesView;
+			}
 			Messaging.DefaultView.SendValueChanged();
 			UpdateCheckmarks();
 		}
@@ -30,6 +34,7 @@ namespace MyCryptos.Forms.view.pages.settings
 		{
 			GraphOptionCell.ShowIcon = ApplicationSettings.DefaultPage.Equals(Core.Types.StartupPage.GraphView);
 			TableOptionCell.ShowIcon = ApplicationSettings.DefaultPage.Equals(Core.Types.StartupPage.TableView);
+			RatesOptionCell.ShowIcon = ApplicationSettings.DefaultPage.Equals(Core.Types.StartupPage.RatesView);
 		}
 	}
 }

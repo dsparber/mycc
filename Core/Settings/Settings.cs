@@ -10,6 +10,8 @@ namespace MyCryptos.Core.settings
 
 		public const string KeyBaseCurrency = "currency";
 
+		public const string KeyRatePageCurrency = "rate-page-currency";
+
 		public const string KeyFirstLaunch = "first-launch";
 
 		public const string KeySortOrder = "sort-order";
@@ -18,7 +20,9 @@ namespace MyCryptos.Core.settings
 
 		public const string KeyAutoRefreshOnStartup = "auto-refresh-on-startup";
 
-		public const string KeyReferenceCurrencies = "reference-currencies";
+		public const string KeyMainReferenceCurrencies = "main-reference-currencies";
+
+		public const string KeyFurtherReferenceCurrencies = "further-reference-currencies";
 
 		public const string KeyPin = "pin";
 

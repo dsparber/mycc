@@ -41,6 +41,20 @@ namespace MyCryptos.Core.settings
 			}
 		}
 
+		public static Currency.Model.Currency SelectedRatePageCurrency
+		{
+			get
+			{
+				var json = Settings.Get(Settings.KeyRatePageCurrency, JsonConvert.SerializeObject(Currency.Model.Currency.Btc));
+				var currency = JsonConvert.DeserializeObject<Currency.Model.Currency>(json);
+				return currency;
+			}
+			set
+			{
+				Settings.Set(Settings.KeyRatePageCurrency, JsonConvert.SerializeObject(value));
+			}
+		}
+
 		public static string Pin
 		{
 			set
@@ -56,7 +70,7 @@ namespace MyCryptos.Core.settings
 			return hash.Equals(Hash(pin));
 		}
 
-		public static List<Currency.Model.Currency> ReferenceCurrencies
+		public static List<Currency.Model.Currency> MainReferenceCurrencies
 		{
 			get
 			{
@@ -64,7 +78,7 @@ namespace MyCryptos.Core.settings
 
 				var defaultValue = JsonConvert.SerializeObject(currencies);
 
-				var json = Settings.Get(Settings.KeyReferenceCurrencies, defaultValue);
+				var json = Settings.Get(Settings.KeyMainReferenceCurrencies, defaultValue);
 				var data = JsonConvert.DeserializeObject<List<Currency.Model.Currency>>(json);
 				data.RemoveAll(c => c.Equals(BaseCurrency));
 				data.Add(BaseCurrency);
@@ -72,9 +86,30 @@ namespace MyCryptos.Core.settings
 			}
 			set
 			{
-				Settings.Set(Settings.KeyReferenceCurrencies, JsonConvert.SerializeObject(value));
+				Settings.Set(Settings.KeyMainReferenceCurrencies, JsonConvert.SerializeObject(value));
 			}
 		}
+
+		public static List<Currency.Model.Currency> FurtherReferenceCurrencies
+		{
+			get
+			{
+				var currencies = new List<Currency.Model.Currency>();
+
+				var defaultValue = JsonConvert.SerializeObject(currencies);
+
+				var json = Settings.Get(Settings.KeyFurtherReferenceCurrencies, defaultValue);
+				var data = JsonConvert.DeserializeObject<List<Currency.Model.Currency>>(json);
+				data.RemoveAll(MainReferenceCurrencies.Contains);
+				return data.OrderBy(c => c.Code).ToList();
+			}
+			set
+			{
+				Settings.Set(Settings.KeyFurtherReferenceCurrencies, JsonConvert.SerializeObject(value));
+			}
+		}
+
+		public static List<Currency.Model.Currency> AllReferenceCurrencies => MainReferenceCurrencies.Concat(FurtherReferenceCurrencies).ToList();
 
 		public static SortOrder SortOrder
 		{

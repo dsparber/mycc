@@ -20,7 +20,7 @@ namespace MyCryptos.Forms.view.components
 				throw new ArgumentNullException();
 			}
 
-			var currencies = ApplicationSettings.ReferenceCurrencies.Where(c => !baseMoney.Currency.Equals(c));
+			var currencies = ApplicationSettings.AllReferenceCurrencies.Where(c => !baseMoney.Currency.Equals(c));
 
 			Cells = new List<ReferenceValueViewCell>();
 

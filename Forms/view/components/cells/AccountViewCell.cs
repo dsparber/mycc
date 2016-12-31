@@ -38,7 +38,7 @@ namespace MyCryptos.view.components
 		void setTapRecognizer()
 		{
 			var gestureRecognizer = new TapGestureRecognizer();
-			gestureRecognizer.Tapped += (sender, e) => Navigation.PushAsync(new AccountDetailView(account, repository));
+			gestureRecognizer.Tapped += (sender, e) => Navigation.PushAsync(new AccountDetailView(account));
 
 			if (View != null)
 			{

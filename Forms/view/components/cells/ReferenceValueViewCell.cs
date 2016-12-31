@@ -35,14 +35,12 @@ namespace MyCryptos.Forms.view.components.cells
 		{
 			if (exchangeRate?.Rate != null && money != null)
 			{
-				Text = new Money(money.Amount * exchangeRate.RateNotNull, exchangeRate.SecondaryCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+				Text = new Money(money.Amount * exchangeRate.RateNotNull, exchangeRate.SecondaryCurrency).ToString();
 			}
 			else if (exchangeRate?.SecondaryCurrency != null)
 			{
-				Text = new Money(0, exchangeRate.SecondaryCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+				Text = new Money(0, exchangeRate.SecondaryCurrency).ToString();
 			}
-
-			Detail = exchangeRate?.Rate != null ? string.Format(I18N.ExchangeRate, exchangeRate.Rate) : I18N.NoExchangeRateFound;
 		}
 
 		public override decimal Units => Money.Amount * (ExchangeRate?.RateNotNull ?? 0);

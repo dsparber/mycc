@@ -18,10 +18,14 @@
 			<TableView
 				Intent="Settings">
 				<TableSection
-					Title="{i18N:Translate ReferenceCurrencies}">
+					Title="{i18N:Translate Data}">
 					<components:CustomViewCell
-						Text="{i18N:Translate ReferenceCurrencies}"
+						Text="{i18N:Translate Currencies}"
 						x:Name="ReferenceCurrenciesCell"
+						Image="more.png" />
+					<components:CustomViewCell
+						Text="{i18N:Translate Sources}"
+						x:Name="SourcesCell"
 						Image="more.png" />
 				</TableSection>
 				<TableSection

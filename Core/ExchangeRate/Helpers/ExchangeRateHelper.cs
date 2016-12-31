@@ -20,8 +20,13 @@ namespace MyCryptos.Core.ExchangeRate.Helpers
 				return null;
 			}
 
-			var rateReference = GetDirectRate(referenceCurrency, Currency.Model.Currency.Btc);
-			var rateSecondary = GetDirectRate(Currency.Model.Currency.Btc, secondaryCurrency);
+			if (referenceCurrency.Equals(secondaryCurrency))
+			{
+				return new Model.ExchangeRate(referenceCurrency, secondaryCurrency, 1);
+			}
+
+			var rateReference = GetDirectRate(referenceCurrency, Currency.Model.Currency.Btc) ?? GetDirectRate(Currency.Model.Currency.Btc, referenceCurrency)?.Inverse;
+			var rateSecondary = GetDirectRate(Currency.Model.Currency.Btc, secondaryCurrency) ?? GetDirectRate(secondaryCurrency, Currency.Model.Currency.Btc)?.Inverse;
 
 			if (rateReference == null || rateSecondary == null)
 			{
@@ -60,6 +65,11 @@ namespace MyCryptos.Core.ExchangeRate.Helpers
 			if (referenceCurrency == null || secondaryCurrency == null)
 			{
 				return null;
+			}
+
+			if (referenceCurrency.Equals(secondaryCurrency))
+			{
+				return new Model.ExchangeRate(referenceCurrency, secondaryCurrency, 1);
 			}
 
 			var rateReference = await GetDirectRate(referenceCurrency, Currency.Model.Currency.Btc, speed);

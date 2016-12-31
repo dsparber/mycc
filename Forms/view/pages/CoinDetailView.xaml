@@ -17,7 +17,8 @@
 		<components:ChangingStackLayout
 			x:Name="ChangingStack">
 			<TableView
-				Intent="Form">
+				Intent="Form"
+				x:Name="Table">
 				<TableView.BackgroundColor>
 					<OnPlatform
 						x:TypeArguments="Color"

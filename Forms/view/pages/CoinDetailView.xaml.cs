@@ -5,9 +5,6 @@ using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Repositories.Base;
 using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.Currency.Model;
-using MyCryptos.Core.ExchangeRate.Helpers;
-using MyCryptos.Core.ExchangeRate.Model;
-using MyCryptos.Core.settings;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Tasks;
@@ -23,21 +20,27 @@ namespace MyCryptos.Forms.view.pages
 		private List<AccountViewCell> cells;
 		private List<ReferenceValueViewCell> referenceValueCells;
 
-		private List<ExchangeRate> exchangeRates;
 		private IEnumerable<Tuple<FunctionalAccount, AccountRepository>> accounts;
 
 		private readonly Currency currency;
-		private Money MoneySum => (accounts.ToList().Count == 0) ? null : new Money(accounts.Sum(a => a.Item1.Money.Amount), accounts.First().Item1.Money.Currency);
+		private readonly decimal? amount;
+		private Money MoneySum => amount != null ? new Money(amount.Value, currency) : (accounts.ToList().Count == 0) ? null : new Money(accounts.Sum(a => a.Item1.Money.Amount), accounts.First().Item1.Money.Currency);
 
-		public CoinDetailView(Currency pageCurrency)
+		public CoinDetailView(Currency pageCurrency, decimal? amount = null)
 		{
 			InitializeComponent();
 
-			var header = new CoinHeaderComponent(pageCurrency, true);
+			var header = new CoinHeaderComponent(pageCurrency, true, amount);
 			ChangingStack.Children.Insert(0, header);
 
 			currency = pageCurrency;
-			Title = PluralHelper.GetTextAccounts(AccountStorage.AccountsWithCurrency(currency).Count);
+			this.amount = amount;
+			Title = currency.Code;
+
+			if (amount != null)
+			{
+				Table.Root.Remove(AccountSection);
+			}
 
 			Subscribe();
 			LoadData();
@@ -48,17 +51,7 @@ namespace MyCryptos.Forms.view.pages
 			var accs = AccountStorage.Instance.AllElementsWithRepositories;
 			accounts = accs.Where(t => t.Item1.Money.Currency.Equals(currency)).ToList();
 
-			var currencies = ApplicationSettings.ReferenceCurrencies;
-
-			exchangeRates = new List<ExchangeRate>();
-			foreach (var c in currencies)
-			{
-				exchangeRates.Add(ExchangeRateHelper.GetRate(currency, c));
-			}
-			exchangeRates.RemoveAll(e => e == null);
-
-
-			if (accounts.ToList().Count == 0)
+			if (accounts.ToList().Count == 0 && amount == null)
 			{
 				Navigation.RemovePage(this);
 			}
@@ -87,7 +80,11 @@ namespace MyCryptos.Forms.view.pages
 					EqualsSection.Add(c);
 				}
 
-				SortHelper.ApplySortOrder(cells, AccountSection, Core.Types.SortOrder.Alphabetical, Core.Types.SortDirection.Ascending);
+
+				if (Table.Root.Contains(AccountSection))
+				{
+					SortHelper.ApplySortOrder(cells, AccountSection, Core.Types.SortOrder.Alphabetical, Core.Types.SortDirection.Ascending);
+				}
 			});
 		}
 

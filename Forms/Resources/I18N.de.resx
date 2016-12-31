@@ -854,4 +854,34 @@
 		xml:space="preserve">
     <value>Die eingegebene Quelle wurde bereits hinzugefügt!</value>
   </data>
+	<data
+		name="MainCurrencies"
+		xml:space="preserve">
+    <value>Hauptwährungen</value>
+  </data>
+	<data
+		name="FurtherCurrencies"
+		xml:space="preserve">
+    <value>Weitere Währungen</value>
+  </data>
+	<data
+		name="AddMainCurrencies"
+		xml:space="preserve">
+    <value>Hauptwährungen hinzufügen</value>
+  </data>
+	<data
+		name="AddFurtherCurrencies"
+		xml:space="preserve">
+    <value>Weitere Währungen hinzufügen</value>
+  </data>
+	<data
+		name="Rates"
+		xml:space="preserve">
+    <value>Kurse</value>
+  </data>
+	<data
+		name="Data"
+		xml:space="preserve">
+    <value>Daten</value>
+  </data>
 </root>

@@ -862,5 +862,41 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("RepositoryAlreadyAdded", resourceCulture);
             }
         }
+        
+        internal static string MainCurrencies {
+            get {
+                return ResourceManager.GetString("MainCurrencies", resourceCulture);
+            }
+        }
+        
+        internal static string FurtherCurrencies {
+            get {
+                return ResourceManager.GetString("FurtherCurrencies", resourceCulture);
+            }
+        }
+        
+        internal static string AddMainCurrencies {
+            get {
+                return ResourceManager.GetString("AddMainCurrencies", resourceCulture);
+            }
+        }
+        
+        internal static string AddFurtherCurrencies {
+            get {
+                return ResourceManager.GetString("AddFurtherCurrencies", resourceCulture);
+            }
+        }
+        
+        internal static string Rates {
+            get {
+                return ResourceManager.GetString("Rates", resourceCulture);
+            }
+        }
+        
+        internal static string Data {
+            get {
+                return ResourceManager.GetString("Data", resourceCulture);
+            }
+        }
     }
 }

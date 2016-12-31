@@ -18,16 +18,14 @@ namespace MyCryptos.Forms.view.pages
 		private readonly List<ReferenceValueViewCell> referenceValueCells;
 
 		private FunctionalAccount account;
-		private readonly AccountRepository repository;
 		private readonly CoinHeaderComponent header;
 
 
-		public AccountDetailView(FunctionalAccount account, AccountRepository repository)
+		public AccountDetailView(FunctionalAccount account)
 		{
 			InitializeComponent();
 
 			this.account = account;
-			this.repository = repository;
 
 			header = new CoinHeaderComponent(account);
 			ChangingStack.Children.Insert(0, header);
@@ -62,7 +60,7 @@ namespace MyCryptos.Forms.view.pages
 		{
 			if (Device.OS != TargetPlatform.Android)
 			{
-				Title = account.Name;
+				Title = account.Money.Currency.Code;
 			}
 			currencyEntryCell.SelectedMoney = account.Money;
 

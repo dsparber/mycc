@@ -47,7 +47,7 @@ namespace MyCryptos.Forms.view.components
 				var currency = CurrencyStorage.Instance.AllElements.Find(e => element.Item1.Equals(e?.Code));
 				var accounts = AccountStorage.AccountsWithCurrency(currency);
 
-				Device.BeginInvokeOnMainThread(() => navigation.PushAsync((accounts.Count == 1) ? (Page)new AccountDetailView(accounts[0], AccountStorage.RepositoryOf(accounts[0])) : new CoinDetailView(currency)));
+				Device.BeginInvokeOnMainThread(() => navigation.PushAsync((accounts.Count == 1) ? (Page)new AccountDetailView(accounts[0]) : new CoinDetailView(currency)));
 			});
 
 			webView.RegisterCallback("appeared", t => UpdateView());

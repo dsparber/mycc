@@ -23,6 +23,11 @@
 					Tapped="SelectionChanged"
 					Text="{i18N:Translate Graph}"
 					Image="checkmark.png" />
+				<components:CustomViewCell
+					x:Name="RatesOptionCell"
+					Tapped="SelectionChanged"
+					Text="{i18N:Translate Rates}"
+					Image="checkmark.png" />
 			</TableSection>
 		</TableView>
 	</components:ChangingStackLayout>

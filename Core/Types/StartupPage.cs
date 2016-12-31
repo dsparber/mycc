@@ -2,6 +2,6 @@
 {
 	public enum StartupPage
 	{
-		GraphView, TableView
+		RatesView, GraphView, TableView
 	}
 }

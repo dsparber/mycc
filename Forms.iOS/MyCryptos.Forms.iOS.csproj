@@ -346,6 +346,9 @@
     <BundleResource Include="Resources\graph%403x.png" />
     <BundleResource Include="Resources\graph%402x.png" />
     <BundleResource Include="Resources\graph.png" />
+    <BundleResource Include="Resources\rate%403x.png" />
+    <BundleResource Include="Resources\rate%402x.png" />
+    <BundleResource Include="Resources\rate.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\coinTable.css" />
@@ -366,9 +369,12 @@
     <BundleResource Include="Resources\refresh.png" />
     <BundleResource Include="Resources\refresh%402x.png" />
     <Content Include="Html\jquery-latest.min.js" />
-    <BundleResource Include="Html\more.png" />
     <Content Include="Html\up.svg" />
     <Content Include="Html\upDown.svg" />
+    <Content Include="Html\ratesTable.css" />
+    <Content Include="Html\ratesTable.html" />
+    <Content Include="Html\ratesTable.js" />
+    <Content Include="Html\more.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\Chart.min.js">
