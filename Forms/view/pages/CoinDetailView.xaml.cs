@@ -9,7 +9,6 @@ using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Tasks;
 using MyCryptos.Forms.view.components;
-using MyCryptos.Forms.view.components.cells;
 using MyCryptos.view.components;
 using Xamarin.Forms;
 
@@ -17,8 +16,7 @@ namespace MyCryptos.Forms.view.pages
 {
 	public partial class CoinDetailView
 	{
-		private List<AccountViewCell> cells;
-		private List<ReferenceValueViewCell> referenceValueCells;
+		private ReferenceCurrenciesView referenceView;
 
 		private IEnumerable<Tuple<FunctionalAccount, AccountRepository>> accounts;
 
@@ -39,14 +37,25 @@ namespace MyCryptos.Forms.view.pages
 
 			if (amount != null)
 			{
-				Table.Root.Remove(AccountSection);
+				Content.Children.Remove(Table);
 			}
 
+			LoadData(false);
+
+			referenceView = new ReferenceCurrenciesView(MoneySum);
+			Content.Children.Add(referenceView);
+
 			Subscribe();
-			LoadData();
+			UpdateView();
+
 		}
 
 		private void LoadData()
+		{
+			LoadData(true);
+		}
+
+		private void LoadData(bool updateView)
 		{
 			var accs = AccountStorage.Instance.AllElementsWithRepositories;
 			accounts = accs.Where(t => t.Item1.Money.Currency.Equals(currency)).ToList();
@@ -55,7 +64,7 @@ namespace MyCryptos.Forms.view.pages
 			{
 				Navigation.RemovePage(this);
 			}
-			else
+			else if (updateView)
 			{
 				UpdateView();
 			}
@@ -63,29 +72,18 @@ namespace MyCryptos.Forms.view.pages
 
 		private void UpdateView()
 		{
-			cells = new List<AccountViewCell>();
-			foreach (var a in accounts)
+			referenceView.UpdateView();
+
+			if (Content.Children.Contains(Table))
 			{
-				cells.Add(new AccountViewCell(Navigation) { Account = a.Item1, Repository = a.Item2 });
-			}
+				var cells = accounts.Select(a => new AccountViewCell(Navigation) { Account = a.Item1, Repository = a.Item2 });
 
-			var table = new ReferenceCurrenciesSection(MoneySum);
-			referenceValueCells = table.Cells;
-
-			Device.BeginInvokeOnMainThread(() =>
-			{
-				EqualsSection.Clear();
-				foreach (var c in referenceValueCells)
+				Device.BeginInvokeOnMainThread(() =>
 				{
-					EqualsSection.Add(c);
-				}
-
-
-				if (Table.Root.Contains(AccountSection))
-				{
+					Table.HeightRequest = 46 * cells.Count() + 100;
 					SortHelper.ApplySortOrder(cells, AccountSection, Core.Types.SortOrder.Alphabetical, Core.Types.SortDirection.Ascending);
-				}
-			});
+				});
+			}
 		}
 
 		private void Subscribe()
@@ -101,6 +99,13 @@ namespace MyCryptos.Forms.view.pages
 		private async void Refresh(object sender, EventArgs args)
 		{
 			await AppTaskHelper.FetchBalanceAndRates(currency);
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+
+			referenceView.OnAppearing();
 		}
 	}
 }

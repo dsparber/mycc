@@ -82,7 +82,7 @@ namespace MyCryptos.Forms.view.pages
 			Device.BeginInvokeOnMainThread(() =>
 			{
 				Header.IsLoading = false;
-				SortHelper.ApplySortOrder(cells, AccountsSection, SortOrder.None);
+				SortHelper.ApplySortOrder(cells, AccountsSection, SortOrder.None, SortDirection.Ascending);
 			});
 
 			if (repository is AddressAccountRepository)

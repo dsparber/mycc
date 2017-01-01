@@ -79,7 +79,6 @@
     <Compile Include="view\components\HeaderView.xaml.cs">
       <DependentUpon>HeaderView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\components\ReferenceCurrenciesSection.cs" />
     <Compile Include="view\components\SegmentedControl.cs" />
     <Compile Include="view\container\MasterDetailContainerView.cs" />
     <Compile Include="view\container\TabContainerView.cs" />
@@ -132,6 +131,7 @@
       <DependentUpon>RateView.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\components\RatesTableComponent.cs" />
+    <Compile Include="view\components\ReferenceCurrenciesView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

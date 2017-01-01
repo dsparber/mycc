@@ -61,13 +61,13 @@ namespace MyCryptos.Forms.view.components
 			{
 				SortOrder value;
 				var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
-				if (clickedSortOrder == ApplicationSettings.SortOrder)
+				if (clickedSortOrder == ApplicationSettings.SortOrderTable)
 				{
-					ApplicationSettings.SortDirection = ApplicationSettings.SortDirection == SortDirection.Ascending
+					ApplicationSettings.SortDirectionTable = ApplicationSettings.SortDirectionTable == SortDirection.Ascending
 						? SortDirection.Descending
 						: SortDirection.Ascending;
 				}
-				ApplicationSettings.SortOrder = clickedSortOrder;
+				ApplicationSettings.SortOrderTable = clickedSortOrder;
 
 				UpdateView();
 			});
@@ -108,6 +108,7 @@ namespace MyCryptos.Forms.view.components
 			{
 				appeared = true;
 				webView.LoadFromContent("Html/coinTable.html");
+				Task.Delay(200).ContinueWith(t => UpdateView());
 				Task.Delay(500).ContinueWith(t => UpdateView());
 			}
 			UpdateView();
@@ -129,7 +130,7 @@ namespace MyCryptos.Forms.view.components
 				if (!itemsExisting || !appeared) return;
 
 				Func<Data, object> sortLambda;
-				switch (ApplicationSettings.SortOrder)
+				switch (ApplicationSettings.SortOrderTable)
 				{
 					case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
 					case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("<", string.Empty)); break;
@@ -138,7 +139,7 @@ namespace MyCryptos.Forms.view.components
 					default: sortLambda = d => 1; break;
 				}
 
-				items = ApplicationSettings.SortDirection == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
+				items = ApplicationSettings.SortDirectionTable == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
 				webView.CallJsFunction("setHeader", new[]{
 					new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
@@ -197,8 +198,8 @@ namespace MyCryptos.Forms.view.components
 
 			public SortData()
 			{
-				Direction = ApplicationSettings.SortDirection.ToString();
-				Type = ApplicationSettings.SortOrder.ToString();
+				Direction = ApplicationSettings.SortDirectionTable.ToString();
+				Type = ApplicationSettings.SortOrderTable.ToString();
 			}
 
 		}

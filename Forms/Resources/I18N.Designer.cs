@@ -898,5 +898,17 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("Data", resourceCulture);
             }
         }
+        
+        public static string Reference {
+            get {
+                return ResourceManager.GetString("Reference", resourceCulture);
+            }
+        }
+        
+        public static string IsEqualTo {
+            get {
+                return ResourceManager.GetString("IsEqualTo", resourceCulture);
+            }
+        }
     }
 }

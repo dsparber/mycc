@@ -16,27 +16,11 @@
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<components:ChangingStackLayout
-			x:Name="ChangingStack">
-			<StackLayout
-				Spacing="0">
-				<StackLayout.BackgroundColor>
-					<OnPlatform
-						x:TypeArguments="Color"
-						Android="#EEE" />
-				</StackLayout.BackgroundColor>
-				<TableView
-					Intent="Form">
-					<TableView.BackgroundColor>
-						<OnPlatform
-							x:TypeArguments="Color"
-							Android="#EEE" />
-					</TableView.BackgroundColor>
-					<TableSection
-						Title="{i18N:Translate EqualTo}"
-						x:Name="EqualsSection">
-					</TableSection>
-				</TableView>
-			</StackLayout>
+			x:Name="ChangingStack"
+			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
+			<ScrollView
+				x:Name="Content"
+				IsClippedToBounds="true" />
 		</components:ChangingStackLayout>
 	</ContentPage.Content>
 </ContentPage>

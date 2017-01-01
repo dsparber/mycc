@@ -884,4 +884,14 @@
 		xml:space="preserve">
     <value>Data</value>
   </data>
+	<data
+		name="Reference"
+		xml:space="preserve">
+    <value>Reference</value>
+  </data>
+	<data
+		name="IsEqualTo"
+		xml:space="preserve">
+    <value>{0} is equal to</value>
+  </data>
 </root>

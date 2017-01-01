@@ -15,24 +15,30 @@
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<components:ChangingStackLayout
-			x:Name="ChangingStack">
-			<TableView
-				Intent="Form"
-				x:Name="Table">
-				<TableView.BackgroundColor>
-					<OnPlatform
-						x:TypeArguments="Color"
-						Android="#EEE" />
-				</TableView.BackgroundColor>
-				<TableSection
-					Title="{i18N:Translate Accounts}"
-					x:Name="AccountSection">
-				</TableSection>
-				<TableSection
-					Title="{i18N:Translate EqualTo}"
-					x:Name="EqualsSection">
-				</TableSection>
-			</TableView>
+			x:Name="ChangingStack"
+			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
+			<ScrollView
+				IsClippedToBounds="true">
+				<StackLayout
+					x:Name="Content"
+					Spacing="0">
+					<TableView
+						RowHeight="44"
+						Margin="0,0,0,-40"
+						Intent="Form"
+						x:Name="Table">
+						<TableView.BackgroundColor>
+							<OnPlatform
+								x:TypeArguments="Color"
+								Android="#EEE" />
+						</TableView.BackgroundColor>
+						<TableSection
+							Title="{i18N:Translate Accounts}"
+							x:Name="AccountSection">
+						</TableSection>
+					</TableView>
+				</StackLayout>
+			</ScrollView>
 		</components:ChangingStackLayout>
 	</ContentPage.Content>
 </ContentPage>

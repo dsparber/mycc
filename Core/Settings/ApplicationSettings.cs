@@ -111,32 +111,90 @@ namespace MyCryptos.Core.settings
 
 		public static List<Currency.Model.Currency> AllReferenceCurrencies => MainReferenceCurrencies.Concat(FurtherReferenceCurrencies).ToList();
 
-		public static SortOrder SortOrder
+		public static SortOrder SortOrderTable
 		{
 			get
 			{
 				var defaultValue = SortOrder.Alphabetical;
-				var stringValue = Settings.Get(Settings.KeySortOrder, defaultValue.ToString());
+				var stringValue = Settings.Get(Settings.KeySortOrderTable, defaultValue.ToString());
 				var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
 				return enumValue;
 			}
 			set
 			{
-				Settings.Set(Settings.KeySortOrder, value.ToString());
+				Settings.Set(Settings.KeySortOrderTable, value.ToString());
 			}
 		}
 
-		public static SortDirection SortDirection
+		public static SortDirection SortDirectionTable
 		{
 			get
 			{
 				var defaultValue = SortDirection.Ascending.ToString();
-				var stringValue = Settings.Get(Settings.KeySortDirection, defaultValue);
+				var stringValue = Settings.Get(Settings.KeySortDirectionTable, defaultValue);
 				return (SortDirection)Enum.Parse(typeof(SortDirection), stringValue);
 			}
 			set
 			{
-				Settings.Set(Settings.KeySortDirection, value.ToString());
+				Settings.Set(Settings.KeySortDirectionTable, value.ToString());
+			}
+		}
+
+		public static SortOrder SortOrderRates
+		{
+			get
+			{
+				var defaultValue = SortOrder.Alphabetical;
+				var stringValue = Settings.Get(Settings.KeySortOrderRates, defaultValue.ToString());
+				var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
+				return enumValue;
+			}
+			set
+			{
+				Settings.Set(Settings.KeySortOrderRates, value.ToString());
+			}
+		}
+
+		public static SortDirection SortDirectionRates
+		{
+			get
+			{
+				var defaultValue = SortDirection.Ascending.ToString();
+				var stringValue = Settings.Get(Settings.KeySortDirectionRates, defaultValue);
+				return (SortDirection)Enum.Parse(typeof(SortDirection), stringValue);
+			}
+			set
+			{
+				Settings.Set(Settings.KeySortDirectionRates, value.ToString());
+			}
+		}
+
+		public static SortOrder SortOrderReferenceValues
+		{
+			get
+			{
+				var defaultValue = SortOrder.Alphabetical;
+				var stringValue = Settings.Get(Settings.KeySortOrderReferenceValues, defaultValue.ToString());
+				var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
+				return enumValue;
+			}
+			set
+			{
+				Settings.Set(Settings.KeySortOrderReferenceValues, value.ToString());
+			}
+		}
+
+		public static SortDirection SortDirectionReferenceValues
+		{
+			get
+			{
+				var defaultValue = SortDirection.Ascending.ToString();
+				var stringValue = Settings.Get(Settings.KeySortDirectionReferenceValues, defaultValue);
+				return (SortDirection)Enum.Parse(typeof(SortDirection), stringValue);
+			}
+			set
+			{
+				Settings.Set(Settings.KeySortDirectionReferenceValues, value.ToString());
 			}
 		}
 
