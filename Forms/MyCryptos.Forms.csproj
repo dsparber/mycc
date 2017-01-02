@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="view\components\RatesTableComponent.cs" />
     <Compile Include="view\components\ReferenceCurrenciesView.cs" />
+    <Compile Include="view\components\AccountsTableComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

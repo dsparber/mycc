@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Tasks;
 using MyCryptos.Forms.view.components;
-using MyCryptos.Forms.view.components.cells;
 using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.pages

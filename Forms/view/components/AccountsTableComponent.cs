@@ -6,14 +6,14 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using constants;
 using MyCryptos.Core.Account.Models.Base;
+using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.Currency.Model;
-using MyCryptos.Core.ExchangeRate.Helpers;
-using MyCryptos.Core.ExchangeRate.Model;
 using MyCryptos.Core.Resources;
 using MyCryptos.Core.settings;
 using MyCryptos.Core.Types;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
+using MyCryptos.Forms.view.pages;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
 using XLabs.Ioc;
@@ -22,15 +22,15 @@ using XLabs.Serialization.JsonNET;
 
 namespace MyCryptos.Forms.view.components
 {
-	public class ReferenceCurrenciesView : ContentView
+	public class AccountsTableComponent : ContentView
 	{
 		private readonly HybridWebView webView;
+		private Currency _currency;
 		private bool appeared;
-		private Money referenceMoney;
 
-		public ReferenceCurrenciesView(Money reference)
+		public AccountsTableComponent(INavigation navigation, Currency currency)
 		{
-			referenceMoney = reference;
+			_currency = currency;
 
 			var resolverContainer = new SimpleContainer();
 
@@ -40,9 +40,16 @@ namespace MyCryptos.Forms.view.components
 			{
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				VerticalOptions = LayoutOptions.FillAndExpand,
-				BackgroundColor = AppConstants.TableBackgroundColor,
+				BackgroundColor = Color.White,
 				HeightRequest = 0
 			};
+			webView.RegisterCallback("Callback", idString =>
+			{
+				var id = int.Parse(idString);
+				var account = AccountStorage.Instance.AllElements.Find(a => a.Id.Equals(id));
+
+				Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(account)));
+			});
 
 			webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
 			{
@@ -54,45 +61,39 @@ namespace MyCryptos.Forms.view.components
 			{
 				SortOrder value;
 				var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
-				if (clickedSortOrder != SortOrder.None)
+				if (clickedSortOrder == ApplicationSettings.SortOrderAccounts)
 				{
-					if (clickedSortOrder == ApplicationSettings.SortOrderReferenceValues)
-					{
-						ApplicationSettings.SortDirectionReferenceValues = ApplicationSettings.SortDirectionReferenceValues == SortDirection.Ascending
-							? SortDirection.Descending
-							: SortDirection.Ascending;
-					}
-					ApplicationSettings.SortOrderReferenceValues = clickedSortOrder;
-
-					UpdateView();
+					ApplicationSettings.SortDirectionAccounts = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending
+						? SortDirection.Descending
+						: SortDirection.Ascending;
 				}
+				ApplicationSettings.SortOrderAccounts = clickedSortOrder;
+
+				UpdateView();
 			});
 
-			var label = string.Format(I18N.IsEqualTo, referenceMoney.ToString());
+			var label = I18N.Accounts;
 
 			var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-			stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? label.ToUpper() : label, HorizontalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(8, 24, 8, 8), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
+			stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? label.ToUpper() : label, VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.Start, Margin = new Thickness(8, 24, 8, 8), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
 			stack.Children.Add(webView);
 
 			Content = stack;
 
 			UpdateView();
 
-			Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
 			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
-
-			Messaging.RatesPageCurrency.SubscribeValueChanged(this, UpdateView);
-			Messaging.Loading.SubscribeFinished(this, UpdateView);
+			Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
 		}
 
 		public void OnAppearing()
 		{
-
 			if (!appeared)
 			{
 				appeared = true;
-				webView.LoadFromContent("Html/equalsTable.html");
+				webView.LoadFromContent("Html/accountsTable.html");
+
 				Task.Delay(200).ContinueWith(t => UpdateView());
 				Task.Delay(500).ContinueWith(t => UpdateView());
 				Task.Delay(1000).ContinueWith(t => UpdateView());
@@ -106,25 +107,25 @@ namespace MyCryptos.Forms.view.components
 		{
 			try
 			{
-				var items = ApplicationSettings.AllReferenceCurrencies.Select(c => new Data(referenceMoney, c)).ToList();
+				var items = AccountStorage.AccountsWithCurrency(_currency).Select(a => new Data(a)).ToList();
 				var itemsExisting = (items.Count > 0);
 
 				if (!itemsExisting || !appeared) return;
 
 				Func<Data, object> sortLambda;
-				switch (ApplicationSettings.SortOrderReferenceValues)
+				switch (ApplicationSettings.SortOrderAccounts)
 				{
-					case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
-					case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("< ", string.Empty)); break;
-					case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Amount.Replace("< ", string.Empty)); break;
+					case SortOrder.Alphabetical: sortLambda = d => d.Name; break;
+					case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("<", "").Trim()); break;
+					case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Amount.Replace("<", "").Trim()); break;
 					case SortOrder.None: sortLambda = d => 1; break;
 					default: sortLambda = d => 1; break;
 				}
 
-				items = ApplicationSettings.SortDirectionReferenceValues == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
+				items = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
 				webView.CallJsFunction("setHeader", new[]{
-					new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
+					new HeaderData(I18N.Label, SortOrder.Alphabetical.ToString()),
 					new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
 				}, string.Empty);
 				webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
@@ -141,18 +142,17 @@ namespace MyCryptos.Forms.view.components
 		public class Data
 		{
 			[DataMember]
+			public readonly string Name;
+			[DataMember]
 			public readonly string Amount;
 			[DataMember]
-			public readonly string Code;
+			public readonly int Id;
 
-			public Data(Money reference, Currency currency)
+			public Data(Account account)
 			{
-				var neededRate = new ExchangeRate(reference.Currency, currency);
-				var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
-
-				Code = currency.Code;
-				var money = new Money(rate.RateNotNull * reference.Amount, currency);
-				Amount = reference.Amount == 1 ? money.ToString8Digits(ApplicationSettings.RoundMoney, false) : money.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
+				Name = account.Name;
+				Amount = account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
+				Id = account.Id;
 			}
 		}
 
@@ -168,8 +168,8 @@ namespace MyCryptos.Forms.view.components
 
 			public SortData()
 			{
-				Direction = ApplicationSettings.SortDirectionReferenceValues.ToString();
-				Type = ApplicationSettings.SortOrderReferenceValues.ToString();
+				Direction = ApplicationSettings.SortDirectionAccounts.ToString();
+				Type = ApplicationSettings.SortOrderAccounts.ToString();
 			}
 
 		}

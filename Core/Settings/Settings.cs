@@ -16,10 +16,12 @@ namespace MyCryptos.Core.settings
 
 		public const string KeySortOrderTable = "sort-order-table";
 		public const string KeySortOrderRates = "sort-order-rates";
+		public const string KeySortOrderAccounts = "sort-order-accounts";
 		public const string KeySortOrderReferenceValues = "sort-order-reference";
 
 		public const string KeySortDirectionTable = "sort-direction-table";
 		public const string KeySortDirectionRates = "sort-direction-rates";
+		public const string KeySortDirectionAccounts = "sort-direction-accounts";
 		public const string KeySortDirectionReferenceValues = "sort-direction-reference";
 
 		public const string KeyAutoRefreshOnStartup = "auto-refresh-on-startup";

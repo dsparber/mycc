@@ -169,6 +169,35 @@ namespace MyCryptos.Core.settings
 			}
 		}
 
+		public static SortOrder SortOrderAccounts
+		{
+			get
+			{
+				var defaultValue = SortOrder.Alphabetical;
+				var stringValue = Settings.Get(Settings.KeySortOrderAccounts, defaultValue.ToString());
+				var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
+				return enumValue;
+			}
+			set
+			{
+				Settings.Set(Settings.KeySortOrderAccounts, value.ToString());
+			}
+		}
+
+		public static SortDirection SortDirectionAccounts
+		{
+			get
+			{
+				var defaultValue = SortDirection.Ascending.ToString();
+				var stringValue = Settings.Get(Settings.KeySortDirectionAccounts, defaultValue);
+				return (SortDirection)Enum.Parse(typeof(SortDirection), stringValue);
+			}
+			set
+			{
+				Settings.Set(Settings.KeySortDirectionAccounts, value.ToString());
+			}
+		}
+
 		public static SortOrder SortOrderReferenceValues
 		{
 			get

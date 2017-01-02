@@ -68,6 +68,13 @@ namespace MyCryptos.Forms.view.pages.settings
 		{
 			PinSettingsCell.Detail = (ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled) ? I18N.FingerprintActive : (ApplicationSettings.IsPinSet) ? I18N.PinActive : I18N.NotConfigured;
 		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+
+			SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
+		}
 	}
 }
 

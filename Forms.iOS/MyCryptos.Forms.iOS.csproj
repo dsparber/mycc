@@ -378,6 +378,9 @@
     <Content Include="Html\equalsTable.css" />
     <Content Include="Html\equalsTable.html" />
     <Content Include="Html\equalsTable.js" />
+    <Content Include="Html\accountsTable.css" />
+    <Content Include="Html\accountsTable.html" />
+    <Content Include="Html\accountsTable.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\Chart.min.js">

@@ -17,6 +17,7 @@ namespace MyCryptos.Forms.view.pages
 	public partial class CoinDetailView
 	{
 		private ReferenceCurrenciesView referenceView;
+		private AccountsTableComponent accountsView;
 
 		private IEnumerable<Tuple<FunctionalAccount, AccountRepository>> accounts;
 
@@ -35,15 +36,16 @@ namespace MyCryptos.Forms.view.pages
 			this.amount = amount;
 			Title = currency.Code;
 
-			if (amount != null)
-			{
-				Content.Children.Remove(Table);
-			}
-
 			LoadData(false);
 
+			accountsView = new AccountsTableComponent(Navigation, currency);
+			if (amount == null)
+			{
+				Content.Children.Add(accountsView);
+			}
 			referenceView = new ReferenceCurrenciesView(MoneySum);
 			Content.Children.Add(referenceView);
+
 
 			Subscribe();
 			UpdateView();
@@ -73,17 +75,7 @@ namespace MyCryptos.Forms.view.pages
 		private void UpdateView()
 		{
 			referenceView.UpdateView();
-
-			if (Content.Children.Contains(Table))
-			{
-				var cells = accounts.Select(a => new AccountViewCell(Navigation) { Account = a.Item1, Repository = a.Item2 });
-
-				Device.BeginInvokeOnMainThread(() =>
-				{
-					Table.HeightRequest = 46 * cells.Count() + 100;
-					SortHelper.ApplySortOrder(cells, AccountSection, Core.Types.SortOrder.Alphabetical, Core.Types.SortDirection.Ascending);
-				});
-			}
+			accountsView.UpdateView();
 		}
 
 		private void Subscribe()
@@ -105,7 +97,16 @@ namespace MyCryptos.Forms.view.pages
 		{
 			base.OnAppearing();
 
+			accountsView.OnAppearing();
 			referenceView.OnAppearing();
+		}
+
+		protected override void OnSizeAllocated(double width, double height)
+		{
+			base.OnSizeAllocated(width, height);
+
+			referenceView.UpdateView();
+			accountsView.UpdateView();
 		}
 	}
 }

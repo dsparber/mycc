@@ -1,26 +1,29 @@
 "use strict";
 
 var testData = [{
-    "Code": "BTC",
-    "Reference": 213.96
+    "Name": "Georg",
+    "Amount": "23,525.31",
+    "Id":1
 }, {
-    "Code": "ETH",
-    "Reference": "347,852.23"
+    "Name": "Paul",
+    "Amount": 986.24,
+    "Id":3
 }, {
-    "Code": "PVC",
-    "Reference": 478.54
+    "Name": "Josef",
+    "Amount": "45,845.78",
+    "Id":2
 }];
 
 var testColumns = [{
-    "Text": "Währung",
-    "Type": "Currency"
+    "Text": "Name",
+    "Type": "Name",
 }, {
-    "Text": "Entspricht",
-    "Type": "Value"
-}];
+    "Text": "Anzahl",
+    "Type": "Amount",
+} ];
 
 var testSort = {
-    "Type": "Currency",
+    "Type": "Name",
     "Direction": "Ascending"
 };
 
@@ -32,14 +35,13 @@ function setHeader(columns) {
     table.deleteTHead();
     var header = table.createTHead();
     var row = header.insertRow(0);
-    row.insertCell(0);
     for (var i = 0; i < columns.length; i++) {
-        var cell = row.insertCell(-1);
+        var cell = row.insertCell(i);
         cell.innerHTML = "<span>" + columns[i]["Text"] + "</span>";
         cell.setAttribute("type", columns[i]["Type"]);
         cell.onclick = headerClicked(columns[i]["Type"])
     }
-    row.insertCell(-1);
+    row.insertCell(columns.length);
 }
 
 function updateTable(data, sort) {
@@ -51,15 +53,13 @@ function updateTable(data, sort) {
 
     for (var i = 0; i < data.length; i++) {
         var row = coinTable.insertRow(i);
-        var numberCell = row.insertCell(0);
-        var codeCell = row.insertCell(1);
-        var referenceCell = row.insertCell(2);
-        row.insertCell(3); // For Arrow
-        numberCell.innerHTML = "1";
-        codeCell.innerHTML = data[i]["Code"];
-        referenceCell.innerHTML = data[i]["Reference"];
+        var nameCell = row.insertCell(0);
+        var amountCell = row.insertCell(1);
+        row.insertCell(2); // For Arrow
+        amountCell.innerHTML = data[i]["Amount"];
+        nameCell.innerHTML = data[i]["Name"];
 
-        row.onclick = rowClicked(data[i]["Code"]);
+        row.onclick = rowClicked(data[i]["Id"]);
     }
 
     $("#coinTable thead").children().removeClass();
@@ -68,20 +68,20 @@ function updateTable(data, sort) {
     sizeAllocated();
 }
 
-function rowClicked(code) {
+function rowClicked(id) {
     return function () {
-        Native("Callback", code);
+        Native("Callback", id);
     }
+}
+
+function sizeAllocated() {
+    Native("CallbackSizeAllocated", document.getElementById("coinTable").offsetHeight);
 }
 
 function headerClicked(type) {
     return function () {
         Native("HeaderClickedCallback", type);
     }
-}
-
-function sizeAllocated() {
-    Native("CallbackSizeAllocated", document.getElementById("coinTable").offsetHeight);
 }
 
 function clearTable(table) {

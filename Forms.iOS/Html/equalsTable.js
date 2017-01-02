@@ -62,6 +62,8 @@ function updateTable(data, sort) {
 
     $("#coinTable thead").children().removeClass();
     $("#coinTable td[type=" + sort["Type"] + "]").addClass((sort["Direction"] == "Ascending") ? "down" : "up");
+
+    sizeAllocated();
 }
 
 function rowClicked(code) {
@@ -74,6 +76,10 @@ function headerClicked(type) {
     return function () {
         Native("HeaderClickedCallback", type);
     }
+}
+
+function sizeAllocated() {
+    Native("CallbackSizeAllocated", document.getElementById("coinTable").offsetHeight);
 }
 
 function clearTable(table) {

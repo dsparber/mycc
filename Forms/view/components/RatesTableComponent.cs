@@ -42,13 +42,19 @@ namespace MyCryptos.Forms.view.components
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				BackgroundColor = Color.White,
-				MinimumHeightRequest = 500
+				HeightRequest = 0
 			};
 			webView.RegisterCallback("Callback", code =>
 			{
 				var currency = CurrencyStorage.Find(code);
 
 				Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinDetailView(currency, 1)));
+			});
+
+			webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
+			{
+				var size = int.Parse(sizeString);
+				Device.BeginInvokeOnMainThread(() => webView.HeightRequest = size);
 			});
 
 			webView.RegisterCallback("HeaderClickedCallback", type =>
