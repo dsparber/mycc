@@ -19,6 +19,7 @@ table {
 
 td:first-child {
     padding-left: 8px;
+    width: 1px;
 }
 
 td:first-child+td{
@@ -33,6 +34,14 @@ td:last-child {
   padding-right: 8px;
 }
 
+td div div:first-child {
+  color: #aaa;
+}
+
+td:last-child {
+  vertical-align: bottom;
+}
+
 /*tbody td:last-child {
     background-image: url('more.png');
     background-position: center center;
@@ -43,8 +52,11 @@ td:last-child {
 td {
     white-space: nowrap;
     text-align: left;
-    padding: 8px 4px;
+    padding: 4px;
     cursor: pointer;
+}
+thead td {
+  padding: 8px 4px;
 }
 
 tr:first-child {
@@ -64,7 +76,7 @@ thead td {
     padding-right: 0.35em;
 }
 
-thead td span {
+thead td:not(:first-child) span {
     display: block;
     background-image: url("upDown.svg");
     background-repeat: no-repeat;

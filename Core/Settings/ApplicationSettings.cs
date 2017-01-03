@@ -202,7 +202,7 @@ namespace MyCryptos.Core.settings
 		{
 			get
 			{
-				var defaultValue = SortOrder.Alphabetical;
+				var defaultValue = SortOrder.ByUnits;
 				var stringValue = Settings.Get(Settings.KeySortOrderReferenceValues, defaultValue.ToString());
 				var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
 				return enumValue;

@@ -20,7 +20,7 @@ namespace MyCryptos.Core.Account.Models.Base
 			{
 				throw new ArgumentNullException();
 			}
-			Amount = amount;
+			Amount = Math.Truncate(amount * 100000000) / 100000000;
 			Currency = currency;
 		}
 
@@ -47,7 +47,12 @@ namespace MyCryptos.Core.Account.Models.Base
 		/// <returns>Money object as string</returns>
 		public override string ToString()
 		{
-			return $"{Amount:#,0.########} {Currency.Code}";
+			return ToString(true);
+		}
+
+		public string ToString(bool showCurrency)
+		{
+			return $"{Amount:#,0.########}{(showCurrency ? $" {Currency.Code}" : string.Empty)}";
 		}
 
 		public string ToStringTwoDigits(bool round, bool showCurrency = true)
@@ -56,10 +61,10 @@ namespace MyCryptos.Core.Account.Models.Base
 			return $"{(round && Amount < 0.01M && Amount > 0 ? $"< {0.01}" : $"{amount:#,0.00}")}{ (showCurrency ? $" {Currency.Code}" : string.Empty)}";
 		}
 
-		public string ToString8Digits(bool round, bool showCurrency = true)
+		public string ToString8Digits(bool showCurrency = true)
 		{
-			var amount = round ? Math.Round(Amount, 8) : Math.Truncate(Amount * 100000000) / 100000000;
-			return $"{(round && Amount < 0.00000001M && Amount > 0 ? $"< {0.00000001}" : $"{amount:#,0.00000000}")}{ (showCurrency ? $" {Currency.Code}" : string.Empty)}";
+			var amount = Math.Truncate(Amount * 100000000) / 100000000;
+			return $"{amount:#,0.00000000}{(showCurrency ? $" {Currency.Code}" : string.Empty)}";
 		}
 
 		/// <summary>

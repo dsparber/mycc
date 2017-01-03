@@ -68,7 +68,7 @@ namespace MyCryptos.Forms.view.components
 				}
 			});
 
-			var label = string.Format(I18N.IsEqualTo, referenceMoney.ToString());
+			var label = I18N.EqualTo;
 
 			var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
@@ -106,7 +106,7 @@ namespace MyCryptos.Forms.view.components
 		{
 			try
 			{
-				var items = ApplicationSettings.AllReferenceCurrencies.Select(c => new Data(referenceMoney, c)).ToList();
+				var items = ApplicationSettings.AllReferenceCurrencies.Where(c => !c.Equals(referenceMoney.Currency)).Select(c => new Data(referenceMoney, c)).ToList();
 				var itemsExisting = (items.Count > 0);
 
 				if (!itemsExisting || !appeared) return;
@@ -124,8 +124,8 @@ namespace MyCryptos.Forms.view.components
 				items = ApplicationSettings.SortDirectionReferenceValues == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
 				webView.CallJsFunction("setHeader", new[]{
-					new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
-					new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
+					new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
+					new HeaderData($"{I18N.Currency[0]}.", SortOrder.Alphabetical.ToString())
 				}, string.Empty);
 				webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
 			}
@@ -144,6 +144,8 @@ namespace MyCryptos.Forms.view.components
 			public readonly string Amount;
 			[DataMember]
 			public readonly string Code;
+			[DataMember]
+			public readonly string Rate;
 
 			public Data(Money reference, Currency currency)
 			{
@@ -152,7 +154,8 @@ namespace MyCryptos.Forms.view.components
 
 				Code = currency.Code;
 				var money = new Money(rate.RateNotNull * reference.Amount, currency);
-				Amount = reference.Amount == 1 ? money.ToString8Digits(ApplicationSettings.RoundMoney, false) : money.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
+				Amount = money.ToString8Digits(false);
+				Rate = new Money(rate.RateNotNull, currency).ToString8Digits(false);
 			}
 		}
 

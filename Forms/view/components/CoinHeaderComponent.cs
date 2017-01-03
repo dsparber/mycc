@@ -27,6 +27,7 @@ namespace MyCryptos.Forms.view.components
 		public CoinHeaderComponent(FunctionalAccount account) : this()
 		{
 			this.account = account;
+			currency = account.Money.Currency;
 			useOnlyThisCurrency = true;
 
 			UpdateView();
@@ -77,7 +78,7 @@ namespace MyCryptos.Forms.view.components
 			{
 				infoTexts[0] = PluralHelper.GetTextCoins(amountDifferentCurrencies);
 			}
-			infoTexts[1] = string.Join(" / ", ApplicationSettings.MainReferenceCurrencies
+			infoTexts[1] = useOnlyThisCurrency ? currency?.Name : string.Join(" / ", ApplicationSettings.MainReferenceCurrencies
 									   .Where(c => !c.Equals(currency))
 									   .Select(c => (amount != null ? new Money(ExchangeRateHelper.GetRate(CoinSum.Currency, c)?.RateNotNull ?? 0, c)
 													 : (useOnlyThisCurrency ? CoinSumAs(c)
@@ -87,7 +88,7 @@ namespace MyCryptos.Forms.view.components
 
 			Device.BeginInvokeOnMainThread(() =>
 			{
-				TitleText = useOnlyThisCurrency ? sum.ToString() : sum.ToStringTwoDigits(ApplicationSettings.RoundMoney);
+				TitleText = useOnlyThisCurrency ? sum.ToString(false) : sum.ToStringTwoDigits(ApplicationSettings.RoundMoney);
 				InfoText = infoTexts[currentInfoText];
 
 				if (isLoading.HasValue)
