@@ -26,13 +26,9 @@ namespace MyCryptos.Forms.view.pages.settings
 			ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies);
 			SourcesCell.Tapped += (sender, e) => Navigation.PushAsync(new SourcesView());
 			SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
+			RatesCell.Tapped += (sender, e) => Navigation.PushAsync(new WatchedCurrenciesSettingsView());
+			RatesCell.Detail = string.Join(", ", ApplicationSettings.WatchedCurrencies);
 			SetPinCellText();
-
-			Messaging.Pin.SubscribeValueChanged(this, SetPinCellText);
-			Messaging.DefaultView.SubscribeValueChanged(this, SetDefaultPageCellText);
-			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, () => ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies));
-			Messaging.UpdatingAccounts.SubscribeFinished(this, () => SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count));
-			Messaging.Loading.SubscribeFinished(this, () => SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count));
 		}
 
 		private void SetDefaultPageCellText()
@@ -74,6 +70,10 @@ namespace MyCryptos.Forms.view.pages.settings
 			base.OnAppearing();
 
 			SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
+			RatesCell.Detail = string.Join(", ", ApplicationSettings.WatchedCurrencies);
+			ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies);
+			SetDefaultPageCellText();
+			SetPinCellText();
 		}
 	}
 }

@@ -26,9 +26,9 @@ namespace MyCryptos.Core.settings
 
 		public const string KeyAutoRefreshOnStartup = "auto-refresh-on-startup";
 
-		public const string KeyMainReferenceCurrencies = "main-reference-currencies";
-
-		public const string KeyFurtherReferenceCurrencies = "further-reference-currencies";
+		public const string KeyWatchedCurrencies = "watched-currencies";
+		public const string KeyMainCurrencies = "main-currencies";
+		public const string KeyFurtherCurrencies = "further-currencies";
 
 		public const string KeyPin = "pin";
 

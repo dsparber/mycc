@@ -133,6 +133,9 @@
     <Compile Include="view\components\RatesTableComponent.cs" />
     <Compile Include="view\components\ReferenceCurrenciesView.cs" />
     <Compile Include="view\components\AccountsTableComponent.cs" />
+    <Compile Include="view\pages\settings\WatchedCurrenciesSettingsView.xaml.cs">
+      <DependentUpon>WatchedCurrenciesSettingsView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -167,6 +170,10 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType></SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\pages\settings\WatchedCurrenciesSettingsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

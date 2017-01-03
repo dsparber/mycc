@@ -27,7 +27,7 @@ namespace MyCryptos.Forms.view.pages.settings
 			var mainCurrencyCells = new List<CustomViewCell>();
 			var furtherCurrencyCells = new List<CustomViewCell>();
 
-			var mainCurrencies = new List<Currency>(ApplicationSettings.MainReferenceCurrencies);
+			var mainCurrencies = new List<Currency>(ApplicationSettings.MainCurrencies);
 
 			foreach (var c in mainCurrencies)
 			{
@@ -43,7 +43,7 @@ namespace MyCryptos.Forms.view.pages.settings
 						ApplicationSettings.BaseCurrency = mainCurrencies[0];
 						Messaging.ReferenceCurrency.SendValueChanged();
 					}
-					ApplicationSettings.MainReferenceCurrencies = mainCurrencies;
+					ApplicationSettings.MainCurrencies = mainCurrencies;
 					Messaging.ReferenceCurrencies.SendValueChanged();
 					SetReferenceCurrencyCells();
 				};
@@ -63,7 +63,7 @@ namespace MyCryptos.Forms.view.pages.settings
 				mainCurrencyCells.Add(cell);
 			}
 
-			var furtherCurrencies = new List<Currency>(ApplicationSettings.FurtherReferenceCurrencies);
+			var furtherCurrencies = new List<Currency>(ApplicationSettings.FurtherCurrencies);
 
 			foreach (var c in furtherCurrencies)
 			{
@@ -74,7 +74,7 @@ namespace MyCryptos.Forms.view.pages.settings
 				{
 					var cu = (e as TappedEventArgs)?.Parameter as Currency;
 					furtherCurrencies.Remove(cu);
-					ApplicationSettings.FurtherReferenceCurrencies = furtherCurrencies;
+					ApplicationSettings.FurtherCurrencies = furtherCurrencies;
 					Messaging.ReferenceCurrencies.SendValueChanged();
 					SetReferenceCurrencyCells();
 				};
@@ -106,7 +106,7 @@ namespace MyCryptos.Forms.view.pages.settings
 					CurrencySelected = (c) =>
 					{
 						mainCurrencies.Add(c);
-						ApplicationSettings.MainReferenceCurrencies = mainCurrencies;
+						ApplicationSettings.MainCurrencies = mainCurrencies;
 						Messaging.ReferenceCurrencies.SendValueChanged();
 						SetReferenceCurrencyCells();
 					}
@@ -127,7 +127,7 @@ namespace MyCryptos.Forms.view.pages.settings
 					CurrencySelected = (c) =>
 					{
 						furtherCurrencies.Add(c);
-						ApplicationSettings.FurtherReferenceCurrencies = furtherCurrencies;
+						ApplicationSettings.FurtherCurrencies = furtherCurrencies;
 						Messaging.ReferenceCurrencies.SendValueChanged();
 						SetReferenceCurrencyCells();
 					}

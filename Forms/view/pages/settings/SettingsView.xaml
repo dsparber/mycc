@@ -27,6 +27,10 @@
 						Text="{i18N:Translate Sources}"
 						x:Name="SourcesCell"
 						Image="more.png" />
+					<components:CustomViewCell
+						Text="{i18N:Translate Rates}"
+						x:Name="RatesCell"
+						Image="more.png" />
 				</TableSection>
 				<TableSection
 					Title="{i18N:Translate General}">

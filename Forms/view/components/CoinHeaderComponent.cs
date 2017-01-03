@@ -35,6 +35,16 @@ namespace MyCryptos.Forms.view.components
 			UpdateView();
 		}
 
+		protected override void OnSizeAllocated(double width, double height)
+		{
+			base.OnSizeAllocated(width, height);
+
+			if (infoTexts != null && infoTexts.Count >= currentInfoText)
+			{
+				InfoText = infoTexts[currentInfoText];
+			}
+		}
+
 		public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false, decimal? amount = null) : this()
 		{
 			this.currency = currency ?? ApplicationSettings.BaseCurrency;
@@ -66,7 +76,7 @@ namespace MyCryptos.Forms.view.components
 
 			if (amount != null)
 			{
-				infoTexts[0] = string.Empty;
+				infoTexts[0] = currency.Name;
 			}
 			else if (account != null)
 			{
@@ -80,7 +90,7 @@ namespace MyCryptos.Forms.view.components
 			{
 				infoTexts[0] = PluralHelper.GetTextCoins(amountDifferentCurrencies);
 			}
-			infoTexts[1] = useOnlyThisCurrency ? currency?.Name : string.Join(" / ", ApplicationSettings.MainReferenceCurrencies
+			infoTexts[1] = (useOnlyThisCurrency && amount == null) ? currency?.Name : string.Join(" / ", ApplicationSettings.MainCurrencies
 									   .Where(c => !c.Equals(currency))
 									   .Select(c => (amount != null ? new Money(ExchangeRateHelper.GetRate(CoinSum.Currency, c)?.RateNotNull ?? 0, c)
 													 : (useOnlyThisCurrency ? CoinSumAs(c)
@@ -90,7 +100,7 @@ namespace MyCryptos.Forms.view.components
 
 			Device.BeginInvokeOnMainThread(() =>
 			{
-				if (useOnlyThisCurrency)
+				if (useOnlyThisCurrency && amount == null)
 				{
 					var s = sum.ToString(false);
 					var beforeDecimal = new Money(Math.Truncate(sum.Amount), sum.Currency).ToString(false);
@@ -103,6 +113,10 @@ namespace MyCryptos.Forms.view.components
 					i = i > s.Length ? s.Length : i;
 					TitleText = s.Substring(0, i);
 					TitleTextSmall = s.Substring(i);
+				}
+				else if (amount != null)
+				{
+					TitleText = sum.ToString();
 				}
 				else {
 					TitleText = sum.ToStringTwoDigits(ApplicationSettings.RoundMoney);

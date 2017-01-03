@@ -44,7 +44,7 @@ namespace MyCryptos.Forms.view.pages
 
 		private void PositionSelected(object sender, EventArgs e)
 		{
-			var currencies = ApplicationSettings.MainReferenceCurrencies;
+			var currencies = ApplicationSettings.MainCurrencies;
 
 			ApplicationSettings.SelectedRatePageCurrency = currencies[HeaderCarousel.Position];
 			Messaging.RatesPageCurrency.SendValueChanged();
@@ -52,8 +52,8 @@ namespace MyCryptos.Forms.view.pages
 
 		private void SetHeaderCarousel()
 		{
-			HeaderCarousel.ItemsSource = ApplicationSettings.MainReferenceCurrencies.ToList();
-			HeaderCarousel.Position = ApplicationSettings.MainReferenceCurrencies.IndexOf(ApplicationSettings.SelectedRatePageCurrency);
+			HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
+			HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.SelectedRatePageCurrency);
 			if (HeaderCarousel.ItemTemplate != null) return;
 
 			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
@@ -95,7 +95,7 @@ namespace MyCryptos.Forms.view.pages
 				Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => isUpdatingExchangeRates = true, () => isUpdatingExchangeRates = false);
 			}
 
-			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new HeaderView(true) { IsLoading = isUpdatingExchangeRates, TitleText = ((Currency)item).Code, InfoText = ((Currency)item).Name });
+			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent(((Currency)item), false, 1) { IsLoading = isUpdatingExchangeRates });
 		}
 	}
 }

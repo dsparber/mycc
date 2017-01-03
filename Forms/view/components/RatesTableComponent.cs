@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using constants;
 using MyCryptos.Core.Account.Models.Base;
+using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.Currency.Model;
 using MyCryptos.Core.Currency.Storage;
 using MyCryptos.Core.ExchangeRate.Helpers;
@@ -87,9 +88,8 @@ namespace MyCryptos.Forms.view.components
 				HorizontalOptions = LayoutOptions.FillAndExpand
 			};
 			stack.Children.Add(noDataLabel);
-			stack.Children.Add(webView);
+			stack.Children.Add(new ScrollView { Content = webView, IsClippedToBounds = true });
 			Content = stack;
-			HeightRequest = 500;
 
 			UpdateView();
 
@@ -115,7 +115,11 @@ namespace MyCryptos.Forms.view.components
 		{
 			try
 			{
-				var items = ApplicationSettings.AllReferenceCurrencies.Select(c => new Data(c)).ToList();
+				var items = AccountStorage.UsedCurrencies
+							  .Concat(ApplicationSettings.WatchedCurrencies).Distinct()
+							  .Where(c => !c.Equals(ApplicationSettings.SelectedRatePageCurrency))
+							  .Select(c => new Data(c)).ToList();
+
 				var itemsExisting = (items.Count > 0);
 
 				Device.BeginInvokeOnMainThread(() =>
@@ -140,7 +144,7 @@ namespace MyCryptos.Forms.view.components
 
 				webView.CallJsFunction("setHeader", new[]{
 					new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
-					new HeaderData(I18N.EqualTo, SortOrder.ByValue.ToString())
+					new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.SelectedRatePageCurrency), SortOrder.ByValue.ToString())
 				}, string.Empty);
 				webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
 			}
