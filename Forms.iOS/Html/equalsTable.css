@@ -38,6 +38,10 @@ td div div:first-child {
   color: #aaa;
 }
 
+td div div span:last-child {
+    font-size: 9pt;
+}
+
 td:last-child {
   vertical-align: bottom;
 }

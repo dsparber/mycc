@@ -1,5 +1,4 @@
-﻿using System;
-using MyCryptos.Forms.helpers;
+﻿using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using Xamarin.Forms;
 
@@ -8,20 +7,31 @@ namespace MyCryptos.view.components
 	public partial class HeaderView
 	{
 		private double defaultSize = 36;
+		private double defaultSizeSmall = 24;
 
 		public string TitleText
 		{
-			private get { return TitleLabel.Text; }
+			private get { return TitleLabel.Text ?? string.Empty; }
 			set
 			{
 				TitleLabel.Text = GetText(value);
-				AdaptSize(GetText(value));
+				AdaptSize();
+			}
+		}
+
+		public string TitleTextSmall
+		{
+			private get { return TitleLabelSmall.Text ?? string.Empty; }
+			set
+			{
+				TitleLabelSmall.Text = GetText(value);
+				AdaptSize();
 			}
 		}
 
 		public string InfoText
 		{
-			private get { return InfoLabel.Text; }
+			private get { return InfoLabel.Text ?? string.Empty; }
 			set
 			{
 				InfoLabel.Text = GetText(value);
@@ -72,7 +82,7 @@ namespace MyCryptos.view.components
 			InfoText = InfoText;
 			LoadingText = LoadingText;
 
-			Messaging.Layout.SubscribeValueChanged(this, () => AdaptSize(TitleText));
+			Messaging.Layout.SubscribeValueChanged(this, AdaptSize);
 		}
 
 		private static string GetText(string text)
@@ -81,20 +91,23 @@ namespace MyCryptos.view.components
 			return string.IsNullOrEmpty(text) ? " " : text;
 		}
 
-		void AdaptSize(string text)
+		void AdaptSize()
 		{
 			var size = (float?)defaultSize + 0.25f;
+			var sizeSmall = (float?)defaultSizeSmall + 0.25f;
 			double width = 0, availableWidth = 0;
 
 			do
 			{
-				size -= 0.25f;
-				width = DependencyService.Get<ITextSizeHelper>().CalculateWidth(text, size, true).Item2;
+				size -= 0.25f; sizeSmall -= 0.25f;
+				width = DependencyService.Get<ITextSizeHelper>().CalculateWidth(TitleText, size, true).Item2
+						+ DependencyService.Get<ITextSizeHelper>().CalculateWidth(TitleTextSmall, sizeSmall, true).Item2;
 				availableWidth = Width - 40;
 
 			} while (availableWidth > 0 && width > availableWidth);
 
 			TitleLabel.FontSize = (double)size;
+			TitleLabelSmall.FontSize = (double)sizeSmall;
 		}
 	}
 }

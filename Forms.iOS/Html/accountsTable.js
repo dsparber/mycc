@@ -6,7 +6,7 @@ var testData = [{
     "Id":1
 }, {
     "Name": "Paul",
-    "Amount": 986.24,
+    "Amount": "986.24",
     "Id":3
 }, {
     "Name": "Josef",
@@ -56,7 +56,7 @@ function updateTable(data, sort) {
         var nameCell = row.insertCell(0);
         var amountCell = row.insertCell(1);
         row.insertCell(2); // For Arrow
-        amountCell.innerHTML = data[i]["Amount"];
+        amountCell.innerHTML = "<span>"+data[i]["Amount"].substring(0,data[i]["Amount"].length-5)+"</span><span>"+data[i]["Amount"].substring(data[i]["Amount"].length-5)+"</span>";
         nameCell.innerHTML = data[i]["Name"];
 
         row.onclick = rowClicked(data[i]["Id"]);

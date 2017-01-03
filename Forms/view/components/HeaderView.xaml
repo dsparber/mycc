@@ -13,15 +13,26 @@
 			Margin="10,10,10,20"
 			VerticalOptions="CenterAndExpand"
 			HorizontalOptions="CenterAndExpand">
-			<Label
-				x:Name="TitleLabel"
-				FontSize="36"
-				Margin="5,0,5,0"
-				FontAttributes="Bold"
-				HorizontalTextAlignment="Center"
-				TextColor="White"
-				LineBreakMode="TailTruncation"
-				WidthRequest="1000" />
+			<StackLayout
+				Orientation="Horizontal"
+				HorizontalOptions="CenterAndExpand"
+				Spacing="0"
+				Margin="5,0,5,0">
+				<Label
+					x:Name="TitleLabel"
+					FontSize="36"
+					FontAttributes="Bold"
+					TextColor="White"
+					LineBreakMode="TailTruncation" />
+				<Label
+					x:Name="TitleLabelSmall"
+					Margin="0,0,0,3"
+					VerticalOptions="End"
+					FontSize="24"
+					FontAttributes="Bold"
+					TextColor="White"
+					LineBreakMode="TailTruncation" />
+			</StackLayout>
 			<Label
 				HorizontalOptions="FillAndExpand"
 				x:Name="InfoLabel"

@@ -151,7 +151,7 @@ namespace MyCryptos.Forms.view.components
 			public Data(Account account)
 			{
 				Name = account.Name;
-				Amount = account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
+				Amount = account.Money.ToString8Digits(false);
 				Id = account.Id;
 			}
 		}

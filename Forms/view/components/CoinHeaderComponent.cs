@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Storage;
@@ -88,7 +90,24 @@ namespace MyCryptos.Forms.view.components
 
 			Device.BeginInvokeOnMainThread(() =>
 			{
-				TitleText = useOnlyThisCurrency ? sum.ToString(false) : sum.ToStringTwoDigits(ApplicationSettings.RoundMoney);
+				if (useOnlyThisCurrency)
+				{
+					var s = sum.ToString(false);
+					var beforeDecimal = new Money(Math.Truncate(sum.Amount), sum.Currency).ToString(false);
+					var decimals = s.Remove(0, beforeDecimal.Length);
+					var i1 = decimals.IndexOf(".", StringComparison.CurrentCulture);
+					var i2 = decimals.IndexOf(",", StringComparison.CurrentCulture);
+					var i = i1 > i2 ? i1 : i2;
+					i = i == -1 ? s.Length : i;
+					i += 4 + beforeDecimal.Length;
+					i = i > s.Length ? s.Length : i;
+					TitleText = s.Substring(0, i);
+					TitleTextSmall = s.Substring(i);
+				}
+				else {
+					TitleText = sum.ToStringTwoDigits(ApplicationSettings.RoundMoney);
+				}
+
 				InfoText = infoTexts[currentInfoText];
 
 				if (isLoading.HasValue)

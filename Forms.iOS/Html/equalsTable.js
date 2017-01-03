@@ -1,15 +1,15 @@
 "use strict";
 
 var testData = [{
-    "Amount": "750.45",
+    "Amount": "750.12345678",
     "Code": "EUR",
     "Rate": "0,12345678"
 }, {
-  "Amount": "850.45",
+  "Amount": "850.12345678",
   "Code": "USD",
   "Rate": "0,12345678"
 }, {
-  "Amount": "325750.45",
+  "Amount": "325750.12345678",
   "Code": "DOGE",
   "Rate": "0,12345678"
 }];
@@ -57,7 +57,7 @@ function updateTable(data, sort) {
         var amountCell = row.insertCell(1);
         var codeCell = row.insertCell(2);
         xCell.innerHTML = "<div><div>x</div><div>=</div></div>";
-        amountCell.innerHTML = "<div><div>"+data[i]["Rate"]+"</div><div>"+data[i]["Amount"]+"</div></div>";
+        amountCell.innerHTML = "<div><div><span>"+data[i]["Rate"].substring(0,data[i]["Rate"].length-5)+"</span><span>"+data[i]["Rate"].substring(data[i]["Rate"].length-5)+"</span></div><div><span>"+data[i]["Amount"].substring(0,data[i]["Amount"].length-5)+"</span><span>"+data[i]["Amount"].substring(data[i]["Amount"].length-5)+"</span></div></div>";
         codeCell.innerHTML = "<div>"+data[i]["Code"]+"</div>";
 
         row.onclick = rowClicked(data[i]["Code"]);
