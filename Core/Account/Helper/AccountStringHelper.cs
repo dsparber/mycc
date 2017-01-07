@@ -11,7 +11,7 @@ namespace MyCryptos.Core.Account.Helper
 		{
 			var i1 = Math.Max(0, qrCodeText.IndexOf(':') + 1);
 			var i2 = qrCodeText.IndexOf('?');
-			i2 = i2 > 0 ? i2 - 1 : qrCodeText.Length;
+			i2 = i2 > 0 ? i2 : qrCodeText.Length;
 
 			var address = qrCodeText.Substring(i1, i2 - i1);
 			var currencyString = i1 != 0 ? qrCodeText.Split(':')[0] : null;
