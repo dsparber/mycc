@@ -894,4 +894,9 @@
 		xml:space="preserve">
     <value>{0} is equal to</value>
   </data>
+	<data
+		name="AddressOrXpub"
+		xml:space="preserve">
+    <value>Address / Xpub</value>
+  </data>
 </root>

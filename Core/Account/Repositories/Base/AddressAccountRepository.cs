@@ -12,6 +12,7 @@ namespace MyCryptos.Core.Account.Repositories.Base
 	{
 		public string Address;
 		protected virtual decimal BalanceFactor => 1;
+		protected virtual HttpContent PostContent => null;
 
 		protected abstract Uri Url { get; }
 		protected abstract Func<string, decimal> Balance { get; }
@@ -34,8 +35,14 @@ namespace MyCryptos.Core.Account.Repositories.Base
 		async Task<decimal?> getBalance()
 		{
 			var uri = Url;
-
-			var response = await client.GetAsync(uri);
+			HttpResponseMessage response;
+			if (PostContent == null)
+			{
+				response = await client.GetAsync(uri);
+			}
+			else {
+				response = await client.PostAsync(uri, PostContent);
+			}
 
 			if (response.IsSuccessStatusCode)
 			{

@@ -35,15 +35,15 @@ namespace MyCryptos.Forms.view.addsource
 			supportedCurrencies = availableRepositories.SelectMany(a => a(null, null, null).SupportedCurrencies);
 
 			currencyEntryCell = new CurrencyEntryCell(navigation) { IsAmountEnabled = false, CurrenciesToSelect = supportedCurrencies, IsFormRepresentation = true };
-			addressEntryCell = new CustomEntryCell { Title = I18N.Address, Placeholder = I18N.Address };
+			addressEntryCell = new CustomEntryCell { Title = I18N.Address, Placeholder = I18N.AddressOrXpub };
 			var scanActionCell = new CustomViewCell { Text = I18N.ScanQrCode, IsActionCell = true, IsCentered = true };
 
 			var sectionQr = new TableSection();
 			var sectionInfo = new TableSection { Title = I18N.AccountInformation };
 
 			sectionQr.Add(scanActionCell);
-			sectionInfo.Add(currencyEntryCell);
 			sectionInfo.Add(addressEntryCell);
+			sectionInfo.Add(currencyEntryCell);
 
 			sections = new List<TableSection> { sectionQr, sectionInfo };
 
@@ -94,8 +94,11 @@ namespace MyCryptos.Forms.view.addsource
 			var coin = currencyEntryCell.SelectedCurrency;
 			var address = addressEntryCell.Text ?? string.Empty;
 
-			var repository = availableRepositories.Select(a => a(name, coin, address)).FirstOrDefault(r => r.SupportedCurrencies.Contains(coin));
-			return repository;
+			if (Currency.Btc.Equals(coin) && address.StartsWith("xpub", StringComparison.CurrentCultureIgnoreCase))
+			{
+				return new BlockchainXpubAccountRepository(default(int), name, address);
+			}
+			return availableRepositories.Select(a => a(name, coin, address)).FirstOrDefault(r => r.SupportedCurrencies.Contains(coin));
 		}
 
 		public override bool Enabled

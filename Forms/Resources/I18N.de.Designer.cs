@@ -910,5 +910,11 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("IsEqualTo", resourceCulture);
             }
         }
+        
+        internal static string AddressOrXpub {
+            get {
+                return ResourceManager.GetString("AddressOrXpub", resourceCulture);
+            }
+        }
     }
 }

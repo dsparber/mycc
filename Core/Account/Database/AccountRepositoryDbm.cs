@@ -16,6 +16,7 @@ namespace MyCryptos.Core.Account.Database
 		public const int DB_TYPE_BLOCKCHAIN_REPOSITORY = 4;
 		public const int DB_TYPE_ETHEREUM_REPOSITORY = 5;
 		public const int DB_TYPE_CRYPTOID_REPOSITORY = 6;
+		public const int DB_TYPE_BLOCKCHAIN_XPUB_REPOSITORY = 7;
 
 		[PrimaryKey, AutoIncrement, Column("_id")]
 		public int Id { get; set; }
@@ -68,6 +69,7 @@ namespace MyCryptos.Core.Account.Database
 					case DB_TYPE_BLOCKCHAIN_REPOSITORY: return new BlockchainAccountRepository(Id, Name, Data);
 					case DB_TYPE_ETHEREUM_REPOSITORY: return new EthereumAccountRepository(Id, Name, Data);
 					case DB_TYPE_CRYPTOID_REPOSITORY: return new CryptoIdAccountRepository(Id, Name, Data);
+					case DB_TYPE_BLOCKCHAIN_XPUB_REPOSITORY: return new BlockchainXpubAccountRepository(Id, Name, Data);
 					default: throw new NotSupportedException();
 				}
 			});
