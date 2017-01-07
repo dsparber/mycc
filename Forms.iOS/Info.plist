@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>MyCryptos</string>
+	<string>MyCC</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.danielsparber.MyCryptos</string>
+	<string>com.sparber.mycc</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -41,7 +41,7 @@
 	<key>XSAppIconAssets</key>
 	<string>Resources/Images.xcassets/AppIcons.appiconset</string>
 	<key>CFBundleName</key>
-	<string>MyCryptos</string>
+	<string>MyCC</string>
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>de</string>

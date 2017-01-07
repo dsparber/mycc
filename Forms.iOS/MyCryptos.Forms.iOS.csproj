@@ -41,9 +41,9 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchFloat32>True</MtouchFloat32>
     <MtouchUseSGen>True</MtouchUseSGen>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution</CodesignKey>
     <MtouchUseRefCounting>True</MtouchUseRefCounting>
-    <CodesignProvision>e209da28-2e7a-4613-b0af-31658720221c</CodesignProvision>
+    <CodesignProvision>Automatic:AppStore</CodesignProvision>
     <MtouchSdkVersion>10.1</MtouchSdkVersion>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>False</MtouchDebug>

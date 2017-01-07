@@ -207,7 +207,7 @@
 				TargetAttributes = {
 					6547C7DB1D8574820016C588 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = GAH6QW97Q6;
+						DevelopmentTeam = SQF382NLPQ;
 					};
 					6547C7F41D8574820016C588 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -421,10 +421,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = GAH6QW97Q6;
+				DEVELOPMENT_TEAM = SQF382NLPQ;
 				INFOPLIST_FILE = MyCryptos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.danielsparber.MyCryptos;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sparber.mycc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -434,10 +434,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = GAH6QW97Q6;
+				DEVELOPMENT_TEAM = SQF382NLPQ;
 				INFOPLIST_FILE = MyCryptos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.danielsparber.MyCryptos;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sparber.mycc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
