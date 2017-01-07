@@ -202,7 +202,7 @@
 	<data
 		name="AppName"
 		xml:space="preserve">
-    <value>MyCryptos</value>
+    <value>MyCC</value>
   </data>
 	<data
 		name="Settings"
@@ -467,7 +467,7 @@
 	<data
 		name="FetchingNoSuccessText"
 		xml:space="preserve">
-    <value>Error! Fetching data was not successful. Please verify Your input and internet connection!</value>
+    <value>Error! Fetching data was not successful. Please verify your input and internet connection!</value>
   </data>
 	<data
 		name="Testing"
@@ -567,7 +567,7 @@
 	<data
 		name="Table"
 		xml:space="preserve">
-    <value>Table</value>
+    <value>Balance (Table)</value>
   </data>
 	<data
 		name="Appeareance"
@@ -582,7 +582,7 @@
 	<data
 		name="AdditionalReferenceCurrency"
 		xml:space="preserve">
-    <value>Additional currency</value>
+    <value>Additional reference currency</value>
   </data>
 	<data
 		name="AddReferenceCurrency"
@@ -617,7 +617,7 @@
 	<data
 		name="OneCoin"
 		xml:space="preserve">
-    <value>One coin</value>
+    <value>One currency</value>
   </data>
 	<data
 		name="OneSource"
@@ -770,11 +770,6 @@
     <value>Amount</value>
   </data>
 	<data
-		name="ShowGraphOnStartup"
-		xml:space="preserve">
-    <value>Show graph on startup</value>
-  </data>
-	<data
 		name="NoSourcesDescriptionAdd"
 		xml:space="preserve">
     <value>You can simply add a source by pressing the add button (+) in the top right corner.</value>
@@ -782,7 +777,7 @@
 	<data
 		name="GoToSourcesToAddAccount"
 		xml:space="preserve">
-    <value>You can go to the sources page to add data.</value>
+    <value>You can go to the settings page to add data.</value>
   </data>
 	<data
 		name="NoDataToDisplay"
@@ -847,7 +842,7 @@
 	<data
 		name="OtherwiseTruncate"
 		xml:space="preserve">
-    <value>Otherwise numers are truncated</value>
+    <value>Otherwise numbers are truncated</value>
   </data>
 	<data
 		name="RepositoryAlreadyAdded"
@@ -897,6 +892,6 @@
 	<data
 		name="AddressOrXpub"
 		xml:space="preserve">
-    <value>Address / Xpub</value>
+    <value>Address / xPub</value>
   </data>
 </root>
