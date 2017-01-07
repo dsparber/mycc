@@ -297,7 +297,7 @@
 	<data
 		name="ReferenceCurrency"
 		xml:space="preserve">
-    <value>Referenz Währung</value>
+    <value>Referenzwährung</value>
   </data>
 	<data
 		name="AddActionChooseTitle"
@@ -307,7 +307,7 @@
 	<data
 		name="AddLocalAccount"
 		xml:space="preserve">
-    <value>Lokales Konto hinzufügen</value>
+    <value>Manuelle Werte hinzufügen</value>
   </data>
 	<data
 		name="SortOrder"
@@ -397,12 +397,12 @@
 	<data
 		name="LocalAccount"
 		xml:space="preserve">
-    <value>Lokales Konto</value>
+    <value>Manuelle Eingabedaten</value>
   </data>
 	<data
 		name="DifferentCoinsCount"
 		xml:space="preserve">
-    <value>{0} verschiedene Coins</value>
+    <value>{0} verschiedene Währungen</value>
   </data>
 	<data
 		name="EqualTo"
@@ -482,7 +482,7 @@
 	<data
 		name="Local"
 		xml:space="preserve">
-    <value>lokal</value>
+    <value>manuelle Eingaben</value>
   </data>
 	<data
 		name="Online"
@@ -542,7 +542,7 @@
 	<data
 		name="NoCoins"
 		xml:space="preserve">
-    <value>Keine Coins</value>
+    <value>Keine Währungen</value>
   </data>
 	<data
 		name="Blockchain"
@@ -562,12 +562,12 @@
 	<data
 		name="Graph"
 		xml:space="preserve">
-    <value>Graph</value>
+    <value>Vermögen</value>
   </data>
 	<data
 		name="Table"
 		xml:space="preserve">
-    <value>Tabelle</value>
+    <value>Vermögen</value>
   </data>
 	<data
 		name="Appeareance"
@@ -677,7 +677,7 @@
 	<data
 		name="FingerprintActive"
 		xml:space="preserve">
-    <value>PIN und Fingerprint aktiviert</value>
+    <value>PIN und Fingerprint sind aktiviert</value>
   </data>
 	<data
 		name="NotConfigured"
@@ -782,12 +782,12 @@
 	<data
 		name="GoToSourcesToAddAccount"
 		xml:space="preserve">
-    <value>Gehen Sie zur Quellen Seite um Daten hinzuzufügen.</value>
+    <value>Gehen Sie zu Einstellungen / Quellen um Daten hinzuzufügen.</value>
   </data>
 	<data
 		name="NoDataToDisplay"
 		xml:space="preserve">
-    <value>Kein Daten</value>
+    <value>Keine anzeigbaren Daten vorhanden</value>
   </data>
 	<data
 		name="Manually"
@@ -897,6 +897,6 @@
 	<data
 		name="AddressOrXpub"
 		xml:space="preserve">
-    	<value>Adresse / Xpub</value>
+    	<value>Adresse / xPub</value>
 	</data>
 </root>
