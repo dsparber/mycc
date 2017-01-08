@@ -42,8 +42,8 @@ namespace MyCryptos.view.components
 		{
 			Switch = new Switch { HorizontalOptions = LayoutOptions.EndAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
 
-			titleLabel = new Label { HorizontalOptions = LayoutOptions.FillAndExpand, TextColor = AppConstants.FontColor };
-			infoLabel = new Label { HorizontalOptions = LayoutOptions.FillAndExpand, TextColor = AppConstants.FontColorLight, FontSize = titleLabel.FontSize * AppConstants.FontFactorSmall };
+			titleLabel = new Label { HorizontalOptions = LayoutOptions.FillAndExpand, TextColor = AppConstants.FontColor, LineBreakMode = LineBreakMode.TailTruncation };
+			infoLabel = new Label { HorizontalOptions = LayoutOptions.FillAndExpand, TextColor = AppConstants.FontColorLight, LineBreakMode = LineBreakMode.TailTruncation, FontSize = titleLabel.FontSize * AppConstants.FontFactorSmall };
 			var labelStack = new StackLayout { Spacing = 0, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
 			labelStack.Children.Add(titleLabel);
 			labelStack.Children.Add(infoLabel);

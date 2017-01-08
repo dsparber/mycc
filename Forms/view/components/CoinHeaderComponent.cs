@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Storage;
@@ -159,6 +158,9 @@ namespace MyCryptos.Forms.view.components
 		{
 			Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => UpdateView());
 			Messaging.RoundNumbers.SubscribeValueChanged(this, () => UpdateView());
+
+			Messaging.FetchMissingRates.SubscribeFinished(this, () => UpdateView());
+			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, () => UpdateView());
 			Messaging.UpdatingAccounts.SubscribeFinished(this, () => UpdateView());
 			Messaging.Loading.SubscribeFinished(this, () => UpdateView());
 		}

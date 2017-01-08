@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.settings;
 using MyCryptos.Core.Types;
@@ -27,7 +28,8 @@ namespace MyCryptos.Forms.view.pages.settings
 			SourcesCell.Tapped += (sender, e) => Navigation.PushAsync(new SourcesView());
 			SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
 			RatesCell.Tapped += (sender, e) => Navigation.PushAsync(new WatchedCurrenciesSettingsView());
-			RatesCell.Detail = string.Join(", ", ApplicationSettings.WatchedCurrencies);
+			RatesCell.DetailBreakMode = Xamarin.Forms.LineBreakMode.TailTruncation;
+			SetRatesCellDetail();
 			SetPinCellText();
 		}
 
@@ -70,10 +72,15 @@ namespace MyCryptos.Forms.view.pages.settings
 			base.OnAppearing();
 
 			SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
-			RatesCell.Detail = string.Join(", ", ApplicationSettings.WatchedCurrencies);
+			SetRatesCellDetail();
 			ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies);
 			SetDefaultPageCellText();
 			SetPinCellText();
+		}
+
+		void SetRatesCellDetail()
+		{
+			RatesCell.Detail = ApplicationSettings.WatchedCurrencies.Count == 0 ? I18N.AllCurrenciesFromAccounts : string.Join(" + ", new List<string> { I18N.AllCurrenciesFromAccounts, string.Join(", ", ApplicationSettings.WatchedCurrencies) });
 		}
 	}
 }

@@ -521,6 +521,12 @@ namespace MyCryptos.Forms.Resources {
             }
         }
         
+        public static string Assets {
+            get {
+                return ResourceManager.GetString("Assets", resourceCulture);
+            }
+        }
+        
         public static string Appeareance {
             get {
                 return ResourceManager.GetString("Appeareance", resourceCulture);
@@ -761,12 +767,6 @@ namespace MyCryptos.Forms.Resources {
             }
         }
         
-        public static string ShowGraphOnStartup {
-            get {
-                return ResourceManager.GetString("ShowGraphOnStartup", resourceCulture);
-            }
-        }
-        
         public static string NoSourcesDescriptionAdd {
             get {
                 return ResourceManager.GetString("NoSourcesDescriptionAdd", resourceCulture);
@@ -914,6 +914,30 @@ namespace MyCryptos.Forms.Resources {
         public static string AddressOrXpub {
             get {
                 return ResourceManager.GetString("AddressOrXpub", resourceCulture);
+            }
+        }
+        
+        public static string AllCurrenciesFromAccounts {
+            get {
+                return ResourceManager.GetString("AllCurrenciesFromAccounts", resourceCulture);
+            }
+        }
+        
+        public static string AdditionalCurrencies {
+            get {
+                return ResourceManager.GetString("AdditionalCurrencies", resourceCulture);
+            }
+        }
+        
+        public static string RatesCurrenciesInfo {
+            get {
+                return ResourceManager.GetString("RatesCurrenciesInfo", resourceCulture);
+            }
+        }
+        
+        public static string CurrenciesForRateView {
+            get {
+                return ResourceManager.GetString("CurrenciesForRateView", resourceCulture);
             }
         }
     }

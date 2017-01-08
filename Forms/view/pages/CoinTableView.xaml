@@ -8,7 +8,7 @@
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
 	x:Class="MyCryptos.Forms.view.pages.CoinTableView"
-	Title="{i18N:Translate Table}">
+	Title="{i18N:Translate Assets}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Text="{i18N:Translate Refresh}"

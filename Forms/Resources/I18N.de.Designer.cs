@@ -521,6 +521,12 @@ namespace MyCryptos.Forms.Resources {
             }
         }
         
+        internal static string Assets {
+            get {
+                return ResourceManager.GetString("Assets", resourceCulture);
+            }
+        }
+        
         internal static string Appeareance {
             get {
                 return ResourceManager.GetString("Appeareance", resourceCulture);
@@ -914,6 +920,30 @@ namespace MyCryptos.Forms.Resources {
         internal static string AddressOrXpub {
             get {
                 return ResourceManager.GetString("AddressOrXpub", resourceCulture);
+            }
+        }
+        
+        internal static string AllCurrenciesFromAccounts {
+            get {
+                return ResourceManager.GetString("AllCurrenciesFromAccounts", resourceCulture);
+            }
+        }
+        
+        internal static string AdditionalCurrencies {
+            get {
+                return ResourceManager.GetString("AdditionalCurrencies", resourceCulture);
+            }
+        }
+        
+        internal static string RatesCurrenciesInfo {
+            get {
+                return ResourceManager.GetString("RatesCurrenciesInfo", resourceCulture);
+            }
+        }
+        
+        internal static string CurrenciesForRateView {
+            get {
+                return ResourceManager.GetString("CurrenciesForRateView", resourceCulture);
             }
         }
     }

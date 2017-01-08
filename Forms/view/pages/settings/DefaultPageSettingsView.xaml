@@ -14,6 +14,11 @@
 			<TableSection
 				Title="{i18N:Translate DefaultView}">
 				<components:CustomViewCell
+					x:Name="RatesOptionCell"
+					Tapped="SelectionChanged"
+					Text="{i18N:Translate Rates}"
+					Image="checkmark.png" />
+				<components:CustomViewCell
 					x:Name="TableOptionCell"
 					Tapped="SelectionChanged"
 					Text="{i18N:Translate Table}"
@@ -22,11 +27,6 @@
 					x:Name="GraphOptionCell"
 					Tapped="SelectionChanged"
 					Text="{i18N:Translate Graph}"
-					Image="checkmark.png" />
-				<components:CustomViewCell
-					x:Name="RatesOptionCell"
-					Tapped="SelectionChanged"
-					Text="{i18N:Translate Rates}"
 					Image="checkmark.png" />
 			</TableSection>
 		</TableView>

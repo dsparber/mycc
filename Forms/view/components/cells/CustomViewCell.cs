@@ -48,6 +48,17 @@ namespace MyCryptos.view.components
 			}
 		}
 
+		public LineBreakMode DetailBreakMode
+		{
+			set
+			{
+				Device.BeginInvokeOnMainThread(() =>
+				{
+					detailLabel.LineBreakMode = value;
+				});
+			}
+		}
+
 		public string Image
 		{
 			set { image = value; Device.BeginInvokeOnMainThread(() => accessoryImage.Source = ImageSource.FromFile(image)); }

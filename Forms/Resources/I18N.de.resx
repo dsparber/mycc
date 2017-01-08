@@ -562,12 +562,17 @@
 	<data
 		name="Graph"
 		xml:space="preserve">
-    <value>Vermögen</value>
+    <value>Graph</value>
   </data>
 	<data
 		name="Table"
 		xml:space="preserve">
-    <value>Vermögen</value>
+    <value>Tabelle</value>
+  </data>
+	<data
+		name="Assets"
+		xml:space="preserve">
+    <value>Assets</value>
   </data>
 	<data
 		name="Appeareance"
@@ -899,4 +904,24 @@
 		xml:space="preserve">
     	<value>Adresse / xPub</value>
 	</data>
+	<data
+		name="AllCurrenciesFromAccounts"
+		xml:space="preserve">
+    <value>Währungen aller Konten</value>
+  </data>
+	<data
+		name="AdditionalCurrencies"
+		xml:space="preserve">
+    <value>Zusätzliche Währungen</value>
+  </data>
+	<data
+		name="RatesCurrenciesInfo"
+		xml:space="preserve">
+    <value>Die Kursansicht zeigt die Währungen aller vorhandenen Konten zusätzlich zu den unten festgelegten.</value>
+  </data>
+	<data
+		name="CurrenciesForRateView"
+		xml:space="preserve">
+    <value>Währungen für die Kursansicht</value>
+  </data>
 </root>

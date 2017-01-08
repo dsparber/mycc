@@ -567,7 +567,12 @@
 	<data
 		name="Table"
 		xml:space="preserve">
-    <value>Balance (Table)</value>
+    <value>Table</value>
+  </data>
+	<data
+		name="Assets"
+		xml:space="preserve">
+    <value>Assets</value>
   </data>
 	<data
 		name="Appeareance"
@@ -893,5 +898,25 @@
 		name="AddressOrXpub"
 		xml:space="preserve">
     <value>Address / xPub</value>
+  </data>
+	<data
+		name="AllCurrenciesFromAccounts"
+		xml:space="preserve">
+    <value>All currencies from accounts</value>
+  </data>
+	<data
+		name="AdditionalCurrencies"
+		xml:space="preserve">
+    <value>Additional currencies</value>
+  </data>
+	<data
+		name="RatesCurrenciesInfo"
+		xml:space="preserve">
+    <value>The rates view shows the currencies of all entered accounts plus the following ones.</value>
+  </data>
+	<data
+		name="CurrenciesForRateView"
+		xml:space="preserve">
+    <value>Currencies for the rates view</value>
   </data>
 </root>
