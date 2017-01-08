@@ -136,6 +136,7 @@
     <Compile Include="view\pages\settings\WatchedCurrenciesSettingsView.xaml.cs">
       <DependentUpon>WatchedCurrenciesSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\components\RatesHeaderComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

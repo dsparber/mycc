@@ -5,7 +5,7 @@
 	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
-	BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
+	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
 	x:Class="MyCryptos.Forms.view.pages.RateView"
 	Title="{i18N:Translate Rates}">

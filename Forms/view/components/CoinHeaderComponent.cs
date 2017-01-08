@@ -18,7 +18,7 @@ namespace MyCryptos.Forms.view.components
 	{
 
 		private readonly Currency currency;
-		private readonly decimal? amount;
+		private readonly bool useOneBitcoinAsReference;
 		private readonly FunctionalAccount account;
 		private readonly bool useOnlyThisCurrency;
 		private readonly List<string> infoTexts;
@@ -41,11 +41,11 @@ namespace MyCryptos.Forms.view.components
 			SetInfoText();
 		}
 
-		public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false, decimal? amount = null) : this()
+		public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false, bool useOneBitcoinAsReference = false) : this()
 		{
 			this.currency = currency ?? ApplicationSettings.BaseCurrency;
-			this.amount = amount;
-			this.useOnlyThisCurrency = useOnlyThisCurrency || amount != null;
+			this.useOneBitcoinAsReference = useOneBitcoinAsReference;
+			this.useOnlyThisCurrency = useOnlyThisCurrency;
 
 			UpdateView();
 		}
@@ -67,10 +67,9 @@ namespace MyCryptos.Forms.view.components
 
 		private void UpdateView(bool? isLoading = null)
 		{
-			var sum = amount != null ? new Money(amount.Value, currency) : account != null ? account.Money : (useOnlyThisCurrency ? CoinSum : MoneySum) ?? new Money(0, currency);
 			var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
 
-			if (amount != null)
+			if (useOneBitcoinAsReference)
 			{
 				infoTexts[0] = currency.Name;
 			}
@@ -86,9 +85,9 @@ namespace MyCryptos.Forms.view.components
 			{
 				infoTexts[0] = PluralHelper.GetTextCoins(amountDifferentCurrencies);
 			}
-			infoTexts[1] = (useOnlyThisCurrency && amount == null) ? currency?.Name : string.Join(" / ", ApplicationSettings.MainCurrencies
+			infoTexts[1] = (useOneBitcoinAsReference) ? currency?.Name : string.Join(" / ", ApplicationSettings.MainCurrencies
 									   .Where(c => !c.Equals(currency))
-									   .Select(c => (amount != null ? new Money(ExchangeRateHelper.GetRate(CoinSum.Currency, c)?.RateNotNull ?? 0, c)
+																					 .Select(c => (useOneBitcoinAsReference ? new Money(ExchangeRateHelper.GetRate(Currency.Btc, c)?.RateNotNull ?? 0, c)
 													 : (useOnlyThisCurrency ? CoinSumAs(c)
 														: MoneySumOf(c)) ?? new Money(0, c))
 											   .ToStringTwoDigits(ApplicationSettings.RoundMoney)));
@@ -96,10 +95,10 @@ namespace MyCryptos.Forms.view.components
 
 			Device.BeginInvokeOnMainThread(() =>
 			{
-				if (useOnlyThisCurrency && amount == null)
+				if (useOnlyThisCurrency && !useOneBitcoinAsReference)
 				{
-					var s = sum.ToString(false);
-					var beforeDecimal = new Money(Math.Truncate(sum.Amount), sum.Currency).ToString(false);
+					var s = Sum.ToString(false);
+					var beforeDecimal = new Money(Math.Truncate(Sum.Amount), Sum.Currency).ToString(false);
 					var decimals = s.Remove(0, beforeDecimal.Length);
 					var i1 = decimals.IndexOf(".", StringComparison.CurrentCulture);
 					var i2 = decimals.IndexOf(",", StringComparison.CurrentCulture);
@@ -110,12 +109,8 @@ namespace MyCryptos.Forms.view.components
 					TitleText = s.Substring(0, i);
 					TitleTextSmall = s.Substring(i);
 				}
-				else if (amount != null)
-				{
-					TitleText = sum.ToString();
-				}
 				else {
-					TitleText = sum.ToStringTwoDigits(ApplicationSettings.RoundMoney);
+					TitleText = Sum.ToStringTwoDigits(ApplicationSettings.RoundMoney);
 				}
 
 				SetInfoText();
@@ -125,9 +120,9 @@ namespace MyCryptos.Forms.view.components
 					IsLoading = isLoading.Value;
 				}
 			});
-
-
 		}
+
+		private Money Sum => useOneBitcoinAsReference ? new Money(ExchangeRateHelper.GetRate(Currency.Btc, currency).RateNotNull, currency) : account != null ? account.Money : (useOnlyThisCurrency ? CoinSum : MoneySum) ?? new Money(0, currency);
 
 		private Money CoinSum => account != null ? account.Money : new Money(AccountStorage.Instance.AllElements.Where(a => currency.Equals(a.Money.Currency)).Sum(a => a.Money.Amount), currency);
 		private Money CoinSumAs(Currency c) => new Money(CoinSum.Amount * (ExchangeRateHelper.GetRate(CoinSum.Currency, c)?.RateNotNull ?? 0), c);

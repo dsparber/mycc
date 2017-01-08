@@ -49,7 +49,7 @@ namespace MyCryptos.Forms.view.components
 			{
 				var currency = CurrencyStorage.Find(code);
 
-				Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinDetailView(currency, 1)));
+				// TODO Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinDetailView(currency, 1)));
 			});
 
 			webView.RegisterCallback("CallbackSizeAllocated", sizeString =>

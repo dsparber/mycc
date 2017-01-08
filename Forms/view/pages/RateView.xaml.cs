@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.Currency.Model;
+using MyCryptos.Core.ExchangeRate.Helpers;
 using MyCryptos.Core.settings;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Tasks;
@@ -97,7 +98,12 @@ namespace MyCryptos.Forms.view.pages
 				Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => isUpdatingExchangeRates = true, () => isUpdatingExchangeRates = false);
 			}
 
-			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent(((Currency)item), false, 1) { IsLoading = isUpdatingExchangeRates });
+			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() =>
+			{
+				var c = (Currency)item;
+
+				return new RatesHeaderComponent(c, isUpdatingExchangeRates);
+			});
 		}
 	}
 }
