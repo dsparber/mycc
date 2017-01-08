@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 //using System.Diagnostics;
@@ -13,11 +14,11 @@ namespace MyCryptos.Forms.Messages
 			// MessagingCenter.Unsubscribe<MessageInfo>(subscriber, message);
 			MessagingCenter.Subscribe<MessageInfo>(subscriber, message, i =>
 			{
-				//Debug.WriteLine($"{subscriber}: {message} ({i})");
+				Debug.WriteLine($"{subscriber}: {message} ({i})");
 				var action = actions.FirstOrDefault(a => a.Item1.Equals(i));
 
 				action?.Item2();
-				//Debug.WriteLine($"{subscriber}: {message} ({i}) - done");
+				Debug.WriteLine($"{subscriber}: {message} ({i}) - done");
 			});
 		}
 
@@ -44,19 +45,19 @@ namespace MyCryptos.Forms.Messages
 
 		public static void SendValueChanged(this string message)
 		{
-			//Debug.WriteLine($"Sent: {message} {MessageInfo.ValueChanged}");
+			Debug.WriteLine($"Sent: {message} {MessageInfo.ValueChanged}");
 			MessagingCenter.Send(MessageInfo.ValueChanged, message);
 
 		}
 		public static void SendStarted(this string message)
 		{
-			//Debug.WriteLine($"Sent: {message} {MessageInfo.Started}");
+			Debug.WriteLine($"Sent: {message} {MessageInfo.Started}");
 			MessagingCenter.Send(MessageInfo.Started, message);
 		}
 
 		public static void SendFinished(this string message)
 		{
-			//Debug.WriteLine($"Sent: {message} {MessageInfo.Finished}");
+			Debug.WriteLine($"Sent: {message} {MessageInfo.Finished}");
 			MessagingCenter.Send(MessageInfo.Finished, message);
 		}
 	}

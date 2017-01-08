@@ -46,10 +46,7 @@ namespace MyCryptos.Forms.view.pages
 			referenceView = new ReferenceCurrenciesView(MoneySum);
 			Content.Children.Add(referenceView);
 
-
 			Subscribe();
-			UpdateView();
-
 		}
 
 		private void LoadData()
@@ -66,16 +63,6 @@ namespace MyCryptos.Forms.view.pages
 			{
 				Navigation.RemovePage(this);
 			}
-			else if (updateView)
-			{
-				UpdateView();
-			}
-		}
-
-		private void UpdateView()
-		{
-			referenceView.UpdateView();
-			accountsView.UpdateView();
 		}
 
 		private void Subscribe()
@@ -99,14 +86,6 @@ namespace MyCryptos.Forms.view.pages
 
 			accountsView.OnAppearing();
 			referenceView.OnAppearing();
-		}
-
-		protected override void OnSizeAllocated(double width, double height)
-		{
-			base.OnSizeAllocated(width, height);
-
-			referenceView.UpdateView();
-			accountsView.UpdateView();
 		}
 	}
 }

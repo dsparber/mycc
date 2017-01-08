@@ -56,7 +56,6 @@ namespace MyCryptos.Forms.view.pages
 
 		private void Update(bool loading = false)
 		{
-			referenceView.UpdateView();
 			Device.BeginInvokeOnMainThread(() => header.IsLoading = loading);
 		}
 

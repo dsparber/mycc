@@ -168,7 +168,6 @@ namespace MyCryptos.Forms.view.components
 			{
 				var neededRate = new ExchangeRate(currency, ApplicationSettings.SelectedRatePageCurrency);
 				var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
-				Debug.WriteLine(rate.ToString());
 
 				Code = currency.Code;
 				Reference = new Money(rate.RateNotNull, ApplicationSettings.SelectedRatePageCurrency).ToString8Digits(ApplicationSettings.RoundMoney);
