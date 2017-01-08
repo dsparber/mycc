@@ -38,10 +38,7 @@ namespace MyCryptos.Forms.view.components
 		{
 			base.OnSizeAllocated(width, height);
 
-			if (infoTexts != null && infoTexts.Count >= currentInfoText)
-			{
-				InfoText = infoTexts[currentInfoText];
-			}
+			SetInfoText();
 		}
 
 		public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false, decimal? amount = null) : this()
@@ -59,7 +56,7 @@ namespace MyCryptos.Forms.view.components
 			recognizer.Tapped += (sender, e) =>
 			{
 				currentInfoText = (currentInfoText + 1) % infoTexts.Count;
-				InfoText = infoTexts[currentInfoText];
+				SetInfoText();
 			};
 
 			infoTexts = new List<string> { string.Empty, string.Empty };
@@ -121,7 +118,7 @@ namespace MyCryptos.Forms.view.components
 					TitleText = sum.ToStringTwoDigits(ApplicationSettings.RoundMoney);
 				}
 
-				InfoText = infoTexts[currentInfoText];
+				SetInfoText();
 
 				if (isLoading.HasValue)
 				{
@@ -163,6 +160,19 @@ namespace MyCryptos.Forms.view.components
 			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, () => UpdateView());
 			Messaging.UpdatingAccounts.SubscribeFinished(this, () => UpdateView());
 			Messaging.Loading.SubscribeFinished(this, () => UpdateView());
+		}
+
+		void SetInfoText()
+		{
+			if (infoTexts != null && infoTexts.Count >= currentInfoText)
+			{
+				var text = infoTexts[currentInfoText];
+				if (string.IsNullOrEmpty(text?.Trim()))
+				{
+					text = infoTexts[(currentInfoText + 1) % infoTexts.Count];
+				}
+				InfoText = text;
+			}
 		}
 	}
 }

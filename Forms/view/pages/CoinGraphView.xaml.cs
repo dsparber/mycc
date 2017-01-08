@@ -58,6 +58,8 @@ namespace MyCryptos.Forms.view.pages
 		{
 			HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
 			HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
+			HeaderCarousel.ShowIndicators = (HeaderCarousel.ItemsSource.Count > 1);
+
 			if (HeaderCarousel.ItemTemplate != null) return;
 
 			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();

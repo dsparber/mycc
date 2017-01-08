@@ -48,7 +48,7 @@ namespace MyCryptos.Forms.view.pages.settings
 					SetReferenceCurrencyCells();
 				};
 
-				if (mainCurrencies.Count <= 1)
+				if (c.Equals(Currency.Btc))
 				{
 					items.Remove(delete);
 				}
