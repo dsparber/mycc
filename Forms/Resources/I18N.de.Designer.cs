@@ -83,6 +83,12 @@ namespace MyCryptos.Forms.Resources {
             }
         }
         
+        internal static string AppNameLong {
+            get {
+                return ResourceManager.GetString("AppNameLong", resourceCulture);
+            }
+        }
+        
         internal static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);

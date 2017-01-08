@@ -203,7 +203,11 @@
 		name="AppName"
 		xml:space="preserve">
     <value>MyCC</value>
-	<comment>Untertitel (bei Einstellungen im blauen Bereich): Meine Kryptowährungen</comment>
+  </data>
+	<data
+		name="AppNameLong"
+		xml:space="preserve">
+    <value>Meine Kryptowährungen</value>
   </data>
 	<data
 		name="Settings"

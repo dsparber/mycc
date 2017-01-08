@@ -205,6 +205,11 @@
     <value>MyCC</value>
   </data>
 	<data
+		name="AppNameLong"
+		xml:space="preserve">
+    <value>My CryptoCurrencies</value>
+  </data>
+	<data
 		name="Settings"
 		xml:space="preserve">
     <value>Settings</value>
