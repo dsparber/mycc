@@ -3,6 +3,7 @@ using System.Linq;
 using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.Currency.Model;
 using MyCryptos.Core.ExchangeRate.Helpers;
+using MyCryptos.Core.ExchangeRate.Model;
 using MyCryptos.Core.settings;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Tasks;
@@ -86,7 +87,11 @@ namespace MyCryptos.Forms.view.pages
 		private async void Refresh(object sender, EventArgs e)
 		{
 			await AppTaskHelper.FetchBalancesAndRates();
-			await AppTaskHelper.FetchMissingRates();
+			await AppTaskHelper.FetchMissingRates(ApplicationSettings.WatchedCurrencies
+									.Select(c => new ExchangeRate(Currency.Btc, c))
+									.Select(r => ExchangeRateHelper.GetRate(r) ?? r)
+									.Where(r => r?.Rate == null)
+									.Concat(AccountStorage.NeededRates).ToList());
 		}
 
 		private class HeaderTemplateSelector : DataTemplateSelector

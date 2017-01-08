@@ -75,7 +75,7 @@ namespace MyCryptos.Forms.view.components
 			}
 			else if (account != null)
 			{
-				infoTexts[0] = PluralHelper.GetTextAccounts(1);
+				infoTexts[0] = account.Name;
 			}
 			else if (useOnlyThisCurrency)
 			{
