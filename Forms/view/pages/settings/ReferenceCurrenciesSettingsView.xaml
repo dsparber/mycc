@@ -8,7 +8,8 @@
 	Title="{i18N:Translate Currencies}">
 	<components:ChangingStackLayout>
 		<components:HeaderView
-			TitleText="{i18N:Translate AppName}" />
+			TitleText="{i18N:Translate AppName}"
+			x:Name="Header" />
 		<TableView
 			Intent="Settings">
 			<TableSection

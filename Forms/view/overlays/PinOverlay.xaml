@@ -16,7 +16,8 @@
 	<ContentPage.Content>
 		<components:ChangingStackLayout>
 			<components:HeaderView
-				TitleText="{i18N:Translate AppName}" />
+				TitleText="{i18N:Translate AppName}"
+				x:Name="Header" />
 			<TableView
 				Intent="Form"
 				x:Name="PinTable">

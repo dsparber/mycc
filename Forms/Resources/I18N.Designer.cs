@@ -946,5 +946,23 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("CurrenciesForRateView", resourceCulture);
             }
         }
+        
+        public static string NoCurrencies {
+            get {
+                return ResourceManager.GetString("NoCurrencies", resourceCulture);
+            }
+        }
+        
+        public static string OneCurrency {
+            get {
+                return ResourceManager.GetString("OneCurrency", resourceCulture);
+            }
+        }
+        
+        public static string Security {
+            get {
+                return ResourceManager.GetString("Security", resourceCulture);
+            }
+        }
     }
 }

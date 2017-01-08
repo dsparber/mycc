@@ -931,4 +931,19 @@
 		xml:space="preserve">
     <value>Währungen für die Kursansicht</value>
   </data>
+	<data
+		name="NoCurrencies"
+		xml:space="preserve">
+    <value>Keine Währungen</value>
+  </data>
+	<data
+		name="OneCurrency"
+		xml:space="preserve">
+    <value>Eine Währung</value>
+  </data>
+	<data
+		name="Security"
+		xml:space="preserve">
+    <value>Sicherheit</value>
+  </data>
 </root>

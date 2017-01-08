@@ -14,7 +14,8 @@
 	<ContentPage.Content>
 		<components:ChangingStackLayout>
 			<components:HeaderView
-				x:Name="Header" />
+				x:Name="Header"
+				InfoText="{i18N:Translate AppNameLong}" />
 			<TableView
 				Intent="Settings">
 				<TableSection
@@ -35,7 +36,7 @@
 				<TableSection
 					Title="{i18N:Translate General}">
 					<components:CustomViewCell
-						Text="{i18N:Translate Pin}"
+						Text="{i18N:Translate Security}"
 						x:Name="PinSettingsCell"
 						Tapped="PinCellTapped"
 						Image="more.png" />

@@ -56,11 +56,13 @@ namespace MyCryptos.Forms.view.overlays
 				}
 			};
 
+			Title = I18N.Pin;
+
 			switch (this.pinAction)
 			{
-				case PinAction.Enable: Title = I18N.EnablePin; PinTable.Root.Remove(OldPinSection); break;
-				case PinAction.Disable: Title = I18N.DisablePin; PinTable.Root.Remove(ChangePinSection); break;
-				case PinAction.Change: Title = I18N.ChangePin; break;
+				case PinAction.Enable: Header.InfoText = I18N.EnablePin; PinTable.Root.Remove(OldPinSection); break;
+				case PinAction.Disable: Header.InfoText = I18N.DisablePin; PinTable.Root.Remove(ChangePinSection); break;
+				case PinAction.Change: Header.InfoText = I18N.ChangePin; break;
 			}
 		}
 

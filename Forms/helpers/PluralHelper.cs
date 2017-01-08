@@ -16,6 +16,7 @@ namespace MyCryptos.Forms.helpers
 
 		public static string GetTextAccounts(int count) => GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, count);
 		public static string GetTextCoins(int count) => GetText(I18N.NoCoins, I18N.OneCoin, I18N.Coins, count);
+		public static string GetTextCurrencies(int count) => GetText(I18N.NoCurrencies, I18N.OneCurrency, I18N.Currencies, count);
 		public static string GetTextSourcs(int count) => GetText(I18N.NoSources, I18N.OneSource, I18N.Sources, count);
 
 	}

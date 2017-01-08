@@ -3,6 +3,7 @@ using System.Linq;
 using MyCryptos.Core.Currency.Model;
 using MyCryptos.Core.Currency.Storage;
 using MyCryptos.Core.settings;
+using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Resources;
 using MyCryptos.Forms.view.overlays;
@@ -28,6 +29,8 @@ namespace MyCryptos.Forms.view.pages.settings
 			var furtherCurrencyCells = new List<CustomViewCell>();
 
 			var mainCurrencies = new List<Currency>(ApplicationSettings.MainCurrencies);
+
+			Header.InfoText = PluralHelper.GetTextCurrencies(ApplicationSettings.AllReferenceCurrencies.Count);
 
 			foreach (var c in mainCurrencies)
 			{

@@ -19,7 +19,7 @@ namespace MyCryptos.Forms.view.pages.settings
 
 			FingerprintCell.Switch.Toggled += (sender, e) => { ApplicationSettings.IsFingerprintEnabled = e.Value; Messaging.Pin.SendValueChanged(); };
 
-			if (ApplicationSettings.IsFingerprintEnabled)
+			if (ApplicationSettings.IsFingerprintEnabled && ApplicationSettings.IsPinSet)
 			{
 				FingerprintCell.Switch.IsToggled = true;
 			}
@@ -33,6 +33,8 @@ namespace MyCryptos.Forms.view.pages.settings
 
 		private void SetPinCells()
 		{
+
+			Header.InfoText = $"{I18N.Security}: {((ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled) ? I18N.FingerprintActive : (ApplicationSettings.IsPinSet) ? I18N.PinActive : I18N.NotConfigured)}";
 
 			if (!ApplicationSettings.IsPinSet)
 			{
@@ -58,11 +60,18 @@ namespace MyCryptos.Forms.view.pages.settings
 		{
 			base.OnAppearing();
 
-			if (!await CrossFingerprint.Current.IsAvailableAsync()) return;
-
-			if (!Table.Root.Contains(FingerprintSection))
+			if (await CrossFingerprint.Current.IsAvailableAsync() && ApplicationSettings.IsPinSet)
 			{
-				Table.Root.Add(FingerprintSection);
+				if (!Table.Root.Contains(FingerprintSection))
+				{
+					Table.Root.Add(FingerprintSection);
+				}
+			}
+			else {
+				if (Table.Root.Contains(FingerprintSection))
+				{
+					Table.Root.Remove(FingerprintSection);
+				}
 			}
 		}
 

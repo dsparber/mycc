@@ -812,7 +812,7 @@
 	<data
 		name="DefaultView"
 		xml:space="preserve">
-    <value>DefaultView</value>
+    <value>Default View</value>
   </data>
 	<data
 		name="GeneralError"
@@ -923,5 +923,20 @@
 		name="CurrenciesForRateView"
 		xml:space="preserve">
     <value>Currencies for the rates view</value>
+  </data>
+	<data
+		name="NoCurrencies"
+		xml:space="preserve">
+    <value>No currencies</value>
+  </data>
+	<data
+		name="OneCurrency"
+		xml:space="preserve">
+    <value>One currency</value>
+  </data>
+	<data
+		name="Security"
+		xml:space="preserve">
+    <value>Security</value>
   </data>
 </root>
