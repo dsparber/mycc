@@ -22,7 +22,7 @@ namespace MyCryptos.Forms.view.components
 		private static List<RatesHeaderComponent> instances = new List<RatesHeaderComponent>();
 		private static int currentInfoText = 1;
 
-		public RatesHeaderComponent(Currency currency, bool isUpdating)
+		public RatesHeaderComponent(Currency currency, bool isUpdating) : base(true)
 		{
 			this.currency = currency;
 
