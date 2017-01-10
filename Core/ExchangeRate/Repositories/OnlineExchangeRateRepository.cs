@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,6 +44,12 @@ namespace MyCryptos.Core.ExchangeRate.Repositories
 		{
 			await FetchWithFilter(e => !e.Rate.HasValue);
 			return true;
+		}
+
+
+		public async Task FetchOnline(List<ExchangeRate.Model.ExchangeRate> neededRates)
+		{
+			await FetchWithFilter(neededRates.Contains);
 		}
 	}
 }

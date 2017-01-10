@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -28,9 +29,16 @@ namespace MyCryptos.Forms.view.components
 		private bool appeared;
 		private Money referenceMoney;
 
-		public ReferenceCurrenciesView(Money reference)
+		private List<Currency> _currencies;
+		private bool _showAmountInHeader;
+		private string tableHeaderLabel => _showAmountInHeader ? string.Format(I18N.IsEqualTo, referenceMoney.ToString()) : I18N.EqualTo;
+		private IEnumerable<Currency> referenceCurrencies => _currencies ?? ApplicationSettings.AllReferenceCurrencies.Where(c => !c.Equals(referenceMoney.Currency));
+
+		public ReferenceCurrenciesView(Money reference, bool showAmountInHeader = false, List<Currency> currencies = null)
 		{
 			referenceMoney = reference;
+			_currencies = currencies;
+			_showAmountInHeader = showAmountInHeader;
 
 			var resolverContainer = new SimpleContainer();
 
@@ -68,11 +76,9 @@ namespace MyCryptos.Forms.view.components
 				}
 			});
 
-			var label = I18N.EqualTo;
-
 			var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-			stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? label.ToUpper() : label, HorizontalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(8, 24, 8, 8), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
+			stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? tableHeaderLabel.ToUpper() : tableHeaderLabel, HorizontalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(8, 24, 8, 8), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
 			stack.Children.Add(webView);
 
 			Content = stack;
@@ -104,7 +110,7 @@ namespace MyCryptos.Forms.view.components
 		{
 			try
 			{
-				var items = ApplicationSettings.AllReferenceCurrencies.Where(c => !c.Equals(referenceMoney.Currency)).Select(c => new Data(referenceMoney, c)).ToList();
+				var items = referenceCurrencies.Select(c => new Data(referenceMoney, c)).ToList();
 				var itemsExisting = (items.Count > 0);
 				Debug.WriteLine(111);
 

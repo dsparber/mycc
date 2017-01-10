@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCryptos.Core.Abstract.Storage;
@@ -36,6 +37,11 @@ namespace MyCryptos.Core.ExchangeRate.Storage
 		public async Task FetchNew()
 		{
 			await Task.WhenAll(Repositories.Select(x => x.FetchNew()));
+		}
+
+		public async Task FetchOnline(List<ExchangeRate.Model.ExchangeRate> neededRates)
+		{
+			await Task.WhenAll(Repositories.OfType<OnlineExchangeRateRepository>().Select(x => x.FetchOnline(neededRates)));
 		}
 
 		public override ExchangeRateRepository LocalRepository

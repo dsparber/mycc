@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyCryptos.Core.Abstract.Repositories;
 using MyCryptos.Core.ExchangeRate.Database;

@@ -41,5 +41,9 @@ namespace MyCryptos.Forms.Tasks
 			await ApplicationTasks.FetchBalanceAndRates(currency, Messaging.UpdatingAccountsAndRates.SendStarted, Messaging.UpdatingAccountsAndRates.SendFinished, ErrorOverlay.Display);
 			await FetchMissingRates(AccountStorage.NeededRatesFor(currency));
 		}
+		public static async Task FetchRates(List<ExchangeRate> neededRates)
+		{
+			await ApplicationTasks.FetchRates(neededRates, Messaging.UpdatingAccountsAndRates.SendStarted, Messaging.UpdatingAccountsAndRates.SendFinished, ErrorOverlay.Display);
+		}
 	}
 }

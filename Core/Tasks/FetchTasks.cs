@@ -86,6 +86,7 @@ namespace MyCryptos.Core.tasks
 				onStarted();
 				await account.FetchBalanceOnline();
 				// TODO Fetch rates for specific currency
+				await ExchangeRateStorage.Instance.FetchOnline();
 			}
 			catch (Exception e)
 			{
@@ -104,6 +105,7 @@ namespace MyCryptos.Core.tasks
 				onStarted();
 				await Task.WhenAll(AccountStorage.Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).OfType<OnlineFunctionalAccount>().Select(a => a.FetchBalanceOnline()));
 				// TODO Fetch rates for specific currency
+				await ExchangeRateStorage.Instance.FetchOnline();
 			}
 			catch (Exception e)
 			{
@@ -138,6 +140,23 @@ namespace MyCryptos.Core.tasks
 			{
 				onStarted();
 				await AccountStorage.Instance.FetchOnline();
+			}
+			catch (Exception e)
+			{
+				onError(e);
+			}
+			finally
+			{
+				onFinished();
+			}
+		}
+
+		public static async Task FetchRates(List<ExchangeRate.Model.ExchangeRate> neededRates, Action onStarted, Action onFinished, Action<Exception> onError)
+		{
+			try
+			{
+				onStarted();
+				await ExchangeRateStorage.Instance.FetchOnline(neededRates);
 			}
 			catch (Exception e)
 			{

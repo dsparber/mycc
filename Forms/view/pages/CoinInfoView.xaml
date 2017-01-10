@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
+	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
+	x:Class="MyCryptos.Forms.view.pages.CoinInfoView">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			Text="{i18N:Translate Refresh}"
+			Clicked="Refresh"
+			x:Name="RefreshItem"
+			Icon="refresh.png" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<components:ChangingStackLayout
+			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
+			<components:HeaderView
+				x:Name="Header" />
+			<ScrollView
+				IsClippedToBounds="true">
+				<StackLayout
+					Spacing="0"
+					x:Name="Content" />
+			</ScrollView>
+		</components:ChangingStackLayout>
+	</ContentPage.Content>
+</ContentPage>
