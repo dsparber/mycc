@@ -138,6 +138,11 @@
     <Compile Include="Types\StartupPage.cs" />
     <Compile Include="Account\Repositories\Implementations\BlockchainXpubAccountRepository.cs" />
     <Compile Include="Account\Models\Implementations\BlockchainXpubAccount.cs" />
+    <Compile Include="CoinInfo\Repositories\BlockExpertsCoinInfoRepository.cs" />
+    <Compile Include="CoinInfo\Repositories\CryptoIdCoinInfoRepository.cs" />
+    <Compile Include="CoinInfo\CoinInfoStorage.cs" />
+    <Compile Include="CoinInfo\CoinInfoData.cs" />
+    <Compile Include="CoinInfo\ICoinInfoRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -217,6 +222,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CoinInfo\" />
+    <Folder Include="CoinInfo\Repositories\" />
+  </ItemGroup>
   <Import Project="packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Import Project="..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
 </Project>

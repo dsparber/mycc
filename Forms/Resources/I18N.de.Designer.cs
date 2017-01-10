@@ -970,5 +970,89 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("Security", resourceCulture);
             }
         }
+        
+        internal static string Abbreviation {
+            get {
+                return ResourceManager.GetString("Abbreviation", resourceCulture);
+            }
+        }
+        
+        internal static string Algorithm {
+            get {
+                return ResourceManager.GetString("Algorithm", resourceCulture);
+            }
+        }
+        
+        internal static string Blocktime {
+            get {
+                return ResourceManager.GetString("Blocktime", resourceCulture);
+            }
+        }
+        
+        internal static string Hashrate {
+            get {
+                return ResourceManager.GetString("Hashrate", resourceCulture);
+            }
+        }
+        
+        internal static string Difficulty {
+            get {
+                return ResourceManager.GetString("Difficulty", resourceCulture);
+            }
+        }
+        
+        internal static string BlockHeight {
+            get {
+                return ResourceManager.GetString("BlockHeight", resourceCulture);
+            }
+        }
+        
+        internal static string CoinSupply {
+            get {
+                return ResourceManager.GetString("CoinSupply", resourceCulture);
+            }
+        }
+        
+        internal static string ProofOfWork {
+            get {
+                return ResourceManager.GetString("ProofOfWork", resourceCulture);
+            }
+        }
+        
+        internal static string ProofOfStake {
+            get {
+                return ResourceManager.GetString("ProofOfStake", resourceCulture);
+            }
+        }
+        
+        internal static string GHps {
+            get {
+                return ResourceManager.GetString("GHps", resourceCulture);
+            }
+        }
+        
+        internal static string unitSecond {
+            get {
+                return ResourceManager.GetString("unitSecond", resourceCulture);
+            }
+        }
+        
+        internal static string MarketCap {
+            get {
+                return ResourceManager.GetString("MarketCap", resourceCulture);
+            }
+        }
+        
+        internal static string ProofOfWorkAndState {
+            get {
+                return ResourceManager.GetString("ProofOfWorkAndState", resourceCulture);
+            }
+        }
+        
+        internal static string BlockExplorer {
+            get {
+                return ResourceManager.GetString("BlockExplorer", resourceCulture);
+            }
+        }
     }
 }

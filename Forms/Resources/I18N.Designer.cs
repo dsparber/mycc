@@ -964,5 +964,89 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("Security", resourceCulture);
             }
         }
+        
+        public static string Abbreviation {
+            get {
+                return ResourceManager.GetString("Abbreviation", resourceCulture);
+            }
+        }
+        
+        public static string Algorithm {
+            get {
+                return ResourceManager.GetString("Algorithm", resourceCulture);
+            }
+        }
+        
+        public static string Blocktime {
+            get {
+                return ResourceManager.GetString("Blocktime", resourceCulture);
+            }
+        }
+        
+        public static string Hashrate {
+            get {
+                return ResourceManager.GetString("Hashrate", resourceCulture);
+            }
+        }
+        
+        public static string Difficulty {
+            get {
+                return ResourceManager.GetString("Difficulty", resourceCulture);
+            }
+        }
+        
+        public static string BlockHeight {
+            get {
+                return ResourceManager.GetString("BlockHeight", resourceCulture);
+            }
+        }
+        
+        public static string CoinSupply {
+            get {
+                return ResourceManager.GetString("CoinSupply", resourceCulture);
+            }
+        }
+        
+        public static string ProofOfWork {
+            get {
+                return ResourceManager.GetString("ProofOfWork", resourceCulture);
+            }
+        }
+        
+        public static string ProofOfStake {
+            get {
+                return ResourceManager.GetString("ProofOfStake", resourceCulture);
+            }
+        }
+        
+        public static string GHps {
+            get {
+                return ResourceManager.GetString("GHps", resourceCulture);
+            }
+        }
+        
+        public static string unitSecond {
+            get {
+                return ResourceManager.GetString("unitSecond", resourceCulture);
+            }
+        }
+        
+        public static string MarketCap {
+            get {
+                return ResourceManager.GetString("MarketCap", resourceCulture);
+            }
+        }
+        
+        public static string ProofOfWorkAndState {
+            get {
+                return ResourceManager.GetString("ProofOfWorkAndState", resourceCulture);
+            }
+        }
+        
+        public static string BlockExplorer {
+            get {
+                return ResourceManager.GetString("BlockExplorer", resourceCulture);
+            }
+        }
     }
 }

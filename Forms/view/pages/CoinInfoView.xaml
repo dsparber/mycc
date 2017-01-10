@@ -22,7 +22,21 @@
 				IsClippedToBounds="true">
 				<StackLayout
 					Spacing="0"
-					x:Name="Content" />
+					x:Name="Content">
+					<Label
+						x:Name="InfoHeading"
+						Margin="15"
+						FontSize="14" />
+					<StackLayout
+						Margin="15,0,15,0"
+						Orientation="Horizontal">
+						<StackLayout
+							x:Name="InfoStackHeadings"
+							HorizontalOptions="StartAndExpand" />
+						<StackLayout
+							x:Name="InfoStackValues" />
+					</StackLayout>
+				</StackLayout>
 			</ScrollView>
 		</components:ChangingStackLayout>
 	</ContentPage.Content>

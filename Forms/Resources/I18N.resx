@@ -939,4 +939,74 @@
 		xml:space="preserve">
     <value>Security</value>
   </data>
+	<data
+		name="Abbreviation"
+		xml:space="preserve">
+    <value>Abbreviation</value>
+  </data>
+	<data
+		name="Algorithm"
+		xml:space="preserve">
+    <value>Algorithm</value>
+  </data>
+	<data
+		name="Blocktime"
+		xml:space="preserve">
+    <value>Blocktime</value>
+  </data>
+	<data
+		name="Hashrate"
+		xml:space="preserve">
+    <value>Hashrate</value>
+  </data>
+	<data
+		name="Difficulty"
+		xml:space="preserve">
+    <value>Difficulty</value>
+  </data>
+	<data
+		name="BlockHeight"
+		xml:space="preserve">
+    <value>Block height</value>
+  </data>
+	<data
+		name="CoinSupply"
+		xml:space="preserve">
+    <value>Coin supply</value>
+  </data>
+	<data
+		name="ProofOfWork"
+		xml:space="preserve">
+    <value>Proof of work</value>
+  </data>
+	<data
+		name="ProofOfStake"
+		xml:space="preserve">
+    <value>Proof of stake</value>
+  </data>
+	<data
+		name="GHps"
+		xml:space="preserve">
+    <value>GH/s</value>
+  </data>
+	<data
+		name="unitSecond"
+		xml:space="preserve">
+    <value>s</value>
+  </data>
+	<data
+		name="MarketCap"
+		xml:space="preserve">
+    <value>Market cap.</value>
+  </data>
+	<data
+		name="ProofOfWorkAndState"
+		xml:space="preserve">
+    <value>Proof of work and stake</value>
+  </data>
+	<data
+		name="BlockExplorer"
+		xml:space="preserve">
+    <value>Block explorer</value>
+  </data>
 </root>

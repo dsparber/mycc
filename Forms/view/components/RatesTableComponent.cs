@@ -116,7 +116,9 @@ namespace MyCryptos.Forms.view.components
 			try
 			{
 				var items = AccountStorage.UsedCurrencies
-							  .Concat(ApplicationSettings.WatchedCurrencies).Distinct()
+							  .Concat(ApplicationSettings.WatchedCurrencies)
+							  .Concat(ApplicationSettings.AllReferenceCurrencies)
+							  .Distinct()
 							  .Where(c => !c.Equals(ApplicationSettings.SelectedRatePageCurrency))
 							  .Select(c => new Data(c)).ToList();
 
