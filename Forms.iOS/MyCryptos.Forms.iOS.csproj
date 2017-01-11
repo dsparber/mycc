@@ -345,6 +345,9 @@
     <BundleResource Include="Resources\rate%403x.png" />
     <BundleResource Include="Resources\rate%402x.png" />
     <BundleResource Include="Resources\rate.png" />
+    <BundleResource Include="Resources\info%402x.png" />
+    <BundleResource Include="Resources\info%403x.png" />
+    <BundleResource Include="Resources\info.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Html\coinTable.css" />

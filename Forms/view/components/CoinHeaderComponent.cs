@@ -9,6 +9,7 @@ using MyCryptos.Core.ExchangeRate.Model;
 using MyCryptos.Core.settings;
 using MyCryptos.Forms.helpers;
 using MyCryptos.Forms.Messages;
+using MyCryptos.Forms.view.pages;
 using MyCryptos.view.components;
 using Xamarin.Forms;
 
@@ -22,6 +23,7 @@ namespace MyCryptos.Forms.view.components
 		private readonly FunctionalAccount account;
 		private readonly bool useOnlyThisCurrency;
 		private readonly List<string> infoTexts;
+		private readonly TapGestureRecognizer infoRecognizer;
 
 		private static int currentInfoText = 1;
 
@@ -30,6 +32,8 @@ namespace MyCryptos.Forms.view.components
 			this.account = account;
 			currency = account.Money.Currency;
 			useOnlyThisCurrency = true;
+
+			infoRecognizer.Tapped += (sender, e) => Navigation.PushAsync(new CoinInfoView(account.Money.Currency));
 
 			UpdateView();
 		}
@@ -46,6 +50,7 @@ namespace MyCryptos.Forms.view.components
 			this.currency = currency ?? ApplicationSettings.BaseCurrency;
 			this.useOneBitcoinAsReference = useOneBitcoinAsReference;
 			this.useOnlyThisCurrency = useOnlyThisCurrency;
+			infoRecognizer.Tapped += (sender, e) => Navigation.PushAsync(new CoinInfoView(currency));
 
 			UpdateView();
 		}
@@ -60,6 +65,7 @@ namespace MyCryptos.Forms.view.components
 			};
 
 			infoTexts = new List<string> { string.Empty, string.Empty };
+			infoRecognizer = new TapGestureRecognizer();
 
 			GestureRecognizers.Add(recognizer);
 			AddSubscriber();
@@ -95,6 +101,15 @@ namespace MyCryptos.Forms.view.components
 
 			Device.BeginInvokeOnMainThread(() =>
 			{
+				if (useOnlyThisCurrency || account != null)
+				{
+					InfoImage.IsVisible = true;
+					if (!InfoImage.GestureRecognizers.Contains(infoRecognizer))
+					{
+						InfoImage.GestureRecognizers.Add(infoRecognizer);
+					}
+				}
+
 				if (useOnlyThisCurrency && !useOneBitcoinAsReference)
 				{
 					var s = Sum.ToString(false);

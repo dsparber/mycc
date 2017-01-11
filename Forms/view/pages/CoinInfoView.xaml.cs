@@ -40,8 +40,8 @@ namespace MyCryptos.Forms.view.pages
 			_referenceView = new ReferenceCurrenciesView(new Money(1, _currency), true, _referenceCurrencies);
 			Content.Children.Add(_referenceView);
 
-			//Messaging.FetchMissingRates.SubscribeFinished(this, async () => await UpdateView());
-			//Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, async () => await UpdateView());
+			//Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
+			//Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
 
 			Func<Label> getLabel = () => new Label { IsVisible = false, FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor, LineBreakMode = LineBreakMode.TailTruncation };
 			Func<Tuple<Label, Label>> getTuple = () => Tuple.Create(getLabel(), getLabel());
@@ -74,7 +74,7 @@ namespace MyCryptos.Forms.view.pages
 			UpdateView();
 		}
 
-		private async Task UpdateView()
+		private void UpdateView()
 		{
 			var rate = new ExchangeRate(_currency, Currency.Btc);
 			rate = ExchangeRateHelper.GetRate(rate) ?? rate;
@@ -90,75 +90,77 @@ namespace MyCryptos.Forms.view.pages
 			_infos[I18N.Abbreviation].Item2.IsVisible = true;
 			_infos[I18N.Abbreviation].Item2.Text = _currency.Code;
 
-			var info = await CoinInfoStorage.Instance.GetInfo(_currency);
-
-
 			_infos[I18N.BlockExplorer].Item1.IsVisible = explorer.Count() > 0;
 			_infos[I18N.BlockExplorer].Item2.IsVisible = explorer.Count() > 0;
 			_infos[I18N.BlockExplorer].Item2.Text = string.Join(", ", explorer);
 
-			if (info != null)
-			{
-				_infos[I18N.Algorithm].Item1.IsVisible = info.Algorithm != null;
-				_infos[I18N.Algorithm].Item2.IsVisible = info.Algorithm != null;
-				_infos[I18N.Algorithm].Item2.Text = info.Algorithm;
-
-				_infos[I18N.Type].Item1.IsVisible = info.IsProofOfWork != null || info.IsProofOfStake != null;
-				_infos[I18N.Type].Item2.IsVisible = info.IsProofOfWork != null || info.IsProofOfStake != null;
-				_infos[I18N.Type].Item2.Text = (info.IsProofOfWork.GetValueOrDefault() && info.IsProofOfStake.GetValueOrDefault()) ? I18N.ProofOfWorkAndState : (info.IsProofOfWork.GetValueOrDefault()) ? I18N.ProofOfWork : info.IsProofOfStake.GetValueOrDefault() ? I18N.ProofOfStake : string.Empty;
-
-				_infos[I18N.Hashrate].Item1.IsVisible = info.Hashrate != null;
-				_infos[I18N.Hashrate].Item2.IsVisible = info.Hashrate != null;
-				_infos[I18N.Hashrate].Item2.Text = $"{info.Hashrate} {I18N.GHps}";
-
-				_infos[I18N.Difficulty].Item1.IsVisible = info.Difficulty != null;
-				_infos[I18N.Difficulty].Item2.IsVisible = info.Difficulty != null;
-				_infos[I18N.Difficulty].Item2.Text = info.Difficulty.GetValueOrDefault().ToString();
-
-				_infos[I18N.BlockHeight].Item1.IsVisible = info.Height != null;
-				_infos[I18N.BlockHeight].Item2.IsVisible = info.Height != null;
-				_infos[I18N.BlockHeight].Item2.Text = info.Height.GetValueOrDefault().ToString();
-
-				_infos[I18N.Blocktime].Item1.IsVisible = info.Blocktime != null;
-				_infos[I18N.Blocktime].Item2.IsVisible = info.Blocktime != null;
-				_infos[I18N.Blocktime].Item2.Text = info.Blocktime.GetValueOrDefault().ToString();
-
-				_infos[I18N.CoinSupply].Item1.IsVisible = info.CoinSupply != null;
-				_infos[I18N.CoinSupply].Item2.IsVisible = info.CoinSupply != null;
-				_infos[I18N.CoinSupply].Item2.Text = info.CoinSupply.GetValueOrDefault().ToString();
-
-				_infos[I18N.MarketCap].Item1.IsVisible = info.CoinSupply != null && rate.Rate != null;
-				_infos[I18N.MarketCap].Item2.IsVisible = info.CoinSupply != null && rate.Rate != null;
-				_infos[I18N.MarketCap].Item2.Text = new Money(info.CoinSupply.GetValueOrDefault() * rate.RateNotNull, Currency.Btc).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-			}
-			else {
-				_infos[I18N.Algorithm].Item1.IsVisible = false;
-				_infos[I18N.Algorithm].Item2.IsVisible = false;
-
-				_infos[I18N.Type].Item1.IsVisible = false;
-				_infos[I18N.Type].Item2.IsVisible = false;
-
-				_infos[I18N.Hashrate].Item1.IsVisible = false;
-				_infos[I18N.Hashrate].Item2.IsVisible = false;
-
-				_infos[I18N.Difficulty].Item1.IsVisible = false;
-				_infos[I18N.Difficulty].Item2.IsVisible = false;
-
-				_infos[I18N.BlockHeight].Item1.IsVisible = false;
-				_infos[I18N.BlockHeight].Item2.IsVisible = false;
-
-				_infos[I18N.Blocktime].Item1.IsVisible = false;
-				_infos[I18N.Blocktime].Item2.IsVisible = false;
-
-				_infos[I18N.CoinSupply].Item1.IsVisible = false;
-				_infos[I18N.CoinSupply].Item2.IsVisible = false;
-
-				_infos[I18N.MarketCap].Item1.IsVisible = false;
-				_infos[I18N.MarketCap].Item2.IsVisible = false;
-			}
-
 			Header.InfoText = referenceMoney.ToString8Digits();
 			_referenceView.UpdateView();
+
+			Task.Factory.StartNew(async () =>
+			{
+				var info = await CoinInfoStorage.Instance.GetInfo(_currency);
+
+				if (info != null)
+				{
+					_infos[I18N.Algorithm].Item1.IsVisible = info.Algorithm != null;
+					_infos[I18N.Algorithm].Item2.IsVisible = info.Algorithm != null;
+					_infos[I18N.Algorithm].Item2.Text = info.Algorithm;
+
+					_infos[I18N.Type].Item1.IsVisible = info.IsProofOfWork != null || info.IsProofOfStake != null;
+					_infos[I18N.Type].Item2.IsVisible = info.IsProofOfWork != null || info.IsProofOfStake != null;
+					_infos[I18N.Type].Item2.Text = (info.IsProofOfWork.GetValueOrDefault() && info.IsProofOfStake.GetValueOrDefault()) ? I18N.ProofOfWorkAndState : (info.IsProofOfWork.GetValueOrDefault()) ? I18N.ProofOfWork : info.IsProofOfStake.GetValueOrDefault() ? I18N.ProofOfStake : string.Empty;
+
+					_infos[I18N.Hashrate].Item1.IsVisible = info.Hashrate != null;
+					_infos[I18N.Hashrate].Item2.IsVisible = info.Hashrate != null;
+					_infos[I18N.Hashrate].Item2.Text = $"{info.Hashrate} {I18N.GHps}";
+
+					_infos[I18N.Difficulty].Item1.IsVisible = info.Difficulty != null;
+					_infos[I18N.Difficulty].Item2.IsVisible = info.Difficulty != null;
+					_infos[I18N.Difficulty].Item2.Text = info.Difficulty.GetValueOrDefault().ToString();
+
+					_infos[I18N.BlockHeight].Item1.IsVisible = info.Height != null;
+					_infos[I18N.BlockHeight].Item2.IsVisible = info.Height != null;
+					_infos[I18N.BlockHeight].Item2.Text = info.Height.GetValueOrDefault().ToString();
+
+					_infos[I18N.Blocktime].Item1.IsVisible = info.Blocktime != null;
+					_infos[I18N.Blocktime].Item2.IsVisible = info.Blocktime != null;
+					_infos[I18N.Blocktime].Item2.Text = info.Blocktime.GetValueOrDefault().ToString();
+
+					_infos[I18N.CoinSupply].Item1.IsVisible = info.CoinSupply != null;
+					_infos[I18N.CoinSupply].Item2.IsVisible = info.CoinSupply != null;
+					_infos[I18N.CoinSupply].Item2.Text = info.CoinSupply.GetValueOrDefault().ToString();
+
+					_infos[I18N.MarketCap].Item1.IsVisible = info.CoinSupply != null && rate.Rate != null;
+					_infos[I18N.MarketCap].Item2.IsVisible = info.CoinSupply != null && rate.Rate != null;
+					_infos[I18N.MarketCap].Item2.Text = new Money(info.CoinSupply.GetValueOrDefault() * rate.RateNotNull, Currency.Btc).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+				}
+				else {
+					_infos[I18N.Algorithm].Item1.IsVisible = false;
+					_infos[I18N.Algorithm].Item2.IsVisible = false;
+
+					_infos[I18N.Type].Item1.IsVisible = false;
+					_infos[I18N.Type].Item2.IsVisible = false;
+
+					_infos[I18N.Hashrate].Item1.IsVisible = false;
+					_infos[I18N.Hashrate].Item2.IsVisible = false;
+
+					_infos[I18N.Difficulty].Item1.IsVisible = false;
+					_infos[I18N.Difficulty].Item2.IsVisible = false;
+
+					_infos[I18N.BlockHeight].Item1.IsVisible = false;
+					_infos[I18N.BlockHeight].Item2.IsVisible = false;
+
+					_infos[I18N.Blocktime].Item1.IsVisible = false;
+					_infos[I18N.Blocktime].Item2.IsVisible = false;
+
+					_infos[I18N.CoinSupply].Item1.IsVisible = false;
+					_infos[I18N.CoinSupply].Item2.IsVisible = false;
+
+					_infos[I18N.MarketCap].Item1.IsVisible = false;
+					_infos[I18N.MarketCap].Item2.IsVisible = false;
+				}
+			});
 		}
 
 		private async void Refresh(object sender, EventArgs e)
