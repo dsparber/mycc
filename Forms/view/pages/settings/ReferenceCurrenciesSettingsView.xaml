@@ -13,11 +13,8 @@
 		<TableView
 			Intent="Settings">
 			<TableSection
-				Title="{i18N:Translate MainCurrencies}"
-				x:Name="MainCurrenciesSection" />
-			<TableSection
-				Title="{i18N:Translate FurtherCurrencies}"
-				x:Name="AllCurrenciesSection" />
+				Title="{i18N:Translate ReferenceCurrencies}"
+				x:Name="CurrenciesSection" />
 		</TableView>
 	</components:ChangingStackLayout>
 </ContentPage>

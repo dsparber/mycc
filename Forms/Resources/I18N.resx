@@ -1009,4 +1009,14 @@
 		xml:space="preserve">
     <value>Block explorer</value>
   </data>
+	<data
+		name="BitcoinCanNotBeUnstared"
+		xml:space="preserve">
+    <value>Bitcoin can not be removed from the stared reference currencies.</value>
+  </data>
+	<data
+		name="BitcoinCanNotBeRemoved"
+		xml:space="preserve">
+    <value>Bitcoin can not be removed from the reference currencies.</value>
+  </data>
 </root>

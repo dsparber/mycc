@@ -1016,4 +1016,14 @@
 		xml:space="preserve">
     <value>Block explorer</value>
   </data>
+	<data
+		name="BitcoinCanNotBeUnstared"
+		xml:space="preserve">
+    <value>Bitcoin kann nicht von den favoritisierten Referenzwährungen entfernt werden.</value>
+  </data>
+	<data
+		name="BitcoinCanNotBeRemoved"
+		xml:space="preserve">
+    <value>Bitcoin kann nicht von den Referenzwährungen entfernt werden.</value>
+  </data>
 </root>

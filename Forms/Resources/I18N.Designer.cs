@@ -1048,5 +1048,17 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("BlockExplorer", resourceCulture);
             }
         }
+        
+        public static string BitcoinCanNotBeUnstared {
+            get {
+                return ResourceManager.GetString("BitcoinCanNotBeUnstared", resourceCulture);
+            }
+        }
+        
+        public static string BitcoinCanNotBeRemoved {
+            get {
+                return ResourceManager.GetString("BitcoinCanNotBeRemoved", resourceCulture);
+            }
+        }
     }
 }
