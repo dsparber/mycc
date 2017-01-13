@@ -5,16 +5,40 @@
 	x:Class="MyCryptos.Forms.view.pages.settings.ReferenceCurrenciesSettingsView"
 	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
+	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
+	BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
 	Title="{i18N:Translate Currencies}">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			Text="{i18N:Translate Add}"
+			Clicked="Add" />
+	</ContentPage.ToolbarItems>
 	<components:ChangingStackLayout>
 		<components:HeaderView
 			TitleText="{i18N:Translate AppName}"
 			x:Name="Header" />
-		<TableView
-			Intent="Settings">
-			<TableSection
-				Title="{i18N:Translate ReferenceCurrencies}"
-				x:Name="CurrenciesSection" />
-		</TableView>
+		<ScrollView
+			IsClippedToBounds="true">
+			<StackLayout
+				Spacing="0"
+				BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
+				<Label
+					Text="{i18N:Translate ReferenceCurrencyInfoP1}"
+					Margin="15,15,15,0"
+					TextColor="{x:Static constants:AppConstants.TableSectionColor}"
+					FontSize="14" />
+				<Label
+					Text="{i18N:Translate ReferenceCurrencyInfoP2}"
+					Margin="15,5,15,0"
+					TextColor="{x:Static constants:AppConstants.TableSectionColor}"
+					FontSize="14" />
+				<TableView
+					Intent="Settings">
+					<TableSection
+						Title="{i18N:Translate ReferenceCurrencies}"
+						x:Name="CurrenciesSection" />
+				</TableView>
+			</StackLayout>
+		</ScrollView>
 	</components:ChangingStackLayout>
 </ContentPage>

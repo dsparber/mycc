@@ -5,30 +5,41 @@
 	x:Class="MyCryptos.Forms.view.pages.settings.DefaultPageSettingsView"
 	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
 	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
+	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
 	Title="{i18N:Translate DefaultView}">
 	<components:ChangingStackLayout>
 		<components:HeaderView
-			TitleText="{i18N:Translate AppName}" />
-		<TableView
-			Intent="Settings">
-			<TableSection
-				Title="{i18N:Translate DefaultView}">
-				<components:CustomViewCell
-					x:Name="RatesOptionCell"
-					Tapped="SelectionChanged"
-					Text="{i18N:Translate Rates}"
-					Image="checkmark.png" />
-				<components:CustomViewCell
-					x:Name="TableOptionCell"
-					Tapped="SelectionChanged"
-					Text="{i18N:Translate Table}"
-					Image="checkmark.png" />
-				<components:CustomViewCell
-					x:Name="GraphOptionCell"
-					Tapped="SelectionChanged"
-					Text="{i18N:Translate Graph}"
-					Image="checkmark.png" />
-			</TableSection>
-		</TableView>
+			TitleText="{i18N:Translate AppName}"
+			x:Name="Header" />
+		<StackLayout
+			Spacing="0"
+			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
+			<Label
+				Text="{i18N:Translate DefaultPageInfo}"
+				Margin="15,15,15,0"
+				TextColor="{x:Static constants:AppConstants.TableSectionColor}"
+				FontSize="14" />
+			<TableView
+				Intent="Settings">
+				<TableSection
+					Title="{i18N:Translate DefaultView}">
+					<components:CustomViewCell
+						x:Name="RatesOptionCell"
+						Tapped="SelectionChanged"
+						Text="{i18N:Translate Rates}"
+						Image="checkmark.png" />
+					<components:CustomViewCell
+						x:Name="TableOptionCell"
+						Tapped="SelectionChanged"
+						Text="{i18N:Translate AssetsTable}"
+						Image="checkmark.png" />
+					<components:CustomViewCell
+						x:Name="GraphOptionCell"
+						Tapped="SelectionChanged"
+						Text="{i18N:Translate AssetsGraph}"
+						Image="checkmark.png" />
+				</TableSection>
+			</TableView>
+		</StackLayout>
 	</components:ChangingStackLayout>
 </ContentPage>

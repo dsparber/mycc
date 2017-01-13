@@ -75,11 +75,10 @@ namespace MyCryptos.Forms.view.pages
 				   return c;
 		   	};
 
-			var manualCells = repositories.OfType<LocalAccountRepository>().Where(r => r.Elements.ToList().Count > 0).Select(r =>
+			var manualCells = repositories.OfType<LocalAccountRepository>().SelectMany(r => r.Elements).Select(a =>
 			{
-				var c = GetCell(r);
-				c.Detail = PluralHelper.GetTextCoins(r.Elements.ToList().Count);
-				c.Text = r.Description;
+				var c = new CustomViewCell { Image = "more.png", Text = a.Money.ToString(), Detail = a.Name };
+				c.Tapped += (sender, e) => Navigation.PushAsync(new AccountEditView(a, AccountStorage.Instance.LocalRepository as LocalAccountRepository));
 				return c;
 			}).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
 			var bittrexCells = repositories.OfType<BittrexAccountRepository>().Select(r =>

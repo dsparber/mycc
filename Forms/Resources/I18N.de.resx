@@ -1026,4 +1026,34 @@
 		xml:space="preserve">
     <value>Bitcoin kann nicht von den Referenzwährungen entfernt werden.</value>
   </data>
+	<data
+		name="OnlyThreeCurrenciesCanBeStared"
+		xml:space="preserve">
+    <value>Es können nur drei Währungen mit einem Stern markiert werden.</value>
+  </data>
+	<data
+		name="ReferenceCurrencyInfoP1"
+		xml:space="preserve">
+    <value>Der Wert aller Coins, einer Coin oder eines Kontos wird in den folgenden Währungen angezeigt.</value>
+  </data>
+	<data
+		name="ReferenceCurrencyInfoP2"
+		xml:space="preserve">
+    <value>Die Werte, welche mit einem Stern markierten sind, werden im blauen Kopffeld angezeigt.</value>
+  </data>
+	<data
+		name="AssetsGraph"
+		xml:space="preserve">
+    <value>Vermögensübersicht (Graph)</value>
+  </data>
+	<data
+		name="AssetsTable"
+		xml:space="preserve">
+    <value>Vermögensübersicht (Table)</value>
+  </data>
+	<data
+		name="DefaultPageInfo"
+		xml:space="preserve">
+    <value>Die ausgewählte Ansicht wird beim Starten der Applikation angezeigt.</value>
+  </data>
 </root>

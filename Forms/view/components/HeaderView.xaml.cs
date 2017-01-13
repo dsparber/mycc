@@ -9,8 +9,6 @@ namespace MyCryptos.view.components
 		private double defaultSize = 36;
 		private double defaultSizeSmall = 24;
 
-		public Image InfoImage => InfoIcon;
-
 		public string TitleText
 		{
 			private get { return TitleLabel.Text ?? string.Empty; }

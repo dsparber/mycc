@@ -9,6 +9,10 @@
 	x:Class="MyCryptos.Forms.view.pages.AccountDetailView">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
+			Text="{i18N:Translate Info}"
+			Clicked="ShowInfo"
+			Icon="info.png" />
+		<ToolbarItem
 			Text="{i18N:Translate Refresh}"
 			Clicked="Refresh"
 			x:Name="RefreshItem"
@@ -19,7 +23,7 @@
 			x:Name="ChangingStack"
 			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
 			<ScrollView
-				x:Name="Content"
+				x:Name="ContentView"
 				IsClippedToBounds="true" />
 		</components:ChangingStackLayout>
 	</ContentPage.Content>

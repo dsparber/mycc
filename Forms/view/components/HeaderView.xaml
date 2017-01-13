@@ -10,7 +10,7 @@
 	Margin="0,-1,0,0">
 	<ContentView.Content>
 		<StackLayout
-			Margin="10,10,10,0"
+			Margin="10"
 			VerticalOptions="CenterAndExpand"
 			HorizontalOptions="CenterAndExpand">
 			<StackLayout
@@ -56,18 +56,6 @@
 					Color="White"
 					x:Name="LoadingIndicator"
 					IsRunning="true" />
-			</StackLayout>
-			<StackLayout
-				Orientation="Horizontal">
-				<ContentView
-					HeightRequest="20"
-					HorizontalOptions="FillAndExpand" />
-				<Image
-					HorizontalOptions="End"
-					VerticalOptions="End"
-					Source="info.png"
-					x:Name="InfoIcon"
-					IsVisible="false" />
 			</StackLayout>
 		</StackLayout>
 	</ContentView.Content>

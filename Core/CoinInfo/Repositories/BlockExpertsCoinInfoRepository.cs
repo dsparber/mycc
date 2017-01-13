@@ -27,14 +27,14 @@ namespace MyCryptos.Core.CoinInfo.Repositories
 			var client = new HttpClient { MaxResponseContentBufferSize = 256000 };
 
 			var heightTask = client.GetAsync(GetUri(currency, KeyHeight));
-			var hashrateTask = client.GetAsync(GetUri(currency, KeyHeight));
-			var diffTask = client.GetAsync(GetUri(currency, KeyHeight));
-			var supplyTask = client.GetAsync(GetUri(currency, KeyHeight));
+			var hashrateTask = client.GetAsync(GetUri(currency, KeyHashrate));
+			var diffTask = client.GetAsync(GetUri(currency, KeyDifficulty));
+			var supplyTask = client.GetAsync(GetUri(currency, KeySupply));
 
 			var heigh = await (await heightTask).Content.ReadAsStringAsync();
-			var hashrate = await (await heightTask).Content.ReadAsStringAsync();
-			var diff = await (await heightTask).Content.ReadAsStringAsync();
-			var supply = await (await heightTask).Content.ReadAsStringAsync();
+			var hashrate = await (await hashrateTask).Content.ReadAsStringAsync();
+			var diff = await (await diffTask).Content.ReadAsStringAsync();
+			var supply = await (await supplyTask).Content.ReadAsStringAsync();
 
 			return new CoinInfoData(currency)
 			{

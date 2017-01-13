@@ -1066,5 +1066,41 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("BitcoinCanNotBeRemoved", resourceCulture);
             }
         }
+        
+        internal static string OnlyThreeCurrenciesCanBeStared {
+            get {
+                return ResourceManager.GetString("OnlyThreeCurrenciesCanBeStared", resourceCulture);
+            }
+        }
+        
+        internal static string ReferenceCurrencyInfoP1 {
+            get {
+                return ResourceManager.GetString("ReferenceCurrencyInfoP1", resourceCulture);
+            }
+        }
+        
+        internal static string ReferenceCurrencyInfoP2 {
+            get {
+                return ResourceManager.GetString("ReferenceCurrencyInfoP2", resourceCulture);
+            }
+        }
+        
+        internal static string AssetsGraph {
+            get {
+                return ResourceManager.GetString("AssetsGraph", resourceCulture);
+            }
+        }
+        
+        internal static string AssetsTable {
+            get {
+                return ResourceManager.GetString("AssetsTable", resourceCulture);
+            }
+        }
+        
+        internal static string DefaultPageInfo {
+            get {
+                return ResourceManager.GetString("DefaultPageInfo", resourceCulture);
+            }
+        }
     }
 }

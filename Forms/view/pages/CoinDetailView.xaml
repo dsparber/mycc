@@ -9,6 +9,10 @@
 	x:Class="MyCryptos.Forms.view.pages.CoinDetailView">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
+			Text="{i18N:Translate Info}"
+			Clicked="ShowInfo"
+			Icon="info.png" />
+		<ToolbarItem
 			Text="{i18N:Translate Refresh}"
 			Clicked="Refresh"
 			Icon="refresh.png" />
@@ -20,7 +24,7 @@
 			<ScrollView
 				IsClippedToBounds="true">
 				<StackLayout
-					x:Name="Content"
+					x:Name="ContentView"
 					Spacing="0">
 				</StackLayout>
 			</ScrollView>

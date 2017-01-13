@@ -89,9 +89,6 @@
     <Compile Include="view\pages\AccountDetailView.xaml.cs">
       <DependentUpon>AccountDetailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\AddSourceView.xaml.cs">
-      <DependentUpon>AddSourceView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="view\pages\CoinDetailView.xaml.cs">
       <DependentUpon>CoinDetailView.xaml</DependentUpon>
     </Compile>
@@ -100,9 +97,6 @@
     </Compile>
     <Compile Include="view\pages\PasswordView.xaml.cs">
       <DependentUpon>PasswordView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\pages\RepositoryView.xaml.cs">
-      <DependentUpon>RepositoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\pages\settings\PinSettingsView.xaml.cs">
       <DependentUpon>PinSettingsView.xaml</DependentUpon>
@@ -116,14 +110,8 @@
     <Compile Include="view\pages\settings\DefaultPageSettingsView.xaml.cs">
       <DependentUpon>DefaultPageSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\SourcesView.xaml.cs">
-      <DependentUpon>SourcesView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="view\overlays\ErrorOverlay.cs" />
     <Compile Include="Tasks\AppTaskHelper.cs" />
-    <Compile Include="view\pages\AccountEditView.cs">
-      <DependentUpon>AccountEditView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="view\pages\CoinTableView.xaml.cs">
       <DependentUpon>CoinTableView.xaml</DependentUpon>
     </Compile>
@@ -139,6 +127,18 @@
     <Compile Include="view\components\RatesHeaderComponent.cs" />
     <Compile Include="view\pages\CoinInfoView.xaml.cs">
       <DependentUpon>CoinInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\pages\settings\SourcesView.xaml.cs">
+      <DependentUpon>SourcesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\pages\settings\RepositoryView.xaml.cs">
+      <DependentUpon>RepositoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\overlays\AddSourceView.xaml.cs">
+      <DependentUpon>AddSourceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\pages\settings\AccountEditView.cs">
+      <DependentUpon>AccountEditView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -161,10 +161,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>I18N.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\AccountEditView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType></SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="view\pages\CoinTableView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType></SubType>
@@ -181,6 +177,23 @@
     </EmbeddedResource>
     <EmbeddedResource Include="view\pages\CoinInfoView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\pages\settings\SourcesView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType></SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\pages\settings\RepositoryView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType></SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\overlays\AddSourceView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType></SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\pages\settings\AccountEditView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType></SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -204,13 +217,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="view\pages\AddSourceView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>
-      </SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="view\pages\CoinDetailView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
@@ -227,13 +233,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="view\pages\PasswordView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>
-      </SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\pages\RepositoryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
       </SubType>
@@ -263,14 +262,6 @@
     <EmbeddedResource Include="view\pages\settings\DefaultPageSettingsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\pages\SourcesView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>
-      </SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

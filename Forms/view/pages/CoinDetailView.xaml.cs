@@ -35,10 +35,10 @@ namespace MyCryptos.Forms.view.pages
 
 			accountsView = new AccountsTableComponent(Navigation, currency);
 
-			Content.Children.Add(accountsView);
+			ContentView.Children.Add(accountsView);
 
 			referenceView = new ReferenceCurrenciesView(MoneySum);
-			Content.Children.Add(referenceView);
+			ContentView.Children.Add(referenceView);
 
 			Subscribe();
 		}
@@ -80,6 +80,11 @@ namespace MyCryptos.Forms.view.pages
 
 			accountsView.OnAppearing();
 			referenceView.OnAppearing();
+		}
+
+		private void ShowInfo(object sender, EventArgs args)
+		{
+			Navigation.PushAsync(new CoinInfoView(currency));
 		}
 	}
 }

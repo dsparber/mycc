@@ -67,11 +67,13 @@ namespace MyCryptos.view.components
 		public bool ShowIcon
 		{
 			set { Device.BeginInvokeOnMainThread(() => accessoryImage.IsVisible = value); }
+			get { return accessoryImage?.IsVisible ?? false; }
 		}
 
 		public List<CustomViewCellActionItem> ActionItems
 		{
 			set { actions = value; SetActionItems(); }
+			get { return actions; }
 		}
 
 		public bool IsLoading

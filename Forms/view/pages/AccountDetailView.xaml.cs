@@ -22,14 +22,9 @@ namespace MyCryptos.Forms.view.pages
 			header = new CoinHeaderComponent(account);
 			ChangingStack.Children.Insert(0, header);
 			referenceView = new ReferenceCurrenciesView(account.Money);
-			Content.Content = referenceView;
+			ContentView.Content = referenceView;
 
 			SetView();
-
-			if (!(account is OnlineFunctionalAccount))
-			{
-				ToolbarItems.Remove(RefreshItem);
-			}
 
 			Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => Update());
 			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, () => Update());
@@ -68,8 +63,16 @@ namespace MyCryptos.Forms.view.pages
 
 		private async void Refresh(object sender, EventArgs args)
 		{
-			await AppTaskHelper.FetchBalanceAndRates(account as OnlineFunctionalAccount);
+			if (account is OnlineFunctionalAccount)
+			{
+				await AppTaskHelper.FetchBalanceAndRates(account as OnlineFunctionalAccount);
+			}
 			await AppTaskHelper.FetchMissingRates();
+		}
+
+		private void ShowInfo(object sender, EventArgs args)
+		{
+			Navigation.PushAsync(new CoinInfoView(account.Money.Currency));
 		}
 	}
 }

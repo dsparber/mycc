@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MyCryptos.Core.Currency.Model;
 using MyCryptos.Core.Currency.Storage;
@@ -18,8 +19,6 @@ namespace MyCryptos.Forms.view.pages.settings
 		{
 			InitializeComponent();
 			SetReferenceCurrencyCells();
-
-			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetReferenceCurrencyCells);
 		}
 
 		private void SetReferenceCurrencyCells()
@@ -48,36 +47,31 @@ namespace MyCryptos.Forms.view.pages.settings
 					ActionItems = items,
 					Detail = c.Name
 				};
-
 				currencyCells.Add(cell);
 			}
 
-
 			AllCurrenciesSection.Clear();
 			AllCurrenciesSection.Add(currencyCells);
+		}
 
-
+		private void Add(object sender, EventArgs args)
+		{
 			var allReferenceCurrencies = ApplicationSettings.WatchedCurrencies.ToArray();
 			var currencies = CurrencyStorage.Instance.AllElements.Where(c => !allReferenceCurrencies.Contains(c)).ToList();
 
-			var addCurrencyCell = new CustomViewCell { Text = I18N.AddFurtherCurrencies, IsActionCell = true };
-			addCurrencyCell.Tapped += (sender, e) =>
+			var overlay = new CurrencyOverlay(currencies)
 			{
-				var overlay = new CurrencyOverlay(currencies)
+				CurrencySelected = (c) =>
 				{
-					CurrencySelected = (c) =>
-					{
-						watchedCurrencies.Add(c);
-						ApplicationSettings.WatchedCurrencies = watchedCurrencies;
-						Messaging.ReferenceCurrencies.SendValueChanged();
-						SetReferenceCurrencyCells();
-					}
-				};
-
-				Navigation.PushAsync(overlay);
+					var watchedCurrencies = new List<Currency>(ApplicationSettings.WatchedCurrencies);
+					watchedCurrencies.Add(c);
+					ApplicationSettings.WatchedCurrencies = watchedCurrencies;
+					Messaging.ReferenceCurrencies.SendValueChanged();
+					SetReferenceCurrencyCells();
+				}
 			};
 
-			AllCurrenciesSection.Add(addCurrencyCell);
+			Navigation.PushAsync(overlay);
 		}
 	}
 }

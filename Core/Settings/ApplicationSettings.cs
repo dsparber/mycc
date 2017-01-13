@@ -99,8 +99,6 @@ namespace MyCryptos.Core.settings
 
 				var json = Settings.Get(Settings.KeyMainCurrencies, defaultValue);
 				var data = JsonConvert.DeserializeObject<List<Currency.Model.Currency>>(json);
-				data.RemoveAll(c => c.Equals(BaseCurrency));
-				data.Add(BaseCurrency);
 				return data.OrderBy(c => c.Code).ToList();
 			}
 			set
@@ -128,7 +126,7 @@ namespace MyCryptos.Core.settings
 			}
 		}
 
-		public static List<Currency.Model.Currency> AllReferenceCurrencies => MainCurrencies.Concat(FurtherCurrencies).ToList();
+		public static List<Currency.Model.Currency> AllReferenceCurrencies => MainCurrencies.Concat(FurtherCurrencies).Distinct().ToList();
 
 		public static SortOrder SortOrderTable
 		{

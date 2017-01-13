@@ -8,24 +8,34 @@
 	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
 	Title="{i18N:Translate Rates}">
-	<components:ChangingStackLayout>
-		<components:HeaderView
-			TitleText="{i18N:Translate AppName}"
-			InfoText="{i18N:Translate CurrenciesForRateView}" />
-		<StackLayout
-			Spacing="0"
-			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-			<Label
-				Text="{i18N:Translate RatesCurrenciesInfo}"
-				Margin="15,15,15,0"
-				TextColor="{x:Static constants:AppConstants.TableSectionColor}"
-				FontSize="14" />
-			<TableView
-				Intent="Settings">
-				<TableSection
-					Title="{i18N:Translate AdditionalCurrencies}"
-					x:Name="AllCurrenciesSection" />
-			</TableView>
-		</StackLayout>
-	</components:ChangingStackLayout>
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			Text="{i18N:Translate Add}"
+			Clicked="Add" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<components:ChangingStackLayout>
+			<components:HeaderView
+				TitleText="{i18N:Translate AppName}"
+				InfoText="{i18N:Translate CurrenciesForRateView}" />
+			<ScrollView
+				IsClippedToBounds="true">
+				<StackLayout
+					Spacing="0"
+					BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
+					<Label
+						Text="{i18N:Translate RatesCurrenciesInfo}"
+						Margin="15,15,15,0"
+						TextColor="{x:Static constants:AppConstants.TableSectionColor}"
+						FontSize="14" />
+					<TableView
+						Intent="Settings">
+						<TableSection
+							Title="{i18N:Translate AdditionalCurrencies}"
+							x:Name="AllCurrenciesSection" />
+					</TableView>
+				</StackLayout>
+			</ScrollView>
+		</components:ChangingStackLayout>
+	</ContentPage.Content>
 </ContentPage>

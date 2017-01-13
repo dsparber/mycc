@@ -21,12 +21,12 @@
 				<TableSection
 					Title="{i18N:Translate Data}">
 					<components:CustomViewCell
-						Text="{i18N:Translate ReferenceCurrencies}"
-						x:Name="ReferenceCurrenciesCell"
-						Image="more.png" />
-					<components:CustomViewCell
 						Text="{i18N:Translate Sources}"
 						x:Name="SourcesCell"
+						Image="more.png" />
+					<components:CustomViewCell
+						Text="{i18N:Translate ReferenceCurrencies}"
+						x:Name="ReferenceCurrenciesCell"
 						Image="more.png" />
 					<components:CustomViewCell
 						Text="{i18N:Translate Rates}"

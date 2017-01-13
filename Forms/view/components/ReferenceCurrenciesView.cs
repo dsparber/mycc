@@ -112,13 +112,10 @@ namespace MyCryptos.Forms.view.components
 			{
 				var items = referenceCurrencies.Select(c => new Data(referenceMoney, c)).ToList();
 				var itemsExisting = (items.Count > 0);
-				Debug.WriteLine(111);
 
 				if (!itemsExisting || !appeared) return;
-				Debug.WriteLine(114);
 
 				Func<Data, object> sortLambda;
-				Debug.WriteLine(117);
 				switch (ApplicationSettings.SortOrderReferenceValues)
 				{
 					case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
@@ -127,22 +124,17 @@ namespace MyCryptos.Forms.view.components
 					case SortOrder.None: sortLambda = d => 1; break;
 					default: sortLambda = d => 1; break;
 				}
-				Debug.WriteLine(126);
 				items = ApplicationSettings.SortDirectionReferenceValues == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
-				Debug.WriteLine(118);
 				webView.CallJsFunction("setHeader", new[]{
 					new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
 					new HeaderData($"{I18N.Currency[0]}.", SortOrder.Alphabetical.ToString())
 				}, string.Empty);
-				Debug.WriteLine(133);
 				webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
-				Debug.WriteLine(135);
 			}
 			catch (Exception e)
 			{
 				Debug.WriteLine(e);
 			}
-			Debug.WriteLine(140);
 		}
 
 		[DataContract]

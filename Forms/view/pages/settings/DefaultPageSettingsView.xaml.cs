@@ -1,6 +1,7 @@
 ﻿using System;
 using MyCryptos.Core.settings;
 using MyCryptos.Forms.Messages;
+using MyCryptos.Forms.Resources;
 
 namespace MyCryptos.Forms.view.pages.settings
 {
@@ -35,6 +36,7 @@ namespace MyCryptos.Forms.view.pages.settings
 			GraphOptionCell.ShowIcon = ApplicationSettings.DefaultPage.Equals(Core.Types.StartupPage.GraphView);
 			TableOptionCell.ShowIcon = ApplicationSettings.DefaultPage.Equals(Core.Types.StartupPage.TableView);
 			RatesOptionCell.ShowIcon = ApplicationSettings.DefaultPage.Equals(Core.Types.StartupPage.RatesView);
+			Header.InfoText = $"{I18N.DefaultView}: {(GraphOptionCell.ShowIcon ? I18N.AssetsGraph : TableOptionCell.ShowIcon ? I18N.AssetsTable : I18N.Rates)}";
 		}
 	}
 }
