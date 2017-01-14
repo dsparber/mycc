@@ -26,7 +26,6 @@ namespace MyCryptos.Forms.view.addsource
 		}
 
 		public override List<TableSection> InputSections => new List<TableSection> { inputSection };
-		public override string DefaultName => I18N.Unnamed;
 		public override string Description => I18N.Manually;
 
 		public override bool Enabled

@@ -19,6 +19,7 @@ namespace MyCryptos.Forms.view.pages
 {
 	public partial class CoinInfoView : ContentPage
 	{
+		private bool _fetchCoinInfoDone, _fetchRatesDone;
 		private Currency _currency;
 		private ReferenceCurrenciesView _referenceView;
 		private List<Currency> _referenceCurrencies => ApplicationSettings.AllReferenceCurrencies;
@@ -38,10 +39,10 @@ namespace MyCryptos.Forms.view.pages
 			InfoHeading.TextColor = AppConstants.TableSectionColor;
 
 			_referenceView = new ReferenceCurrenciesView(new Money(1, _currency), true, _referenceCurrencies);
-			Content.Children.Add(_referenceView);
+			ContentView.Children.Add(_referenceView);
 
-			//Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
-			//Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
+			Messaging.FetchingCoinInfo.SubscribeFinished(this, () => { UpdateView(true); _fetchCoinInfoDone = true; if (_fetchCoinInfoDone && _fetchRatesDone) Header.IsLoading = false; });
+			Messaging.UpdatingRates.SubscribeFinished(this, () => { _fetchRatesDone = true; if (_fetchCoinInfoDone && _fetchRatesDone) Header.IsLoading = false; });
 
 			Func<Label> getLabel = () => new Label { IsVisible = false, FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor, LineBreakMode = LineBreakMode.TailTruncation };
 			Func<Tuple<Label, Label>> getTuple = () => Tuple.Create(getLabel(), getLabel());
@@ -56,8 +57,10 @@ namespace MyCryptos.Forms.view.pages
 
 				{I18N.Hashrate, getTuple()},
 				{I18N.Difficulty, getTuple()},
+				{I18N.BlockReward, getTuple()},
 				{I18N.BlockHeight, getTuple()},
 				{I18N.Blocktime, getTuple()},
+				{I18N.MaxCoinSupply, getTuple()},
 				{I18N.CoinSupply, getTuple()},
 				{I18N.MarketCap, getTuple()}
 			};
@@ -74,32 +77,37 @@ namespace MyCryptos.Forms.view.pages
 			UpdateView();
 		}
 
-		private void UpdateView()
+		private void UpdateView(bool calledFromBackground = false)
 		{
 			var rate = new ExchangeRate(_currency, Currency.Btc);
 			rate = ExchangeRateHelper.GetRate(rate) ?? rate;
 			var referenceMoney = new Money(rate.RateNotNull, Currency.Btc);
 
 			var explorer = CoinInfoStorage.Instance.GetExplorer(_currency).Select(e => e.Name);
+			var info = CoinInfoStorage.Instance.Get(_currency);
 
-			_infos[I18N.Name].Item1.IsVisible = true;
-			_infos[I18N.Name].Item2.IsVisible = true;
-			_infos[I18N.Name].Item2.Text = _currency.Name;
-
-			_infos[I18N.Abbreviation].Item1.IsVisible = true;
-			_infos[I18N.Abbreviation].Item2.IsVisible = true;
-			_infos[I18N.Abbreviation].Item2.Text = _currency.Code;
-
-			_infos[I18N.BlockExplorer].Item1.IsVisible = explorer.Count() > 0;
-			_infos[I18N.BlockExplorer].Item2.IsVisible = explorer.Count() > 0;
-			_infos[I18N.BlockExplorer].Item2.Text = string.Join(", ", explorer);
-
-			Header.InfoText = referenceMoney.ToString8Digits();
-			_referenceView.UpdateView();
-
-			Task.Factory.StartNew(async () =>
+			if (info == null && explorer.Count() > 0)
 			{
-				var info = await CoinInfoStorage.Instance.GetInfo(_currency);
+				Task.Run(() => AppTaskHelper.FetchCoinInfo(_currency));
+			}
+
+			Action updateUi = () =>
+			{
+				_infos[I18N.Name].Item1.IsVisible = true;
+				_infos[I18N.Name].Item2.IsVisible = true;
+				_infos[I18N.Name].Item2.Text = _currency.Name;
+
+				_infos[I18N.Abbreviation].Item1.IsVisible = true;
+				_infos[I18N.Abbreviation].Item2.IsVisible = true;
+				_infos[I18N.Abbreviation].Item2.Text = _currency.Code;
+
+				_infos[I18N.BlockExplorer].Item1.IsVisible = explorer.Count() > 0;
+				_infos[I18N.BlockExplorer].Item2.IsVisible = explorer.Count() > 0;
+				_infos[I18N.BlockExplorer].Item2.Text = string.Join(", ", explorer);
+
+				Header.InfoText = referenceMoney.ToString8Digits();
+				_referenceView.UpdateView();
+
 
 				if (info != null)
 				{
@@ -113,23 +121,31 @@ namespace MyCryptos.Forms.view.pages
 
 					_infos[I18N.Hashrate].Item1.IsVisible = info.Hashrate != null;
 					_infos[I18N.Hashrate].Item2.IsVisible = info.Hashrate != null;
-					_infos[I18N.Hashrate].Item2.Text = $"{info.Hashrate} {I18N.GHps}";
+					_infos[I18N.Hashrate].Item2.Text = $"{info.Hashrate:#,0.########} {I18N.GHps}";
 
 					_infos[I18N.Difficulty].Item1.IsVisible = info.Difficulty != null;
 					_infos[I18N.Difficulty].Item2.IsVisible = info.Difficulty != null;
-					_infos[I18N.Difficulty].Item2.Text = info.Difficulty.GetValueOrDefault().ToString();
+					_infos[I18N.Difficulty].Item2.Text = $"{info.Difficulty.GetValueOrDefault():#,0.########}";
 
-					_infos[I18N.BlockHeight].Item1.IsVisible = info.Height != null;
-					_infos[I18N.BlockHeight].Item2.IsVisible = info.Height != null;
-					_infos[I18N.BlockHeight].Item2.Text = info.Height.GetValueOrDefault().ToString();
+					_infos[I18N.BlockReward].Item1.IsVisible = info.Blockreward != null;
+					_infos[I18N.BlockReward].Item2.IsVisible = info.Blockreward != null;
+					_infos[I18N.BlockReward].Item2.Text = new Money(info.Blockreward.GetValueOrDefault(), _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+
+					_infos[I18N.BlockHeight].Item1.IsVisible = info.BlockHeight != null;
+					_infos[I18N.BlockHeight].Item2.IsVisible = info.BlockHeight != null;
+					_infos[I18N.BlockHeight].Item2.Text = $"{info.BlockHeight.GetValueOrDefault():#,0}";
 
 					_infos[I18N.Blocktime].Item1.IsVisible = info.Blocktime != null;
 					_infos[I18N.Blocktime].Item2.IsVisible = info.Blocktime != null;
-					_infos[I18N.Blocktime].Item2.Text = info.Blocktime.GetValueOrDefault().ToString();
+					_infos[I18N.Blocktime].Item2.Text = $"{ info.Blocktime.GetValueOrDefault():#,0.##}{I18N.unitSecond}";
+
+					_infos[I18N.MaxCoinSupply].Item1.IsVisible = info.MaxCoinSupply != null;
+					_infos[I18N.MaxCoinSupply].Item2.IsVisible = info.MaxCoinSupply != null;
+					_infos[I18N.MaxCoinSupply].Item2.Text = new Money(info.MaxCoinSupply.GetValueOrDefault(), _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
 
 					_infos[I18N.CoinSupply].Item1.IsVisible = info.CoinSupply != null;
 					_infos[I18N.CoinSupply].Item2.IsVisible = info.CoinSupply != null;
-					_infos[I18N.CoinSupply].Item2.Text = info.CoinSupply.GetValueOrDefault().ToString();
+					_infos[I18N.CoinSupply].Item2.Text = new Money(info.CoinSupply.GetValueOrDefault(), _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
 
 					_infos[I18N.MarketCap].Item1.IsVisible = info.CoinSupply != null && rate.Rate != null;
 					_infos[I18N.MarketCap].Item2.IsVisible = info.CoinSupply != null && rate.Rate != null;
@@ -148,6 +164,9 @@ namespace MyCryptos.Forms.view.pages
 					_infos[I18N.Difficulty].Item1.IsVisible = false;
 					_infos[I18N.Difficulty].Item2.IsVisible = false;
 
+					_infos[I18N.BlockReward].Item1.IsVisible = false;
+					_infos[I18N.BlockReward].Item2.IsVisible = false;
+
 					_infos[I18N.BlockHeight].Item1.IsVisible = false;
 					_infos[I18N.BlockHeight].Item2.IsVisible = false;
 
@@ -157,15 +176,29 @@ namespace MyCryptos.Forms.view.pages
 					_infos[I18N.CoinSupply].Item1.IsVisible = false;
 					_infos[I18N.CoinSupply].Item2.IsVisible = false;
 
+					_infos[I18N.MaxCoinSupply].Item1.IsVisible = false;
+					_infos[I18N.MaxCoinSupply].Item2.IsVisible = false;
+
 					_infos[I18N.MarketCap].Item1.IsVisible = false;
 					_infos[I18N.MarketCap].Item2.IsVisible = false;
 				}
-			});
+			};
+
+			if (calledFromBackground)
+			{
+				Device.BeginInvokeOnMainThread(updateUi);
+			}
+			else {
+				updateUi();
+			}
 		}
 
-		private async void Refresh(object sender, EventArgs e)
+		private void Refresh(object sender, EventArgs e)
 		{
-			await AppTaskHelper.FetchRates(_rates);
+			_fetchRatesDone = false; _fetchCoinInfoDone = false;
+			Header.IsLoading = true;
+			Task.Run(() => AppTaskHelper.FetchRates(_rates));
+			Task.Run(() => AppTaskHelper.FetchCoinInfo(_currency));
 		}
 
 		protected override void OnAppearing()

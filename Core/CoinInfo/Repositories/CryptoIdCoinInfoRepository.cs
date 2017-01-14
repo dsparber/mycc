@@ -51,7 +51,7 @@ namespace MyCryptos.Core.CoinInfo.Repositories
 				Algorithm = ParseOrNull(summaryJson[JsonKeyAlgorithm]),
 				IsProofOfWork = ParseOrNull(summaryJson[JsonKeyAlgorithm]) != null,
 				IsProofOfStake = bool.Parse((string)summaryJson[JsonKeyIsPoS]),
-				Height = int.Parse((string)summaryJson[JsonKeyHeigth]),
+				BlockHeight = int.Parse((string)summaryJson[JsonKeyHeigth]),
 				Difficulty = decimal.Parse((string)summaryJson[JsonKeyDifficulty], CultureInfo.InvariantCulture),
 				CoinSupply = decimal.Parse((string)summaryJson[JsonKeySupply], CultureInfo.InvariantCulture),
 				Hashrate = hashrate

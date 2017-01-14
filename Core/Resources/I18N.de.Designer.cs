@@ -94,5 +94,11 @@ namespace MyCryptos.Core.Resources {
                 return ResourceManager.GetString("ManuallyAdded", resourceCulture);
             }
         }
+        
+        internal static string Blockr {
+            get {
+                return ResourceManager.GetString("Blockr", resourceCulture);
+            }
+        }
     }
 }

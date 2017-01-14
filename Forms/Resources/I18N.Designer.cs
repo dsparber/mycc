@@ -1096,5 +1096,17 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("DefaultPageInfo", resourceCulture);
             }
         }
+        
+        public static string MaxCoinSupply {
+            get {
+                return ResourceManager.GetString("MaxCoinSupply", resourceCulture);
+            }
+        }
+        
+        public static string BlockReward {
+            get {
+                return ResourceManager.GetString("BlockReward", resourceCulture);
+            }
+        }
     }
 }

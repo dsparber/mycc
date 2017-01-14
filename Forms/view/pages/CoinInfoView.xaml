@@ -10,7 +10,6 @@
 		<ToolbarItem
 			Text="{i18N:Translate Refresh}"
 			Clicked="Refresh"
-			x:Name="RefreshItem"
 			Icon="refresh.png" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
@@ -22,7 +21,7 @@
 				IsClippedToBounds="true">
 				<StackLayout
 					Spacing="0"
-					x:Name="Content">
+					x:Name="ContentView">
 					<Label
 						x:Name="InfoHeading"
 						Margin="15"

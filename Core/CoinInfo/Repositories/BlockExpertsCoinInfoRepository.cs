@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using MyCryptos.Core.Currency.Repositories;
@@ -31,17 +30,17 @@ namespace MyCryptos.Core.CoinInfo.Repositories
 			var diffTask = client.GetAsync(GetUri(currency, KeyDifficulty));
 			var supplyTask = client.GetAsync(GetUri(currency, KeySupply));
 
-			var heigh = await (await heightTask).Content.ReadAsStringAsync();
-			var hashrate = await (await hashrateTask).Content.ReadAsStringAsync();
-			var diff = await (await diffTask).Content.ReadAsStringAsync();
-			var supply = await (await supplyTask).Content.ReadAsStringAsync();
+			var heigh = int.Parse(await (await heightTask).Content.ReadAsStringAsync());
+			var hashrate = decimal.Parse(await (await hashrateTask).Content.ReadAsStringAsync(), CultureInfo.InvariantCulture);
+			var diff = decimal.Parse(await (await diffTask).Content.ReadAsStringAsync(), CultureInfo.InvariantCulture);
+			var supply = decimal.Parse(await (await supplyTask).Content.ReadAsStringAsync(), CultureInfo.InvariantCulture);
 
 			return new CoinInfoData(currency)
 			{
-				Height = int.Parse(heigh),
-				CoinSupply = decimal.Parse(supply, CultureInfo.InvariantCulture),
-				Hashrate = decimal.Parse(hashrate, CultureInfo.InvariantCulture),
-				Difficulty = decimal.Parse(diff, CultureInfo.InvariantCulture),
+				BlockHeight = heigh != 0 ? heigh as int? : null,
+				CoinSupply = supply != 0 ? supply as decimal? : null,
+				Hashrate = hashrate != 0 ? hashrate as decimal? : null,
+				Difficulty = diff != 0 ? diff as decimal? : null
 			};
 		}
 	}

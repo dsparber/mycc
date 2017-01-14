@@ -43,7 +43,12 @@ namespace MyCryptos.Forms.Tasks
 		}
 		public static async Task FetchRates(List<ExchangeRate> neededRates)
 		{
-			await ApplicationTasks.FetchRates(neededRates, Messaging.UpdatingAccountsAndRates.SendStarted, Messaging.UpdatingAccountsAndRates.SendFinished, ErrorOverlay.Display);
+			await ApplicationTasks.FetchRates(neededRates, Messaging.UpdatingRates.SendStarted, Messaging.UpdatingRates.SendFinished, ErrorOverlay.Display);
+		}
+
+		public static async Task FetchCoinInfo(Currency currency)
+		{
+			await ApplicationTasks.FetchCoinInfo(currency, Messaging.FetchingCoinInfo.SendStarted, Messaging.FetchingCoinInfo.SendFinished, ErrorOverlay.Display);
 		}
 	}
 }

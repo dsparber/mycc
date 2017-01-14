@@ -146,12 +146,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\MyCryptos.Core.csproj">
-      <Project>{92708d96-5841-4408-a7ee-b2d02c716f89}</Project>
-      <Name>MyCryptos.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\I18N.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>I18N.de.Designer.cs</LastGenOutput>
@@ -334,6 +328,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tasks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\MyCC.Core.csproj">
+      <Project>{92708D96-5841-4408-A7EE-B2D02C716F89}</Project>
+      <Name>MyCC.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

@@ -1056,4 +1056,14 @@
 		xml:space="preserve">
     <value>Die ausgewählte Ansicht wird beim Starten der Applikation angezeigt.</value>
   </data>
+	<data
+		name="MaxCoinSupply"
+		xml:space="preserve">
+    <value>Max. coin supply</value>
+  </data>
+	<data
+		name="BlockReward"
+		xml:space="preserve">
+    <value>Blockbelohnung</value>
+  </data>
 </root>

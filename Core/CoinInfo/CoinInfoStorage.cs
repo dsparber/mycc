@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCryptos.Core.Abstract.Database;
@@ -23,54 +24,48 @@ namespace MyCryptos.Core.CoinInfo
 
 			_dbConnection = DependencyService.Get<ISQLiteConnection>().GetConnection();
 
-			_dbConnection.CreateTableAsync<CoinInfoData>();
-			Task.Factory.StartNew(async () => Elements.AddRange(await _dbConnection.Table<CoinInfoData>().ToListAsync()));
+
+			Task.Run(async () =>
+			{
+				await _dbConnection.CreateTableAsync<CoinInfoData>();
+				Elements.AddRange(await _dbConnection.Table<CoinInfoData>().ToListAsync());
+			});
 
 			_repositories = new List<ICoinInfoRepository> {
 				new CryptoIdCoinInfoRepository(),
-				new BlockExpertsCoinInfoRepository()
+				new BlockExpertsCoinInfoRepository(),
+				new BlockchainCoinInfoRepository(),
+				new BlockrCoinInfoRepository()
 			};
 		}
 
-		public async Task<CoinInfoData> GetInfo(Currency.Model.Currency currency)
+		public async Task<CoinInfoData> FetchInfo(Currency.Model.Currency currency)
 		{
-			if (Elements.Any(i => i.CurrencyCode.Equals(currency.Code)))
+			var info = new CoinInfoData(currency);
+
+			foreach (var r in GetExplorer(currency))
 			{
-				return Elements.Find(i => i.CurrencyCode.Equals(currency.Code));
+				info = info.AddUpdate(await r.GetInfo(currency));
 			}
 
-			foreach (var r in _repositories)
+			if (Elements.Contains(info))
 			{
-				if (r.SupportedCoins.Contains(currency))
-				{
-					try
-					{
-						var info = await r.GetInfo(currency);
-						if (info == null) continue;
-
-						if (Elements.Contains(info))
-						{
-							Elements.Remove(info);
-							await _dbConnection.UpdateAsync(info);
-						}
-						else {
-							await _dbConnection.InsertAsync(info);
-						}
-						Elements.Add(info);
-
-						return info;
-
-					}
-					catch (Exception)
-					{
-						continue;
-					}
-				}
+				Elements.Remove(info);
+				await _dbConnection.UpdateAsync(info);
 			}
-			return null;
+			else {
+				await _dbConnection.InsertAsync(info);
+			}
+			Elements.Add(info);
+
+			return info;
 		}
 
 		public List<ICoinInfoRepository> GetExplorer(Currency.Model.Currency currency) => _repositories.Where(r => r.SupportedCoins.Contains(currency)).ToList();
+
+		public bool Contains(Currency.Model.Currency currency) => Elements.Any(e => string.Equals(e.CurrencyCode, currency.Code));
+
+		public CoinInfoData Get(Currency.Model.Currency currency) => Elements.Find(e => string.Equals(e.CurrencyCode, currency.Code));
 
 		public static CoinInfoStorage Instance = new CoinInfoStorage();
 	}

@@ -47,7 +47,6 @@ namespace MyCryptos.Forms.view.addsource
 
 			sections = new List<TableSection> { sectionQr, sectionInfo };
 
-			currencyEntryCell.OnSelected = (c) => NameChanged();
 			scanActionCell.Tapped += (sender, e) =>
 			{
 				try
@@ -76,7 +75,6 @@ namespace MyCryptos.Forms.view.addsource
 								nameEntry.Text = values.Item3;
 							}
 
-							NameChanged();
 							navigation.PopAsync();
 						});
 					};
@@ -111,8 +109,6 @@ namespace MyCryptos.Forms.view.addsource
 		}
 
 		public override List<TableSection> InputSections => sections;
-
-		public sealed override string DefaultName => GetRepository(null)?.Description ?? I18N.Unnamed;
 
 		public sealed override string Description => I18N.Address;
 

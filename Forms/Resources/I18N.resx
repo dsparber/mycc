@@ -1049,4 +1049,14 @@
 		xml:space="preserve">
     <value>The selected view is presented when the application starts.</value>
   </data>
+	<data
+		name="MaxCoinSupply"
+		xml:space="preserve">
+    <value>Max. coin supply</value>
+  </data>
+	<data
+		name="BlockReward"
+		xml:space="preserve">
+    <value>Block reward</value>
+  </data>
 </root>

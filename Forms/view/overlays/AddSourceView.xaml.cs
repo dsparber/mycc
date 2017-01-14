@@ -37,14 +37,7 @@ namespace MyCryptos.Forms.view.pages
 
 			addViews = new List<AddSourceSubview>
 			{
-				new AddAddressSubview(Navigation, NameEntryCell.Entry)
-				{
-					NameChanged = () =>
-					{
-						Header.InfoText = specificAddView.DefaultName;
-						NameEntryCell.Placeholder = specificAddView.DefaultName;
-					}
-				},
+				new AddAddressSubview(Navigation, NameEntryCell.Entry),
 				new AddBittrexSubview(),
 				new AddLocalAccountSubview(Navigation)
 			};

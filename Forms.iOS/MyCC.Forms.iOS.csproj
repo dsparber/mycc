@@ -397,13 +397,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\MyCryptos.Core.csproj">
+    <ProjectReference Include="..\Core\MyCC.Core.csproj">
       <Project>{92708D96-5841-4408-A7EE-B2D02C716F89}</Project>
-      <Name>MyCryptos.Core</Name>
+      <Name>MyCC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Forms\MyCryptos.Forms.csproj">
-      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
-      <Name>MyCryptos.Forms</Name>
+    <ProjectReference Include="..\Forms\MyCC.Forms.csproj">
+      <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
+      <Name>MyCC.Forms</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

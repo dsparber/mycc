@@ -41,8 +41,6 @@ namespace MyCryptos.Forms.view.addsource
 			}
 		}
 
-		public override string DefaultName => I18N.Bittrex;
-
 		public override string Description => I18N.Bittrex;
 
 		public override List<TableSection> InputSections => new List<TableSection> { section };

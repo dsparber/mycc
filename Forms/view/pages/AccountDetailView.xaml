@@ -15,7 +15,6 @@
 		<ToolbarItem
 			Text="{i18N:Translate Refresh}"
 			Clicked="Refresh"
-			x:Name="RefreshItem"
 			Icon="refresh.png" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>

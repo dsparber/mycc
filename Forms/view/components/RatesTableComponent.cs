@@ -115,12 +115,12 @@ namespace MyCryptos.Forms.view.components
 		{
 			try
 			{
-				var items = AccountStorage.UsedCurrencies
-							  .Concat(ApplicationSettings.WatchedCurrencies)
-							  .Concat(ApplicationSettings.AllReferenceCurrencies)
-							  .Distinct()
-							  .Where(c => !c.Equals(ApplicationSettings.SelectedRatePageCurrency))
-							  .Select(c => new Data(c)).ToList();
+				var items = ApplicationSettings.WatchedCurrencies
+											   .Concat(ApplicationSettings.MainCurrencies)
+							 					.Concat(AccountStorage.UsedCurrencies)
+												.Distinct()
+												.Where(c => !c.Equals(ApplicationSettings.SelectedRatePageCurrency))
+												.Select(c => new Data(c)).ToList();
 
 				var itemsExisting = (items.Count > 0);
 

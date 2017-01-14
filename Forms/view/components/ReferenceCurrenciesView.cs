@@ -78,7 +78,7 @@ namespace MyCryptos.Forms.view.components
 
 			var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-			stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? tableHeaderLabel.ToUpper() : tableHeaderLabel, HorizontalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(8, 24, 8, 8), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
+			stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? tableHeaderLabel.ToUpper() : tableHeaderLabel, HorizontalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(15, 24, 8, 15), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
 			stack.Children.Add(webView);
 
 			Content = stack;

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MyCryptos.Core.Account.Models.Base;
 using MyCryptos.Core.Account.Repositories.Base;
 using MyCryptos.Core.Account.Storage;
+using MyCryptos.Core.CoinInfo;
 using MyCryptos.Core.Currency.Storage;
 using MyCryptos.Core.ExchangeRate.Helpers;
 using MyCryptos.Core.ExchangeRate.Storage;
@@ -157,6 +158,23 @@ namespace MyCryptos.Core.tasks
 			{
 				onStarted();
 				await ExchangeRateStorage.Instance.FetchOnline(neededRates);
+			}
+			catch (Exception e)
+			{
+				onError(e);
+			}
+			finally
+			{
+				onFinished();
+			}
+		}
+
+		public static async Task FetchCoinInfo(Currency.Model.Currency coin, Action onStarted, Action onFinished, Action<Exception> onError)
+		{
+			try
+			{
+				onStarted();
+				await CoinInfoStorage.Instance.FetchInfo(coin);
 			}
 			catch (Exception e)
 			{

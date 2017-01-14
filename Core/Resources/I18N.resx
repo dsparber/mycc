@@ -214,4 +214,9 @@
 		xml:space="preserve">
     <value>Manually added accounts</value>
   </data>
+	<data
+		name="Blockr"
+		xml:space="preserve">
+    <value>Blockr</value>
+  </data>
 </root>

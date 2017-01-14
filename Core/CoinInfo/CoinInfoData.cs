@@ -34,18 +34,25 @@ namespace MyCryptos.Core.CoinInfo
 		public decimal? Difficulty { get; set; }
 
 		/// <summary>
-		/// Gets or sets the coin supply. The coin supply is the total amount of coins available
+		/// Gets or sets the coin supply. The coin supply is the total amount of coins available.
 		/// </summary>
 		/// <value>The coin supply.</value>
 		[Column("CoinSupply")]
 		public decimal? CoinSupply { get; set; }
 
 		/// <summary>
+		/// Gets or sets the max. coin supply. The max. coin supply is the total amount of coins possible.
+		/// </summary>
+		/// <value>The max. coin supply.</value>
+		[Column("MaxSupply")]
+		public decimal? MaxCoinSupply { get; set; }
+
+		/// <summary>
 		/// Gets or sets the block height. The block height represents the number of blocks existing within the chain.
 		/// </summary>
-		/// <value>The height.</value>
+		/// <value>The block height.</value>
 		[Column("Height")]
-		public int? Height { get; set; }
+		public int? BlockHeight { get; set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this coin is working as proof of stake.
@@ -68,6 +75,13 @@ namespace MyCryptos.Core.CoinInfo
 		[Column("Blocktime")]
 		public decimal? Blocktime { get; set; }
 
+		/// <summary>
+		/// Gets or sets the blockreward.
+		/// </summary>
+		/// <value>The blockreward.</value>
+		[Column("Blockreward")]
+		public decimal? Blockreward { get; set; }
+
 
 		public CoinInfoData(Currency.Model.Currency currency) : this(currency.Code) { }
 
@@ -86,6 +100,34 @@ namespace MyCryptos.Core.CoinInfo
 		public override int GetHashCode()
 		{
 			return CurrencyCode.GetHashCode();
+		}
+
+		/// <summary>
+		/// Returns an updated info object, where the new informations are added to the existing
+		/// </summary>
+		/// <returns>The updated info.</returns>
+		/// <param name="info">The new info data.</param>
+		public CoinInfoData AddUpdate(CoinInfoData info)
+		{
+			return new CoinInfoData
+			{
+				CurrencyCode = info.CurrencyCode ?? CurrencyCode,
+				Algorithm = info.Algorithm ?? Algorithm,
+				Blocktime = info.Blocktime ?? Blocktime,
+				CoinSupply = info.CoinSupply ?? CoinSupply,
+				Difficulty = info.Difficulty ?? Difficulty,
+				Hashrate = info.Hashrate ?? Hashrate,
+				BlockHeight = info.BlockHeight ?? BlockHeight,
+				IsProofOfWork = info.IsProofOfWork ?? IsProofOfWork,
+				IsProofOfStake = info.IsProofOfStake ?? IsProofOfStake,
+				Blockreward = info.Blockreward ?? Blockreward,
+				MaxCoinSupply = info.MaxCoinSupply ?? MaxCoinSupply
+			};
+		}
+
+		public override string ToString()
+		{
+			return string.Format("[CoinInfoData: CurrencyCode={0}, Algorithm={1}, Hashrate={2}, Difficulty={3}, CoinSupply={4}, MaxCoinSupply={5}, BlockHeight={6}, IsProofOfStake={7}, IsProofOfWork={8}, Blocktime={9}]", CurrencyCode, Algorithm, Hashrate, Difficulty, CoinSupply, MaxCoinSupply, BlockHeight, IsProofOfStake, IsProofOfWork, Blocktime);
 		}
 	}
 }

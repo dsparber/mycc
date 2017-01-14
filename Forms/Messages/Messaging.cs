@@ -1,4 +1,6 @@
-﻿namespace MyCryptos.Forms.Messages
+﻿using System.Threading.Tasks;
+
+namespace MyCryptos.Forms.Messages
 {
 	public static class Messaging
 	{
@@ -15,9 +17,13 @@
 
 
 		public const string FetchMissingRates = "FetchMissingRates";
+		public const string FetchingCoinInfo = "FetchingCoinInfo";
 		public const string UpdatingAccounts = "UpdatingAccounts";
+		public const string UpdatingRates = "UpdatingRates";
 		public const string UpdatingAccountsAndRates = "UpdatingAccountsAndRates";
 		public const string UpdatingCurrenciesAndAvailableRates = "UpdatingCurrenciesAndAvailableRates";
+
+
 	}
 }
 

@@ -38,26 +38,6 @@
 							Android="#EEE" />
 					</StackLayout.BackgroundColor>
 				</StackLayout>
-				<ContentView
-					x:Name="NoSourcesView"
-					VerticalOptions="FillAndExpand"
-					BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-					<StackLayout
-						VerticalOptions="CenterAndExpand"
-						Margin="40">
-						<Label
-							Text="{i18N:Translate NoDataToDisplay}"
-							VerticalOptions="Center"
-							HorizontalTextAlignment="Center"
-							TextColor="{x:Static constants:AppConstants.FontColorLight}" />
-						<Label
-							Text="{i18N:Translate GoToSourcesToAddAccount}"
-							VerticalOptions="Center"
-							HorizontalTextAlignment="Center"
-							WidthRequest="150"
-							TextColor="{x:Static constants:AppConstants.FontColorLight}" />
-					</StackLayout>
-				</ContentView>
 			</StackLayout>
 		</components:ChangingStackLayout>
 	</ContentPage.Content>

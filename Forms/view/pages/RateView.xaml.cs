@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.Currency.Model;
 using MyCryptos.Core.ExchangeRate.Helpers;
@@ -8,7 +9,6 @@ using MyCryptos.Core.settings;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Tasks;
 using MyCryptos.Forms.view.components;
-using MyCryptos.view.components;
 using Xamarin.Forms;
 
 namespace MyCryptos.Forms.view.pages
@@ -33,7 +33,16 @@ namespace MyCryptos.Forms.view.pages
 			}
 
 			SetHeaderCarousel();
-			SetNoSourcesView();
+
+			if (ApplicationSettings.FirstLaunch)
+			{
+				Task.Run(async () => await AppTaskHelper.FetchMissingRates(ApplicationSettings.WatchedCurrencies
+									   .Concat(ApplicationSettings.MainCurrencies)
+									   .Select(c => new ExchangeRate(Currency.Btc, c))
+									   .Select(r => ExchangeRateHelper.GetRate(r) ?? r)
+									   .Where(r => r?.Rate == null)
+									   .Concat(AccountStorage.NeededRates).ToList()));
+			}
 		}
 
 		protected override void OnAppearing()
@@ -62,32 +71,19 @@ namespace MyCryptos.Forms.view.pages
 
 			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
 			HeaderCarousel.PositionSelected += PositionSelected;
-			HeaderCarousel.HeightRequest = 120;// new CoinsHeaderView().HeightRequest;
-		}
-
-		private void SetNoSourcesView()
-		{
-			Device.BeginInvokeOnMainThread(() =>
-			{
-				NoSourcesView.IsVisible = (AccountStorage.Instance.AllElements.Count == 0);
-				Stack.IsVisible = AccountStorage.Instance.AllElements.Count != 0;
-			});
+			HeaderCarousel.HeightRequest = 120;
 		}
 
 		private void AddSubscriber()
 		{
 			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
-
-			Messaging.Loading.SubscribeFinished(this, SetNoSourcesView);
-			Messaging.FetchMissingRates.SubscribeFinished(this, SetNoSourcesView);
-			Messaging.UpdatingAccounts.SubscribeFinished(this, SetNoSourcesView);
-			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoSourcesView);
 		}
 
 		private async void Refresh(object sender, EventArgs e)
 		{
 			await AppTaskHelper.FetchBalancesAndRates();
 			await AppTaskHelper.FetchMissingRates(ApplicationSettings.WatchedCurrencies
+									.Concat(ApplicationSettings.MainCurrencies)
 									.Select(c => new ExchangeRate(Currency.Btc, c))
 									.Select(r => ExchangeRateHelper.GetRate(r) ?? r)
 									.Where(r => r?.Rate == null)

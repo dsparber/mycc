@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCryptos.Core", "Core\MyCryptos.Core.csproj", "{92708D96-5841-4408-A7EE-B2D02C716F89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCC.Core", "Core\MyCC.Core.csproj", "{92708D96-5841-4408-A7EE-B2D02C716F89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCryptos.Forms.Android", "Forms.Android\MyCryptos.Forms.Android.csproj", "{BA81C78F-C991-499E-B504-422EEDAAB3EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCC.Forms.Android", "Forms.Android\MyCC.Forms.Android.csproj", "{BA81C78F-C991-499E-B504-422EEDAAB3EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCryptos.Forms.iOS", "Forms.iOS\MyCryptos.Forms.iOS.csproj", "{2F18BB0F-A007-454B-A5B7-048D7F65FEAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCC.Forms.iOS", "Forms.iOS\MyCC.Forms.iOS.csproj", "{2F18BB0F-A007-454B-A5B7-048D7F65FEAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCryptos.Forms", "Forms\MyCryptos.Forms.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCC.Forms", "Forms\MyCC.Forms.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
