@@ -18,12 +18,16 @@ namespace MyCryptos.Core.settings
 			{
 				if (lastVersion != null) return lastVersion;
 
-				var persitedValue = new MyCC.Core.Settings.Version(Settings.Get(Settings.KeyAppVersion, "0.0.0"));
-				Settings.Set(Settings.KeyAppVersion, Constants.AppVersion.ToString());
+				if (!FirstLaunch)
+				{
+					var persitedValue = new MyCC.Core.Settings.Version(Settings.Get(Settings.KeyAppVersion, "0.0.0"));
+					Settings.Set(Settings.KeyAppVersion, Constants.AppVersion.ToString());
 
 
-				lastVersion = persitedValue;
-				return lastVersion;
+					lastVersion = persitedValue;
+					return lastVersion;
+				}
+				return Constants.AppVersion;
 			}
 		}
 
