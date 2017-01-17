@@ -1066,4 +1066,9 @@
 		xml:space="preserve">
     <value>Blockbelohnung</value>
   </data>
+	<data
+		name="Further"
+		xml:space="preserve">
+    <value>Weitere</value>
+  </data>
 </root>

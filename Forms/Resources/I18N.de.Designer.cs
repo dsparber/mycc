@@ -1114,5 +1114,11 @@ namespace MyCryptos.Forms.Resources {
                 return ResourceManager.GetString("BlockReward", resourceCulture);
             }
         }
+        
+        internal static string Further {
+            get {
+                return ResourceManager.GetString("Further", resourceCulture);
+            }
+        }
     }
 }

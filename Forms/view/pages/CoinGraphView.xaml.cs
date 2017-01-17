@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using MyCryptos.Core.Account.Storage;
 using MyCryptos.Core.Currency.Model;
 using MyCryptos.Core.settings;
-using MyCryptos.Core.Types;
 using MyCryptos.Forms.Messages;
-using MyCryptos.Forms.Resources;
 using MyCryptos.Forms.Tasks;
 using MyCryptos.Forms.view.components;
 using Xamarin.Forms;

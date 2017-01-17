@@ -1059,4 +1059,9 @@
 		xml:space="preserve">
     <value>Block reward</value>
   </data>
+	<data
+		name="Further"
+		xml:space="preserve">
+    <value>Further</value>
+  </data>
 </root>
