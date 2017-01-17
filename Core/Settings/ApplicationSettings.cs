@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MyCC.Core.Settings;
 using MyCryptos.Core.Types;
 using Newtonsoft.Json;
 using PCLCrypto;
@@ -10,6 +11,22 @@ namespace MyCryptos.Core.settings
 {
 	public static class ApplicationSettings
 	{
+		private static MyCC.Core.Settings.Version lastVersion;
+		public static MyCC.Core.Settings.Version VersionLastLaunch
+		{
+			get
+			{
+				if (lastVersion != null) return lastVersion;
+
+				var persitedValue = new MyCC.Core.Settings.Version(Settings.Get(Settings.KeyAppVersion, "0.0.0"));
+				Settings.Set(Settings.KeyAppVersion, Constants.AppVersion.ToString());
+
+
+				lastVersion = persitedValue;
+				return lastVersion;
+			}
+		}
+
 		private static bool? firstLaunch;
 		public static bool FirstLaunch
 		{

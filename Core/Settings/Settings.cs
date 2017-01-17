@@ -8,6 +8,8 @@ namespace MyCryptos.Core.settings
 	{
 		private static Dictionary<string, object> cache = new Dictionary<string, object>();
 
+		public const string KeyAppVersion = "version";
+
 		public const string KeyBaseCurrency = "currency";
 
 		public const string KeyRatePageCurrency = "rate-page-currency";

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyCC.Core.Settings;
 using MyCryptos.Core.Abstract.Database;
 using MyCryptos.Core.CoinInfo.Repositories;
+using MyCryptos.Core.settings;
 using SQLite;
 using Xamarin.Forms;
 
@@ -28,6 +28,11 @@ namespace MyCryptos.Core.CoinInfo
 			Task.Run(async () =>
 			{
 				await _dbConnection.CreateTableAsync<CoinInfoData>();
+				if (ApplicationSettings.VersionLastLaunch < new Version("0.5.0"))
+				{
+					await _dbConnection.ExecuteAsync("ALTER TABLE CoinInfos ADD COLUMN MaxSupply float;");
+					await _dbConnection.ExecuteAsync("ALTER TABLE CoinInfos ADD COLUMN Blockreward float;");
+				}
 				Elements.AddRange(await _dbConnection.Table<CoinInfoData>().ToListAsync());
 			});
 
