@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MyCryptos.Core.Abstract.Database;
+using MyCC.Core.Abstract.Database;
 using SQLite;
 
-namespace MyCryptos.Core.ExchangeRate.Database
+namespace MyCC.Core.ExchangeRate.Database
 {
     public class ExchangeRateDatabase : AbstractDatabase<ExchangeRateDbm, Model.ExchangeRate, string>
     {

@@ -1,22 +1,22 @@
-﻿using MyCryptos.Core.Abstract.Repositories;
-using MyCryptos.Core.Account.Database;
-using MyCryptos.Core.Account.Models.Base;
+﻿using MyCC.Core.Abstract.Repositories;
+using MyCC.Core.Account.Database;
+using MyCC.Core.Account.Models.Base;
 
-namespace MyCryptos.Core.Account.Repositories.Base
+namespace MyCC.Core.Account.Repositories.Base
 {
-	public abstract class AccountRepository : AbstractDatabaseRepository<AccountDbm, FunctionalAccount, int>
-	{
-		protected AccountRepository(int id, string name) : base(id, new AccountDatabase())
-		{
-			Name = name;
-		}
+    public abstract class AccountRepository : AbstractDatabaseRepository<AccountDbm, FunctionalAccount, int>
+    {
+        protected AccountRepository(int id, string name) : base(id, new AccountDatabase())
+        {
+            Name = name;
+        }
 
-		public string Name;
+        public string Name;
 
-		public abstract string Data { get; }
+        public abstract string Data { get; }
 
-		public abstract string Description { get; }
+        public abstract string Description { get; }
 
-		public abstract string Info { get; }
-	}
+        public abstract string Info { get; }
+    }
 }

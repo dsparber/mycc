@@ -1,7 +1,7 @@
 using System;
-using MyCryptos.Core.Abstract.Models;
+using MyCC.Core.Abstract.Models;
 
-namespace MyCryptos.Core.Account.Models.Base
+namespace MyCC.Core.Account.Models.Base
 {
     /// <summary>
     /// Model for a simple account
@@ -32,7 +32,7 @@ namespace MyCryptos.Core.Account.Models.Base
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:MyCryptos.Core.Account.Models.Base.Account"/> class.
+        /// Initializes a new instance of the <see cref="T:MyCC.Core.Account.Models.Base.Account"/> class.
         /// </summary>
         /// <param name="id">Identifier.</param>
         /// <param name="repositoryId">Repository identifier.</param>

@@ -5,14 +5,14 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using constants;
-using MyCryptos.Core.Account.Models.Base;
-using MyCryptos.Core.Account.Storage;
-using MyCryptos.Core.Currency.Model;
-using MyCryptos.Core.Resources;
-using MyCryptos.Core.settings;
-using MyCryptos.Core.Types;
+using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Account.Storage;
+using MyCC.Core.Currency.Model;
+using MyCC.Core.Resources;
+using MyCC.Core.Settings;
+using MyCC.Core.Types;
 using MyCryptos.Forms.Messages;
-using MyCryptos.Forms.Resources;
+using MyCC.Forms.Resources;
 using MyCryptos.Forms.view.pages;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
@@ -22,174 +22,174 @@ using XLabs.Serialization.JsonNET;
 
 namespace MyCryptos.Forms.view.components
 {
-	public class AccountsTableComponent : ContentView
-	{
-		private readonly HybridWebView webView;
-		private Currency _currency;
-		private bool appeared;
+    public class AccountsTableComponent : ContentView
+    {
+        private readonly HybridWebView webView;
+        private Currency _currency;
+        private bool appeared;
 
-		public AccountsTableComponent(INavigation navigation, Currency currency)
-		{
-			_currency = currency;
+        public AccountsTableComponent(INavigation navigation, Currency currency)
+        {
+            _currency = currency;
 
-			var resolverContainer = new SimpleContainer();
+            var resolverContainer = new SimpleContainer();
 
-			resolverContainer.Register<IJsonSerializer, JsonSerializer>();
+            resolverContainer.Register<IJsonSerializer, JsonSerializer>();
 
-			webView = new HybridWebView
-			{
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				BackgroundColor = Color.White,
-				HeightRequest = 0
-			};
-			webView.RegisterCallback("Callback", idString =>
-			{
-				var id = int.Parse(idString);
-				var account = AccountStorage.Instance.AllElements.Find(a => a.Id.Equals(id));
+            webView = new HybridWebView
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                BackgroundColor = Color.White,
+                HeightRequest = 0
+            };
+            webView.RegisterCallback("Callback", idString =>
+            {
+                var id = int.Parse(idString);
+                var account = AccountStorage.Instance.AllElements.Find(a => a.Id.Equals(id));
 
-				Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(account)));
-			});
+                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(account)));
+            });
 
-			webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
-			{
-				var size = int.Parse(sizeString);
-				Device.BeginInvokeOnMainThread(() => webView.HeightRequest = size);
-			});
+            webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
+            {
+                var size = int.Parse(sizeString);
+                Device.BeginInvokeOnMainThread(() => webView.HeightRequest = size);
+            });
 
-			webView.RegisterCallback("HeaderClickedCallback", type =>
-			{
-				SortOrder value;
-				var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
-				if (clickedSortOrder == ApplicationSettings.SortOrderAccounts)
-				{
-					ApplicationSettings.SortDirectionAccounts = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending
-						? SortDirection.Descending
-						: SortDirection.Ascending;
-				}
-				ApplicationSettings.SortOrderAccounts = clickedSortOrder;
+            webView.RegisterCallback("HeaderClickedCallback", type =>
+            {
+                SortOrder value;
+                var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
+                if (clickedSortOrder == ApplicationSettings.SortOrderAccounts)
+                {
+                    ApplicationSettings.SortDirectionAccounts = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending
+                        ? SortDirection.Descending
+                        : SortDirection.Ascending;
+                }
+                ApplicationSettings.SortOrderAccounts = clickedSortOrder;
 
-				UpdateView();
-			});
+                UpdateView();
+            });
 
-			var label = I18N.Accounts;
+            var label = I18N.Accounts;
 
-			var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
+            var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-			stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? label.ToUpper() : label, VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.Start, Margin = new Thickness(8, 24, 8, 8), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
-			stack.Children.Add(webView);
+            stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? label.ToUpper() : label, VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.Start, Margin = new Thickness(8, 24, 8, 8), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
+            stack.Children.Add(webView);
 
-			Content = stack;
+            Content = stack;
 
-			UpdateView();
+            UpdateView();
 
-			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
-			Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
-		}
+            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
+        }
 
-		public void OnAppearing()
-		{
-			if (!appeared)
-			{
-				appeared = true;
-				webView.LoadFromContent("Html/accountsTable.html");
+        public void OnAppearing()
+        {
+            if (!appeared)
+            {
+                appeared = true;
+                webView.LoadFromContent("Html/accountsTable.html");
 
-				Task.Delay(200).ContinueWith(t => UpdateView());
-				Task.Delay(500).ContinueWith(t => UpdateView());
-				Task.Delay(1000).ContinueWith(t => UpdateView());
-				Task.Delay(1500).ContinueWith(t => UpdateView());
-				Task.Delay(2000).ContinueWith(t => UpdateView());
-			}
-			UpdateView();
-		}
+                Task.Delay(200).ContinueWith(t => UpdateView());
+                Task.Delay(500).ContinueWith(t => UpdateView());
+                Task.Delay(1000).ContinueWith(t => UpdateView());
+                Task.Delay(1500).ContinueWith(t => UpdateView());
+                Task.Delay(2000).ContinueWith(t => UpdateView());
+            }
+            UpdateView();
+        }
 
-		public void UpdateView()
-		{
-			try
-			{
-				var items = AccountStorage.AccountsWithCurrency(_currency).Select(a => new Data(a)).ToList();
-				var itemsExisting = (items.Count > 0);
+        public void UpdateView()
+        {
+            try
+            {
+                var items = AccountStorage.AccountsWithCurrency(_currency).Select(a => new Data(a)).ToList();
+                var itemsExisting = (items.Count > 0);
 
-				if (!itemsExisting || !appeared) return;
+                if (!itemsExisting || !appeared) return;
 
-				Func<Data, object> sortLambda;
-				switch (ApplicationSettings.SortOrderAccounts)
-				{
-					case SortOrder.Alphabetical: sortLambda = d => d.Name; break;
-					case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("<", "").Trim()); break;
-					case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Amount.Replace("<", "").Trim()); break;
-					case SortOrder.None: sortLambda = d => 1; break;
-					default: sortLambda = d => 1; break;
-				}
+                Func<Data, object> sortLambda;
+                switch (ApplicationSettings.SortOrderAccounts)
+                {
+                    case SortOrder.Alphabetical: sortLambda = d => d.Name; break;
+                    case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("<", "").Trim()); break;
+                    case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Amount.Replace("<", "").Trim()); break;
+                    case SortOrder.None: sortLambda = d => 1; break;
+                    default: sortLambda = d => 1; break;
+                }
 
-				items = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
+                items = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
-				webView.CallJsFunction("setHeader", new[]{
-					new HeaderData(I18N.Label, SortOrder.Alphabetical.ToString()),
-					new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
-				}, string.Empty);
-				webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
-			}
-			catch (Exception e)
-			{
-				Debug.WriteLine(e);
-			}
-		}
+                webView.CallJsFunction("setHeader", new[]{
+                    new HeaderData(I18N.Label, SortOrder.Alphabetical.ToString()),
+                    new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
+                }, string.Empty);
+                webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
 
-		[DataContract]
-		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-		[SuppressMessage("ReSharper", "NotAccessedField.Global")]
-		public class Data
-		{
-			[DataMember]
-			public readonly string Name;
-			[DataMember]
-			public readonly string Amount;
-			[DataMember]
-			public readonly int Id;
+        [DataContract]
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
+        public class Data
+        {
+            [DataMember]
+            public readonly string Name;
+            [DataMember]
+            public readonly string Amount;
+            [DataMember]
+            public readonly int Id;
 
-			public Data(Account account)
-			{
-				Name = account.Name;
-				Amount = account.Money.ToString8Digits(false);
-				Id = account.Id;
-			}
-		}
+            public Data(Account account)
+            {
+                Name = account.Name;
+                Amount = account.Money.ToString8Digits(false);
+                Id = account.Id;
+            }
+        }
 
-		[DataContract]
-		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-		[SuppressMessage("ReSharper", "NotAccessedField.Global")]
-		public class SortData
-		{
-			[DataMember]
-			public readonly string Direction;
-			[DataMember]
-			public readonly string Type;
+        [DataContract]
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
+        public class SortData
+        {
+            [DataMember]
+            public readonly string Direction;
+            [DataMember]
+            public readonly string Type;
 
-			public SortData()
-			{
-				Direction = ApplicationSettings.SortDirectionAccounts.ToString();
-				Type = ApplicationSettings.SortOrderAccounts.ToString();
-			}
+            public SortData()
+            {
+                Direction = ApplicationSettings.SortDirectionAccounts.ToString();
+                Type = ApplicationSettings.SortOrderAccounts.ToString();
+            }
 
-		}
+        }
 
-		[DataContract]
-		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-		[SuppressMessage("ReSharper", "NotAccessedField.Global")]
-		public class HeaderData
-		{
-			[DataMember]
-			public readonly string Text;
-			[DataMember]
-			public readonly string Type;
+        [DataContract]
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
+        public class HeaderData
+        {
+            [DataMember]
+            public readonly string Text;
+            [DataMember]
+            public readonly string Type;
 
-			public HeaderData(string text, string type)
-			{
-				Text = text;
-				Type = type;
-			}
+            public HeaderData(string text, string type)
+            {
+                Text = text;
+                Type = type;
+            }
 
-		}
-	}
+        }
+    }
 }

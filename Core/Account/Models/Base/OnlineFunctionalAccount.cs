@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace MyCryptos.Core.Account.Models.Base
+namespace MyCC.Core.Account.Models.Base
 {
     public abstract class OnlineFunctionalAccount : FunctionalAccount
     {

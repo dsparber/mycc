@@ -1,7 +1,7 @@
-﻿namespace MyCryptos.Core.Types
+﻿namespace MyCC.Core.Types
 {
-	public enum PinAction
-	{
-		EnableOrDisable, Change, Enable, Disable
-	}
+    public enum PinAction
+    {
+        EnableOrDisable, Change, Enable, Disable
+    }
 }

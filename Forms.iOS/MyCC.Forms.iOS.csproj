@@ -6,9 +6,9 @@
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{2F18BB0F-A007-454B-A5B7-048D7F65FEAD}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>MyCryptos.Forms.iOS</RootNamespace>
+    <RootNamespace>MyCC.Forms.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>MyCryptos.Forms.iOS</AssemblyName>
+    <AssemblyName>MyCC.Forms.iOS</AssemblyName>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>

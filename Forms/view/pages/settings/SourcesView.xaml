@@ -2,9 +2,9 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
+	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="MyCryptos.Forms.view.pages.SourcesView"
 	Title="{i18N:Translate Sources}">

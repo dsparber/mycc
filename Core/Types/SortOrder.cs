@@ -1,4 +1,4 @@
-﻿namespace MyCryptos.Core.Types
+﻿namespace MyCC.Core.Types
 {
     public enum SortOrder
     {

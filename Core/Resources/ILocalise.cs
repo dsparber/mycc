@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace MyCryptos.Core.Resources
+namespace MyCC.Core.Resources
 {
     public interface ILocalise
     {

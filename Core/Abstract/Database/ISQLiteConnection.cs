@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace MyCryptos.Core.Abstract.Database
+namespace MyCC.Core.Abstract.Database
 {
     public interface ISQLiteConnection
     {

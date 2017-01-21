@@ -2,29 +2,29 @@
 <ContentView
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
+	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
 	x:Class="MyCryptos.view.components.HeaderView"
 	BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
 	WidthRequest="280"
 	Margin="0,-1,0,0">
-	<ContentView.Content>
-		<StackLayout
+  <ContentView.Content>
+    <StackLayout
 			Margin="10"
 			VerticalOptions="CenterAndExpand"
 			HorizontalOptions="CenterAndExpand">
-			<StackLayout
+      <StackLayout
 				Orientation="Horizontal"
 				HorizontalOptions="CenterAndExpand"
 				Spacing="0"
 				Margin="5,0,5,0">
-				<Label
+        <Label
 					x:Name="TitleLabel"
 					FontSize="36"
 					FontAttributes="Bold"
 					TextColor="White"
 					LineBreakMode="TailTruncation" />
-				<Label
+        <Label
 					x:Name="TitleLabelSmall"
 					Margin="0,0,0,3"
 					VerticalOptions="End"
@@ -32,8 +32,8 @@
 					FontAttributes="Bold"
 					TextColor="White"
 					LineBreakMode="TailTruncation" />
-			</StackLayout>
-			<Label
+      </StackLayout>
+      <Label
 				HorizontalOptions="FillAndExpand"
 				x:Name="InfoLabel"
 				FontSize="18"
@@ -41,22 +41,22 @@
 				TextColor="White"
 				LineBreakMode="TailTruncation"
 				WidthRequest="10000" />
-			<StackLayout
+      <StackLayout
 				x:Name="LoadingPanel"
 				IsVisible="false"
 				Orientation="Horizontal"
 				HorizontalOptions="Center">
-				<Label
+        <Label
 					x:Name="RefreshingLabel"
 					FontSize="18"
 					Text="{i18N:Translate Refreshing}"
 					TextColor="White">
-				</Label>
-				<ActivityIndicator
+        </Label>
+        <ActivityIndicator
 					Color="White"
 					x:Name="LoadingIndicator"
 					IsRunning="true" />
-			</StackLayout>
-		</StackLayout>
-	</ContentView.Content>
+      </StackLayout>
+    </StackLayout>
+  </ContentView.Content>
 </ContentView>

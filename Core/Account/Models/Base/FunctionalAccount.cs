@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyCryptos.Core.Account.Database;
+using MyCC.Core.Account.Database;
 
-namespace MyCryptos.Core.Account.Models.Base
+namespace MyCC.Core.Account.Models.Base
 {
     public abstract class FunctionalAccount : Account
     {

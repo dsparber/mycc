@@ -1,7 +1,7 @@
 ﻿using System;
-using MyCryptos.Core.Abstract.Models;
+using MyCC.Core.Abstract.Models;
 
-namespace MyCryptos.Core.Account.Models.Base
+namespace MyCC.Core.Account.Models.Base
 {
     public class Transaction : IPersistableWithParent<string>
     {

@@ -3,9 +3,9 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="MyCryptos.Forms.view.pages.settings.DefaultPageSettingsView"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
+	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
 	Title="{i18N:Translate DefaultView}">
 	<components:ChangingStackLayout>
 		<components:HeaderView

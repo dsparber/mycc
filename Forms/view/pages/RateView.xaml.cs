@@ -1,110 +1,111 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using MyCryptos.Core.Account.Storage;
-using MyCryptos.Core.Currency.Model;
-using MyCryptos.Core.ExchangeRate.Helpers;
-using MyCryptos.Core.ExchangeRate.Model;
-using MyCryptos.Core.settings;
+using MyCC.Core.Account.Storage;
+using MyCC.Core.Currency.Model;
+using MyCC.Core.ExchangeRate.Helpers;
+using MyCC.Core.ExchangeRate.Model;
+using MyCC.Core.Settings;
+using MyCC.Forms.view.components;
 using MyCryptos.Forms.Messages;
 using MyCryptos.Forms.Tasks;
 using MyCryptos.Forms.view.components;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.pages
+namespace MyCC.Forms.view.pages
 {
-	public partial class RateView
-	{
-		private readonly RatesTableComponent tableView;
+    public partial class RateView
+    {
+        private readonly RatesTableComponent _tableView;
 
-		public RateView()
-		{
-			InitializeComponent();
+        public RateView()
+        {
+            InitializeComponent();
 
-			tableView = new RatesTableComponent(Navigation);
+            _tableView = new RatesTableComponent(Navigation);
 
-			Stack.Children.Add(tableView);
+            Stack.Children.Add(_tableView);
 
-			AddSubscriber();
+            AddSubscriber();
 
-			if (Device.OS == TargetPlatform.Android)
-			{
-				Title = string.Empty;
-			}
+            if (Device.OS == TargetPlatform.Android)
+            {
+                Title = string.Empty;
+            }
 
-			SetHeaderCarousel();
+            SetHeaderCarousel();
 
-			if (ApplicationSettings.FirstLaunch)
-			{
-				Task.Run(async () => await AppTaskHelper.FetchMissingRates(ApplicationSettings.WatchedCurrencies
-									   .Concat(ApplicationSettings.MainCurrencies)
-									   .Select(c => new ExchangeRate(Currency.Btc, c))
-									   .Select(r => ExchangeRateHelper.GetRate(r) ?? r)
-									   .Where(r => r?.Rate == null)
-									   .Concat(AccountStorage.NeededRates).ToList()));
-			}
-		}
+            if (ApplicationSettings.FirstLaunch)
+            {
+                Task.Run(async () => await AppTaskHelper.FetchMissingRates(ApplicationSettings.WatchedCurrencies
+                                       .Concat(ApplicationSettings.AllReferenceCurrencies)
+                                       .Select(c => new ExchangeRate(Currency.Btc, c))
+                                       .Select(r => ExchangeRateHelper.GetRate(r) ?? r)
+                                       .Where(r => r.Rate == null)
+                                       .Concat(AccountStorage.NeededRates).ToList()));
+            }
+        }
 
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
-			tableView.OnAppearing();
-		}
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _tableView.OnAppearing();
+        }
 
 
 
-		private void PositionSelected(object sender, EventArgs e)
-		{
-			var currencies = ApplicationSettings.MainCurrencies;
+        private void PositionSelected(object sender, EventArgs e)
+        {
+            var currencies = ApplicationSettings.MainCurrencies;
 
-			ApplicationSettings.SelectedRatePageCurrency = currencies[HeaderCarousel.Position];
-			Messaging.RatesPageCurrency.SendValueChanged();
-		}
+            ApplicationSettings.SelectedRatePageCurrency = currencies[HeaderCarousel.Position];
+            Messaging.RatesPageCurrency.SendValueChanged();
+        }
 
-		private void SetHeaderCarousel()
-		{
-			HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
-			HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.SelectedRatePageCurrency);
-			HeaderCarousel.ShowIndicators = (HeaderCarousel.ItemsSource.Count > 1);
+        private void SetHeaderCarousel()
+        {
+            HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
+            HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.SelectedRatePageCurrency);
+            HeaderCarousel.ShowIndicators = (HeaderCarousel.ItemsSource.Count > 1);
 
-			if (HeaderCarousel.ItemTemplate != null) return;
+            if (HeaderCarousel.ItemTemplate != null) return;
 
-			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
-			HeaderCarousel.PositionSelected += PositionSelected;
-			HeaderCarousel.HeightRequest = 120;
-		}
+            HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
+            HeaderCarousel.PositionSelected += PositionSelected;
+            HeaderCarousel.HeightRequest = 120;
+        }
 
-		private void AddSubscriber()
-		{
-			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
-		}
+        private void AddSubscriber()
+        {
+            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
+        }
 
-		private async void Refresh(object sender, EventArgs e)
-		{
-			await AppTaskHelper.FetchBalancesAndRates();
-			await AppTaskHelper.FetchMissingRates(ApplicationSettings.WatchedCurrencies
-									.Concat(ApplicationSettings.MainCurrencies)
-									.Select(c => new ExchangeRate(Currency.Btc, c))
-									.Select(r => ExchangeRateHelper.GetRate(r) ?? r)
-									.Where(r => r?.Rate == null)
-									.Concat(AccountStorage.NeededRates).ToList());
-		}
+        private async void Refresh(object sender, EventArgs e)
+        {
+            await AppTaskHelper.FetchBalancesAndRates();
+            await AppTaskHelper.FetchMissingRates(ApplicationSettings.WatchedCurrencies
+                                    .Concat(ApplicationSettings.AllReferenceCurrencies)
+                                    .Select(c => new ExchangeRate(Currency.Btc, c))
+                                    .Select(r => ExchangeRateHelper.GetRate(r) ?? r)
+                                    .Where(r => r.Rate == null)
+                                    .Concat(AccountStorage.NeededRates).ToList());
+        }
 
-		private class HeaderTemplateSelector : DataTemplateSelector
-		{
-			private bool isUpdatingExchangeRates;
+        private class HeaderTemplateSelector : DataTemplateSelector
+        {
+            private bool _isUpdatingExchangeRates;
 
-			public HeaderTemplateSelector()
-			{
-				Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => isUpdatingExchangeRates = true, () => isUpdatingExchangeRates = false);
-			}
+            public HeaderTemplateSelector()
+            {
+                Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => _isUpdatingExchangeRates = true, () => _isUpdatingExchangeRates = false);
+            }
 
-			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() =>
-			{
-				var c = (Currency)item;
+            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() =>
+            {
+                var c = (Currency)item;
 
-				return new RatesHeaderComponent(c, isUpdatingExchangeRates);
-			});
-		}
-	}
+                return new RatesHeaderComponent(c, _isUpdatingExchangeRates);
+            });
+        }
+    }
 }

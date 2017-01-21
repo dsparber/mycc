@@ -1,4 +1,4 @@
-using MyCryptos.Core.Account.Models.Base;
+using MyCC.Core.Account.Models.Base;
 
 namespace MyCryptos.Forms.view.addsource
 {

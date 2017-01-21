@@ -1,4 +1,4 @@
-﻿namespace MyCryptos.Core.Abstract.Models
+﻿namespace MyCC.Core.Abstract.Models
 {
     public interface IPersistableWithParent<IdType> : Persistable<IdType>
     {

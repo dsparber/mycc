@@ -1,8 +1,8 @@
 using System;
-using MyCryptos.Core.Abstract.Models;
+using MyCC.Core.Abstract.Models;
 using Newtonsoft.Json;
 
-namespace MyCryptos.Core.Currency.Model
+namespace MyCC.Core.Currency.Model
 {
     /// <summary>
     ///  Simple model for Currencies

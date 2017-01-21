@@ -2,28 +2,28 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
+	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="MyCryptos.Forms.view.pages.AccountDetailView">
-	<ContentPage.ToolbarItems>
-		<ToolbarItem
+  <ContentPage.ToolbarItems>
+    <ToolbarItem
 			Text="{i18N:Translate Info}"
 			Clicked="ShowInfo"
 			Icon="info.png" />
-		<ToolbarItem
+    <ToolbarItem
 			Text="{i18N:Translate Refresh}"
 			Clicked="Refresh"
 			Icon="refresh.png" />
-	</ContentPage.ToolbarItems>
-	<ContentPage.Content>
-		<components:ChangingStackLayout
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <components:ChangingStackLayout
 			x:Name="ChangingStack"
 			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-			<ScrollView
+      <ScrollView
 				x:Name="ContentView"
 				IsClippedToBounds="true" />
-		</components:ChangingStackLayout>
-	</ContentPage.Content>
+    </components:ChangingStackLayout>
+  </ContentPage.Content>
 </ContentPage>

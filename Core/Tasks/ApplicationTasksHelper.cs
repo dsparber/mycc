@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace MyCryptos.Core.tasks
+namespace MyCC.Core.Tasks
 {
     public static partial class ApplicationTasks
     {

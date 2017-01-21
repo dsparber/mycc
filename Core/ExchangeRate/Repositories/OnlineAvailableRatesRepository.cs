@@ -1,8 +1,8 @@
-﻿namespace MyCryptos.Core.ExchangeRate.Repositories
+﻿namespace MyCC.Core.ExchangeRate.Repositories
 {
-	public abstract class OnlineAvailableRatesRepository : AvailableRatesRepository
-	{
-		protected OnlineAvailableRatesRepository(int id) : base(id) { }
-	}
+    public abstract class OnlineAvailableRatesRepository : AvailableRatesRepository
+    {
+        protected OnlineAvailableRatesRepository(int id) : base(id) { }
+    }
 }
 

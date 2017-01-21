@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyCryptos.Core.Abstract.Models;
+using MyCC.Core.Abstract.Models;
 using SQLite;
 using Xamarin.Forms;
 
-namespace MyCryptos.Core.Abstract.Database
+namespace MyCC.Core.Abstract.Database
 {
     public abstract class AbstractDatabase<T, V, IdType> where T : IEntityDBM<V, IdType> where V : Persistable<IdType>
     {

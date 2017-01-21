@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MyCryptos.Core.Abstract.Database;
+using MyCC.Core.Abstract.Database;
 using SQLite;
 
-namespace MyCryptos.Core.Currency.Database
+namespace MyCC.Core.Currency.Database
 {
     public class CurrencyDatabase : AbstractDatabase<CurrencyDbm, Model.Currency, string>
     {

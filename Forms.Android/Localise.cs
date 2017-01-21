@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using System.Threading;
-using MyCryptos.Core.Resources;
+using MyCC.Core.Resources;
 
 [assembly: Dependency(typeof(MyCryptos.Droid.Localise))]
 

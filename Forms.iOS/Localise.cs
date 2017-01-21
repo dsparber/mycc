@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using Foundation;
 using System.Threading;
-using MyCryptos.Core.Resources;
+using MyCC.Core.Resources;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(MyCryptos.iOS.Localise))]

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MyCryptos.Core.Abstract.Database;
-using MyCryptos.Core.Account.Models.Base;
-using MyCryptos.Core.Currency.Database;
-using MyCryptos.Core.Currency.Storage;
+using MyCC.Core.Abstract.Database;
+using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Currency.Database;
+using MyCC.Core.Currency.Storage;
 using SQLite;
 
-namespace MyCryptos.Core.Account.Database
+namespace MyCC.Core.Account.Database
 {
     [Table("Transactions")]
     public class TransactionDbm : IEntityRepositoryIdDBM<Transaction, string>

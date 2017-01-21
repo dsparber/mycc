@@ -1,7 +1,7 @@
 ﻿
-using MyCryptos.Core.Abstract.Models;
+using MyCC.Core.Abstract.Models;
 
-namespace MyCryptos.Core.Abstract.Database
+namespace MyCC.Core.Abstract.Database
 {
     public interface IEntityRepositoryIdDBM<T, IDType> : IEntityDBM<T, IDType> where T : IPersistableWithParent<IDType>
     {

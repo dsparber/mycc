@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
-using MyCryptos.Core.Resources;
+using MyCC.Core.Resources;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

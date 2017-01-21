@@ -1,7 +1,7 @@
-﻿namespace MyCryptos.Core.Types
+﻿namespace MyCC.Core.Types
 {
-	public enum StartupPage
-	{
-		RatesView, GraphView, TableView
-	}
+    public enum StartupPage
+    {
+        RatesView, GraphView, TableView
+    }
 }

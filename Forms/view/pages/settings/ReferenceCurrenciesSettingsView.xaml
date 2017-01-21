@@ -2,43 +2,43 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	x:Class="MyCryptos.Forms.view.pages.settings.ReferenceCurrenciesSettingsView"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCryptos.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCryptos.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCryptos.Forms"
+	x:Class="MyCC.Forms.view.pages.settings.ReferenceCurrenciesSettingsView"
+	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
 	Title="{i18N:Translate Currencies}">
-	<ContentPage.ToolbarItems>
-		<ToolbarItem
+  <ContentPage.ToolbarItems>
+    <ToolbarItem
 			Text="{i18N:Translate Add}"
 			Clicked="Add" />
-	</ContentPage.ToolbarItems>
-	<components:ChangingStackLayout>
-		<components:HeaderView
+  </ContentPage.ToolbarItems>
+  <components:ChangingStackLayout>
+    <components:HeaderView
 			TitleText="{i18N:Translate AppName}"
 			x:Name="Header" />
-		<ScrollView
+    <ScrollView
 			IsClippedToBounds="true">
-			<StackLayout
+      <StackLayout
 				Spacing="0"
 				BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-				<Label
+        <Label
 					Text="{i18N:Translate ReferenceCurrencyInfoP1}"
 					Margin="15,15,15,0"
 					TextColor="{x:Static constants:AppConstants.TableSectionColor}"
 					FontSize="14" />
-				<Label
+        <Label
 					Text="{i18N:Translate ReferenceCurrencyInfoP2}"
 					Margin="15,5,15,0"
 					TextColor="{x:Static constants:AppConstants.TableSectionColor}"
 					FontSize="14" />
-				<TableView
+        <TableView
 					Intent="Settings">
-					<TableSection
+          <TableSection
 						Title="{i18N:Translate ReferenceCurrencies}"
 						x:Name="CurrenciesSection" />
-				</TableView>
-			</StackLayout>
-		</ScrollView>
-	</components:ChangingStackLayout>
+        </TableView>
+      </StackLayout>
+    </ScrollView>
+  </components:ChangingStackLayout>
 </ContentPage>

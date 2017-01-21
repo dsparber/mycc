@@ -1,6 +1,6 @@
-﻿using MyCryptos.Core.Account.Models.Base;
+﻿using MyCC.Core.Account.Models.Base;
 
-namespace MyCryptos.Core.Account.Models.Implementations
+namespace MyCC.Core.Account.Models.Implementations
 {
     public class LocalAccount : FunctionalAccount
     {
