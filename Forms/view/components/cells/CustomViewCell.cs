@@ -1,10 +1,9 @@
-using constants;
-using MyCryptos.view.components.cells;
 using System.Collections.Generic;
+using MyCC.Forms.constants;
 using MyCC.Forms.Resources;
 using Xamarin.Forms;
 
-namespace MyCryptos.view.components
+namespace MyCC.Forms.view.components.cells
 {
     public class CustomViewCell : SortableViewCell
     {

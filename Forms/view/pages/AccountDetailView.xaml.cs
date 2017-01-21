@@ -1,11 +1,11 @@
 using System;
 using MyCC.Core.Account.Models.Base;
-using MyCryptos.Forms.Messages;
-using MyCryptos.Forms.Tasks;
-using MyCryptos.Forms.view.components;
+using MyCC.Forms.Messages;
+using MyCC.Forms.Tasks;
+using MyCC.Forms.view.components;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.pages
+namespace MyCC.Forms.view.pages
 {
     public partial class AccountDetailView
     {

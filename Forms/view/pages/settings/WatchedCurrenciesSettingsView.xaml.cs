@@ -4,14 +4,12 @@ using System.Linq;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Currency.Storage;
 using MyCC.Core.Settings;
-using MyCryptos.Forms.Messages;
-using MyCC.Forms.Resources;
-using MyCryptos.Forms.view.overlays;
-using MyCryptos.view.components;
-using MyCryptos.view.components.cells;
+using MyCC.Forms.Messages;
+using MyCC.Forms.view.components.cells;
+using MyCC.Forms.view.overlays;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.pages.settings
+namespace MyCC.Forms.view.pages.settings
 {
     public partial class WatchedCurrenciesSettingsView
     {

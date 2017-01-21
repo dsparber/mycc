@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.ExchangeRate.Helpers;
 using MyCC.Core.Settings;
-using MyCryptos.Forms.helpers;
-using MyCryptos.Forms.Messages;
-using MyCryptos.view.components;
+using MyCC.Forms.Messages;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.components
+namespace MyCC.Forms.view.components
 {
     public class RatesHeaderComponent : HeaderView
     {

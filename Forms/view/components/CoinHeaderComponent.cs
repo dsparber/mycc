@@ -7,12 +7,11 @@ using MyCC.Core.Currency.Model;
 using MyCC.Core.ExchangeRate.Helpers;
 using MyCC.Core.ExchangeRate.Model;
 using MyCC.Core.Settings;
-using MyCryptos.Forms.helpers;
-using MyCryptos.Forms.Messages;
-using MyCryptos.view.components;
+using MyCC.Forms.helpers;
+using MyCC.Forms.Messages;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.components
+namespace MyCC.Forms.view.components
 {
     public class CoinHeaderComponent : HeaderView
     {

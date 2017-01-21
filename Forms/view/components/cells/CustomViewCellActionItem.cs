@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCryptos.view.components.cells
+namespace MyCC.Forms.view.components.cells
 {
     public class CustomViewCellActionItem
     {

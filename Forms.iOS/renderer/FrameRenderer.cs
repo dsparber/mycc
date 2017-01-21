@@ -1,15 +1,15 @@
-﻿using MyCryptos.iOS.renderer;
+﻿using MyCC.Forms.iOS.renderer;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(Frame), typeof(CustomFrameRenderer))]
-namespace MyCryptos.iOS.renderer
+namespace MyCC.Forms.iOS.renderer
 {
-	public class CustomFrameRenderer : FrameRenderer
-	{
-		protected override void SetBackgroundColor(Color color)
-		{
-			//base.SetBackgroundColor(color);
-		}
-	}
+    public class CustomFrameRenderer : FrameRenderer
+    {
+        protected override void SetBackgroundColor(Color color)
+        {
+            //base.SetBackgroundColor(color);
+        }
+    }
 }

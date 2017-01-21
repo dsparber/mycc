@@ -1,13 +1,13 @@
 using System;
-using Xamarin.Forms;
-using constants;
 using System.Collections.Generic;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currency.Model;
+using MyCC.Forms.constants;
 using MyCC.Forms.Resources;
-using MyCryptos.Forms.view.overlays;
+using MyCC.Forms.view.overlays;
+using Xamarin.Forms;
 
-namespace MyCryptos.view.components
+namespace MyCC.Forms.view.components.cells
 {
     public class CurrencyEntryCell : ViewCell
     {

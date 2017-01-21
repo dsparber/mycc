@@ -2,15 +2,15 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
+	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	x:Class="MyCryptos.Forms.view.pages.SourcesView"
-	Title="{i18N:Translate Sources}">
+	x:Class="MyCC.Forms.view.pages.settings.SourcesView"
+	Title="{resources:Translate Sources}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
-			Text="{i18N:Translate Add}"
+			Text="{resources:Translate Add}"
 			Clicked="Add" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
@@ -43,12 +43,12 @@
 						VerticalOptions="CenterAndExpand"
 						Margin="40">
 						<Label
-							Text="{i18N:Translate NoSources}"
+							Text="{resources:Translate NoSources}"
 							VerticalOptions="Center"
 							HorizontalTextAlignment="Center"
 							TextColor="{x:Static constants:AppConstants.FontColorLight}" />
 						<Label
-							Text="{i18N:Translate NoSourcesDescriptionAdd}"
+							Text="{resources:Translate NoSourcesDescriptionAdd}"
 							VerticalOptions="Center"
 							HorizontalTextAlignment="Center"
 							WidthRequest="150"

@@ -95,7 +95,7 @@ function showChart(data, textAccounts, textCurrencies, textFurther, textNoData) 
     } else {
         createMainGraph(data);
 
-        $("#pieChart").resize(function() {
+        $("#pieChart").resize(function () {
             createMainGraph(data);
         });
     }
@@ -131,14 +131,14 @@ function showOverlay(id, callback) {
     overlay.id = id;
     var close = document.createElement("div");
     close.className = "close";
-    close.onclick = function() {
+    close.onclick = function () {
         $("#" + id).toggle("scale", {
-                direction: "both"
-            },
-            function() {
+            direction: "both"
+        },
+            function () {
                 document.getElementById("content").removeChild(document.getElementById(id));
             });
-    }
+    };
     overlay.appendChild(close);
     document.getElementById("content").appendChild(overlay);
     $("#" + id).toggle(0);
@@ -170,7 +170,7 @@ function clickedListener(data) {
 
     if (data["isGrouped"]) {
         var id = "overlay_" + $('.overlay').length + 1;
-        var createGroupedGraph = function() {
+        var createGroupedGraph = function () {
             if (data["groupedData"][0].hasOwnProperty("accounts")) {
                 var numAccounts = 0;
                 for (var i in data["groupedData"]) {
@@ -191,10 +191,10 @@ function clickedListener(data) {
             var pie = new d3pie(id, chartOptions);
         };
 
-        showOverlay(id, function() {
+        showOverlay(id, function () {
             createGroupedGraph();
 
-            $("#" + id).resize(function() {
+            $("#" + id).resize(function () {
                 clearChartArea(id);
                 createGroupedGraph();
             });
@@ -205,7 +205,7 @@ function clickedListener(data) {
         if (data["accounts"].length == 1) {
             Native("selectedCallback", data["accounts"][0]["id"]);
         } else {
-            var createAccountsGraph = function() {
+            var createAccountsGraph = function () {
                 chartOptions["header"]["title"].text = data["name"];
                 chartOptions["header"]["subtitle"].text = data["accounts"].length == 1 ? _textAccounts[0] : data["accounts"].length + " " + _textAccounts[1];
                 chartOptions["data"]["content"] = data["accounts"];
@@ -217,10 +217,10 @@ function clickedListener(data) {
                 var pie = new d3pie(id, chartOptions);
             };
 
-            showOverlay(id, function() {
+            showOverlay(id, function () {
                 createAccountsGraph();
 
-                $("#" + id).resize(function() {
+                $("#" + id).resize(function () {
                     clearChartArea(id);
                     createAccountsGraph();
                 });

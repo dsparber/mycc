@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.helpers
+namespace MyCC.Forms.helpers
 {
     public static class NavigationHelper
     {

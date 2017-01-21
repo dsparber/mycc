@@ -2,19 +2,20 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
+	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
+	xmlns:cells="clr-namespace:MyCC.Forms.view.components.cells;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	x:Class="MyCryptos.Forms.view.pages.AccountEditView">
+	x:Class="MyCC.Forms.view.pages.settings.AccountEditView">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			x:Name="EditItem"
-			Text="{i18N:Translate Edit}"
+			Text="{resources:Translate Edit}"
 			Clicked="StartEditing" />
 		<ToolbarItem
 			x:Name="SaveItem"
-			Text="{i18N:Translate Save}"
+			Text="{resources:Translate Save}"
 			Clicked="DoneEditing" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
@@ -39,17 +40,17 @@
 					<TableView.Root>
 						<TableSection
 							x:Name="AccountSection">
-							<components:CustomEntryCell
+							<cells:CustomEntryCell
 								x:Name="AccountName"
-								Title="{i18N:Translate Name}"
-								Placeholder="{i18N:Translate Name}"
+								Title="{resources:Translate Name}"
+								Placeholder="{resources:Translate Name}"
 								IsEditable="false" />
 						</TableSection>
 						<TableSection
 							x:Name="DeleteSection">
-							<components:CustomViewCell
+							<cells:CustomViewCell
 								x:Name="DeleteButtonCell"
-								Text="{i18N:Translate Delete}"
+								Text="{resources:Translate Delete}"
 								IsDeleteActionCell="true" />
 						</TableSection>
 					</TableView.Root>

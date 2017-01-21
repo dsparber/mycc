@@ -4,13 +4,14 @@ using System.Linq;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
-using MyCryptos.Forms.helpers;
-using MyCryptos.Forms.Messages;
+using MyCC.Forms.helpers;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCryptos.view.components;
+using MyCC.Forms.view.components.cells;
+using MyCC.Forms.view.overlays;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.pages
+namespace MyCC.Forms.view.pages.settings
 {
     public partial class SourcesView
     {

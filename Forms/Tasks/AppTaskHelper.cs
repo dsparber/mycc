@@ -5,10 +5,10 @@ using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.ExchangeRate.Model;
 using MyCC.Core.Tasks;
-using MyCryptos.Forms.Messages;
-using MyCryptos.Forms.view.overlays;
+using MyCC.Forms.Messages;
+using MyCC.Forms.view.overlays;
 
-namespace MyCryptos.Forms.Tasks
+namespace MyCC.Forms.Tasks
 {
     public static class AppTaskHelper
     {

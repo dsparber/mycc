@@ -1,11 +1,12 @@
 ﻿using System;
-using Xamarin.Forms;
 using System.Threading;
 using MyCC.Core.Resources;
+using MyCC.Forms.Android;
+using Xamarin.Forms;
 
-[assembly: Dependency(typeof(MyCryptos.Droid.Localise))]
+[assembly: Dependency(typeof(Localise))]
 
-namespace MyCryptos.Droid
+namespace MyCC.Forms.Android
 {
     public class Localise : ILocalise
     {

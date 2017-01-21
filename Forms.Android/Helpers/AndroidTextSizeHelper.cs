@@ -1,13 +1,12 @@
 ﻿using System;
-using Android.Content.Res;
 using Android.Graphics;
 using Android.Widget;
-using MyCryptos.Droid.Helpers;
-using MyCryptos.Forms.helpers;
+using MyCC.Forms.Android.Helpers;
+using MyCC.Forms.helpers;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(AndroidTextSizeHelper))]
-namespace MyCryptos.Droid.Helpers
+namespace MyCC.Forms.Android.Helpers
 {
     public class AndroidTextSizeHelper : ITextSizeHelper
     {
@@ -21,8 +20,8 @@ namespace MyCryptos.Droid.Helpers
             }
             textView.Typeface = bold ? Typeface.DefaultBold : Typeface.Default;
             textView.Paint.GetTextBounds(text, 0, text.Length, bounds);
-            var length = bounds.Width() / Resources.System.DisplayMetrics.ScaledDensity;
-            var height = bounds.Width() / Resources.System.DisplayMetrics.ScaledDensity;
+            var length = bounds.Width() / global::Android.Content.Res.Resources.System.DisplayMetrics.ScaledDensity;
+            var height = bounds.Width() / global::Android.Content.Res.Resources.System.DisplayMetrics.ScaledDensity;
             return Tuple.Create((double)height, (double)length);
         }
 

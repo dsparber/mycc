@@ -5,19 +5,19 @@ var testData = [{
     "Code": "EUR",
     "Rate": "0,12345678"
 }, {
-  "Amount": "850.12345678",
-  "Code": "USD",
-  "Rate": "0,12345678"
+    "Amount": "850.12345678",
+    "Code": "USD",
+    "Rate": "0,12345678"
 }, {
-  "Amount": "325750.12345678",
-  "Code": "DOGE",
-  "Rate": "0,12345678"
+    "Amount": "325750.12345678",
+    "Code": "DOGE",
+    "Rate": "0,12345678"
 }];
 
 var testColumns = [{
     "Text": "Betrag",
     "Type": "Amount"
-},{
+}, {
     "Text": "Währung",
     "Type": "Code"
 }];
@@ -40,7 +40,7 @@ function setHeader(columns) {
         var cell = row.insertCell(-1);
         cell.innerHTML = "<span>" + columns[i]["Text"] + "</span>";
         cell.setAttribute("type", columns[i]["Type"]);
-        cell.onclick = headerClicked(columns[i]["Type"])
+        cell.onclick = headerClicked(columns[i]["Type"]);
     }
 }
 
@@ -57,8 +57,8 @@ function updateTable(data, sort) {
         var amountCell = row.insertCell(1);
         var codeCell = row.insertCell(2);
         xCell.innerHTML = "<div><div>x</div><div>=</div></div>";
-        amountCell.innerHTML = "<div><div><span>"+data[i]["Rate"].substring(0,data[i]["Rate"].length-5)+"</span><span>"+data[i]["Rate"].substring(data[i]["Rate"].length-5)+"</span></div><div><span>"+data[i]["Amount"].substring(0,data[i]["Amount"].length-5)+"</span><span>"+data[i]["Amount"].substring(data[i]["Amount"].length-5)+"</span></div></div>";
-        codeCell.innerHTML = "<div>"+data[i]["Code"]+"</div>";
+        amountCell.innerHTML = "<div><div><span>" + data[i]["Rate"].substring(0, data[i]["Rate"].length - 5) + "</span><span>" + data[i]["Rate"].substring(data[i]["Rate"].length - 5) + "</span></div><div><span>" + data[i]["Amount"].substring(0, data[i]["Amount"].length - 5) + "</span><span>" + data[i]["Amount"].substring(data[i]["Amount"].length - 5) + "</span></div></div>";
+        codeCell.innerHTML = "<div>" + data[i]["Code"] + "</div>";
 
         row.onclick = rowClicked(data[i]["Code"]);
     }
@@ -72,13 +72,13 @@ function updateTable(data, sort) {
 function rowClicked(code) {
     return function () {
         Native("Callback", code);
-    }
+    };
 }
 
 function headerClicked(type) {
     return function () {
         Native("HeaderClickedCallback", type);
-    }
+    };
 }
 
 function sizeAllocated() {

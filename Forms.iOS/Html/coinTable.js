@@ -46,7 +46,7 @@ function setHeader(columns) {
         cell.innerHTML = "<span>" + columns[i]["Text"] + "</span>";
         cell.setAttribute("type", columns[i]["Type"]);
         cell.setAttribute("class", columns[i]["XYZ"]);
-        cell.onclick = headerClicked(columns[i]["Type"])
+        cell.onclick = headerClicked(columns[i]["Type"]);
     }
     row.insertCell(columns.length);
 }
@@ -78,13 +78,13 @@ function updateTable(data, sort) {
 function rowClicked(code) {
     return function () {
         Native("Callback", code);
-    }
+    };
 }
 
 function headerClicked(type) {
     return function () {
         Native("HeaderClickedCallback", type);
-    }
+    };
 }
 
 function clearTable(table) {

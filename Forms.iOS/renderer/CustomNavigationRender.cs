@@ -1,11 +1,11 @@
-﻿using constants;
-using MyCryptos.iOS.renderer;
+﻿using MyCC.Forms.constants;
+using MyCC.Forms.iOS.renderer;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(NavigationPage), typeof(CustomNavigationRender))]
-namespace MyCryptos.iOS.renderer
+namespace MyCC.Forms.iOS.renderer
 {
     internal class CustomNavigationRender : NavigationRenderer
     {

@@ -2,41 +2,42 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	x:Class="MyCryptos.Forms.view.pages.settings.DefaultPageSettingsView"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
-	Title="{i18N:Translate DefaultView}">
+	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
+	xmlns:cells="clr-namespace:MyCC.Forms.view.components.cells;assembly=MyCC.Forms"
+	x:Class="MyCC.Forms.view.pages.settings.DefaultPageSettingsView"
+    Title="{resources:Translate DefaultView}">
 	<components:ChangingStackLayout>
 		<components:HeaderView
-			TitleText="{i18N:Translate AppName}"
+			TitleText="{resources:Translate AppName}"
 			x:Name="Header" />
 		<StackLayout
 			Spacing="0"
 			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
 			<Label
-				Text="{i18N:Translate DefaultPageInfo}"
+				Text="{resources:Translate DefaultPageInfo}"
 				Margin="15,15,15,0"
 				TextColor="{x:Static constants:AppConstants.TableSectionColor}"
 				FontSize="14" />
 			<TableView
 				Intent="Settings">
 				<TableSection
-					Title="{i18N:Translate DefaultView}">
-					<components:CustomViewCell
+					Title="{resources:Translate DefaultView}">
+					<cells:CustomViewCell
 						x:Name="RatesOptionCell"
 						Tapped="SelectionChanged"
-						Text="{i18N:Translate Rates}"
+						Text="{resources:Translate Rates}"
 						Image="checkmark.png" />
-					<components:CustomViewCell
+					<cells:CustomViewCell
 						x:Name="TableOptionCell"
 						Tapped="SelectionChanged"
-						Text="{i18N:Translate AssetsTable}"
+						Text="{resources:Translate AssetsTable}"
 						Image="checkmark.png" />
-					<components:CustomViewCell
+					<cells:CustomViewCell
 						x:Name="GraphOptionCell"
 						Tapped="SelectionChanged"
-						Text="{i18N:Translate AssetsGraph}"
+						Text="{resources:Translate AssetsGraph}"
 						Image="checkmark.png" />
 				</TableSection>
 			</TableView>

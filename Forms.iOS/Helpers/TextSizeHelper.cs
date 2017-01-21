@@ -1,11 +1,11 @@
 ﻿using System;
-using MyCryptos.Forms.helpers;
-using MyCryptos.Forms.iOS.Helpers;
+using MyCC.Forms.helpers;
+using MyCC.Forms.iOS.Helpers;
 using UIKit;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(TextSizeHelper))]
-namespace MyCryptos.Forms.iOS.Helpers
+namespace MyCC.Forms.iOS.Helpers
 {
     public class TextSizeHelper : ITextSizeHelper
     {

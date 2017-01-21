@@ -3,12 +3,12 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
-using MyCryptos.Forms.Messages;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCryptos.view.components;
+using MyCC.Forms.view.components.cells;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.pages
+namespace MyCC.Forms.view.pages.settings
 {
     public partial class AccountEditView
     {

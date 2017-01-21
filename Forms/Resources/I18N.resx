@@ -59,744 +59,437 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema
-		id="root"
-		xmlns=""
-		xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-		xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import
-			namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element
-			name="root"
-			msdata:IsDataSet="true">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
-        <xsd:choice
-					maxOccurs="unbounded">
-          <xsd:element
-						name="metadata">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element
-									name="value"
-									type="xsd:string"
-									minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute
-								name="name"
-								use="required"
-								type="xsd:string" />
-              <xsd:attribute
-								name="type"
-								type="xsd:string" />
-              <xsd:attribute
-								name="mimetype"
-								type="xsd:string" />
-              <xsd:attribute
-								ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
-          <xsd:element
-						name="assembly">
+          <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute
-								name="alias"
-								type="xsd:string" />
-              <xsd:attribute
-								name="name"
-								type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
-          <xsd:element
-						name="data">
+          <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element
-									name="value"
-									type="xsd:string"
-									minOccurs="0"
-									msdata:Ordinal="1" />
-                <xsd:element
-									name="comment"
-									type="xsd:string"
-									minOccurs="0"
-									msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute
-								name="name"
-								type="xsd:string"
-								use="required"
-								msdata:Ordinal="1" />
-              <xsd:attribute
-								name="type"
-								type="xsd:string"
-								msdata:Ordinal="3" />
-              <xsd:attribute
-								name="mimetype"
-								type="xsd:string"
-								msdata:Ordinal="4" />
-              <xsd:attribute
-								ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
-          <xsd:element
-						name="resheader">
+          <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element
-									name="value"
-									type="xsd:string"
-									minOccurs="0"
-									msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute
-								name="name"
-								type="xsd:string"
-								use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
       </xsd:complexType>
     </xsd:element>
   </xsd:schema>
-  <resheader
-		name="resmimetype">
+  <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
-  <resheader
-		name="version">
+  <resheader name="version">
     <value>2.0</value>
   </resheader>
-  <resheader
-		name="reader">
+  <resheader name="reader">
     <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <resheader
-		name="writer">
+  <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data
-		name="Cancel"
-		xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data
-		name="Save"
-		xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data
-		name="Add"
-		xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data
-		name="AppName"
-		xml:space="preserve">
-    <value>MyCC</value>
-  </data>
-  <data
-		name="AppNameLong"
-		xml:space="preserve">
-    <value>My CryptoCurrencies</value>
-  </data>
-  <data
-		name="Settings"
-		xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data
-		name="Currency"
-		xml:space="preserve">
-    <value>Currency</value>
-  </data>
-  <data
-		name="Value"
-		xml:space="preserve">
-    <value>Value</value>
-  </data>
-  <data
-		name="Label"
-		xml:space="preserve">
-    <value>Label</value>
-  </data>
-  <data
-		name="Accounts"
-		xml:space="preserve">
-    <value>Accounts</value>
-  </data>
-  <data
-		name="NoAccounts"
-		xml:space="preserve">
-    <value>No account</value>
-  </data>
-  <data
-		name="NoSources"
-		xml:space="preserve">
-    <value>No sources</value>
-  </data>
-  <data
-		name="Sources"
-		xml:space="preserve">
-    <value>Sources</value>
-  </data>
-  <data
-		name="Source"
-		xml:space="preserve">
-    <value>Source</value>
-  </data>
-  <data
-		name="Refreshing"
-		xml:space="preserve">
-    <value>Refreshing</value>
-  </data>
-  <data
-		name="RefreshingDots"
-		xml:space="preserve">
-    <value>Refreshing ...</value>
-  </data>
-  <data
-		name="RefreshOnStartup"
-		xml:space="preserve">
-    <value>Refresh on startup</value>
-  </data>
-  <data
-		name="SearchCurrencies"
-		xml:space="preserve">
-    <value>Search currencies</value>
-  </data>
-  <data
-		name="Edit"
-		xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data
-		name="Editing"
-		xml:space="preserve">
-    <value>Editing</value>
-  </data>
-  <data
-		name="Delete"
-		xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data
-		name="EqualTo"
-		xml:space="preserve">
-    <value>Equal to</value>
-  </data>
-  <data
-		name="Name"
-		xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data
-		name="ApiKey"
-		xml:space="preserve">
-    <value>Key</value>
-  </data>
-  <data
-		name="SecretApiKey"
-		xml:space="preserve">
-    <value>Secret</value>
-  </data>
-  <data
-		name="AddRepositoryTitle"
-		xml:space="preserve">
-    <value>Add source</value>
-  </data>
-  <data
-		name="Bittrex"
-		xml:space="preserve">
-    <value>Bittrex</value>
-  </data>
-  <data
-		name="AddSource"
-		xml:space="preserve">
-    <value>Add new source</value>
-  </data>
-  <data
-		name="GrantAccess"
-		xml:space="preserve">
-    <value>Grant access</value>
-  </data>
-  <data
-		name="Ok"
-		xml:space="preserve">
-    <value>Ok</value>
-  </data>
-  <data
-		name="Error"
-		xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data
-		name="FetchingNoSuccessText"
-		xml:space="preserve">
-    <value>Error! Fetching data was not successful. Please verify your input and internet connection!</value>
-  </data>
-  <data
-		name="Testing"
-		xml:space="preserve">
-    <value>Testing</value>
-  </data>
-  <data
-		name="Fetching"
-		xml:space="preserve">
-    <value>Fetching</value>
-  </data>
-  <data
-		name="Local"
-		xml:space="preserve">
-    <value>local</value>
-  </data>
-  <data
-		name="Online"
-		xml:space="preserve">
-    <value>online</value>
-  </data>
-  <data
-		name="Deleting"
-		xml:space="preserve">
-    <value>Deleting</value>
-  </data>
-  <data
-		name="Type"
-		xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data
-		name="Done"
-		xml:space="preserve">
-    <value>Done</value>
-  </data>
-  <data
-		name="Address"
-		xml:space="preserve">
-    <value>Address</value>
-  </data>
-  <data
-		name="AccountInformation"
-		xml:space="preserve">
-    <value>Account information</value>
-  </data>
-  <data
-		name="SelectCurrency"
-		xml:space="preserve">
-    <value>Select Currency</value>
-  </data>
-  <data
-		name="NetworkError"
-		xml:space="preserve">
-    <value>An internet connection could not be established. Please verify that your phone has internet access.</value>
-  </data>
-  <data
-		name="Graph"
-		xml:space="preserve">
-    <value>Graph</value>
-  </data>
-  <data
-		name="Table"
-		xml:space="preserve">
-    <value>Table</value>
-  </data>
-  <data
-		name="Assets"
-		xml:space="preserve">
-    <value>Assets</value>
-  </data>
-  <data
-		name="ReferenceCurrencies"
-		xml:space="preserve">
-    <value>Reference currencies</value>
-  </data>
-  <data
-		name="OneAccount"
-		xml:space="preserve">
-    <value>One account</value>
-  </data>
-  <data
-		name="OneSource"
-		xml:space="preserve">
-    <value>One source</value>
-  </data>
-  <data
-		name="Refresh"
-		xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data
-		name="Currencies"
-		xml:space="preserve">
-    <value>Currencies</value>
-  </data>
-  <data
-		name="Unnamed"
-		xml:space="preserve">
-    <value>Unnamed</value>
-  </data>
-  <data
-		name="NewSource"
-		xml:space="preserve">
-    <value>New Source</value>
-  </data>
-  <data
-		name="Copyright"
-		xml:space="preserve">
-    <value>© Daniel Sparber</value>
-  </data>
-  <data
-		name="Pin"
-		xml:space="preserve">
-    <value>PIN</value>
-  </data>
-  <data
-		name="PinActive"
-		xml:space="preserve">
-    <value>PIN active</value>
-  </data>
-  <data
-		name="FingerprintActive"
-		xml:space="preserve">
-    <value>PIN and fingerprint active</value>
-  </data>
-  <data
-		name="NotConfigured"
-		xml:space="preserve">
-    <value>Not configured</value>
-  </data>
-  <data
-		name="EnablePin"
-		xml:space="preserve">
-    <value>Enable PIN</value>
-  </data>
-  <data
-		name="DisablePin"
-		xml:space="preserve">
-    <value>Disable PIN</value>
-  </data>
-  <data
-		name="ChangePin"
-		xml:space="preserve">
-    <value>Change PIN</value>
-  </data>
-  <data
-		name="OldPin"
-		xml:space="preserve">
-    <value>Old PIN</value>
-  </data>
-  <data
-		name="NewPin"
-		xml:space="preserve">
-    <value>New PIN</value>
-  </data>
-  <data
-		name="RepeatNewPin"
-		xml:space="preserve">
-    <value>Repeat PIN</value>
-  </data>
-  <data
-		name="UseFingerprint"
-		xml:space="preserve">
-    <value>Use Fingerprint</value>
-  </data>
-  <data
-		name="General"
-		xml:space="preserve">
-    <value>General</value>
-  </data>
-  <data
-		name="PinToShort"
-		xml:space="preserve">
-    <value>The entered PIN is to short!</value>
-  </data>
-  <data
-		name="NewPinsDontMatch"
-		xml:space="preserve">
-    <value>The new PINs do not match!</value>
-  </data>
-  <data
-		name="OldPinWrong"
-		xml:space="preserve">
-    <value>The entered old PIN is wrong!</value>
-  </data>
-  <data
-		name="UnlockTheApplication"
-		xml:space="preserve">
-    <value>Unlock the application</value>
-  </data>
-  <data
-		name="ScanQrCode"
-		xml:space="preserve">
-    <value>Scan QR code</value>
-  </data>
-  <data
-		name="AmountAndCurrency"
-		xml:space="preserve">
-    <value>Amount and currency</value>
-  </data>
-  <data
-		name="VerifyInput"
-		xml:space="preserve">
-    <value>Please verify your input!</value>
-  </data>
-  <data
-		name="Amount"
-		xml:space="preserve">
-    <value>Amount</value>
-  </data>
-  <data
-		name="NoSourcesDescriptionAdd"
-		xml:space="preserve">
-    <value>You can simply add a source by pressing the add button (+) in the top right corner.</value>
-  </data>
-  <data
-		name="GoToSourcesToAddAccount"
-		xml:space="preserve">
-    <value>You can go to the settings page to add data.</value>
-  </data>
-  <data
-		name="NoDataToDisplay"
-		xml:space="preserve">
-    <value>No data to display</value>
-  </data>
-  <data
-		name="Manually"
-		xml:space="preserve">
-    <value>Manually</value>
-  </data>
-  <data
-		name="AsCurrency"
-		xml:space="preserve">
-    <value>as {0}</value>
-  </data>
-  <data
-		name="DefaultView"
-		xml:space="preserve">
-    <value>Default View</value>
-  </data>
-  <data
-		name="GeneralError"
-		xml:space="preserve">
-    <value>An unexpected error occured</value>
-  </data>
-  <data
-		name="ManuallyAdded"
-		xml:space="preserve">
-    <value>Manually added</value>
-  </data>
-  <data
-		name="AddressAdded"
-		xml:space="preserve">
-    <value>Added with Address</value>
-  </data>
-  <data
-		name="BittrexAdded"
-		xml:space="preserve">
-    <value>Added with Bittrex</value>
-  </data>
-  <data
-		name="Info"
-		xml:space="preserve">
-    <value>Info</value>
-  </data>
-  <data
-		name="LoadRatesAndBalancesOnStartup"
-		xml:space="preserve">
-    <value>Refresh rates and balances on startup</value>
-  </data>
-  <data
-		name="RoundNumbers"
-		xml:space="preserve">
-    <value>Round numbers</value>
-  </data>
-  <data
-		name="OtherwiseTruncate"
-		xml:space="preserve">
-    <value>Otherwise numbers are truncated</value>
-  </data>
-  <data
-		name="RepositoryAlreadyAdded"
-		xml:space="preserve">
-    <value>The entered source was already added!</value>
-  </data>
-  <data
-		name="Rates"
-		xml:space="preserve">
-    <value>Rates</value>
-  </data>
-  <data
-		name="Data"
-		xml:space="preserve">
-    <value>Data</value>
-  </data>
-  <data
-		name="IsEqualTo"
-		xml:space="preserve">
-    <value>{0} is equal to</value>
-  </data>
-  <data
-		name="AddressOrXpub"
-		xml:space="preserve">
-    <value>Address / xPub</value>
-  </data>
-  <data
-		name="AllCurrenciesFromAccounts"
-		xml:space="preserve">
-    <value>All currencies from accounts</value>
-  </data>
-  <data
-		name="AdditionalCurrencies"
-		xml:space="preserve">
-    <value>Additional currencies</value>
-  </data>
-  <data
-		name="RatesCurrenciesInfo"
-		xml:space="preserve">
-    <value>The rates view shows the currencies of all entered accounts plus the following ones.</value>
-  </data>
-  <data
-		name="CurrenciesForRateView"
-		xml:space="preserve">
-    <value>Currencies for the rates view</value>
-  </data>
-  <data
-		name="NoCurrencies"
-		xml:space="preserve">
-    <value>No currencies</value>
-  </data>
-  <data
-		name="OneCurrency"
-		xml:space="preserve">
-    <value>One currency</value>
-  </data>
-  <data
-		name="Security"
-		xml:space="preserve">
-    <value>Security</value>
-  </data>
-  <data
-		name="Abbreviation"
-		xml:space="preserve">
+  <data name="Abbreviation" xml:space="preserve">
     <value>Abbreviation</value>
   </data>
-  <data
-		name="Algorithm"
-		xml:space="preserve">
+  <data name="AccountInformation" xml:space="preserve">
+    <value>Account information</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AdditionalCurrencies" xml:space="preserve">
+    <value>Additional currencies</value>
+  </data>
+  <data name="AddRepositoryTitle" xml:space="preserve">
+    <value>Add source</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="AddressAdded" xml:space="preserve">
+    <value>Added with Address</value>
+  </data>
+  <data name="AddressOrXpub" xml:space="preserve">
+    <value>Address / xPub</value>
+  </data>
+  <data name="AddSource" xml:space="preserve">
+    <value>Add new source</value>
+  </data>
+  <data name="Algorithm" xml:space="preserve">
     <value>Algorithm</value>
   </data>
-  <data
-		name="Blocktime"
-		xml:space="preserve">
-    <value>Blocktime</value>
+  <data name="AllCurrenciesFromAccounts" xml:space="preserve">
+    <value>All currencies from accounts</value>
   </data>
-  <data
-		name="Hashrate"
-		xml:space="preserve">
-    <value>Hashrate</value>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
   </data>
-  <data
-		name="Difficulty"
-		xml:space="preserve">
-    <value>Difficulty</value>
+  <data name="AmountAndCurrency" xml:space="preserve">
+    <value>Amount and currency</value>
   </data>
-  <data
-		name="BlockHeight"
-		xml:space="preserve">
-    <value>Block height</value>
+  <data name="ApiKey" xml:space="preserve">
+    <value>Key</value>
   </data>
-  <data
-		name="CoinSupply"
-		xml:space="preserve">
-    <value>Coin supply</value>
+  <data name="AppName" xml:space="preserve">
+    <value>MyCC</value>
   </data>
-  <data
-		name="ProofOfWork"
-		xml:space="preserve">
-    <value>Proof of work</value>
+  <data name="AppNameLong" xml:space="preserve">
+    <value>My CryptoCurrencies</value>
   </data>
-  <data
-		name="ProofOfStake"
-		xml:space="preserve">
-    <value>Proof of stake</value>
+  <data name="AsCurrency" xml:space="preserve">
+    <value>as {0}</value>
   </data>
-  <data
-		name="GHps"
-		xml:space="preserve">
-    <value>GH/s</value>
+  <data name="Assets" xml:space="preserve">
+    <value>Assets</value>
   </data>
-  <data
-		name="UnitSecond"
-		xml:space="preserve">
-    <value>s</value>
-  </data>
-  <data
-		name="MarketCap"
-		xml:space="preserve">
-    <value>Market cap.</value>
-  </data>
-  <data
-		name="ProofOfWorkAndState"
-		xml:space="preserve">
-    <value>Proof of work and stake</value>
-  </data>
-  <data
-		name="BlockExplorer"
-		xml:space="preserve">
-    <value>Block explorer</value>
-  </data>
-  <data
-		name="BitcoinCanNotBeUnstared"
-		xml:space="preserve">
-    <value>Bitcoin can not be removed from the stared reference currencies.</value>
-  </data>
-  <data
-		name="BitcoinCanNotBeRemoved"
-		xml:space="preserve">
-    <value>Bitcoin can not be removed from the reference currencies.</value>
-  </data>
-  <data
-		name="OnlyThreeCurrenciesCanBeStared"
-		xml:space="preserve">
-    <value>Only three currencies can be marked with a star.</value>
-  </data>
-  <data
-		name="ReferenceCurrencyInfoP1"
-		xml:space="preserve">
-    <value>The value of all coins, one coin or one account is shown for the following currencies.</value>
-  </data>
-  <data
-		name="ReferenceCurrencyInfoP2"
-		xml:space="preserve">
-    <value>The values of the stared currencies are shown within the blue header.</value>
-  </data>
-  <data
-		name="AssetsGraph"
-		xml:space="preserve">
+  <data name="AssetsGraph" xml:space="preserve">
     <value>Assets (Graph)</value>
   </data>
-  <data
-		name="AssetsTable"
-		xml:space="preserve">
+  <data name="AssetsTable" xml:space="preserve">
     <value>Assets (Table)</value>
   </data>
-  <data
-		name="DefaultPageInfo"
-		xml:space="preserve">
-    <value>The selected view is presented when the application starts.</value>
+  <data name="BitcoinCanNotBeRemoved" xml:space="preserve">
+    <value>Bitcoin can not be removed from the reference currencies.</value>
   </data>
-  <data
-		name="MaxCoinSupply"
-		xml:space="preserve">
-    <value>Max. coin supply</value>
+  <data name="BitcoinCanNotBeUnstared" xml:space="preserve">
+    <value>Bitcoin can not be removed from the stared reference currencies.</value>
   </data>
-  <data
-		name="BlockReward"
-		xml:space="preserve">
+  <data name="Bittrex" xml:space="preserve">
+    <value>Bittrex</value>
+  </data>
+  <data name="BittrexAdded" xml:space="preserve">
+    <value>Added with Bittrex</value>
+  </data>
+  <data name="BlockExplorer" xml:space="preserve">
+    <value>Block explorer</value>
+  </data>
+  <data name="BlockHeight" xml:space="preserve">
+    <value>Block height</value>
+  </data>
+  <data name="BlockReward" xml:space="preserve">
     <value>Block reward</value>
   </data>
-  <data
-		name="Further"
-		xml:space="preserve">
+  <data name="Blocktime" xml:space="preserve">
+    <value>Blocktime</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ChangePin" xml:space="preserve">
+    <value>Change PIN</value>
+  </data>
+  <data name="CoinSupply" xml:space="preserve">
+    <value>Coin supply</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>© Daniel Sparber</value>
+  </data>
+  <data name="Currencies" xml:space="preserve">
+    <value>Currencies</value>
+  </data>
+  <data name="CurrenciesForRateView" xml:space="preserve">
+    <value>Currencies for the rates view</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="DefaultPageInfo" xml:space="preserve">
+    <value>The selected view is presented when the application starts.</value>
+  </data>
+  <data name="DefaultView" xml:space="preserve">
+    <value>Default View</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Deleting" xml:space="preserve">
+    <value>Deleting</value>
+  </data>
+  <data name="Difficulty" xml:space="preserve">
+    <value>Difficulty</value>
+  </data>
+  <data name="DisablePin" xml:space="preserve">
+    <value>Disable PIN</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Editing" xml:space="preserve">
+    <value>Editing</value>
+  </data>
+  <data name="EnablePin" xml:space="preserve">
+    <value>Enable PIN</value>
+  </data>
+  <data name="EqualTo" xml:space="preserve">
+    <value>Equal to</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Fetching" xml:space="preserve">
+    <value>Fetching</value>
+  </data>
+  <data name="FetchingNoSuccessText" xml:space="preserve">
+    <value>Error! Fetching data was not successful. Please verify your input and internet connection!</value>
+  </data>
+  <data name="FingerprintActive" xml:space="preserve">
+    <value>PIN and fingerprint active</value>
+  </data>
+  <data name="Further" xml:space="preserve">
     <value>Further</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="GeneralError" xml:space="preserve">
+    <value>An unexpected error occured</value>
+  </data>
+  <data name="GHps" xml:space="preserve">
+    <value>GH/s</value>
+  </data>
+  <data name="GoToSourcesToAddAccount" xml:space="preserve">
+    <value>You can go to the settings page to add data.</value>
+  </data>
+  <data name="GrantAccess" xml:space="preserve">
+    <value>Grant access</value>
+  </data>
+  <data name="Graph" xml:space="preserve">
+    <value>Graph</value>
+  </data>
+  <data name="Hashrate" xml:space="preserve">
+    <value>Hashrate</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="IsEqualTo" xml:space="preserve">
+    <value>{0} is equal to</value>
+  </data>
+  <data name="Label" xml:space="preserve">
+    <value>Label</value>
+  </data>
+  <data name="LoadRatesAndBalancesOnStartup" xml:space="preserve">
+    <value>Refresh rates and balances on startup</value>
+  </data>
+  <data name="Local" xml:space="preserve">
+    <value>local</value>
+  </data>
+  <data name="Manually" xml:space="preserve">
+    <value>Manually</value>
+  </data>
+  <data name="ManuallyAdded" xml:space="preserve">
+    <value>Manually added</value>
+  </data>
+  <data name="MarketCap" xml:space="preserve">
+    <value>Market cap.</value>
+  </data>
+  <data name="MaxCoinSupply" xml:space="preserve">
+    <value>Max. coin supply</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NetworkError" xml:space="preserve">
+    <value>An internet connection could not be established. Please verify that your phone has internet access.</value>
+  </data>
+  <data name="NewPin" xml:space="preserve">
+    <value>New PIN</value>
+  </data>
+  <data name="NewPinsDontMatch" xml:space="preserve">
+    <value>The new PINs do not match!</value>
+  </data>
+  <data name="NewSource" xml:space="preserve">
+    <value>New Source</value>
+  </data>
+  <data name="NoAccounts" xml:space="preserve">
+    <value>No account</value>
+  </data>
+  <data name="NoCurrencies" xml:space="preserve">
+    <value>No currencies</value>
+  </data>
+  <data name="NoDataToDisplay" xml:space="preserve">
+    <value>No data to display</value>
+  </data>
+  <data name="NoSources" xml:space="preserve">
+    <value>No sources</value>
+  </data>
+  <data name="NoSourcesDescriptionAdd" xml:space="preserve">
+    <value>You can simply add a source by pressing the add button (+) in the top right corner.</value>
+  </data>
+  <data name="NotConfigured" xml:space="preserve">
+    <value>Not configured</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="OldPin" xml:space="preserve">
+    <value>Old PIN</value>
+  </data>
+  <data name="OldPinWrong" xml:space="preserve">
+    <value>The entered old PIN is wrong!</value>
+  </data>
+  <data name="OneAccount" xml:space="preserve">
+    <value>One account</value>
+  </data>
+  <data name="OneCurrency" xml:space="preserve">
+    <value>One currency</value>
+  </data>
+  <data name="OneSource" xml:space="preserve">
+    <value>One source</value>
+  </data>
+  <data name="Online" xml:space="preserve">
+    <value>online</value>
+  </data>
+  <data name="OnlyThreeCurrenciesCanBeStared" xml:space="preserve">
+    <value>Only three currencies can be marked with a star.</value>
+  </data>
+  <data name="OtherwiseTruncate" xml:space="preserve">
+    <value>Otherwise numbers are truncated</value>
+  </data>
+  <data name="Pin" xml:space="preserve">
+    <value>PIN</value>
+  </data>
+  <data name="PinActive" xml:space="preserve">
+    <value>PIN active</value>
+  </data>
+  <data name="PinToShort" xml:space="preserve">
+    <value>The entered PIN is to short!</value>
+  </data>
+  <data name="ProofOfStake" xml:space="preserve">
+    <value>Proof of stake</value>
+  </data>
+  <data name="ProofOfWork" xml:space="preserve">
+    <value>Proof of work</value>
+  </data>
+  <data name="ProofOfWorkAndState" xml:space="preserve">
+    <value>Proof of work and stake</value>
+  </data>
+  <data name="Rates" xml:space="preserve">
+    <value>Rates</value>
+  </data>
+  <data name="RatesCurrenciesInfo" xml:space="preserve">
+    <value>The rates view shows the currencies of all entered accounts plus the following ones.</value>
+  </data>
+  <data name="ReferenceCurrencies" xml:space="preserve">
+    <value>Reference currencies</value>
+  </data>
+  <data name="ReferenceCurrencyInfoP1" xml:space="preserve">
+    <value>The value of all coins, one coin or one account is shown for the following currencies.</value>
+  </data>
+  <data name="ReferenceCurrencyInfoP2" xml:space="preserve">
+    <value>The values of the stared currencies are shown within the blue header.</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Refreshing" xml:space="preserve">
+    <value>Refreshing</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Refreshing ...</value>
+  </data>
+  <data name="RefreshOnStartup" xml:space="preserve">
+    <value>Refresh on startup</value>
+  </data>
+  <data name="RepeatNewPin" xml:space="preserve">
+    <value>Repeat PIN</value>
+  </data>
+  <data name="RepositoryAlreadyAdded" xml:space="preserve">
+    <value>The entered source was already added!</value>
+  </data>
+  <data name="RoundNumbers" xml:space="preserve">
+    <value>Round numbers</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ScanQrCode" xml:space="preserve">
+    <value>Scan QR code</value>
+  </data>
+  <data name="SearchCurrencies" xml:space="preserve">
+    <value>Search currencies</value>
+  </data>
+  <data name="SecretApiKey" xml:space="preserve">
+    <value>Secret</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="SelectCurrency" xml:space="preserve">
+    <value>Select Currency</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="Sources" xml:space="preserve">
+    <value>Sources</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>Table</value>
+  </data>
+  <data name="Testing" xml:space="preserve">
+    <value>Testing</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="UnitSecond" xml:space="preserve">
+    <value>s</value>
+  </data>
+  <data name="UnlockTheApplication" xml:space="preserve">
+    <value>Unlock the application</value>
+  </data>
+  <data name="Unnamed" xml:space="preserve">
+    <value>Unnamed</value>
+  </data>
+  <data name="UseFingerprint" xml:space="preserve">
+    <value>Use Fingerprint</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="VerifyInput" xml:space="preserve">
+    <value>Please verify your input!</value>
   </data>
 </root>

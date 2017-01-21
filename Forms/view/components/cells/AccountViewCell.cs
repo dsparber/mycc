@@ -3,11 +3,10 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.ExchangeRate.Helpers;
 using MyCC.Core.ExchangeRate.Model;
 using MyCC.Core.Settings;
-using MyCryptos.Forms.Messages;
 using Xamarin.Forms;
-using AccountDetailView = MyCryptos.Forms.view.pages.AccountDetailView;
+using AccountDetailView = MyCC.Forms.view.pages.AccountDetailView;
 
-namespace MyCryptos.view.components
+namespace MyCC.Forms.view.components.cells
 {
     public class AccountViewCell : CustomViewCell
     {

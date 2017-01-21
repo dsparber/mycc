@@ -1,6 +1,6 @@
 ﻿using MyCC.Forms.Resources;
 
-namespace MyCryptos.Forms.helpers
+namespace MyCC.Forms.helpers
 {
     public static class PluralHelper
     {

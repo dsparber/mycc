@@ -1,25 +1,25 @@
 using System;
-using System.Linq;
-using MyCryptos.Forms.Messages;
-using MyCC.Forms.Resources;
-using Xamarin.Forms;
-using XLabs.Forms.Controls;
-using XLabs.Ioc;
-using XLabs.Serialization;
-using MyCryptos.Forms.view.pages;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
-using Newtonsoft.Json;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.ExchangeRate.Helpers;
 using MyCC.Core.ExchangeRate.Model;
 using MyCC.Core.Settings;
+using MyCC.Forms.Messages;
+using MyCC.Forms.Resources;
+using MyCC.Forms.view.pages;
+using Newtonsoft.Json;
+using Xamarin.Forms;
+using XLabs.Forms.Controls;
+using XLabs.Ioc;
+using XLabs.Serialization;
 
-namespace MyCryptos.Forms.view.components
+namespace MyCC.Forms.view.components
 {
     public class CoinGraphComponent : ContentView
     {

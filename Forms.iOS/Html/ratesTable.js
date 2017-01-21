@@ -37,7 +37,7 @@ function setHeader(columns) {
         var cell = row.insertCell(-1);
         cell.innerHTML = "<span>" + columns[i]["Text"] + "</span>";
         cell.setAttribute("type", columns[i]["Type"]);
-        cell.onclick = headerClicked(columns[i]["Type"])
+        cell.onclick = headerClicked(columns[i]["Type"]);
     }
     row.insertCell(-1);
 }
@@ -71,13 +71,13 @@ function updateTable(data, sort) {
 function rowClicked(code) {
     return function () {
         Native("Callback", code);
-    }
+    };
 }
 
 function headerClicked(type) {
     return function () {
         Native("HeaderClickedCallback", type);
-    }
+    };
 }
 
 function sizeAllocated() {

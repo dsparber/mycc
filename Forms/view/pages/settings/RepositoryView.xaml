@@ -2,21 +2,22 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
+	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
+	xmlns:cells="clr-namespace:MyCC.Forms.view.components.cells;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	Title="{i18N:Translate Accounts}"
-	x:Class="MyCryptos.Forms.view.pages.RepositoryView">
+	Title="{resources:Translate Accounts}"
+	x:Class="MyCC.Forms.view.pages.settings.RepositoryView">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			x:Name="EditItem"
 			Clicked="EditClicked"
-			Text="{i18N:Translate Edit}" />
+			Text="{resources:Translate Edit}" />
 		<ToolbarItem
 			x:Name="SaveItem"
 			Clicked="SaveClicked"
-			Text="{i18N:Translate Save}" />
+			Text="{resources:Translate Save}" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<components:ChangingStackLayout>
@@ -31,26 +32,26 @@
 						Android="#EEE" />
 				</TableView.BackgroundColor>
 				<TableSection
-					Title="{i18N:Translate Info}"
+					Title="{resources:Translate Info}"
 					x:Name="GeneralSection">
-					<components:CustomEntryCell
+					<cells:CustomEntryCell
 						x:Name="RepositoryNameEntryCell"
-						Title="{i18N:Translate Name}"
+						Title="{resources:Translate Name}"
 						IsEditable="false"
-						Placeholder="{i18N:Translate Name}" />
-					<components:CustomEntryCell
+						Placeholder="{resources:Translate Name}" />
+					<cells:CustomEntryCell
 						x:Name="AddressEntryCell"
 						IsEditable="false"
-						Title="{i18N:Translate Address}" />
+						Title="{resources:Translate Address}" />
 				</TableSection>
 				<TableSection
-					Title="{i18N:Translate Coins}"
+					Title="{resources:Translate Coins}"
 					x:Name="AccountsSection" />
 				<TableSection
 					x:Name="DeleteSection">
-					<components:CustomViewCell
+					<cells:CustomViewCell
 						x:Name="DeleteButtonCell"
-						Text="{i18N:Translate Delete}"
+						Text="{resources:Translate Delete}"
 						IsDeleteActionCell="true" />
 				</TableSection>
 			</TableView>

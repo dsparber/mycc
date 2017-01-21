@@ -2,36 +2,36 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	x:Class="MyCryptos.Forms.view.pages.settings.WatchedCurrenciesSettingsView"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
-	BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
-	Title="{i18N:Translate Rates}">
+	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
+	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
+	x:Class="MyCC.Forms.view.pages.settings.WatchedCurrenciesSettingsView"
+    BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
+	Title="{resources:Translate Rates}">
   <ContentPage.ToolbarItems>
     <ToolbarItem
-			Text="{i18N:Translate Add}"
+			Text="{resources:Translate Add}"
 			Clicked="Add" />
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <components:ChangingStackLayout>
       <components:HeaderView
-				TitleText="{i18N:Translate AppName}"
-				InfoText="{i18N:Translate CurrenciesForRateView}" />
+				TitleText="{resources:Translate AppName}"
+				InfoText="{resources:Translate CurrenciesForRateView}" />
       <ScrollView
 				IsClippedToBounds="true">
         <StackLayout
 					Spacing="0"
 					BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
           <Label
-						Text="{i18N:Translate RatesCurrenciesInfo}"
+						Text="{resources:Translate RatesCurrenciesInfo}"
 						Margin="15,15,15,0"
 						TextColor="{x:Static constants:AppConstants.TableSectionColor}"
 						FontSize="14" />
           <TableView
 						Intent="Settings">
             <TableSection
-							Title="{i18N:Translate AdditionalCurrencies}"
+							Title="{resources:Translate AdditionalCurrencies}"
 							x:Name="AllCurrenciesSection" />
           </TableView>
         </StackLayout>

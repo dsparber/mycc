@@ -1,4 +1,4 @@
-﻿namespace MyCryptos.Forms.Messages
+﻿namespace MyCC.Forms.Messages
 {
     public class MessageInfo
     {

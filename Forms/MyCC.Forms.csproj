@@ -147,12 +147,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\I18N.de.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>I18N.de.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\I18N.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
       <LastGenOutput>I18N.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="view\pages\CoinTableView.xaml">

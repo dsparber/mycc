@@ -1,13 +1,16 @@
-﻿using Xamarin.Forms;
-using System.Linq;
+﻿using System.Linq;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
-using MyCryptos.Forms.Messages;
-using MyCryptos.Forms.view.container;
-using MyCryptos.Forms.view.overlays;
+using MyCC.Forms.Messages;
+using MyCC.Forms.view.container;
+using MyCC.Forms.view.overlays;
+using MyCC.Forms.view.pages;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
-namespace MyCryptos
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+namespace MyCC.Forms
 {
     public class App : Application
     {
@@ -26,7 +29,7 @@ namespace MyCryptos
 
             if (ApplicationSettings.IsPinSet)
             {
-                startPage = new Forms.view.pages.PasswordView(startPage);
+                startPage = new PasswordView(startPage);
             }
 
             MainPage = startPage;
@@ -65,14 +68,14 @@ namespace MyCryptos
             if (!ApplicationSettings.IsPinSet) return;
 
             var page = GetCurrentPage();
-            if (page is Forms.view.pages.PasswordView) return;
+            if (page is PasswordView) return;
 
-            page?.Navigation.PushModalAsync(new Forms.view.pages.PasswordView(true), false);
+            page?.Navigation.PushModalAsync(new PasswordView(true), false);
         }
 
         protected override async void OnResume()
         {
-            var passwordView = (GetCurrentPage() as Forms.view.pages.PasswordView);
+            var passwordView = (GetCurrentPage() as PasswordView);
             if (passwordView != null)
             {
                 await passwordView.Authenticate();

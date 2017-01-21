@@ -2,18 +2,19 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
+	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
+	xmlns:cells="clr-namespace:MyCC.Forms.view.components.cells;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	x:Class="MyCryptos.Forms.view.pages.AddSourceView"
-	Title="{i18N:Translate AddSource}">
+	x:Class="MyCC.Forms.view.overlays.AddSourceView"
+	Title="{resources:Translate AddSource}">
   <ContentPage.ToolbarItems>
     <ToolbarItem
-			Text="{i18N:Translate Save}"
+			Text="{resources:Translate Save}"
 			Clicked="Save" />
     <ToolbarItem
-			Text="{i18N:Translate Cancel}"
+			Text="{resources:Translate Cancel}"
 			Clicked="Cancel"
 			x:Name="CancelItem" />
   </ContentPage.ToolbarItems>
@@ -41,11 +42,11 @@
             </TableView.BackgroundColor>
             <TableView.Root>
               <TableSection
-								Title="{i18N:Translate Name}" x:Name="NameSection">
-                <components:CustomEntryCell
+								Title="{resources:Translate Name}" x:Name="NameSection">
+                <cells:CustomEntryCell
 									x:Name="NameEntryCell"
-									Title="{i18N:Translate Name}"
-									Placeholder="{i18N:Translate Name}" />
+									Title="{resources:Translate Name}"
+									Placeholder="{resources:Translate Name}" />
               </TableSection>
             </TableView.Root>
           </TableView>

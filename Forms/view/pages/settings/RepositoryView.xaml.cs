@@ -4,14 +4,14 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Types;
-using MyCryptos.Forms.helpers;
-using MyCryptos.Forms.Messages;
+using MyCC.Forms.helpers;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCryptos.Forms.Tasks;
-using MyCryptos.view.components;
+using MyCC.Forms.Tasks;
+using MyCC.Forms.view.components.cells;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.pages
+namespace MyCC.Forms.view.pages.settings
 {
     public partial class RepositoryView
     {

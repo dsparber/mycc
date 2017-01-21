@@ -2,7 +2,7 @@
 using MyCC.Forms.Resources;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.addsource
+namespace MyCC.Forms.view.addsource
 {
 
     public abstract class AddSourceSubview

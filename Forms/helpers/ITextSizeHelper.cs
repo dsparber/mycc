@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCryptos.Forms.helpers
+namespace MyCC.Forms.helpers
 {
     public interface ITextSizeHelper
     {

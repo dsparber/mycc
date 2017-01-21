@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using constants;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Currency.Storage;
+using MyCC.Forms.constants;
 using MyCC.Forms.Resources;
-using MyCryptos.view.components;
+using MyCC.Forms.view.components.cells;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.overlays
+namespace MyCC.Forms.view.overlays
 {
     class CurrencyOverlay : ContentPage
     {

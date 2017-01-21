@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
-using MyCryptos.Forms.helpers;
-using MyCryptos.Forms.Messages;
+using MyCC.Forms.helpers;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 
-namespace MyCryptos.Forms.view.pages.settings
+namespace MyCC.Forms.view.pages.settings
 {
     public partial class SettingsView
     {

@@ -4,7 +4,7 @@ using System.Net;
 using MyCC.Forms.Resources;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.overlays
+namespace MyCC.Forms.view.overlays
 {
     public static class ErrorOverlay
     {

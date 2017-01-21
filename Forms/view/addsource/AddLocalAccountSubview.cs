@@ -3,10 +3,10 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Forms.Resources;
-using MyCryptos.view.components;
+using MyCC.Forms.view.components.cells;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.addsource
+namespace MyCC.Forms.view.addsource
 {
     public class AddLocalAccountSubview : AddAccountSubview
     {

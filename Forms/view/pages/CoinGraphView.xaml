@@ -2,16 +2,16 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
-	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
+    BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
-	x:Class="MyCryptos.Forms.view.pages.CoinGraphView"
-	Title="{i18N:Translate Assets}">
+	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
+	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
+	x:Class="MyCC.Forms.view.pages.CoinGraphView"
+	Title="{resources:Translate Assets}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
-			Text="{i18N:Translate Refresh}"
+			Text="{resources:Translate Refresh}"
 			Clicked="Refresh"
 			Icon="refresh.png" />
 	</ContentPage.ToolbarItems>
@@ -48,12 +48,12 @@
 						VerticalOptions="CenterAndExpand"
 						Margin="40">
 						<Label
-							Text="{i18N:Translate NoDataToDisplay}"
+							Text="{resources:Translate NoDataToDisplay}"
 							VerticalOptions="Center"
 							HorizontalTextAlignment="Center"
 							TextColor="{x:Static constants:AppConstants.FontColorLight}" />
 						<Label
-							Text="{i18N:Translate GoToSourcesToAddAccount}"
+							Text="{resources:Translate GoToSourcesToAddAccount}"
 							VerticalOptions="Center"
 							HorizontalTextAlignment="Center"
 							WidthRequest="150"

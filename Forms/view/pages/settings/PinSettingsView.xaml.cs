@@ -1,13 +1,13 @@
 ﻿using System;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
-using MyCryptos.Forms.helpers;
-using MyCryptos.Forms.Messages;
+using MyCC.Forms.helpers;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCryptos.Forms.view.overlays;
+using MyCC.Forms.view.overlays;
 using Plugin.Fingerprint;
 
-namespace MyCryptos.Forms.view.pages.settings
+namespace MyCC.Forms.view.pages.settings
 {
     public partial class PinSettingsView
     {

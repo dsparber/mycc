@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace MyCryptos.Forms.helpers
+namespace MyCC.Forms.helpers
 {
     public static class StringHelper
     {

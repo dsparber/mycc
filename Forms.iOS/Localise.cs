@@ -1,12 +1,13 @@
 ﻿using System.Globalization;
-using Foundation;
 using System.Threading;
+using Foundation;
 using MyCC.Core.Resources;
+using MyCC.Forms.iOS;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(MyCryptos.iOS.Localise))]
+[assembly: Dependency(typeof(Localise))]
 
-namespace MyCryptos.iOS
+namespace MyCC.Forms.iOS
 {
     public class Localise : ILocalise
     {

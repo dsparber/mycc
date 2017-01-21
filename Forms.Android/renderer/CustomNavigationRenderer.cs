@@ -1,12 +1,12 @@
 ﻿using Android.App;
 using Android.Graphics.Drawables;
-using renderer;
+using MyCC.Forms.Android.renderer;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer(typeof(NavigationPage), typeof(CustomNavigationRenderer))]
 
-namespace renderer
+namespace MyCC.Forms.Android.renderer
 {
     public class CustomNavigationRenderer : NavigationRenderer
     {

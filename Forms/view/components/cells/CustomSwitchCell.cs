@@ -1,78 +1,78 @@
-﻿using constants;
+﻿using MyCC.Forms.constants;
 using Xamarin.Forms;
 
-namespace MyCryptos.view.components
+namespace MyCC.Forms.view.components.cells
 {
-	public sealed class CustomSwitchCell : ViewCell
-	{
-		public readonly Switch Switch;
-		private readonly Label titleLabel;
-		private readonly Label infoLabel;
+    public sealed class CustomSwitchCell : ViewCell
+    {
+        public readonly Switch Switch;
+        private readonly Label titleLabel;
+        private readonly Label infoLabel;
 
-		private string title;
-		private string info;
+        private string title;
+        private string info;
 
-		public string Title
-		{
-			get { return title; }
-			set { title = value; titleLabel.Text = title; }
-		}
+        public string Title
+        {
+            get { return title; }
+            set { title = value; titleLabel.Text = title; }
+        }
 
-		public string Info
-		{
-			get { return info; }
-			set { info = value; infoLabel.Text = info; }
-		}
+        public string Info
+        {
+            get { return info; }
+            set { info = value; infoLabel.Text = info; }
+        }
 
-		public bool IsEditable
-		{
-			set
-			{
-				Switch.IsEnabled = value;
-			}
-		}
+        public bool IsEditable
+        {
+            set
+            {
+                Switch.IsEnabled = value;
+            }
+        }
 
-		public bool On
-		{
-			get { return Switch.IsToggled; }
-			set { Switch.IsToggled = value; }
-		}
+        public bool On
+        {
+            get { return Switch.IsToggled; }
+            set { Switch.IsToggled = value; }
+        }
 
-		public CustomSwitchCell()
-		{
-			Switch = new Switch { HorizontalOptions = LayoutOptions.EndAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
+        public CustomSwitchCell()
+        {
+            Switch = new Switch { HorizontalOptions = LayoutOptions.EndAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
 
-			titleLabel = new Label { HorizontalOptions = LayoutOptions.FillAndExpand, TextColor = AppConstants.FontColor, LineBreakMode = LineBreakMode.TailTruncation };
-			infoLabel = new Label { HorizontalOptions = LayoutOptions.FillAndExpand, TextColor = AppConstants.FontColorLight, LineBreakMode = LineBreakMode.TailTruncation, FontSize = titleLabel.FontSize * AppConstants.FontFactorSmall };
-			var labelStack = new StackLayout { Spacing = 0, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
-			labelStack.Children.Add(titleLabel);
-			labelStack.Children.Add(infoLabel);
+            titleLabel = new Label { HorizontalOptions = LayoutOptions.FillAndExpand, TextColor = AppConstants.FontColor, LineBreakMode = LineBreakMode.TailTruncation };
+            infoLabel = new Label { HorizontalOptions = LayoutOptions.FillAndExpand, TextColor = AppConstants.FontColorLight, LineBreakMode = LineBreakMode.TailTruncation, FontSize = titleLabel.FontSize * AppConstants.FontFactorSmall };
+            var labelStack = new StackLayout { Spacing = 0, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
+            labelStack.Children.Add(titleLabel);
+            labelStack.Children.Add(infoLabel);
 
-			var stack = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand };
-			stack.Children.Add(labelStack);
-			stack.Children.Add(Switch);
+            var stack = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand };
+            stack.Children.Add(labelStack);
+            stack.Children.Add(Switch);
 
 
-			if (Device.OS == TargetPlatform.Android)
-			{
-				titleLabel.FontSize = AppConstants.AndroidFontSize;
-			}
+            if (Device.OS == TargetPlatform.Android)
+            {
+                titleLabel.FontSize = AppConstants.AndroidFontSize;
+            }
 
-			stack.HorizontalOptions = LayoutOptions.FillAndExpand;
-			stack.VerticalOptions = LayoutOptions.FillAndExpand;
-			if (Device.OS == TargetPlatform.Android)
-			{
-				stack.BackgroundColor = Color.White;
-				View = new ContentView { Content = stack, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5) };
-			}
-			else
-			{
-				View = stack;
-			}
+            stack.HorizontalOptions = LayoutOptions.FillAndExpand;
+            stack.VerticalOptions = LayoutOptions.FillAndExpand;
+            if (Device.OS == TargetPlatform.Android)
+            {
+                stack.BackgroundColor = Color.White;
+                View = new ContentView { Content = stack, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5) };
+            }
+            else
+            {
+                View = stack;
+            }
 
-			var gestureRecogniser = new TapGestureRecognizer();
-			gestureRecogniser.Tapped += (sender, e) => Switch.Focus();
-			View.GestureRecognizers.Add(gestureRecogniser);
-		}
-	}
+            var gestureRecogniser = new TapGestureRecognizer();
+            gestureRecogniser.Tapped += (sender, e) => Switch.Focus();
+            View.GestureRecognizers.Add(gestureRecogniser);
+        }
+    }
 }

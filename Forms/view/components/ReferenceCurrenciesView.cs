@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using constants;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.ExchangeRate.Helpers;
@@ -13,7 +12,8 @@ using MyCC.Core.ExchangeRate.Model;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
-using MyCryptos.Forms.Messages;
+using MyCC.Forms.constants;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
@@ -21,7 +21,7 @@ using XLabs.Ioc;
 using XLabs.Serialization;
 using XLabs.Serialization.JsonNET;
 
-namespace MyCryptos.Forms.view.components
+namespace MyCC.Forms.view.components
 {
     public class ReferenceCurrenciesView : ContentView
     {

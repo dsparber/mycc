@@ -6,10 +6,9 @@ using MyCC.Core.Currency.Model;
 using MyCC.Core.ExchangeRate.Helpers;
 using MyCC.Core.ExchangeRate.Model;
 using MyCC.Core.Settings;
+using MyCC.Forms.Messages;
+using MyCC.Forms.Tasks;
 using MyCC.Forms.view.components;
-using MyCryptos.Forms.Messages;
-using MyCryptos.Forms.Tasks;
-using MyCryptos.Forms.view.components;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.view.pages

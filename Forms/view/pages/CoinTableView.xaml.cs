@@ -1,16 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Settings;
-using MyCryptos.Forms.Messages;
-using MyCC.Forms.Resources;
-using MyCryptos.Forms.Tasks;
-using MyCryptos.Forms.view.components;
+using MyCC.Forms.Messages;
+using MyCC.Forms.Tasks;
+using MyCC.Forms.view.components;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.pages
+namespace MyCC.Forms.view.pages
 {
     public partial class CoinTableView
     {

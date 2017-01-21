@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using MyCC.Forms.iOS.renderer;
 using MyCC.Forms.Resources;
-using renderer;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(ContentPage), typeof(ContentPageRenderer))]
-namespace renderer
+namespace MyCC.Forms.iOS.renderer
 {
     public class ContentPageRenderer : PageRenderer
     {

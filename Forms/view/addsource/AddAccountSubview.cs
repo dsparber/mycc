@@ -1,6 +1,6 @@
 using MyCC.Core.Account.Models.Base;
 
-namespace MyCryptos.Forms.view.addsource
+namespace MyCC.Forms.view.addsource
 {
 
     public abstract class AddAccountSubview : AddSourceSubview

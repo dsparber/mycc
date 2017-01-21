@@ -1,12 +1,12 @@
 ﻿using System;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
-using MyCryptos.Forms.helpers;
-using MyCryptos.Forms.Messages;
+using MyCC.Forms.helpers;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.overlays
+namespace MyCC.Forms.view.overlays
 {
     public partial class PinOverlay : ContentPage
     {

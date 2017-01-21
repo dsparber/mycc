@@ -2,20 +2,20 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
+	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.view.pages.settings.ReferenceCurrenciesSettingsView"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
-	BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
-	Title="{i18N:Translate Currencies}">
+    BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
+	Title="{resources:Translate Currencies}">
   <ContentPage.ToolbarItems>
     <ToolbarItem
-			Text="{i18N:Translate Add}"
+			Text="{resources:Translate Add}"
 			Clicked="Add" />
   </ContentPage.ToolbarItems>
   <components:ChangingStackLayout>
     <components:HeaderView
-			TitleText="{i18N:Translate AppName}"
+			TitleText="{resources:Translate AppName}"
 			x:Name="Header" />
     <ScrollView
 			IsClippedToBounds="true">
@@ -23,19 +23,19 @@
 				Spacing="0"
 				BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
         <Label
-					Text="{i18N:Translate ReferenceCurrencyInfoP1}"
+					Text="{resources:Translate ReferenceCurrencyInfoP1}"
 					Margin="15,15,15,0"
 					TextColor="{x:Static constants:AppConstants.TableSectionColor}"
 					FontSize="14" />
         <Label
-					Text="{i18N:Translate ReferenceCurrencyInfoP2}"
+					Text="{resources:Translate ReferenceCurrencyInfoP2}"
 					Margin="15,5,15,0"
 					TextColor="{x:Static constants:AppConstants.TableSectionColor}"
 					FontSize="14" />
         <TableView
 					Intent="Settings">
           <TableSection
-						Title="{i18N:Translate ReferenceCurrencies}"
+						Title="{resources:Translate ReferenceCurrencies}"
 						x:Name="CurrenciesSection" />
         </TableView>
       </StackLayout>

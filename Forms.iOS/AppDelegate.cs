@@ -1,12 +1,12 @@
-﻿using constants;
+﻿using CarouselView.FormsPlugin.iOS;
 using Foundation;
+using MyCC.Forms.constants;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XLabs.Forms.Controls;
-using CarouselView.FormsPlugin.iOS;
 
-namespace MyCryptos.iOS
+namespace MyCC.Forms.iOS
 {
     [Register("AppDelegate")]
     public class AppDelegate : FormsApplicationDelegate

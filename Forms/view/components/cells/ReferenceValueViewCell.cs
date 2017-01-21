@@ -1,10 +1,8 @@
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.ExchangeRate.Model;
-using MyCryptos.Forms.Messages;
-using MyCC.Forms.Resources;
-using MyCryptos.view.components;
+using MyCC.Forms.Messages;
 
-namespace MyCryptos.Forms.view.components.cells
+namespace MyCC.Forms.view.components.cells
 {
     public class ReferenceValueViewCell : CustomViewCell
     {

@@ -2,10 +2,11 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
-	x:Class="MyCryptos.Forms.view.pages.settings.SettingsView"
-	Title="{i18N:Translate Settings}">
+	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
+	xmlns:cells="clr-namespace:MyCC.Forms.view.components.cells;assembly=MyCC.Forms"
+	x:Class="MyCC.Forms.view.pages.settings.SettingsView"
+	Title="{resources:Translate Settings}">
 	<ContentPage.BackgroundColor>
 		<OnPlatform
 			x:TypeArguments="Color"
@@ -15,44 +16,44 @@
 		<components:ChangingStackLayout>
 			<components:HeaderView
 				x:Name="Header"
-				InfoText="{i18N:Translate AppNameLong}" />
+				InfoText="{resources:Translate AppNameLong}" />
 			<TableView
 				Intent="Settings">
 				<TableSection
-					Title="{i18N:Translate Data}">
-					<components:CustomViewCell
-						Text="{i18N:Translate Sources}"
+					Title="{resources:Translate Data}">
+					<cells:CustomViewCell
+						Text="{resources:Translate Sources}"
 						x:Name="SourcesCell"
 						Image="more.png" />
-					<components:CustomViewCell
-						Text="{i18N:Translate ReferenceCurrencies}"
+					<cells:CustomViewCell
+						Text="{resources:Translate ReferenceCurrencies}"
 						x:Name="ReferenceCurrenciesCell"
 						Image="more.png" />
-					<components:CustomViewCell
-						Text="{i18N:Translate Rates}"
+					<cells:CustomViewCell
+						Text="{resources:Translate Rates}"
 						x:Name="RatesCell"
 						Image="more.png" />
 				</TableSection>
 				<TableSection
-					Title="{i18N:Translate General}">
-					<components:CustomViewCell
-						Text="{i18N:Translate Security}"
+					Title="{resources:Translate General}">
+					<cells:CustomViewCell
+						Text="{resources:Translate Security}"
 						x:Name="PinSettingsCell"
 						Tapped="PinCellTapped"
 						Image="more.png" />
-					<components:CustomViewCell
-						Text="{i18N:Translate DefaultView}"
+					<cells:CustomViewCell
+						Text="{resources:Translate DefaultView}"
 						x:Name="DefaultViewCell"
 						Tapped="OpenDefaultViewPage"
 						Image="more.png" />
-					<components:CustomSwitchCell
+					<cells:CustomSwitchCell
 						x:Name="AutoRefresh"
-						Title="{i18N:Translate RefreshOnStartup}"
-						Info="{i18N:Translate LoadRatesAndBalancesOnStartup}" />
-					<components:CustomSwitchCell
+						Title="{resources:Translate RefreshOnStartup}"
+						Info="{resources:Translate LoadRatesAndBalancesOnStartup}" />
+					<cells:CustomSwitchCell
 						x:Name="RoundNumbers"
-						Title="{i18N:Translate RoundNumbers}"
-						Info="{i18N:Translate OtherwiseTruncate}" />
+						Title="{resources:Translate RoundNumbers}"
+						Info="{resources:Translate OtherwiseTruncate}" />
 				</TableSection>
 			</TableView>
 		</components:ChangingStackLayout>

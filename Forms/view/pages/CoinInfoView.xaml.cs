@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using constants;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.CoinInfo;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.ExchangeRate.Helpers;
 using MyCC.Core.ExchangeRate.Model;
 using MyCC.Core.Settings;
-using MyCryptos.Forms.Messages;
+using MyCC.Forms.constants;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCryptos.Forms.Tasks;
-using MyCryptos.Forms.view.components;
+using MyCC.Forms.Tasks;
+using MyCC.Forms.view.components;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.pages
+namespace MyCC.Forms.view.pages
 {
     public partial class CoinInfoView : ContentPage
     {
@@ -83,10 +83,10 @@ namespace MyCryptos.Forms.view.pages
             rate = ExchangeRateHelper.GetRate(rate) ?? rate;
             var referenceMoney = new Money(rate.RateNotNull, Currency.Btc);
 
-            var explorer = CoinInfoStorage.Instance.GetExplorer(_currency).Select(e => e.Name);
+            var explorer = CoinInfoStorage.Instance.GetExplorer(_currency).Select(e => e.Name).ToList();
             var info = CoinInfoStorage.Instance.Get(_currency);
 
-            if (info == null && explorer.Count() > 0)
+            if (info == null && explorer.Any())
             {
                 Task.Run(() => AppTaskHelper.FetchCoinInfo(_currency));
             }
@@ -101,8 +101,8 @@ namespace MyCryptos.Forms.view.pages
                 _infos[I18N.Abbreviation].Item2.IsVisible = true;
                 _infos[I18N.Abbreviation].Item2.Text = _currency.Code;
 
-                _infos[I18N.BlockExplorer].Item1.IsVisible = explorer.Count() > 0;
-                _infos[I18N.BlockExplorer].Item2.IsVisible = explorer.Count() > 0;
+                _infos[I18N.BlockExplorer].Item1.IsVisible = explorer.Any();
+                _infos[I18N.BlockExplorer].Item2.IsVisible = explorer.Any();
                 _infos[I18N.BlockExplorer].Item2.Text = string.Join(", ", explorer);
 
                 Header.InfoText = referenceMoney.ToString8Digits();

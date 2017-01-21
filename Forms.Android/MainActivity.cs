@@ -1,10 +1,10 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Xamarin.Forms.Platform.Android;
 using CarouselView.FormsPlugin.Android;
+using Xamarin.Forms.Platform.Android;
 
-namespace MyCryptos.Droid
+namespace MyCC.Forms.Android
 {
     [Activity(Label = "MyCryptos", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : FormsApplicationActivity

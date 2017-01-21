@@ -2,42 +2,43 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCryptos.view.components;assembly=MyCC.Forms"
-	x:Class="MyCryptos.Forms.view.overlays.PinOverlay">
+	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
+	xmlns:cells="clr-namespace:MyCC.Forms.view.components.cells;assembly=MyCC.Forms"
+	x:Class="MyCC.Forms.view.overlays.PinOverlay">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
-			Text="{i18N:Translate Cancel}"
+			Text="{resources:Translate Cancel}"
 			Clicked="CancelClicked" />
 		<ToolbarItem
-			Text="{i18N:Translate Save}"
+			Text="{resources:Translate Save}"
 			Clicked="SaveClicked" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<components:ChangingStackLayout>
 			<components:HeaderView
-				TitleText="{i18N:Translate AppName}"
+				TitleText="{resources:Translate AppName}"
 				x:Name="Header" />
 			<TableView
 				Intent="Form"
 				x:Name="PinTable">
 				<TableSection
 					x:Name="OldPinSection">
-					<components:CustomEntryCell
+					<cells:CustomEntryCell
 						x:Name="OldPinCell"
-						Placeholder="{i18N:Translate OldPin}"
-						Title="{i18N:Translate OldPin}" />
+						Placeholder="{resources:Translate OldPin}"
+						Title="{resources:Translate OldPin}" />
 				</TableSection>
 				<TableSection
 					x:Name="ChangePinSection">
-					<components:CustomEntryCell
+					<cells:CustomEntryCell
 						x:Name="NewPinCell"
-						Placeholder="{i18N:Translate NewPin}"
-						Title="{i18N:Translate NewPin}" />
-					<components:CustomEntryCell
+						Placeholder="{resources:Translate NewPin}"
+						Title="{resources:Translate NewPin}" />
+					<cells:CustomEntryCell
 						x:Name="NewPinRepeatCell"
-						Placeholder="{i18N:Translate RepeatNewPin}"
-						Title="{i18N:Translate RepeatNewPin}" />
+						Placeholder="{resources:Translate RepeatNewPin}"
+						Title="{resources:Translate RepeatNewPin}" />
 				</TableSection>
 			</TableView>
 		</components:ChangingStackLayout>

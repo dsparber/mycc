@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Types;
-using MyCryptos.view.components;
+using MyCC.Forms.view.components.cells;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.helpers
+namespace MyCC.Forms.helpers
 {
     public static class SortHelper
     {

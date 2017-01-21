@@ -2,9 +2,9 @@
 <ContentView
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:i18N="clr-namespace:MyCryptos.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:constants="clr-namespace:constants;assembly=MyCC.Forms"
-	x:Class="MyCryptos.view.components.HeaderView"
+	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
+	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	x:Class="MyCC.Forms.view.components.HeaderView"
 	BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
 	WidthRequest="280"
 	Margin="0,-1,0,0">
@@ -49,7 +49,7 @@
         <Label
 					x:Name="RefreshingLabel"
 					FontSize="18"
-					Text="{i18N:Translate Refreshing}"
+					Text="{resources:Translate Refreshing}"
 					TextColor="White">
         </Label>
         <ActivityIndicator

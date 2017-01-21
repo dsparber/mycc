@@ -6,7 +6,7 @@ using MyCC.Core.Resources;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace MyCryptos.Forms.Resources
+namespace MyCC.Forms.Resources
 {
 
     // You exclude the 'Extension' suffix when using in Xaml markup
@@ -14,7 +14,7 @@ namespace MyCryptos.Forms.Resources
     public class TranslateExtension : IMarkupExtension
     {
         private readonly CultureInfo ci;
-        private const string ResourceId = "MyCryptos.Forms.Resources.I18N";
+        private const string ResourceId = "MyCC.Forms.Resources.I18N";
 
         public TranslateExtension()
         {

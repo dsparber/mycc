@@ -5,11 +5,11 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
-using MyCryptos.Forms.Messages;
-using MyCryptos.Forms.Tasks;
-using MyCryptos.Forms.view.components;
+using MyCC.Forms.Messages;
+using MyCC.Forms.Tasks;
+using MyCC.Forms.view.components;
 
-namespace MyCryptos.Forms.view.pages
+namespace MyCC.Forms.view.pages
 {
     public partial class CoinDetailView
     {

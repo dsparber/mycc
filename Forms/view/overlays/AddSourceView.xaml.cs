@@ -2,18 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using constants;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.ExchangeRate.Model;
 using MyCC.Core.Settings;
-using MyCryptos.Forms.helpers;
-using MyCryptos.Forms.Messages;
+using MyCC.Forms.constants;
+using MyCC.Forms.helpers;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCryptos.Forms.Tasks;
-using MyCryptos.Forms.view.addsource;
+using MyCC.Forms.Tasks;
+using MyCC.Forms.view.addsource;
 using Xamarin.Forms;
 
-namespace MyCryptos.Forms.view.pages
+namespace MyCC.Forms.view.overlays
 {
     public partial class AddSourceView
     {

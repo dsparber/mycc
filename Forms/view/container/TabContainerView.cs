@@ -1,12 +1,12 @@
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Resources;
-using MyCryptos.Forms.view.pages;
-using MyCryptos.Forms.view.pages.settings;
+using MyCC.Forms.view.pages;
+using MyCC.Forms.view.pages.settings;
 using Xamarin.Forms;
 using RateView = MyCC.Forms.view.pages.RateView;
 
-namespace MyCryptos.Forms.view.container
+namespace MyCC.Forms.view.container
 {
     public class TabContainerView : TabbedPage
     {

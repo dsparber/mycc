@@ -3,15 +3,15 @@
 var testData = [{
     "Name": "Georg",
     "Amount": "23,525.31",
-    "Id":1
+    "Id": 1
 }, {
     "Name": "Paul",
     "Amount": "986.24",
-    "Id":3
+    "Id": 3
 }, {
     "Name": "Josef",
     "Amount": "45,845.78",
-    "Id":2
+    "Id": 2
 }];
 
 var testColumns = [{
@@ -20,7 +20,7 @@ var testColumns = [{
 }, {
     "Text": "Anzahl",
     "Type": "Amount",
-} ];
+}];
 
 var testSort = {
     "Type": "Name",
@@ -39,7 +39,7 @@ function setHeader(columns) {
         var cell = row.insertCell(i);
         cell.innerHTML = "<span>" + columns[i]["Text"] + "</span>";
         cell.setAttribute("type", columns[i]["Type"]);
-        cell.onclick = headerClicked(columns[i]["Type"])
+        cell.onclick = headerClicked(columns[i]["Type"]);
     }
     row.insertCell(columns.length);
 }
@@ -56,7 +56,7 @@ function updateTable(data, sort) {
         var nameCell = row.insertCell(0);
         var amountCell = row.insertCell(1);
         row.insertCell(2); // For Arrow
-        amountCell.innerHTML = "<span>"+data[i]["Amount"].substring(0,data[i]["Amount"].length-5)+"</span><span>"+data[i]["Amount"].substring(data[i]["Amount"].length-5)+"</span>";
+        amountCell.innerHTML = "<span>" + data[i]["Amount"].substring(0, data[i]["Amount"].length - 5) + "</span><span>" + data[i]["Amount"].substring(data[i]["Amount"].length - 5) + "</span>";
         nameCell.innerHTML = data[i]["Name"];
 
         row.onclick = rowClicked(data[i]["Id"]);
@@ -71,7 +71,7 @@ function updateTable(data, sort) {
 function rowClicked(id) {
     return function () {
         Native("Callback", id);
-    }
+    };
 }
 
 function sizeAllocated() {
@@ -81,7 +81,7 @@ function sizeAllocated() {
 function headerClicked(type) {
     return function () {
         Native("HeaderClickedCallback", type);
-    }
+    };
 }
 
 function clearTable(table) {

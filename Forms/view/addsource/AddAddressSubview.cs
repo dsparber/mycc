@@ -6,13 +6,13 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Currency.Model;
 using MyCC.Forms.Resources;
-using MyCryptos.view.components;
+using MyCC.Forms.view.components.cells;
 using Xamarin.Forms;
 using ZXing;
 using ZXing.Mobile;
 using ZXing.Net.Mobile.Forms;
 
-namespace MyCryptos.Forms.view.addsource
+namespace MyCC.Forms.view.addsource
 {
     public class AddAddressSubview : AddRepositorySubview
     {
