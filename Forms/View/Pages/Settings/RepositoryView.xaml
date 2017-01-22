@@ -45,7 +45,6 @@
 						Title="{resources:Translate Address}" />
 				</TableSection>
 				<TableSection
-					Title="{resources:Translate Coins}"
 					x:Name="AccountsSection" />
 				<TableSection
 					x:Name="DeleteSection">
