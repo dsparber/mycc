@@ -35,12 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="constants\AppConstants.cs" />
-    <Compile Include="helpers\NavigationHelper.cs" />
-    <Compile Include="helpers\PluralHelper.cs" />
-    <Compile Include="helpers\SortHelper.cs" />
-    <Compile Include="helpers\StringHelper.cs" />
-    <Compile Include="helpers\ITextSizeHelper.cs" />
+    <Compile Include="Constants\AppConstants.cs" />
+    <Compile Include="Helpers\NavigationHelper.cs" />
+    <Compile Include="Helpers\PluralHelper.cs" />
+    <Compile Include="Helpers\SortHelper.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helpers\ITextSizeHelper.cs" />
     <Compile Include="Messages\MessageInfo.cs" />
     <Compile Include="Messages\Messaging.cs" />
     <Compile Include="Messages\MessageTools.cs" />
@@ -57,87 +57,87 @@
       <DependentUpon>I18N.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\TranslateExtension.cs" />
-    <Compile Include="view\addsource\AddAccountSubview.cs" />
-    <Compile Include="view\addsource\AddAddressSubview.cs" />
-    <Compile Include="view\addsource\AddBittrexSubview.cs" />
-    <Compile Include="view\addsource\AddLocalAccountSubview.cs" />
-    <Compile Include="view\addsource\AddRepositorySubview.cs" />
-    <Compile Include="view\addsource\AddSourceSubview.cs" />
-    <Compile Include="view\components\cells\AccountViewCell.cs" />
-    <Compile Include="view\components\cells\CurrencyEntryCell.cs" />
-    <Compile Include="view\components\cells\CustomEntryCell.cs" />
-    <Compile Include="view\components\cells\CustomPickerCell.cs" />
-    <Compile Include="view\components\cells\CustomSwitchCell.cs" />
-    <Compile Include="view\components\cells\CustomViewCell.cs" />
-    <Compile Include="view\components\cells\CustomViewCellActionItem.cs" />
-    <Compile Include="view\components\cells\ReferenceValueViewCell.cs" />
-    <Compile Include="view\components\cells\SortableViewCell.cs" />
-    <Compile Include="view\components\ChangingStackLayout.cs" />
-    <Compile Include="view\components\CoinTableComponent.cs" />
-    <Compile Include="view\components\CoinGraphComponent.cs" />
-    <Compile Include="view\components\CoinHeaderComponent.cs" />
-    <Compile Include="view\components\HeaderView.xaml.cs">
+    <Compile Include="View\Addsource\AddAccountSubview.cs" />
+    <Compile Include="View\Addsource\AddAddressSubview.cs" />
+    <Compile Include="View\Addsource\AddBittrexSubview.cs" />
+    <Compile Include="View\Addsource\AddLocalAccountSubview.cs" />
+    <Compile Include="View\Addsource\AddRepositorySubview.cs" />
+    <Compile Include="View\Addsource\AddSourceSubview.cs" />
+    <Compile Include="View\Components\Cells\AccountViewCell.cs" />
+    <Compile Include="View\Components\Cells\CurrencyEntryCell.cs" />
+    <Compile Include="View\Components\Cells\CustomEntryCell.cs" />
+    <Compile Include="View\Components\Cells\CustomPickerCell.cs" />
+    <Compile Include="View\Components\Cells\CustomSwitchCell.cs" />
+    <Compile Include="View\Components\Cells\CustomViewCell.cs" />
+    <Compile Include="View\Components\Cells\CustomViewCellActionItem.cs" />
+    <Compile Include="View\Components\Cells\ReferenceValueViewCell.cs" />
+    <Compile Include="View\Components\Cells\SortableViewCell.cs" />
+    <Compile Include="View\Components\ChangingStackLayout.cs" />
+    <Compile Include="View\Components\CoinTableComponent.cs" />
+    <Compile Include="View\Components\CoinGraphComponent.cs" />
+    <Compile Include="View\Components\CoinHeaderComponent.cs" />
+    <Compile Include="View\Components\HeaderView.xaml.cs">
       <DependentUpon>HeaderView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\components\SegmentedControl.cs" />
-    <Compile Include="view\container\MasterDetailContainerView.cs" />
-    <Compile Include="view\container\TabContainerView.cs" />
-    <Compile Include="view\overlays\CurrencyOverlay.cs" />
-    <Compile Include="view\overlays\PinOverlay.xaml.cs">
+    <Compile Include="View\Components\SegmentedControl.cs" />
+    <Compile Include="View\Container\MasterDetailContainerView.cs" />
+    <Compile Include="View\Container\TabContainerView.cs" />
+    <Compile Include="View\Overlays\CurrencyOverlay.cs" />
+    <Compile Include="View\Overlays\PinOverlay.xaml.cs">
       <DependentUpon>PinOverlay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\AccountDetailView.xaml.cs">
+    <Compile Include="View\Pages\AccountDetailView.xaml.cs">
       <DependentUpon>AccountDetailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\CoinDetailView.xaml.cs">
+    <Compile Include="View\Pages\CoinDetailView.xaml.cs">
       <DependentUpon>CoinDetailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\CoinGraphView.xaml.cs">
+    <Compile Include="View\Pages\CoinGraphView.xaml.cs">
       <DependentUpon>CoinGraphView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\PasswordView.xaml.cs">
+    <Compile Include="View\Pages\PasswordView.xaml.cs">
       <DependentUpon>PasswordView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\settings\PinSettingsView.xaml.cs">
+    <Compile Include="View\Pages\Settings\PinSettingsView.xaml.cs">
       <DependentUpon>PinSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\settings\ReferenceCurrenciesSettingsView.xaml.cs">
+    <Compile Include="View\Pages\Settings\ReferenceCurrenciesSettingsView.xaml.cs">
       <DependentUpon>ReferenceCurrenciesSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\settings\SettingsView.xaml.cs">
+    <Compile Include="View\Pages\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\settings\DefaultPageSettingsView.xaml.cs">
+    <Compile Include="View\Pages\Settings\DefaultPageSettingsView.xaml.cs">
       <DependentUpon>DefaultPageSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\overlays\ErrorOverlay.cs" />
+    <Compile Include="View\Overlays\ErrorOverlay.cs" />
     <Compile Include="Tasks\AppTaskHelper.cs" />
-    <Compile Include="view\pages\CoinTableView.xaml.cs">
+    <Compile Include="View\Pages\CoinTableView.xaml.cs">
       <DependentUpon>CoinTableView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\RateView.xaml.cs">
+    <Compile Include="View\Pages\RateView.xaml.cs">
       <DependentUpon>RateView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\components\RatesTableComponent.cs" />
-    <Compile Include="view\components\ReferenceCurrenciesView.cs" />
-    <Compile Include="view\components\AccountsTableComponent.cs" />
-    <Compile Include="view\pages\settings\WatchedCurrenciesSettingsView.xaml.cs">
+    <Compile Include="View\Components\RatesTableComponent.cs" />
+    <Compile Include="View\Components\ReferenceCurrenciesView.cs" />
+    <Compile Include="View\Components\AccountsTableComponent.cs" />
+    <Compile Include="View\Pages\Settings\WatchedCurrenciesSettingsView.xaml.cs">
       <DependentUpon>WatchedCurrenciesSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\components\RatesHeaderComponent.cs" />
-    <Compile Include="view\pages\CoinInfoView.xaml.cs">
+    <Compile Include="View\Components\RatesHeaderComponent.cs" />
+    <Compile Include="View\Pages\CoinInfoView.xaml.cs">
       <DependentUpon>CoinInfoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\settings\SourcesView.xaml.cs">
+    <Compile Include="View\Pages\Settings\SourcesView.xaml.cs">
       <DependentUpon>SourcesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\settings\RepositoryView.xaml.cs">
+    <Compile Include="View\Pages\Settings\RepositoryView.xaml.cs">
       <DependentUpon>RepositoryView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\overlays\AddSourceView.xaml.cs">
+    <Compile Include="View\Overlays\AddSourceView.xaml.cs">
       <DependentUpon>AddSourceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\pages\settings\AccountEditView.cs">
+    <Compile Include="View\Pages\Settings\AccountEditView.cs">
       <DependentUpon>AccountEditView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -154,111 +154,111 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>I18N.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\CoinTableView.xaml">
+    <EmbeddedResource Include="View\Pages\CoinTableView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
       </SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\RateView.xaml">
+    <EmbeddedResource Include="View\Pages\RateView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
       </SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\settings\WatchedCurrenciesSettingsView.xaml">
+    <EmbeddedResource Include="View\Pages\Settings\WatchedCurrenciesSettingsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\CoinInfoView.xaml">
+    <EmbeddedResource Include="View\Pages\CoinInfoView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\settings\SourcesView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>
-      </SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\settings\RepositoryView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>
-      </SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\overlays\AddSourceView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>
-      </SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\pages\settings\AccountEditView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>
-      </SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\components\HeaderView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\overlays\PinOverlay.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>
-      </SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\pages\AccountDetailView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>
-      </SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\pages\CoinDetailView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>
-      </SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\pages\CoinGraphView.xaml">
+    <EmbeddedResource Include="View\Pages\Settings\SourcesView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
       </SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\pages\PasswordView.xaml">
+    <EmbeddedResource Include="View\Pages\Settings\RepositoryView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>
+      </SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Overlays\AddSourceView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>
+      </SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Pages\Settings\AccountEditView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
       </SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="view\pages\settings\PinSettingsView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>
-      </SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="view\pages\settings\ReferenceCurrenciesSettingsView.xaml">
+    <EmbeddedResource Include="View\Components\HeaderView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="view\pages\settings\SettingsView.xaml">
+    <EmbeddedResource Include="View\Overlays\PinOverlay.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
       </SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="view\pages\settings\DefaultPageSettingsView.xaml">
+    <EmbeddedResource Include="View\Pages\AccountDetailView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>
+      </SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\Pages\CoinDetailView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>
+      </SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\Pages\CoinGraphView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>
+      </SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\Pages\PasswordView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>
+      </SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\Pages\Settings\PinSettingsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>
+      </SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\Pages\Settings\ReferenceCurrenciesSettingsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\Pages\Settings\SettingsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>
+      </SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\Pages\Settings\DefaultPageSettingsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
