@@ -17,7 +17,7 @@ namespace MyCC.Forms.Android.renderer
             RemoveAppIconFromActionBar();
         }
 
-        void RemoveAppIconFromActionBar()
+        private void RemoveAppIconFromActionBar()
         {
             var actionBar = ((Activity)Context).ActionBar;
             var icon = new ColorDrawable(Color.Transparent.ToAndroid());

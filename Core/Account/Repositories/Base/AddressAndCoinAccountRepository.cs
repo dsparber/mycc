@@ -7,7 +7,7 @@ namespace MyCC.Core.Account.Repositories.Base
         private readonly Currency.Model.Currency coin;
         protected sealed override Currency.Model.Currency Currency => coin;
 
-        public override string Data { get { return JsonConvert.SerializeObject(new KeyData(coin, Address)); } }
+        public override string Data => JsonConvert.SerializeObject(new KeyData(coin, Address));
 
         protected AddressAndCoinAccountRepository(int id, string name, string data) : this(id, name, null, null)
         {
@@ -22,7 +22,7 @@ namespace MyCC.Core.Account.Repositories.Base
             this.coin = coin;
         }
 
-        class KeyData
+        private class KeyData
         {
 
             public string address;

@@ -61,9 +61,7 @@ namespace MyCC.Forms.view.pages.settings
             {
                 CurrencySelected = (c) =>
                 {
-                    var watchedCurrencies = new List<Currency>(ApplicationSettings.WatchedCurrencies);
-                    watchedCurrencies.Add(c);
-                    ApplicationSettings.WatchedCurrencies = watchedCurrencies;
+                    ApplicationSettings.WatchedCurrencies = new List<Currency>(ApplicationSettings.WatchedCurrencies) { c };
                     Messaging.ReferenceCurrencies.SendValueChanged();
                     SetReferenceCurrencyCells();
                 }

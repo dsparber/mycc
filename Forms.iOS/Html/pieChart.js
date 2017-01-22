@@ -33,7 +33,7 @@ var chartOptions = {
             "pieDistance": 20
         },
         "inner": {
-            "format": "percentage",
+            "format": "percentage"
         },
         "mainLabel": {
             "color": "#fff",

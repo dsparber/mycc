@@ -24,7 +24,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
         protected override Uri Url => new Uri($"https://blockchain.info/de/address/{Address}?format=json&limit=0");
 
         public BlockchainAccountRepository(int id, string name, string address) : base(id, name, address) { }
-        public override int RepositoryTypeId => AccountRepositoryDbm.DB_TYPE_BLOCKCHAIN_REPOSITORY;
+        public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeBlockchainRepository;
 
         protected override FunctionalAccount GetAccount(int? id, string name, Money money) => new BlockchainAccount(id, name, money, this);
     }

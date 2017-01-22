@@ -15,10 +15,10 @@ namespace MyCC.Forms.iOS.renderer
         {
             base.ViewWillAppear(animated);
 
-            rearrangeButtons();
+            RearrangeButtons();
         }
 
-        ToolbarItem GetButtonInfo(IList<ToolbarItem> items, string name)
+        private ToolbarItem GetButtonInfo(IList<ToolbarItem> items, string name)
         {
             if (string.IsNullOrEmpty(name) || items == null)
                 return null;
@@ -26,14 +26,14 @@ namespace MyCC.Forms.iOS.renderer
             return items.ToList().FirstOrDefault(itemData => name.Equals(itemData.Text));
         }
 
-        void rearrangeButtons()
+        private void RearrangeButtons()
         {
             if (NavigationController == null)
             {
                 return;
             }
 
-            var itemsInfo = (Element as ContentPage).ToolbarItems;
+            var itemsInfo = (Element as ContentPage)?.ToolbarItems;
 
             var navigationItem = NavigationController.TopViewController.NavigationItem;
             var leftNativeButtons = (navigationItem.LeftBarButtonItems ?? new UIBarButtonItem[] { }).ToList();
@@ -65,8 +65,6 @@ namespace MyCC.Forms.iOS.renderer
                     else if (info.Text.Equals(I18N.Add))
                     {
                         systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Add);
-                        var x = UIBarButtonSystemItem.Add;
-                        x.ToString();
                     }
                     else if (info.Text.Equals(I18N.Cancel))
                     {

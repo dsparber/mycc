@@ -42,16 +42,13 @@ namespace MyCC.Forms.iOS
                 prefLanguageOnly = pref.Substring(0, 2);
                 if (prefLanguageOnly == "pt")
                 {
-                    if (pref == "pt")
-                        pref = "pt-BR"; // get the correct Brazilian language strings from the PCL RESX (note the local iOS folder is still "pt")
-                    else
-                        pref = "pt-PT"; // Portugal
+                    pref = pref == "pt" ? "pt-BR" : "pt-PT";
                 }
                 netLanguage = pref.Replace("_", "-");
             }
 
             // this gets called a lot - try/catch can be expensive so consider caching or something
-            CultureInfo ci = null;
+            CultureInfo ci;
             try
             {
                 ci = new CultureInfo(netLanguage);

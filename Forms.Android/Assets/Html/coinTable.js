@@ -17,16 +17,18 @@ var testData = [{
     "Reference": 478.54
 }];
 
-var testColumns = [{
-    "Text": "Währung",
-    "Type": "Currency",
-}, {
-    "Text": "Anzahl",
-    "Type": "Amount",
-}, {
-    "Text": "in EUR",
-    "Type": "ReferenceCurrency",
-}, ];
+var testColumns = [
+    {
+        "Text": "Währung",
+        "Type": "Currency"
+    }, {
+        "Text": "Anzahl",
+        "Type": "Amount"
+    }, {
+        "Text": "in EUR",
+        "Type": "ReferenceCurrency"
+    }
+];
 
 var testSort = {
     "Type": "Currency",

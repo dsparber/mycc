@@ -3,12 +3,12 @@ using Xamarin.Forms;
 
 namespace MyCC.Forms.view.components.cells
 {
-    class CustomPickerCell : ViewCell
+    internal class CustomPickerCell : ViewCell
     {
         public readonly Picker Picker;
         protected readonly Label TitleLabel;
 
-        string title;
+        private string title;
 
         public string Title
         {

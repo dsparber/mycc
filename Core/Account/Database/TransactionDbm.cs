@@ -30,11 +30,10 @@ namespace MyCC.Core.Account.Database
         public async Task<Transaction> Resolve()
         {
             var currency = CurrencyStorage.Instance.AllElements.Find(c => c.Code.Equals(currencyCode));
-            if (currency == null)
-            {
-                var db = new CurrencyDatabase();
-                currency = await db.Get(currencyCode);
-            }
+            if (currency != null) return new Transaction(Id, timestamp, new Money(moneyAmount, currency), ParentId);
+
+            var db = new CurrencyDatabase();
+            currency = await db.Get(currencyCode);
 
             return new Transaction(Id, timestamp, new Money(moneyAmount, currency), ParentId);
         }

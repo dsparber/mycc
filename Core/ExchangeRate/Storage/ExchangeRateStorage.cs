@@ -9,7 +9,7 @@ namespace MyCC.Core.ExchangeRate.Storage
 {
     public class ExchangeRateStorage : AbstractDatabaseStorage<ExchangeRateRepositoryDbm, ExchangeRateRepository, ExchangeRateDbm, Model.ExchangeRate, string>
     {
-        public ExchangeRateStorage() : base(new ExchangeRateRepositoryDatabase()) { }
+        private ExchangeRateStorage() : base(new ExchangeRateRepositoryDatabase()) { }
 
 
         protected override async Task OnFirstLaunch()
@@ -20,26 +20,16 @@ namespace MyCC.Core.ExchangeRate.Storage
             await Add(new CryptonatorExchangeRateRepository(default(int)));
         }
 
-        static ExchangeRateStorage instance { get; set; }
+        private static ExchangeRateStorage _instance;
 
-        public static ExchangeRateStorage Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new ExchangeRateStorage();
-                }
-                return instance;
-            }
-        }
+        public static ExchangeRateStorage Instance => _instance ?? (_instance = new ExchangeRateStorage());
 
         public async Task FetchNew()
         {
             await Task.WhenAll(Repositories.Select(x => x.FetchNew()));
         }
 
-        public async Task FetchOnline(List<ExchangeRate.Model.ExchangeRate> neededRates)
+        public async Task FetchOnline(List<Model.ExchangeRate> neededRates)
         {
             await Task.WhenAll(Repositories.OfType<OnlineExchangeRateRepository>().Select(x => x.FetchOnline(neededRates)));
         }

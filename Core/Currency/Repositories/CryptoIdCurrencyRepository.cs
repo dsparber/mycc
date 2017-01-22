@@ -8,48 +8,38 @@ using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Currency.Repositories
 {
-    class CryptoIdCurrencyRepository : OnlineCurrencyRepository
+    internal class CryptoIdCurrencyRepository : OnlineCurrencyRepository
     {
-        const string URL_CURRENCY_LIST = "http://chainz.cryptoid.info/explorer/api.dws?q=summary";
+        private const string UrlCurrencyList = "http://chainz.cryptoid.info/explorer/api.dws?q=summary";
 
-        const string JSON_KEY_NAME = "name";
+        private const string JsonKeyName = "name";
 
-        const int BUFFER_SIZE = 256000;
-        readonly HttpClient client;
+        private const int BufferSize = 256000;
+        private readonly HttpClient _client;
 
         public CryptoIdCurrencyRepository(int id) : base(id)
         {
-            client = new HttpClient();
-            client.MaxResponseContentBufferSize = BUFFER_SIZE;
+            _client = new HttpClient { MaxResponseContentBufferSize = BufferSize };
         }
         public override int RepositoryTypeId => CurrencyRepositoryDbm.DB_TYPE_CRYPTOID_REPOSITORY;
 
         protected override async Task<IEnumerable<Model.Currency>> GetCurrencies()
         {
-            var uri = new Uri(URL_CURRENCY_LIST);
+            var uri = new Uri(UrlCurrencyList);
 
-            var response = await client.GetAsync(uri);
+            var response = await _client.GetAsync(uri);
 
-            if (response.IsSuccessStatusCode)
-            {
+            if (!response.IsSuccessStatusCode) return null;
 
-                var content = await response.Content.ReadAsStringAsync();
-                var json = JObject.Parse(content);
+            var content = await response.Content.ReadAsStringAsync();
+            var json = JObject.Parse(content);
 
-                var currentElements = new List<Model.Currency>();
+            var currentElements = (from key in json.Properties().Select(p => p.Name) let name = (string)json[key][JsonKeyName] select new Model.Currency(key, name)).ToList();
 
-                foreach (var key in json.Properties().Select(p => p.Name))
-                {
-                    var name = (string)(json[key] as JObject)[JSON_KEY_NAME];
-                    var c = new Model.Currency(key, name);
-                    currentElements.Add(c);
-                }
-                await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(e => Remove(e)));
+            await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(Remove));
 
-                LastFetch = DateTime.Now;
-                return currentElements;
-            }
-            return null;
+            LastFetch = DateTime.Now;
+            return currentElements;
         }
     }
 }

@@ -20,19 +20,18 @@ namespace MyCC.Core.Account.Repositories.Base
         protected abstract Currency.Model.Currency Currency { get; }
         public abstract IEnumerable<Currency.Model.Currency> SupportedCurrencies { get; }
 
-        const int BUFFER_SIZE = 256000;
-        readonly HttpClient client;
+        private const int BUFFER_SIZE = 256000;
+        private readonly HttpClient client;
 
         public override string Data => Address;
 
         protected AddressAccountRepository(int id, string name, string address) : base(id, name)
         {
             Address = address;
-            client = new HttpClient();
-            client.MaxResponseContentBufferSize = BUFFER_SIZE;
+            client = new HttpClient { MaxResponseContentBufferSize = BUFFER_SIZE };
         }
 
-        async Task<decimal?> getBalance()
+        private async Task<decimal?> getBalance()
         {
             var uri = Url;
             HttpResponseMessage response;
@@ -45,12 +44,10 @@ namespace MyCC.Core.Account.Repositories.Base
                 response = await client.PostAsync(uri, PostContent);
             }
 
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return Balance(content) / BalanceFactor;
-            }
-            return null;
+            if (!response.IsSuccessStatusCode) return null;
+
+            var content = await response.Content.ReadAsStringAsync();
+            return Balance(content) / BalanceFactor;
         }
 
         public sealed override async Task<bool> Test()

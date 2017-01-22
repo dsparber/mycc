@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Storage;
 using MyCC.Core.Currency.Database;
@@ -8,33 +9,17 @@ namespace MyCC.Core.Currency.Storage
 {
     public class CurrencyRepositoryMapStorage : AbstractDatabaseStorage<CurrencyMapRepositoryDbm, CurrencyRepositoryMap, CurrencyMapDbm, CurrencyMapDbm, string>
     {
-        public CurrencyRepositoryMapStorage() : base(new CurrencyMapRepositoryDatabase()) { }
+        private CurrencyRepositoryMapStorage() : base(new CurrencyMapRepositoryDatabase()) { }
 
         protected override async Task OnFirstLaunch()
         {
             await Add(new CurrencyRepositoryMap());
         }
 
-        static CurrencyRepositoryMapStorage instance { get; set; }
+        private static CurrencyRepositoryMapStorage _instance;
 
-        public static CurrencyRepositoryMapStorage Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new CurrencyRepositoryMapStorage();
-                }
-                return instance;
-            }
-        }
+        public static CurrencyRepositoryMapStorage Instance => _instance ?? (_instance = new CurrencyRepositoryMapStorage());
 
-        public override CurrencyRepositoryMap LocalRepository
-        {
-            get
-            {
-                return Repositories.Find(r => r is CurrencyRepositoryMap);
-            }
-        }
+        public override CurrencyRepositoryMap LocalRepository => Repositories.FirstOrDefault();
     }
 }

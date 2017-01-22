@@ -21,7 +21,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public BlockchainXpubAccountRepository(int id, string name, string address) : base(id, name, address) { }
 
         public override string Description => I18N.Blockchain;
-        public override int RepositoryTypeId => AccountRepositoryDbm.DB_TYPE_BLOCKCHAIN_XPUB_REPOSITORY;
+        public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeBlockchainXpubRepository;
 
         protected override Currency.Model.Currency Currency => Core.Currency.Model.Currency.Btc;
         public override IEnumerable<Currency.Model.Currency> SupportedCurrencies => new List<Currency.Model.Currency> { Currency };

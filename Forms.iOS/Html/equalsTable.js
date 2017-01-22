@@ -34,7 +34,7 @@ function setHeader(columns) {
     var table = document.getElementById("coinTable");
     table.deleteTHead();
     var header = table.createTHead();
-    var row = header.insertRow(i);
+    var row = header.insertRow();
     row.insertCell(-1);
     for (var i = 0; i < columns.length; i++) {
         var cell = row.insertCell(-1);

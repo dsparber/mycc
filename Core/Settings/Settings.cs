@@ -6,7 +6,7 @@ namespace MyCC.Core.Settings
 {
     public static class Settings
     {
-        private static Dictionary<string, object> cache = new Dictionary<string, object>();
+        private static readonly Dictionary<string, object> Cache = new Dictionary<string, object>();
 
         public const string KeyAppVersion = "version";
 
@@ -44,30 +44,29 @@ namespace MyCC.Core.Settings
 
         public static T Get<T>(string key, T defaultValue)
         {
-            if (cache.ContainsKey(key))
+            if (Cache.ContainsKey(key))
             {
-                return (T)cache[key];
+                return (T)Cache[key];
             }
 
             var value = AppSettings.GetValueOrDefault(key, defaultValue);
-            cache.Add(key, value);
+            Cache.Add(key, value);
             return value;
         }
 
         public static void Set<T>(string key, T value)
         {
-            if (!cache.ContainsKey(key) || !Equals(value, cache[key]))
-            {
-                AppSettings.AddOrUpdateValue(key, value);
+            if (Cache.ContainsKey(key) && Equals(value, Cache[key])) return;
 
-                if (!cache.ContainsKey(key))
-                {
-                    cache.Add(key, value);
-                }
-                else
-                {
-                    cache[key] = value;
-                }
+            AppSettings.AddOrUpdateValue(key, value);
+
+            if (!Cache.ContainsKey(key))
+            {
+                Cache.Add(key, value);
+            }
+            else
+            {
+                Cache[key] = value;
             }
         }
 

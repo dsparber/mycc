@@ -15,11 +15,10 @@ namespace MyCC.Forms.view.components
         {
             base.OnSizeAllocated(width, height);
             var orientation = width > height ? StackOrientation.Horizontal : StackOrientation.Vertical;
-            if (orientation != Orientation)
-            {
-                Orientation = orientation;
-                Messaging.Layout.SendValueChanged();
-            }
+            if (orientation == Orientation) return;
+
+            Orientation = orientation;
+            Messaging.Layout.SendValueChanged();
         }
 
         protected override void OnChildAdded(Element child)

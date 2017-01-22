@@ -75,22 +75,20 @@ namespace MyCC.Forms.view.components
         {
             currentInfoText = (currentInfoText + increment) % infoTexts.Count;
 
-            if (infoTexts != null && infoTexts.Count >= currentInfoText)
-            {
-                var text = infoTexts[currentInfoText];
-                if (string.IsNullOrEmpty(text?.Trim()))
-                {
-                    text = infoTexts[(currentInfoText + 1) % infoTexts.Count];
-                }
-                InfoText = text;
+            if (infoTexts == null || infoTexts.Count < currentInfoText) return;
 
-                if (updateOthers)
-                {
-                    foreach (var i in instances)
-                    {
-                        i.SetInfoText(0, false);
-                    }
-                }
+            var text = infoTexts[currentInfoText];
+            if (string.IsNullOrEmpty(text?.Trim()))
+            {
+                text = infoTexts[(currentInfoText + 1) % infoTexts.Count];
+            }
+            InfoText = text;
+
+            if (!updateOthers) return;
+
+            foreach (var i in instances)
+            {
+                i.SetInfoText(0, false);
             }
         }
     }

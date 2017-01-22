@@ -44,7 +44,7 @@
     <Compile Include="Messages\MessageInfo.cs" />
     <Compile Include="Messages\Messaging.cs" />
     <Compile Include="Messages\MessageTools.cs" />
-    <Compile Include="MyCryptos.Forms.cs" />
+    <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\I18N.de.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -63,7 +63,6 @@
     <Compile Include="View\Addsource\AddLocalAccountSubview.cs" />
     <Compile Include="View\Addsource\AddRepositorySubview.cs" />
     <Compile Include="View\Addsource\AddSourceSubview.cs" />
-    <Compile Include="View\Components\Cells\AccountViewCell.cs" />
     <Compile Include="View\Components\Cells\CurrencyEntryCell.cs" />
     <Compile Include="View\Components\Cells\CustomEntryCell.cs" />
     <Compile Include="View\Components\Cells\CustomPickerCell.cs" />

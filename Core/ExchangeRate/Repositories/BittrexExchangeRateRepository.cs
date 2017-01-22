@@ -10,19 +10,18 @@ namespace MyCC.Core.ExchangeRate.Repositories
 {
     public class BittrexExchangeRateRepository : OnlineExchangeRateRepository
     {
-        const string URL_RATE = "https://bittrex.com/api/v1.1/public/getticker?market={0}";
+        private const string URL_RATE = "https://bittrex.com/api/v1.1/public/getticker?market={0}";
 
-        const string RESULT_KEY = "result";
-        const string RATE_KEY = "Last";
+        private const string RESULT_KEY = "result";
+        private const string RATE_KEY = "Last";
 
-        const int BUFFER_SIZE = 256000;
+        private const int BUFFER_SIZE = 256000;
 
-        readonly HttpClient client;
+        private readonly HttpClient client;
 
         public BittrexExchangeRateRepository(int id) : base(id)
         {
-            client = new HttpClient();
-            client.MaxResponseContentBufferSize = BUFFER_SIZE;
+            client = new HttpClient { MaxResponseContentBufferSize = BUFFER_SIZE };
         }
         public override int RepositoryTypeId => ExchangeRateRepositoryDbm.DB_TYPE_BITTREX_REPOSITORY;
 
@@ -45,7 +44,7 @@ namespace MyCC.Core.ExchangeRate.Repositories
             }
         }
 
-        static string ToUrl(Model.ExchangeRate exchangeRate)
+        private static string ToUrl(Model.ExchangeRate exchangeRate)
         {
             return exchangeRate.ReferenceCurrency.Code.ToUpper() + "-" + exchangeRate.SecondaryCurrency.Code.ToUpper();
         }

@@ -17,16 +17,13 @@ namespace MyCC.Core.Settings
             {
                 if (_lastVersion != null) return _lastVersion;
 
-                if (!FirstLaunch)
-                {
-                    var persitedValue = new MyCC.Core.Settings.Version(Settings.Get(Settings.KeyAppVersion, "0.0.0"));
-                    Settings.Set(Settings.KeyAppVersion, Constants.AppVersion.ToString());
+                if (FirstLaunch) return Constants.AppVersion;
 
+                var persitedValue = new Version(Settings.Get(Settings.KeyAppVersion, "0.0.0"));
+                Settings.Set(Settings.KeyAppVersion, Constants.AppVersion.ToString());
 
-                    _lastVersion = persitedValue;
-                    return _lastVersion;
-                }
-                return Constants.AppVersion;
+                _lastVersion = persitedValue;
+                return _lastVersion;
             }
         }
 

@@ -8,25 +8,25 @@ namespace MyCC.Forms.view.pages
 {
     public partial class PasswordView
     {
-        private readonly Page nextStartupPage;
-        private readonly bool goesToBckground;
+        private readonly Page _nextStartupPage;
+        private readonly bool _goesToBckground;
 
         public PasswordView(bool background = false)
         {
             InitializeComponent();
-            goesToBckground = background;
+            _goesToBckground = background;
         }
 
         public PasswordView(Page page, bool background = false) : this(background)
         {
-            nextStartupPage = page;
+            _nextStartupPage = page;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            if (!goesToBckground)
+            if (!_goesToBckground)
             {
                 await Authenticate();
             }
@@ -53,25 +53,24 @@ namespace MyCC.Forms.view.pages
                 PinFrame.OutlineColor = Color.White;
             }
 
-            if (e.NewTextValue?.Length == ApplicationSettings.PinLength)
+            if (e.NewTextValue?.Length != ApplicationSettings.PinLength) return;
+
+            if (ApplicationSettings.IsPinValid(e.NewTextValue))
             {
-                if (ApplicationSettings.IsPinValid(e.NewTextValue))
-                {
-                    await Disappear();
-                }
-                else
-                {
-                    PasswordEntry.Text = string.Empty;
-                    PinFrame.OutlineColor = Color.Red;
-                }
+                await Disappear();
+            }
+            else
+            {
+                PasswordEntry.Text = string.Empty;
+                PinFrame.OutlineColor = Color.Red;
             }
         }
 
         private async Task Disappear()
         {
-            if (nextStartupPage != null)
+            if (_nextStartupPage != null)
             {
-                await Navigation.PushModalAsync(nextStartupPage);
+                await Navigation.PushModalAsync(_nextStartupPage);
             }
             else
             {

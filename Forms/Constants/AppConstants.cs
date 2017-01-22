@@ -7,18 +7,16 @@ namespace MyCC.Forms.constants
         public static readonly Color ThemeColor = Color.FromHex("#3498db");
         // #34495e, #f39c12, #3498db
 
-        public static readonly int AndroidFontSize = 17;
-        public static readonly double FontFactorSmall = 0.75;
+        public const int AndroidFontSize = 17;
+        public const double FontFactorSmall = 0.75;
         public static readonly Color FontColor = Color.FromHex("222");
         public static readonly Color BackgroundColor = (Device.OS == TargetPlatform.Android) ? Color.FromHex("EEE") : Color.FromHex("FFF");
         public static readonly Color TableBackgroundColor = (Device.OS == TargetPlatform.Android) ? Color.FromHex("EEE") : Color.FromRgb(238, 239, 243);
         public static readonly Color TableSectionColor = Color.FromRgb(107, 107, 112);
-        public static readonly int TableSectionFontSize = 14;
-        public static readonly double OpacityDisabledField = 0.5;
+        public const int TableSectionFontSize = 14;
+        public const double OpacityDisabledField = 0.5;
         public static readonly Color FontColorLight = FontColor.MultiplyAlpha(OpacityDisabledField);
 
-        public static readonly int LabelWidth = 100;
-
-        public static readonly decimal PieGroupThreshold = 0.05M;
+        public const int LabelWidth = 100;
     }
 }

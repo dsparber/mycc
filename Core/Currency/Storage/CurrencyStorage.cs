@@ -20,7 +20,7 @@ namespace MyCC.Core.Currency.Storage
             await Add(new CryptoIdCurrencyRepository(default(int)));
         }
 
-        static CurrencyStorage instance { get; set; }
+        private static CurrencyStorage instance { get; set; }
 
         public static CurrencyStorage Instance => instance ?? (instance = new CurrencyStorage());
 

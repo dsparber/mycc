@@ -8,7 +8,7 @@ namespace MyCC.Core.ExchangeRate.Repositories
 {
     public class LocalAvailableRatesRepository : AvailableRatesRepository
     {
-        IEnumerable<Model.ExchangeRate> Elements;
+        private IEnumerable<Model.ExchangeRate> Elements;
 
         public LocalAvailableRatesRepository(int id) : base(id)
         {
@@ -35,13 +35,7 @@ namespace MyCC.Core.ExchangeRate.Repositories
             return FetchOnline();
         }
 
-        public override ExchangeRateRepository ExchangeRateRepository
-        {
-            get
-            {
-                return ExchangeRateStorage.Instance.LocalRepository;
-            }
-        }
+        public override ExchangeRateRepository ExchangeRateRepository => ExchangeRateStorage.Instance.LocalRepository;
 
         public override Model.ExchangeRate ExchangeRateWithCurrency(Currency.Model.Currency currency)
         {

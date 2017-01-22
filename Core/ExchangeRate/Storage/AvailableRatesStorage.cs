@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Storage;
 using MyCC.Core.ExchangeRate.Database;
@@ -9,7 +9,7 @@ namespace MyCC.Core.ExchangeRate.Storage
 {
     public class AvailableRatesStorage : AbstractStorage<AvailableRatesRepositoryDbm, AvailableRatesRepository>
     {
-        public AvailableRatesStorage() : base(new AvailableRatesRepositoryDatabase()) { }
+        private AvailableRatesStorage() : base(new AvailableRatesRepositoryDatabase()) { }
 
         protected override async Task OnFirstLaunch()
         {
@@ -18,54 +18,13 @@ namespace MyCC.Core.ExchangeRate.Storage
             await Add(new CryptonatorAvailableRatesRepository(default(int)));
         }
 
-        static AvailableRatesStorage instance { get; set; }
+        private static AvailableRatesStorage _instance;
 
-        public static AvailableRatesStorage Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new AvailableRatesStorage();
-                }
-                return instance;
-            }
-        }
-
-        public Model.ExchangeRate ExchangeRateWithCurrency(Currency.Model.Currency currency)
-        {
-            foreach (var r in Repositories)
-            {
-                var e = r.ExchangeRateWithCurrency(currency);
-                if (e != null)
-                {
-                    return e;
-                }
-            }
-            return null;
-        }
-
-        public List<Model.ExchangeRate> ExchangeRatesWithCurrency(Currency.Model.Currency currency)
-        {
-            var all = new List<Model.ExchangeRate>();
-            foreach (var r in Repositories)
-            {
-                all.AddRange(r.ExchangeRatesWithCurrency(currency));
-
-            }
-            return all;
-        }
+        public static AvailableRatesStorage Instance => _instance ?? (_instance = new AvailableRatesStorage());
 
         public bool IsAvailable(Model.ExchangeRate exchangeRate)
         {
-            foreach (var r in Repositories)
-            {
-                if (r.IsAvailable(exchangeRate))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return Repositories.Any(r => r.IsAvailable(exchangeRate));
         }
     }
 }

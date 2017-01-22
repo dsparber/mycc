@@ -16,7 +16,7 @@ namespace MyCC.Core.ExchangeRate.Model
         /// <param name="referenceCurrency">Reference currency.</param>
         /// <param name="secondaryCurrency">Secondary currency.</param>
         /// <param name="rate">Exchange rate.</param>
-        public ExchangeRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency, decimal? rate)
+        public ExchangeRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency, decimal? rate = null)
         {
             if (referenceCurrency == null || secondaryCurrency == null)
             {
@@ -26,13 +26,6 @@ namespace MyCC.Core.ExchangeRate.Model
             SecondaryCurrency = secondaryCurrency;
             Rate = rate == null ? (decimal?)null : Math.Truncate(rate.Value * 100000000) / 100000000;
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:Models.ExchangeRate"/> class without an exchange rate.
-        /// </summary>
-        /// <param name="referenceCurrency">Reference currency.</param>
-        /// <param name="secondaryCurrency">Secondary currency.</param>
-        public ExchangeRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency) : this(referenceCurrency, secondaryCurrency, null) { }
 
         /// <summary>
         /// Gets or sets the identifier.
@@ -53,12 +46,12 @@ namespace MyCC.Core.ExchangeRate.Model
         /// <summary>
         /// The reference currency.
         /// </summary>
-        public Currency.Model.Currency ReferenceCurrency { get; private set; }
+        public Currency.Model.Currency ReferenceCurrency { get; }
 
         /// <summary>
         /// The secondary currency.
         /// </summary>
-        public Currency.Model.Currency SecondaryCurrency { get; private set; }
+        public Currency.Model.Currency SecondaryCurrency { get; }
 
         /// <summary>
         /// The rate, can not be not null. No value equals 0

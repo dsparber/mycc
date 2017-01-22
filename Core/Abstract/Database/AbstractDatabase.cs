@@ -10,11 +10,11 @@ namespace MyCC.Core.Abstract.Database
 {
     public abstract class AbstractDatabase<T, V, IdType> where T : IEntityDBM<V, IdType> where V : Persistable<IdType>
     {
-        SQLiteAsyncConnection connection;
+        private SQLiteAsyncConnection connection;
 
-        Task initialisation;
+        private Task initialisation;
 
-        async Task initialise()
+        private async Task initialise()
         {
             if (initialisation == null)
             {
@@ -26,16 +26,13 @@ namespace MyCC.Core.Abstract.Database
             }
         }
 
-        async Task<SQLiteAsyncConnection> getConnection()
+        private async Task<SQLiteAsyncConnection> getConnection()
         {
             await initialise();
             return connection;
         }
 
-        public Task<SQLiteAsyncConnection> Connection
-        {
-            get { return getConnection(); }
-        }
+        public Task<SQLiteAsyncConnection> Connection => getConnection();
 
         protected abstract Task Create(SQLiteAsyncConnection connection);
 
@@ -63,7 +60,7 @@ namespace MyCC.Core.Abstract.Database
         }
         public async Task<IEnumerable<V>> Insert(IEnumerable<V> elemets)
         {
-            var dbElements = elemets.Distinct().Select(e => Resolve(e));
+            var dbElements = elemets.Distinct().Select(Resolve);
             await (await Connection).InsertAllAsync(dbElements);
             return await Task.WhenAll(dbElements.Select(e => e.Resolve()));
         }
@@ -87,7 +84,7 @@ namespace MyCC.Core.Abstract.Database
 
         public async Task<IEnumerable<V>> Update(IEnumerable<V> elemets)
         {
-            var dbElements = elemets.Select(e => Resolve(e));
+            var dbElements = elemets.Select(Resolve);
             await (await Connection).UpdateAllAsync(elemets);
             return await Task.WhenAll(dbElements.Select(e => e.Resolve()));
         }

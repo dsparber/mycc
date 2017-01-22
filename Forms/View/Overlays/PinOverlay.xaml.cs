@@ -10,7 +10,7 @@ namespace MyCC.Forms.view.overlays
 {
     public partial class PinOverlay : ContentPage
     {
-        private PinAction pinAction;
+        private readonly PinAction _pinAction;
 
         public PinOverlay(PinAction pinAction)
         {
@@ -18,11 +18,11 @@ namespace MyCC.Forms.view.overlays
 
             if (pinAction == PinAction.EnableOrDisable)
             {
-                this.pinAction = ApplicationSettings.IsPinSet ? PinAction.Disable : PinAction.Enable;
+                _pinAction = ApplicationSettings.IsPinSet ? PinAction.Disable : PinAction.Enable;
             }
             else
             {
-                this.pinAction = pinAction;
+                _pinAction = pinAction;
             }
 
             OldPinCell.Entry.IsPassword = true;
@@ -39,7 +39,7 @@ namespace MyCC.Forms.view.overlays
 
                 if (ApplicationSettings.IsPinValid(e.NewTextValue))
                 {
-                    if (this.pinAction == PinAction.Disable)
+                    if (_pinAction == PinAction.Disable)
                     {
                         ApplicationSettings.Pin = null;
                         Messaging.Pin.SendValueChanged();
@@ -59,11 +59,13 @@ namespace MyCC.Forms.view.overlays
 
             Title = I18N.Pin;
 
-            switch (this.pinAction)
+            switch (_pinAction)
             {
                 case PinAction.Enable: Header.InfoText = I18N.EnablePin; PinTable.Root.Remove(OldPinSection); break;
                 case PinAction.Disable: Header.InfoText = I18N.DisablePin; PinTable.Root.Remove(ChangePinSection); break;
                 case PinAction.Change: Header.InfoText = I18N.ChangePin; break;
+                case PinAction.EnableOrDisable: throw new ArgumentException();
+                default: throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -71,7 +73,7 @@ namespace MyCC.Forms.view.overlays
         {
             base.OnAppearing();
 
-            if (pinAction == PinAction.Enable)
+            if (_pinAction == PinAction.Enable)
             {
                 NewPinCell.Entry.Focus();
             }
@@ -81,19 +83,19 @@ namespace MyCC.Forms.view.overlays
             }
         }
 
-        void CancelClicked(object sender, EventArgs e)
+        private void CancelClicked(object sender, EventArgs e)
         {
             Navigation.PopOrPopModal();
         }
 
-        void SaveClicked(object sender, EventArgs e)
+        private void SaveClicked(object sender, EventArgs e)
         {
             var oldPin = OldPinCell.Entry.Text ?? string.Empty;
             var newPin = NewPinCell.Entry.Text ?? string.Empty;
 
-            var repeatOk = newPin.Equals(NewPinRepeatCell.Entry.Text) || pinAction == PinAction.Disable;
-            var oldPinOk = ApplicationSettings.IsPinValid(oldPin) || pinAction == PinAction.Enable;
-            var pinLongEnough = newPin.Length >= 4 || pinAction == PinAction.Disable;
+            var repeatOk = newPin.Equals(NewPinRepeatCell.Entry.Text) || _pinAction == PinAction.Disable;
+            var oldPinOk = ApplicationSettings.IsPinValid(oldPin) || _pinAction == PinAction.Enable;
+            var pinLongEnough = newPin.Length >= 4 || _pinAction == PinAction.Disable;
 
 
             if (!oldPinOk)

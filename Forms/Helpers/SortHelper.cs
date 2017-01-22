@@ -9,7 +9,7 @@ namespace MyCC.Forms.helpers
 {
     public static class SortHelper
     {
-        public static IEnumerable<T> SortCells<T>(IEnumerable<T> cells, SortOrder order, SortDirection direction) where T : SortableViewCell
+        private static IEnumerable<T> SortCells<T>(IEnumerable<T> cells, SortOrder order, SortDirection direction) where T : SortableViewCell
         {
             Func<T, object> sortLambda;
 
@@ -18,12 +18,14 @@ namespace MyCC.Forms.helpers
                 case SortOrder.ByValue: sortLambda = c => c.Value; break;
                 case SortOrder.ByUnits: sortLambda = c => c.Units; break;
                 case SortOrder.Alphabetical: sortLambda = c => c.Name; break;
+                case SortOrder.None: sortLambda = c => null; break;
                 default: sortLambda = c => null; break;
             }
 
             switch (direction)
             {
                 case SortDirection.Descending: cells = cells.OrderByDescending(sortLambda); break;
+                case SortDirection.Ascending: cells = cells.OrderBy(sortLambda); break;
                 default: cells = cells.OrderBy(sortLambda); break;
             }
 
@@ -38,21 +40,6 @@ namespace MyCC.Forms.helpers
             foreach (var c in cells)
             {
                 section.Add(c);
-            }
-        }
-
-        public static void ApplySortOrder<T>(IEnumerable<Tuple<TableSection, List<T>>> elements, TableView tableView, SortOrder order, SortDirection direction) where T : SortableViewCell
-        {
-            tableView.Root.Clear();
-
-            elements = elements.OrderBy(e => e.Item1.Title);
-            foreach (var e in elements)
-            {
-                ApplySortOrder(e.Item2, e.Item1, order, direction);
-                if (e.Item1.Count > 0)
-                {
-                    tableView.Root.Add(e.Item1);
-                }
             }
         }
     }

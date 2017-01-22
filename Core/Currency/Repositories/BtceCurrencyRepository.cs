@@ -11,13 +11,7 @@ namespace MyCC.Core.Currency.Repositories
 
         protected override Task<IEnumerable<Model.Currency>> GetCurrencies()
         {
-            return Task.Factory.StartNew<IEnumerable<Model.Currency>>(() =>
-               {
-                   var currentElements = new List<Model.Currency>();
-                   currentElements.Add(Model.Currency.Eur);
-                   currentElements.Add(Model.Currency.Usd);
-                   return currentElements;
-               });
+            return Task.Factory.StartNew<IEnumerable<Model.Currency>>(() => new List<Model.Currency> { Model.Currency.Eur, Model.Currency.Usd });
         }
     }
 }

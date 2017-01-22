@@ -39,12 +39,10 @@ namespace MyCC.Core.Account.Storage
         public static List<ExchangeRate.Model.ExchangeRate> NeededRatesFor(Currency.Model.Currency accountCurrency) => ApplicationSettings.AllReferenceCurrencies
                                        .Select(c => new ExchangeRate.Model.ExchangeRate(accountCurrency, c))
                                        .Select(e => ExchangeRateHelper.GetRate(e) ?? e)
-                                       .Where(r => r?.Rate == null)
+                                       .Where(r => r.Rate == null)
                                        .ToList();
 
         public static List<ExchangeRate.Model.ExchangeRate> NeededRatesFor(FunctionalAccount account) => NeededRatesFor(account.Money.Currency);
-
-        public static AccountRepository RepositoryOf(FunctionalAccount account) => Instance.Repositories.FirstOrDefault(r => r.Elements.Contains(account));
 
         public static async Task<bool> AddRepository(OnlineAccountRepository repository)
         {

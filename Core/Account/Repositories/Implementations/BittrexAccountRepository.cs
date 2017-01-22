@@ -52,7 +52,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
             this.privateApiKey = privateApiKey;
         }
 
-        public override int RepositoryTypeId => AccountRepositoryDbm.DB_TYPE_BITTREX_REPOSITORY;
+        public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeBittrexRepository;
 
         public async Task<JToken> GetResult(Currency.Model.Currency currency = null)
         {

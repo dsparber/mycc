@@ -25,18 +25,18 @@ namespace MyCC.Forms.view.components
 {
     public class ReferenceCurrenciesView : ContentView
     {
-        private readonly HybridWebView webView;
-        private bool appeared;
-        private Money referenceMoney;
+        private readonly HybridWebView _webView;
+        private bool _appeared;
+        private readonly Money _referenceMoney;
 
-        private List<Currency> _currencies;
-        private bool _showAmountInHeader;
-        private string tableHeaderLabel => _showAmountInHeader ? string.Format(I18N.IsEqualTo, referenceMoney.ToString()) : I18N.EqualTo;
-        private IEnumerable<Currency> referenceCurrencies => _currencies ?? ApplicationSettings.AllReferenceCurrencies.Where(c => !c.Equals(referenceMoney.Currency));
+        private readonly List<Currency> _currencies;
+        private readonly bool _showAmountInHeader;
+        private string TableHeaderLabel => _showAmountInHeader ? string.Format(I18N.IsEqualTo, _referenceMoney) : I18N.EqualTo;
+        private IEnumerable<Currency> ReferenceCurrencies => _currencies ?? ApplicationSettings.AllReferenceCurrencies.Where(c => !c.Equals(_referenceMoney.Currency));
 
         public ReferenceCurrenciesView(Money reference, bool showAmountInHeader = false, List<Currency> currencies = null)
         {
-            referenceMoney = reference;
+            _referenceMoney = reference;
             _currencies = currencies;
             _showAmountInHeader = showAmountInHeader;
 
@@ -44,7 +44,7 @@ namespace MyCC.Forms.view.components
 
             resolverContainer.Register<IJsonSerializer, JsonSerializer>();
 
-            webView = new HybridWebView
+            _webView = new HybridWebView
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
@@ -52,34 +52,33 @@ namespace MyCC.Forms.view.components
                 HeightRequest = 0
             };
 
-            webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
+            _webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
             {
                 var size = int.Parse(sizeString);
-                Device.BeginInvokeOnMainThread(() => webView.HeightRequest = size);
+                Device.BeginInvokeOnMainThread(() => _webView.HeightRequest = size);
             });
 
-            webView.RegisterCallback("HeaderClickedCallback", type =>
+            _webView.RegisterCallback("HeaderClickedCallback", type =>
             {
                 SortOrder value;
                 var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
-                if (clickedSortOrder != SortOrder.None)
-                {
-                    if (clickedSortOrder == ApplicationSettings.SortOrderReferenceValues)
-                    {
-                        ApplicationSettings.SortDirectionReferenceValues = ApplicationSettings.SortDirectionReferenceValues == SortDirection.Ascending
-                            ? SortDirection.Descending
-                            : SortDirection.Ascending;
-                    }
-                    ApplicationSettings.SortOrderReferenceValues = clickedSortOrder;
+                if (clickedSortOrder == SortOrder.None) return;
 
-                    UpdateView();
+                if (clickedSortOrder == ApplicationSettings.SortOrderReferenceValues)
+                {
+                    ApplicationSettings.SortDirectionReferenceValues = ApplicationSettings.SortDirectionReferenceValues == SortDirection.Ascending
+                        ? SortDirection.Descending
+                        : SortDirection.Ascending;
                 }
+                ApplicationSettings.SortOrderReferenceValues = clickedSortOrder;
+
+                UpdateView();
             });
 
             var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-            stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? tableHeaderLabel.ToUpper() : tableHeaderLabel, HorizontalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(15, 24, 8, 15), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
-            stack.Children.Add(webView);
+            stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? TableHeaderLabel.ToUpper() : TableHeaderLabel, HorizontalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(15, 24, 8, 15), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
+            stack.Children.Add(_webView);
 
             Content = stack;
 
@@ -92,28 +91,27 @@ namespace MyCC.Forms.view.components
 
         public void OnAppearing()
         {
-            if (!appeared)
-            {
-                appeared = true;
-                webView.LoadFromContent("Html/equalsTable.html");
-                UpdateView();
+            if (_appeared) return;
 
-                Task.Delay(200).ContinueWith(t => UpdateView());
-                Task.Delay(500).ContinueWith(t => UpdateView());
-                Task.Delay(1000).ContinueWith(t => UpdateView());
-                Task.Delay(1500).ContinueWith(t => UpdateView());
-                Task.Delay(2000).ContinueWith(t => UpdateView());
-            }
+            _appeared = true;
+            _webView.LoadFromContent("Html/equalsTable.html");
+            UpdateView();
+
+            Task.Delay(200).ContinueWith(t => UpdateView());
+            Task.Delay(500).ContinueWith(t => UpdateView());
+            Task.Delay(1000).ContinueWith(t => UpdateView());
+            Task.Delay(1500).ContinueWith(t => UpdateView());
+            Task.Delay(2000).ContinueWith(t => UpdateView());
         }
 
         public void UpdateView()
         {
             try
             {
-                var items = referenceCurrencies.Select(c => new Data(referenceMoney, c)).ToList();
+                var items = ReferenceCurrencies.Select(c => new Data(_referenceMoney, c)).ToList();
                 var itemsExisting = (items.Count > 0);
 
-                if (!itemsExisting || !appeared) return;
+                if (!itemsExisting || !_appeared) return;
 
                 Func<Data, object> sortLambda;
                 switch (ApplicationSettings.SortOrderReferenceValues)
@@ -125,11 +123,11 @@ namespace MyCC.Forms.view.components
                     default: sortLambda = d => 1; break;
                 }
                 items = ApplicationSettings.SortDirectionReferenceValues == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
-                webView.CallJsFunction("setHeader", new[]{
+                _webView.CallJsFunction("setHeader", new[]{
                     new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
                     new HeaderData($"{I18N.Currency[0]}.", SortOrder.Alphabetical.ToString())
                 }, string.Empty);
-                webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+                _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
             }
             catch (Exception e)
             {

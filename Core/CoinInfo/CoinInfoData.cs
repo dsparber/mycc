@@ -85,7 +85,7 @@ namespace MyCC.Core.CoinInfo
 
         public CoinInfoData(Currency.Model.Currency currency) : this(currency.Code) { }
 
-        public CoinInfoData(string currency)
+        private CoinInfoData(string currency)
         {
             CurrencyCode = currency;
         }
@@ -121,13 +121,13 @@ namespace MyCC.Core.CoinInfo
                 IsProofOfWork = info.IsProofOfWork ?? IsProofOfWork,
                 IsProofOfStake = info.IsProofOfStake ?? IsProofOfStake,
                 Blockreward = info.Blockreward ?? Blockreward,
-                MaxCoinSupply = info.MaxCoinSupply ?? MaxCoinSupply
+                MaxCoinSupply = info.MaxCoinSupply ?? MaxCoinSupply,
             };
         }
 
         public override string ToString()
         {
-            return string.Format("[CoinInfoData: CurrencyCode={0}, Algorithm={1}, Hashrate={2}, Difficulty={3}, CoinSupply={4}, MaxCoinSupply={5}, BlockHeight={6}, IsProofOfStake={7}, IsProofOfWork={8}, Blocktime={9}]", CurrencyCode, Algorithm, Hashrate, Difficulty, CoinSupply, MaxCoinSupply, BlockHeight, IsProofOfStake, IsProofOfWork, Blocktime);
+            return $"[CoinInfoData: CurrencyCode={CurrencyCode}, Algorithm={Algorithm}, Hashrate={Hashrate}, Difficulty={Difficulty}, CoinSupply={CoinSupply}, MaxCoinSupply={MaxCoinSupply}, BlockHeight={BlockHeight}, IsProofOfStake={IsProofOfStake}, IsProofOfWork={IsProofOfWork}, Blocktime={Blocktime}]";
         }
     }
 }

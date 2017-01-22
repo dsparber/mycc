@@ -28,12 +28,10 @@ namespace MyCC.Core.Currency.Database
 
         public override bool Equals(object obj)
         {
-            if (obj is CurrencyMapDbm)
-            {
-                var e = (CurrencyMapDbm)obj;
-                return Code.Equals(e.Code) && e.Id == Id;
-            }
-            return false;
+            if (!(obj is CurrencyMapDbm)) return false;
+
+            var e = (CurrencyMapDbm)obj;
+            return Code.Equals(e.Code) && e.Id == Id;
         }
 
         public override int GetHashCode()

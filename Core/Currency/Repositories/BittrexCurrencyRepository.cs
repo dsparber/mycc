@@ -10,54 +10,41 @@ namespace MyCC.Core.Currency.Repositories
 {
     public class BittrexCurrencyRepository : OnlineCurrencyRepository
     {
-        const string URL_CURRENCY_LIST = "https://bittrex.com/api/v1.1/public/getcurrencies";
+        private const string UrlCurrencyList = "https://bittrex.com/api/v1.1/public/getcurrencies";
 
-        const string CURRENCY_LIST_RESULT = "result";
-        const string CURRENCY_LIST_RESULT_NAME = "CurrencyLong";
-        const string CURRENCY_LIST_RESULT_CURRENCY = "Currency";
+        private const string CurrencyListResult = "result";
+        private const string CurrencyListResultName = "CurrencyLong";
+        private const string CurrencyListResultCurrency = "Currency";
 
-        const int BUFFER_SIZE = 256000;
+        private const int BufferSize = 256000;
 
-        readonly HttpClient client;
+        private readonly HttpClient _client;
 
         public BittrexCurrencyRepository(int id) : base(id)
         {
-            client = new HttpClient();
-            client.MaxResponseContentBufferSize = BUFFER_SIZE;
+            _client = new HttpClient { MaxResponseContentBufferSize = BufferSize };
         }
 
         public override int RepositoryTypeId => CurrencyRepositoryDbm.DB_TYPE_BITTREX_REPOSITORY;
 
         protected override async Task<IEnumerable<Model.Currency>> GetCurrencies()
         {
-            var uri = new Uri(URL_CURRENCY_LIST);
+            var uri = new Uri(UrlCurrencyList);
 
-            var response = await client.GetAsync(uri);
+            var response = await _client.GetAsync(uri);
 
-            if (response.IsSuccessStatusCode)
-            {
+            if (!response.IsSuccessStatusCode) return null;
 
-                var content = await response.Content.ReadAsStringAsync();
-                var json = JObject.Parse(content);
-                var result = (JArray)json[CURRENCY_LIST_RESULT];
+            var content = await response.Content.ReadAsStringAsync();
+            var json = JObject.Parse(content);
+            var result = (JArray)json[CurrencyListResult];
 
-                var currentElements = new List<Model.Currency>();
+            var currentElements = (from token in result let name = (string)token[CurrencyListResultName] let code = (string)token[CurrencyListResultCurrency] select new Model.Currency(code, name)).ToList();
 
-                foreach (var token in result)
-                {
-                    var name = (string)token[CURRENCY_LIST_RESULT_NAME];
-                    var code = (string)token[CURRENCY_LIST_RESULT_CURRENCY];
-                    var c = new Model.Currency(code, name);
-                    currentElements.Add(c);
+            await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(Remove));
 
-                }
-
-                await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(e => Remove(e)));
-
-                LastFetch = DateTime.Now;
-                return currentElements;
-            }
-            return null;
+            LastFetch = DateTime.Now;
+            return currentElements;
         }
     }
 }

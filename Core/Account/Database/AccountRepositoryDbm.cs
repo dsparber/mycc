@@ -10,13 +10,13 @@ namespace MyCC.Core.Account.Database
     [Table("AccountRepositories")]
     public class AccountRepositoryDbm : IEntityDBM<AccountRepository, int>
     {
-        public const int DB_TYPE_LOCAL_REPOSITORY = 1;
-        public const int DB_TYPE_BITTREX_REPOSITORY = 2;
-        public const int DB_TYPE_BLOCK_EXPERTS_REPOSITORY = 3;
-        public const int DB_TYPE_BLOCKCHAIN_REPOSITORY = 4;
-        public const int DB_TYPE_ETHEREUM_REPOSITORY = 5;
-        public const int DB_TYPE_CRYPTOID_REPOSITORY = 6;
-        public const int DB_TYPE_BLOCKCHAIN_XPUB_REPOSITORY = 7;
+        public const int DbTypeLocalRepository = 1;
+        public const int DbTypeBittrexRepository = 2;
+        public const int DbTypeBlockExpertsRepository = 3;
+        public const int DbTypeBlockchainRepository = 4;
+        public const int DbTypeEthereumRepository = 5;
+        public const int DbTypeCryptoidRepository = 6;
+        public const int DbTypeBlockchainXpubRepository = 7;
 
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
@@ -45,11 +45,8 @@ namespace MyCC.Core.Account.Database
 
         public override bool Equals(object obj)
         {
-            if (obj is AccountRepositoryDbm)
-            {
-                return Id == ((AccountRepositoryDbm)obj).Id;
-            }
-            return false;
+            var dbm = obj as AccountRepositoryDbm;
+            return Id == dbm?.Id;
         }
 
         public override int GetHashCode()
@@ -63,13 +60,13 @@ namespace MyCC.Core.Account.Database
             {
                 switch (Type)
                 {
-                    case DB_TYPE_LOCAL_REPOSITORY: return new LocalAccountRepository(Id, Name);
-                    case DB_TYPE_BITTREX_REPOSITORY: return new BittrexAccountRepository(Id, Name, Data);
-                    case DB_TYPE_BLOCK_EXPERTS_REPOSITORY: return new BlockExpertsAccountRepository(Id, Name, Data);
-                    case DB_TYPE_BLOCKCHAIN_REPOSITORY: return new BlockchainAccountRepository(Id, Name, Data);
-                    case DB_TYPE_ETHEREUM_REPOSITORY: return new EthereumAccountRepository(Id, Name, Data);
-                    case DB_TYPE_CRYPTOID_REPOSITORY: return new CryptoIdAccountRepository(Id, Name, Data);
-                    case DB_TYPE_BLOCKCHAIN_XPUB_REPOSITORY: return new BlockchainXpubAccountRepository(Id, Name, Data);
+                    case DbTypeLocalRepository: return new LocalAccountRepository(Id, Name);
+                    case DbTypeBittrexRepository: return new BittrexAccountRepository(Id, Name, Data);
+                    case DbTypeBlockExpertsRepository: return new BlockExpertsAccountRepository(Id, Name, Data);
+                    case DbTypeBlockchainRepository: return new BlockchainAccountRepository(Id, Name, Data);
+                    case DbTypeEthereumRepository: return new EthereumAccountRepository(Id, Name, Data);
+                    case DbTypeCryptoidRepository: return new CryptoIdAccountRepository(Id, Name, Data);
+                    case DbTypeBlockchainXpubRepository: return new BlockchainXpubAccountRepository(Id, Name, Data);
                     default: throw new NotSupportedException();
                 }
             });

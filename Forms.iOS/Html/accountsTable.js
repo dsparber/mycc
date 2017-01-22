@@ -16,10 +16,10 @@ var testData = [{
 
 var testColumns = [{
     "Text": "Name",
-    "Type": "Name",
+    "Type": "Name"
 }, {
     "Text": "Anzahl",
-    "Type": "Amount",
+    "Type": "Amount"
 }];
 
 var testSort = {

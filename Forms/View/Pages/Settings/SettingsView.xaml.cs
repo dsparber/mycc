@@ -78,7 +78,7 @@ namespace MyCC.Forms.view.pages.settings
             SetPinCellText();
         }
 
-        void SetRatesCellDetail()
+        private void SetRatesCellDetail()
         {
             RatesCell.Detail = ApplicationSettings.WatchedCurrencies.Count == 0 ? I18N.AllCurrenciesFromAccounts : string.Join(" + ", new List<string> { I18N.AllCurrenciesFromAccounts, string.Join(", ", ApplicationSettings.WatchedCurrencies) });
         }

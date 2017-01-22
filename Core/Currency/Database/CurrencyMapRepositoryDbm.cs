@@ -19,13 +19,7 @@ namespace MyCC.Core.Currency.Database
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
 
-        public Task<CurrencyRepositoryMap> Resolve()
-        {
-            return Task.Factory.StartNew(() =>
-            {
-                return new CurrencyRepositoryMap { Id = Id };
-            });
-        }
+        public Task<CurrencyRepositoryMap> Resolve() => Task.Factory.StartNew(() => new CurrencyRepositoryMap { Id = Id });
     }
 }
 

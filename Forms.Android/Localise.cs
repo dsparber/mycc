@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using MyCC.Core.Resources;
 using MyCC.Forms.Android;
 using Xamarin.Forms;
@@ -14,15 +13,7 @@ namespace MyCC.Forms.Android
         {
             var androidLocale = Java.Util.Locale.Default;
 
-            //var netLanguage = androidLocale.Language.Replace ("_", "-");
             var netLanguage = androidLocale.ToString().Replace("_", "-");
-
-            //var netLanguage = androidLanguage.Replace ("_", "-");
-            Console.WriteLine("android:" + androidLocale);
-            Console.WriteLine("net:" + netLanguage);
-
-            Console.WriteLine(Thread.CurrentThread.CurrentCulture);
-            Console.WriteLine(Thread.CurrentThread.CurrentUICulture);
 
             return new System.Globalization.CultureInfo(netLanguage);
         }

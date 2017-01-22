@@ -30,7 +30,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
         public CryptoIdAccountRepository(int id, string name, string data) : base(id, name, data) { }
         public CryptoIdAccountRepository(int id, string name, Currency.Model.Currency coin, string address) : base(id, name, coin, address) { }
-        public override int RepositoryTypeId => AccountRepositoryDbm.DB_TYPE_CRYPTOID_REPOSITORY;
+        public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeCryptoidRepository;
 
         protected override FunctionalAccount GetAccount(int? id, string name, Money money) => new CryptoIdAccount(id, name, money, this);
     }

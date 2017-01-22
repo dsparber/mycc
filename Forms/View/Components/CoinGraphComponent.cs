@@ -61,13 +61,12 @@ namespace MyCC.Forms.view.components
 
         public void OnAppearing()
         {
-            if (!appeared)
-            {
-                appeared = true;
-                webView.LoadFromContent("Html/pieChart.html");
-                Task.Delay(500).ContinueWith(t => UpdateView());
-                UpdateView();
-            }
+            if (appeared) return;
+
+            appeared = true;
+            webView.LoadFromContent("Html/pieChart.html");
+            Task.Delay(500).ContinueWith(t => UpdateView());
+            UpdateView();
         }
 
         public void UpdateView()

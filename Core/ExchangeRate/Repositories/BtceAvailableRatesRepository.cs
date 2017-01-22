@@ -10,7 +10,7 @@ namespace MyCC.Core.ExchangeRate.Repositories
 {
     public class BtceAvailableRatesRepository : AvailableRatesRepository
     {
-        List<Model.ExchangeRate> Elements;
+        private List<Model.ExchangeRate> Elements;
 
         public BtceAvailableRatesRepository(int id) : base(id)
         {

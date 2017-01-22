@@ -13,100 +13,102 @@ namespace MyCC.Core.Currency.Repositories
         {
             var list = await Task.Factory.StartNew(() =>
              {
-                 var currentElements = new List<Model.Currency>();
+                 var currentElements = new List<Model.Currency>
+                 {
+                     new Model.Currency("2GIVE", "2GiveCoin"),
+                     new Model.Currency("AMBER", "Ambercoin"),
+                     new Model.Currency("ASW", "AmericanStandardWallet"),
+                     new Model.Currency("ANTI", "Anti Bitcoin"),
+                     new Model.Currency("ARC", "AquariusCoin"),
+                     new Model.Currency("ARG", "Argentum"),
+                     new Model.Currency("ADCN", "Asiadigicoin"),
+                     new Model.Currency("ADC", "AudioCoin"),
+                     new Model.Currency("ALX", "AvalonX"),
+                     new Model.Currency("BEEZ", "BeezerCoin"),
+                     new Model.Currency("BLRY", "Billary Coin"),
+                     new Model.Currency("BIOS", "Bios crypto"),
+                     new Model.Currency("BTCD", "BitcoinDark"),
+                     new Model.Currency("XBC", "BitcoinPlus"),
+                     new Model.Currency("BSD", "BitSend"),
+                     new Model.Currency("BITS", "Bitstar"),
+                     new Model.Currency("BLU", "Bluecoin"),
+                     new Model.Currency("BEC", "Bluecoin"),
+                     new Model.Currency("CASH", "Cashcoin"),
+                     new Model.Currency("CPC", "CereiPayCoin"),
+                     new Model.Currency("CHESS", "ChessCoin"),
+                     new Model.Currency("CMC", "CMI"),
+                     new Model.Currency("COC", "CoCreateCoin"),
+                     new Model.Currency("COIN", "COIN"),
+                     new Model.Currency("CV2", "Colossuscoin2"),
+                     new Model.Currency("CPI", "CPICoin"),
+                     new Model.Currency("CRW", "Crowncoin"),
+                     new Model.Currency("DICK", "Dickcoin"),
+                     new Model.Currency("DIME", "Dimecoin"),
+                     new Model.Currency("DOPE", "Dopecoin"),
+                     new Model.Currency("DVC", "Dovecoin"),
+                     new Model.Currency("ECC", "E-CurrencyCoin"),
+                     new Model.Currency("ESP", "Espers"),
+                     new Model.Currency("FEDS", "FedoraShare"),
+                     new Model.Currency("FRWC", "Frankywillcoin"),
+                     new Model.Currency("GBRC", "GlobalBusinessRevolution"),
+                     new Model.Currency("XGR", "GoldReserve"),
+                     new Model.Currency("GRT", "Grantcoin"),
+                     new Model.Currency("HAM", "HamRadiocoin"),
+                     new Model.Currency("HCC", "HCCoin"),
+                     new Model.Currency("HEMP", "Hempcoin"),
+                     new Model.Currency("HNC", "HunCoin"),
+                     new Model.Currency("NKA", "IncaKoin"),
+                     new Model.Currency("INC", "Incrementum"),
+                     new Model.Currency("ICASH", "Internet Cash"),
+                     new Model.Currency("ISL", "IslaCoin"),
+                     new Model.Currency("XJO", "JouleCoin"),
+                     new Model.Currency("KCC", "K-COIN"),
+                     new Model.Currency("KNC", "KhanCoin"),
+                     new Model.Currency("KUC", "Kuwaitcoin"),
+                     new Model.Currency("LDC", "Landcoin"),
+                     new Model.Currency("LEA", "LeaCoin"),
+                     new Model.Currency("LEO", "LEOcoin"),
+                     new Model.Currency("LKC2", "LinkedCoin"),
+                     new Model.Currency("LKC", "Luckycoin"),
+                     new Model.Currency("MBL", "MobileCash"),
+                     new Model.Currency("MST", "Mustang Coin"),
+                     new Model.Currency("NTC", "Neptunecoin"),
+                     new Model.Currency("OK", "OKCash"),
+                     new Model.Currency("ORLY", "Orlycoin"),
+                     new Model.Currency("PAPAFR", "PAPAFRANCESCOCoin"),
+                     new Model.Currency("PEC", "PeaceCoin"),
+                     new Model.Currency("POST", "PostCoin"),
+                     new Model.Currency("PVC", "PuraVidaCoin"),
+                     new Model.Currency("QBK", "Qibuckcoin"),
+                     new Model.Currency("RVC", "Revcoin"),
+                     new Model.Currency("SFC", "Safecoin"),
+                     new Model.Currency("SH", "Shilling"),
+                     new Model.Currency("SPEC", "SPEC"),
+                     new Model.Currency("SSC", "SSCoin"),
+                     new Model.Currency("SSUC", "SSUCoin"),
+                     new Model.Currency("STP", "Stepcoin"),
+                     new Model.Currency("SUPER", "Supercoin"),
+                     new Model.Currency("SCN", "Swiscoin"),
+                     new Model.Currency("TCOIN", "T-coin"),
+                     new Model.Currency("TAO", "Tao"),
+                     new Model.Currency("TRNT", "Tarrant"),
+                     new Model.Currency("TEK", "TEKcoin"),
+                     new Model.Currency("TAGR", "Think and Get Rich Coin"),
+                     new Model.Currency("TRUMP", "TrumpCoin"),
+                     new Model.Currency("UNB", "UnbreakableCoin"),
+                     new Model.Currency("UNC", "UNCoin"),
+                     new Model.Currency("UPC", "UnionPlusCoin"),
+                     new Model.Currency("XVC", "Vcash"),
+                     new Model.Currency("VOX", "VOXELS"),
+                     new Model.Currency("VPN", "Vpncoin"),
+                     new Model.Currency("WAY", "WayGuide"),
+                     new Model.Currency("XCO", "Xcoin"),
+                     new Model.Currency("MI", "Xiaomicoin"),
+                     new Model.Currency("XPAY", "xPAY"),
+                     new Model.Currency("YOC", "Yocoin"),
+                     new Model.Currency("ZUR", "Zurcoin")
+                 };
 
-                 currentElements.Add(new Model.Currency("2GIVE", "2GiveCoin"));
-                 currentElements.Add(new Model.Currency("AMBER", "Ambercoin"));
-                 currentElements.Add(new Model.Currency("ASW", "AmericanStandardWallet"));
-                 currentElements.Add(new Model.Currency("ANTI", "Anti Bitcoin"));
-                 currentElements.Add(new Model.Currency("ARC", "AquariusCoin"));
-                 currentElements.Add(new Model.Currency("ARG", "Argentum"));
-                 currentElements.Add(new Model.Currency("ADCN", "Asiadigicoin"));
-                 currentElements.Add(new Model.Currency("ADC", "AudioCoin"));
-                 currentElements.Add(new Model.Currency("ALX", "AvalonX"));
-                 currentElements.Add(new Model.Currency("BEEZ", "BeezerCoin"));
-                 currentElements.Add(new Model.Currency("BLRY", "Billary Coin"));
-                 currentElements.Add(new Model.Currency("BIOS", "Bios crypto"));
-                 currentElements.Add(new Model.Currency("BTCD", "BitcoinDark"));
-                 currentElements.Add(new Model.Currency("XBC", "BitcoinPlus"));
-                 currentElements.Add(new Model.Currency("BSD", "BitSend"));
-                 currentElements.Add(new Model.Currency("BITS", "Bitstar"));
-                 currentElements.Add(new Model.Currency("BLU", "Bluecoin"));
-                 currentElements.Add(new Model.Currency("BEC", "Bluecoin"));
-                 currentElements.Add(new Model.Currency("CASH", "Cashcoin"));
-                 currentElements.Add(new Model.Currency("CPC", "CereiPayCoin"));
-                 currentElements.Add(new Model.Currency("CHESS", "ChessCoin"));
-                 currentElements.Add(new Model.Currency("CMC", "CMI"));
-                 currentElements.Add(new Model.Currency("COC", "CoCreateCoin"));
-                 currentElements.Add(new Model.Currency("COIN", "COIN"));
-                 currentElements.Add(new Model.Currency("CV2", "Colossuscoin2"));
-                 currentElements.Add(new Model.Currency("CPI", "CPICoin"));
-                 currentElements.Add(new Model.Currency("CRW", "Crowncoin"));
-                 currentElements.Add(new Model.Currency("DICK", "Dickcoin"));
-                 currentElements.Add(new Model.Currency("DIME", "Dimecoin"));
-                 currentElements.Add(new Model.Currency("DOPE", "Dopecoin"));
-                 currentElements.Add(new Model.Currency("DVC", "Dovecoin"));
-                 currentElements.Add(new Model.Currency("ECC", "E-CurrencyCoin"));
-                 currentElements.Add(new Model.Currency("ESP", "Espers"));
-                 currentElements.Add(new Model.Currency("FEDS", "FedoraShare"));
-                 currentElements.Add(new Model.Currency("FRWC", "Frankywillcoin"));
-                 currentElements.Add(new Model.Currency("GBRC", "GlobalBusinessRevolution"));
-                 currentElements.Add(new Model.Currency("XGR", "GoldReserve"));
-                 currentElements.Add(new Model.Currency("GRT", "Grantcoin"));
-                 currentElements.Add(new Model.Currency("HAM", "HamRadiocoin"));
-                 currentElements.Add(new Model.Currency("HCC", "HCCoin"));
-                 currentElements.Add(new Model.Currency("HEMP", "Hempcoin"));
-                 currentElements.Add(new Model.Currency("HNC", "HunCoin"));
-                 currentElements.Add(new Model.Currency("NKA", "IncaKoin"));
-                 currentElements.Add(new Model.Currency("INC", "Incrementum"));
-                 currentElements.Add(new Model.Currency("ICASH", "Internet Cash"));
-                 currentElements.Add(new Model.Currency("ISL", "IslaCoin"));
-                 currentElements.Add(new Model.Currency("XJO", "JouleCoin"));
-                 currentElements.Add(new Model.Currency("KCC", "K-COIN"));
-                 currentElements.Add(new Model.Currency("KNC", "KhanCoin"));
-                 currentElements.Add(new Model.Currency("KUC", "Kuwaitcoin"));
-                 currentElements.Add(new Model.Currency("LDC", "Landcoin"));
-                 currentElements.Add(new Model.Currency("LEA", "LeaCoin"));
-                 currentElements.Add(new Model.Currency("LEO", "LEOcoin"));
-                 currentElements.Add(new Model.Currency("LKC2", "LinkedCoin"));
-                 currentElements.Add(new Model.Currency("LKC", "Luckycoin"));
-                 currentElements.Add(new Model.Currency("MBL", "MobileCash"));
-                 currentElements.Add(new Model.Currency("MST", "Mustang Coin"));
-                 currentElements.Add(new Model.Currency("NTC", "Neptunecoin"));
-                 currentElements.Add(new Model.Currency("OK", "OKCash"));
-                 currentElements.Add(new Model.Currency("ORLY", "Orlycoin"));
-                 currentElements.Add(new Model.Currency("PAPAFR", "PAPAFRANCESCOCoin"));
-                 currentElements.Add(new Model.Currency("PEC", "PeaceCoin"));
-                 currentElements.Add(new Model.Currency("POST", "PostCoin"));
-                 currentElements.Add(new Model.Currency("PVC", "PuraVidaCoin"));
-                 currentElements.Add(new Model.Currency("QBK", "Qibuckcoin"));
-                 currentElements.Add(new Model.Currency("RVC", "Revcoin"));
-                 currentElements.Add(new Model.Currency("SFC", "Safecoin"));
-                 currentElements.Add(new Model.Currency("SH", "Shilling"));
-                 currentElements.Add(new Model.Currency("SPEC", "SPEC"));
-                 currentElements.Add(new Model.Currency("SSC", "SSCoin"));
-                 currentElements.Add(new Model.Currency("SSUC", "SSUCoin"));
-                 currentElements.Add(new Model.Currency("STP", "Stepcoin"));
-                 currentElements.Add(new Model.Currency("SUPER", "Supercoin"));
-                 currentElements.Add(new Model.Currency("SCN", "Swiscoin"));
-                 currentElements.Add(new Model.Currency("TCOIN", "T-coin"));
-                 currentElements.Add(new Model.Currency("TAO", "Tao"));
-                 currentElements.Add(new Model.Currency("TRNT", "Tarrant"));
-                 currentElements.Add(new Model.Currency("TEK", "TEKcoin"));
-                 currentElements.Add(new Model.Currency("TAGR", "Think and Get Rich Coin"));
-                 currentElements.Add(new Model.Currency("TRUMP", "TrumpCoin"));
-                 currentElements.Add(new Model.Currency("UNB", "UnbreakableCoin"));
-                 currentElements.Add(new Model.Currency("UNC", "UNCoin"));
-                 currentElements.Add(new Model.Currency("UPC", "UnionPlusCoin"));
-                 currentElements.Add(new Model.Currency("XVC", "Vcash"));
-                 currentElements.Add(new Model.Currency("VOX", "VOXELS"));
-                 currentElements.Add(new Model.Currency("VPN", "Vpncoin"));
-                 currentElements.Add(new Model.Currency("WAY", "WayGuide"));
-                 currentElements.Add(new Model.Currency("XCO", "Xcoin"));
-                 currentElements.Add(new Model.Currency("MI", "Xiaomicoin"));
-                 currentElements.Add(new Model.Currency("XPAY", "xPAY"));
-                 currentElements.Add(new Model.Currency("YOC", "Yocoin"));
-                 currentElements.Add(new Model.Currency("ZUR", "Zurcoin"));
 
                  return currentElements;
              });

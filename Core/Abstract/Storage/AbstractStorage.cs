@@ -12,7 +12,7 @@ namespace MyCC.Core.Abstract.Storage
     {
         public List<V> Repositories { get; private set; }
 
-        readonly Task onCreationTask;
+        private readonly Task onCreationTask;
 
         protected AbstractStorage(AbstractDatabase<T, V, int> database)
         {
@@ -21,9 +21,9 @@ namespace MyCC.Core.Abstract.Storage
             onCreationTask = OnCreation();
         }
 
-        AbstractDatabase<T, V, int> Database { get; set; }
+        private AbstractDatabase<T, V, int> Database { get; set; }
 
-        async Task OnCreation()
+        private async Task OnCreation()
         {
             Repositories.AddRange(await Database.GetAll());
             if (ApplicationSettings.FirstLaunch)

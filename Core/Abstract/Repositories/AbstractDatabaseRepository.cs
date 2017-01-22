@@ -10,7 +10,7 @@ namespace MyCC.Core.Abstract.Repositories
 {
     public abstract class AbstractDatabaseRepository<TDatabaseModel, TModel, TId> : AbstractRepository where TDatabaseModel : IEntityRepositoryIdDBM<TModel, TId> where TModel : IPersistableWithParent<TId>
     {
-        List<TModel> elements;
+        private List<TModel> elements;
 
         public IEnumerable<TModel> Elements
         {
@@ -22,7 +22,7 @@ namespace MyCC.Core.Abstract.Repositories
         public DateTime LastFastFetch { get; protected set; }
         public DateTime LastFetch { get; protected set; }
 
-        readonly AbstractDatabase<TDatabaseModel, TModel, TId> Database;
+        private readonly AbstractDatabase<TDatabaseModel, TModel, TId> Database;
 
         protected AbstractDatabaseRepository(int id, AbstractDatabase<TDatabaseModel, TModel, TId> database) : base(id)
         {

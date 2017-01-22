@@ -13,8 +13,8 @@ namespace MyCC.Core.Account.Repositories.Implementations
 {
     public class EthereumAccountRepository : AddressAccountRepository
     {
-        const string JsonKeyBalance = "balance";
-        const string JsonKeyData = "data";
+        private const string JsonKeyBalance = "balance";
+        private const string JsonKeyData = "data";
 
         public override string Description => I18N.Etherchain;
 
@@ -27,7 +27,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
 
         public EthereumAccountRepository(int id, string name, string address) : base(id, name, address) { }
-        public override int RepositoryTypeId => AccountRepositoryDbm.DB_TYPE_ETHEREUM_REPOSITORY;
+        public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeEthereumRepository;
 
         protected override FunctionalAccount GetAccount(int? id, string name, Money money) => new EthereumAccount(id, name, money, this);
     }

@@ -10,7 +10,7 @@ namespace MyCC.Core.ExchangeRate.Repositories
 {
     public class BittrexAvailableRatesRepository : AvailableRatesRepository
     {
-        List<Model.ExchangeRate> Elements;
+        private List<Model.ExchangeRate> Elements;
 
         public BittrexAvailableRatesRepository(int id) : base(id)
         {
@@ -35,13 +35,7 @@ namespace MyCC.Core.ExchangeRate.Repositories
             });
         }
 
-        public override ExchangeRateRepository ExchangeRateRepository
-        {
-            get
-            {
-                return ExchangeRateStorage.Instance.Repositories.OfType<BittrexExchangeRateRepository>().FirstOrDefault();
-            }
-        }
+        public override ExchangeRateRepository ExchangeRateRepository => ExchangeRateStorage.Instance.Repositories.OfType<BittrexExchangeRateRepository>().FirstOrDefault();
 
         public override Model.ExchangeRate ExchangeRateWithCurrency(Currency.Model.Currency currency)
         {

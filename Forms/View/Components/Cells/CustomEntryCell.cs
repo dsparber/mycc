@@ -8,8 +8,8 @@ namespace MyCC.Forms.view.components.cells
         public readonly Entry Entry;
         protected readonly Label TitleLabel;
 
-        string title;
-        string placeholder;
+        private string title;
+        private string placeholder;
 
         public string Title
         {

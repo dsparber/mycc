@@ -10,44 +10,30 @@ using Xamarin.Forms;
 
 namespace MyCC.Forms.view.overlays
 {
-    class CurrencyOverlay : ContentPage
+    internal class CurrencyOverlay : ContentPage
     {
         public Action<Currency> CurrencySelected;
 
-        readonly SearchBar searchBar;
-        readonly TableView currenciesTableView;
-        readonly CurrencyEntryCell parent;
-
-        List<Currency> currencies;
+        private readonly SearchBar _searchBar;
+        private readonly CurrencyEntryCell _parent;
 
         public CurrencyOverlay(List<Currency> currenciesToSelect = null) : this(null, currenciesToSelect)
         { }
 
-        public CurrencyOverlay(CurrencyEntryCell p, List<Currency> currenciesToSelect = null)
+        public CurrencyOverlay(CurrencyEntryCell parent, List<Currency> currenciesToSelect = null)
         {
-            parent = p;
+            _parent = parent;
 
-            var allElements = currenciesToSelect ?? p?.CurrenciesToSelect?.OrderBy(c => c?.Code).ToList() ?? CurrencyStorage.Instance.AllElements;
-
-            var type = parent?.CurrencyRepositoryType;
-            if (type != null)
-            {
-                var ids = CurrencyStorage.Instance.RepositoriesOfType(type).Select(e => e.Id);
-                var currencyMapCodes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => ids.Contains(e.ParentId)).Select(e => e.Code);
-                allElements.RemoveAll(e => currencyMapCodes.Contains(e.Code));
-            }
-
-            currencies = allElements;
-
+            var currencies = currenciesToSelect ?? _parent?.CurrenciesToSelect?.OrderBy(c => c?.Code).ToList() ?? CurrencyStorage.Instance.AllElements;
 
             Title = I18N.Currency;
 
-            if (parent != null)
+            if (_parent != null)
             {
                 var done = new ToolbarItem { Text = I18N.Save };
                 done.Clicked += (sender, e) =>
                 {
-                    parent.OnSelected(parent.SelectedCurrency);
+                    _parent.OnSelected(_parent.SelectedCurrency);
                     Navigation.PopAsync();
                 };
                 ToolbarItems.Add(done);
@@ -59,19 +45,19 @@ namespace MyCC.Forms.view.overlays
                 ToolbarItems.Add(cancel);
             }
 
-            searchBar = new SearchBar { Placeholder = I18N.SearchCurrencies };
+            _searchBar = new SearchBar { Placeholder = I18N.SearchCurrencies };
             if (Device.OS == TargetPlatform.Android)
             {
-                searchBar.TextColor = AppConstants.FontColor;
-                searchBar.PlaceholderColor = AppConstants.FontColorLight;
-                searchBar.HeightRequest = searchBar.HeightRequest + 50;
-                searchBar.Margin = new Thickness(0, 0, 0, -51);
+                _searchBar.TextColor = AppConstants.FontColor;
+                _searchBar.PlaceholderColor = AppConstants.FontColorLight;
+                _searchBar.HeightRequest = _searchBar.HeightRequest + 50;
+                _searchBar.Margin = new Thickness(0, 0, 0, -51);
             }
 
-            currenciesTableView = new TableView();
+            var currenciesTableView = new TableView();
 
             var stack = new StackLayout();
-            stack.Children.Add(searchBar);
+            stack.Children.Add(_searchBar);
             stack.Children.Add(currenciesTableView);
 
             Content = stack;
@@ -79,13 +65,13 @@ namespace MyCC.Forms.view.overlays
             var section = new TableSection();
 
             var currenciesSorted = currencies.Where(c => c != null).Distinct().OrderBy(c => c.Code);
-            setTableContent(section, currenciesSorted);
+            SetTableContent(section, currenciesSorted);
 
-            searchBar.TextChanged += (sender, e) =>
+            _searchBar.TextChanged += (sender, e) =>
             {
                 var txt = e.NewTextValue ?? string.Empty;
                 var filtered = currenciesSorted.Where(c => c.Code.ToLower().Contains(txt.ToLower()) || c.Name.ToLower().Contains(txt.ToLower()));
-                setTableContent(section, filtered);
+                SetTableContent(section, filtered);
             };
 
             currenciesTableView.Root.Add(section);
@@ -97,10 +83,10 @@ namespace MyCC.Forms.view.overlays
         {
             base.OnAppearing();
 
-            searchBar.Focus();
+            _searchBar.Focus();
         }
 
-        void setTableContent(TableSection section, IEnumerable<Currency> currenciesSorted)
+        private void SetTableContent(TableSection section, IEnumerable<Currency> currenciesSorted)
         {
             section.Clear();
             foreach (var c in currenciesSorted)
@@ -108,10 +94,10 @@ namespace MyCC.Forms.view.overlays
                 var cell = new CustomViewCell { Text = c.Code, Detail = c.Name };
                 cell.Tapped += (sender, e) =>
                 {
-                    if (parent != null)
+                    if (_parent != null)
                     {
-                        parent.SelectedCurrency = c;
-                        parent.OnSelected(parent.SelectedCurrency);
+                        _parent.SelectedCurrency = c;
+                        _parent.OnSelected(_parent.SelectedCurrency);
                     }
                     CurrencySelected?.Invoke(c);
                     Navigation.PopAsync();

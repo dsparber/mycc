@@ -9,7 +9,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
     public class LocalAccountRepository : AccountRepository
     {
         public LocalAccountRepository(int id, string name) : base(id, name) { }
-        public override int RepositoryTypeId => AccountRepositoryDbm.DB_TYPE_LOCAL_REPOSITORY;
+        public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeLocalRepository;
 
         public override async Task<bool> FetchOnline()
         {
@@ -23,9 +23,9 @@ namespace MyCC.Core.Account.Repositories.Implementations
             return await FetchOnline();
         }
 
-        public override string Data { get { return string.Empty; } }
+        public override string Data => string.Empty;
 
-        public override string Description { get { return I18N.ManuallyAdded; } }
+        public override string Description => I18N.ManuallyAdded;
 
         public override string Info => Name;
     }

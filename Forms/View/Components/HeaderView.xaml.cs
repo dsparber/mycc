@@ -19,7 +19,7 @@ namespace MyCC.Forms.view.components
             }
         }
 
-        public string TitleTextSmall
+        protected string TitleTextSmall
         {
             private get { return TitleLabelSmall.Text ?? string.Empty; }
             set
@@ -49,19 +49,17 @@ namespace MyCC.Forms.view.components
 
         public bool IsLoading
         {
-            get { return LoadingIndicator.IsRunning; }
             set { LoadingPanel.IsVisible = value; LoadingIndicator.IsRunning = value; InfoLabel.IsVisible = !value; }
         }
 
-        public HeaderView(bool subscribeToRefresh) : this()
+        protected HeaderView(bool subscribeToRefresh) : this()
         {
-            if (subscribeToRefresh)
-            {
-                Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
-                Messaging.Loading.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
-                Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
-                Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
-            }
+            if (!subscribeToRefresh) return;
+
+            Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
+            Messaging.Loading.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
+            Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
+            Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => IsLoading = true), () => Device.BeginInvokeOnMainThread(() => IsLoading = false));
         }
 
         public HeaderView()
@@ -91,11 +89,11 @@ namespace MyCC.Forms.view.components
             return string.IsNullOrEmpty(text) ? " " : text;
         }
 
-        void AdaptSize()
+        private void AdaptSize()
         {
             var size = (float?)defaultSize + 0.25f;
             var sizeSmall = (float?)defaultSizeSmall + 0.25f;
-            double width = 0, availableWidth = 0;
+            double width, availableWidth;
 
             do
             {

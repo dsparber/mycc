@@ -10,7 +10,7 @@ namespace MyCC.Core.ExchangeRate.Repositories
 {
     public class CryptonatorAvailableRatesRepository : AvailableRatesRepository
     {
-        IEnumerable<Currency.Model.Currency> Currencies;
+        private IEnumerable<Currency.Model.Currency> Currencies;
 
         public CryptonatorAvailableRatesRepository(int id) : base(id)
         {
@@ -46,20 +46,12 @@ namespace MyCC.Core.ExchangeRate.Repositories
 
         public override Model.ExchangeRate ExchangeRateWithCurrency(Currency.Model.Currency currency)
         {
-            if (Currencies.Contains(currency))
-            {
-                return new Model.ExchangeRate(currency, Currency.Model.Currency.Btc);
-            }
-            return null;
+            return Currencies.Contains(currency) ? new Model.ExchangeRate(currency, Currency.Model.Currency.Btc) : null;
         }
 
         public override List<Model.ExchangeRate> ExchangeRatesWithCurrency(Currency.Model.Currency currency)
         {
-            if (Currencies.Contains(currency))
-            {
-                return new List<Model.ExchangeRate> { new Model.ExchangeRate(currency, Currency.Model.Currency.Btc), new Model.ExchangeRate(currency, Currency.Model.Currency.Eur), new Model.ExchangeRate(currency, Currency.Model.Currency.Usd) }.Where(e => !e.ReferenceCurrency.Equals(e.SecondaryCurrency)).ToList();
-            }
-            return new List<Model.ExchangeRate>();
+            return Currencies.Contains(currency) ? new List<Model.ExchangeRate> { new Model.ExchangeRate(currency, Currency.Model.Currency.Btc), new Model.ExchangeRate(currency, Currency.Model.Currency.Eur), new Model.ExchangeRate(currency, Currency.Model.Currency.Usd) }.Where(e => !e.ReferenceCurrency.Equals(e.SecondaryCurrency)).ToList() : new List<Model.ExchangeRate>();
         }
     }
 }
