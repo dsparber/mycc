@@ -31,6 +31,7 @@ namespace MyCC.Forms.view.components
         private readonly HybridWebView _webView;
         private readonly Label _noDataLabel;
         private bool _appeared;
+        private bool _sizeAllocated;
 
         public RatesTableComponent(INavigation navigation)
         {
@@ -55,6 +56,7 @@ namespace MyCC.Forms.view.components
             _webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
             {
                 var size = int.Parse(sizeString);
+                _sizeAllocated = true;
                 Device.BeginInvokeOnMainThread(() => _webView.HeightRequest = size);
             });
 
@@ -106,7 +108,14 @@ namespace MyCC.Forms.view.components
             {
                 _appeared = true;
                 _webView.LoadFromContent("Html/ratesTable.html");
-                Task.Delay(500).ContinueWith(t => UpdateView());
+                Task.Run(async () =>
+                {
+                    while (!_sizeAllocated)
+                    {
+                        UpdateView();
+                        await Task.Delay(50);
+                    }
+                });
             }
             UpdateView();
         }

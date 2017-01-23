@@ -25,6 +25,7 @@ namespace MyCC.Forms.view.components
     {
         private readonly HybridWebView webView;
         private bool appeared;
+        private bool _sizeAllocated;
 
         public CoinGraphComponent(INavigation navigation)
         {
@@ -44,6 +45,10 @@ namespace MyCC.Forms.view.components
                 var element = AccountStorage.Instance.AllElements.Find(e => e.Id == Convert.ToInt32(id));
 
                 Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(element)));
+            });
+            webView.RegisterCallback("sizeAllocated", id =>
+            {
+                _sizeAllocated = true;
             });
 
             Content = webView;
@@ -65,8 +70,15 @@ namespace MyCC.Forms.view.components
 
             appeared = true;
             webView.LoadFromContent("Html/pieChart.html");
-            Task.Delay(500).ContinueWith(t => UpdateView());
-            UpdateView();
+
+            Task.Run(async () =>
+            {
+                while (!_sizeAllocated)
+                {
+                    UpdateView();
+                    await Task.Delay(50);
+                }
+            });
         }
 
         public void UpdateView()

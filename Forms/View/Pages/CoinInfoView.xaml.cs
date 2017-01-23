@@ -17,15 +17,15 @@ using Xamarin.Forms;
 
 namespace MyCC.Forms.view.pages
 {
-    public partial class CoinInfoView : ContentPage
+    public partial class CoinInfoView
     {
         private bool _fetchCoinInfoDone, _fetchRatesDone;
-        private Currency _currency;
-        private ReferenceCurrenciesView _referenceView;
-        private List<Currency> _referenceCurrencies => ApplicationSettings.AllReferenceCurrencies;
-        private List<ExchangeRate> _rates => _referenceCurrencies.Select(c => new ExchangeRate(Currency.Btc, c)).ToList();
+        private readonly Currency _currency;
+        private readonly ReferenceCurrenciesView _referenceView;
+        private static IEnumerable<Currency> ReferenceCurrencies => ApplicationSettings.AllReferenceCurrencies;
+        private static List<ExchangeRate> Rates => ReferenceCurrencies.Select(c => new ExchangeRate(Currency.Btc, c)).ToList();
 
-        private Dictionary<string, Tuple<Label, Label>> _infos;
+        private readonly Dictionary<string, Tuple<Label, Label>> _infos;
 
         public CoinInfoView(Currency currency)
         {
@@ -38,7 +38,7 @@ namespace MyCC.Forms.view.pages
             InfoHeading.Text = Device.OS == TargetPlatform.iOS ? I18N.Info.ToUpper() : I18N.Info;
             InfoHeading.TextColor = AppConstants.TableSectionColor;
 
-            _referenceView = new ReferenceCurrenciesView(new Money(1, _currency), true, _referenceCurrencies);
+            _referenceView = new ReferenceCurrenciesView(new Money(1, _currency), true);
             ContentView.Children.Add(_referenceView);
 
             Messaging.FetchingCoinInfo.SubscribeFinished(this, () => { UpdateView(true); _fetchCoinInfoDone = true; if (_fetchCoinInfoDone && _fetchRatesDone) Header.IsLoading = false; });
@@ -199,7 +199,7 @@ namespace MyCC.Forms.view.pages
         {
             _fetchRatesDone = false; _fetchCoinInfoDone = false;
             Header.IsLoading = true;
-            Task.Run(() => AppTaskHelper.FetchRates(_rates));
+            Task.Run(() => AppTaskHelper.FetchRates(Rates));
             Task.Run(() => AppTaskHelper.FetchCoinInfo(_currency));
         }
 

@@ -44,7 +44,7 @@ function setHeader(columns) {
     }
 }
 
-function updateTable(data, sort) {
+function updateTable(data, sort, hideRate) {
 
     var coinTable = document.getElementById("coinTable");
     clearTable(coinTable);
@@ -53,35 +53,42 @@ function updateTable(data, sort) {
 
     for (var i = 0; i < data.length; i++) {
         var row = coinTable.insertRow(i);
-        var xCell = row.insertCell(0);
+        var firstCell = row.insertCell(0);
         var amountCell = row.insertCell(1);
         var codeCell = row.insertCell(2);
-        xCell.innerHTML = "<div><div>x</div><div>=</div></div>";
-        amountCell.innerHTML = "<div><div><span>" + data[i]["Rate"].substring(0, data[i]["Rate"].length - 5) + "</span><span>" + data[i]["Rate"].substring(data[i]["Rate"].length - 5) + "</span></div><div><span>" + data[i]["Amount"].substring(0, data[i]["Amount"].length - 5) + "</span><span>" + data[i]["Amount"].substring(data[i]["Amount"].length - 5) + "</span></div></div>";
-        codeCell.innerHTML = "<div>" + data[i]["Code"] + "</div>";
+
+        var rateHtml = "<div><span>" + data[i]["Rate"].substring(0, data[i]["Rate"].length - 5) + "</span><span>" + data[i]["Rate"].substring(data[i]["Rate"].length - 5) + "</span></div>";
+        var amountHtml = "<div><span>" + data[i]["Amount"].substring(0, data[i]["Amount"].length - 5) + "</span><span>" + data[i]["Amount"].substring(data[i]["Amount"].length - 5) + "</span></div>";
+
+        firstCell.innerHTML = "<div>" + (hideRate ? "" : "<div>x</div>") + "<div>=</div></div>";
+        amountCell.innerHTML = "<div>" + (hideRate ? "" : rateHtml) + amountHtml + "</div>";
+        codeCell.innerHTML = "<div><div>" + data[i]["Code"] + "</div></div>";
 
         row.onclick = rowClicked(data[i]["Code"]);
     }
 
     $("#coinTable thead").children().removeClass();
-    $("#coinTable td[type=" + sort["Type"] + "]").addClass((sort["Direction"] == "Ascending") ? "down" : "up");
+    $("#coinTable td[type=" + sort["Type"] + "]").addClass(("Ascending" === sort["Direction"]) ? "down" : "up");
 
     sizeAllocated();
 }
 
 function rowClicked(code) {
     return function () {
+        // ReSharper disable once UndeclaredGlobalVariableUsing
         Native("Callback", code);
     };
 }
 
 function headerClicked(type) {
     return function () {
+        // ReSharper disable once UndeclaredGlobalVariableUsing
         Native("HeaderClickedCallback", type);
     };
 }
 
 function sizeAllocated() {
+    // ReSharper disable once UndeclaredGlobalVariableUsing
     Native("CallbackSizeAllocated", document.getElementById("coinTable").offsetHeight);
 }
 

@@ -74,17 +74,26 @@ function updateTable(data, sort) {
     }
 
     $("#coinTable thead").children().removeClass();
-    $("#coinTable td[type=" + sort["Type"] + "]").addClass((sort["Direction"] == "Ascending") ? "down" : "up");
+    $("#coinTable td[type=" + sort["Type"] + "]").addClass((sort["Direction"] === "Ascending") ? "down" : "up");
+
+    sizeAllocated();
+}
+
+function sizeAllocated() {
+    // ReSharper disable once UndeclaredGlobalVariableUsing
+    Native("CallbackSizeAllocated", document.getElementById("coinTable").offsetHeight);
 }
 
 function rowClicked(code) {
     return function () {
+        // ReSharper disable once UndeclaredGlobalVariableUsing
         Native("Callback", code);
     };
 }
 
 function headerClicked(type) {
     return function () {
+        // ReSharper disable once UndeclaredGlobalVariableUsing
         Native("HeaderClickedCallback", type);
     };
 }

@@ -24,9 +24,10 @@ namespace MyCC.Forms.view.components
 {
     public class AccountsTableComponent : ContentView
     {
-        private readonly HybridWebView webView;
-        private Currency _currency;
-        private bool appeared;
+        private readonly HybridWebView _webView;
+        private readonly Currency _currency;
+        private bool _sizeAllocated;
+        private bool _appeared;
 
         public AccountsTableComponent(INavigation navigation, Currency currency)
         {
@@ -36,14 +37,14 @@ namespace MyCC.Forms.view.components
 
             resolverContainer.Register<IJsonSerializer, JsonSerializer>();
 
-            webView = new HybridWebView
+            _webView = new HybridWebView
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 BackgroundColor = Color.White,
                 HeightRequest = 0
             };
-            webView.RegisterCallback("Callback", idString =>
+            _webView.RegisterCallback("Callback", idString =>
             {
                 var id = int.Parse(idString);
                 var account = AccountStorage.Instance.AllElements.Find(a => a.Id.Equals(id));
@@ -51,13 +52,14 @@ namespace MyCC.Forms.view.components
                 Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(account)));
             });
 
-            webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
+            _webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
             {
                 var size = int.Parse(sizeString);
-                Device.BeginInvokeOnMainThread(() => webView.HeightRequest = size);
+                _sizeAllocated = true;
+                Device.BeginInvokeOnMainThread(() => _webView.HeightRequest = size);
             });
 
-            webView.RegisterCallback("HeaderClickedCallback", type =>
+            _webView.RegisterCallback("HeaderClickedCallback", type =>
             {
                 SortOrder value;
                 var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
@@ -77,7 +79,7 @@ namespace MyCC.Forms.view.components
             var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
             stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? label.ToUpper() : label, VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.Start, Margin = new Thickness(8, 24, 8, 8), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
-            stack.Children.Add(webView);
+            stack.Children.Add(_webView);
 
             Content = stack;
 
@@ -89,28 +91,31 @@ namespace MyCC.Forms.view.components
 
         public void OnAppearing()
         {
-            if (!appeared)
+            if (!_appeared)
             {
-                appeared = true;
-                webView.LoadFromContent("Html/accountsTable.html");
+                _appeared = true;
+                _webView.LoadFromContent("Html/accountsTable.html");
 
-                Task.Delay(200).ContinueWith(t => UpdateView());
-                Task.Delay(500).ContinueWith(t => UpdateView());
-                Task.Delay(1000).ContinueWith(t => UpdateView());
-                Task.Delay(1500).ContinueWith(t => UpdateView());
-                Task.Delay(2000).ContinueWith(t => UpdateView());
+                Task.Run(async () =>
+                {
+                    while (!_sizeAllocated)
+                    {
+                        UpdateView();
+                        await Task.Delay(50);
+                    }
+                });
             }
             UpdateView();
         }
 
-        public void UpdateView()
+        private void UpdateView()
         {
             try
             {
                 var items = AccountStorage.AccountsWithCurrency(_currency).Select(a => new Data(a)).ToList();
                 var itemsExisting = (items.Count > 0);
 
-                if (!itemsExisting || !appeared) return;
+                if (!itemsExisting || !_appeared) return;
 
                 Func<Data, object> sortLambda;
                 switch (ApplicationSettings.SortOrderAccounts)
@@ -124,11 +129,11 @@ namespace MyCC.Forms.view.components
 
                 items = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
-                webView.CallJsFunction("setHeader", new[]{
+                _webView.CallJsFunction("setHeader", new[]{
                     new HeaderData(I18N.Label, SortOrder.Alphabetical.ToString()),
                     new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
                 }, string.Empty);
-                webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+                _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
             }
             catch (Exception e)
             {

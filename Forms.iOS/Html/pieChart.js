@@ -90,7 +90,7 @@ function showChart(data, textAccounts, textCurrencies, textFurther, textNoData) 
     _textCurrencies = textCurrencies;
     _textFurter = textFurther;
 
-    if (data.length == 0) {
+    if (data.length === 0) {
         document.getElementById("pieChart").innerHtml = textNoData;
     } else {
         createMainGraph(data);
@@ -99,6 +99,8 @@ function showChart(data, textAccounts, textCurrencies, textFurther, textNoData) 
             createMainGraph(data);
         });
     }
+    // ReSharper disable once UseOfImplicitGlobalInFunctionScope
+    Native("sizeAllocated", true);
 }
 
 function createMainGraph(data) {
@@ -148,18 +150,18 @@ function showOverlay(id, callback) {
 }
 
 function labelFormatter(context) {
-    if (context.value != chartOptions["data"]["content"][context.index]["value"]) {
-        if (context.section == "outer" && context.part == "mainLabel") {
+    if (context.value !== chartOptions["data"]["content"][context.index]["value"]) {
+        if (context.section === "outer" && context.part === "mainLabel") {
             return _textFurter;
         }
-        if (context.section == "inner") {
+        if (context.section === "inner") {
             return "";
         }
     }
-    if (context.section == "outer" && context.part == "value") {
+    if (context.section === "outer" && context.part === "value") {
         return "\u2248 " + chartOptions["data"]["content"][context.index]["reference"];
     }
-    if (context.section == "outer" && context.part == "mainLabel") {
+    if (context.section === "outer" && context.part === "mainLabel") {
         return chartOptions["data"]["content"][context.index]["money"];
     }
     return chartOptions["data"]["content"][context.index]["label"];
@@ -169,18 +171,18 @@ function clickedListener(data) {
     data = data["data"];
 
     if (data["isGrouped"]) {
-        var id = "overlay_" + $('.overlay').length + 1;
+        var id = "overlay_" + $(".overlay").length + 1;
         var createGroupedGraph = function () {
             if (data["groupedData"][0].hasOwnProperty("accounts")) {
                 var numAccounts = 0;
                 for (var i in data["groupedData"]) {
                     numAccounts += data["groupedData"][i]["accounts"].length;
                 }
-                chartOptions["header"]["title"].text = data["groupedData"].length == 1 ? _textCurrencies[0] : data["groupedData"].length + " " + _textCurrencies[1];
-                chartOptions["header"]["subtitle"].text = numAccounts == 1 ? _textAccounts[0] : numAccounts + " " + _textAccounts[1];
+                chartOptions["header"]["title"].text = data["groupedData"].length === 1 ? _textCurrencies[0] : data["groupedData"].length + " " + _textCurrencies[1];
+                chartOptions["header"]["subtitle"].text = numAccounts === 1 ? _textAccounts[0] : numAccounts + " " + _textAccounts[1];
             } else {
                 var numAccounts = data["groupedData"].length;
-                chartOptions["header"]["subtitle"].text = numAccounts == 1 ? _textAccounts[0] : numAccounts + " " + _textAccounts[1];
+                chartOptions["header"]["subtitle"].text = numAccounts === 1 ? _textAccounts[0] : numAccounts + " " + _textAccounts[1];
             }
             chartOptions["data"]["content"] = data["groupedData"];
             var div = document.getElementById(id);
@@ -200,14 +202,15 @@ function clickedListener(data) {
             });
         });
     } else if (data.hasOwnProperty("accounts")) {
-        var id = "overlay_" + $('.overlay').length + 1;
+        var id = "overlay_" + $(".overlay").length + 1;
 
-        if (data["accounts"].length == 1) {
+        if (data["accounts"].length === 1) {
+            // ReSharper disable once UseOfImplicitGlobalInFunctionScope
             Native("selectedCallback", data["accounts"][0]["id"]);
         } else {
             var createAccountsGraph = function () {
                 chartOptions["header"]["title"].text = data["name"];
-                chartOptions["header"]["subtitle"].text = data["accounts"].length == 1 ? _textAccounts[0] : data["accounts"].length + " " + _textAccounts[1];
+                chartOptions["header"]["subtitle"].text = data["accounts"].length === 1 ? _textAccounts[0] : data["accounts"].length + " " + _textAccounts[1];
                 chartOptions["data"]["content"] = data["accounts"];
                 var div = document.getElementById(id);
                 chartOptions["size"]["canvasWidth"] = div.offsetWidth;
@@ -227,6 +230,7 @@ function clickedListener(data) {
             });
         }
     } else
+        // ReSharper disable once UseOfImplicitGlobalInFunctionScope
         Native("selectedCallback", data["id"]);
 };
 

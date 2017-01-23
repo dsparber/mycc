@@ -9,7 +9,6 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.ExchangeRate.Helpers;
 using MyCC.Core.ExchangeRate.Model;
-using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.constants;
@@ -27,17 +26,16 @@ namespace MyCC.Forms.view.components
     {
         private readonly HybridWebView _webView;
         private bool _appeared;
+        private bool _sizeAllocated;
         private readonly Money _referenceMoney;
 
-        private readonly List<Currency> _currencies;
         private readonly bool _showAmountInHeader;
         private string TableHeaderLabel => _showAmountInHeader ? string.Format(I18N.IsEqualTo, _referenceMoney) : I18N.EqualTo;
-        private IEnumerable<Currency> ReferenceCurrencies => _currencies ?? ApplicationSettings.AllReferenceCurrencies.Where(c => !c.Equals(_referenceMoney.Currency));
+        private IEnumerable<Currency> ReferenceCurrencies => ApplicationSettings.AllReferenceCurrencies.Where(c => !c.Equals(_referenceMoney.Currency));
 
-        public ReferenceCurrenciesView(Money reference, bool showAmountInHeader = false, List<Currency> currencies = null)
+        public ReferenceCurrenciesView(Money reference, bool showAmountInHeader = false)
         {
             _referenceMoney = reference;
-            _currencies = currencies;
             _showAmountInHeader = showAmountInHeader;
 
             var resolverContainer = new SimpleContainer();
@@ -55,6 +53,7 @@ namespace MyCC.Forms.view.components
             _webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
             {
                 var size = int.Parse(sizeString);
+                _sizeAllocated = true;
                 Device.BeginInvokeOnMainThread(() => _webView.HeightRequest = size);
             });
 
@@ -95,13 +94,15 @@ namespace MyCC.Forms.view.components
 
             _appeared = true;
             _webView.LoadFromContent("Html/equalsTable.html");
-            UpdateView();
 
-            Task.Delay(200).ContinueWith(t => UpdateView());
-            Task.Delay(500).ContinueWith(t => UpdateView());
-            Task.Delay(1000).ContinueWith(t => UpdateView());
-            Task.Delay(1500).ContinueWith(t => UpdateView());
-            Task.Delay(2000).ContinueWith(t => UpdateView());
+            Task.Run(async () =>
+            {
+                while (!_sizeAllocated)
+                {
+                    UpdateView();
+                    await Task.Delay(50);
+                }
+            });
         }
 
         public void UpdateView()
@@ -127,7 +128,7 @@ namespace MyCC.Forms.view.components
                     new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
                     new HeaderData($"{I18N.Currency[0]}.", SortOrder.Alphabetical.ToString())
                 }, string.Empty);
-                _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+                _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), _referenceMoney.Amount == 1);
             }
             catch (Exception e)
             {

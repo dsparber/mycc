@@ -1,6 +1,6 @@
 
 html, body {
-    font-family:  "Droid Sans Mono", "Courier New", Consolas, monospace;
+    font-family: "Droid Sans Mono", "Courier New", Consolas, monospace;
     font-size: 8pt;
     font-weight: lighter;
     margin: 0;
@@ -22,20 +22,25 @@ td:first-child {
     width: 1px;
 }
 
-td:first-child+td{
-    text-align: right;
-}
+    td:first-child + td {
+        text-align: right;
+    }
 
 thead td:last-child {
     padding: 8px;
 }
+
 td:last-child {
-  width: 1px;
-  padding-right: 8px;
+    width: 1px;
+    padding-right: 8px;
 }
 
-td div div:first-child {
-  color: #aaa;
+td div div:first-child:not(:last-child) {
+    color: #aaa;
+}
+
+td > div {
+    padding: 4px 0;
 }
 
 td div div span:last-child {
@@ -43,7 +48,7 @@ td div div span:last-child {
 }
 
 td:last-child {
-  vertical-align: bottom;
+    vertical-align: bottom;
 }
 
 /*tbody td:last-child {
@@ -59,8 +64,9 @@ td {
     padding: 4px;
     cursor: pointer;
 }
+
 thead td {
-  padding: 8px 4px;
+    padding: 8px 4px;
 }
 
 tr:first-child {
@@ -80,19 +86,19 @@ thead td {
     padding-right: 0.35em;
 }
 
-thead td:not(:first-child) span {
-    display: block;
-    background-image: url("upDown.svg");
-    background-repeat: no-repeat;
-    background-position: right center;
-    background-size: auto 1em;
-    padding-right: 1.25em;
-}
+    thead td:not(:first-child) span {
+        display: block;
+        background-image: url("upDown.svg");
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: auto 1em;
+        padding-right: 1.25em;
+    }
 
-thead td.down span {
-    background-image: url("up.svg");
-}
+    thead td.down span {
+        background-image: url("up.svg");
+    }
 
-thead td.up span {
-    background-image: url("down.svg");
-}
+    thead td.up span {
+        background-image: url("down.svg");
+    }

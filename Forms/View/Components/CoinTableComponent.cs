@@ -27,9 +27,10 @@ namespace MyCC.Forms.view.components
 {
     public class CoinTableComponent : ContentView
     {
-        private readonly HybridWebView webView;
-        private readonly Label noDataLabel;
-        private bool appeared;
+        private readonly HybridWebView _webView;
+        private readonly Label _noDataLabel;
+        private bool _appeared;
+        private bool _sizeAllocated;
 
         public CoinTableComponent(INavigation navigation)
         {
@@ -37,14 +38,19 @@ namespace MyCC.Forms.view.components
 
             resolverContainer.Register<IJsonSerializer, JsonSerializer>();
 
-            webView = new HybridWebView
+            _webView = new HybridWebView
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = Color.White,
-                MinimumHeightRequest = 500
+                BackgroundColor = Color.White
             };
-            webView.RegisterCallback("Callback", code =>
+            _webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
+            {
+                var size = int.Parse(sizeString);
+                _sizeAllocated = true;
+                Device.BeginInvokeOnMainThread(() => _webView.HeightRequest = size);
+            });
+            _webView.RegisterCallback("Callback", code =>
             {
                 var currency = CurrencyStorage.Find(code);
                 var accounts = AccountStorage.AccountsWithCurrency(currency);
@@ -56,7 +62,7 @@ namespace MyCC.Forms.view.components
                             : new CoinDetailView(currency)));
             });
 
-            webView.RegisterCallback("HeaderClickedCallback", type =>
+            _webView.RegisterCallback("HeaderClickedCallback", type =>
             {
                 SortOrder value;
                 var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
@@ -71,7 +77,7 @@ namespace MyCC.Forms.view.components
                 UpdateView();
             });
 
-            noDataLabel = new Label
+            _noDataLabel = new Label
             {
                 Text = I18N.NoDataToDisplay,
                 IsVisible = false,
@@ -85,10 +91,9 @@ namespace MyCC.Forms.view.components
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
-            stack.Children.Add(noDataLabel);
-            stack.Children.Add(webView);
+            stack.Children.Add(_noDataLabel);
+            stack.Children.Add(_webView);
             Content = stack;
-            HeightRequest = 500;
 
             UpdateView();
 
@@ -103,17 +108,21 @@ namespace MyCC.Forms.view.components
 
         public void OnAppearing()
         {
-            if (!appeared)
+            if (_appeared) return;
+            _appeared = true;
+
+            _webView.LoadFromContent("Html/coinTable.html");
+            Task.Run(async () =>
             {
-                appeared = true;
-                webView.LoadFromContent("Html/coinTable.html");
-                Task.Delay(200).ContinueWith(t => UpdateView());
-                Task.Delay(500).ContinueWith(t => UpdateView());
-            }
-            UpdateView();
+                while (!_sizeAllocated)
+                {
+                    UpdateView();
+                    await Task.Delay(50);
+                }
+            });
         }
 
-        public void UpdateView()
+        private void UpdateView()
         {
             try
             {
@@ -122,11 +131,11 @@ namespace MyCC.Forms.view.components
 
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    noDataLabel.IsVisible = !itemsExisting;
-                    webView.IsVisible = itemsExisting;
+                    _noDataLabel.IsVisible = !itemsExisting;
+                    _webView.IsVisible = itemsExisting;
                 });
 
-                if (!itemsExisting || !appeared) return;
+                if (!itemsExisting || !_appeared) return;
 
                 Func<Data, object> sortLambda;
                 switch (ApplicationSettings.SortOrderTable)
@@ -140,12 +149,12 @@ namespace MyCC.Forms.view.components
 
                 items = ApplicationSettings.SortDirectionTable == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
-                webView.CallJsFunction("setHeader", new[]{
+                _webView.CallJsFunction("setHeader", new[]{
                     new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
                     new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
                     new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.BaseCurrency.Code), SortOrder.ByValue.ToString())
                 }, string.Empty);
-                webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+                _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
             }
             catch (Exception e)
             {
