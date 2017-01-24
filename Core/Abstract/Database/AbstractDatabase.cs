@@ -8,41 +8,41 @@ using Xamarin.Forms;
 
 namespace MyCC.Core.Abstract.Database
 {
-    public abstract class AbstractDatabase<T, V, IdType> where T : IEntityDBM<V, IdType> where V : Persistable<IdType>
+    public abstract class AbstractDatabase<T, TV, TIdType> where T : IEntityDbm<TV, TIdType> where TV : IPersistable<TIdType>
     {
-        private SQLiteAsyncConnection connection;
+        private SQLiteAsyncConnection _connection;
 
-        private Task initialisation;
+        private Task _initialisation;
 
-        private async Task initialise()
+        private async Task Initialise()
         {
-            if (initialisation == null)
+            if (_initialisation == null)
             {
-                initialisation = Create(connection);
+                _initialisation = Create(_connection);
             }
-            if (!initialisation.IsCompleted)
+            if (!_initialisation.IsCompleted)
             {
-                await initialisation;
+                await _initialisation;
             }
         }
 
-        private async Task<SQLiteAsyncConnection> getConnection()
+        private async Task<SQLiteAsyncConnection> GetConnection()
         {
-            await initialise();
-            return connection;
+            await Initialise();
+            return _connection;
         }
 
-        public Task<SQLiteAsyncConnection> Connection => getConnection();
+        public Task<SQLiteAsyncConnection> Connection => GetConnection();
 
         protected abstract Task Create(SQLiteAsyncConnection connection);
 
         protected AbstractDatabase()
         {
-            connection = DependencyService.Get<ISQLiteConnection>().GetConnection();
+            _connection = DependencyService.Get<ISqLiteConnection>().GetConnection();
         }
 
 
-        public async Task<V> Insert(V element)
+        public async Task<TV> Insert(TV element)
         {
             var dbElement = Resolve(element);
             await (await Connection).InsertAsync(dbElement);
@@ -50,7 +50,7 @@ namespace MyCC.Core.Abstract.Database
 
             return element;
         }
-        public async Task<V> InsertOrUpdate(V element)
+        public async Task<TV> InsertOrUpdate(TV element)
         {
             var dbElement = Resolve(element);
             await (await Connection).InsertOrReplaceAsync(dbElement);
@@ -58,21 +58,21 @@ namespace MyCC.Core.Abstract.Database
 
             return element;
         }
-        public async Task<IEnumerable<V>> Insert(IEnumerable<V> elemets)
+        public async Task<IEnumerable<TV>> Insert(IEnumerable<TV> elemets)
         {
             var dbElements = elemets.Distinct().Select(Resolve);
             await (await Connection).InsertAllAsync(dbElements);
             return await Task.WhenAll(dbElements.Select(e => e.Resolve()));
         }
 
-        public async Task<V> Update(V element)
+        public async Task<TV> Update(TV element)
         {
             return await Update(element, element);
         }
 
-        public async Task<V> Update(V oldElement, V newElement)
+        public async Task<TV> Update(TV oldElement, TV newElement)
         {
-            if (EqualityComparer<IdType>.Default.Equals(oldElement.Id, newElement.Id) && !EqualityComparer<IdType>.Default.Equals(default(IdType), newElement.Id))
+            if (EqualityComparer<TIdType>.Default.Equals(oldElement.Id, newElement.Id) && !EqualityComparer<TIdType>.Default.Equals(default(TIdType), newElement.Id))
             {
                 await (await Connection).UpdateAsync(Resolve(newElement));
                 return newElement;
@@ -82,51 +82,51 @@ namespace MyCC.Core.Abstract.Database
             return await Insert(newElement);
         }
 
-        public async Task<IEnumerable<V>> Update(IEnumerable<V> elemets)
+        public async Task<IEnumerable<TV>> Update(IEnumerable<TV> elemets)
         {
             var dbElements = elemets.Select(Resolve);
             await (await Connection).UpdateAllAsync(elemets);
             return await Task.WhenAll(dbElements.Select(e => e.Resolve()));
         }
 
-        public async Task Delete(V element)
+        public async Task Delete(TV element)
         {
             await (await Connection).DeleteAsync(Resolve(element));
         }
 
         public abstract Task<IEnumerable<T>> GetAllDbObjects();
-        public async Task<IEnumerable<V>> GetAll()
+        public async Task<IEnumerable<TV>> GetAll()
         {
             return await Task.WhenAll((await GetAllDbObjects()).Select(o => o.Resolve()));
         }
 
-        public async Task<IEnumerable<V>> Get(Func<T, bool> predicate)
+        public async Task<IEnumerable<TV>> Get(Func<T, bool> predicate)
         {
             return await Task.WhenAll((await GetAllDbObjects()).Where(predicate).Select(o => o.Resolve()));
         }
 
-        public async Task<IEnumerable<V>> Get(Func<V, bool> predicate)
+        public async Task<IEnumerable<TV>> Get(Func<TV, bool> predicate)
         {
             return (await Task.WhenAll((await GetAllDbObjects()).Select(o => o.Resolve()))).Where(predicate);
         }
 
-        public abstract Task<T> GetDbObject(IdType id);
-        public async Task<V> Get(IdType id)
+        public abstract Task<T> GetDbObject(TIdType id);
+        public async Task<TV> Get(TIdType id)
         {
             var element = await GetDbObject(id);
             return await ResolveReverse(element);
         }
 
-        public async Task<V> ResolveReverse(T element)
+        public async Task<TV> ResolveReverse(T element)
         {
             if (!EqualityComparer<T>.Default.Equals(element, default(T)))
             {
                 return await element.Resolve();
             }
-            return default(V);
+            return default(TV);
         }
 
-        protected abstract T Resolve(V element);
+        protected abstract T Resolve(TV element);
     }
 }
 

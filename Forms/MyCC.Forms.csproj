@@ -69,7 +69,6 @@
     <Compile Include="View\Components\Cells\CustomSwitchCell.cs" />
     <Compile Include="View\Components\Cells\CustomViewCell.cs" />
     <Compile Include="View\Components\Cells\CustomViewCellActionItem.cs" />
-    <Compile Include="View\Components\Cells\ReferenceValueViewCell.cs" />
     <Compile Include="View\Components\Cells\SortableViewCell.cs" />
     <Compile Include="View\Components\ChangingStackLayout.cs" />
     <Compile Include="View\Components\CoinTableComponent.cs" />

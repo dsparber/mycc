@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.CoinInfo;
 using MyCC.Core.Currency.Model;
-using MyCC.Core.ExchangeRate.Helpers;
-using MyCC.Core.ExchangeRate.Model;
+using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.constants;
 using MyCC.Forms.Messages;
@@ -81,7 +80,7 @@ namespace MyCC.Forms.view.pages
         {
             var rate = new ExchangeRate(_currency, Currency.Btc);
             rate = ExchangeRateHelper.GetRate(rate) ?? rate;
-            var referenceMoney = new Money(rate.RateNotNull, Currency.Btc);
+            var referenceMoney = new Money(rate.Rate ?? 0, Currency.Btc);
 
             var explorer = CoinInfoStorage.Instance.GetExplorer(_currency).Select(e => e.Name).ToList();
             var info = CoinInfoStorage.Instance.Get(_currency);
@@ -149,7 +148,7 @@ namespace MyCC.Forms.view.pages
 
                     _infos[I18N.MarketCap].Item1.IsVisible = info.CoinSupply != null && rate.Rate != null;
                     _infos[I18N.MarketCap].Item2.IsVisible = info.CoinSupply != null && rate.Rate != null;
-                    _infos[I18N.MarketCap].Item2.Text = new Money(info.CoinSupply.GetValueOrDefault() * rate.RateNotNull, Currency.Btc).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+                    _infos[I18N.MarketCap].Item2.Text = new Money(info.CoinSupply.GetValueOrDefault() * rate.Rate ?? 0, Currency.Btc).ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 }
                 else
                 {

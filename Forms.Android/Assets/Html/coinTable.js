@@ -26,7 +26,7 @@ var testColumns = [
         "Type": "Amount"
     }, {
         "Text": "in EUR",
-        "Type": "ReferenceCurrency"
+        "Type": "ReferenceCurrencyCode"
     }
 ];
 

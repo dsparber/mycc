@@ -7,16 +7,16 @@ namespace MyCC.Core.Account.Models.Implementations
 {
     public class BlockExpertsAccount : OnlineFunctionalAccount
     {
-        private readonly BlockExpertsAccountRepository repository;
+        private readonly BlockExpertsAccountRepository _repository;
 
         public BlockExpertsAccount(int? id, string name, Money money, BlockExpertsAccountRepository repository) : base(id, repository.Id, name, money)
         {
-            this.repository = repository;
+            this._repository = repository;
         }
 
         public override Task FetchBalanceOnline()
         {
-            return repository.FetchOnline();
+            return _repository.FetchOnline();
         }
 
         public override Task FetchTransactionsOnline()

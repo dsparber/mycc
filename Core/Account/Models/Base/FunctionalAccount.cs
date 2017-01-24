@@ -7,8 +7,8 @@ namespace MyCC.Core.Account.Models.Base
 {
     public abstract class FunctionalAccount : Account
     {
-        protected readonly AccountDatabase accountDatabase;
-        protected readonly TransactionDatabase transactionDatabase;
+        protected readonly AccountDatabase AccountDatabase;
+        protected readonly TransactionDatabase TransactionDatabase;
 
         public List<Transaction> Transactions { get; private set; }
 
@@ -16,17 +16,17 @@ namespace MyCC.Core.Account.Models.Base
         {
             Transactions = new List<Transaction>();
 
-            accountDatabase = new AccountDatabase();
-            transactionDatabase = new TransactionDatabase();
+            AccountDatabase = new AccountDatabase();
+            TransactionDatabase = new TransactionDatabase();
         }
 
         public async Task LoadBalanceFromDatabase()
         {
-            Money = (await accountDatabase.Get(Id)).Money;
+            Money = (await AccountDatabase.Get(Id)).Money;
         }
         public async Task LoadTransactionsFromDatabase()
         {
-            Transactions = (await transactionDatabase.Get((TransactionDbm t) => t.ParentId == Id)).ToList();
+            Transactions = (await TransactionDatabase.Get((TransactionDbm t) => t.ParentId == Id)).ToList();
         }
     }
 }

@@ -11,7 +11,7 @@ using SQLite;
 namespace MyCC.Core.Account.Database
 {
     [Table("Accounts")]
-    public class AccountDbm : IEntityRepositoryIdDBM<FunctionalAccount, int>
+    public class AccountDbm : IEntityRepositoryIdDbm<FunctionalAccount, int>
     {
         public AccountDbm() { }
 

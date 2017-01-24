@@ -2,7 +2,7 @@
 
 namespace MyCC.Core.Abstract.Database
 {
-    public interface ISQLiteConnection
+    public interface ISqLiteConnection
     {
         SQLiteAsyncConnection GetConnection();
     }

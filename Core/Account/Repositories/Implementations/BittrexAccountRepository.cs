@@ -24,8 +24,8 @@ namespace MyCC.Core.Account.Repositories.Implementations
         // const string API_KEY = "51bb7379ae6645af87a8005f74fd272c";
         // const string API_KEY_SECRET = "8eea5afc2a7340079143b8dae4e9b46f";
 
-        private readonly string apiKey;
-        private readonly string privateApiKey;
+        private readonly string _apiKey;
+        private readonly string _privateApiKey;
 
         private const string BaseUrl = "https://bittrex.com/api/v1.1/account/getbalance{2}apikey={0}&nonce={1}";
         private const string Signing = "apisign";
@@ -36,20 +36,20 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
         private const int BufferSize = 256000;
 
-        public override string Data => JsonConvert.SerializeObject(new KeyData(apiKey, privateApiKey));
+        public override string Data => JsonConvert.SerializeObject(new KeyData(_apiKey, _privateApiKey));
 
         public BittrexAccountRepository(int id, string name, string data) : base(id, name)
         {
             var keys = JsonConvert.DeserializeObject<KeyData>(data);
 
-            apiKey = keys.Key;
-            privateApiKey = keys.PrivateKey;
+            _apiKey = keys.Key;
+            _privateApiKey = keys.PrivateKey;
         }
 
         public BittrexAccountRepository(int id, string name, string apiKey, string privateApiKey) : base(id, name)
         {
-            this.apiKey = apiKey;
-            this.privateApiKey = privateApiKey;
+            this._apiKey = apiKey;
+            this._privateApiKey = privateApiKey;
         }
 
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeBittrexRepository;
@@ -57,9 +57,9 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public async Task<JToken> GetResult(Currency.Model.Currency currency = null)
         {
             var nounce = Convert.ToUInt64((DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds);
-            var uri = new Uri(string.Format(BaseUrl, apiKey, nounce, (currency != null ? $"?currency={currency.Code}&" : "s?")));
+            var uri = new Uri(string.Format(BaseUrl, _apiKey, nounce, (currency != null ? $"?currency={currency.Code}&" : "s?")));
 
-            var keyBytes = Encoding.UTF8.GetBytes(privateApiKey);
+            var keyBytes = Encoding.UTF8.GetBytes(_privateApiKey);
             var dataBytes = Encoding.UTF8.GetBytes(uri.AbsoluteUri);
 
             var algorithm = WinRTCrypto.MacAlgorithmProvider.OpenAlgorithm(MacAlgorithm.HmacSha512);

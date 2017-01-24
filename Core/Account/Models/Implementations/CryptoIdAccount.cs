@@ -7,16 +7,16 @@ namespace MyCC.Core.Account.Models.Implementations
 {
     public class CryptoIdAccount : OnlineFunctionalAccount
     {
-        private readonly CryptoIdAccountRepository repository;
+        private readonly CryptoIdAccountRepository _repository;
 
         public CryptoIdAccount(int? id, string name, Money money, CryptoIdAccountRepository repository) : base(id, repository.Id, name, money)
         {
-            this.repository = repository;
+            this._repository = repository;
         }
 
         public override Task FetchBalanceOnline()
         {
-            return repository.FetchOnline();
+            return _repository.FetchOnline();
         }
 
         public override Task FetchTransactionsOnline()

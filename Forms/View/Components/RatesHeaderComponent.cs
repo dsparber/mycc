@@ -3,7 +3,7 @@ using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
-using MyCC.Core.ExchangeRate.Helpers;
+using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Messages;
 using Xamarin.Forms;
@@ -42,7 +42,7 @@ namespace MyCC.Forms.view.components
             infoTexts[0] = currency.Name;
             infoTexts[1] = string.Join(" / ", ApplicationSettings.MainCurrencies
                             .Where(c => !c.Equals(currency))
-                            .Select(c => new Money(ExchangeRateHelper.GetRate(Currency.Btc, c)?.RateNotNull ?? 0, c)
+                            .Select(c => new Money(ExchangeRateHelper.GetRate(Currency.Btc, c)?.Rate ?? 0, c)
                             .ToStringTwoDigits(ApplicationSettings.RoundMoney)));
 
             Device.BeginInvokeOnMainThread(() =>
@@ -58,7 +58,7 @@ namespace MyCC.Forms.view.components
             });
         }
 
-        private Money Sum => new Money(ExchangeRateHelper.GetRate(Currency.Btc, currency)?.RateNotNull ?? 0, currency);
+        private Money Sum => new Money(ExchangeRateHelper.GetRate(Currency.Btc, currency)?.Rate ?? 0, currency);
 
         private void AddSubscriber()
         {

@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
-using MyCC.Core.ExchangeRate.Helpers;
-using MyCC.Core.ExchangeRate.Model;
+using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
@@ -76,12 +75,12 @@ namespace MyCC.Forms.view.components
                 while (!_sizeAllocated)
                 {
                     UpdateView();
-                    await Task.Delay(50);
+                    await Task.Delay(200);
                 }
             });
         }
 
-        public void UpdateView()
+        private void UpdateView()
         {
             try
             {
@@ -98,6 +97,7 @@ namespace MyCC.Forms.view.components
         [JsonObject]
         [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
         [SuppressMessage("ReSharper", "NotAccessedField.Global")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         public class Data
         {
             [DataMember]
@@ -127,7 +127,7 @@ namespace MyCC.Forms.view.components
 
                 label = group.Key.Code;
                 name = group.Key.Name;
-                value = totalMoney.Amount * rate.RateNotNull;
+                value = totalMoney.Amount * rate.Rate ?? 0;
                 money = totalMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 reference = new Money(value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 accounts = group.Where(a => a.Money.Amount > 0).Select(a => new AccountData(a, rate, referenceCurrency)).OrderByDescending(d => d.value).ToArray();
@@ -138,6 +138,7 @@ namespace MyCC.Forms.view.components
         [JsonObject]
         [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
         [SuppressMessage("ReSharper", "NotAccessedField.Global")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         public class AccountData
         {
             [DataMember]
@@ -157,7 +158,7 @@ namespace MyCC.Forms.view.components
 
             public AccountData(Account account, ExchangeRate rate, Currency referenceCurrency)
             {
-                value = account.Money.Amount * rate.RateNotNull;
+                value = account.Money.Amount * rate.Rate ?? 0;
                 label = account.Name;
                 money = account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 reference = new Money(value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);

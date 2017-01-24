@@ -20,28 +20,28 @@ namespace MyCC.Core.Account.Repositories.Base
         protected abstract Currency.Model.Currency Currency { get; }
         public abstract IEnumerable<Currency.Model.Currency> SupportedCurrencies { get; }
 
-        private const int BUFFER_SIZE = 256000;
-        private readonly HttpClient client;
+        private const int BufferSize = 256000;
+        private readonly HttpClient _client;
 
         public override string Data => Address;
 
         protected AddressAccountRepository(int id, string name, string address) : base(id, name)
         {
             Address = address;
-            client = new HttpClient { MaxResponseContentBufferSize = BUFFER_SIZE };
+            _client = new HttpClient { MaxResponseContentBufferSize = BufferSize };
         }
 
-        private async Task<decimal?> getBalance()
+        private async Task<decimal?> GetBalance()
         {
             var uri = Url;
             HttpResponseMessage response;
             if (PostContent == null)
             {
-                response = await client.GetAsync(uri);
+                response = await _client.GetAsync(uri);
             }
             else
             {
-                response = await client.PostAsync(uri, PostContent);
+                response = await _client.PostAsync(uri, PostContent);
             }
 
             if (!response.IsSuccessStatusCode) return null;
@@ -54,7 +54,7 @@ namespace MyCC.Core.Account.Repositories.Base
         {
             try
             {
-                return (await getBalance()).HasValue;
+                return (await GetBalance()).HasValue;
             }
             catch (Exception)
             {
@@ -65,7 +65,7 @@ namespace MyCC.Core.Account.Repositories.Base
         public sealed override async Task<bool> FetchOnline()
         {
 
-            var balance = await getBalance();
+            var balance = await GetBalance();
 
             if (!balance.HasValue) return false;
 

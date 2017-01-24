@@ -7,8 +7,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currency.Model;
-using MyCC.Core.ExchangeRate.Helpers;
-using MyCC.Core.ExchangeRate.Model;
+using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.constants;
@@ -100,7 +99,7 @@ namespace MyCC.Forms.view.components
                 while (!_sizeAllocated)
                 {
                     UpdateView();
-                    await Task.Delay(50);
+                    await Task.Delay(200);
                 }
             });
         }
@@ -154,9 +153,9 @@ namespace MyCC.Forms.view.components
                 var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
 
                 Code = currency.Code;
-                var money = new Money(rate.RateNotNull * reference.Amount, currency);
+                var money = new Money(rate.Rate ?? 0 * reference.Amount, currency);
                 Amount = money.ToString8Digits(false);
-                Rate = new Money(rate.RateNotNull, currency).ToString8Digits(false);
+                Rate = new Money(rate.Rate ?? 0, currency).ToString8Digits(false);
             }
         }
 

@@ -7,7 +7,7 @@ namespace MyCC.Core.Currency.Repositories
     public class LocalCurrencyRepository : CurrencyRepository
     {
         public LocalCurrencyRepository(int id) : base(id) { }
-        public override int RepositoryTypeId => CurrencyRepositoryDbm.DB_TYPE_LOCAL_REPOSITORY;
+        public override int RepositoryTypeId => CurrencyRepositoryDbm.DbTypeLocalRepository;
 
         public override async Task<bool> FetchOnline()
         {

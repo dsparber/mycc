@@ -55,7 +55,7 @@ namespace MyCC.Core.Currency.Model
         /// <value>The abbreviation.</value>
         public string Code
         {
-            get { return code; }
+            get { return _code; }
             private set
             {
                 if (value == null)
@@ -63,11 +63,11 @@ namespace MyCC.Core.Currency.Model
                     throw new ArgumentNullException();
 
                 }
-                code = value;
+                _code = value;
             }
         }
 
-        private string code;
+        private string _code;
 
         /// <summary>
         /// Equals the specified obj.

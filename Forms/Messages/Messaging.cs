@@ -7,7 +7,7 @@
         public const string Layout = "Layout";
         public const string RoundNumbers = "RoundNumbers";
         public const string DefaultView = "DefaultView";
-        public const string ReferenceCurrency = "ReferenceCurrency";
+        public const string ReferenceCurrency = "ReferenceCurrencyCode";
         public const string RatesPageCurrency = "RatesPageCurrency";
         public const string ReferenceCurrencies = "ReferenceCurrencies";
 

@@ -1,6 +1,6 @@
 ﻿namespace MyCC.Core.Abstract.Models
 {
-    public interface IPersistableWithParent<IdType> : Persistable<IdType>
+    public interface IPersistableWithParent<TIdType> : IPersistable<TIdType>
     {
         int ParentId { get; set; }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.ExchangeRate.Model;
+using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.constants;
 using MyCC.Forms.helpers;

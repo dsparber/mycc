@@ -14,9 +14,9 @@ namespace MyCC.Core.Account.Repositories.Implementations
 {
     public class BlockchainXpubAccountRepository : AddressAccountRepository
     {
-        private const string addressKey = "addr";
-        private const string responseKey = "response";
-        private const string confirmedKey = "confirmed";
+        private const string AddressKey = "addr";
+        private const string ResponseKey = "response";
+        private const string ConfirmedKey = "confirmed";
 
         public BlockchainXpubAccountRepository(int id, string name, string address) : base(id, name, address) { }
 
@@ -26,11 +26,11 @@ namespace MyCC.Core.Account.Repositories.Implementations
         protected override Currency.Model.Currency Currency => Core.Currency.Model.Currency.Btc;
         public override IEnumerable<Currency.Model.Currency> SupportedCurrencies => new List<Currency.Model.Currency> { Currency };
 
-        protected override Func<string, decimal> Balance => (httpContent) => JObject.Parse(httpContent)[responseKey].Select(d => decimal.Parse((string)d[confirmedKey], CultureInfo.InvariantCulture)).Sum();
+        protected override Func<string, decimal> Balance => (httpContent) => JObject.Parse(httpContent)[ResponseKey].Select(d => decimal.Parse((string)d[ConfirmedKey], CultureInfo.InvariantCulture)).Sum();
         protected override decimal BalanceFactor => 1e8M;
 
         protected override Uri Url => new Uri("https://www.blockonomics.co/api/balance");
-        protected override HttpContent PostContent => new StringContent($"{{\"{addressKey}\":\"{Address}\"}}");
+        protected override HttpContent PostContent => new StringContent($"{{\"{AddressKey}\":\"{Address}\"}}");
 
         protected override FunctionalAccount GetAccount(int? id, string name, Money money) => new BlockchainXpubAccount(id, name, money, this);
     }

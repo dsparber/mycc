@@ -8,20 +8,20 @@ using MyCC.Core.Settings;
 
 namespace MyCC.Core.Abstract.Storage
 {
-    public abstract class AbstractStorage<T, V> where V : AbstractRepository where T : IEntityDBM<V, int>
+    public abstract class AbstractStorage<T, TV> where TV : AbstractRepository where T : IEntityDbm<TV, int>
     {
-        public List<V> Repositories { get; private set; }
+        public List<TV> Repositories { get; private set; }
 
-        private readonly Task onCreationTask;
+        private readonly Task _onCreationTask;
 
-        protected AbstractStorage(AbstractDatabase<T, V, int> database)
+        protected AbstractStorage(AbstractDatabase<T, TV, int> database)
         {
             Database = database;
-            Repositories = new List<V>();
-            onCreationTask = OnCreation();
+            Repositories = new List<TV>();
+            _onCreationTask = OnCreation();
         }
 
-        private AbstractDatabase<T, V, int> Database { get; set; }
+        private AbstractDatabase<T, TV, int> Database { get; set; }
 
         private async Task OnCreation()
         {
@@ -34,66 +34,66 @@ namespace MyCC.Core.Abstract.Storage
         protected virtual Task OnFirstLaunch() { return Task.Factory.StartNew(() => { }); }
 
 
-        public virtual async Task Add(V repository)
+        public virtual async Task Add(TV repository)
         {
             repository = await Database.Insert(repository);
             Repositories.Add(repository);
         }
 
-        public virtual async Task Remove(V repository)
+        public virtual async Task Remove(TV repository)
         {
             await Database.Delete(repository);
             Repositories.Remove(repository);
         }
 
-        public virtual async Task Update(V repository)
+        public virtual async Task Update(TV repository)
         {
             Repositories.Remove(repository);
             repository = await Database.Update(repository);
             Repositories.Add(repository);
         }
 
-        public List<A> RepositoriesOfType<A>() where A : V
+        public List<TA> RepositoriesOfType<TA>() where TA : TV
         {
-            return Repositories.OfType<A>().ToList();
+            return Repositories.OfType<TA>().ToList();
         }
 
-        public List<V> RepositoriesOfType(Type type)
+        public List<TV> RepositoriesOfType(Type type)
         {
             return Repositories.FindAll(r => r.GetType() == type);
         }
 
-        public A RepositoryOfType<A>() where A : V
+        public TA RepositoryOfType<TA>() where TA : TV
         {
-            return RepositoriesOfType<A>().FirstOrDefault();
+            return RepositoriesOfType<TA>().FirstOrDefault();
         }
 
-        public V RepositoryOfType(Type type)
+        public TV RepositoryOfType(Type type)
         {
             return RepositoriesOfType(type).FirstOrDefault();
         }
 
-        protected virtual Task beforeFetching()
+        protected virtual Task BeforeFetching()
         {
             return Task.Factory.StartNew(() => { });
         }
 
-        protected virtual Task beforeFastFetching()
+        protected virtual Task BeforeFastFetching()
         {
             return Task.Factory.StartNew(() => { });
         }
 
         public async Task FetchOnline()
         {
-            await onCreationTask;
-            await beforeFetching();
+            await _onCreationTask;
+            await BeforeFetching();
             await Task.WhenAll(Repositories.Select(x => x.FetchOnline()));
         }
 
         public async Task LoadFromDatabase()
         {
-            await onCreationTask;
-            await beforeFastFetching();
+            await _onCreationTask;
+            await BeforeFastFetching();
             await Task.WhenAll(Repositories.Select(x => x.LoadFromDatabase()));
         }
     }

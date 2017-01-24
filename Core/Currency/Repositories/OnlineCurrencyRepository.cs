@@ -31,7 +31,7 @@ namespace MyCC.Core.Currency.Repositories
 
                 if (existing != null)
                 {
-                    c.Name = (c.Name.Equals(c.Code)) ? existing.Name : c.Name;
+                    c.Name = c.Name.ToLower().Equals(c.Code.ToLower()) ? existing.Name : c.Name;
                 }
                 await CurrencyStorage.Instance.LocalRepository.AddOrUpdate(c);
 
@@ -47,7 +47,7 @@ namespace MyCC.Core.Currency.Repositories
                 }
             }
 
-            var toDelete = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == Id).Where(e => !mapElements.Contains(e));
+            var toDelete = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == Id).Where(e => !mapElements.Contains(e)).ToList();
             await Task.WhenAll(toDelete.Select(e => CurrencyRepositoryMapStorage.Instance.LocalRepository.Remove(e)));
             await Task.WhenAll(Elements.Where(e => toDelete.Contains(new CurrencyMapDbm { Code = e.Code, ParentId = Id })).Select(Remove));
 

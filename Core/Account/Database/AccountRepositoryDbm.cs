@@ -8,7 +8,7 @@ using SQLite;
 namespace MyCC.Core.Account.Database
 {
     [Table("AccountRepositories")]
-    public class AccountRepositoryDbm : IEntityDBM<AccountRepository, int>
+    public class AccountRepositoryDbm : IEntityDbm<AccountRepository, int>
     {
         public const int DbTypeLocalRepository = 1;
         public const int DbTypeBittrexRepository = 2;

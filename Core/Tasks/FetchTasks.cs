@@ -7,25 +7,24 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.CoinInfo;
 using MyCC.Core.Currency.Storage;
-using MyCC.Core.ExchangeRate.Helpers;
-using MyCC.Core.ExchangeRate.Storage;
-using MyCC.Core.Types;
+using MyCC.Core.Rates;
+using MyCC.Core.Settings;
 
 namespace MyCC.Core.Tasks
 {
     public static partial class ApplicationTasks
     {
-        private static Task fetchAllExchangeRatesTask;
-        private static Task fetchMissingRatesTask;
-        private static Task fetchCurrenciesAndAvailableRatesTask;
+        private static Task _fetchAllExchangeRatesTask;
+        private static Task _fetchMissingRatesTask;
+        private static Task _fetchCurrenciesAndAvailableRatesTask;
 
         public static Task FetchBalancesAndRates(Action onStarted, Action onFinished, Action<Exception> onError)
-        => fetchAllExchangeRatesTask = fetchAllExchangeRatesTask.GetTask(async () =>
+        => _fetchAllExchangeRatesTask = _fetchAllExchangeRatesTask.GetTask(async () =>
         {
             try
             {
                 onStarted();
-                await ExchangeRateStorage.Instance.FetchOnline();
+                await ExchangeRatesStorage.Instance.UpdateRates();
                 await AccountStorage.Instance.FetchOnline();
             }
             catch (Exception e)
@@ -39,14 +38,14 @@ namespace MyCC.Core.Tasks
         });
 
         public static Task FetchCurrenciesAndAvailableRates(Action onStarted, Action onFinished, Action<Exception> onError)
-        => fetchCurrenciesAndAvailableRatesTask = fetchCurrenciesAndAvailableRatesTask.GetTask(async () =>
+        => _fetchCurrenciesAndAvailableRatesTask = _fetchCurrenciesAndAvailableRatesTask.GetTask(async () =>
         {
             try
             {
                 onStarted();
                 await CurrencyRepositoryMapStorage.Instance.FetchOnline();
                 await CurrencyStorage.Instance.FetchOnline();
-                await AvailableRatesStorage.Instance.FetchOnline();
+                await ExchangeRatesStorage.Instance.FetchAvailableRates();
             }
             catch (Exception e)
             {
@@ -58,8 +57,8 @@ namespace MyCC.Core.Tasks
             }
         });
 
-        public static Task FetchMissingRates(IEnumerable<ExchangeRate.Model.ExchangeRate> rates, Action onStarted, Action onFinished, Action<Exception> onError)
-        => fetchMissingRatesTask = fetchMissingRatesTask.GetTask(async () =>
+        public static Task FetchMissingRates(IEnumerable<ExchangeRate> rates, Action onStarted, Action onFinished, Action<Exception> onError)
+        => _fetchMissingRatesTask = _fetchMissingRatesTask.GetTask(async () =>
         {
             var ratesList = rates.ToList();
             ratesList.RemoveAll(e => e == null);
@@ -67,8 +66,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted();
-                await Task.WhenAll(ratesList.Select(r => ExchangeRateHelper.GetRate(r, FetchSpeedEnum.Fast)));
-                await ExchangeRateStorage.Instance.FetchNew();
+                await ExchangeRateHelper.FetchMissingRatesFor(ratesList);
             }
             catch (Exception e)
             {
@@ -86,8 +84,8 @@ namespace MyCC.Core.Tasks
             {
                 onStarted();
                 await account.FetchBalanceOnline();
-                // TODO Fetch rates for specific currency
-                await ExchangeRateStorage.Instance.FetchOnline();
+                var ratesToUpdate = ApplicationSettings.AllReferenceCurrencies.Select(c => new ExchangeRate(account.Money.Currency, c));
+                await ExchangeRateHelper.UpdateRates(ratesToUpdate);
             }
             catch (Exception e)
             {
@@ -105,8 +103,8 @@ namespace MyCC.Core.Tasks
             {
                 onStarted();
                 await Task.WhenAll(AccountStorage.Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).OfType<OnlineFunctionalAccount>().Select(a => a.FetchBalanceOnline()));
-                // TODO Fetch rates for specific currency
-                await ExchangeRateStorage.Instance.FetchOnline();
+                var ratesToUpdate = ApplicationSettings.AllReferenceCurrencies.Select(c => new ExchangeRate(currency, c));
+                await ExchangeRateHelper.UpdateRates(ratesToUpdate);
             }
             catch (Exception e)
             {
@@ -152,12 +150,12 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchRates(List<ExchangeRate.Model.ExchangeRate> neededRates, Action onStarted, Action onFinished, Action<Exception> onError)
+        public static async Task FetchRates(List<ExchangeRate> neededRates, Action onStarted, Action onFinished, Action<Exception> onError)
         {
             try
             {
                 onStarted();
-                await ExchangeRateStorage.Instance.FetchOnline(neededRates);
+                await ExchangeRateHelper.UpdateRates(neededRates);
             }
             catch (Exception e)
             {

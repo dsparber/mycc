@@ -3,7 +3,7 @@ using MyCC.Core.Abstract.Models;
 
 namespace MyCC.Core.Abstract.Repositories
 {
-    public abstract class AbstractRepository : Persistable<int>
+    public abstract class AbstractRepository : IPersistable<int>
     {
         public abstract int RepositoryTypeId { get; }
 

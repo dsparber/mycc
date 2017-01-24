@@ -6,7 +6,7 @@ using SQLite;
 namespace MyCC.Core.Currency.Database
 {
     [Table("CurrencyRepositoryMap")]
-    public class CurrencyMapRepositoryDbm : IEntityDBM<CurrencyRepositoryMap, int>
+    public class CurrencyMapRepositoryDbm : IEntityDbm<CurrencyRepositoryMap, int>
     {
 
         public CurrencyMapRepositoryDbm() { }

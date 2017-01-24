@@ -8,11 +8,11 @@ using MyCC.Core.Abstract.Repositories;
 
 namespace MyCC.Core.Abstract.Storage
 {
-    public abstract class AbstractDatabaseStorage<Ta, Va, T, V, IdType> : AbstractStorage<Ta, Va> where Va : AbstractDatabaseRepository<T, V, IdType> where Ta : IEntityDBM<Va, int> where T : IEntityRepositoryIdDBM<V, IdType> where V : IPersistableWithParent<IdType>
+    public abstract class AbstractDatabaseStorage<TA, TVa, T, TV, TIdType> : AbstractStorage<TA, TVa> where TVa : AbstractDatabaseRepository<T, TV, TIdType> where TA : IEntityDbm<TVa, int> where T : IEntityRepositoryIdDbm<TV, TIdType> where TV : IPersistableWithParent<TIdType>
     {
-        protected AbstractDatabaseStorage(AbstractDatabase<Ta, Va, int> database) : base(database) { }
+        protected AbstractDatabaseStorage(AbstractDatabase<TA, TVa, int> database) : base(database) { }
 
-        public List<V> AllElements
+        public List<TV> AllElements
         {
             get
             {
@@ -20,7 +20,7 @@ namespace MyCC.Core.Abstract.Storage
             }
         }
 
-        public List<Tuple<V, Va>> AllElementsWithRepositories
+        public List<Tuple<TV, TVa>> AllElementsWithRepositories
         {
             get
             {
@@ -28,17 +28,17 @@ namespace MyCC.Core.Abstract.Storage
             }
         }
 
-        public List<V> AllOfType<A>()
+        public List<TV> AllOfType<TA>()
         {
-            return AllElements.FindAll(e => e is A);
+            return AllElements.FindAll(e => e is TA);
         }
 
-        public V Find(V element)
+        public TV Find(TV element)
         {
             return AllElements.Find(e => Equals(e, element));
         }
 
-        public override async Task Remove(Va repository)
+        public override async Task Remove(TVa repository)
         {
             // Delete all elements
             var repo = Repositories.Find(r => r.Id == repository.Id);
@@ -47,6 +47,6 @@ namespace MyCC.Core.Abstract.Storage
             await base.Remove(repository);
         }
 
-        public abstract Va LocalRepository { get; }
+        public abstract TVa LocalRepository { get; }
     }
 }

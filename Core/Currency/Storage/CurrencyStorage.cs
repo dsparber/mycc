@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Storage;
 using MyCC.Core.Currency.Database;
@@ -8,21 +9,20 @@ namespace MyCC.Core.Currency.Storage
 {
     public class CurrencyStorage : AbstractDatabaseStorage<CurrencyRepositoryDbm, CurrencyRepository, CurrencyDbm, Model.Currency, string>
     {
-        private CurrencyStorage() : base(new CurrencyRepositoryDatabase()) { }
-
-        protected override async Task OnFirstLaunch()
+        private CurrencyStorage() : base(new CurrencyRepositoryDatabase())
         {
-            await Add(new LocalCurrencyRepository(default(int)));
-            await Add(new BittrexCurrencyRepository(default(int)));
-            await Add(new BtceCurrencyRepository(default(int)));
-            await Add(new CryptonatorCurrencyRepository(default(int)));
-            await Add(new BlockExpertsCurrencyRepository(default(int)));
-            await Add(new CryptoIdCurrencyRepository(default(int)));
+            Repositories.Add(new LocalCurrencyRepository(CurrencyRepositoryDbm.DbTypeLocalRepository));
+            Repositories.Add(new BittrexCurrencyRepository(CurrencyRepositoryDbm.DbTypeBittrexRepository));
+            Repositories.Add(new BtceCurrencyRepository(CurrencyRepositoryDbm.DbTypeBtceRepository));
+            Repositories.Add(new CryptonatorCurrencyRepository(CurrencyRepositoryDbm.DbTypeCryptonatorRepository));
+            Repositories.Add(new BlockExpertsCurrencyRepository(CurrencyRepositoryDbm.DbTypeBlockExpertsRepository));
+            Repositories.Add(new CryptoIdCurrencyRepository(CurrencyRepositoryDbm.DbTypeCryptoidRepository));
+            Repositories.Add(new OpenexchangeCurrencyRepository(CurrencyRepositoryDbm.DbTypeOpenExchangeRepository));
         }
 
-        private static CurrencyStorage instance { get; set; }
+        private static CurrencyStorage _instance;
 
-        public static CurrencyStorage Instance => instance ?? (instance = new CurrencyStorage());
+        public static CurrencyStorage Instance => _instance ?? (_instance = new CurrencyStorage());
 
         public Model.Currency GetByString(string s)
         {
@@ -37,7 +37,7 @@ namespace MyCC.Core.Currency.Storage
             }
         }
 
-        protected override async Task beforeFastFetching()
+        protected override async Task BeforeFastFetching()
         {
             await LocalRepository.FetchOnline();
         }

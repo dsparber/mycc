@@ -8,13 +8,13 @@ using MyCC.Core.Abstract.Models;
 
 namespace MyCC.Core.Abstract.Repositories
 {
-    public abstract class AbstractDatabaseRepository<TDatabaseModel, TModel, TId> : AbstractRepository where TDatabaseModel : IEntityRepositoryIdDBM<TModel, TId> where TModel : IPersistableWithParent<TId>
+    public abstract class AbstractDatabaseRepository<TDatabaseModel, TModel, TId> : AbstractRepository where TDatabaseModel : IEntityRepositoryIdDbm<TModel, TId> where TModel : IPersistableWithParent<TId>
     {
-        private List<TModel> elements;
+        private List<TModel> _elements;
 
         public IEnumerable<TModel> Elements
         {
-            get { return elements.FindAll(e => true); }
+            get { return _elements.FindAll(e => true); }
         }
 
         public int ElementsCount => Elements.ToList().Count;
@@ -22,12 +22,12 @@ namespace MyCC.Core.Abstract.Repositories
         public DateTime LastFastFetch { get; protected set; }
         public DateTime LastFetch { get; protected set; }
 
-        private readonly AbstractDatabase<TDatabaseModel, TModel, TId> Database;
+        private readonly AbstractDatabase<TDatabaseModel, TModel, TId> _database;
 
         protected AbstractDatabaseRepository(int id, AbstractDatabase<TDatabaseModel, TModel, TId> database) : base(id)
         {
-            elements = new List<TModel>();
-            Database = database;
+            _elements = new List<TModel>();
+            _database = database;
         }
 
         protected virtual Func<TModel, bool> DatabaseFilter
@@ -39,7 +39,7 @@ namespace MyCC.Core.Abstract.Repositories
         {
             try
             {
-                elements = new List<TModel>((await Database.GetAll()).Where(DatabaseFilter));
+                _elements = new List<TModel>((await _database.GetAll()).Where(DatabaseFilter));
                 return true;
             }
             catch (Exception e)
@@ -51,40 +51,40 @@ namespace MyCC.Core.Abstract.Repositories
 
         public async Task RemoveAll()
         {
-            await Task.WhenAll(Elements.Select(e => Database.Delete(e)));
-            elements.RemoveAll(e => true);
+            await Task.WhenAll(Elements.Select(e => _database.Delete(e)));
+            _elements.RemoveAll(e => true);
         }
 
         public async Task Remove(TModel element)
         {
-            await Database.Delete(element);
-            elements.Remove(element);
+            await _database.Delete(element);
+            _elements.Remove(element);
         }
 
         public async Task Add(TModel element)
         {
-            element = await Database.Insert(element);
-            elements.Add(element);
+            element = await _database.Insert(element);
+            _elements.Add(element);
         }
 
         public async Task AddOrUpdate(TModel element)
         {
-            elements.RemoveAll(e => Equals(e, element));
-            await Database.InsertOrUpdate(element);
-            elements.Add(element);
+            _elements.RemoveAll(e => Equals(e, element));
+            await _database.InsertOrUpdate(element);
+            _elements.Add(element);
         }
 
         public async Task Add(IEnumerable<TModel> newElements)
         {
-            newElements = await Database.Insert(newElements);
-            elements.AddRange(newElements);
+            newElements = await _database.Insert(newElements);
+            _elements.AddRange(newElements);
         }
 
         public async Task Update(IEnumerable<TModel> updateElements)
         {
-            elements.RemoveAll(updateElements.Contains);
-            updateElements = await Database.Update(updateElements);
-            elements.AddRange(updateElements);
+            _elements.RemoveAll(updateElements.Contains);
+            updateElements = await _database.Update(updateElements);
+            _elements.AddRange(updateElements);
         }
 
         public async Task Update(TModel element)
@@ -94,9 +94,9 @@ namespace MyCC.Core.Abstract.Repositories
 
         public async Task Update(TModel oldElement, TModel newElement)
         {
-            elements.Remove(oldElement);
-            newElement = await Database.Update(oldElement, newElement);
-            elements.Add(newElement);
+            _elements.Remove(oldElement);
+            newElement = await _database.Update(oldElement, newElement);
+            _elements.Add(newElement);
         }
     }
 }

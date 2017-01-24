@@ -9,7 +9,7 @@ using SQLite;
 namespace MyCC.Core.Account.Database
 {
     [Table("Transactions")]
-    public class TransactionDbm : IEntityRepositoryIdDBM<Transaction, string>
+    public class TransactionDbm : IEntityRepositoryIdDbm<Transaction, string>
     {
         public TransactionDbm() { }
 
@@ -17,25 +17,25 @@ namespace MyCC.Core.Account.Database
         public string Id { get; set; }
 
         [Column("Timestamp")]
-        private DateTime timestamp { get; set; }
+        private DateTime Timestamp { get; set; }
 
         [Column("Amount")]
-        private decimal moneyAmount { get; set; }
+        private decimal MoneyAmount { get; set; }
 
         [Column("Code")]
-        private string currencyCode { get; set; }
+        private string CurrencyCode { get; set; }
 
         public int ParentId { get; set; }
 
         public async Task<Transaction> Resolve()
         {
-            var currency = CurrencyStorage.Instance.AllElements.Find(c => c.Code.Equals(currencyCode));
-            if (currency != null) return new Transaction(Id, timestamp, new Money(moneyAmount, currency), ParentId);
+            var currency = CurrencyStorage.Instance.AllElements.Find(c => c.Code.Equals(CurrencyCode));
+            if (currency != null) return new Transaction(Id, Timestamp, new Money(MoneyAmount, currency), ParentId);
 
             var db = new CurrencyDatabase();
-            currency = await db.Get(currencyCode);
+            currency = await db.Get(CurrencyCode);
 
-            return new Transaction(Id, timestamp, new Money(moneyAmount, currency), ParentId);
+            return new Transaction(Id, Timestamp, new Money(MoneyAmount, currency), ParentId);
         }
 
         public TransactionDbm(Transaction transaction)
@@ -43,9 +43,9 @@ namespace MyCC.Core.Account.Database
             Id = transaction.Id;
             ParentId = transaction.ParentId;
 
-            timestamp = transaction.Timestamp;
-            moneyAmount = transaction.Money.Amount;
-            currencyCode = transaction.Money.Currency.Code;
+            Timestamp = transaction.Timestamp;
+            MoneyAmount = transaction.Money.Amount;
+            CurrencyCode = transaction.Money.Currency.Code;
         }
     }
 }

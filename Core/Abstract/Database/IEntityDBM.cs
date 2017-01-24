@@ -3,9 +3,9 @@ using MyCC.Core.Abstract.Models;
 
 namespace MyCC.Core.Abstract.Database
 {
-    public interface IEntityDBM<T, IDType> where T : Persistable<IDType>
+    public interface IEntityDbm<T, TIdType> where T : IPersistable<TIdType>
     {
-        IDType Id { get; set; }
+        TIdType Id { get; set; }
 
         Task<T> Resolve();
     }

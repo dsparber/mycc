@@ -11,7 +11,7 @@ namespace MyCC.Core.CoinInfo
 {
     public class CoinInfoStorage
     {
-        public readonly List<CoinInfoData> Elements;
+        private readonly List<CoinInfoData> _elements;
 
         private readonly SQLiteAsyncConnection _dbConnection;
 
@@ -19,9 +19,9 @@ namespace MyCC.Core.CoinInfo
 
         private CoinInfoStorage()
         {
-            Elements = new List<CoinInfoData>();
+            _elements = new List<CoinInfoData>();
 
-            _dbConnection = DependencyService.Get<ISQLiteConnection>().GetConnection();
+            _dbConnection = DependencyService.Get<ISqLiteConnection>().GetConnection();
 
 
             Task.Run(async () =>
@@ -32,7 +32,7 @@ namespace MyCC.Core.CoinInfo
                     await _dbConnection.ExecuteAsync("ALTER TABLE CoinInfos ADD COLUMN MaxSupply float;");
                     await _dbConnection.ExecuteAsync("ALTER TABLE CoinInfos ADD COLUMN Blockreward float;");
                 }
-                Elements.AddRange(await _dbConnection.Table<CoinInfoData>().ToListAsync());
+                _elements.AddRange(await _dbConnection.Table<CoinInfoData>().ToListAsync());
             });
 
             _repositories = new List<ICoinInfoRepository> {
@@ -52,26 +52,24 @@ namespace MyCC.Core.CoinInfo
                 info = info.AddUpdate(await r.GetInfo(currency));
             }
 
-            if (Elements.Contains(info))
+            if (_elements.Contains(info))
             {
-                Elements.Remove(info);
+                _elements.Remove(info);
                 await _dbConnection.UpdateAsync(info);
             }
             else
             {
                 await _dbConnection.InsertAsync(info);
             }
-            Elements.Add(info);
+            _elements.Add(info);
 
             return info;
         }
 
-        public List<ICoinInfoRepository> GetExplorer(Currency.Model.Currency currency) => _repositories.Where(r => r.SupportedCoins.Contains(currency)).ToList();
+        public IEnumerable<ICoinInfoRepository> GetExplorer(Currency.Model.Currency currency) => _repositories.Where(r => r.SupportedCoins.Contains(currency));
 
-        public bool Contains(Currency.Model.Currency currency) => Elements.Any(e => string.Equals(e.CurrencyCode, currency.Code));
+        public CoinInfoData Get(Currency.Model.Currency currency) => _elements.Find(e => string.Equals(e.CurrencyCode, currency.Code));
 
-        public CoinInfoData Get(Currency.Model.Currency currency) => Elements.Find(e => string.Equals(e.CurrencyCode, currency.Code));
-
-        public static CoinInfoStorage Instance = new CoinInfoStorage();
+        public static readonly CoinInfoStorage Instance = new CoinInfoStorage();
     }
 }

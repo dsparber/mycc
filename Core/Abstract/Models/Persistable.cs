@@ -1,7 +1,7 @@
 ﻿namespace MyCC.Core.Abstract.Models
 {
-    public interface Persistable<IdType>
+    public interface IPersistable<TIdType>
     {
-        IdType Id { get; set; }
+        TIdType Id { get; set; }
     }
 }

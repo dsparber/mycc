@@ -7,7 +7,7 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(SQLiteConnectionAndroid))]
 namespace MyCC.Forms.Android.data.database
 {
-    public class SQLiteConnectionAndroid : ISQLiteConnection
+    public class SQLiteConnectionAndroid : ISqLiteConnection
     {
         public SQLiteAsyncConnection GetConnection()
         {

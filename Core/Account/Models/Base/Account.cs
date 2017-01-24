@@ -58,12 +58,12 @@ namespace MyCC.Core.Account.Models.Base
         /// <summary>
         /// Money of the account
         /// </summary>
-        private Money money;
+        private Money _money;
         public Money Money
         {
             get
             {
-                return money;
+                return _money;
             }
             protected set
             {
@@ -71,7 +71,7 @@ namespace MyCC.Core.Account.Models.Base
                 {
                     throw new ArgumentNullException();
                 }
-                money = value;
+                _money = value;
             }
         }
 
@@ -80,18 +80,18 @@ namespace MyCC.Core.Account.Models.Base
         /// </summary>
         public string Name
         {
-            get { return name; }
+            get { return _name; }
             set
             {
                 if (value == null)
                 {
                     throw new ArgumentNullException();
                 }
-                name = value;
+                _name = value;
             }
         }
 
-        private string name;
+        private string _name;
 
         public override bool Equals(object obj)
         {

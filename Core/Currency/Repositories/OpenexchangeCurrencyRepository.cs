@@ -8,19 +8,15 @@ using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Currency.Repositories
 {
-    public class BittrexCurrencyRepository : OnlineCurrencyRepository
+    public class OpenexchangeCurrencyRepository : OnlineCurrencyRepository
     {
-        private const string UrlCurrencyList = "https://bittrex.com/api/v1.1/public/getcurrencies";
-
-        private const string CurrencyListResult = "result";
-        private const string CurrencyListResultName = "CurrencyLong";
-        private const string CurrencyListResultCurrency = "Currency";
+        private const string UrlCurrencyList = "https://openexchangerates.org/api/currencies.json";
 
         private const int BufferSize = 256000;
 
         private readonly HttpClient _client;
 
-        public BittrexCurrencyRepository(int id) : base(id)
+        public OpenexchangeCurrencyRepository(int id) : base(id)
         {
             _client = new HttpClient { MaxResponseContentBufferSize = BufferSize };
         }
@@ -30,16 +26,21 @@ namespace MyCC.Core.Currency.Repositories
         protected override async Task<IEnumerable<Model.Currency>> GetCurrencies()
         {
             var uri = new Uri(UrlCurrencyList);
-
             var response = await _client.GetAsync(uri);
 
             if (!response.IsSuccessStatusCode) return null;
 
             var content = await response.Content.ReadAsStringAsync();
             var json = JObject.Parse(content);
-            var result = (JArray)json[CurrencyListResult];
 
-            var currentElements = (from token in result let name = (string)token[CurrencyListResultName] let code = (string)token[CurrencyListResultCurrency] select new Model.Currency(code, name)).ToList();
+            var currentElements = new List<Model.Currency>();
+
+            foreach (var key in json)
+            {
+                var name = (string)key.Value;
+                var code = key.Key;
+                currentElements.Add(new Model.Currency(code, name));
+            }
 
             await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(Remove));
 

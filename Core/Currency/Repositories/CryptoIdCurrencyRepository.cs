@@ -21,7 +21,7 @@ namespace MyCC.Core.Currency.Repositories
         {
             _client = new HttpClient { MaxResponseContentBufferSize = BufferSize };
         }
-        public override int RepositoryTypeId => CurrencyRepositoryDbm.DB_TYPE_CRYPTOID_REPOSITORY;
+        public override int RepositoryTypeId => CurrencyRepositoryDbm.DbTypeCryptoidRepository;
 
         protected override async Task<IEnumerable<Model.Currency>> GetCurrencies()
         {

@@ -9,8 +9,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Currency.Storage;
-using MyCC.Core.ExchangeRate.Helpers;
-using MyCC.Core.ExchangeRate.Model;
+using MyCC.Core.Rates;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
@@ -113,7 +112,7 @@ namespace MyCC.Forms.view.components
                     while (!_sizeAllocated)
                     {
                         UpdateView();
-                        await Task.Delay(50);
+                        await Task.Delay(200);
                     }
                 });
             }
@@ -181,7 +180,7 @@ namespace MyCC.Forms.view.components
                 var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
 
                 Code = currency.Code;
-                Reference = new Money(rate.RateNotNull, ApplicationSettings.SelectedRatePageCurrency).ToString8Digits(ApplicationSettings.RoundMoney);
+                Reference = new Money(rate.Rate ?? 0, ApplicationSettings.SelectedRatePageCurrency).ToString8Digits(ApplicationSettings.RoundMoney);
             }
 
             public override string ToString()

@@ -4,8 +4,7 @@ using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
-using MyCC.Core.ExchangeRate.Helpers;
-using MyCC.Core.ExchangeRate.Model;
+using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.helpers;
 using MyCC.Forms.Messages;
@@ -87,7 +86,7 @@ namespace MyCC.Forms.view.components
             }
             _infoTexts[1] = (_useOneBitcoinAsReference) ? _currency?.Name : string.Join(" / ", ApplicationSettings.MainCurrencies
                                        .Where(c => !c.Equals(_currency))
-                                       .Select(c => (_useOneBitcoinAsReference ? new Money(ExchangeRateHelper.GetRate(Currency.Btc, c)?.RateNotNull ?? 0, c)
+                                       .Select(c => (_useOneBitcoinAsReference ? new Money(ExchangeRateHelper.GetRate(Currency.Btc, c)?.Rate ?? 0, c)
                                                      : (_useOnlyThisCurrency ? CoinSumAs(c)
                                                         : MoneySumOf(c)) ?? new Money(0, c))
                                                .ToStringTwoDigits(ApplicationSettings.RoundMoney)));
@@ -128,10 +127,10 @@ namespace MyCC.Forms.view.components
             });
         }
 
-        private Money Sum => _useOneBitcoinAsReference ? new Money(ExchangeRateHelper.GetRate(Currency.Btc, _currency).RateNotNull, _currency) : _account != null ? _account.Money : (_useOnlyThisCurrency ? CoinSum : MoneySum) ?? new Money(0, _currency);
+        private Money Sum => _useOneBitcoinAsReference ? new Money(ExchangeRateHelper.GetRate(Currency.Btc, _currency).Rate ?? 0, _currency) : _account != null ? _account.Money : (_useOnlyThisCurrency ? CoinSum : MoneySum) ?? new Money(0, _currency);
 
         private Money CoinSum => _account != null ? _account.Money : new Money(AccountStorage.Instance.AllElements.Where(a => _currency.Equals(a.Money.Currency)).Sum(a => a.Money.Amount), _currency);
-        private Money CoinSumAs(Currency c) => new Money(CoinSum.Amount * (ExchangeRateHelper.GetRate(CoinSum.Currency, c)?.RateNotNull ?? 0), c);
+        private Money CoinSumAs(Currency c) => new Money(CoinSum.Amount * (ExchangeRateHelper.GetRate(CoinSum.Currency, c)?.Rate ?? 0), c);
 
         private Money MoneySum => MoneySumOf(_currency);
 
@@ -142,7 +141,7 @@ namespace MyCC.Forms.view.components
                 var rate = new ExchangeRate(a.Money.Currency, currency);
                 rate = ExchangeRateHelper.GetRate(rate) ?? rate;
 
-                return a.Money.Amount * rate.RateNotNull;
+                return a.Money.Amount * rate.Rate ?? 0;
             });
 
             return new Money(amount, currency);
