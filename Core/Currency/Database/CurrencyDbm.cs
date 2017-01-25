@@ -5,34 +5,38 @@ using SQLite;
 
 namespace MyCC.Core.Currency.Database
 {
-    [Table("Currencies")]
-    public class CurrencyDbm : IEntityRepositoryIdDbm<Model.Currency, string>
-    {
-        public CurrencyDbm() { }
+	[Table("Currencies")]
+	public class CurrencyDbm : IEntityRepositoryIdDbm<Model.Currency, string>
+	{
+		public CurrencyDbm() { }
 
-        [Ignore]
-        public int ParentId
-        {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
-        }
+		[Ignore]
+		public int ParentId
+		{
+			get { throw new NotSupportedException(); }
+			set { throw new NotSupportedException(); }
+		}
 
-        [PrimaryKey, Column("Code")]
-        public string Id { get; set; }
+		[PrimaryKey, Column("Code")]
+		public string Id { get; set; }
 
-        [Column("Name")]
-        public string Name { get; set; }
+		[Column("Name")]
+		public string Name { get; set; }
 
-        public CurrencyDbm(Model.Currency currency)
-        {
-            Name = currency.Name;
-            Id = currency.Code;
-        }
+		[Column("IsCrypto")]
+		public bool IsCryptoCurrency { get; set; }
 
-        public Task<Model.Currency> Resolve()
-        {
-            return Task.Factory.StartNew(() => new Model.Currency(Id, Name));
-        }
-    }
+		public CurrencyDbm(Model.Currency currency)
+		{
+			Name = currency.Name;
+			Id = currency.Code;
+			IsCryptoCurrency = currency.IsCryptoCurrency;
+		}
+
+		public Task<Model.Currency> Resolve()
+		{
+			return Task.Factory.StartNew(() => new Model.Currency(Id, Name, IsCryptoCurrency));
+		}
+	}
 }
 

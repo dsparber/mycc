@@ -8,37 +8,37 @@ using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Currency.Repositories
 {
-    public class CryptonatorCurrencyRepository : OnlineCurrencyRepository
-    {
-        private const string UrlCurrencyList = "https://api.cryptonator.com/api/currencies";
+	public class CryptonatorCurrencyRepository : OnlineCurrencyRepository
+	{
+		private const string UrlCurrencyList = "https://api.cryptonator.com/api/currencies";
 
-        private const string CurrencyListResult = "rows";
-        private const string CurrencyListResultName = "name";
-        private const string CurrencyListResultCurrency = "code";
+		private const string CurrencyListResult = "rows";
+		private const string CurrencyListResultName = "name";
+		private const string CurrencyListResultCurrency = "code";
 
-        private const int BufferSize = 256000;
+		private const int BufferSize = 256000;
 
-        private readonly HttpClient _client;
+		private readonly HttpClient _client;
 
-        public CryptonatorCurrencyRepository(int id) : base(id)
-        {
-            _client = new HttpClient { MaxResponseContentBufferSize = BufferSize };
-        }
+		public CryptonatorCurrencyRepository(int id) : base(id)
+		{
+			_client = new HttpClient { MaxResponseContentBufferSize = BufferSize };
+		}
 
-        public override int RepositoryTypeId => CurrencyRepositoryDbm.DbTypeCryptonatorRepository;
+		public override int RepositoryTypeId => CurrencyRepositoryDbm.DbTypeCryptonatorRepository;
 
-        protected override async Task<IEnumerable<Model.Currency>> GetCurrencies()
-        {
-            var uri = new Uri(UrlCurrencyList);
+		protected override async Task<IEnumerable<Model.Currency>> GetCurrencies()
+		{
+			var uri = new Uri(UrlCurrencyList);
 
-            var response = await _client.GetAsync(uri);
-            if (!response.IsSuccessStatusCode) return null;
+			var response = await _client.GetAsync(uri);
+			if (!response.IsSuccessStatusCode) return null;
 
-            var content = await response.Content.ReadAsStringAsync();
-            var json = JObject.Parse(content);
-            var result = (JArray)json[CurrencyListResult];
+			var content = await response.Content.ReadAsStringAsync();
+			var json = JObject.Parse(content);
+			var result = (JArray)json[CurrencyListResult];
 
-            return (from token in result let name = (string)token[CurrencyListResultName] let code = (string)token[CurrencyListResultCurrency] select new Model.Currency(code, name)).ToList();
-        }
-    }
+			return (from token in result let name = (string)token[CurrencyListResultName] let code = (string)token[CurrencyListResultCurrency] select new Model.Currency(code, name, true)).ToList();
+		}
+	}
 }

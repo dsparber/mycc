@@ -24,209 +24,213 @@ using XLabs.Serialization.JsonNET;
 
 namespace MyCC.Forms.view.components
 {
-    public class CoinTableComponent : ContentView
-    {
-        private readonly HybridWebView _webView;
-        private readonly Label _noDataLabel;
-        private bool _appeared;
-        private bool _sizeAllocated;
+	public class CoinTableComponent : ContentView
+	{
+		private readonly HybridWebView _webView;
+		private readonly Label _noDataLabel;
+		private bool _appeared;
+		private bool _sizeAllocated;
 
-        public CoinTableComponent(INavigation navigation)
-        {
-            var resolverContainer = new SimpleContainer();
+		public CoinTableComponent(INavigation navigation)
+		{
+			var resolverContainer = new SimpleContainer();
 
-            resolverContainer.Register<IJsonSerializer, JsonSerializer>();
+			resolverContainer.Register<IJsonSerializer, JsonSerializer>();
 
-            _webView = new HybridWebView
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = Color.White
-            };
-            _webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
-            {
-                var size = int.Parse(sizeString);
-                _sizeAllocated = true;
-                Device.BeginInvokeOnMainThread(() => _webView.HeightRequest = size);
-            });
-            _webView.RegisterCallback("Callback", code =>
-            {
-                var currency = CurrencyStorage.Find(code);
-                var accounts = AccountStorage.AccountsWithCurrency(currency);
+			_webView = new HybridWebView
+			{
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				BackgroundColor = Color.White
+			};
+			_webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
+			{
+				var size = int.Parse(sizeString);
+				_sizeAllocated = true;
+				Device.BeginInvokeOnMainThread(() => _webView.HeightRequest = size);
+			});
+			_webView.RegisterCallback("Callback", code =>
+			{
+				var currency = new Currency(code.Split(',')[0], bool.Parse(code.Split(',')[1]));
 
-                Device.BeginInvokeOnMainThread(
-                    () =>
-                        navigation.PushAsync((accounts.Count == 1)
-                            ? (Page)new AccountDetailView(accounts[0])
-                            : new CoinDetailView(currency)));
-            });
+				var accounts = AccountStorage.AccountsWithCurrency(currency);
 
-            _webView.RegisterCallback("HeaderClickedCallback", type =>
-            {
-                SortOrder value;
-                var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
-                if (clickedSortOrder == ApplicationSettings.SortOrderTable)
-                {
-                    ApplicationSettings.SortDirectionTable = ApplicationSettings.SortDirectionTable == SortDirection.Ascending
-                        ? SortDirection.Descending
-                        : SortDirection.Ascending;
-                }
-                ApplicationSettings.SortOrderTable = clickedSortOrder;
+				Device.BeginInvokeOnMainThread(
+					() =>
+						navigation.PushAsync((accounts.Count == 1)
+							? (Page)new AccountDetailView(accounts[0])
+											 : new CoinDetailView(currency)));
+			});
 
-                UpdateView();
-            });
+			_webView.RegisterCallback("HeaderClickedCallback", type =>
+			{
+				SortOrder value;
+				var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
+				if (clickedSortOrder == ApplicationSettings.SortOrderTable)
+				{
+					ApplicationSettings.SortDirectionTable = ApplicationSettings.SortDirectionTable == SortDirection.Ascending
+						? SortDirection.Descending
+						: SortDirection.Ascending;
+				}
+				ApplicationSettings.SortOrderTable = clickedSortOrder;
 
-            _noDataLabel = new Label
-            {
-                Text = I18N.NoDataToDisplay,
-                IsVisible = false,
-                TextColor = AppConstants.FontColorLight,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.CenterAndExpand
-            };
+				UpdateView();
+			});
 
-            var stack = new StackLayout
-            {
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand
-            };
-            stack.Children.Add(_noDataLabel);
-            stack.Children.Add(_webView);
-            Content = stack;
+			_noDataLabel = new Label
+			{
+				Text = I18N.NoDataToDisplay,
+				IsVisible = false,
+				TextColor = AppConstants.FontColorLight,
+				HorizontalOptions = LayoutOptions.CenterAndExpand,
+				VerticalOptions = LayoutOptions.CenterAndExpand
+			};
 
-            UpdateView();
+			var stack = new StackLayout
+			{
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				HorizontalOptions = LayoutOptions.FillAndExpand
+			};
+			stack.Children.Add(_noDataLabel);
+			stack.Children.Add(new ScrollView { Content = _webView });
+			Content = stack;
 
-            Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
+			UpdateView();
 
-            Messaging.RoundNumbers.SubscribeValueChanged(this, UpdateView);
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
-            Messaging.Loading.SubscribeFinished(this, UpdateView);
-        }
+			Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
+			Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
+			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
 
-        public void OnAppearing()
-        {
-            if (_appeared) return;
-            _appeared = true;
+			Messaging.RoundNumbers.SubscribeValueChanged(this, UpdateView);
+			Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
+			Messaging.Loading.SubscribeFinished(this, UpdateView);
+		}
 
-            _webView.LoadFromContent("Html/coinTable.html");
-            Task.Run(async () =>
-            {
-                while (!_sizeAllocated)
-                {
-                    UpdateView();
-                    await Task.Delay(200);
-                }
-            });
-        }
+		public void OnAppearing()
+		{
+			if (_appeared) return;
+			_appeared = true;
 
-        private void UpdateView()
-        {
-            try
-            {
-                var items = AccountStorage.UsedCurrencies.Select(c => new Data(c)).ToList();
-                var itemsExisting = (items.Count > 0);
+			_webView.LoadFromContent("Html/coinTable.html");
+			Task.Run(async () =>
+			{
+				while (!_sizeAllocated)
+				{
+					UpdateView();
+					await Task.Delay(200);
+				}
+			});
+		}
 
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    _noDataLabel.IsVisible = !itemsExisting;
-                    _webView.IsVisible = itemsExisting;
-                });
+		private void UpdateView()
+		{
+			try
+			{
+				var items = AccountStorage.UsedCurrencies.Select(c => new Data(c)).ToList();
+				var itemsExisting = (items.Count > 0);
 
-                if (!itemsExisting || !_appeared) return;
+				Device.BeginInvokeOnMainThread(() =>
+				{
+					_noDataLabel.IsVisible = !itemsExisting;
+					_webView.IsVisible = itemsExisting;
+				});
 
-                Func<Data, object> sortLambda;
-                switch (ApplicationSettings.SortOrderTable)
-                {
-                    case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
-                    case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("<", string.Empty)); break;
-                    case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Reference.Replace("<", string.Empty)); break;
-                    case SortOrder.None: sortLambda = d => 1; break;
-                    default: sortLambda = d => 1; break;
-                }
+				if (!itemsExisting || !_appeared) return;
 
-                items = ApplicationSettings.SortDirectionTable == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
+				Func<Data, object> sortLambda;
+				switch (ApplicationSettings.SortOrderTable)
+				{
+					case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
+					case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("<", string.Empty)); break;
+					case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Reference.Replace("<", string.Empty)); break;
+					case SortOrder.None: sortLambda = d => 1; break;
+					default: sortLambda = d => 1; break;
+				}
 
-                _webView.CallJsFunction("setHeader", new[]{
-                    new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
-                    new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
-                    new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.BaseCurrency.Code), SortOrder.ByValue.ToString())
-                }, string.Empty);
-                _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-        }
+				items = ApplicationSettings.SortDirectionTable == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
-        [DataContract]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
-        public class Data
-        {
-            [DataMember]
-            public readonly string Code;
-            [DataMember]
-            public readonly string Name;
-            [DataMember]
-            public readonly string Amount;
-            [DataMember]
-            public readonly string Reference;
+				_webView.CallJsFunction("setHeader", new[]{
+					new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
+					new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
+					new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.BaseCurrency.Code), SortOrder.ByValue.ToString())
+				}, string.Empty);
+				_webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(e);
+			}
+		}
 
-            public Data(Currency currency)
-            {
-                var sum = AccountStorage.AccountsWithCurrency(currency).Sum(a => a.Money.Amount);
-                var neededRate = new ExchangeRate(currency, ApplicationSettings.BaseCurrency);
-                var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
+		[DataContract]
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+		[SuppressMessage("ReSharper", "NotAccessedField.Global")]
+		public class Data
+		{
+			[DataMember]
+			public readonly string CallbackString;
+			[DataMember]
+			public readonly string Code;
+			[DataMember]
+			public readonly string Name;
+			[DataMember]
+			public readonly string Amount;
+			[DataMember]
+			public readonly string Reference;
 
-                Code = currency.Code;
-                Amount = new Money(sum, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
-                Reference = new Money(sum * rate.Rate ?? 0, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
-                Name = currency.Name;
-            }
+			public Data(Currency currency)
+			{
+				var sum = AccountStorage.AccountsWithCurrency(currency).Sum(a => a.Money.Amount);
+				var neededRate = new ExchangeRate(currency, ApplicationSettings.BaseCurrency);
+				var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
 
-            public override string ToString()
-            {
-                return string.Format($"{Amount} {Code}\t= {Reference}");
-            }
-        }
+				Code = currency.Code;
+				Amount = new Money(sum, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
+				Reference = new Money(sum * rate.Rate ?? 0, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
+				Name = currency.Name;
+				CallbackString = currency.Code + "," + currency.IsCryptoCurrency;
+			}
 
-        [DataContract]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
-        public class SortData
-        {
-            [DataMember]
-            public readonly string Direction;
-            [DataMember]
-            public readonly string Type;
+			public override string ToString()
+			{
+				return string.Format($"{Amount} {Code}\t= {Reference}");
+			}
+		}
 
-            public SortData()
-            {
-                Direction = ApplicationSettings.SortDirectionTable.ToString();
-                Type = ApplicationSettings.SortOrderTable.ToString();
-            }
+		[DataContract]
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+		[SuppressMessage("ReSharper", "NotAccessedField.Global")]
+		public class SortData
+		{
+			[DataMember]
+			public readonly string Direction;
+			[DataMember]
+			public readonly string Type;
 
-        }
+			public SortData()
+			{
+				Direction = ApplicationSettings.SortDirectionTable.ToString();
+				Type = ApplicationSettings.SortOrderTable.ToString();
+			}
 
-        [DataContract]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
-        public class HeaderData
-        {
-            [DataMember]
-            public readonly string Text;
-            [DataMember]
-            public readonly string Type;
+		}
 
-            public HeaderData(string text, string type)
-            {
-                Text = text;
-                Type = type;
-            }
+		[DataContract]
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+		[SuppressMessage("ReSharper", "NotAccessedField.Global")]
+		public class HeaderData
+		{
+			[DataMember]
+			public readonly string Text;
+			[DataMember]
+			public readonly string Type;
 
-        }
-    }
+			public HeaderData(string text, string type)
+			{
+				Text = text;
+				Type = type;
+			}
+
+		}
+	}
 }

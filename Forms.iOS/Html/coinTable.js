@@ -70,7 +70,7 @@ function updateTable(data, sort) {
         amountCell.innerHTML = data[i]["Amount"];
         referenceCell.innerHTML = data[i]["Reference"];
 
-        row.onclick = rowClicked(data[i]["Code"]);
+        row.onclick = rowClicked(data[i]["CallbackString"]);
     }
 
     $("#coinTable thead").children().removeClass();
