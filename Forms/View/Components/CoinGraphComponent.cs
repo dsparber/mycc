@@ -70,7 +70,7 @@ namespace MyCC.Forms.view.components
             appeared = true;
             webView.LoadFromContent("Html/pieChart.html");
 
-            Task.Run(async () =>
+            Task.Factory.StartNew(async () =>
             {
                 while (!_sizeAllocated)
                 {

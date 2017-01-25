@@ -96,7 +96,7 @@ namespace MyCC.Forms.view.components
                 _appeared = true;
                 _webView.LoadFromContent("Html/accountsTable.html");
 
-                Task.Run(async () =>
+                Task.Factory.StartNew(async () =>
                 {
                     while (!_sizeAllocated)
                     {
