@@ -40,7 +40,7 @@ namespace MyCC.Forms.view.pages.settings
 				CurrencySelected = (c) =>
 				{
 					ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Concat(new List<Currency> { c }).ToList();
-					var index = ApplicationSettings.AllReferenceCurrencies.OrderBy(x => x.Code).ToList().IndexOf(c);
+					var index = Math.Min(ApplicationSettings.AllReferenceCurrencies.OrderBy(x => x.Code).ToList().IndexOf(c), 0);
 					CurrenciesSection.Insert(index, GetCell(c));
 					Messaging.ReferenceCurrencies.SendValueChanged();
 					Task.Run(() => AppTaskHelper.FetchMissingRates(AccountStorage.NeededRates));

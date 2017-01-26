@@ -35,8 +35,8 @@ namespace MyCC.Core.Currency.Model
 		/// <value>The identifier.</value>
 		public string Id
 		{
-			get { return Code; }
-			set { Code = value; }
+			get { return Code + (IsCryptoCurrency ? "1" : "0"); }
+			set { }
 		}
 
 		/// <summary>
@@ -65,7 +65,7 @@ namespace MyCC.Core.Currency.Model
 			get { return _code; }
 			private set
 			{
-				if (value == null)
+				if (string.IsNullOrWhiteSpace(value))
 				{
 					throw new ArgumentNullException();
 

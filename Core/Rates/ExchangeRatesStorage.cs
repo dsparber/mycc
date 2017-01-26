@@ -21,12 +21,22 @@ namespace MyCC.Core.Rates
 		{
 			_connection = DependencyService.Get<ISqLiteConnection>().GetConnection();
 			_connection.CreateTableAsync<ExchangeRate>();
-			if (ApplicationSettings.VersionLastLaunch < new Version("0.5.4"))
+
+			Task.Run(async () =>
 			{
-				Task.Run(async () => await _connection.ExecuteAsync("ALTER TABLE ExchangeRates ADD COLUMN ReferenceIsCrypto INTEGER;"));
-				Task.Run(async () => await _connection.ExecuteAsync("ALTER TABLE ExchangeRates ADD COLUMN SecondaryIsCrypto INTEGER;"));
-				Task.Run(async () => await _connection.ExecuteAsync("DELETE FROM ExchangeRates;"));
-			}
+				if (ApplicationSettings.VersionLastLaunch < new Version("0.5.4"))
+				{
+					await _connection.ExecuteAsync("ALTER TABLE ExchangeRates ADD COLUMN ReferenceIsCrypto INTEGER;");
+					await _connection.ExecuteAsync("ALTER TABLE ExchangeRates ADD COLUMN SecondaryIsCrypto INTEGER;");
+					await _connection.ExecuteAsync("DELETE FROM ExchangeRates;");
+				}
+				if (ApplicationSettings.VersionLastLaunch < new Version("0.5.9"))
+				{
+					await _connection.ExecuteAsync("DELETE FROM ExchangeRates;");
+					await _connection.ExecuteAsync("DROP TABLE AvailableRatesRepositories;)");
+					await _connection.ExecuteAsync("DROP TABLE ExchangeRateRepositories;)");
+				}
+			});
 
 			Repositories = new List<IRateRepository> {
 				new BittrexExchangeRateRepository(_connection),

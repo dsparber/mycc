@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using MyCC.Core.Currency.Database;
+using MyCC.Core.Currency.Storage;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Currency.Repositories
@@ -38,7 +39,15 @@ namespace MyCC.Core.Currency.Repositories
 			var json = JObject.Parse(content);
 			var result = (JArray)json[CurrencyListResult];
 
-			return (from token in result let name = (string)token[CurrencyListResultName] let code = (string)token[CurrencyListResultCurrency] select new Model.Currency(code, name, true)).ToList();
+			var currencies = (from token in result let name = (string)token[CurrencyListResultName] let code = (string)token[CurrencyListResultCurrency] select new Model.Currency(code, name, true)).ToList();
+
+			var id = CurrencyStorage.Instance.RepositoryOfType<OpenexchangeCurrencyRepository>().Id;
+			var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == id).Select(e => e.Code);
+			var fiatCurrencies = CurrencyStorage.Instance.AllElements.Where(c => codes.Any(x => x.Equals(c?.Code))).ToList();
+
+			currencies.RemoveAll(c => fiatCurrencies.Any(f => f.Code.Equals(c.Code)));
+
+			return currencies;
 		}
 	}
 }
