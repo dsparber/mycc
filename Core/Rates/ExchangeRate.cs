@@ -17,7 +17,9 @@ namespace MyCC.Core.Rates
         /// Initializes a new instance of the <see cref="T:Models.ExchangeRate"/> class.
         /// </summary>
         /// <param name="referenceCurrencyCode">Reference currency code.</param>
+        /// <param name="referenceIsCrypto">Wether the reference currency is a crypto currency</param>
         /// <param name="secondaryCurrencyCode">Secondary currency code.</param>
+        /// <param name="secondaryIsCrypto">Wether the secondary currency is a crypto currency</param>
         /// <param name="rate">Exchange rate.</param>
         public ExchangeRate(string referenceCurrencyCode, bool referenceIsCrypto, string secondaryCurrencyCode, bool secondaryIsCrypto, decimal? rate = null)
         {
@@ -30,8 +32,6 @@ namespace MyCC.Core.Rates
             ReferenceCurrencyIsCryptoCurrency = referenceIsCrypto;
             SecondaryCurrencyIsCryptoCurrency = secondaryIsCrypto;
             Rate = rate == null ? (decimal?)null : Math.Truncate(rate.Value * 100000000) / 100000000;
-
-            Id = $"{ReferenceCurrencyCode}{SecondaryCurrencyCode}{RepositoryId}";
         }
 
         /// <summary>
@@ -43,58 +43,65 @@ namespace MyCC.Core.Rates
         public ExchangeRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency, decimal? rate = null) : this(referenceCurrency.Code, referenceCurrency.IsCryptoCurrency, secondaryCurrency.Code, secondaryCurrency.IsCryptoCurrency, rate) { }
 
         // ReSharper disable once MemberCanBePrivate.Global
+        // ReSharper disable once UnusedMember.Global
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
         /// <value>The identifier.</value>
         [PrimaryKey, Column("_id")]
-        public string Id { get; set; }
+        public string Id
+        {
+            get
+            {
+                return $"{ReferenceCurrencyCode}-{SecondaryCurrencyCode}-{RepositoryId}";
+            }
+            set
+            {
+                var parts = value.Split('-');
+                ReferenceCurrencyCode = parts[0];
+                SecondaryCurrencyCode = parts[1];
+                RepositoryId = int.Parse(parts[2]);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the repository identifier.
         /// </summary>
         /// <value>The identifier.</value>
         [Column("ExchangeRateRepository")]
-        public int RepositoryId
-        {
-            get
-            {
-                return _repositoryId;
-            }
-            set
-            {
-                _repositoryId = value;
-                Id = $"{ReferenceCurrencyCode}{SecondaryCurrencyCode}{RepositoryId}";
-            }
-        }
+        public int RepositoryId { get; set; }
 
-        private int _repositoryId;
-
+        // ReSharper disable once MemberCanBePrivate.Global
         /// <summary>
         /// The reference currency.
         /// </summary>
         [Column("ReferenceCode")]
-        public string ReferenceCurrencyCode { get; }
+        public string ReferenceCurrencyCode { get; set; }
 
+        // ReSharper disable once MemberCanBePrivate.Global
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
         /// <summary>
         /// Gets a value indicating whether this <see cref="T:MyCC.Core.Rates.ExchangeRate"/> reference currency is a crypto currency.
         /// </summary>
         /// <value><c>true</c> if reference currency is crypto currency; otherwise, <c>false</c>.</value>
         [Column("ReferenceIsCrypto")]
-        public bool ReferenceCurrencyIsCryptoCurrency { get; }
+        public bool ReferenceCurrencyIsCryptoCurrency { get; set; }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         /// <summary>
         /// The secondary currency.
         /// </summary>
         [Column("SecondaryCode")]
-        public string SecondaryCurrencyCode { get; }
+        public string SecondaryCurrencyCode { get; set; }
 
+        // ReSharper disable once MemberCanBePrivate.Global
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
         /// <summary>
         /// Gets a value indicating whether this <see cref="T:MyCC.Core.Rates.ExchangeRate"/> secondary currency is a crypto currency.
         /// </summary>
         /// <value><c>true</c> if secondary currency is crypto currency; otherwise, <c>false</c>.</value>
         [Column("SecondaryIsCrypto")]
-        public bool SecondaryCurrencyIsCryptoCurrency { get; }
+        public bool SecondaryCurrencyIsCryptoCurrency { get; set; }
 
         private decimal? _rate;
         /// <summary>
@@ -135,18 +142,10 @@ namespace MyCC.Core.Rates
         }
 
         /// <summary>
-        /// Returns if the exchange rate contains the specified currency code.
-        /// </summary>
-        /// <param name="currency">The specified currency code.</param>
-        public bool Contains(Currency.Model.Currency currency)
-        {
-            return Contains(currency.Code, currency.IsCryptoCurrency);
-        }
-
-        /// <summary>
         /// Returns if the exchange rate contains the specified currency.
         /// </summary>
         /// <param name="currencyCode">The specified currency.</param>
+        /// <param name="isCrypto">Wether the currency is a crypro currency</param>
         public bool Contains(string currencyCode, bool isCrypto)
         {
             return (ReferenceCurrencyCode != null && ReferenceCurrencyCode.Equals(currencyCode) && ReferenceCurrencyIsCryptoCurrency == isCrypto)

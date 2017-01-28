@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
+using MyCC.Core.Currency.Storage;
 using MyCC.Core.Rates;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
@@ -51,6 +52,7 @@ namespace MyCC.Forms.view.components
             _webView.RegisterCallback("Callback", code =>
             {
                 var currency = new Currency(code.Split(',')[0], bool.Parse(code.Split(',')[1]));
+                currency = CurrencyStorage.Instance.Find(currency) ?? currency;
 
                 var accounts = AccountStorage.AccountsWithCurrency(currency);
 

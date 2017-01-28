@@ -58,7 +58,7 @@ namespace MyCC.Core.Rates.Repositories
             }
             else
             {
-                await _connection.InsertAsync(exchangeRate);
+                await _connection.InsertOrReplaceAsync(exchangeRate);
             }
             Rates.Add(exchangeRate);
 

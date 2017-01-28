@@ -40,10 +40,5 @@ namespace MyCC.Core.Currency.Storage
         {
             await LocalRepository.FetchOnline();
         }
-
-        public static Model.Currency Find(string code)
-        {
-            return Instance.AllElements.Find(c => Equals(code, c?.Code));
-        }
     }
 }

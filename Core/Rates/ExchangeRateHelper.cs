@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Rates.Repositories.Interfaces;
@@ -47,8 +46,6 @@ namespace MyCC.Core.Rates
 
         public static Task FetchMissingRatesFor(IEnumerable<ExchangeRate> rates)
         {
-            Debug.WriteLine("Requested rates:");
-            Debug.WriteLine(string.Join("\n", rates));
             var missingRates = rates.SelectMany(GetNeededRates).Distinct();
             return FetchMissingRates(missingRates);
         }
@@ -57,12 +54,6 @@ namespace MyCC.Core.Rates
         {
             var storedRates = ExchangeRatesStorage.Instance.StoredRates.ToList();
             var neededToFetch = missingRates.Where(r => !(storedRates.Contains(r) || storedRates.Contains(r.Inverse)));
-
-            Debug.WriteLine("Missing rates:");
-            Debug.WriteLine(string.Join("\n", missingRates));
-            Debug.WriteLine("Needed to fetch:");
-            Debug.WriteLine(string.Join("\n", neededToFetch));
-
 
             var fetchedFixerIo = false;
             var fetchedBtce = false;

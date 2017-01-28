@@ -35,6 +35,10 @@ namespace MyCC.Core.Rates
                     await _connection.ExecuteAsync("DROP TABLE AvailableRatesRepositories;)");
                     await _connection.ExecuteAsync("DROP TABLE ExchangeRateRepositories;)");
                 }
+                if (ApplicationSettings.VersionLastLaunch < new Version("0.5.11"))
+                {
+                    await _connection.ExecuteAsync("DELETE FROM ExchangeRates;");
+                }
             });
 
             Repositories = new List<IRateRepository> {
