@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MyCC.Core.Abstract.Database;
 using MyCC.Core.Currency.Repositories;
 using MyCC.Core.Currency.Storage;
 using MyCC.Core.Rates.Repositories.Interfaces;
@@ -69,19 +67,18 @@ namespace MyCC.Core.Rates.Repositories
 
         private static string ToUrl(ExchangeRate exchangeRate)
         {
-            return exchangeRate.ReferenceCurrencyCode.ToLower() + "-" + exchangeRate.SecondaryCurrencyCode.ToLower();
+            return exchangeRate.ReferenceCurrencyCode?.ToLower() + "-" + exchangeRate.SecondaryCurrencyCode?.ToLower();
         }
 
         public int TypeId => (int)RatesRepositories.Cryptonator;
 
         public Task FetchAvailableRates()
         {
-            return new Task(() =>
-            {
-                var id = CurrencyStorage.Instance.RepositoryOfType<CryptonatorCurrencyRepository>().Id;
-                var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == id).Select(e => e.Code);
-                _supportedCurrencies = CurrencyStorage.Instance.AllElements.Where(c => codes.Any(x => x.Equals(c?.Code))).Select(c => c.Code).ToList();
-            });
+            var id = CurrencyStorage.Instance.RepositoryOfType<CryptonatorCurrencyRepository>().Id;
+            var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == id).Select(e => e.Code);
+            _supportedCurrencies = CurrencyStorage.Instance.AllElements.Where(c => codes.Any(x => x.Equals(c?.Code))).Select(c => c.Code).ToList();
+
+            return new Task(() => { });
         }
 
         public bool IsAvailable(ExchangeRate rate)

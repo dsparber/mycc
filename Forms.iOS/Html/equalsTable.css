@@ -40,7 +40,7 @@ td div div:first-child:not(:last-child) {
 }
 
 td > div {
-    padding: 4px 0;
+    padding: 2px 0;
 }
 
 td div div span:last-child {

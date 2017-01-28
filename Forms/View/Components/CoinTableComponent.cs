@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
-using MyCC.Core.Currency.Storage;
 using MyCC.Core.Rates;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
