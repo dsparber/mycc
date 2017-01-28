@@ -1,7 +1,6 @@
 
 html, body {
     font-family:  "Droid Sans Mono", "Courier New", Consolas, monospace;
-    font-size: 8pt;
     font-weight: lighter;
     margin: 0;
     -webkit-touch-callout: none;
@@ -25,6 +24,10 @@ td:first-child+td, td:first-child+td+td {
 
 th:last-child, td:last-child {
     width: 30px;
+}
+
+tbody td span:last-child {
+    font-size: 9pt;
 }
 
 tbody td:last-child {
@@ -73,10 +76,4 @@ thead td.down span {
 
 thead td.up span {
     background-image: url("down.svg");
-}
-
-@media (max-width: 374px){
-    td:first-child+td+td {
-        display: none;
-    }
 }

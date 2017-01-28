@@ -17,9 +17,10 @@ table {
 
 td:first-child {
   padding-left: 8px;
+    width: 1px;
 }
 
-td:first-child+td, td:first-child+td+td {
+td:first-child, td:first-child+td+td {
     text-align: right;
 }
 
@@ -73,10 +74,4 @@ thead td.down span {
 
 thead td.up span {
     background-image: url("down.svg");
-}
-
-@media (max-width: 374px){
-    td:first-child+td+td {
-        display: none;
-    }
 }

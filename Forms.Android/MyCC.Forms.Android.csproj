@@ -229,7 +229,6 @@
     <None Include="app.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
-    <None Include="Assets\AboutAssets.txt" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -277,24 +276,6 @@
     <AndroidResource Include="Resources\drawable\up.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Html\upDown.svg" />
-    <AndroidAsset Include="Assets\Html\Chart.min.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\coinTable.css" />
-    <AndroidAsset Include="Assets\Html\coinTable.html" />
-    <AndroidAsset Include="Assets\Html\coinTable.js" />
-    <AndroidAsset Include="Assets\Html\down.svg" />
-    <AndroidAsset Include="Assets\Html\graph.css" />
-    <AndroidAsset Include="Assets\Html\graph.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\graph.js" />
-    <AndroidAsset Include="Assets\Html\jquery-latest.min.js" />
-    <AndroidAsset Include="Assets\Html\more.png" />
-    <AndroidAsset Include="Assets\Html\up.svg" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Core\MyCC.Core.csproj">
       <Project>{92708D96-5841-4408-A7EE-B2D02C716F89}</Project>
       <Name>MyCC.Core</Name>
@@ -303,6 +284,32 @@
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>MyCC.Forms</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Html\accountsTable.css" />
+    <AndroidAsset Include="Assets\Html\accountsTable.html" />
+    <AndroidAsset Include="Assets\Html\accountsTable.js" />
+    <AndroidAsset Include="Assets\Html\close.svg" />
+    <AndroidAsset Include="Assets\Html\coinTable.css" />
+    <AndroidAsset Include="Assets\Html\coinTable.html" />
+    <AndroidAsset Include="Assets\Html\coinTable.js" />
+    <AndroidAsset Include="Assets\Html\d3.min.js" />
+    <AndroidAsset Include="Assets\Html\d3pie.min.js" />
+    <AndroidAsset Include="Assets\Html\down.svg" />
+    <AndroidAsset Include="Assets\Html\equalsTable.css" />
+    <AndroidAsset Include="Assets\Html\equalsTable.html" />
+    <AndroidAsset Include="Assets\Html\equalsTable.js" />
+    <AndroidAsset Include="Assets\Html\jquery-latest.min.js" />
+    <AndroidAsset Include="Assets\Html\jquery-ui.min.js" />
+    <AndroidAsset Include="Assets\Html\more.png" />
+    <AndroidAsset Include="Assets\Html\pieChart.css" />
+    <AndroidAsset Include="Assets\Html\pieChart.html" />
+    <AndroidAsset Include="Assets\Html\pieChart.js" />
+    <AndroidAsset Include="Assets\Html\ratesTable.css" />
+    <AndroidAsset Include="Assets\Html\ratesTable.html" />
+    <AndroidAsset Include="Assets\Html\ratesTable.js" />
+    <AndroidAsset Include="Assets\Html\up.svg" />
+    <AndroidAsset Include="Assets\Html\upDown.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

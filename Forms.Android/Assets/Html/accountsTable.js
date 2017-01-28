@@ -1,37 +1,29 @@
 "use strict";
 
 var testData = [{
-    "Code": "BTC",
-    "Name": "Bitcoin",
+    "Name": "Georg",
     "Amount": "23,525.31",
-    "Reference": 213.96
+    "Id": 1
 }, {
-    "Code": "ETH",
-    "Name": "Ethereum",
-    "Amount": 986.2425,
-    "Reference": "347,852.23"
+    "Name": "Paul",
+    "Amount": "986.24",
+    "Id": 3
 }, {
-    "Code": "PVC",
-    "Name": "PuraVidaCoin",
+    "Name": "Josef",
     "Amount": "45,845.78",
-    "Reference": 478.54
+    "Id": 2
 }];
 
-var testColumns = [
-    {
-        "Text": "Währung",
-        "Type": "Currency"
-    }, {
-        "Text": "Anzahl",
-        "Type": "Amount"
-    }, {
-        "Text": "in EUR",
-        "Type": "ReferenceCurrency"
-    }
-];
+var testColumns = [{
+    "Text": "Name",
+    "Type": "Name"
+}, {
+    "Text": "Anzahl",
+    "Type": "Amount"
+}];
 
 var testSort = {
-    "Type": "Currency",
+    "Type": "Name",
     "Direction": "Ascending"
 };
 
@@ -47,7 +39,6 @@ function setHeader(columns) {
         var cell = row.insertCell(i);
         cell.innerHTML = "<span>" + columns[i]["Text"] + "</span>";
         cell.setAttribute("type", columns[i]["Type"]);
-        cell.setAttribute("class", columns[i]["XYZ"]);
         cell.onclick = headerClicked(columns[i]["Type"]);
     }
     row.insertCell(columns.length);
@@ -62,15 +53,13 @@ function updateTable(data, sort) {
 
     for (var i = 0; i < data.length; i++) {
         var row = coinTable.insertRow(i);
-        var codeCell = row.insertCell(0);
+        var nameCell = row.insertCell(0);
         var amountCell = row.insertCell(1);
-        var referenceCell = row.insertCell(2);
-        row.insertCell(3); // For Arrow
-        codeCell.innerHTML = data[i]["Code"];
-        amountCell.innerHTML = data[i]["Amount"];
-        referenceCell.innerHTML = data[i]["Reference"];
+        row.insertCell(2); // For Arrow
+        amountCell.innerHTML = "<span>" + data[i]["Amount"].substring(0, data[i]["Amount"].length - 5) + "</span><span>" + data[i]["Amount"].substring(data[i]["Amount"].length - 5) + "</span>";
+        nameCell.innerHTML = data[i]["Name"];
 
-        row.onclick = rowClicked(data[i]["CallbackString"]);
+        row.onclick = rowClicked(data[i]["Id"]);
     }
 
     $("#coinTable thead").children().removeClass();
@@ -79,21 +68,18 @@ function updateTable(data, sort) {
     sizeAllocated();
 }
 
-function sizeAllocated() {
-    // ReSharper disable once UndeclaredGlobalVariableUsing
-    Native("CallbackSizeAllocated", document.getElementById("coinTable").offsetHeight);
+function rowClicked(id) {
+    return function () {
+        Native("Callback", id);
+    };
 }
 
-function rowClicked(code) {
-    return function () {
-        // ReSharper disable once UndeclaredGlobalVariableUsing
-        Native("Callback", code);
-    };
+function sizeAllocated() {
+    Native("CallbackSizeAllocated", document.getElementById("coinTable").offsetHeight);
 }
 
 function headerClicked(type) {
     return function () {
-        // ReSharper disable once UndeclaredGlobalVariableUsing
         Native("HeaderClickedCallback", type);
     };
 }
