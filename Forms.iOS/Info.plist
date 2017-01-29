@@ -51,8 +51,10 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Scan QR Code</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.9</string>
+	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>0.9</string>
+	<string>1.0</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Needed for scanning QR Codes</string>
 </dict>
 </plist>
