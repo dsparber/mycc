@@ -197,12 +197,6 @@
     <Reference Include="CarouselView.FormsPlugin.iOS">
       <HintPath>..\packages\CarouselView.FormsPlugin.2.9.0\lib\Xamarin.iOS10\CarouselView.FormsPlugin.iOS.dll</HintPath>
     </Reference>
-    <Reference Include="Plugin.Fingerprint.Abstractions">
-      <HintPath>..\packages\Plugin.Fingerprint.1.4.0\lib\Xamarin.iOS10\Plugin.Fingerprint.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.Fingerprint">
-      <HintPath>..\packages\Plugin.Fingerprint.1.4.0\lib\Xamarin.iOS10\Plugin.Fingerprint.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Forms.Core">
       <HintPath>..\packages\Xamarin.Forms.2.3.3.180\lib\Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
@@ -226,6 +220,12 @@
     </Reference>
     <Reference Include="SQLitePCLRaw.batteries_v2">
       <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.2\lib\Xamarin.iOS10\SQLitePCLRaw.batteries_v2.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Fingerprint.Abstractions">
+      <HintPath>..\packages\Plugin.Fingerprint.1.4.1\lib\Xamarin.iOS10\Plugin.Fingerprint.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Fingerprint">
+      <HintPath>..\packages\Plugin.Fingerprint.1.4.1\lib\Xamarin.iOS10\Plugin.Fingerprint.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

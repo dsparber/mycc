@@ -173,15 +173,6 @@
     <Reference Include="CarouselView.FormsPlugin.Android">
       <HintPath>..\packages\CarouselView.FormsPlugin.2.9.0\lib\MonoAndroid\CarouselView.FormsPlugin.Android.dll</HintPath>
     </Reference>
-    <Reference Include="Plugin.Fingerprint.Abstractions">
-      <HintPath>..\packages\Plugin.Fingerprint.1.4.0\lib\MonoAndroid\Plugin.Fingerprint.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.Fingerprint.Android.Samsung">
-      <HintPath>..\packages\Plugin.Fingerprint.1.4.0\lib\MonoAndroid\Plugin.Fingerprint.Android.Samsung.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.Fingerprint">
-      <HintPath>..\packages\Plugin.Fingerprint.1.4.0\lib\MonoAndroid\Plugin.Fingerprint.dll</HintPath>
-    </Reference>
     <Reference Include="SQLitePCLRaw.core">
       <HintPath>..\packages\SQLitePCLRaw.core.1.1.2\lib\MonoAndroid\SQLitePCLRaw.core.dll</HintPath>
     </Reference>
@@ -211,6 +202,15 @@
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.2.3.3.180\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Fingerprint.Abstractions">
+      <HintPath>..\packages\Plugin.Fingerprint.1.4.1\lib\MonoAndroid\Plugin.Fingerprint.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Fingerprint.Android.Samsung">
+      <HintPath>..\packages\Plugin.Fingerprint.1.4.1\lib\MonoAndroid\Plugin.Fingerprint.Android.Samsung.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Fingerprint">
+      <HintPath>..\packages\Plugin.Fingerprint.1.4.1\lib\MonoAndroid\Plugin.Fingerprint.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
