@@ -18,7 +18,7 @@ namespace MyCC.Forms
         {
             Page startPage;
 
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.OS == TargetPlatform.Android && false)
             {
                 startPage = new MasterDetailContainerView();
             }

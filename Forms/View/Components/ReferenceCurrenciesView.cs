@@ -123,11 +123,15 @@ namespace MyCC.Forms.view.components
                     default: sortLambda = d => 1; break;
                 }
                 items = ApplicationSettings.SortDirectionReferenceValues == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
-                _webView.CallJsFunction("setHeader", new[]{
-                    new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
-                    new HeaderData($"{I18N.Currency[0]}.", SortOrder.Alphabetical.ToString())
-                }, string.Empty);
-                _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), _referenceMoney.Amount == 1);
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    _webView.CallJsFunction("setHeader", new[]{
+                        new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
+                        new HeaderData($"{I18N.Currency[0]}.", SortOrder.Alphabetical.ToString())
+                    }, string.Empty);
+                    _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), _referenceMoney.Amount == 1);
+                });
             }
             catch (Exception e)
             {

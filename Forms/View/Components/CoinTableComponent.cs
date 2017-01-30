@@ -150,12 +150,15 @@ namespace MyCC.Forms.view.components
 
                 items = ApplicationSettings.SortDirectionTable == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
-                _webView.CallJsFunction("setHeader", new[]{
-                    new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
-                    new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
-                    new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.BaseCurrency.Code), SortOrder.ByValue.ToString())
-                }, string.Empty);
-                _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    _webView.CallJsFunction("setHeader", new[]{
+                        new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
+                        new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
+                        new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.BaseCurrency.Code), SortOrder.ByValue.ToString())
+                    }, string.Empty);
+                    _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+                });
             }
             catch (Exception e)
             {

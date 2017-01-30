@@ -22,8 +22,8 @@ namespace MyCC.Forms.view.components
 {
     public class CoinGraphComponent : ContentView
     {
-        private readonly HybridWebView webView;
-        private bool appeared;
+        private readonly HybridWebView _webView;
+        private bool _appeared;
         private bool _sizeAllocated;
 
         public CoinGraphComponent(INavigation navigation)
@@ -32,25 +32,25 @@ namespace MyCC.Forms.view.components
 
             resolverContainer.Register<IJsonSerializer, XLabs.Serialization.JsonNET.JsonSerializer>();
 
-            webView = new HybridWebView
+            _webView = new HybridWebView
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 BackgroundColor = Color.White,
                 MinimumHeightRequest = 500
             };
-            webView.RegisterCallback("selectedCallback", id =>
+            _webView.RegisterCallback("selectedCallback", id =>
             {
                 var element = AccountStorage.Instance.AllElements.Find(e => e.Id == Convert.ToInt32(id));
 
                 Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(element)));
             });
-            webView.RegisterCallback("sizeAllocated", id =>
+            _webView.RegisterCallback("sizeAllocated", id =>
             {
                 _sizeAllocated = true;
             });
 
-            Content = webView;
+            Content = _webView;
             HeightRequest = 500;
 
             UpdateView();
@@ -65,10 +65,10 @@ namespace MyCC.Forms.view.components
 
         public void OnAppearing()
         {
-            if (appeared) return;
+            if (_appeared) return;
 
-            appeared = true;
-            webView.LoadFromContent("Html/pieChart.html");
+            _appeared = true;
+            _webView.LoadFromContent("Html/pieChart.html");
 
             Task.Factory.StartNew(async () =>
             {
@@ -85,7 +85,7 @@ namespace MyCC.Forms.view.components
             try
             {
                 var items = AccountStorage.AccountsGroupedByCurrency.Select(e => new Data(e, ApplicationSettings.BaseCurrency)).Where(d => d.value > 0).OrderByDescending(d => d.value).ToArray();
-                webView.CallJsFunction("showChart", items, new string[] { I18N.OneAccount, I18N.Accounts }, new string[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay);
+                Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new string[] { I18N.OneAccount, I18N.Accounts }, new string[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay));
             }
             catch (Exception e)
             {
