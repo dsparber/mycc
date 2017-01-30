@@ -47,6 +47,7 @@ namespace MyCC.Forms.view.pages
 			if (ApplicationSettings.IsFingerprintEnabled && !_fingerprintCanceled)
 			{
 				ShowFingerprintIcon.IsVisible = true;
+				PasswordEntry.Unfocus();
 
 				var result = await CrossFingerprint.Current.AuthenticateAsync(I18N.UnlockTheApplication);
 				if (result.Authenticated)
@@ -56,6 +57,7 @@ namespace MyCC.Forms.view.pages
 				if (result.Status.Equals(FingerprintAuthenticationResultStatus.Canceled))
 				{
 					_fingerprintCanceled = true;
+					PasswordEntry.Focus();
 				}
 			}
 			PasswordEntry.Focus();
