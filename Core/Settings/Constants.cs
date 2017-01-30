@@ -2,6 +2,6 @@
 {
 	public static class Constants
 	{
-		public static readonly Version AppVersion = new Version("0.5.15");
+		public static readonly Version AppVersion = new Version("0.5.16");
 	}
 }

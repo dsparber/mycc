@@ -28,7 +28,7 @@ namespace MyCC.Core.Currency.Database
 				}
 				await connection.ExecuteAsync("DELETE FROM Currencies;");
 			}
-			if (ApplicationSettings.VersionLastLaunch < new Version("0.5.10"))
+			if (ApplicationSettings.VersionLastLaunch < new Version("0.5.16"))
 			{
 				await connection.ExecuteAsync("DELETE FROM Currencies;");
 				await connection.ExecuteAsync("DELETE FROM CurrencyMap;");
