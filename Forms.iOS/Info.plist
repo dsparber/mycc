@@ -50,11 +50,11 @@
 	<false/>
 	<key>NSCameraUsageDescription</key>
 	<string>Scan QR Code</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Needed for scanning QR Codes</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.5.13</string>
+	<key>CFBundleVersion</key>
+	<string>0.5.13</string>
 </dict>
 </plist>

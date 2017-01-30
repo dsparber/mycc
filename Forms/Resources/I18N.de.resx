@@ -799,4 +799,14 @@
 		xml:space="preserve">
     <value>Bitte überprüfen Sie Ihre Eingabe!</value>
   </data>
+	<data
+		name="UnlockApplication"
+		xml:space="preserve">
+    <value>App entsperren</value>
+  </data>
+	<data
+		name="DevelopedBy"
+		xml:space="preserve">
+    <value>Entwickelt von Daniel Sparber</value>
+  </data>
 </root>

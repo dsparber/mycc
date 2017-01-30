@@ -796,5 +796,17 @@ namespace MyCC.Forms.Resources {
                 return ResourceManager.GetString("VerifyInput", resourceCulture);
             }
         }
+        
+        public static string UnlockApplication {
+            get {
+                return ResourceManager.GetString("UnlockApplication", resourceCulture);
+            }
+        }
+        
+        public static string DevelopedBy {
+            get {
+                return ResourceManager.GetString("DevelopedBy", resourceCulture);
+            }
+        }
     }
 }
