@@ -326,10 +326,10 @@
       <HintPath>..\packages\CarouselView.FormsPlugin.2.9.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10\CarouselView.FormsPlugin.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Fingerprint.Abstractions">
-      <HintPath>..\packages\Plugin.Fingerprint.1.4.0\lib\portable-net45+win8+wpa81+wp8\Plugin.Fingerprint.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Plugin.Fingerprint.1.4.1\lib\portable-net45+win8+wpa81+wp8\Plugin.Fingerprint.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Fingerprint">
-      <HintPath>..\packages\Plugin.Fingerprint.1.4.0\lib\portable-net45+win8+wpa81+wp8\Plugin.Fingerprint.dll</HintPath>
+      <HintPath>..\packages\Plugin.Fingerprint.1.4.1\lib\portable-net45+win8+wpa81+wp8\Plugin.Fingerprint.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />

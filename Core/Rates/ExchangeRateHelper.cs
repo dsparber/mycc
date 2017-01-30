@@ -40,8 +40,9 @@ namespace MyCC.Core.Rates
 
 		private static ExchangeRate GetStoredRate(ExchangeRate neededRate)
 		{
-			return ExchangeRatesStorage.Instance.StoredRates.ToList().Find(c => c?.Equals(neededRate) ?? false) ??
-					ExchangeRatesStorage.Instance.StoredRates.ToList().Find(c => c?.Equals(neededRate.Inverse) ?? false)?.Inverse;
+			var rates = ExchangeRatesStorage.Instance.StoredRates.ToList();
+			return rates.Find(c => c?.Equals(neededRate) ?? false) ??
+					rates.Find(c => c?.Equals(neededRate.Inverse) ?? false)?.Inverse;
 		}
 
 		public static Task FetchMissingRatesFor(IEnumerable<ExchangeRate> rates)

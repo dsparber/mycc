@@ -272,12 +272,12 @@
 	<data
 		name="AssetsGraph"
 		xml:space="preserve">
-    <value>Vermögen (Grafik)</value>
+    <value>Vermögensübersicht (Grafik)</value>
   </data>
 	<data
 		name="AssetsTable"
 		xml:space="preserve">
-    <value>Vermögen (Tabelle)</value>
+    <value>Vermögensübersicht (Tabelle)</value>
   </data>
 	<data
 		name="BitcoinCanNotBeRemoved"
