@@ -43,7 +43,7 @@ namespace MyCC.Core.Currency.Repositories
 			var currencies = (from token in result
 							  let name = (string)token[CurrencyListResultName]
 							  let code = (string)token[CurrencyListResultCurrency]
-							  let isCrypto = CurrencyStorage.Instance.AllElements.Find(c => c.Code.Equals(code) && c.Name.Equals(name))?.IsCryptoCurrency ?? true
+							  let isCrypto = CurrencyStorage.Instance.AllElements.Find(c => Equals(c?.Code, code) && Equals(c?.Name, name))?.IsCryptoCurrency ?? true
 							  select new Model.Currency(code, name, isCrypto)).Where(c => c.IsCryptoCurrency).ToList();
 
 			return currencies;
