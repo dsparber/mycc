@@ -270,16 +270,6 @@
     <value>Assets</value>
   </data>
 	<data
-		name="AssetsGraph"
-		xml:space="preserve">
-    <value>Assets (Graph)</value>
-  </data>
-	<data
-		name="AssetsTable"
-		xml:space="preserve">
-    <value>Assets (Table)</value>
-  </data>
-	<data
 		name="BitcoinCanNotBeRemoved"
 		xml:space="preserve">
     <value>Bitcoin can not be removed from the reference currencies.</value>

@@ -7,7 +7,7 @@
 	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
 	xmlns:cells="clr-namespace:MyCC.Forms.view.components.cells;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.view.pages.settings.DefaultPageSettingsView"
-    Title="{resources:Translate DefaultView}">
+	Title="{resources:Translate DefaultView}">
 	<components:ChangingStackLayout>
 		<components:HeaderView
 			TitleText="{resources:Translate AppName}"
@@ -27,17 +27,14 @@
 					<cells:CustomViewCell
 						x:Name="RatesOptionCell"
 						Tapped="SelectionChanged"
-						Text="{resources:Translate Rates}"
 						Image="checkmark.png" />
 					<cells:CustomViewCell
 						x:Name="TableOptionCell"
 						Tapped="SelectionChanged"
-						Text="{resources:Translate AssetsTable}"
 						Image="checkmark.png" />
 					<cells:CustomViewCell
 						x:Name="GraphOptionCell"
 						Tapped="SelectionChanged"
-						Text="{resources:Translate AssetsGraph}"
 						Image="checkmark.png" />
 				</TableSection>
 			</TableView>

@@ -161,18 +161,6 @@ namespace MyCC.Forms.Resources {
             }
         }
         
-        public static string AssetsGraph {
-            get {
-                return ResourceManager.GetString("AssetsGraph", resourceCulture);
-            }
-        }
-        
-        public static string AssetsTable {
-            get {
-                return ResourceManager.GetString("AssetsTable", resourceCulture);
-            }
-        }
-        
         public static string BitcoinCanNotBeRemoved {
             get {
                 return ResourceManager.GetString("BitcoinCanNotBeRemoved", resourceCulture);

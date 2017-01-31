@@ -270,16 +270,6 @@
     <value>Vermögensübersicht</value>
   </data>
 	<data
-		name="AssetsGraph"
-		xml:space="preserve">
-    <value>Vermögensübersicht (Grafik)</value>
-  </data>
-	<data
-		name="AssetsTable"
-		xml:space="preserve">
-    <value>Vermögensübersicht (Tabelle)</value>
-  </data>
-	<data
 		name="BitcoinCanNotBeRemoved"
 		xml:space="preserve">
     <value>Bitcoin kann nicht von den Referenzwährungen entfernt werden.</value>

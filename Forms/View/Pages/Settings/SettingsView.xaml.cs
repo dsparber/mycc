@@ -23,7 +23,7 @@ namespace MyCC.Forms.view.pages.settings
 
 			AutoRefresh.Switch.Toggled += AutoRefreshChanged;
 			RoundNumbers.Switch.Toggled += RoundNumbersChanged;
-			ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new MyCC.Forms.view.pages.settings.ReferenceCurrenciesSettingsView());
+			ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new ReferenceCurrenciesSettingsView());
 			ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies);
 			SourcesCell.Tapped += (sender, e) => Navigation.PushAsync(new SourcesView());
 			SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
@@ -35,7 +35,7 @@ namespace MyCC.Forms.view.pages.settings
 
 		private void SetDefaultPageCellText()
 		{
-			DefaultViewCell.Detail = ApplicationSettings.DefaultPage == StartupPage.TableView ? I18N.AssetsTable : ApplicationSettings.DefaultPage == StartupPage.GraphView ? I18N.AssetsGraph : I18N.Rates;
+			DefaultViewCell.Detail = ApplicationSettings.DefaultPage == StartupPage.TableView ? $"{I18N.Assets} ({I18N.Table})" : ApplicationSettings.DefaultPage == StartupPage.GraphView ? $"{I18N.Assets} ({I18N.Graph})" : I18N.Rates;
 		}
 
 		private void OpenDefaultViewPage(object sender, EventArgs e)

@@ -12,6 +12,9 @@ namespace MyCC.Forms.view.pages.settings
 		{
 			InitializeComponent();
 			UpdateCheckmarks();
+			RatesOptionCell.Text = I18N.Rates;
+			GraphOptionCell.Text = $"{I18N.Assets} ({I18N.Graph})";
+			TableOptionCell.Text = $"{I18N.Assets} ({I18N.Table})";
 		}
 
 		private void SelectionChanged(object sender, EventArgs e)
@@ -37,7 +40,7 @@ namespace MyCC.Forms.view.pages.settings
 			GraphOptionCell.ShowIcon = ApplicationSettings.DefaultPage.Equals(StartupPage.GraphView);
 			TableOptionCell.ShowIcon = ApplicationSettings.DefaultPage.Equals(StartupPage.TableView);
 			RatesOptionCell.ShowIcon = ApplicationSettings.DefaultPage.Equals(StartupPage.RatesView);
-			Header.InfoText = $"{I18N.DefaultView}: {(ApplicationSettings.DefaultPage.Equals(StartupPage.GraphView) ? I18N.AssetsGraph : ApplicationSettings.DefaultPage.Equals(StartupPage.TableView) ? I18N.AssetsTable : I18N.Rates)}";
+			Header.InfoText = ApplicationSettings.DefaultPage.Equals(StartupPage.GraphView) ? $"{I18N.Assets} ({I18N.Graph})" : ApplicationSettings.DefaultPage.Equals(StartupPage.TableView) ? $"{I18N.Assets} ({I18N.Table})" : I18N.Rates;
 		}
 	}
 }
