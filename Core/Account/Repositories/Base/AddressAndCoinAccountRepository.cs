@@ -14,14 +14,17 @@ namespace MyCC.Core.Account.Repositories.Base
 			var keyData = JsonConvert.DeserializeObject<KeyData>(data);
 
 			_coin = keyData.Coin;
-			_coin.IsCryptoCurrency = true;
+			if (_coin != null) _coin.IsCryptoCurrency = true;
 			Address = keyData.address;
 		}
 
 		protected AddressAndCoinAccountRepository(int id, string name, Currency.Model.Currency coin, string address) : base(id, name, address)
 		{
-			_coin = coin;
-			_coin.IsCryptoCurrency = true;
+			if (coin != null)
+			{
+				_coin = coin;
+				_coin.IsCryptoCurrency = true;
+			}
 		}
 
 		private class KeyData

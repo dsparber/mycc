@@ -93,15 +93,7 @@ namespace MyCC.Forms.view.components
 
 			_appeared = true;
 			_webView.LoadFromContent("Html/equalsTable.html");
-
-			Task.Factory.StartNew(async () =>
-			{
-				while (!_sizeAllocated)
-				{
-					UpdateView();
-					await Task.Delay(200);
-				}
-			});
+			_webView.LoadFinished = (sender, e) => UpdateView();
 		}
 
 		public void UpdateView()

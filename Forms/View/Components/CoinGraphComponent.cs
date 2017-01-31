@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
@@ -23,9 +22,8 @@ namespace MyCC.Forms.view.components
 {
 	public class CoinGraphComponent : ContentView
 	{
-		private readonly HybridWebView webView;
+		private readonly HybridWebView _webView;
 		private bool appeared;
-		private bool _sizeAllocated;
 
 		public CoinGraphComponent(INavigation navigation)
 		{
@@ -33,25 +31,21 @@ namespace MyCC.Forms.view.components
 
 			resolverContainer.Register<IJsonSerializer, XLabs.Serialization.JsonNET.JsonSerializer>();
 
-			webView = new HybridWebView
+			_webView = new HybridWebView
 			{
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				BackgroundColor = Color.White,
 				MinimumHeightRequest = 500
 			};
-			webView.RegisterCallback("selectedCallback", id =>
+			_webView.RegisterCallback("selectedCallback", id =>
 			{
 				var element = AccountStorage.Instance.AllElements.Find(e => e.Id == Convert.ToInt32(id));
 
 				Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(element)));
 			});
-			webView.RegisterCallback("sizeAllocated", id =>
-			{
-				_sizeAllocated = true;
-			});
 
-			Content = webView;
+			Content = _webView;
 			HeightRequest = 500;
 
 			UpdateView();
@@ -69,16 +63,8 @@ namespace MyCC.Forms.view.components
 			if (appeared) return;
 
 			appeared = true;
-			webView.LoadFromContent("Html/pieChart.html");
-
-			Task.Factory.StartNew(async () =>
-			{
-				while (!_sizeAllocated)
-				{
-					UpdateView();
-					await Task.Delay(200);
-				}
-			});
+			_webView.LoadFromContent("Html/pieChart.html");
+			_webView.LoadFinished = (sender, e) => UpdateView();
 		}
 
 		private void UpdateView()
@@ -86,7 +72,7 @@ namespace MyCC.Forms.view.components
 			try
 			{
 				var items = AccountStorage.AccountsGroupedByCurrency.Select(e => new Data(e, ApplicationSettings.BaseCurrency)).Where(d => d.value > 0).OrderByDescending(d => d.value).ToArray();
-				webView.CallJsFunction("showChart", items, new string[] { I18N.OneAccount, I18N.Accounts }, new string[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, ApplicationSettings.BaseCurrency.Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString());
+				_webView.CallJsFunction("showChart", items, new string[] { I18N.OneAccount, I18N.Accounts }, new string[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, ApplicationSettings.BaseCurrency.Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString());
 			}
 			catch (Exception e)
 			{

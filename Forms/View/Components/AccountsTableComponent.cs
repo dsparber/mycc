@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
@@ -26,7 +25,6 @@ namespace MyCC.Forms.view.components
 	{
 		private readonly HybridWebView _webView;
 		private readonly Currency _currency;
-		private bool _sizeAllocated;
 		private bool _appeared;
 
 		public AccountsTableComponent(INavigation navigation, Currency currency)
@@ -55,7 +53,6 @@ namespace MyCC.Forms.view.components
 			_webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
 			{
 				var size = int.Parse(sizeString);
-				_sizeAllocated = true;
 				Device.BeginInvokeOnMainThread(() => _webView.HeightRequest = size);
 			});
 
@@ -95,15 +92,7 @@ namespace MyCC.Forms.view.components
 			{
 				_appeared = true;
 				_webView.LoadFromContent("Html/accountsTable.html");
-
-				Task.Factory.StartNew(async () =>
-				{
-					while (!_sizeAllocated)
-					{
-						UpdateView();
-						await Task.Delay(200);
-					}
-				});
+				_webView.LoadFinished = (sender, e) => UpdateView();
 			}
 		}
 

@@ -138,6 +138,7 @@
     <Compile Include="View\Pages\Settings\AccountEditView.cs">
       <DependentUpon>AccountEditView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\Settings\AboutView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
