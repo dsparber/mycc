@@ -796,5 +796,17 @@ namespace MyCC.Forms.Resources {
                 return ResourceManager.GetString("DevelopedBy", resourceCulture);
             }
         }
+        
+        public static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        public static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
     }
 }

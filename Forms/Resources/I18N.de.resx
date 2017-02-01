@@ -467,7 +467,7 @@
 	<data
 		name="Info"
 		xml:space="preserve">
-    <value>Kontoinformation</value>
+    <value>Info</value>
   </data>
 	<data
 		name="IsEqualTo"
@@ -798,5 +798,15 @@
 		name="DevelopedBy"
 		xml:space="preserve">
     <value>Entwickelt von Daniel Sparber</value>
+  </data>
+	<data
+		name="About"
+		xml:space="preserve">
+    <value>Über</value>
+  </data>
+	<data
+		name="Version"
+		xml:space="preserve">
+    <value>Version</value>
   </data>
 </root>

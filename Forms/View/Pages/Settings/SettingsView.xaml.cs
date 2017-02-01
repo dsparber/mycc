@@ -6,6 +6,7 @@ using MyCC.Core.Types;
 using MyCC.Forms.helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
+using MyCC.Forms.View.Pages.Settings;
 
 namespace MyCC.Forms.view.pages.settings
 {
@@ -31,6 +32,7 @@ namespace MyCC.Forms.view.pages.settings
 			RatesCell.DetailBreakMode = Xamarin.Forms.LineBreakMode.TailTruncation;
 			SetRatesCellDetail();
 			SetPinCellText();
+			SetAboutCell();
 		}
 
 		private void SetDefaultPageCellText()
@@ -81,6 +83,12 @@ namespace MyCC.Forms.view.pages.settings
 		private void SetRatesCellDetail()
 		{
 			RatesCell.Detail = ApplicationSettings.WatchedCurrencies.Count == 0 ? I18N.AllCurrenciesFromAccounts : string.Join(" + ", new List<string> { I18N.AllCurrenciesFromAccounts, string.Join(", ", ApplicationSettings.WatchedCurrencies) });
+		}
+
+		private void SetAboutCell()
+		{
+			AboutCell.Detail = $"{I18N.AppName} - {I18N.Version} {Constants.AppVersion}";
+			AboutCell.Tapped += (sender, e) => Navigation.PushAsync(new AboutView());
 		}
 	}
 }

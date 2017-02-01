@@ -799,4 +799,14 @@
 		xml:space="preserve">
     <value>Developed by Daniel Sparber</value>
   </data>
+	<data
+		name="About"
+		xml:space="preserve">
+    <value>About</value>
+  </data>
+	<data
+		name="Version"
+		xml:space="preserve">
+    <value>Version</value>
+  </data>
 </root>

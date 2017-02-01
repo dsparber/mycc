@@ -55,6 +55,13 @@
 						Title="{resources:Translate RoundNumbers}"
 						Info="{resources:Translate OtherwiseTruncate}" />
 				</TableSection>
+				<TableSection
+					Title="{resources:Translate Info}">
+					<cells:CustomViewCell
+						x:Name="AboutCell"
+						Text="{resources:Translate About}"
+						Image="more.png" />
+				</TableSection>
 			</TableView>
 		</components:ChangingStackLayout>
 	</ContentPage.Content>

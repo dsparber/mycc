@@ -397,6 +397,11 @@
     <Content Include="Html\pieChart.css" />
     <Content Include="Html\pieChart.html" />
     <Content Include="Html\pieChart.js" />
+    <Content Include="Html\about.css" />
+    <Content Include="Html\about.html" />
+    <Content Include="Html\about.js" />
+    <Content Include="Html\collapse.png" />
+    <Content Include="Html\expand.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\MyCC.Core.csproj">
