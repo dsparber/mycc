@@ -139,6 +139,7 @@
       <DependentUpon>AccountEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\Settings\AboutView.cs" />
+    <Compile Include="View\Overlays\AccountQrCodeOverlay.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

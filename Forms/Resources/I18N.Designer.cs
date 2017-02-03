@@ -808,5 +808,11 @@ namespace MyCC.Forms.Resources {
                 return ResourceManager.GetString("Version", resourceCulture);
             }
         }
+        
+        public static string ShowQrCode {
+            get {
+                return ResourceManager.GetString("ShowQrCode", resourceCulture);
+            }
+        }
     }
 }

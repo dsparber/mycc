@@ -809,4 +809,9 @@
 		xml:space="preserve">
     <value>Version</value>
   </data>
+	<data
+		name="ShowQrCode"
+		xml:space="preserve">
+    <value>Show QR code</value>
+  </data>
 </root>

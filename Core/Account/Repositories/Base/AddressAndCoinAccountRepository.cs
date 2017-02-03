@@ -5,7 +5,7 @@ namespace MyCC.Core.Account.Repositories.Base
 	public abstract class AddressAndCoinAccountRepository : AddressAccountRepository
 	{
 		private readonly Currency.Model.Currency _coin;
-		protected sealed override Currency.Model.Currency Currency => _coin;
+		public sealed override Currency.Model.Currency Currency => _coin;
 
 		public override string Data => JsonConvert.SerializeObject(new KeyData(_coin, Address));
 

@@ -17,7 +17,7 @@ namespace MyCC.Core.Account.Repositories.Base
 		protected abstract Uri Url { get; }
 		protected abstract Func<string, decimal> Balance { get; }
 
-		protected abstract Currency.Model.Currency Currency { get; }
+		public abstract Currency.Model.Currency Currency { get; }
 		public abstract IEnumerable<Currency.Model.Currency> SupportedCurrencies { get; }
 
 		private const int BufferSize = 256000;
