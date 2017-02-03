@@ -194,12 +194,14 @@ namespace MyCC.Forms.view.pages
 			}
 		}
 
-		private void Refresh(object sender, EventArgs e)
+		private async void Refresh(object sender, EventArgs e)
 		{
+			RefreshItem.Clicked -= Refresh;
 			_fetchRatesDone = false; _fetchCoinInfoDone = false;
 			Header.IsLoading = true;
-			Task.Run(() => AppTaskHelper.FetchRates(Rates));
-			Task.Run(() => AppTaskHelper.FetchCoinInfo(_currency));
+			await AppTaskHelper.FetchRates(Rates);
+			await AppTaskHelper.FetchCoinInfo(_currency);
+			RefreshItem.Clicked += Refresh;
 		}
 
 		protected override void OnAppearing()

@@ -22,6 +22,10 @@ namespace MyCC.Forms.view.components
 {
 	public class CoinGraphComponent : ContentView
 	{
+		private bool _refreshingMissing;
+		private bool _refreshingAccounts;
+		private bool _refreshingAccountsAndRates;
+
 		private readonly HybridWebView _webView;
 		private bool appeared;
 
@@ -50,12 +54,20 @@ namespace MyCC.Forms.view.components
 
 			UpdateView();
 
-			Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
-			Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
-			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
 			Messaging.Loading.SubscribeFinished(this, UpdateView);
-
 			Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
+
+			Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => _refreshingMissing = true, () => { _refreshingMissing = false; UpdateIfRefreshingFinished(); });
+			Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => _refreshingAccounts = true, () => { _refreshingAccounts = false; UpdateIfRefreshingFinished(); });
+			Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => _refreshingAccountsAndRates = true, () => { _refreshingAccountsAndRates = false; UpdateIfRefreshingFinished(); });
+		}
+
+		private void UpdateIfRefreshingFinished()
+		{
+			if (!_refreshingMissing && !_refreshingAccounts && !_refreshingAccountsAndRates)
+			{
+				UpdateView();
+			}
 		}
 
 		public void OnAppearing()

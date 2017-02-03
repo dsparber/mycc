@@ -25,7 +25,6 @@ namespace MyCC.Forms.view.components
 	{
 		private readonly HybridWebView _webView;
 		private bool _appeared;
-		private bool _sizeAllocated;
 		private readonly Money _referenceMoney;
 
 		private readonly bool _showAmountInHeader;
@@ -52,7 +51,6 @@ namespace MyCC.Forms.view.components
 			_webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
 			{
 				var size = int.Parse(sizeString);
-				_sizeAllocated = true;
 				Device.BeginInvokeOnMainThread(() => _webView.HeightRequest = size);
 			});
 
