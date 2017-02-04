@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
@@ -17,153 +16,153 @@ using Xamarin.Forms;
 using XLabs.Forms.Controls;
 using XLabs.Ioc;
 using XLabs.Serialization;
+using System.Globalization;
 
 namespace MyCC.Forms.view.components
 {
-    public class CoinGraphComponent : ContentView
-    {
-        private readonly HybridWebView _webView;
-        private bool _appeared;
-        private bool _sizeAllocated;
+	public class CoinGraphComponent : ContentView
+	{
+		private bool _refreshingMissing;
+		private bool _refreshingAccounts;
+		private bool _refreshingAccountsAndRates;
 
-        public CoinGraphComponent(INavigation navigation)
-        {
-            var resolverContainer = new SimpleContainer();
+		private readonly HybridWebView _webView;
+		private bool appeared;
 
-            resolverContainer.Register<IJsonSerializer, XLabs.Serialization.JsonNET.JsonSerializer>();
+		public CoinGraphComponent(INavigation navigation)
+		{
+			var resolverContainer = new SimpleContainer();
 
-            _webView = new HybridWebView
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = Color.White,
-                MinimumHeightRequest = 500
-            };
-            _webView.RegisterCallback("selectedCallback", id =>
-            {
-                var element = AccountStorage.Instance.AllElements.Find(e => e.Id == Convert.ToInt32(id));
+			resolverContainer.Register<IJsonSerializer, XLabs.Serialization.JsonNET.JsonSerializer>();
 
-                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(element)));
-            });
-            _webView.RegisterCallback("sizeAllocated", id =>
-            {
-                _sizeAllocated = true;
-            });
+			_webView = new HybridWebView
+			{
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				BackgroundColor = Color.White,
+				MinimumHeightRequest = 500
+			};
+			_webView.RegisterCallback("selectedCallback", id =>
+			{
+				var element = AccountStorage.Instance.AllElements.Find(e => e.Id == Convert.ToInt32(id));
 
-            Content = _webView;
-            HeightRequest = 500;
+				Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(element)));
+			});
 
-            UpdateView();
+			Content = _webView;
+			HeightRequest = 500;
 
-            Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
-            Messaging.Loading.SubscribeFinished(this, UpdateView);
+			UpdateView();
 
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
-        }
+			Messaging.Loading.SubscribeFinished(this, UpdateView);
+			Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
 
-        public void OnAppearing()
-        {
-            if (_appeared) return;
+			Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => _refreshingMissing = true, () => { _refreshingMissing = false; UpdateIfRefreshingFinished(); });
+			Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => _refreshingAccounts = true, () => { _refreshingAccounts = false; UpdateIfRefreshingFinished(); });
+			Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => _refreshingAccountsAndRates = true, () => { _refreshingAccountsAndRates = false; UpdateIfRefreshingFinished(); });
+		}
 
-            _appeared = true;
-            _webView.LoadFromContent("Html/pieChart.html");
+		private void UpdateIfRefreshingFinished()
+		{
+			if (!_refreshingMissing && !_refreshingAccounts && !_refreshingAccountsAndRates)
+			{
+				UpdateView();
+			}
+		}
 
-            Task.Factory.StartNew(async () =>
-            {
-                while (!_sizeAllocated)
-                {
-                    UpdateView();
-                    await Task.Delay(200);
-                }
-            });
-        }
+		public void OnAppearing()
+		{
+			if (appeared) return;
 
-        private void UpdateView()
-        {
-            try
-            {
-                var items = AccountStorage.AccountsGroupedByCurrency.Select(e => new Data(e, ApplicationSettings.BaseCurrency)).Where(d => d.value > 0).OrderByDescending(d => d.value).ToArray();
-                Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new string[] { I18N.OneAccount, I18N.Accounts }, new string[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay));
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-        }
+			appeared = true;
+			_webView.LoadFromContent("Html/pieChart.html");
+			_webView.LoadFinished = (sender, e) => UpdateView();
+		}
 
-        [DataContract]
-        [JsonObject]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        public class Data
-        {
-            [DataMember]
-            public readonly decimal value;
+		private void UpdateView()
+		{
+			try
+			{
+				var items = AccountStorage.AccountsGroupedByCurrency.Select(e => new Data(e, ApplicationSettings.BaseCurrency)).Where(d => d.value > 0).OrderByDescending(d => d.value).ToArray();
+				Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new string[] { I18N.OneAccount, I18N.Accounts }, new string[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, ApplicationSettings.BaseCurrency.Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString()));
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(e);
+			}
+		}
 
-            [DataMember]
-            public readonly string label;
+		[DataContract]
+		[JsonObject]
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+		[SuppressMessage("ReSharper", "NotAccessedField.Global")]
+		[SuppressMessage("ReSharper", "InconsistentNaming")]
+		public class Data
+		{
+			[DataMember]
+			public readonly decimal value;
 
-            [DataMember]
-            public readonly string money;
+			[DataMember]
+			public readonly string label;
 
-            [DataMember]
-            public readonly string reference;
+			[DataMember]
+			public readonly string money;
 
-            [DataMember]
-            public readonly string name;
+			[DataMember]
+			public readonly string reference;
 
-            [DataMember]
-            public readonly AccountData[] accounts;
+			[DataMember]
+			public readonly string name;
 
-            public Data(IGrouping<Currency, Account> group, Currency referenceCurrency)
-            {
-                var rate = new ExchangeRate(group.Key, referenceCurrency);
-                rate = ExchangeRateHelper.GetRate(rate) ?? rate;
+			[DataMember]
+			public readonly AccountData[] accounts;
 
-                var totalMoney = new Money(group.Sum(a => a.Money.Amount), group.Key);
+			public Data(IGrouping<Currency, Account> group, Currency referenceCurrency)
+			{
+				var rate = new ExchangeRate(group.Key, referenceCurrency);
+				rate = ExchangeRateHelper.GetRate(rate) ?? rate;
 
-                label = group.Key.Code;
-                name = group.Key.Name;
-                value = totalMoney.Amount * rate.Rate ?? 0;
-                money = totalMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
-                reference = new Money(value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-                accounts = group.Where(a => a.Money.Amount > 0).Select(a => new AccountData(a, rate, referenceCurrency)).OrderByDescending(d => d.value).ToArray();
-            }
-        }
+				var totalMoney = new Money(group.Sum(a => a.Money.Amount), group.Key);
 
-        [DataContract]
-        [JsonObject]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        public class AccountData
-        {
-            [DataMember]
-            public readonly decimal value;
+				label = group.Key.Code;
+				name = group.Key.Name;
+				value = totalMoney.Amount * rate.Rate ?? 0;
+				money = totalMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
+				reference = new Money(value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+				accounts = group.Where(a => a.Money.Amount > 0).Select(a => new AccountData(a, rate, referenceCurrency)).OrderByDescending(d => d.value).ToArray();
+			}
+		}
 
-            [DataMember]
-            public readonly string label;
+		[DataContract]
+		[JsonObject]
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+		[SuppressMessage("ReSharper", "NotAccessedField.Global")]
+		[SuppressMessage("ReSharper", "InconsistentNaming")]
+		public class AccountData
+		{
+			[DataMember]
+			public readonly decimal value;
 
-            [DataMember]
-            public readonly string money;
+			[DataMember]
+			public readonly string label;
 
-            [DataMember]
-            public readonly string reference;
+			[DataMember]
+			public readonly string money;
 
-            [DataMember]
-            public readonly int id;
+			[DataMember]
+			public readonly string reference;
 
-            public AccountData(Account account, ExchangeRate rate, Currency referenceCurrency)
-            {
-                value = account.Money.Amount * rate.Rate ?? 0;
-                label = account.Name;
-                money = account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney);
-                reference = new Money(value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-                id = account.Id;
-            }
-        }
-    }
+			[DataMember]
+			public readonly int id;
+
+			public AccountData(Account account, ExchangeRate rate, Currency referenceCurrency)
+			{
+				value = account.Money.Amount * rate.Rate ?? 0;
+				label = account.Name;
+				money = account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney);
+				reference = new Money(value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+				id = account.Id;
+			}
+		}
+	}
 }

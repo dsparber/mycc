@@ -8,91 +8,92 @@ using MyCC.Core.Resources;
 
 namespace MyCC.Core.Account.Repositories.Base
 {
-    public abstract class AddressAccountRepository : OnlineAccountRepository
-    {
-        public string Address;
-        protected virtual decimal BalanceFactor => 1;
-        protected virtual HttpContent PostContent => null;
+	public abstract class AddressAccountRepository : OnlineAccountRepository
+	{
+		public string Address;
+		protected virtual decimal BalanceFactor => 1;
+		protected virtual HttpContent PostContent => null;
 
-        protected abstract Uri Url { get; }
-        protected abstract Func<string, decimal> Balance { get; }
+		protected abstract Uri Url { get; }
+		protected abstract Func<string, decimal> Balance { get; }
 
-        protected abstract Currency.Model.Currency Currency { get; }
-        public abstract IEnumerable<Currency.Model.Currency> SupportedCurrencies { get; }
+		public abstract Currency.Model.Currency Currency { get; }
+		public abstract IEnumerable<Currency.Model.Currency> SupportedCurrencies { get; }
 
-        private const int BufferSize = 256000;
-        private readonly HttpClient _client;
+		private const int BufferSize = 256000;
+		private readonly HttpClient _client;
 
-        public override string Data => Address;
+		public override string Data => Address;
 
-        protected AddressAccountRepository(int id, string name, string address) : base(id, name)
-        {
-            Address = address;
-            _client = new HttpClient { MaxResponseContentBufferSize = BufferSize };
-        }
+		protected AddressAccountRepository(int id, string name, string address) : base(id, name)
+		{
+			Address = address;
+			_client = new HttpClient { MaxResponseContentBufferSize = BufferSize };
+		}
 
-        private async Task<decimal?> GetBalance()
-        {
-            var uri = Url;
-            HttpResponseMessage response;
-            if (PostContent == null)
-            {
-                response = await _client.GetAsync(uri);
-            }
-            else
-            {
-                response = await _client.PostAsync(uri, PostContent);
-            }
+		private async Task<decimal?> GetBalance()
+		{
+			var uri = Url;
+			HttpResponseMessage response;
+			if (PostContent == null)
+			{
+				response = await _client.GetAsync(uri);
+			}
+			else
+			{
+				response = await _client.PostAsync(uri, PostContent);
+			}
 
-            if (!response.IsSuccessStatusCode) return null;
+			if (!response.IsSuccessStatusCode) return null;
 
-            var content = await response.Content.ReadAsStringAsync();
-            return Balance(content) / BalanceFactor;
-        }
+			var content = await response.Content.ReadAsStringAsync();
+			return Balance(content) / BalanceFactor;
+		}
 
-        public sealed override async Task<bool> Test()
-        {
-            try
-            {
-                return (await GetBalance()).HasValue;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+		public sealed override async Task<bool> Test()
+		{
+			try
+			{
+				return (await GetBalance()).HasValue;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+		}
 
-        public sealed override async Task<bool> FetchOnline()
-        {
+		public sealed override async Task<bool> FetchOnline()
+		{
 
-            var balance = await GetBalance();
+			var balance = await GetBalance();
 
-            if (!balance.HasValue) return false;
+			if (!balance.HasValue) return false;
 
-            var existing = Elements.FirstOrDefault();
-            var money = new Money(balance.Value, Currency);
-            var name = Name;
+			var existing = Elements.FirstOrDefault();
+			Currency.IsCryptoCurrency = true;
+			var money = new Money(balance.Value, Currency);
+			var name = Name;
 
-            var newAccount = GetAccount(existing?.Id ?? default(int), name, money);
+			var newAccount = GetAccount(existing?.Id ?? default(int), name, money);
 
-            if (existing != null)
-            {
-                await Update(newAccount);
-            }
-            else
-            {
-                await Add(newAccount);
-            }
+			if (existing != null)
+			{
+				await Update(newAccount);
+			}
+			else
+			{
+				await Add(newAccount);
+			}
 
-            await Task.WhenAll(Elements.Where(a => a.Id != newAccount.Id).Select(async a => await Remove(a)));
+			await Task.WhenAll(Elements.Where(a => a.Id != newAccount.Id).Select(async a => await Remove(a)));
 
 
-            LastFetch = DateTime.Now;
-            return true;
-        }
+			LastFetch = DateTime.Now;
+			return true;
+		}
 
-        protected abstract FunctionalAccount GetAccount(int? id, string name, Money money);
+		protected abstract FunctionalAccount GetAccount(int? id, string name, Money money);
 
-        public override string Info => $"{I18N.Address}: {Address}";
-    }
+		public override string Info => $"{I18N.Address}: {Address}";
+	}
 }

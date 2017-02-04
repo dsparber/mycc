@@ -32,7 +32,7 @@
 						Android="#EEE" />
 				</TableView.BackgroundColor>
 				<TableSection
-					Title="{resources:Translate Info}"
+					Title="{resources:Translate AccountInformation}"
 					x:Name="GeneralSection">
 					<cells:CustomEntryCell
 						x:Name="RepositoryNameEntryCell"

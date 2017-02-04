@@ -2,7 +2,7 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
+	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
 	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
 	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
@@ -13,6 +13,7 @@
 		<ToolbarItem
 			Text="{resources:Translate Refresh}"
 			Clicked="Refresh"
+			x:Name="RefreshItem"
 			Icon="refresh.png" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>

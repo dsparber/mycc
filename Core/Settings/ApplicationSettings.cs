@@ -159,6 +159,8 @@ namespace MyCC.Core.Settings
 					MainCurrencies = data;
 				}
 
+				if (!data.Contains(Currency.Model.Currency.Btc)) data.Add(Currency.Model.Currency.Btc);
+
 				return data.Count > 0 ? data.OrderBy(c => c.Code).ToList() : currencies;
 			}
 			set

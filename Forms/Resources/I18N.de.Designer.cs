@@ -161,18 +161,6 @@ namespace MyCC.Forms.Resources {
             }
         }
         
-        public static string AssetsGraph {
-            get {
-                return ResourceManager.GetString("AssetsGraph", resourceCulture);
-            }
-        }
-        
-        public static string AssetsTable {
-            get {
-                return ResourceManager.GetString("AssetsTable", resourceCulture);
-            }
-        }
-        
         public static string BitcoinCanNotBeRemoved {
             get {
                 return ResourceManager.GetString("BitcoinCanNotBeRemoved", resourceCulture);
@@ -794,6 +782,36 @@ namespace MyCC.Forms.Resources {
         public static string VerifyInput {
             get {
                 return ResourceManager.GetString("VerifyInput", resourceCulture);
+            }
+        }
+        
+        public static string UnlockApplication {
+            get {
+                return ResourceManager.GetString("UnlockApplication", resourceCulture);
+            }
+        }
+        
+        public static string DevelopedBy {
+            get {
+                return ResourceManager.GetString("DevelopedBy", resourceCulture);
+            }
+        }
+        
+        public static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        public static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        public static string ShowQrCode {
+            get {
+                return ResourceManager.GetString("ShowQrCode", resourceCulture);
             }
         }
     }

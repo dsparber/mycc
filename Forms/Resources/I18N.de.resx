@@ -270,16 +270,6 @@
     <value>Vermögensübersicht</value>
   </data>
 	<data
-		name="AssetsGraph"
-		xml:space="preserve">
-    <value>Vermögen (Grafik)</value>
-  </data>
-	<data
-		name="AssetsTable"
-		xml:space="preserve">
-    <value>Vermögen (Tabelle)</value>
-  </data>
-	<data
 		name="BitcoinCanNotBeRemoved"
 		xml:space="preserve">
     <value>Bitcoin kann nicht von den Referenzwährungen entfernt werden.</value>
@@ -477,7 +467,7 @@
 	<data
 		name="Info"
 		xml:space="preserve">
-    <value>Kontoinformation</value>
+    <value>Info</value>
   </data>
 	<data
 		name="IsEqualTo"
@@ -798,5 +788,30 @@
 		name="VerifyInput"
 		xml:space="preserve">
     <value>Bitte überprüfen Sie Ihre Eingabe!</value>
+  </data>
+	<data
+		name="UnlockApplication"
+		xml:space="preserve">
+    <value>App entsperren</value>
+  </data>
+	<data
+		name="DevelopedBy"
+		xml:space="preserve">
+    <value>Entwickelt von Daniel Sparber</value>
+  </data>
+	<data
+		name="About"
+		xml:space="preserve">
+    <value>Über</value>
+  </data>
+	<data
+		name="Version"
+		xml:space="preserve">
+    <value>Version</value>
+  </data>
+	<data
+		name="ShowQrCode"
+		xml:space="preserve">
+    <value>QR Code zeigen</value>
   </data>
 </root>

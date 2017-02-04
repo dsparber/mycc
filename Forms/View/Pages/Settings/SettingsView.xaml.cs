@@ -6,6 +6,7 @@ using MyCC.Core.Types;
 using MyCC.Forms.helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
+using MyCC.Forms.View.Pages.Settings;
 
 namespace MyCC.Forms.view.pages.settings
 {
@@ -23,7 +24,7 @@ namespace MyCC.Forms.view.pages.settings
 
 			AutoRefresh.Switch.Toggled += AutoRefreshChanged;
 			RoundNumbers.Switch.Toggled += RoundNumbersChanged;
-			ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new MyCC.Forms.view.pages.settings.ReferenceCurrenciesSettingsView());
+			ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new ReferenceCurrenciesSettingsView());
 			ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies);
 			SourcesCell.Tapped += (sender, e) => Navigation.PushAsync(new SourcesView());
 			SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
@@ -31,11 +32,12 @@ namespace MyCC.Forms.view.pages.settings
 			RatesCell.DetailBreakMode = Xamarin.Forms.LineBreakMode.TailTruncation;
 			SetRatesCellDetail();
 			SetPinCellText();
+			SetAboutCell();
 		}
 
 		private void SetDefaultPageCellText()
 		{
-			DefaultViewCell.Detail = ApplicationSettings.DefaultPage == StartupPage.TableView ? I18N.AssetsTable : ApplicationSettings.DefaultPage == StartupPage.GraphView ? I18N.AssetsGraph : I18N.Rates;
+			DefaultViewCell.Detail = ApplicationSettings.DefaultPage == StartupPage.TableView ? $"{I18N.Assets} ({I18N.Table})" : ApplicationSettings.DefaultPage == StartupPage.GraphView ? $"{I18N.Assets} ({I18N.Graph})" : I18N.Rates;
 		}
 
 		private void OpenDefaultViewPage(object sender, EventArgs e)
@@ -81,6 +83,12 @@ namespace MyCC.Forms.view.pages.settings
 		private void SetRatesCellDetail()
 		{
 			RatesCell.Detail = ApplicationSettings.WatchedCurrencies.Count == 0 ? I18N.AllCurrenciesFromAccounts : string.Join(" + ", new List<string> { I18N.AllCurrenciesFromAccounts, string.Join(", ", ApplicationSettings.WatchedCurrencies) });
+		}
+
+		private void SetAboutCell()
+		{
+			AboutCell.Detail = $"{I18N.AppName} - {I18N.Version} {Constants.AppVersion}";
+			AboutCell.Tapped += (sender, e) => Navigation.PushAsync(new AboutView());
 		}
 	}
 }
