@@ -1855,6 +1855,7 @@ namespace MyCC.Forms.Android
 			global::CarouselView.FormsPlugin.Android.Resource.Styleable.ViewStubCompat_android_id = global::MyCC.Forms.Android.Resource.Styleable.ViewStubCompat_android_id;
 			global::CarouselView.FormsPlugin.Android.Resource.Styleable.ViewStubCompat_android_inflatedId = global::MyCC.Forms.Android.Resource.Styleable.ViewStubCompat_android_inflatedId;
 			global::CarouselView.FormsPlugin.Android.Resource.Styleable.ViewStubCompat_android_layout = global::MyCC.Forms.Android.Resource.Styleable.ViewStubCompat_android_layout;
+			global::ModernHttpClient.Resource.String.library_name = global::MyCC.Forms.Android.Resource.String.library_name;
 			global::PCLCrypto.Resource.String.ApplicationName = global::MyCC.Forms.Android.Resource.String.ApplicationName;
 			global::PCLCrypto.Resource.String.Hello = global::MyCC.Forms.Android.Resource.String.Hello;
 			global::Plugin.Fingerprint.Resource.Drawable.fingerprint_white = global::MyCC.Forms.Android.Resource.Drawable.fingerprint_white;

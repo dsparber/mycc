@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ModernHttpClient;
 using MyCC.Core.Resources;
 
 namespace MyCC.Core.CoinInfo.Repositories
@@ -23,7 +24,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 
         public async Task<CoinInfoData> GetInfo(Currency.Model.Currency currency)
         {
-            var client = new HttpClient { MaxResponseContentBufferSize = 256000 };
+            var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 
             var heightTask = client.GetAsync(GetUri(KeyHeight));
             var hashrateTask = client.GetAsync(GetUri(KeyHashrate));
