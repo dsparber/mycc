@@ -47,11 +47,6 @@ namespace MyCC.Forms.view.pages.settings
 
             RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
 
-            if (Device.OS == TargetPlatform.Android)
-            {
-                Title = string.Empty;
-            }
-
             SetView();
 
             Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetView);

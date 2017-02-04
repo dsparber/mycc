@@ -29,7 +29,6 @@ namespace MyCC.Forms.view.overlays
             if (Device.OS == TargetPlatform.Android)
             {
                 ToolbarItems.Remove(CancelItem);
-                Title = string.Empty;
             }
 
             var addViews = new List<AddSourceSubview>

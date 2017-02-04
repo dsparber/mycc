@@ -16,16 +16,7 @@ namespace MyCC.Forms
     {
         public App()
         {
-            Page startPage;
-
-            if (Device.OS == TargetPlatform.Android && false)
-            {
-                startPage = new MasterDetailContainerView();
-            }
-            else
-            {
-                startPage = new TabContainerView();
-            }
+            Page startPage = new TabContainerView();
 
             if (ApplicationSettings.IsPinSet)
             {
@@ -34,10 +25,8 @@ namespace MyCC.Forms
 
             MainPage = startPage;
 
-            if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
-            {
-                DependencyService.Get<ILocalise>().SetLocale();
-            }
+            DependencyService.Get<ILocalise>().SetLocale();
+
 
             if (ApplicationSettings.FirstLaunch)
             {

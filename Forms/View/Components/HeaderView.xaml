@@ -6,56 +6,59 @@
 	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.view.components.HeaderView"
 	BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
-	WidthRequest="280"
-	Margin="0,-1,0,0">
+	WidthRequest="280">
   <ContentView.Content>
-    <StackLayout
-			Margin="10"
-			VerticalOptions="CenterAndExpand"
-			HorizontalOptions="CenterAndExpand">
+    <StackLayout Spacing="0">
+      <ContentView x:Name="Spacer" HorizontalOptions="FillAndExpand" HeightRequest="0" BackgroundColor="#22FFFFFF"/>
       <StackLayout
-				Orientation="Horizontal"
-				HorizontalOptions="CenterAndExpand"
-				Spacing="0"
-				Margin="5,0,5,0">
+        Spacing="0"
+        Margin="10"
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="CenterAndExpand">
+        <StackLayout
+          Orientation="Horizontal"
+          HorizontalOptions="CenterAndExpand"
+          Spacing="0"
+          Margin="5,0,5,0">
+          <Label
+            x:Name="TitleLabel"
+            FontSize="36"
+            FontAttributes="Bold"
+            TextColor="White"
+            LineBreakMode="TailTruncation" />
+          <Label
+            x:Name="TitleLabelSmall"
+            Margin="0,0,0,3"
+            VerticalOptions="End"
+            FontSize="24"
+            FontAttributes="Bold"
+            TextColor="White"
+            LineBreakMode="TailTruncation" />
+        </StackLayout>
         <Label
-					x:Name="TitleLabel"
-					FontSize="36"
-					FontAttributes="Bold"
-					TextColor="White"
-					LineBreakMode="TailTruncation" />
-        <Label
-					x:Name="TitleLabelSmall"
-					Margin="0,0,0,3"
-					VerticalOptions="End"
-					FontSize="24"
-					FontAttributes="Bold"
-					TextColor="White"
-					LineBreakMode="TailTruncation" />
-      </StackLayout>
-      <Label
-				HorizontalOptions="FillAndExpand"
-				x:Name="InfoLabel"
-				FontSize="18"
-				HorizontalTextAlignment="Center"
-				TextColor="White"
-				LineBreakMode="TailTruncation"
-				WidthRequest="10000" />
-      <StackLayout
-				x:Name="LoadingPanel"
-				IsVisible="false"
-				Orientation="Horizontal"
-				HorizontalOptions="Center">
-        <Label
-					x:Name="RefreshingLabel"
-					FontSize="18"
-					Text="{resources:Translate Refreshing}"
-					TextColor="White">
-        </Label>
-        <ActivityIndicator
-					Color="White"
-					x:Name="LoadingIndicator"
-					IsRunning="true" />
+          HorizontalOptions="FillAndExpand"
+          x:Name="InfoLabel"
+          FontSize="18"
+          HorizontalTextAlignment="Center"
+          TextColor="White"
+          LineBreakMode="TailTruncation"
+          WidthRequest="10000" />
+        <StackLayout
+          x:Name="LoadingPanel"
+          IsVisible="false"
+          Orientation="Horizontal"
+          HorizontalOptions="Center">
+          <Label
+            x:Name="RefreshingLabel"
+            FontSize="18"
+            Text="{resources:Translate Refreshing}"
+            TextColor="White">
+          </Label>
+          <ActivityIndicator
+            Color="White"
+            x:Name="LoadingIndicator"
+            IsRunning="true" />
+        </StackLayout>
       </StackLayout>
     </StackLayout>
   </ContentView.Content>

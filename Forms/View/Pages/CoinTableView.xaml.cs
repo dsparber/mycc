@@ -10,97 +10,92 @@ using Xamarin.Forms;
 
 namespace MyCC.Forms.view.pages
 {
-	public partial class CoinTableView
-	{
-		private readonly CoinTableComponent tableView;
+    public partial class CoinTableView
+    {
+        private readonly CoinTableComponent tableView;
 
-		public CoinTableView()
-		{
-			InitializeComponent();
+        public CoinTableView()
+        {
+            InitializeComponent();
 
-			tableView = new CoinTableComponent(Navigation);
+            tableView = new CoinTableComponent(Navigation);
 
-			Stack.Children.Add(tableView);
+            Stack.Children.Add(tableView);
 
-			AddSubscriber();
+            AddSubscriber();
 
-			if (Device.OS == TargetPlatform.Android)
-			{
-				Title = string.Empty;
-			}
+            SetHeaderCarousel();
+            SetNoSourcesView();
+        }
 
-			SetHeaderCarousel();
-			SetNoSourcesView();
-		}
-
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
-			tableView.OnAppearing();
-		}
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            tableView.OnAppearing();
+        }
 
 
 
-		private void PositionSelected(object sender, EventArgs e)
-		{
-			var currencies = ApplicationSettings.MainCurrencies;
+        private void PositionSelected(object sender, EventArgs e)
+        {
+            var currencies = ApplicationSettings.MainCurrencies;
 
-			ApplicationSettings.BaseCurrency = currencies[HeaderCarousel.Position];
-			MessagingCenter.Send(MessageInfo.ValueChanged, Messaging.ReferenceCurrency);
-		}
+            ApplicationSettings.BaseCurrency = currencies[HeaderCarousel.Position];
+            MessagingCenter.Send(MessageInfo.ValueChanged, Messaging.ReferenceCurrency);
+        }
 
-		private void SetHeaderCarousel()
-		{
-			HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
-			HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
-			HeaderCarousel.ShowIndicators = (HeaderCarousel.ItemsSource.Count > 1);
+        private void SetHeaderCarousel()
+        {
+            HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
+            HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
+            HeaderCarousel.ShowIndicators = (HeaderCarousel.ItemsSource.Count > 1);
 
 
-			if (HeaderCarousel.ItemTemplate != null) return;
+            if (HeaderCarousel.ItemTemplate != null) return;
 
-			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
-			HeaderCarousel.PositionSelected += PositionSelected;
-			HeaderCarousel.HeightRequest = 120;// new CoinsHeaderView().HeightRequest;
-		}
+            HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
+            HeaderCarousel.PositionSelected += PositionSelected;
+            HeaderCarousel.HeightRequest = 120;// new CoinsHeaderView().HeightRequest;
+        }
 
-		private void SetNoSourcesView()
-		{
-			Device.BeginInvokeOnMainThread(() =>
-			{
-				NoSourcesView.IsVisible = (AccountStorage.Instance.AllElements.Count == 0);
-				Stack.IsVisible = AccountStorage.Instance.AllElements.Count != 0;
-			});
-		}
+        private void SetNoSourcesView()
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                NoSourcesView.IsVisible = (AccountStorage.Instance.AllElements.Count == 0);
+                Stack.IsVisible = AccountStorage.Instance.AllElements.Count != 0;
+            });
+        }
 
-		private void AddSubscriber()
-		{
-			Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.BaseCurrency));
-			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
+        private void AddSubscriber()
+        {
+            Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.BaseCurrency));
+            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
 
-			Messaging.Loading.SubscribeFinished(this, SetNoSourcesView);
-			Messaging.FetchMissingRates.SubscribeFinished(this, SetNoSourcesView);
-			Messaging.UpdatingAccounts.SubscribeFinished(this, SetNoSourcesView);
-			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoSourcesView);
-		}
+            Messaging.Loading.SubscribeFinished(this, SetNoSourcesView);
+            Messaging.FetchMissingRates.SubscribeFinished(this, SetNoSourcesView);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, SetNoSourcesView);
+            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoSourcesView);
+        }
 
-		private async void Refresh(object sender, EventArgs e)
-		{
-			RefreshItem.Clicked -= Refresh;
-			await AppTaskHelper.FetchBalancesAndRates();
-			await AppTaskHelper.FetchMissingRates();
-			RefreshItem.Clicked += Refresh;
-		}
+        private async void Refresh(object sender, EventArgs e)
+        {
+            RefreshItem.Clicked -= Refresh;
+            await AppTaskHelper.FetchBalancesAndRates();
+            await AppTaskHelper.FetchMissingRates();
+            RefreshItem.Clicked += Refresh;
+        }
 
-		private class HeaderTemplateSelector : DataTemplateSelector
-		{
-			private bool isUpdatingExchangeRates;
+        private class HeaderTemplateSelector : DataTemplateSelector
+        {
+            private bool isUpdatingExchangeRates;
 
-			public HeaderTemplateSelector()
-			{
-				Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => isUpdatingExchangeRates = true, () => isUpdatingExchangeRates = false);
-			}
+            public HeaderTemplateSelector()
+            {
+                Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => isUpdatingExchangeRates = true, () => isUpdatingExchangeRates = false);
+            }
 
-			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent((Currency)item) { IsLoading = isUpdatingExchangeRates });
-		}
-	}
+            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent((Currency)item) { IsLoading = isUpdatingExchangeRates });
+        }
+    }
 }

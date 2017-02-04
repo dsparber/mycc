@@ -40,11 +40,6 @@ namespace MyCC.Forms.view.pages.settings
 
             currencyEntryCell.OnSelected = (c) => Header.TitleText = currencyEntryCell.SelectedMoney.ToString();
             currencyEntryCell.OnTyped = (m) => Header.TitleText = m.ToString();
-
-            if (Device.OS == TargetPlatform.Android)
-            {
-                Title = string.Empty;
-            }
         }
 
         private void StartEditing(object sender, EventArgs e)
@@ -56,10 +51,8 @@ namespace MyCC.Forms.view.pages.settings
             ToolbarItems.Clear();
             ToolbarItems.Add(SaveItem);
 
-            if (Device.OS != TargetPlatform.Android)
-            {
-                Title = I18N.Editing;
-            }
+            Title = I18N.Editing;
+
         }
 
         private async void DoneEditing(object sender, EventArgs e)
@@ -78,10 +71,8 @@ namespace MyCC.Forms.view.pages.settings
 
             Messaging.UpdatingAccounts.SendFinished();
 
-            if (Device.OS != TargetPlatform.Android)
-            {
-                Title = account.Name;
-            }
+
+            Title = account.Name;
             Header.TitleText = account.Money.ToString();
 
             ToolbarItems.Clear();

@@ -6,7 +6,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace MyCC.Forms.Android
 {
-    [Activity(Label = "MyCryptos", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "MyCC", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : FormsApplicationActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

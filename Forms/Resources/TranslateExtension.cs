@@ -18,10 +18,7 @@ namespace MyCC.Forms.Resources
 
         public TranslateExtension()
         {
-            if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
-            {
-                ci = DependencyService.Get<ILocalise>().GetCurrentCultureInfo();
-            }
+            ci = DependencyService.Get<ILocalise>().GetCurrentCultureInfo();
         }
 
         public string Text { get; set; }
