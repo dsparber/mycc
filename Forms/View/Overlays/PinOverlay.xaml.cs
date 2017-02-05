@@ -1,12 +1,12 @@
 ﻿using System;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
-using MyCC.Forms.helpers;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.overlays
+namespace MyCC.Forms.View.Overlays
 {
     public partial class PinOverlay : ContentPage
     {

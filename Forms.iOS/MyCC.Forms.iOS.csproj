@@ -414,6 +414,9 @@
     <Content Include="Html\about.js" />
     <Content Include="Html\collapse.png" />
     <Content Include="Html\expand.png" />
+    <Content Include="Resources\add.png" />
+    <Content Include="Resources\add%402x.png" />
+    <Content Include="Resources\add%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\MyCC.Core.csproj">

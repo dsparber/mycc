@@ -2,7 +2,7 @@
 using Android.Graphics;
 using Android.Widget;
 using MyCC.Forms.Android.Helpers;
-using MyCC.Forms.helpers;
+using MyCC.Forms.Helpers;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(AndroidTextSizeHelper))]

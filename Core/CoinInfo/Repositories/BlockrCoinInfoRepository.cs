@@ -12,7 +12,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class BlockrCoinInfoRepository : ICoinInfoRepository
     {
-        private Uri GetUri(Currency.Model.Currency coin) => new Uri($"http://{coin.Code.ToLower()}.blockr.io/api/v1/coin/info");
+        private Uri GetUri(Currency.Model.Currency coin) => new Uri($"https://{coin.Code.ToLower()}.blockr.io/api/v1/coin/info");
 
         private const string JsonKeyData = "data";
 

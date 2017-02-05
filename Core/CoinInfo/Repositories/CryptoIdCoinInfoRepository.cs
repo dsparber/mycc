@@ -13,7 +13,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class CryptoIdCoinInfoRepository : ICoinInfoRepository
     {
-        private Uri GetUri(Currency.Model.Currency coin, string action) => new Uri($"http://chainz.cryptoid.info/{coin.Code.ToLower()}/api.dws?q={action}");
+        private Uri GetUri(Currency.Model.Currency coin, string action) => new Uri($"https://chainz.cryptoid.info/{coin.Code.ToLower()}/api.dws?q={action}");
         private const string KeySummary = "summary";
         private const string KeyHashrate = "hashrate";
 

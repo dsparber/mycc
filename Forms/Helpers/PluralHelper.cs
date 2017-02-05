@@ -1,6 +1,6 @@
 ﻿using MyCC.Forms.Resources;
 
-namespace MyCC.Forms.helpers
+namespace MyCC.Forms.Helpers
 {
     public static class PluralHelper
     {

@@ -5,15 +5,15 @@ using System.Linq;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
-using MyCC.Forms.constants;
-using MyCC.Forms.helpers;
+using MyCC.Forms.Constants;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
-using MyCC.Forms.view.addsource;
+using MyCC.Forms.View.Addsource;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.overlays
+namespace MyCC.Forms.View.Overlays
 {
     public partial class AddSourceView
     {
@@ -72,7 +72,7 @@ namespace MyCC.Forms.view.overlays
         private void Cancel(object sender, EventArgs e)
         {
             UnfocusAll();
-            Navigation.PopOrPopModal();
+            NavigationHelper.PopOrPopModal(Navigation);
         }
 
         private async void Save(object sender, EventArgs e)
@@ -101,7 +101,7 @@ namespace MyCC.Forms.view.overlays
                     else if (AccountStorage.Instance.RepositoriesOfType(repository.GetType()).Any(r => r.Data.Equals(repository.Data)))
                     {
                         await DisplayAlert(I18N.Error, I18N.RepositoryAlreadyAdded, I18N.Cancel);
-                        await Navigation.PopOrPopModal();
+                        await NavigationHelper.PopOrPopModal(Navigation);
                     }
                     else
                     {
@@ -112,7 +112,7 @@ namespace MyCC.Forms.view.overlays
                             Header.LoadingText = I18N.Fetching;
                             Messaging.UpdatingAccounts.SendFinished();
                             await AppTaskHelper.FetchMissingRates();
-                            await Navigation.PopOrPopModal();
+                            await NavigationHelper.PopOrPopModal(Navigation);
 
                         }
                         else
@@ -144,7 +144,7 @@ namespace MyCC.Forms.view.overlays
                         {
                             await AppTaskHelper.FetchMissingRates();
                         }
-                        await Navigation.PopOrPopModal();
+                        await NavigationHelper.PopOrPopModal(Navigation);
 
                     }
                     else

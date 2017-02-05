@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCC.Forms.helpers
+namespace MyCC.Forms.Helpers
 {
     public interface ITextSizeHelper
     {

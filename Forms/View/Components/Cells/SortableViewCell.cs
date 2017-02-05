@@ -1,6 +1,6 @@
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.components.cells
+namespace MyCC.Forms.View.Components.Cells
 {
     public abstract class SortableViewCell : ViewCell
     {

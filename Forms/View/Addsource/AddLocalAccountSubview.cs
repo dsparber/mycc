@@ -3,10 +3,10 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Forms.Resources;
-using MyCC.Forms.view.components.cells;
+using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.addsource
+namespace MyCC.Forms.View.Addsource
 {
     public class AddLocalAccountSubview : AddAccountSubview
     {
@@ -41,7 +41,7 @@ namespace MyCC.Forms.view.addsource
             var currency = currencyCell.SelectedCurrency;
             var amount = decimal.Parse(string.IsNullOrEmpty(amountEntryCell.Text) ? "0" : amountEntryCell.Text);
 
-            return currency == null ? null : new LocalAccount(null, name, new Money(amount, currency), AccountStorage.Instance.LocalRepository.Id);
+            return currency == null ? null : new LocalAccount(null, name, new Money(amount, currency), true, AccountStorage.Instance.LocalRepository.Id);
         }
 
         public override void Unfocus()

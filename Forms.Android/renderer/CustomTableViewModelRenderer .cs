@@ -2,7 +2,7 @@ using Android.Content;
 using Android.Views;
 using Android.Widget;
 using MyCC.Forms.Android.renderer;
-using MyCC.Forms.constants;
+using MyCC.Forms.Constants;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 

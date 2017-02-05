@@ -9,7 +9,7 @@ namespace MyCC.Core.Account.Models.Implementations
     {
         private readonly BlockExpertsAccountRepository _repository;
 
-        public BlockExpertsAccount(int? id, string name, Money money, BlockExpertsAccountRepository repository) : base(id, repository.Id, name, money)
+        public BlockExpertsAccount(int? id, string name, Money money, bool isEnabled, BlockExpertsAccountRepository repository) : base(id, repository.Id, name, money, isEnabled)
         {
             this._repository = repository;
         }

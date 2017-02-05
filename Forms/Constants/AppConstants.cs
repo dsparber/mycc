@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace MyCC.Forms.constants
+namespace MyCC.Forms.Constants
 {
     public static class AppConstants
     {

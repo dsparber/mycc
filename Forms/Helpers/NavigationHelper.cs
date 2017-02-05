@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.helpers
+namespace MyCC.Forms.Helpers
 {
     public static class NavigationHelper
     {

@@ -1,12 +1,12 @@
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Resources;
-using MyCC.Forms.view.pages;
-using MyCC.Forms.view.pages.settings;
+using MyCC.Forms.View.Pages;
+using MyCC.Forms.View.Pages.Settings;
 using Xamarin.Forms;
-using RateView = MyCC.Forms.view.pages.RateView;
+using RateView = MyCC.Forms.View.Pages.RateView;
 
-namespace MyCC.Forms.view.container
+namespace MyCC.Forms.View.Container
 {
     public class TabContainerView : TabbedPage
     {

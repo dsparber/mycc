@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using MyCC.Core.Settings;
 using MyCC.Forms.Resources;
-using MyCC.Forms.view.pages;
-using MyCC.Forms.view.pages.settings;
+using MyCC.Forms.View.Pages;
+using MyCC.Forms.View.Pages.Settings;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.container
+namespace MyCC.Forms.View.Container
 {
     public class MasterDetailContainerView : MasterDetailPage
     {

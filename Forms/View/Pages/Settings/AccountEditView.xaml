@@ -2,60 +2,61 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
-	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
-	xmlns:cells="clr-namespace:MyCC.Forms.view.components.cells;assembly=MyCC.Forms"
+    xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
+	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	x:Class="MyCC.Forms.view.pages.settings.AccountEditView">
-	<ContentPage.ToolbarItems>
-		<ToolbarItem
+	x:Class="MyCC.Forms.View.Pages.Settings.AccountEditView">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem
 			x:Name="EditItem"
 			Text="{resources:Translate Edit}"
 			Clicked="StartEditing" />
-		<ToolbarItem
+    <ToolbarItem
 			x:Name="SaveItem"
 			Text="{resources:Translate Save}"
 			Clicked="DoneEditing" />
-	</ContentPage.ToolbarItems>
-	<ContentPage.Content>
-		<components:ChangingStackLayout>
-			<components:HeaderView
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <components1:ChangingStackLayout>
+      <components1:HeaderView
 				x:Name="Header" />
-			<StackLayout
+      <StackLayout
 				Spacing="0">
-				<StackLayout.BackgroundColor>
-					<OnPlatform
+        <StackLayout.BackgroundColor>
+          <OnPlatform
 						x:TypeArguments="Color"
 						Android="#EEE" />
-				</StackLayout.BackgroundColor>
-				<TableView
+        </StackLayout.BackgroundColor>
+        <TableView
 					x:Name="EditView"
 					Intent="Form">
-					<TableView.BackgroundColor>
-						<OnPlatform
+          <TableView.BackgroundColor>
+            <OnPlatform
 							x:TypeArguments="Color"
 							Android="#EEE" />
-					</TableView.BackgroundColor>
-					<TableView.Root>
-						<TableSection
+          </TableView.BackgroundColor>
+          <TableView.Root>
+            <TableSection
 							x:Name="AccountSection">
-							<cells:CustomEntryCell
+              <cells:CustomEntryCell
 								x:Name="AccountName"
 								Title="{resources:Translate Name}"
 								Placeholder="{resources:Translate Name}"
 								IsEditable="false" />
-						</TableSection>
-						<TableSection
+            </TableSection>
+            <TableSection
 							x:Name="DeleteSection">
-							<cells:CustomViewCell
+              <cells:CustomViewCell
 								x:Name="DeleteButtonCell"
 								Text="{resources:Translate Delete}"
 								IsDeleteActionCell="true" />
-						</TableSection>
-					</TableView.Root>
-				</TableView>
-			</StackLayout>
-		</components:ChangingStackLayout>
-	</ContentPage.Content>
+            </TableSection>
+          </TableView.Root>
+        </TableView>
+      </StackLayout>
+    </components1:ChangingStackLayout>
+  </ContentPage.Content>
 </ContentPage>

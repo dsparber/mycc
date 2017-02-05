@@ -26,12 +26,12 @@ namespace MyCC.Core.Account.Repositories.Implementations
         }
 
         protected override Func<string, decimal> Balance => (httpContent) => decimal.Parse(httpContent, CultureInfo.InvariantCulture);
-        protected override Uri Url => new Uri($"http://chainz.cryptoid.info/{Currency.Code.ToLower()}/api.dws?q=getbalance&a={Address}");
+        protected override Uri Url => new Uri($"https://chainz.cryptoid.info/{Currency.Code.ToLower()}/api.dws?q=getbalance&a={Address}");
 
         public CryptoIdAccountRepository(int id, string name, string data) : base(id, name, data) { }
         public CryptoIdAccountRepository(int id, string name, Currency.Model.Currency coin, string address) : base(id, name, coin, address) { }
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeCryptoidRepository;
 
-        protected override FunctionalAccount GetAccount(int? id, string name, Money money) => new CryptoIdAccount(id, name, money, this);
+        protected override FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled) => new CryptoIdAccount(id, name, money, isEnabled, this);
     }
 }

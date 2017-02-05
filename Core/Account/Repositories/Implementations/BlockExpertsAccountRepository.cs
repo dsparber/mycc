@@ -33,6 +33,6 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public BlockExpertsAccountRepository(int id, string name, Currency.Model.Currency coin, string address) : base(id, name, coin, address) { }
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeBlockExpertsRepository;
 
-        protected override FunctionalAccount GetAccount(int? id, string name, Money money) => new BlockExpertsAccount(id, name, money, this);
+        protected override FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled) => new BlockExpertsAccount(id, name, money, isEnabled, this);
     }
 }

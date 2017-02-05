@@ -6,7 +6,7 @@ using MyCC.Core.Currency.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Tasks;
 using MyCC.Forms.Messages;
-using MyCC.Forms.view.overlays;
+using MyCC.Forms.View.Overlays;
 
 namespace MyCC.Forms.Tasks
 {

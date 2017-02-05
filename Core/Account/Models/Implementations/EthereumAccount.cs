@@ -9,7 +9,7 @@ namespace MyCC.Core.Account.Models.Implementations
     {
         private readonly EthereumAccountRepository _repository;
 
-        public EthereumAccount(int? id, string name, Money money, EthereumAccountRepository repository) : base(id, repository.Id, name, money)
+        public EthereumAccount(int? id, string name, Money money, bool isEnabled, EthereumAccountRepository repository) : base(id, repository.Id, name, money, isEnabled)
         {
             this._repository = repository;
         }

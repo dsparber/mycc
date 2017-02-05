@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCC.Forms.view.components.cells
+namespace MyCC.Forms.View.Components.Cells
 {
     public class CustomViewCellActionItem
     {

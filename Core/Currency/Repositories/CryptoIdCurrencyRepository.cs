@@ -11,7 +11,7 @@ namespace MyCC.Core.Currency.Repositories
 {
     internal class CryptoIdCurrencyRepository : OnlineCurrencyRepository
     {
-        private const string UrlCurrencyList = "http://chainz.cryptoid.info/explorer/api.dws?q=summary";
+        private const string UrlCurrencyList = "https://chainz.cryptoid.info/explorer/api.dws?q=summary";
 
         private const string JsonKeyName = "name";
 

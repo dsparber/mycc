@@ -2,11 +2,12 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
-	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
+    xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
+	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	x:Class="MyCC.Forms.view.pages.settings.SourcesView"
+	x:Class="MyCC.Forms.View.Pages.Settings.SourcesView"
 	Title="{resources:Translate Sources}">
   <ContentPage.ToolbarItems>
     <ToolbarItem
@@ -15,8 +16,8 @@
       Icon="add.png"/>
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
-    <components:ChangingStackLayout>
-      <components:HeaderView
+    <components1:ChangingStackLayout>
+      <components1:HeaderView
 				x:Name="Header" />
       <StackLayout
 				VerticalOptions="FillAndExpand">
@@ -57,6 +58,6 @@
           </StackLayout>
         </ContentView>
       </StackLayout>
-    </components:ChangingStackLayout>
+    </components1:ChangingStackLayout>
   </ContentPage.Content>
 </ContentPage>

@@ -9,7 +9,7 @@ namespace MyCC.Core.Account.Models.Implementations
     {
         private readonly BlockchainXpubAccountRepository _repository;
 
-        public BlockchainXpubAccount(int? id, string name, Money money, BlockchainXpubAccountRepository repository) : base(id, repository.Id, name, money)
+        public BlockchainXpubAccount(int? id, string name, Money money, bool isEnabled, BlockchainXpubAccountRepository repository) : base(id, repository.Id, name, money, isEnabled)
         {
             this._repository = repository;
         }

@@ -11,6 +11,7 @@ html, body {
 }
 
 table {
+    position: fixed;
     width: 100%;
     border-collapse: collapse;
 }
@@ -79,4 +80,8 @@ thead td.up span {
     td:first-child+td+td {
         display: none;
     }
+}
+
+.disabled {
+  color: #ccc;
 }

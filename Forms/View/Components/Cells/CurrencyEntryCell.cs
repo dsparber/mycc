@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currency.Model;
-using MyCC.Forms.constants;
+using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
-using MyCC.Forms.view.overlays;
+using MyCC.Forms.View.Overlays;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.components.cells
+namespace MyCC.Forms.View.Components.Cells
 {
     public class CurrencyEntryCell : ViewCell
     {

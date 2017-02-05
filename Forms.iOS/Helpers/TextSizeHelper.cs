@@ -1,5 +1,5 @@
 ﻿using System;
-using MyCC.Forms.helpers;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.iOS.Helpers;
 using UIKit;
 using Xamarin.Forms;

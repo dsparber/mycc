@@ -2,7 +2,7 @@
 using MyCC.Forms.Resources;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.addsource
+namespace MyCC.Forms.View.Addsource
 {
 
     public abstract class AddSourceSubview

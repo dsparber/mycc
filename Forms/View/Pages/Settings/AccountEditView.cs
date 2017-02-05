@@ -5,10 +5,9 @@ using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCC.Forms.view.components.cells;
-using Xamarin.Forms;
+using MyCC.Forms.View.Components.Cells;
 
-namespace MyCC.Forms.view.pages.settings
+namespace MyCC.Forms.View.Pages.Settings
 {
     public partial class AccountEditView
     {
@@ -66,7 +65,7 @@ namespace MyCC.Forms.view.pages.settings
 
             account.Name = AccountName.Text ?? string.Empty;
 
-            account = new LocalAccount(account.Id, account.Name, currencyEntryCell.SelectedMoney, account.ParentId);
+            account = new LocalAccount(account.Id, account.Name, currencyEntryCell.SelectedMoney, account.IsEnabled, account.ParentId);
             await repository.Update(account);
 
             Messaging.UpdatingAccounts.SendFinished();

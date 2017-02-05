@@ -1,26 +1,26 @@
-﻿using MyCC.Forms.constants;
+﻿using MyCC.Forms.Constants;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.components.cells
+namespace MyCC.Forms.View.Components.Cells
 {
     public class CustomEntryCell : ViewCell
     {
         public readonly Entry Entry;
         protected readonly Label TitleLabel;
 
-        private string title;
-        private string placeholder;
+        private string _title;
+        private string _placeholder;
 
         public string Title
         {
-            get { return title; }
-            set { title = value; TitleLabel.Text = title; }
+            get { return _title; }
+            set { _title = value; TitleLabel.Text = _title; }
         }
 
         public string Placeholder
         {
-            get { return placeholder; }
-            set { placeholder = value; Entry.Placeholder = placeholder; }
+            get { return _placeholder; }
+            set { _placeholder = value; Entry.Placeholder = _placeholder; }
         }
 
         public string Text

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Currency.Storage;
-using MyCC.Forms.constants;
+using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
-using MyCC.Forms.view.components.cells;
+using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.overlays
+namespace MyCC.Forms.View.Overlays
 {
     internal class CurrencyOverlay : ContentPage
     {

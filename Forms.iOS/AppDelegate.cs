@@ -1,6 +1,6 @@
 ﻿using CarouselView.FormsPlugin.iOS;
 using Foundation;
-using MyCC.Forms.constants;
+using MyCC.Forms.Constants;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;

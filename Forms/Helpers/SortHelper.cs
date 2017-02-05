@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Types;
-using MyCC.Forms.view.components.cells;
+using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.helpers
+namespace MyCC.Forms.Helpers
 {
     public static class SortHelper
     {

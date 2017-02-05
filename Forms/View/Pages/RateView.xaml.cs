@@ -7,10 +7,10 @@ using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Tasks;
-using MyCC.Forms.view.components;
+using MyCC.Forms.View.Components;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.pages
+namespace MyCC.Forms.View.Pages
 {
     public partial class RateView
     {

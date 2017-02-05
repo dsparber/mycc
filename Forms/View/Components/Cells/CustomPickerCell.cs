@@ -1,19 +1,19 @@
-﻿using MyCC.Forms.constants;
+﻿using MyCC.Forms.Constants;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.components.cells
+namespace MyCC.Forms.View.Components.Cells
 {
     internal class CustomPickerCell : ViewCell
     {
         public readonly Picker Picker;
         protected readonly Label TitleLabel;
 
-        private string title;
+        private string _title;
 
         public string Title
         {
-            get { return title; }
-            set { title = value; TitleLabel.Text = title; }
+            get { return _title; }
+            set { _title = value; TitleLabel.Text = _title; }
         }
 
         public bool IsEditable

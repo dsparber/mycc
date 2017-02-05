@@ -8,29 +8,6 @@ namespace MyCC.Core.Account.Models.Base
     /// </summary>
     public class Account : IPersistableWithParent<int>
     {
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:Models.Account"/> class.
-        /// </summary>
-        /// <param name="name">Name of the account</param>
-        /// <param name="money">Money of the account to be initialised with</param>
-        public Account(string name, Money money)
-        {
-            Name = name;
-            Money = money;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:models.Account"/> class.
-        /// </summary>
-        /// <param name="id">Identifier.</param>
-        /// <param name="name">Name.</param>
-        /// <param name="money">Money.</param>
-        public Account(int id, string name, Money money) : this(name, money)
-        {
-            Id = id;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="T:MyCC.Core.Account.Models.Base.Account"/> class.
         /// </summary>
@@ -38,9 +15,14 @@ namespace MyCC.Core.Account.Models.Base
         /// <param name="repositoryId">Repository identifier.</param>
         /// <param name="name">Name.</param>
         /// <param name="money">Money.</param>
-        public Account(int id, int repositoryId, string name, Money money) : this(id, name, money)
+        /// <param name="isEnabeld">Wether the account is enabled for the overview</param>
+        protected Account(int id, int repositoryId, string name, Money money, bool isEnabeld = true)
         {
+            Name = name;
+            Money = money;
+            Id = id;
             ParentId = repositoryId;
+            IsEnabled = isEnabeld;
         }
 
         /// <summary>
@@ -48,6 +30,8 @@ namespace MyCC.Core.Account.Models.Base
         /// </summary>
         /// <value>The identifier.</value>
         public int Id { get; set; }
+
+        public bool IsEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets the identifier.

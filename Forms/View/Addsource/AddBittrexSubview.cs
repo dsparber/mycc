@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Forms.Resources;
-using MyCC.Forms.view.components.cells;
+using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.addsource
+namespace MyCC.Forms.View.Addsource
 {
     public sealed class AddBittrexSubview : AddRepositorySubview
     {

@@ -4,21 +4,22 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
-	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
-	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
-	x:Class="MyCC.Forms.view.pages.CoinTableView"
+    xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
+	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	x:Class="MyCC.Forms.View.Pages.CoinTableView"
 	Title="{resources:Translate Assets}">
-	<ContentPage.ToolbarItems>
-		<ToolbarItem
+  <ContentPage.ToolbarItems>
+    <ToolbarItem
 			Text="{resources:Translate Refresh}"
 			Clicked="Refresh"
 			x:Name="RefreshItem"
 			Icon="refresh.png" />
-	</ContentPage.ToolbarItems>
-	<ContentPage.Content>
-		<components:ChangingStackLayout>
-			<carousel:CarouselViewControl
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <components1:ChangingStackLayout>
+      <carousel:CarouselViewControl
 				x:Name="HeaderCarousel"
 				Arrows="true"
 				InterPageSpacing="0"
@@ -27,40 +28,40 @@
 				PageIndicatorTintColor="#5FFF"
 				CurrentPageIndicatorTintColor="White"
 				BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}" />
-			<StackLayout
+      <StackLayout
 				VerticalOptions="FillAndExpand">
-				<StackLayout
+        <StackLayout
 					x:Name="Stack"
 					Spacing="0"
 					HorizontalOptions="FillAndExpand"
 					VerticalOptions="FillAndExpand">
-					<StackLayout.BackgroundColor>
-						<OnPlatform
+          <StackLayout.BackgroundColor>
+            <OnPlatform
 							x:TypeArguments="Color"
 							Android="#EEE" />
-					</StackLayout.BackgroundColor>
-				</StackLayout>
-				<ContentView
+          </StackLayout.BackgroundColor>
+        </StackLayout>
+        <ContentView
 					x:Name="NoSourcesView"
 					VerticalOptions="FillAndExpand"
 					BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-					<StackLayout
+          <StackLayout
 						VerticalOptions="CenterAndExpand"
 						Margin="40">
-						<Label
+            <Label
 							Text="{resources:Translate NoDataToDisplay}"
 							VerticalOptions="Center"
 							HorizontalTextAlignment="Center"
 							TextColor="{x:Static constants:AppConstants.FontColorLight}" />
-						<Label
+            <Label
 							Text="{resources:Translate GoToSourcesToAddAccount}"
 							VerticalOptions="Center"
 							HorizontalTextAlignment="Center"
 							WidthRequest="150"
 							TextColor="{x:Static constants:AppConstants.FontColorLight}" />
-					</StackLayout>
-				</ContentView>
-			</StackLayout>
-		</components:ChangingStackLayout>
-	</ContentPage.Content>
+          </StackLayout>
+        </ContentView>
+      </StackLayout>
+    </components1:ChangingStackLayout>
+  </ContentPage.Content>
 </ContentPage>

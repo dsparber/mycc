@@ -4,14 +4,14 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Types;
-using MyCC.Forms.helpers;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
-using MyCC.Forms.view.components.cells;
+using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.pages.settings
+namespace MyCC.Forms.View.Pages.Settings
 {
     public partial class RepositoryView
     {
@@ -107,7 +107,7 @@ namespace MyCC.Forms.view.pages.settings
             RepositoryNameEntryCell.IsEditable = true;
             if (!(_repository is LocalAccountRepository))
             {
-                TableView.Root.Add(DeleteSection);
+                TableView.Root.Add((TableSection)DeleteSection);
             }
             TableView.Root.Remove(AccountsSection);
 
@@ -178,7 +178,7 @@ namespace MyCC.Forms.view.pages.settings
                 RepositoryNameEntryCell.IsEditable = false;
                 AddressEntryCell.IsEditable = false;
 
-                TableView.Root.Add(AccountsSection);
+                TableView.Root.Add((TableSection)AccountsSection);
                 TableView.Root.Remove(DeleteSection);
 
                 ToolbarItems.Remove(SaveItem);

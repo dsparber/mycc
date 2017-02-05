@@ -1,4 +1,4 @@
-﻿using MyCC.Forms.constants;
+﻿using MyCC.Forms.Constants;
 using MyCC.Forms.iOS.renderer;
 using UIKit;
 using Xamarin.Forms;

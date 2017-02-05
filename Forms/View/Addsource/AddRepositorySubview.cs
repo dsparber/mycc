@@ -1,6 +1,6 @@
 using MyCC.Core.Account.Repositories.Base;
 
-namespace MyCC.Forms.view.addsource
+namespace MyCC.Forms.View.Addsource
 {
 
     public abstract class AddRepositorySubview : AddSourceSubview

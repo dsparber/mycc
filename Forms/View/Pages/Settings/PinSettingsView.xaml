@@ -3,37 +3,37 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
-	xmlns:cells="clr-namespace:MyCC.Forms.view.components.cells;assembly=MyCC.Forms"
-	x:Class="MyCC.Forms.view.pages.settings.PinSettingsView"
+	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
+	x:Class="MyCC.Forms.View.Pages.Settings.PinSettingsView"
 	Title="{resources:Translate Security}">
-	<ContentPage.Content>
-		<components:ChangingStackLayout>
-			<components:HeaderView
+  <ContentPage.Content>
+    <components:ChangingStackLayout>
+      <components:HeaderView
 				TitleText="{resources:Translate AppName}"
 				x:Name="Header" />
-			<TableView
+      <TableView
 				Intent="Form"
 				x:Name="Table">
-				<TableSection
+        <TableSection
 					x:Name="ActionSection">
-					<cells:CustomViewCell
+          <cells:CustomViewCell
 						IsActionCell="true"
 						Tapped="EnableDisablePin"
 						x:Name="EnableDisablePinCell" />
-					<cells:CustomViewCell
+          <cells:CustomViewCell
 						IsActionCell="true"
 						Text="{resources:Translate ChangePin}"
 						Tapped="ChangePin"
 						x:Name="ChangePinCell" />
-				</TableSection>
-				<TableSection
+        </TableSection>
+        <TableSection
 					x:Name="FingerprintSection">
-					<cells:CustomSwitchCell
+          <cells:CustomSwitchCell
 						Title="{resources:Translate UseFingerprint}"
 						x:Name="FingerprintCell" />
-				</TableSection>
-			</TableView>
-		</components:ChangingStackLayout>
-	</ContentPage.Content>
+        </TableSection>
+      </TableView>
+    </components:ChangingStackLayout>
+  </ContentPage.Content>
 </ContentPage>

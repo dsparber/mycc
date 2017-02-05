@@ -59,6 +59,10 @@ function updateTable(data, sort) {
         amountCell.innerHTML = "<span>" + data[i]["Amount"].substring(0, data[i]["Amount"].length - 5) + "</span><span>" + data[i]["Amount"].substring(data[i]["Amount"].length - 5) + "</span>";
         nameCell.innerHTML = data[i]["Name"];
 
+        if (data[i]["Disabled"]){
+          row.className = "disabled";
+        }
+
         row.onclick = rowClicked(data[i]["Id"]);
     }
 

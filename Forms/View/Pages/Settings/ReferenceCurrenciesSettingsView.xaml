@@ -2,10 +2,11 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
-	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCC.Forms.view.components;assembly=MyCC.Forms"
-	x:Class="MyCC.Forms.view.pages.settings.ReferenceCurrenciesSettingsView"
+    xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
+	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	x:Class="MyCC.Forms.View.Pages.Settings.ReferenceCurrenciesSettingsView"
     BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
 	Title="{resources:Translate Currencies}">
   <ContentPage.ToolbarItems>
@@ -14,8 +15,8 @@
 			Clicked="Add"
       Icon="add.png"/>
   </ContentPage.ToolbarItems>
-  <components:ChangingStackLayout>
-    <components:HeaderView
+  <components1:ChangingStackLayout>
+    <components1:HeaderView
 			TitleText="{resources:Translate AppName}"
 			x:Name="Header" />
     <ScrollView
@@ -41,5 +42,5 @@
         </TableView>
       </StackLayout>
     </ScrollView>
-  </components:ChangingStackLayout>
+  </components1:ChangingStackLayout>
 </ContentPage>

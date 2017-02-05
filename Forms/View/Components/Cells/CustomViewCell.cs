@@ -1,48 +1,48 @@
 using System.Collections.Generic;
-using MyCC.Forms.constants;
+using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.components.cells
+namespace MyCC.Forms.View.Components.Cells
 {
     public class CustomViewCell : SortableViewCell
     {
-        private readonly Label masterLabel;
-        private readonly Label detailLabel;
-        private readonly StackLayout loadingView;
-        private readonly StackLayout stack;
-        private readonly StackLayout actionItemsStack;
-        private readonly Image accessoryImage;
+        private readonly Label _masterLabel;
+        private readonly Label _detailLabel;
+        private readonly StackLayout _loadingView;
+        private readonly StackLayout _stack;
+        private readonly StackLayout _actionItemsStack;
+        private readonly Image _accessoryImage;
 
-        private string text;
-        private string detail;
-        private string image;
-        private bool isLoading;
-        private List<CustomViewCellActionItem> actions;
+        private string _text;
+        private string _detail;
+        private string _image;
+        private bool _isLoading;
+        private List<CustomViewCellActionItem> _actions;
 
         public string Text
         {
-            get { return text; }
+            get { return _text; }
             set
             {
-                text = value;
+                _text = value;
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    masterLabel.Text = text;
-                    detailLabel.IsVisible = (detail != null);
+                    _masterLabel.Text = _text;
+                    _detailLabel.IsVisible = (_detail != null);
                 });
             }
         }
         public string Detail
         {
-            get { return detail; }
+            get { return _detail; }
             set
             {
-                detail = value;
+                _detail = value;
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    detailLabel.Text = detail;
-                    detailLabel.IsVisible = !IsLoading;
+                    _detailLabel.Text = _detail;
+                    _detailLabel.IsVisible = !IsLoading;
                 });
             }
         }
@@ -53,38 +53,38 @@ namespace MyCC.Forms.view.components.cells
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    detailLabel.LineBreakMode = value;
+                    _detailLabel.LineBreakMode = value;
                 });
             }
         }
 
         public string Image
         {
-            set { image = value; Device.BeginInvokeOnMainThread(() => accessoryImage.Source = ImageSource.FromFile(image)); }
+            set { _image = value; Device.BeginInvokeOnMainThread(() => _accessoryImage.Source = ImageSource.FromFile(_image)); }
         }
 
         public bool ShowIcon
         {
-            set { Device.BeginInvokeOnMainThread(() => accessoryImage.IsVisible = value); }
-            get { return accessoryImage?.IsVisible ?? false; }
+            set { Device.BeginInvokeOnMainThread(() => _accessoryImage.IsVisible = value); }
+            get { return _accessoryImage?.IsVisible ?? false; }
         }
 
         public List<CustomViewCellActionItem> ActionItems
         {
-            set { actions = value; SetActionItems(); }
-            get { return actions; }
+            set { _actions = value; SetActionItems(); }
+            get { return _actions; }
         }
 
         public bool IsLoading
         {
-            get { return isLoading; }
+            get { return _isLoading; }
             set
             {
-                isLoading = value;
+                _isLoading = value;
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    detailLabel.IsVisible = !value;
-                    loadingView.IsVisible = value;
+                    _detailLabel.IsVisible = !value;
+                    _loadingView.IsVisible = value;
                 });
             }
         }
@@ -95,8 +95,8 @@ namespace MyCC.Forms.view.components.cells
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    masterLabel.TextColor = value ? AppConstants.ThemeColor : AppConstants.FontColor;
-                    if (value) stack.Children.Remove(detailLabel);
+                    _masterLabel.TextColor = value ? AppConstants.ThemeColor : AppConstants.FontColor;
+                    if (value) _stack.Children.Remove(_detailLabel);
                 });
             }
         }
@@ -107,44 +107,44 @@ namespace MyCC.Forms.view.components.cells
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    masterLabel.TextColor = value ? Color.Red : AppConstants.FontColor;
-                    if (value) stack.Children.Remove(detailLabel);
-                    masterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand;
+                    _masterLabel.TextColor = value ? Color.Red : AppConstants.FontColor;
+                    if (value) _stack.Children.Remove(_detailLabel);
+                    _masterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand;
                 });
             }
         }
 
         public bool IsCentered
         {
-            set { Device.BeginInvokeOnMainThread(() => masterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand); }
+            set { Device.BeginInvokeOnMainThread(() => _masterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand); }
         }
 
         public CustomViewCell()
         {
-            masterLabel = new Label { TextColor = Color.FromHex("222"), LineBreakMode = LineBreakMode.TailTruncation, VerticalOptions = LayoutOptions.Center };
+            _masterLabel = new Label { TextColor = Color.FromHex("222"), LineBreakMode = LineBreakMode.TailTruncation, VerticalOptions = LayoutOptions.Center };
 
             if (Device.OS == TargetPlatform.Android)
             {
-                masterLabel.FontSize = AppConstants.AndroidFontSize;
+                _masterLabel.FontSize = AppConstants.AndroidFontSize;
             }
 
-            detailLabel = new Label { TextColor = Color.Gray, FontSize = masterLabel.FontSize * 0.75, LineBreakMode = LineBreakMode.MiddleTruncation, VerticalOptions = LayoutOptions.Center };
+            _detailLabel = new Label { TextColor = Color.Gray, FontSize = _masterLabel.FontSize * 0.75, LineBreakMode = LineBreakMode.MiddleTruncation, VerticalOptions = LayoutOptions.Center };
 
-            loadingView = new StackLayout { Orientation = StackOrientation.Horizontal, Spacing = 0, Padding = new Thickness(0), Margin = new Thickness(0) };
-            loadingView.Children.Add(new Label { Text = I18N.RefreshingDots, TextColor = Color.Gray, FontSize = masterLabel.FontSize * 0.75, VerticalOptions = LayoutOptions.Center });
+            _loadingView = new StackLayout { Orientation = StackOrientation.Horizontal, Spacing = 0, Padding = new Thickness(0), Margin = new Thickness(0) };
+            _loadingView.Children.Add(new Label { Text = I18N.RefreshingDots, TextColor = Color.Gray, FontSize = _masterLabel.FontSize * 0.75, VerticalOptions = LayoutOptions.Center });
 
-            stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
-            stack.Children.Add(masterLabel);
-            stack.Children.Add(detailLabel);
-            stack.Children.Add(loadingView);
+            _stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
+            _stack.Children.Add(_masterLabel);
+            _stack.Children.Add(_detailLabel);
+            _stack.Children.Add(_loadingView);
 
-            accessoryImage = new Image { HeightRequest = 20, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.FillAndExpand };
-            actionItemsStack = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.FillAndExpand };
+            _accessoryImage = new Image { HeightRequest = 20, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.FillAndExpand };
+            _actionItemsStack = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.FillAndExpand };
 
             var mainView = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.Fill };
-            mainView.Children.Add(stack);
-            mainView.Children.Add(actionItemsStack);
-            mainView.Children.Add(accessoryImage);
+            mainView.Children.Add(_stack);
+            mainView.Children.Add(_actionItemsStack);
+            mainView.Children.Add(_accessoryImage);
 
             var content = new ContentView { Content = mainView, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.White };
 
@@ -157,8 +157,8 @@ namespace MyCC.Forms.view.components.cells
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                actionItemsStack.Children.Clear();
-                foreach (var a in actions)
+                _actionItemsStack.Children.Clear();
+                foreach (var a in _actions)
                 {
                     var img = new Image
                     {
@@ -176,7 +176,7 @@ namespace MyCC.Forms.view.components.cells
                     gestureRecognizer.Tapped += a.Action;
                     gestureRecognizer.CommandParameter = a.Data;
                     content.GestureRecognizers.Add(gestureRecognizer);
-                    actionItemsStack.Children.Add(content);
+                    _actionItemsStack.Children.Add(content);
                 }
             });
         }

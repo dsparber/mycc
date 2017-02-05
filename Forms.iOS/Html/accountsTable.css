@@ -10,6 +10,7 @@ html, body {
 }
 
 table {
+    position: fixed;
     width: 100%;
     border-collapse: collapse;
 }
@@ -76,4 +77,8 @@ thead td.down span {
 
 thead td.up span {
     background-image: url("down.svg");
+}
+
+.disabled {
+  color: #ccc;
 }

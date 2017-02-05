@@ -1,6 +1,6 @@
 using MyCC.Core.Account.Models.Base;
 
-namespace MyCC.Forms.view.addsource
+namespace MyCC.Forms.View.Addsource
 {
 
     public abstract class AddAccountSubview : AddSourceSubview

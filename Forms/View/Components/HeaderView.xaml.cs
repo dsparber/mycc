@@ -1,8 +1,8 @@
-﻿using MyCC.Forms.helpers;
+﻿using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.components
+namespace MyCC.Forms.View.Components
 {
     public partial class HeaderView
     {

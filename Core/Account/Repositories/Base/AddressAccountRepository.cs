@@ -75,7 +75,7 @@ namespace MyCC.Core.Account.Repositories.Base
             var money = new Money(balance.Value, Currency);
             var name = Name;
 
-            var newAccount = GetAccount(existing?.Id ?? default(int), name, money);
+            var newAccount = GetAccount(existing?.Id ?? default(int), name, money, existing?.IsEnabled ?? true);
 
             if (existing != null)
             {
@@ -93,7 +93,7 @@ namespace MyCC.Core.Account.Repositories.Base
             return true;
         }
 
-        protected abstract FunctionalAccount GetAccount(int? id, string name, Money money);
+        protected abstract FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled);
 
         public override string Info => $"{I18N.Address}: {Address}";
     }

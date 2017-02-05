@@ -9,7 +9,7 @@ namespace MyCC.Core.Account.Models.Implementations
     {
         private readonly CryptoIdAccountRepository _repository;
 
-        public CryptoIdAccount(int? id, string name, Money money, CryptoIdAccountRepository repository) : base(id, repository.Id, name, money)
+        public CryptoIdAccount(int? id, string name, Money money, bool isEnabled, CryptoIdAccountRepository repository) : base(id, repository.Id, name, money, isEnabled)
         {
             this._repository = repository;
         }

@@ -7,7 +7,7 @@ namespace MyCC.Core.Account.Models.Base
     {
         public DateTime LastUpdate;
 
-        protected OnlineFunctionalAccount(int? id, int repositoryId, string name, Money money) : base(id ?? default(int), repositoryId, name, money)
+        protected OnlineFunctionalAccount(int? id, int repositoryId, string name, Money money, bool isEnabled = true) : base(id ?? default(int), repositoryId, name, money, isEnabled)
         {
             LastUpdate = DateTime.MinValue;
         }

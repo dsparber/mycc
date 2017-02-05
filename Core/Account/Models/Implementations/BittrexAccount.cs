@@ -12,7 +12,7 @@ namespace MyCC.Core.Account.Models.Implementations
         private const string BalanceKey = "Balance";
 
 
-        public BittrexAccount(int? id, string name, Money money, BittrexAccountRepository repository) : base(id, repository.Id, name, money)
+        public BittrexAccount(int? id, string name, Money money, bool isEnabled, BittrexAccountRepository repository) : base(id, repository.Id, name, money, isEnabled)
         {
             this._repository = repository;
         }

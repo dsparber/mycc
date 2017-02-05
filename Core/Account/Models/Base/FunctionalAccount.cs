@@ -12,7 +12,7 @@ namespace MyCC.Core.Account.Models.Base
 
         public List<Transaction> Transactions { get; private set; }
 
-        protected FunctionalAccount(int? id, int repositoryId, string name, Money money) : base(id ?? default(int), repositoryId, name, money)
+        protected FunctionalAccount(int? id, int repositoryId, string name, Money money, bool isEnabled = true) : base(id ?? default(int), repositoryId, name, money, isEnabled)
         {
             Transactions = new List<Transaction>();
 

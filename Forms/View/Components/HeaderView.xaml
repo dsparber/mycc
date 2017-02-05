@@ -2,9 +2,9 @@
 <ContentView
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:constants="clr-namespace:MyCC.Forms.constants;assembly=MyCC.Forms"
-	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
-	x:Class="MyCC.Forms.view.components.HeaderView"
+    xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+    xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
+    x:Class="MyCC.Forms.View.Components.HeaderView"
 	BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
 	WidthRequest="280">
   <ContentView.Content>

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace MyCC.Forms.helpers
+namespace MyCC.Forms.Helpers
 {
     public static class StringHelper
     {

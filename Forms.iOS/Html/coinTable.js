@@ -70,6 +70,10 @@ function updateTable(data, sort) {
         amountCell.innerHTML = data[i]["Amount"];
         referenceCell.innerHTML = data[i]["Reference"];
 
+        if (data[i]["Disabled"]){
+          row.className = "disabled";
+        }
+
         row.onclick = rowClicked(data[i]["CallbackString"]);
     }
 

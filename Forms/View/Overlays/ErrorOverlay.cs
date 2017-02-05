@@ -4,7 +4,7 @@ using System.Net;
 using MyCC.Forms.Resources;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.overlays
+namespace MyCC.Forms.View.Overlays
 {
     public static class ErrorOverlay
     {

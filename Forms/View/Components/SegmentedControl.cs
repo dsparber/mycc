@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using MyCC.Forms.constants;
+using MyCC.Forms.Constants;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.components
+namespace MyCC.Forms.View.Components
 {
     public class SegmentedControl : ContentView
     {
