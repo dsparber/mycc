@@ -41,8 +41,7 @@
           FontSize="18"
           HorizontalTextAlignment="Center"
           TextColor="White"
-          LineBreakMode="TailTruncation"
-          WidthRequest="10000" />
+          LineBreakMode="TailTruncation"/>
         <StackLayout
           x:Name="LoadingPanel"
           IsVisible="false"

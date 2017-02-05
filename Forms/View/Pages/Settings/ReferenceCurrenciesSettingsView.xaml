@@ -11,7 +11,8 @@
   <ContentPage.ToolbarItems>
     <ToolbarItem
 			Text="{resources:Translate Add}"
-			Clicked="Add" />
+			Clicked="Add"
+      Icon="add.png"/>
   </ContentPage.ToolbarItems>
   <components:ChangingStackLayout>
     <components:HeaderView
