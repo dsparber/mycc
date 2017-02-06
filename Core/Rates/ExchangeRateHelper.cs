@@ -46,22 +46,25 @@ namespace MyCC.Core.Rates
                     rates.Find(c => c?.Equals(neededRate.Inverse) ?? false)?.Inverse;
         }
 
-        public static Task FetchMissingRatesFor(IEnumerable<ExchangeRate> rates)
+        public static Task FetchMissingRatesFor(IEnumerable<ExchangeRate> rates, Action<double> progressCallback = null)
         {
             var missingRates = rates.SelectMany(GetNeededRates).Distinct();
-            return FetchMissingRates(missingRates);
+            return FetchMissingRates(missingRates, progressCallback);
         }
 
-        private static async Task FetchMissingRates(IEnumerable<ExchangeRate> missingRates)
+        private static async Task FetchMissingRates(IEnumerable<ExchangeRate> missingRates, Action<double> progressCallback = null)
         {
             var storedRates = ExchangeRatesStorage.Instance.StoredRates.ToList();
-            var neededToFetch = missingRates.Where(r => !(storedRates.Contains(r) || storedRates.Contains(r.Inverse)));
+            var neededToFetch = missingRates.Where(r => !(storedRates.Contains(r) || storedRates.Contains(r.Inverse))).ToList();
 
             var fetchedFixerIo = false;
             var fetchedBtce = false;
 
+            var progress = .0;
             foreach (var r in neededToFetch)
             {
+                progressCallback?.Invoke(progress / neededToFetch.Count); progress += 1;
+
                 if (ExchangeRatesStorage.FixerIo.IsAvailable(r) || ExchangeRatesStorage.FixerIo.IsAvailable(r.Inverse))
                 {
                     if (fetchedFixerIo) continue;
@@ -94,16 +97,20 @@ namespace MyCC.Core.Rates
                     }
                 }
             }
+            progressCallback?.Invoke(1);
         }
 
-        public static async Task UpdateRates(IEnumerable<ExchangeRate> rates)
+        public static async Task UpdateRates(IEnumerable<ExchangeRate> rates, Action<double> progressCallback = null)
         {
             var updatedRepositories = new List<int>();
 
-            var ratesToUpdate = rates.SelectMany(GetNeededRates);
+            var ratesToUpdate = rates.SelectMany(GetNeededRates).ToList();
 
+            var progress = .0;
             foreach (var r in ratesToUpdate)
             {
+                progressCallback?.Invoke(progress / ratesToUpdate.Count); progress += 1;
+
                 var supportedRepo = ExchangeRatesStorage.Instance.Repositories.FirstOrDefault(repo => repo.IsAvailable(r));
                 if (supportedRepo == null) continue;
 
@@ -120,6 +127,7 @@ namespace MyCC.Core.Rates
                     await ((ISingleRateRepository)supportedRepo).FetchRate(r);
                 }
             }
+            progressCallback?.Invoke(1);
         }
 
         public static IEnumerable<ExchangeRate> GetNeededRates(ExchangeRate rate)

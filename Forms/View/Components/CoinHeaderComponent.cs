@@ -57,7 +57,7 @@ namespace MyCC.Forms.View.Components
             Instances.Add(this);
         }
 
-        private void UpdateView(bool? isLoading = null)
+        private void UpdateView()
         {
 
             if (_account != null)
@@ -114,11 +114,6 @@ namespace MyCC.Forms.View.Components
                 }
 
                 SetInfoText();
-
-                if (isLoading.HasValue)
-                {
-                    IsLoading = isLoading.Value;
-                }
             });
         }
 
@@ -144,14 +139,14 @@ namespace MyCC.Forms.View.Components
 
         private void AddSubscriber()
         {
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => UpdateView());
-            Messaging.RoundNumbers.SubscribeValueChanged(this, () => UpdateView());
-            Messaging.Loading.SubscribeFinished(this, () => UpdateView());
+            Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
+            Messaging.RoundNumbers.SubscribeValueChanged(this, UpdateView);
+            Messaging.Loading.SubscribeFinished(this, UpdateView);
 
-            Messaging.FetchMissingRates.SubscribeFinished(this, () => UpdateView());
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, () => UpdateView());
-            Messaging.UpdatingAccounts.SubscribeFinished(this, () => UpdateView());
-            Messaging.UpdatingRates.SubscribeFinished(this, () => UpdateView());
+            Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
+            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
+            Messaging.UpdatingRates.SubscribeFinished(this, UpdateView);
         }
 
         private void SetInfoText(int increment = 0, bool updateOthers = true)

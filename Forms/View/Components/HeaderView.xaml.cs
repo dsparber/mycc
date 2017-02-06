@@ -1,4 +1,5 @@
-﻿using MyCC.Forms.Helpers;
+﻿using System.Threading.Tasks;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using Xamarin.Forms;
 
@@ -6,14 +7,9 @@ namespace MyCC.Forms.View.Components
 {
     public partial class HeaderView
     {
-        private bool _refreshingMissing;
-        private bool _refreshingAccounts;
-        private bool _refreshingRates;
-        private bool _refreshingAccountsAndRates;
-        private bool _refreshingCoinInfo;
 
-        private double _defaultSize = 36;
-        private double _defaultSizeSmall = 24;
+        private const double DefaultSize = 36;
+        private const double DefaultSizeSmall = 24;
 
         public string TitleText
         {
@@ -62,18 +58,21 @@ namespace MyCC.Forms.View.Components
         {
             if (!subscribeToRefresh) return;
 
-            Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => { Device.BeginInvokeOnMainThread(() => IsLoading = true); _refreshingMissing = true; }, () => { _refreshingMissing = false; DisableLoading(); });
-            Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => { Device.BeginInvokeOnMainThread(() => IsLoading = true); _refreshingAccounts = true; }, () => { _refreshingAccounts = false; DisableLoading(); });
-            Messaging.UpdatingRates.SubscribeStartedAndFinished(this, () => { Device.BeginInvokeOnMainThread(() => IsLoading = true); _refreshingRates = true; }, () => { _refreshingRates = false; DisableLoading(); });
-            Messaging.FetchingCoinInfo.SubscribeStartedAndFinished(this, () => { Device.BeginInvokeOnMainThread(() => IsLoading = true); _refreshingCoinInfo = true; }, () => { _refreshingCoinInfo = false; DisableLoading(); });
-            Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => { Device.BeginInvokeOnMainThread(() => IsLoading = true); _refreshingAccountsAndRates = true; }, () => { _refreshingAccountsAndRates = false; DisableLoading(); });
+            MessagingCenter.Subscribe<string>(this, Messaging.SetProgress, d => Progress = double.Parse(d));
         }
 
-        private void DisableLoading()
+        private double Progress
         {
-            if (!_refreshingMissing && !_refreshingAccounts && !_refreshingAccountsAndRates && !_refreshingRates && !_refreshingCoinInfo)
+            set
             {
-                Device.BeginInvokeOnMainThread(() => IsLoading = false);
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    ProgressBar.ProgressTo(value, 100, Easing.Linear);
+                });
+                if (value > 0.98)
+                {
+                    Task.Delay(200).ContinueWith(t => Device.BeginInvokeOnMainThread(() => ProgressBar.Progress = 0));
+                }
             }
         }
 
@@ -86,7 +85,7 @@ namespace MyCC.Forms.View.Components
             if (Device.OS == TargetPlatform.Android)
             {
                 LoadingIndicator.VerticalOptions = LayoutOptions.Center;
-                Spacer.HeightRequest = 1;
+                ProgressBar.HeightRequest = 1;
             }
 
             Padding = new Thickness(0, 0, 0, 10);
@@ -106,8 +105,8 @@ namespace MyCC.Forms.View.Components
 
         private void AdaptSize()
         {
-            var size = (float?)_defaultSize + 0.25f;
-            var sizeSmall = (float?)_defaultSizeSmall + 0.25f;
+            var size = (float?)DefaultSize + 0.25f;
+            var sizeSmall = (float?)DefaultSizeSmall + 0.25f;
             double width, availableWidth;
 
             do

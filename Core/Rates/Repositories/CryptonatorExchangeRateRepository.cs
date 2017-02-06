@@ -55,7 +55,7 @@ namespace MyCC.Core.Rates.Repositories
 
             if (Rates.Contains(exchangeRate))
             {
-                Rates.Remove(exchangeRate);
+                Rates.RemoveAll(r => r.Equals(exchangeRate));
                 await _connection.UpdateAsync(exchangeRate);
             }
             else

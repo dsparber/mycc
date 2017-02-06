@@ -18,7 +18,6 @@ namespace MyCC.Forms.View.Pages
     public partial class AccountDetailView
     {
         private readonly FunctionalAccount _account;
-        private readonly CoinHeaderComponent _header;
         private readonly ReferenceCurrenciesView _referenceView;
 
         public AccountDetailView(FunctionalAccount account)
@@ -27,8 +26,8 @@ namespace MyCC.Forms.View.Pages
 
             _account = account;
 
-            _header = new CoinHeaderComponent(account);
-            ChangingStack.Children.Insert(0, _header);
+            var header = new CoinHeaderComponent(account);
+            ChangingStack.Children.Insert(0, header);
             _referenceView = new ReferenceCurrenciesView(account.Money);
 
             var stack = new StackLayout { Spacing = 40, Margin = new Thickness(0, 40) };
@@ -70,24 +69,11 @@ namespace MyCC.Forms.View.Pages
             ContentView.Content = stack;
 
             SetView();
-
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => Update());
-            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, () => Update());
-
-            Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => Update(true), () => Update());
-            Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Update(true), () => Update());
-            Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Update(true), () => Update());
         }
 
         private void SetView()
         {
             Title = _account.Money.Currency.Code;
-            Update();
-        }
-
-        private void Update(bool loading = false)
-        {
-            Device.BeginInvokeOnMainThread(() => _header.IsLoading = loading);
         }
 
         protected override void OnAppearing()
@@ -100,11 +86,7 @@ namespace MyCC.Forms.View.Pages
         private async void Refresh(object sender, EventArgs args)
         {
             RefreshItem.Clicked -= Refresh;
-            if (_account is OnlineFunctionalAccount)
-            {
-                await AppTaskHelper.FetchBalanceAndRates((OnlineFunctionalAccount)_account);
-            }
-            await AppTaskHelper.FetchMissingRates();
+            await AppTaskHelper.FetchBalanceAndRates(_account);
             RefreshItem.Clicked += Refresh;
         }
 

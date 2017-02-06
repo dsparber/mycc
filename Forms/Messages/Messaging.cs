@@ -21,7 +21,7 @@
         public const string UpdatingAccountsAndRates = "UpdatingAccountsAndRates";
         public const string UpdatingCurrenciesAndAvailableRates = "UpdatingCurrenciesAndAvailableRates";
 
-
+        public const string SetProgress = "SetProgress";
     }
 }
 

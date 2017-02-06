@@ -34,7 +34,7 @@ namespace MyCC.Forms.View.Components
             Instances.Add(this);
         }
 
-        private void UpdateView(bool? isLoading = null)
+        private void UpdateView()
         {
             _infoTexts[0] = new Money(ExchangeRateHelper.GetRate(_currency, Currency.Btc)?.Rate ?? 0, Currency.Btc).ToString8Digits();
             _infoTexts[1] = (_currency.IsCryptoCurrency ? CoinInfoStorage.Instance.Get(_currency)?.LastUpdate ?? DateTime.MinValue : DateTime.Now).LastUpdateString();
@@ -44,18 +44,13 @@ namespace MyCC.Forms.View.Components
 
                 TitleText = _currency.Name;
                 SetInfoText();
-
-                if (isLoading.HasValue)
-                {
-                    IsLoading = isLoading.Value;
-                }
             });
         }
 
         private void AddSubscriber()
         {
-            Messaging.FetchingCoinInfo.SubscribeFinished(this, () => UpdateView());
-            Messaging.Loading.SubscribeFinished(this, () => UpdateView());
+            Messaging.FetchingCoinInfo.SubscribeFinished(this, UpdateView);
+            Messaging.Loading.SubscribeFinished(this, UpdateView);
         }
 
         private void SetInfoText(int increment = 0, bool updateOthers = true)

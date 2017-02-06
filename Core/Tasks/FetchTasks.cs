@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.CoinInfo;
 using MyCC.Core.Currency.Storage;
@@ -14,18 +13,12 @@ namespace MyCC.Core.Tasks
 {
     public static partial class ApplicationTasks
     {
-        private static Task _fetchAllExchangeRatesTask;
-        private static Task _fetchMissingRatesTask;
-        private static Task _fetchCurrenciesAndAvailableRatesTask;
-
-        public static Task FetchBalancesAndRates(Action onStarted, Action onFinished, Action<Exception> onError)
-        => _fetchAllExchangeRatesTask = _fetchAllExchangeRatesTask.GetTask(async () =>
+        public static async Task FetchRates(Action onStarted, Action onFinished, Action<Exception> onError, Action<double> progressCallback)
         {
             try
             {
                 onStarted();
-                await ExchangeRatesStorage.Instance.UpdateRates();
-                await AccountStorage.Instance.FetchOnline();
+                await ExchangeRatesStorage.Instance.UpdateRates(progressCallback);
             }
             catch (Exception e)
             {
@@ -35,10 +28,9 @@ namespace MyCC.Core.Tasks
             {
                 onFinished();
             }
-        });
+        }
 
-        public static Task FetchCurrenciesAndAvailableRates(Action onStarted, Action onFinished, Action<Exception> onError)
-        => _fetchCurrenciesAndAvailableRatesTask = _fetchCurrenciesAndAvailableRatesTask.GetTask(async () =>
+        public static async Task FetchCurrenciesAndAvailableRates(Action onStarted, Action onFinished, Action<Exception> onError)
         {
             try
             {
@@ -55,10 +47,9 @@ namespace MyCC.Core.Tasks
             {
                 onFinished();
             }
-        });
+        }
 
-        public static Task FetchMissingRates(IEnumerable<ExchangeRate> rates, Action onStarted, Action onFinished, Action<Exception> onError)
-        => _fetchMissingRatesTask = _fetchMissingRatesTask.GetTask(async () =>
+        public static async Task FetchMissingRates(IEnumerable<ExchangeRate> rates, Action onStarted, Action onFinished, Action<Exception> onError, Action<double> progressCallback)
         {
             var ratesList = rates.ToList();
             ratesList.RemoveAll(e => e == null);
@@ -66,26 +57,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted();
-                await ExchangeRateHelper.FetchMissingRatesFor(ratesList);
-            }
-            catch (Exception e)
-            {
-                onError(e);
-            }
-            finally
-            {
-                onFinished();
-            }
-        });
-
-        public static async Task FetchBalanceAndRates(OnlineFunctionalAccount account, Action onStarted, Action onFinished, Action<Exception> onError)
-        {
-            try
-            {
-                onStarted();
-                await account.FetchBalanceOnline();
-                var ratesToUpdate = ApplicationSettings.AllReferenceCurrencies.Select(c => new ExchangeRate(account.Money.Currency, c));
-                await ExchangeRateHelper.UpdateRates(ratesToUpdate);
+                await ExchangeRateHelper.FetchMissingRatesFor(ratesList, progressCallback);
             }
             catch (Exception e)
             {
@@ -97,14 +69,13 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchBalanceAndRates(Currency.Model.Currency currency, Action onStarted, Action onFinished, Action<Exception> onError)
+        public static async Task FetchBalance(FunctionalAccount account, Action onStarted, Action onFinished, Action<Exception> onError)
         {
             try
             {
                 onStarted();
-                await Task.WhenAll(AccountStorage.Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).OfType<OnlineFunctionalAccount>().Select(a => a.FetchBalanceOnline()));
-                var ratesToUpdate = ApplicationSettings.AllReferenceCurrencies.Select(c => new ExchangeRate(currency, c));
-                await ExchangeRateHelper.UpdateRates(ratesToUpdate);
+                var onlineFunctionalAccount = account as OnlineFunctionalAccount;
+                if (onlineFunctionalAccount != null) await onlineFunctionalAccount.FetchBalanceOnline();
             }
             catch (Exception e)
             {
@@ -116,13 +87,17 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchRates(Currency.Model.Currency currency, Action onStarted, Action onFinished, Action<Exception> onError)
+        public static Task FetchRates(FunctionalAccount account, Action onStarted, Action onFinished, Action<Exception> onError, Action<double> progressCallback)
+            => FetchRates(account.Money.Currency, onStarted, onFinished, onError, progressCallback);
+
+
+        public static async Task FetchRates(Currency.Model.Currency currency, Action onStarted, Action onFinished, Action<Exception> onError, Action<double> progressCallback)
         {
             try
             {
                 onStarted();
                 var ratesToUpdate = ApplicationSettings.AllReferenceCurrencies.Select(c => new ExchangeRate(currency, c));
-                await ExchangeRateHelper.UpdateRates(ratesToUpdate);
+                await ExchangeRateHelper.UpdateRates(ratesToUpdate, progressCallback);
             }
             catch (Exception e)
             {
@@ -134,12 +109,19 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchBalances(OnlineAccountRepository repository, Action onStarted, Action onFinished, Action<Exception> onError)
+        public static async Task FetchBalance(Currency.Model.Currency currency, Action onStarted, Action onFinished, Action<Exception> onError, Action<double> progressCallback)
         {
             try
             {
                 onStarted();
-                await repository.FetchOnline();
+                var accounts = AccountStorage.AccountsWithCurrency(currency).OfType<OnlineFunctionalAccount>().ToList();
+                var progress = .0;
+                await Task.WhenAll(accounts.Select(async a =>
+                {
+                    await a.FetchBalanceOnline();
+                    progress += 1;
+                    progressCallback(progress / accounts.Count);
+                }));
             }
             catch (Exception e)
             {
@@ -151,12 +133,12 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchAccounts(Action onStarted, Action onFinished, Action<Exception> onError)
+        public static async Task FetchAccounts(Action onStarted, Action onFinished, Action<Exception> onError, Action<double> progressCallback)
         {
             try
             {
                 onStarted();
-                await AccountStorage.Instance.FetchOnline();
+                await AccountStorage.Instance.FetchOnline(progressCallback);
             }
             catch (Exception e)
             {
@@ -190,7 +172,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted();
-                await ExchangeRatesStorage.Instance.UpdateRates();
+                await ExchangeRatesStorage.Instance.UpdateRates(d => { });
             }
             catch (Exception e)
             {
@@ -218,5 +200,6 @@ namespace MyCC.Core.Tasks
                 onFinished();
             }
         }
+
     }
 }

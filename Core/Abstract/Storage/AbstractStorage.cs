@@ -83,11 +83,17 @@ namespace MyCC.Core.Abstract.Storage
             return Task.Factory.StartNew(() => { });
         }
 
-        public async Task FetchOnline()
+        public async Task FetchOnline(Action<double> progressCallback = null)
         {
             await _onCreationTask;
             await BeforeFetching();
-            await Task.WhenAll(Repositories.Select(x => x.FetchOnline()));
+            var i = .0;
+            await Task.WhenAll(Repositories.Select(async x =>
+            {
+                await x.FetchOnline();
+                i += 1;
+                progressCallback?.Invoke(i / Repositories.Count);
+            }));
         }
 
         public async Task LoadFromDatabase()

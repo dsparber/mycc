@@ -30,6 +30,9 @@ namespace MyCC.Forms.iOS
                 TextColor = UIColor.White
             });
 
+            UIProgressView.Appearance.ProgressTintColor = Color.White.ToUIColor();
+            UIProgressView.Appearance.TrackTintColor = Color.Transparent.ToUIColor();
+
             UITabBar.Appearance.TintColor = AppConstants.ThemeColor.ToUIColor();
 
             return result;

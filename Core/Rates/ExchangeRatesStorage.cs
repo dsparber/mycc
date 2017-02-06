@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Database;
@@ -7,6 +8,7 @@ using MyCC.Core.Rates.Repositories.Interfaces;
 using MyCC.Core.Settings;
 using SQLite;
 using Xamarin.Forms;
+using Version = MyCC.Core.Settings.Version;
 
 namespace MyCC.Core.Rates
 {
@@ -71,9 +73,15 @@ namespace MyCC.Core.Rates
         public static IMultipleRatesRepository FixerIo => (IMultipleRatesRepository)GetRepository(RatesRepositories.FixerIo);
         public static IMultipleRatesRepository Btce => (IMultipleRatesRepository)GetRepository(RatesRepositories.Btce);
 
-        public async Task UpdateRates()
+        public async Task UpdateRates(Action<double> progressCallback)
         {
-            await Task.WhenAll(Repositories.Where(r => r != null).Select(r => r.UpdateRates()));
+            var i = 0;
+            await Task.WhenAll(Repositories.Select(async r =>
+            {
+                await r.UpdateRates();
+                i += 1;
+                progressCallback((double)i / Repositories.Count());
+            }));
         }
         public async Task FetchAvailableRates()
         {

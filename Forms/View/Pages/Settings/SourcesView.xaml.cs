@@ -15,7 +15,7 @@ namespace MyCC.Forms.View.Pages.Settings
 {
     public partial class SourcesView
     {
-        private List<AccountRepository> repositories;
+        private List<AccountRepository> _repositories;
 
         public SourcesView()
         {
@@ -28,14 +28,14 @@ namespace MyCC.Forms.View.Pages.Settings
             AddressSection.Title = I18N.AddressAdded;
 
             Messaging.Loading.SubscribeFinished(this, SetView);
-            Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetView);
-            Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetView);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, SetView);
+            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetView);
         }
 
         private void SetHeader()
         {
-            var sources = repositories.Count - (AnyLocalAccounts ? 0 : 1);
-            var local = repositories.Where(r => r is LocalAccountRepository).ToList().Count - (AnyLocalAccounts ? 0 : 1);
+            var sources = _repositories.Count - (AnyLocalAccounts ? 0 : 1);
+            var local = _repositories.Where(r => r is LocalAccountRepository).ToList().Count - (AnyLocalAccounts ? 0 : 1);
 
             Header.TitleText = AccountsText(AccountStorage.Instance.AllElements.Count);
             Func<int, string> sourcesText = (count) => PluralHelper.GetText(I18N.NoSources, I18N.OneSource, I18N.Sources, count);
@@ -55,14 +55,13 @@ namespace MyCC.Forms.View.Pages.Settings
             }
 
             Header.InfoText = $"{sourcesText(sources)}{localOnlineText}";
-            Header.IsLoading = false;
         }
 
         private static Func<int, string> AccountsText => (count) => PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, count);
 
         private void SetView()
         {
-            repositories = AccountStorage.Instance.Repositories ?? new List<AccountRepository>();
+            _repositories = AccountStorage.Instance.Repositories ?? new List<AccountRepository>();
 
             Func<AccountRepository, CustomViewCell> GetCell = r =>
                {
@@ -71,19 +70,19 @@ namespace MyCC.Forms.View.Pages.Settings
                    return c;
                };
 
-            var manualCells = repositories.OfType<LocalAccountRepository>().SelectMany(r => r.Elements).Select(a =>
+            var manualCells = _repositories.OfType<LocalAccountRepository>().SelectMany(r => r.Elements).Select(a =>
             {
                 var c = new CustomViewCell { Image = "more.png", Text = a.Money.ToString(), Detail = a.Name };
                 c.Tapped += (sender, e) => Navigation.PushAsync(new AccountEditView(a, AccountStorage.Instance.LocalRepository as LocalAccountRepository));
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
-            var bittrexCells = repositories.OfType<BittrexAccountRepository>().Select(r =>
+            var bittrexCells = _repositories.OfType<BittrexAccountRepository>().Select(r =>
             {
                 var c = GetCell(r);
                 c.Detail = PluralHelper.GetTextAccounts(r.Elements.ToList().Count);
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
-            var addressCells = repositories.OfType<AddressAccountRepository>().Select(r =>
+            var addressCells = _repositories.OfType<AddressAccountRepository>().Select(r =>
             {
                 var c = GetCell(r);
                 c.Detail = $"{I18N.Address}: {r.Address}";

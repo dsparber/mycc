@@ -76,31 +76,18 @@ namespace MyCC.Forms.View.Pages
         private async void Refresh(object sender, EventArgs e)
         {
             RefreshItem.Clicked -= Refresh;
-            await AppTaskHelper.FetchMissingRates(ApplicationSettings.WatchedCurrencies
-                                    .Concat(ApplicationSettings.AllReferenceCurrencies)
-                                    .Select(c => new ExchangeRate(Currency.Btc, c))
-                                    .Select(r => ExchangeRateHelper.GetRate(r) ?? r)
-                                    .Where(r => r.Rate == null)
-                                    .Concat(AccountStorage.NeededRates).ToList());
             await AppTaskHelper.UpdateRates();
             RefreshItem.Clicked += Refresh;
         }
 
         private class HeaderTemplateSelector : DataTemplateSelector
         {
-            private bool _isUpdatingExchangeRates;
-
-            public HeaderTemplateSelector()
-            {
-                Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => _isUpdatingExchangeRates = true, () => _isUpdatingExchangeRates = false);
-            }
-
             protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() =>
-            {
-                var c = (Currency)item;
+             {
+                 var c = (Currency)item;
 
-                return new RatesHeaderComponent(c, _isUpdatingExchangeRates);
-            });
+                 return new RatesHeaderComponent(c);
+             });
         }
     }
 }

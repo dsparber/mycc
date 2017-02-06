@@ -9,7 +9,7 @@
 	WidthRequest="280">
   <ContentView.Content>
     <StackLayout Spacing="0">
-      <ContentView x:Name="Spacer" HorizontalOptions="FillAndExpand" HeightRequest="0" BackgroundColor="#22FFFFFF"/>
+      <ProgressBar x:Name="ProgressBar" HorizontalOptions="FillAndExpand"/>
       <StackLayout
         Spacing="0"
         Margin="10"
@@ -59,6 +59,7 @@
             IsRunning="true" />
         </StackLayout>
       </StackLayout>
+
     </StackLayout>
   </ContentView.Content>
 </ContentView>

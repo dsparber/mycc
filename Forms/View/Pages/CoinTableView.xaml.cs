@@ -82,20 +82,12 @@ namespace MyCC.Forms.View.Pages
         {
             RefreshItem.Clicked -= Refresh;
             await AppTaskHelper.FetchBalancesAndRates();
-            await AppTaskHelper.FetchMissingRates();
             RefreshItem.Clicked += Refresh;
         }
 
         private class HeaderTemplateSelector : DataTemplateSelector
         {
-            private bool isUpdatingExchangeRates;
-
-            public HeaderTemplateSelector()
-            {
-                Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => isUpdatingExchangeRates = true, () => isUpdatingExchangeRates = false);
-            }
-
-            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent((Currency)item) { IsLoading = isUpdatingExchangeRates });
+            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent((Currency)item));
         }
     }
 }

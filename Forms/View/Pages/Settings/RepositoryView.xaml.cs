@@ -48,9 +48,6 @@ namespace MyCC.Forms.View.Pages.Settings
             RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
 
             SetView();
-
-            Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetView);
-            Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => Device.BeginInvokeOnMainThread(() => Header.IsLoading = true), SetView);
         }
 
         private void SetView()
@@ -75,7 +72,6 @@ namespace MyCC.Forms.View.Pages.Settings
             }
             Device.BeginInvokeOnMainThread(() =>
             {
-                Header.IsLoading = false;
                 SortHelper.ApplySortOrder(cells, AccountsSection, SortOrder.None, SortDirection.Ascending);
             });
 
@@ -84,7 +80,6 @@ namespace MyCC.Forms.View.Pages.Settings
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     AddressEntryCell.Text = (_repository as AddressAccountRepository)?.Address;
-                    Header.IsLoading = false;
                 });
             }
         }
@@ -99,6 +94,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             await AccountStorage.Instance.Remove(_repository);
             Messaging.UpdatingAccounts.SendFinished();
+            Header.IsLoading = false;
             await Navigation.PopAsync();
         }
 

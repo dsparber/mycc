@@ -8,7 +8,6 @@ using MyCC.Core.Currency.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
@@ -18,13 +17,8 @@ namespace MyCC.Forms.View.Pages
 {
     public partial class CoinInfoView
     {
-        private bool _fetchCoinInfoDone, _fetchRatesDone;
         private readonly Currency _currency;
         private readonly ReferenceCurrenciesView _referenceView;
-        private static IEnumerable<Currency> ReferenceCurrencies => ApplicationSettings.AllReferenceCurrencies;
-        private static List<ExchangeRate> Rates => ReferenceCurrencies.Select(c => new ExchangeRate(Currency.Btc, c)).ToList();
-
-        private readonly CoinInfoHeaderComponent _header;
 
         private readonly Dictionary<string, Tuple<Label, Label>> _infos;
 
@@ -35,8 +29,8 @@ namespace MyCC.Forms.View.Pages
             _currency = currency;
 
             Title = _currency.Code;
-            _header = new CoinInfoHeaderComponent(_currency);
-            ChangingStack.Children.Insert(0, _header);
+            var header = new CoinInfoHeaderComponent(_currency);
+            ChangingStack.Children.Insert(0, header);
             InfoHeading.Text = Device.OS == TargetPlatform.iOS ? I18N.Info.ToUpper() : I18N.Info;
             InfoHeading.TextColor = AppConstants.TableSectionColor;
 
@@ -80,7 +74,6 @@ namespace MyCC.Forms.View.Pages
         {
             var rate = new ExchangeRate(_currency, Currency.Btc);
             rate = ExchangeRateHelper.GetRate(rate) ?? rate;
-            var referenceMoney = new Money(rate.Rate ?? 0, Currency.Btc);
 
             var explorer = CoinInfoStorage.Instance.GetExplorer(_currency).Select(e => e.Name).ToList();
             var info = CoinInfoStorage.Instance.Get(_currency);
@@ -196,10 +189,7 @@ namespace MyCC.Forms.View.Pages
         private async void Refresh(object sender, EventArgs e)
         {
             RefreshItem.Clicked -= Refresh;
-            _fetchRatesDone = false; _fetchCoinInfoDone = false;
-            _header.IsLoading = true;
-            await AppTaskHelper.FetchRates(_currency);
-            await AppTaskHelper.FetchCoinInfo(_currency);
+            await AppTaskHelper.FetchCoinDetails(_currency);
             RefreshItem.Clicked += Refresh;
         }
 

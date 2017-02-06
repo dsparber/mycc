@@ -20,12 +20,11 @@ namespace MyCC.Forms.View.Components
         private static readonly List<RatesHeaderComponent> Instances = new List<RatesHeaderComponent>();
         private static int _currentInfoText = 1;
 
-        public RatesHeaderComponent(Currency currency, bool isUpdating) : base(true)
+        public RatesHeaderComponent(Currency currency) : base(true)
         {
             _currency = currency;
 
             _infoTexts = new List<string> { string.Empty, string.Empty, string.Empty };
-            IsLoading = isUpdating;
 
             var recognizer = new TapGestureRecognizer();
             recognizer.Tapped += (sender, e) => SetInfoText(+1);
@@ -37,7 +36,7 @@ namespace MyCC.Forms.View.Components
             Instances.Add(this);
         }
 
-        private void UpdateView(bool? isLoading = null)
+        private void UpdateView()
         {
             _infoTexts[0] = _currency.Name;
             _infoTexts[1] = string.Join(" / ", ApplicationSettings.MainCurrencies
@@ -57,11 +56,6 @@ namespace MyCC.Forms.View.Components
 
                 TitleText = Sum.ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 SetInfoText();
-
-                if (isLoading.HasValue)
-                {
-                    IsLoading = isLoading.Value;
-                }
             });
         }
 
@@ -69,14 +63,14 @@ namespace MyCC.Forms.View.Components
 
         private void AddSubscriber()
         {
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => UpdateView());
-            Messaging.RoundNumbers.SubscribeValueChanged(this, () => UpdateView());
+            Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
+            Messaging.RoundNumbers.SubscribeValueChanged(this, UpdateView);
 
-            Messaging.FetchMissingRates.SubscribeFinished(this, () => UpdateView());
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, () => UpdateView());
-            Messaging.UpdatingAccounts.SubscribeFinished(this, () => UpdateView());
-            Messaging.UpdatingRates.SubscribeFinished(this, () => UpdateView());
-            Messaging.Loading.SubscribeFinished(this, () => UpdateView());
+            Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
+            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
+            Messaging.UpdatingRates.SubscribeFinished(this, UpdateView);
+            Messaging.Loading.SubscribeFinished(this, UpdateView);
         }
 
         private void SetInfoText(int increment = 0, bool updateOthers = true)
