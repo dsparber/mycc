@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Storage;
@@ -41,7 +42,7 @@ namespace MyCC.Forms.View.Addsource
             var currency = currencyCell.SelectedCurrency;
             var amount = decimal.Parse(string.IsNullOrEmpty(amountEntryCell.Text) ? "0" : amountEntryCell.Text);
 
-            return currency == null ? null : new LocalAccount(null, name, new Money(amount, currency), true, AccountStorage.Instance.LocalRepository.Id);
+            return currency == null ? null : new LocalAccount(null, name, new Money(amount, currency), true, DateTime.Now, AccountStorage.Instance.LocalRepository.Id);
         }
 
         public override void Unfocus()

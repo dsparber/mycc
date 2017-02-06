@@ -8,7 +8,9 @@ namespace MyCC.Forms.View.Components
     {
         private bool _refreshingMissing;
         private bool _refreshingAccounts;
+        private bool _refreshingRates;
         private bool _refreshingAccountsAndRates;
+        private bool _refreshingCoinInfo;
 
         private double _defaultSize = 36;
         private double _defaultSizeSmall = 24;
@@ -62,12 +64,14 @@ namespace MyCC.Forms.View.Components
 
             Messaging.FetchMissingRates.SubscribeStartedAndFinished(this, () => { Device.BeginInvokeOnMainThread(() => IsLoading = true); _refreshingMissing = true; }, () => { _refreshingMissing = false; DisableLoading(); });
             Messaging.UpdatingAccounts.SubscribeStartedAndFinished(this, () => { Device.BeginInvokeOnMainThread(() => IsLoading = true); _refreshingAccounts = true; }, () => { _refreshingAccounts = false; DisableLoading(); });
+            Messaging.UpdatingRates.SubscribeStartedAndFinished(this, () => { Device.BeginInvokeOnMainThread(() => IsLoading = true); _refreshingRates = true; }, () => { _refreshingRates = false; DisableLoading(); });
+            Messaging.FetchingCoinInfo.SubscribeStartedAndFinished(this, () => { Device.BeginInvokeOnMainThread(() => IsLoading = true); _refreshingCoinInfo = true; }, () => { _refreshingCoinInfo = false; DisableLoading(); });
             Messaging.UpdatingAccountsAndRates.SubscribeStartedAndFinished(this, () => { Device.BeginInvokeOnMainThread(() => IsLoading = true); _refreshingAccountsAndRates = true; }, () => { _refreshingAccountsAndRates = false; DisableLoading(); });
         }
 
         private void DisableLoading()
         {
-            if (!_refreshingMissing && !_refreshingAccounts && !_refreshingAccountsAndRates)
+            if (!_refreshingMissing && !_refreshingAccounts && !_refreshingAccountsAndRates && !_refreshingRates && !_refreshingCoinInfo)
             {
                 Device.BeginInvokeOnMainThread(() => IsLoading = false);
             }

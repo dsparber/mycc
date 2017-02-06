@@ -36,15 +36,26 @@ namespace MyCC.Forms.Tasks
             await ApplicationTasks.FetchBalanceAndRates(account, Messaging.UpdatingAccountsAndRates.SendStarted, Messaging.UpdatingAccountsAndRates.SendFinished, ErrorOverlay.Display);
             await FetchMissingRates(AccountStorage.NeededRatesFor(account));
         }
+
         public static async Task FetchBalanceAndRates(Currency currency)
         {
             await ApplicationTasks.FetchBalanceAndRates(currency, Messaging.UpdatingAccountsAndRates.SendStarted, Messaging.UpdatingAccountsAndRates.SendFinished, ErrorOverlay.Display);
             await FetchMissingRates(AccountStorage.NeededRatesFor(currency));
         }
-        public static async Task FetchRates(List<ExchangeRate> neededRates)
+
+        public static async Task FetchRates(Currency currency)
+        {
+            await ApplicationTasks.FetchRates(currency, Messaging.UpdatingAccountsAndRates.SendStarted, Messaging.UpdatingAccountsAndRates.SendFinished, ErrorOverlay.Display);
+        }
+
+
+        public static async Task FetchRates(IEnumerable<ExchangeRate> neededRates)
         {
             await ApplicationTasks.FetchRates(neededRates, Messaging.UpdatingRates.SendStarted, Messaging.UpdatingRates.SendFinished, ErrorOverlay.Display);
         }
+
+        public static Task UpdateRates() => ApplicationTasks.UpdateRates(Messaging.UpdatingRates.SendStarted, Messaging.UpdatingRates.SendFinished, ErrorOverlay.Display);
+
 
         public static async Task FetchCoinInfo(Currency currency)
         {

@@ -41,7 +41,8 @@ namespace MyCC.Core.CoinInfo.Repositories
                 BlockHeight = heigh != 0 ? heigh as int? : null,
                 CoinSupply = supply != 0 ? supply as decimal? : null,
                 Hashrate = hashrate != 0 ? hashrate as decimal? : null,
-                Difficulty = diff != 0 ? diff as decimal? : null
+                Difficulty = diff != 0 ? diff as decimal? : null,
+                LastUpdate = DateTime.Now
             };
         }
     }

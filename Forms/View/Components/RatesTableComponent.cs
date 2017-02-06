@@ -99,57 +99,55 @@ namespace MyCC.Forms.View.Components
 
         public void OnAppearing()
         {
-            if (!_appeared)
-            {
-                _appeared = true;
-                _webView.LoadFromContent("Html/ratesTable.html");
-                _webView.LoadFinished = (sender, e) => UpdateView();
+            if (_appeared) return;
 
-            }
+            _appeared = true;
+            _webView.LoadFromContent("Html/ratesTable.html");
+            _webView.LoadFinished = (sender, e) => UpdateView();
         }
 
         private void UpdateView()
         {
-            if (_appeared)
+            if (!_appeared) return;
+
+
+            var items = ApplicationSettings.WatchedCurrencies
+                .Concat(ApplicationSettings.AllReferenceCurrencies)
+                .Concat(AccountStorage.UsedCurrencies)
+                .Distinct()
+                .Where(c => !c.Equals(ApplicationSettings.SelectedRatePageCurrency))
+                .Select(c => new Data(c)).ToList();
+
+            var itemsExisting = (items.Count > 0);
+
+            Device.BeginInvokeOnMainThread(() =>
             {
-                var items = ApplicationSettings.WatchedCurrencies
-                                               .Concat(ApplicationSettings.AllReferenceCurrencies)
-                                                 .Concat(AccountStorage.UsedCurrencies)
-                                                .Distinct()
-                                                .Where(c => !c.Equals(ApplicationSettings.SelectedRatePageCurrency))
-                                                .Select(c => new Data(c)).ToList();
+                _noDataLabel.IsVisible = !itemsExisting;
+                _webView.IsVisible = itemsExisting;
+            });
 
-                var itemsExisting = (items.Count > 0);
+            if (!itemsExisting || !_appeared) return;
 
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    _noDataLabel.IsVisible = !itemsExisting;
-                    _webView.IsVisible = itemsExisting;
-                });
-
-                if (!itemsExisting || !_appeared) return;
-
-                Func<Data, object> sortLambda;
-                switch (ApplicationSettings.SortOrderRates)
-                {
-                    case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
-                    case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Reference); break;
-                    case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Reference); break;
-                    case SortOrder.None: sortLambda = d => 1; break;
-                    default: sortLambda = d => 1; break;
-                }
-
-                items = ApplicationSettings.SortDirectionRates == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
-
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    _webView.CallJsFunction("setHeader", new[]{
-                      new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
-                      new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.SelectedRatePageCurrency), SortOrder.ByValue.ToString())
-                          }, string.Empty);
-                    _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
-                });
+            Func<Data, object> sortLambda;
+            switch (ApplicationSettings.SortOrderRates)
+            {
+                case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
+                case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Reference); break;
+                case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Reference); break;
+                case SortOrder.None: sortLambda = d => 1; break;
+                default: sortLambda = d => 1; break;
             }
+
+            items = ApplicationSettings.SortDirectionRates == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                _webView.CallJsFunction("setHeader", new[]{
+                    new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
+                    new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.SelectedRatePageCurrency), SortOrder.ByValue.ToString())
+                }, string.Empty);
+                _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+            });
         }
 
         [DataContract]

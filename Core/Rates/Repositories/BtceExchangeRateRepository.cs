@@ -41,8 +41,8 @@ namespace MyCC.Core.Rates.Repositories
 
             var itemsCount = Rates.Count;
             Rates.Clear();
-            Rates.Add(new ExchangeRate("BTC", true, "EUR", false, rateEur) { RepositoryId = TypeId });
-            Rates.Add(new ExchangeRate("BTC", true, "USD", false, rateUsd) { RepositoryId = TypeId });
+            Rates.Add(new ExchangeRate("BTC", true, "EUR", false, DateTime.Now, rateEur) { RepositoryId = TypeId });
+            Rates.Add(new ExchangeRate("BTC", true, "USD", false, DateTime.Now, rateUsd) { RepositoryId = TypeId });
 
             if (itemsCount == 0) await _connection.InsertAllAsync(Rates);
             else await _connection.UpdateAllAsync(Rates.ToArray());

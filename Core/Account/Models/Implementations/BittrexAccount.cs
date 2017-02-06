@@ -12,12 +12,12 @@ namespace MyCC.Core.Account.Models.Implementations
         private const string BalanceKey = "Balance";
 
 
-        public BittrexAccount(int? id, string name, Money money, bool isEnabled, BittrexAccountRepository repository) : base(id, repository.Id, name, money, isEnabled)
+        public BittrexAccount(int? id, string name, Money money, bool isEnabled, DateTime lastUpdate, BittrexAccountRepository repository) : base(id, repository.Id, name, money, lastUpdate, isEnabled)
         {
-            this._repository = repository;
+            _repository = repository;
         }
 
-        public override async Task FetchBalanceOnline()
+        protected override async Task FetchBalanceOnlineTask()
         {
             var result = (await _repository.GetResult(Money.Currency));
             var balance = decimal.Parse((string)result[BalanceKey], CultureInfo.InvariantCulture);

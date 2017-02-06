@@ -9,12 +9,12 @@ namespace MyCC.Core.Account.Models.Implementations
     {
         private readonly EthereumAccountRepository _repository;
 
-        public EthereumAccount(int? id, string name, Money money, bool isEnabled, EthereumAccountRepository repository) : base(id, repository.Id, name, money, isEnabled)
+        public EthereumAccount(int? id, string name, Money money, bool isEnabled, DateTime lastUpdate, EthereumAccountRepository repository) : base(id, repository.Id, name, money, lastUpdate, isEnabled)
         {
-            this._repository = repository;
+            _repository = repository;
         }
 
-        public override Task FetchBalanceOnline()
+        protected override Task FetchBalanceOnlineTask()
         {
             return _repository.FetchOnline();
         }

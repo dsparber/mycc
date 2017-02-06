@@ -76,13 +76,13 @@ namespace MyCC.Forms.View.Pages
         private async void Refresh(object sender, EventArgs e)
         {
             RefreshItem.Clicked -= Refresh;
-            await AppTaskHelper.FetchBalancesAndRates();
             await AppTaskHelper.FetchMissingRates(ApplicationSettings.WatchedCurrencies
                                     .Concat(ApplicationSettings.AllReferenceCurrencies)
                                     .Select(c => new ExchangeRate(Currency.Btc, c))
                                     .Select(r => ExchangeRateHelper.GetRate(r) ?? r)
                                     .Where(r => r.Rate == null)
                                     .Concat(AccountStorage.NeededRates).ToList());
+            await AppTaskHelper.UpdateRates();
             RefreshItem.Clicked += Refresh;
         }
 

@@ -53,7 +53,7 @@ namespace MyCC.Core.Rates.Repositories
 
             foreach (var r in ratesJson)
             {
-                var rate = new ExchangeRate(Currency.Model.Currency.Eur, new Currency.Model.Currency(r.Key, false), decimal.Parse((string)r.Value, CultureInfo.InvariantCulture)) { RepositoryId = TypeId };
+                var rate = new ExchangeRate(Currency.Model.Currency.Eur, new Currency.Model.Currency(r.Key, false), DateTime.Now, decimal.Parse((string)r.Value, CultureInfo.InvariantCulture)) { RepositoryId = TypeId };
                 fetchedRates.Add(rate);
             }
 

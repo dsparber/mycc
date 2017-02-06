@@ -53,7 +53,8 @@ namespace MyCC.Core.CoinInfo.Repositories
                 CoinSupply = decimal.Parse(volumeCurrent, CultureInfo.InvariantCulture),
                 MaxCoinSupply = decimal.Parse(volumeMax, CultureInfo.InvariantCulture),
                 BlockHeight = int.Parse(height, CultureInfo.InvariantCulture),
-                Difficulty = decimal.Parse(diff, CultureInfo.InvariantCulture)
+                Difficulty = decimal.Parse(diff, CultureInfo.InvariantCulture),
+                LastUpdate = DateTime.Now
             };
         }
     }

@@ -46,7 +46,6 @@ namespace MyCC.Forms.View.Pages
                 await AccountStorage.Update(_account);
                 Messaging.UpdatingAccounts.SendFinished();
             };
-            stack.Children.Add(disableCell);
 
             if (repo is AddressAccountRepository && !(repo is BlockchainXpubAccountRepository))
             {
@@ -63,6 +62,8 @@ namespace MyCC.Forms.View.Pages
                 qrButton.Clicked += (sender, e) => Navigation.PushOrPushModal(new AccountQrCodeOverlay((AddressAccountRepository)repo));
                 stack.Children.Add(qrButton);
             }
+
+            stack.Children.Add(disableCell);
             stack.Children.Add(_referenceView);
 
 

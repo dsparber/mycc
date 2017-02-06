@@ -9,12 +9,12 @@ namespace MyCC.Core.Account.Models.Implementations
     {
         private readonly BlockchainAccountRepository _repository;
 
-        public BlockchainAccount(int? id, string name, Money money, bool isEnabled, BlockchainAccountRepository repository) : base(id, repository.Id, name, money, isEnabled)
+        public BlockchainAccount(int? id, string name, Money money, bool isEnabled, DateTime lastUpdate, BlockchainAccountRepository repository) : base(id, repository.Id, name, money, lastUpdate, isEnabled)
         {
-            this._repository = repository;
+            _repository = repository;
         }
 
-        public override Task FetchBalanceOnline()
+        protected override Task FetchBalanceOnlineTask()
         {
             return _repository.FetchOnline();
         }

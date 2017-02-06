@@ -116,7 +116,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
                 var money = new Money(balance, curr);
                 var existing = Elements.ToList().Find(a => a.Money.Currency.Equals(money.Currency));
 
-                var newAccount = new BittrexAccount(existing?.Id, Name, money, existing?.IsEnabled ?? true, this);
+                var newAccount = new BittrexAccount(existing?.Id, Name, money, existing?.IsEnabled ?? true, DateTime.Now, this);
 
                 if (existing != null)
                 {

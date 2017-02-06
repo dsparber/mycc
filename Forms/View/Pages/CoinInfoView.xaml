@@ -4,7 +4,6 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
-	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.CoinInfoView">
   <ContentPage.ToolbarItems>
@@ -15,12 +14,11 @@
 			Icon="refresh.png" />
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
-    <components1:ChangingStackLayout
+    <components:ChangingStackLayout
+      x:Name="ChangingStack"
 			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-      <components1:HeaderView
-				x:Name="Header" />
       <ScrollView
-				IsClippedToBounds="true">
+         IsClippedToBounds="true">
         <StackLayout
 					Spacing="0"
 					x:Name="ContentView">
@@ -29,7 +27,7 @@
 						Margin="15"
 						FontSize="14" />
           <StackLayout
-						Margin="15,0,15,0"
+						Margin="15,0,15,40"
 						Orientation="Horizontal">
             <StackLayout
 							x:Name="InfoStackHeadings"
@@ -39,6 +37,6 @@
           </StackLayout>
         </StackLayout>
       </ScrollView>
-    </components1:ChangingStackLayout>
+    </components:ChangingStackLayout>
   </ContentPage.Content>
 </ContentPage>

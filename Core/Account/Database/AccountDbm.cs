@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MyCC.Core.Abstract.Database;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
@@ -40,6 +41,9 @@ namespace MyCC.Core.Account.Database
         [Column("AccountRepository")]
         public int ParentId { get; set; }
 
+        [Column("LastUpdate")]
+        public long LastUpdateTicks { get; set; }
+
         public async Task<FunctionalAccount> Resolve()
         {
             var currency = CurrencyStorage.Instance.AllElements.Find(c => c?.Id.Equals(CurrencyId) ?? false) ?? CurrencyStorage.Instance.AllElements.Find(c => c?.Code.Equals(CurrencyId) ?? false);
@@ -71,13 +75,15 @@ namespace MyCC.Core.Account.Database
 
             var money = new Money(MoneyAmount, currency);
 
-            if (repository is BittrexAccountRepository) return new BittrexAccount(Id, Name, money, IsEnabled ?? true, (BittrexAccountRepository)repository);
-            if (repository is BlockchainAccountRepository) return new BlockchainAccount(Id, Name, money, IsEnabled ?? true, (BlockchainAccountRepository)repository);
-            if (repository is BlockExpertsAccountRepository) return new BlockExpertsAccount(Id, Name, money, IsEnabled ?? true, (BlockExpertsAccountRepository)repository);
-            if (repository is CryptoIdAccountRepository) return new CryptoIdAccount(Id, Name, money, IsEnabled ?? true, (CryptoIdAccountRepository)repository);
-            if (repository is EthereumAccountRepository) return new EthereumAccount(Id, Name, money, IsEnabled ?? true, (EthereumAccountRepository)repository);
-            if (repository is LocalAccountRepository) return new LocalAccount(Id, Name, money, IsEnabled ?? true, repository.Id);
-            if (repository is BlockchainXpubAccountRepository) return new BlockchainXpubAccount(Id, Name, money, IsEnabled ?? true, (BlockchainXpubAccountRepository)repository);
+            var LastUpdate = new DateTime(LastUpdateTicks);
+
+            if (repository is BittrexAccountRepository) return new BittrexAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, (BittrexAccountRepository)repository);
+            if (repository is BlockchainAccountRepository) return new BlockchainAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, (BlockchainAccountRepository)repository);
+            if (repository is BlockExpertsAccountRepository) return new BlockExpertsAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, (BlockExpertsAccountRepository)repository);
+            if (repository is CryptoIdAccountRepository) return new CryptoIdAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, (CryptoIdAccountRepository)repository);
+            if (repository is EthereumAccountRepository) return new EthereumAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, (EthereumAccountRepository)repository);
+            if (repository is LocalAccountRepository) return new LocalAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, repository.Id);
+            if (repository is BlockchainXpubAccountRepository) return new BlockchainXpubAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, (BlockchainXpubAccountRepository)repository);
             throw new System.NotSupportedException();
         }
 
@@ -94,6 +100,7 @@ namespace MyCC.Core.Account.Database
             MoneyAmount = account.Money.Amount;
             ParentId = account.ParentId;
             IsEnabled = account.IsEnabled;
+            LastUpdateTicks = account.LastUpdate.Ticks;
         }
     }
 }

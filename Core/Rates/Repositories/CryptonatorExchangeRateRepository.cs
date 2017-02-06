@@ -50,6 +50,7 @@ namespace MyCC.Core.Rates.Repositories
 
             var rate = decimal.Parse((string)rateJson[RateKey], CultureInfo.InvariantCulture);
             exchangeRate.Rate = rate;
+            exchangeRate.LastUpdate = DateTime.Now;
             exchangeRate.RepositoryId = TypeId;
 
             if (Rates.Contains(exchangeRate))

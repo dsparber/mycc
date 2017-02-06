@@ -59,7 +59,8 @@ namespace MyCC.Core.CoinInfo.Repositories
                 Blockreward = blockReward != 0 ? blockReward / 100000000 : null,
                 Algorithm = "SHA-256",
                 IsProofOfStake = false,
-                IsProofOfWork = true
+                IsProofOfWork = true,
+                LastUpdate = DateTime.Now
             };
         }
     }

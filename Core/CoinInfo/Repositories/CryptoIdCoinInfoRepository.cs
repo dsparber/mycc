@@ -54,7 +54,8 @@ namespace MyCC.Core.CoinInfo.Repositories
                 BlockHeight = int.Parse((string)summaryJson[JsonKeyHeigth]),
                 Difficulty = decimal.Parse((string)summaryJson[JsonKeyDifficulty], CultureInfo.InvariantCulture),
                 CoinSupply = decimal.Parse((string)summaryJson[JsonKeySupply], CultureInfo.InvariantCulture),
-                Hashrate = hashrate
+                Hashrate = hashrate,
+                LastUpdate = DateTime.Now
             };
         }
     }

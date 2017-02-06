@@ -17,11 +17,12 @@ namespace MyCC.Forms.View.Components
         private readonly Currency _currency;
         private FunctionalAccount _account;
 
-        private readonly bool _useOneBitcoinAsReference;
         private readonly bool _useOnlyThisCurrency;
 
         private readonly List<string> _infoTexts;
         private static int _currentInfoText = 1;
+        private static readonly List<CoinHeaderComponent> Instances = new List<CoinHeaderComponent>();
+
 
         public CoinHeaderComponent(FunctionalAccount account) : this()
         {
@@ -32,17 +33,9 @@ namespace MyCC.Forms.View.Components
             UpdateView();
         }
 
-        protected override void OnSizeAllocated(double width, double height)
-        {
-            base.OnSizeAllocated(width, height);
-
-            SetInfoText();
-        }
-
-        public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false, bool useOneBitcoinAsReference = false) : this()
+        public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false) : this()
         {
             _currency = currency ?? ApplicationSettings.BaseCurrency;
-            _useOneBitcoinAsReference = useOneBitcoinAsReference;
             _useOnlyThisCurrency = useOnlyThisCurrency;
 
             UpdateView();
@@ -53,42 +46,45 @@ namespace MyCC.Forms.View.Components
             var recognizer = new TapGestureRecognizer();
             recognizer.Tapped += (sender, e) =>
             {
-                _currentInfoText = (_currentInfoText + 1) % _infoTexts.Count;
-                SetInfoText();
+                SetInfoText(1);
             };
 
-            _infoTexts = new List<string> { string.Empty, string.Empty };
+            _infoTexts = new List<string> { string.Empty, string.Empty, string.Empty };
 
             GestureRecognizers.Add(recognizer);
             AddSubscriber();
+
+            Instances.Add(this);
         }
 
         private void UpdateView(bool? isLoading = null)
         {
 
-            if (_useOneBitcoinAsReference)
-            {
-                _infoTexts[0] = _currency.Name;
-            }
-            else if (_account != null)
+            if (_account != null)
             {
                 _infoTexts[0] = _account.Name;
+                _infoTexts[2] = _account.LastUpdate.LastUpdateString();
             }
             else if (_useOnlyThisCurrency)
             {
+                var online = AccountStorage.AccountsWithCurrency(_currency).Where(a => a is OnlineFunctionalAccount).ToList();
+                var time = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.AccountsWithCurrency(_currency).Max(a => a.LastUpdate);
+
                 _infoTexts[0] = PluralHelper.GetTextAccounts(AccountStorage.AccountsWithCurrency(_currency).Count);
+                _infoTexts[2] = time.LastUpdateString();
             }
             else
             {
-                var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().ToList().Count;
+                var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().Count();
+                var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
+                var time = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
+
                 _infoTexts[0] = PluralHelper.GetTextCurrencies(amountDifferentCurrencies);
+                _infoTexts[2] = time.LastUpdateString();
             }
-            _infoTexts[1] = (_useOneBitcoinAsReference) ? _currency?.Name : string.Join(" / ", ApplicationSettings.MainCurrencies
-                                       .Where(c => !c.Equals(_currency))
-                                       .Select(c => (_useOneBitcoinAsReference ? new Money(ExchangeRateHelper.GetRate(Currency.Btc, c)?.Rate ?? 0, c)
-                                                     : (_useOnlyThisCurrency ? CoinSumAs(c)
-                                                        : MoneySumOf(c)) ?? new Money(0, c))
-                                               .ToStringTwoDigits(ApplicationSettings.RoundMoney)));
+            _infoTexts[1] = string.Join(" / ", ApplicationSettings.MainCurrencies.Where(c => !c.Equals(_currency))
+                                       .Select(c => ((_useOnlyThisCurrency ? CoinSumAs(c) : MoneySumOf(c)) ?? new Money(0, c))
+                                       .ToStringTwoDigits(ApplicationSettings.RoundMoney)));
 
             if (_account != null)
             {
@@ -98,7 +94,7 @@ namespace MyCC.Forms.View.Components
 
             Device.BeginInvokeOnMainThread(() =>
             {
-                if (_useOnlyThisCurrency && !_useOneBitcoinAsReference)
+                if (_useOnlyThisCurrency)
                 {
                     var s = Sum.ToString(false);
                     var beforeDecimal = new Money(Math.Truncate(Sum.Amount), Sum.Currency).ToString(false);
@@ -126,9 +122,7 @@ namespace MyCC.Forms.View.Components
             });
         }
 
-        private Money Sum => _useOneBitcoinAsReference ? SumOneBtc : _account != null ? _account.Money : (_useOnlyThisCurrency ? CoinSum : MoneySum) ?? new Money(0, _currency);
-
-        private Money SumOneBtc => new Money(ExchangeRateHelper.GetRate(Currency.Btc, _currency).Rate ?? 0, _currency);
+        private Money Sum => _account != null ? _account.Money : (_useOnlyThisCurrency ? CoinSum : MoneySum) ?? new Money(0, _currency);
 
         private Money CoinSum => _account != null ? _account.Money : new Money(AccountStorage.EnabledAccounts.Where(a => _currency.Equals(a.Money.Currency)).Sum(a => a.Money.Amount), _currency);
         private Money CoinSumAs(Currency c) => new Money(CoinSum.Amount * (ExchangeRateHelper.GetRate(CoinSum.Currency, c)?.Rate ?? 0), c);
@@ -157,10 +151,13 @@ namespace MyCC.Forms.View.Components
             Messaging.FetchMissingRates.SubscribeFinished(this, () => UpdateView());
             Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, () => UpdateView());
             Messaging.UpdatingAccounts.SubscribeFinished(this, () => UpdateView());
+            Messaging.UpdatingRates.SubscribeFinished(this, () => UpdateView());
         }
 
-        private void SetInfoText()
+        private void SetInfoText(int increment = 0, bool updateOthers = true)
         {
+            _currentInfoText = (_currentInfoText + increment) % _infoTexts.Count;
+
             if (_infoTexts == null || _infoTexts.Count < _currentInfoText) return;
 
             var text = _infoTexts[_currentInfoText];
@@ -169,6 +166,13 @@ namespace MyCC.Forms.View.Components
                 text = _infoTexts[(_currentInfoText + 1) % _infoTexts.Count];
             }
             InfoText = text;
+
+            if (!updateOthers) return;
+
+            foreach (var i in Instances)
+            {
+                i.SetInfoText(0, false);
+            }
         }
     }
 }

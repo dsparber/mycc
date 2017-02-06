@@ -507,4 +507,10 @@
   <data name="DisabledInOverview" xml:space="preserve">
     <value>Hidden in overview</value>
   </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Last update</value>
+  </data>
+  <data name="Never" xml:space="preserve">
+    <value>Never</value>
+  </data>
 </root>

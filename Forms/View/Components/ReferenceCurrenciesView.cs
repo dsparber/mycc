@@ -10,6 +10,7 @@ using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Constants;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using Xamarin.Forms;
@@ -25,6 +26,7 @@ namespace MyCC.Forms.View.Components
         public Money ReferenceMoney { get; set; }
 
         private readonly HybridWebView _webView;
+        private readonly Label _lastUpdateLabel;
         private bool _appeared;
 
         private readonly bool _showAmountInHeader;
@@ -71,15 +73,33 @@ namespace MyCC.Forms.View.Components
                 UpdateView();
             });
 
+            _lastUpdateLabel = new Label { TextColor = AppConstants.TableSectionColor, FontSize = AppConstants.TableSectionFontSize, HorizontalOptions = LayoutOptions.EndAndExpand };
+            var headingLabel = new Label
+            {
+                Text = (Device.OS == TargetPlatform.iOS) ? TableHeaderLabel.ToUpper() : TableHeaderLabel,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                FontSize = AppConstants.TableSectionFontSize,
+                TextColor = AppConstants.TableSectionColor
+            };
+            var labelStack = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                Margin = new Thickness(15, 15, 15, 8)
+            };
+            labelStack.Children.Add(headingLabel);
+            labelStack.Children.Add(_lastUpdateLabel);
+
             var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-            stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? TableHeaderLabel.ToUpper() : TableHeaderLabel, HorizontalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(15, 24, 15, 8), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
+            stack.Children.Add(labelStack);
             stack.Children.Add(_webView);
 
             Content = stack;
 
             Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
             Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
+            Messaging.UpdatingRates.SubscribeFinished(this, UpdateView);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
 
             Messaging.RatesPageCurrency.SubscribeValueChanged(this, UpdateView);
             Messaging.Loading.SubscribeFinished(this, UpdateView);
@@ -114,6 +134,12 @@ namespace MyCC.Forms.View.Components
                 }
                 items = ApplicationSettings.SortDirectionReferenceValues == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
+                var updateTime = ReferenceCurrencies
+                                    .Select(e => new ExchangeRate(ReferenceMoney.Currency, e))
+                                    .SelectMany(ExchangeRateHelper.GetNeededRates)
+                                    .Distinct()
+                                    .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).Min();
+
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     _webView.CallJsFunction("setHeader", new[]{
@@ -121,6 +147,7 @@ namespace MyCC.Forms.View.Components
                       new HeaderData($"{I18N.Currency[0]}.", SortOrder.Alphabetical.ToString())
                           }, string.Empty);
                     _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), ReferenceMoney.Amount == 1);
+                    _lastUpdateLabel.Text = updateTime.LastUpdateString();
                 });
             }
             catch (Exception e)

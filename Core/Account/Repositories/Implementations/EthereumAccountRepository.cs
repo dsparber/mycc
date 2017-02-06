@@ -29,6 +29,6 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public EthereumAccountRepository(int id, string name, string address) : base(id, name, address) { }
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeEthereumRepository;
 
-        protected override FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled) => new EthereumAccount(id, name, money, isEnabled, this);
+        protected override FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled) => new EthereumAccount(id, name, money, isEnabled, DateTime.Now, this);
     }
 }

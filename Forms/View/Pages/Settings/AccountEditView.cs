@@ -65,7 +65,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             account.Name = AccountName.Text ?? string.Empty;
 
-            account = new LocalAccount(account.Id, account.Name, currencyEntryCell.SelectedMoney, account.IsEnabled, account.ParentId);
+            account = new LocalAccount(account.Id, account.Name, currencyEntryCell.SelectedMoney, account.IsEnabled, DateTime.Now, account.ParentId);
             await repository.Update(account);
 
             Messaging.UpdatingAccounts.SendFinished();

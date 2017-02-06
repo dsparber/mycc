@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using System;
+using SQLite;
 
 namespace MyCC.Core.CoinInfo
 {
@@ -82,6 +83,15 @@ namespace MyCC.Core.CoinInfo
         [Column("Blockreward")]
         public decimal? Blockreward { get; set; }
 
+        [Column("LastUpdate")]
+        public long LastUpdateTicks { get; set; }
+
+        public DateTime LastUpdate
+        {
+            get { return new DateTime(LastUpdateTicks); }
+            set { LastUpdateTicks = value.Ticks; }
+        }
+
 
         public CoinInfoData(Currency.Model.Currency currency) : this(currency.Code) { }
 
@@ -122,6 +132,7 @@ namespace MyCC.Core.CoinInfo
                 IsProofOfStake = info.IsProofOfStake ?? IsProofOfStake,
                 Blockreward = info.Blockreward ?? Blockreward,
                 MaxCoinSupply = info.MaxCoinSupply ?? MaxCoinSupply,
+                LastUpdate = info.LastUpdate
             };
         }
 

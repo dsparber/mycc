@@ -5,14 +5,17 @@ namespace MyCC.Core.Account.Models.Base
 {
     public abstract class OnlineFunctionalAccount : FunctionalAccount
     {
-        public DateTime LastUpdate;
 
-        protected OnlineFunctionalAccount(int? id, int repositoryId, string name, Money money, bool isEnabled = true) : base(id ?? default(int), repositoryId, name, money, isEnabled)
+        protected OnlineFunctionalAccount(int? id, int repositoryId, string name, Money money, DateTime lastUpdate, bool isEnabled = true) : base(id ?? default(int), repositoryId, name, money, lastUpdate, isEnabled) { }
+
+        public async Task FetchBalanceOnline()
         {
-            LastUpdate = DateTime.MinValue;
+            await FetchBalanceOnlineTask();
+            LastUpdate = DateTime.Now;
         }
 
-        public abstract Task FetchBalanceOnline();
+        protected abstract Task FetchBalanceOnlineTask();
+
         public abstract Task FetchTransactionsOnline();
     }
 }

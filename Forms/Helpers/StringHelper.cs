@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Globalization;
+using System.Linq;
+using MyCC.Forms.Resources;
 
 namespace MyCC.Forms.Helpers
 {
@@ -12,6 +15,13 @@ namespace MyCC.Forms.Helpers
             }
 
             return input.First().ToString().ToUpper() + string.Join("", input.Skip(1));
+        }
+
+        public static string LastUpdateString(this DateTime dateTime)
+        {
+            var format = CultureInfo.CurrentCulture.DateTimeFormat;
+            var dateTimeString = dateTime.Subtract(DateTime.MinValue).Days == 0 ? I18N.Never : dateTime.ToString(DateTime.Now.Subtract(dateTime).Days > 0 ? format.ShortDatePattern : format.ShortTimePattern);
+            return $"{I18N.LastUpdate}: {dateTimeString}";
         }
     }
 }

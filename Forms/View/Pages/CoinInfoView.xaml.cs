@@ -24,6 +24,8 @@ namespace MyCC.Forms.View.Pages
         private static IEnumerable<Currency> ReferenceCurrencies => ApplicationSettings.AllReferenceCurrencies;
         private static List<ExchangeRate> Rates => ReferenceCurrencies.Select(c => new ExchangeRate(Currency.Btc, c)).ToList();
 
+        private readonly CoinInfoHeaderComponent _header;
+
         private readonly Dictionary<string, Tuple<Label, Label>> _infos;
 
         public CoinInfoView(Currency currency)
@@ -33,15 +35,13 @@ namespace MyCC.Forms.View.Pages
             _currency = currency;
 
             Title = _currency.Code;
-            Header.TitleText = _currency.Name;
+            _header = new CoinInfoHeaderComponent(_currency);
+            ChangingStack.Children.Insert(0, _header);
             InfoHeading.Text = Device.OS == TargetPlatform.iOS ? I18N.Info.ToUpper() : I18N.Info;
             InfoHeading.TextColor = AppConstants.TableSectionColor;
 
             _referenceView = new ReferenceCurrenciesView(new Money(1, _currency), true);
             ContentView.Children.Add(_referenceView);
-
-            Messaging.FetchingCoinInfo.SubscribeFinished(this, () => { UpdateView(true); _fetchCoinInfoDone = true; if (_fetchCoinInfoDone && _fetchRatesDone) Device.BeginInvokeOnMainThread(() => Header.IsLoading = false); });
-            Messaging.UpdatingRates.SubscribeFinished(this, () => { _fetchRatesDone = true; if (_fetchCoinInfoDone && _fetchRatesDone) Device.BeginInvokeOnMainThread(() => Header.IsLoading = false); });
 
             Func<Label> getLabel = () => new Label { IsVisible = false, FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor, LineBreakMode = LineBreakMode.TailTruncation };
             Func<Tuple<Label, Label>> getTuple = () => Tuple.Create(getLabel(), getLabel());
@@ -104,7 +104,6 @@ namespace MyCC.Forms.View.Pages
                 _infos[I18N.BlockExplorer].Item2.IsVisible = explorer.Any();
                 _infos[I18N.BlockExplorer].Item2.Text = string.Join(", ", explorer);
 
-                Header.InfoText = referenceMoney.ToString8Digits();
                 _referenceView.UpdateView();
 
 
@@ -198,8 +197,8 @@ namespace MyCC.Forms.View.Pages
         {
             RefreshItem.Clicked -= Refresh;
             _fetchRatesDone = false; _fetchCoinInfoDone = false;
-            Header.IsLoading = true;
-            await AppTaskHelper.FetchRates(Rates);
+            _header.IsLoading = true;
+            await AppTaskHelper.FetchRates(_currency);
             await AppTaskHelper.FetchCoinInfo(_currency);
             RefreshItem.Clicked += Refresh;
         }

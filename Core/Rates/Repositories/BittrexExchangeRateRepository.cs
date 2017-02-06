@@ -42,7 +42,7 @@ namespace MyCC.Core.Rates.Repositories
             var content = await response.Content.ReadAsStringAsync();
             var resultJson = JObject.Parse(content)[ResultKey];
 
-            var fetchedRates = (from r in resultJson let market = ((string)r[MarketKey]).Split('-') let rate = 1 / decimal.Parse((string)r[RateKey], NumberStyles.Float, CultureInfo.InvariantCulture) select new ExchangeRate(market[0], true, market[1], true, rate) { RepositoryId = TypeId }).ToList();
+            var fetchedRates = (from r in resultJson let market = ((string)r[MarketKey]).Split('-') let rate = 1 / decimal.Parse((string)r[RateKey], NumberStyles.Float, CultureInfo.InvariantCulture) select new ExchangeRate(market[0], true, market[1], true, DateTime.Now, rate) { RepositoryId = TypeId }).ToList();
 
             var rates = Rates.ToList();
             var old = rates.Except(fetchedRates).ToList();

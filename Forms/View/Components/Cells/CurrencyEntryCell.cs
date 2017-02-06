@@ -27,14 +27,14 @@ namespace MyCC.Forms.View.Components.Cells
         private Action<Currency> _onSelected;
         public Action<Currency> OnSelected
         {
-            get { return _onSelected ?? ((c) => { }); }
+            get { return _onSelected ?? (c => { }); }
             set { _onSelected = value; }
         }
 
         private Action<Money> _onTyped;
         public Action<Money> OnTyped
         {
-            private get { return _onTyped ?? ((c) => { }); }
+            private get { return _onTyped ?? (c => { }); }
             set { _onTyped = value; }
         }
 

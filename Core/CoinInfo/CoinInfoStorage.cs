@@ -32,6 +32,10 @@ namespace MyCC.Core.CoinInfo
                     await _dbConnection.ExecuteAsync("ALTER TABLE CoinInfos ADD COLUMN MaxSupply float;");
                     await _dbConnection.ExecuteAsync("ALTER TABLE CoinInfos ADD COLUMN Blockreward float;");
                 }
+                if (ApplicationSettings.VersionLastLaunch < new Version("0.5.23"))
+                {
+                    await _dbConnection.ExecuteAsync("ALTER TABLE CoinInfos ADD COLUMN LastUpdate INTEGER;");
+                }
                 _elements.AddRange(await _dbConnection.Table<CoinInfoData>().ToListAsync());
             });
 

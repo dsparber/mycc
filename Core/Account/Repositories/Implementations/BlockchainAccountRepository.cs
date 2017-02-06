@@ -26,6 +26,6 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public BlockchainAccountRepository(int id, string name, string address) : base(id, name, address) { }
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeBlockchainRepository;
 
-        protected override FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled) => new BlockchainAccount(id, name, money, isEnabled, this);
+        protected override FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled) => new BlockchainAccount(id, name, money, isEnabled, DateTime.Now, this);
     }
 }

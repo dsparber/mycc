@@ -116,6 +116,24 @@ namespace MyCC.Core.Tasks
             }
         }
 
+        public static async Task FetchRates(Currency.Model.Currency currency, Action onStarted, Action onFinished, Action<Exception> onError)
+        {
+            try
+            {
+                onStarted();
+                var ratesToUpdate = ApplicationSettings.AllReferenceCurrencies.Select(c => new ExchangeRate(currency, c));
+                await ExchangeRateHelper.UpdateRates(ratesToUpdate);
+            }
+            catch (Exception e)
+            {
+                onError(e);
+            }
+            finally
+            {
+                onFinished();
+            }
+        }
+
         public static async Task FetchBalances(OnlineAccountRepository repository, Action onStarted, Action onFinished, Action<Exception> onError)
         {
             try
@@ -150,12 +168,29 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchRates(List<ExchangeRate> neededRates, Action onStarted, Action onFinished, Action<Exception> onError)
+        public static async Task FetchRates(IEnumerable<ExchangeRate> neededRates, Action onStarted, Action onFinished, Action<Exception> onError)
         {
             try
             {
                 onStarted();
                 await ExchangeRateHelper.UpdateRates(neededRates);
+            }
+            catch (Exception e)
+            {
+                onError(e);
+            }
+            finally
+            {
+                onFinished();
+            }
+        }
+
+        public static async Task UpdateRates(Action onStarted, Action onFinished, Action<Exception> onError)
+        {
+            try
+            {
+                onStarted();
+                await ExchangeRatesStorage.Instance.UpdateRates();
             }
             catch (Exception e)
             {

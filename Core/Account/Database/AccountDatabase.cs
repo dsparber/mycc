@@ -25,6 +25,10 @@ namespace MyCC.Core.Account.Database
             {
                 await connection.ExecuteAsync("ALTER TABLE Accounts ADD COLUMN IsEnabled INTEGER;");
             }
+            if (ApplicationSettings.VersionLastLaunch < new Version("0.5.23"))
+            {
+                await connection.ExecuteAsync("ALTER TABLE Accounts ADD COLUMN LastUpdate INTEGER;");
+            }
         }
 
         public override async Task<AccountDbm> GetDbObject(int id)

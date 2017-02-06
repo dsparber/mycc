@@ -78,6 +78,7 @@
     <Compile Include="View\Components\HeaderView.xaml.cs">
       <DependentUpon>HeaderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Components\CoinInfoHeaderComponent.cs" />
     <Compile Include="View\Components\SegmentedControl.cs" />
     <Compile Include="View\Container\MasterDetailContainerView.cs" />
     <Compile Include="View\Container\TabContainerView.cs" />

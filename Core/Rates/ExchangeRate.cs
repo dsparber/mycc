@@ -20,8 +20,9 @@ namespace MyCC.Core.Rates
         /// <param name="referenceIsCrypto">Wether the reference currency is a crypto currency</param>
         /// <param name="secondaryCurrencyCode">Secondary currency code.</param>
         /// <param name="secondaryIsCrypto">Wether the secondary currency is a crypto currency</param>
+        /// <param name="lastUpdate">Last update of this exchange rate</param>
         /// <param name="rate">Exchange rate.</param>
-        public ExchangeRate(string referenceCurrencyCode, bool referenceIsCrypto, string secondaryCurrencyCode, bool secondaryIsCrypto, decimal? rate = null)
+        public ExchangeRate(string referenceCurrencyCode, bool referenceIsCrypto, string secondaryCurrencyCode, bool secondaryIsCrypto, DateTime? lastUpdate = null, decimal? rate = null)
         {
             if (string.IsNullOrWhiteSpace(referenceCurrencyCode) || string.IsNullOrWhiteSpace(secondaryCurrencyCode))
             {
@@ -32,6 +33,7 @@ namespace MyCC.Core.Rates
             ReferenceCurrencyIsCryptoCurrency = referenceIsCrypto;
             SecondaryCurrencyIsCryptoCurrency = secondaryIsCrypto;
             Rate = rate == null ? (decimal?)null : Math.Truncate(rate.Value * 100000000) / 100000000;
+            LastUpdate = lastUpdate ?? DateTime.MinValue;
         }
 
         /// <summary>
@@ -39,8 +41,9 @@ namespace MyCC.Core.Rates
         /// </summary>
         /// <param name="referenceCurrency">Reference currency.</param>
         /// <param name="secondaryCurrency">Secondary currency.</param>
+        /// <param name="lastUpdate">Last update of this exchange rate</param>
         /// <param name="rate">Exchange rate.</param>
-        public ExchangeRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency, decimal? rate = null) : this(referenceCurrency.Code, referenceCurrency.IsCryptoCurrency, secondaryCurrency.Code, secondaryCurrency.IsCryptoCurrency, rate) { }
+        public ExchangeRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency, DateTime? lastUpdate = null, decimal? rate = null) : this(referenceCurrency.Code, referenceCurrency.IsCryptoCurrency, secondaryCurrency.Code, secondaryCurrency.IsCryptoCurrency, lastUpdate, rate) { }
 
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedMember.Global
@@ -103,6 +106,16 @@ namespace MyCC.Core.Rates
         [Column("SecondaryIsCrypto")]
         public bool SecondaryCurrencyIsCryptoCurrency { get; set; }
 
+        [Column("LastUpdate")]
+        public long LastUpdateTicks { get; set; }
+
+        [Ignore]
+        public DateTime LastUpdate
+        {
+            get { return new DateTime(LastUpdateTicks); }
+            set { LastUpdateTicks = value.Ticks; }
+        }
+
         private decimal? _rate;
         /// <summary>
         /// Gets or sets the rate.
@@ -132,7 +145,7 @@ namespace MyCC.Core.Rates
         {
             get
             {
-                var exchangeRate = new ExchangeRate(SecondaryCurrencyCode, SecondaryCurrencyIsCryptoCurrency, ReferenceCurrencyCode, ReferenceCurrencyIsCryptoCurrency) { RepositoryId = RepositoryId };
+                var exchangeRate = new ExchangeRate(SecondaryCurrencyCode, SecondaryCurrencyIsCryptoCurrency, ReferenceCurrencyCode, ReferenceCurrencyIsCryptoCurrency, LastUpdate) { RepositoryId = RepositoryId };
                 if (Rate != null && Rate != 0)
                 {
                     exchangeRate.Rate = 1 / Rate;

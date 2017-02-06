@@ -144,7 +144,7 @@ namespace MyCC.Forms.View.Overlays
                         {
                             await AppTaskHelper.FetchMissingRates();
                         }
-                        await NavigationHelper.PopOrPopModal(Navigation);
+                        await Navigation.PopOrPopModal();
 
                     }
                     else

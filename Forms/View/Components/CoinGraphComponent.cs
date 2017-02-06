@@ -17,6 +17,7 @@ using Xamarin.Forms;
 using XLabs.Forms.Controls;
 using XLabs.Ioc;
 using XLabs.Serialization;
+using JsonSerializer = XLabs.Serialization.JsonNET.JsonSerializer;
 
 namespace MyCC.Forms.View.Components
 {
@@ -33,7 +34,7 @@ namespace MyCC.Forms.View.Components
         {
             var resolverContainer = new SimpleContainer();
 
-            resolverContainer.Register<IJsonSerializer, XLabs.Serialization.JsonNET.JsonSerializer>();
+            resolverContainer.Register<IJsonSerializer, JsonSerializer>();
 
             _webView = new HybridWebView
             {
