@@ -11,17 +11,20 @@ using SQLite;
 
 namespace MyCC.Core.Rates.Repositories
 {
-	public class BtceExchangeRateRepository : IMultipleRatesRepository
+	public class KrakenExchangeRateRepository : IMultipleRatesRepository
 	{
-		private const string Url = "https://btc-e.com/api/3/ticker/btc_usd-btc_eur";
-		private const string Key = "last";
+		private const string Url = "https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR,XXBTZUSD";
+		private const string KeyResult = "result";
+		private const string KeyEur = "XXBTZEUR";
+		private const string KeyUsd = "XXBTZUSD";
+		private const string KeyLastPrice = "a";
 
 		private const int BufferSize = 256000;
 
 		private readonly HttpClient _client;
 		private readonly SQLiteAsyncConnection _connection;
 
-		public BtceExchangeRateRepository(SQLiteAsyncConnection connection)
+		public KrakenExchangeRateRepository(SQLiteAsyncConnection connection)
 		{
 			_client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
 			_connection = connection;
@@ -36,9 +39,9 @@ namespace MyCC.Core.Rates.Repositories
 			if (!response.IsSuccessStatusCode) return null;
 
 			var content = await response.Content.ReadAsStringAsync();
-			var json = JObject.Parse(content);
-			var rateUsd = decimal.Parse((string)json["btc_usd"][Key], CultureInfo.InvariantCulture);
-			var rateEur = decimal.Parse((string)json["btc_eur"][Key], CultureInfo.InvariantCulture);
+			var result = JObject.Parse(content)[KeyResult];
+			var rateUsd = decimal.Parse((string)result[KeyUsd][KeyLastPrice], CultureInfo.InvariantCulture);
+			var rateEur = decimal.Parse((string)result[KeyEur][KeyLastPrice], CultureInfo.InvariantCulture);
 
 			var itemsCount = Rates.Count;
 			Rates.Clear();
@@ -51,7 +54,7 @@ namespace MyCC.Core.Rates.Repositories
 			return Rates;
 		}
 
-		public int TypeId => (int)RatesRepositories.Btce;
+		public int TypeId => (int)RatesRepositories.Kraken;
 
 		public Task FetchAvailableRates() => new Task(() => { });
 
@@ -67,7 +70,7 @@ namespace MyCC.Core.Rates.Repositories
 
 		public RateRepositoryType RatesType => RateRepositoryType.CryptoToFiat;
 
-		public string Name => I18N.Btce;
+		public string Name => I18N.Kraken;
 	}
 }
 

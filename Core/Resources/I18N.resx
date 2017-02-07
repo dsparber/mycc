@@ -219,4 +219,24 @@
 		xml:space="preserve">
     <value>Blockr</value>
   </data>
+	<data
+		name="Kraken"
+		xml:space="preserve">
+    <value>Kraken</value>
+  </data>
+	<data
+		name="Cryptonator"
+		xml:space="preserve">
+    <value>Cryptonator</value>
+  </data>
+	<data
+		name="Btce"
+		xml:space="preserve">
+    <value>Btce</value>
+  </data>
+	<data
+		name="FixerIo"
+		xml:space="preserve">
+    <value>Fixer.io</value>
+  </data>
 </root>

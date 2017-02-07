@@ -3,18 +3,20 @@ using System.Threading.Tasks;
 
 namespace MyCC.Core.Rates.Repositories.Interfaces
 {
-    public interface IRateRepository
-    {
-        int TypeId { get; }
+	public interface IRateRepository
+	{
+		int TypeId { get; }
 
-        Task FetchAvailableRates();
+		string Name { get; }
 
-        bool IsAvailable(ExchangeRate rate);
+		Task FetchAvailableRates();
 
-        List<ExchangeRate> Rates { get; }
+		bool IsAvailable(ExchangeRate rate);
 
-        RateRepositoryType RatesType { get; }
+		List<ExchangeRate> Rates { get; }
 
-        Task UpdateRates();
-    }
+		RateRepositoryType RatesType { get; }
+
+		Task UpdateRates();
+	}
 }
