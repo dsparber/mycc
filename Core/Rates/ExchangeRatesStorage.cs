@@ -54,7 +54,8 @@ namespace MyCC.Core.Rates
                 new FixerIoExchangeRateRepository(_connection),
                 new BitstampExchangeRateRepository(_connection),
                 new KrakenExchangeRateRepository(_connection),
-                new QuadrigaCxExchangeRateRepository(_connection)
+                new QuadrigaCxExchangeRateRepository(_connection),
+                new CoinbaseExchangeRateRepository(_connection)
             };
         }
 

@@ -8,6 +8,7 @@
         FixerIo = 4,
         Kraken = 5,
         Bitstamp = 6,
-        QuadrigaCx = 7
+        QuadrigaCx = 7,
+        Coinbase = 8
     }
 }

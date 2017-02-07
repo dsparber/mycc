@@ -162,4 +162,7 @@
   <data name="QuadrigaCx" xml:space="preserve">
     <value>QuadrigaCX</value>
   </data>
+  <data name="Coinbase" xml:space="preserve">
+    <value>Coinbase</value>
+  </data>
 </root>

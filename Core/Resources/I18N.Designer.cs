@@ -125,6 +125,15 @@ namespace MyCC.Core.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Coinbase ähnelt.
+        /// </summary>
+        internal static string Coinbase {
+            get {
+                return ResourceManager.GetString("Coinbase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die CryptoID ähnelt.
         /// </summary>
         internal static string CryptoId {

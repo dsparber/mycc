@@ -12,30 +12,34 @@ using SQLite;
 
 namespace MyCC.Core.Rates.Repositories
 {
-    public class QuadrigaCxExchangeRateRepository : ISingleRateRepository
+    public class CoinbaseExchangeRateRepository : ISingleRateRepository
     {
-        private const string UrlUsd = "https://api.quadrigacx.com/v2/ticker?book=btc_usd";
-        private const string KeyLastPrice = "last";
+        private const string UrlUsd = "GET https://api.coinbase.com/v2/prices/BTC-USD/spot";
+        private const string UrlEur = "GET https://api.coinbase.com/v2/prices/BTC-EUR/spot";
+        private const string KeyData = "data";
+        private const string KeyPrice = "amount";
 
         private const int BufferSize = 256000;
 
         private readonly HttpClient _client;
         private readonly SQLiteAsyncConnection _connection;
 
-        public QuadrigaCxExchangeRateRepository(SQLiteAsyncConnection connection)
+        public CoinbaseExchangeRateRepository(SQLiteAsyncConnection connection)
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
+            _client.DefaultRequestHeaders.Add("CB-VERSION", "2016-02-07");
             _connection = connection;
             Rates = new List<ExchangeRate>();
         }
 
-        public int TypeId => (int)RatesRepositories.QuadrigaCx;
+        public int TypeId => (int)RatesRepositories.Coinbase;
 
         public Task FetchAvailableRates() => new Task(() => { });
 
         public bool IsAvailable(ExchangeRate rate)
         {
-            return rate.ReferenceCurrencyCode.Equals("BTC") && rate.SecondaryCurrencyCode.Equals("USD");
+            return rate.ReferenceCurrencyCode.Equals("BTC") &&
+                (rate.SecondaryCurrencyCode.Equals("EUR") || rate.SecondaryCurrencyCode.Equals("USD"));
         }
 
         public List<ExchangeRate> Rates { get; }
@@ -44,19 +48,19 @@ namespace MyCC.Core.Rates.Repositories
 
         public RateRepositoryType RatesType => RateRepositoryType.CryptoToFiat;
 
-        public string Name => I18N.QuadrigaCx;
+        public string Name => I18N.Coinbase;
 
         public async Task<ExchangeRate> FetchRate(ExchangeRate rate)
         {
             if (!IsAvailable(rate)) return null;
 
-            var uri = new Uri(UrlUsd);
+            var uri = new Uri(rate.SecondaryCurrencyCode.Equals("EUR") ? UrlEur : UrlUsd);
             var response = await _client.GetAsync(uri);
 
             if (!response.IsSuccessStatusCode) return null;
 
             var content = await response.Content.ReadAsStringAsync();
-            var rateString = (string)JObject.Parse(content)[KeyLastPrice];
+            var rateString = (string)JObject.Parse(content)[KeyData][KeyPrice];
             var rateValue = decimal.Parse(rateString, CultureInfo.InvariantCulture);
 
             rate.Rate = rateValue;
