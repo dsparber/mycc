@@ -186,5 +186,14 @@ namespace MyCC.Core.Resources {
                 return ResourceManager.GetString("ManuallyAdded", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die QuadrigaCX ähnelt.
+        /// </summary>
+        internal static string QuadrigaCx {
+            get {
+                return ResourceManager.GetString("QuadrigaCx", resourceCulture);
+            }
+        }
     }
 }

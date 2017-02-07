@@ -159,4 +159,7 @@
   <data name="Bitstamp" xml:space="preserve">
     <value>Bitstamp</value>
   </data>
+  <data name="QuadrigaCx" xml:space="preserve">
+    <value>QuadrigaCX</value>
+  </data>
 </root>

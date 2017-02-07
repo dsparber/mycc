@@ -7,6 +7,7 @@
         Cryptonator = 3,
         FixerIo = 4,
         Kraken = 5,
-        Bitstamp = 6
+        Bitstamp = 6,
+        QuadrigaCx = 7
     }
 }

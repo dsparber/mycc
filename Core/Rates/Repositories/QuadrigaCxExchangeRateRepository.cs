@@ -12,10 +12,9 @@ using SQLite;
 
 namespace MyCC.Core.Rates.Repositories
 {
-    public class BitstampExchangeRateRepository : ISingleRateRepository
+    public class QuadrigaCxExchangeRateRepository : ISingleRateRepository
     {
-        private const string UrlUsd = "https://www.bitstamp.net/api/v2/ticker/btcusd";
-        private const string UrlEur = "https://www.bitstamp.net/api/v2/ticker/btceur";
+        private const string UrlUsd = "https://api.quadrigacx.com/v2/ticker?book=btc_usd";
         private const string KeyLastPrice = "last";
 
         private const int BufferSize = 256000;
@@ -23,7 +22,7 @@ namespace MyCC.Core.Rates.Repositories
         private readonly HttpClient _client;
         private readonly SQLiteAsyncConnection _connection;
 
-        public BitstampExchangeRateRepository(SQLiteAsyncConnection connection)
+        public QuadrigaCxExchangeRateRepository(SQLiteAsyncConnection connection)
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
             _connection = connection;
@@ -36,8 +35,7 @@ namespace MyCC.Core.Rates.Repositories
 
         public bool IsAvailable(ExchangeRate rate)
         {
-            return rate.ReferenceCurrencyCode.Equals("BTC") &&
-                (rate.SecondaryCurrencyCode.Equals("EUR") || rate.SecondaryCurrencyCode.Equals("USD"));
+            return rate.ReferenceCurrencyCode.Equals("BTC") && rate.SecondaryCurrencyCode.Equals("USD");
         }
 
         public List<ExchangeRate> Rates { get; }
@@ -52,7 +50,7 @@ namespace MyCC.Core.Rates.Repositories
         {
             if (!IsAvailable(rate)) return null;
 
-            var uri = new Uri(rate.SecondaryCurrencyCode.Equals("EUR") ? UrlEur : UrlUsd);
+            var uri = new Uri(UrlUsd);
             var response = await _client.GetAsync(uri);
 
             if (!response.IsSuccessStatusCode) return null;
