@@ -197,6 +197,15 @@ namespace MyCC.Core.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ItBit ähnelt.
+        /// </summary>
+        internal static string ItBit {
+            get {
+                return ResourceManager.GetString("ItBit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Kraken ähnelt.
         /// </summary>
         internal static string Kraken {

@@ -58,7 +58,8 @@ namespace MyCC.Core.Rates
                 new CoinbaseExchangeRateRepository(_connection),
                 new BitPayExchangeRateRepository(_connection),
                 new BitfinexExchangeRateRepository(_connection),
-                new CoinapultExchangeRateRepository(_connection)
+                new CoinapultExchangeRateRepository(_connection),
+                new ItBitExchangeRateRepository(_connection)
             };
         }
 

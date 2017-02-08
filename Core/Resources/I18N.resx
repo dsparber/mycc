@@ -174,4 +174,7 @@
   <data name="Coinapult" xml:space="preserve">
     <value>Coinapult</value>
   </data>
+  <data name="ItBit" xml:space="preserve">
+    <value>ItBit</value>
+  </data>
 </root>
