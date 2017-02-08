@@ -165,4 +165,7 @@
   <data name="Coinbase" xml:space="preserve">
     <value>Coinbase</value>
   </data>
+  <data name="BitPay" xml:space="preserve">
+    <value>BitPay</value>
+  </data>
 </root>

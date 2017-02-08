@@ -71,6 +71,15 @@ namespace MyCC.Core.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die BitPay ähnelt.
+        /// </summary>
+        internal static string BitPay {
+            get {
+                return ResourceManager.GetString("BitPay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Bitstamp ähnelt.
         /// </summary>
         internal static string Bitstamp {
