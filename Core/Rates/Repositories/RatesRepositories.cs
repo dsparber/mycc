@@ -11,6 +11,7 @@
         QuadrigaCx = 7,
         Coinbase = 8,
         BitPay = 9,
-        Bitfinex = 10
+        Bitfinex = 10,
+        Coinapult = 11
     }
 }

@@ -171,4 +171,7 @@
   <data name="Bitfinex" xml:space="preserve">
     <value>Bitfinex</value>
   </data>
+  <data name="Coinapult" xml:space="preserve">
+    <value>Coinapult</value>
+  </data>
 </root>

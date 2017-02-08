@@ -143,6 +143,15 @@ namespace MyCC.Core.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Coinapult ähnelt.
+        /// </summary>
+        internal static string Coinapult {
+            get {
+                return ResourceManager.GetString("Coinapult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Coinbase ähnelt.
         /// </summary>
         internal static string Coinbase {
