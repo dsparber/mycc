@@ -168,4 +168,7 @@
   <data name="BitPay" xml:space="preserve">
     <value>BitPay</value>
   </data>
+  <data name="Bitfinex" xml:space="preserve">
+    <value>Bitfinex</value>
+  </data>
 </root>

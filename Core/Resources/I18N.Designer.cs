@@ -71,6 +71,15 @@ namespace MyCC.Core.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bitfinex ähnelt.
+        /// </summary>
+        internal static string Bitfinex {
+            get {
+                return ResourceManager.GetString("Bitfinex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die BitPay ähnelt.
         /// </summary>
         internal static string BitPay {

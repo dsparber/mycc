@@ -10,6 +10,7 @@
         Bitstamp = 6,
         QuadrigaCx = 7,
         Coinbase = 8,
-        BitPay = 9
+        BitPay = 9,
+        Bitfinex = 10
     }
 }

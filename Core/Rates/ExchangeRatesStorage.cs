@@ -56,7 +56,8 @@ namespace MyCC.Core.Rates
                 new KrakenExchangeRateRepository(_connection),
                 new QuadrigaCxExchangeRateRepository(_connection),
                 new CoinbaseExchangeRateRepository(_connection),
-                new BitPayExchangeRateRepository(_connection)
+                new BitPayExchangeRateRepository(_connection),
+                new BitfinexExchangeRateRepository(_connection)
             };
         }
 
