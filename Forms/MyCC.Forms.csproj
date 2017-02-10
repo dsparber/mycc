@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="View\Pages\Settings\AboutView.cs" />
     <Compile Include="View\Overlays\AccountQrCodeOverlay.cs" />
+    <Compile Include="BtcUsdRateSelectorPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
