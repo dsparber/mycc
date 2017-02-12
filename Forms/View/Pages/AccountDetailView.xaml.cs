@@ -3,7 +3,6 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
-using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
@@ -48,18 +47,9 @@ namespace MyCC.Forms.View.Pages
 
             if (repo is AddressAccountRepository && !(repo is BlockchainXpubAccountRepository))
             {
-                var qrButton = new Button
-                {
-                    Text = I18N.ShowQrCode,
-                    BackgroundColor = Color.White,
-                    FontSize = AppConstants.TableSectionFontSize,
-                    TextColor = AppConstants.ThemeColor,
-                    BorderWidth = 0.5,
-                    BorderColor = Color.FromHex("#ccc"),
-                    BorderRadius = 0
-                };
+                var qrButton = new ToolbarItem { Icon = "qr.png" };
                 qrButton.Clicked += (sender, e) => Navigation.PushOrPushModal(new AccountQrCodeOverlay((AddressAccountRepository)repo));
-                stack.Children.Add(qrButton);
+                ToolbarItems.Insert(0, qrButton);
             }
 
             stack.Children.Add(disableCell);

@@ -43,7 +43,8 @@
     <MtouchUseSGen>True</MtouchUseSGen>
     <CodesignKey>iPhone Distribution</CodesignKey>
     <MtouchUseRefCounting>True</MtouchUseRefCounting>
-    <CodesignProvision></CodesignProvision>
+    <CodesignProvision>
+    </CodesignProvision>
     <MtouchSdkVersion>
     </MtouchSdkVersion>
     <MtouchLink>SdkOnly</MtouchLink>
@@ -417,6 +418,9 @@
     <Content Include="Resources\add.png" />
     <Content Include="Resources\add%402x.png" />
     <Content Include="Resources\add%403x.png" />
+    <BundleResource Include="Resources\qr%402x.png" />
+    <BundleResource Include="Resources\qr%403x.png" />
+    <BundleResource Include="Resources\qr.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\MyCC.Core.csproj">
