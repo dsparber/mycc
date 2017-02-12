@@ -6,13 +6,16 @@
     xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
     x:Class="MyCC.Forms.View.Components.HeaderView"
 	BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
-	WidthRequest="280">
+	WidthRequest="280"
+  MinimumWidthRequest="280"
+  MinimumHeightRequest="90">
   <ContentView.Content>
     <StackLayout Spacing="0">
       <ProgressBar x:Name="ProgressBar" HorizontalOptions="FillAndExpand"/>
       <StackLayout
+        Padding="0,0,0,20"
         Spacing="0"
-        Margin="10"
+        Margin="5"
         VerticalOptions="CenterAndExpand"
         HorizontalOptions="CenterAndExpand">
         <StackLayout

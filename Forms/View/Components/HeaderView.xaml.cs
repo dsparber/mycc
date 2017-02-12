@@ -94,6 +94,8 @@ namespace MyCC.Forms.View.Components
             LoadingText = LoadingText;
 
             Messaging.Layout.SubscribeValueChanged(this, AdaptSize);
+
+            HeightRequest = 90;
         }
 
         private static string GetText(string text)
@@ -119,6 +121,8 @@ namespace MyCC.Forms.View.Components
 
             TitleLabel.FontSize = (double)size;
             TitleLabelSmall.FontSize = (double)sizeSmall;
+
+            HeightRequest = 90;
         }
     }
 }

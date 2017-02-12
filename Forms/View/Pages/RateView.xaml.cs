@@ -65,7 +65,7 @@ namespace MyCC.Forms.View.Pages
 
             HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
             HeaderCarousel.PositionSelected += PositionSelected;
-            HeaderCarousel.HeightRequest = 120;
+            HeaderCarousel.HeightRequest = 100;
         }
 
         private void AddSubscriber()

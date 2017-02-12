@@ -12,15 +12,15 @@ namespace MyCC.Forms.View.Pages
 {
     public partial class CoinTableView
     {
-        private readonly CoinTableComponent tableView;
+        private readonly CoinTableComponent _tableView;
 
         public CoinTableView()
         {
             InitializeComponent();
 
-            tableView = new CoinTableComponent(Navigation);
+            _tableView = new CoinTableComponent(Navigation);
 
-            Stack.Children.Add(tableView);
+            Stack.Children.Add(_tableView);
 
             AddSubscriber();
 
@@ -31,7 +31,7 @@ namespace MyCC.Forms.View.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            tableView.OnAppearing();
+            _tableView.OnAppearing();
         }
 
 
@@ -55,7 +55,7 @@ namespace MyCC.Forms.View.Pages
 
             HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
             HeaderCarousel.PositionSelected += PositionSelected;
-            HeaderCarousel.HeightRequest = 120;// new CoinsHeaderView().HeightRequest;
+            HeaderCarousel.HeightRequest = 100;
         }
 
         private void SetNoSourcesView()
