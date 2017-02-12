@@ -43,7 +43,7 @@ namespace MyCC.Forms.View.Pages.Settings
                     .Select(r => Tuple.Create(r.TypeId, new CustomCellView
                     {
                         Text = r.Name,
-                        Detail = (ExchangeRateHelper.GetStoredRate(Currency.Btc, Currency.Usd, r.TypeId)?.AsMoney ?? new Money(0, Currency.Usd)).ToStringTwoDigits(ApplicationSettings.RoundMoney),
+                        Detail = GetDetailText(r.TypeId),
                         Image = "checkmark.png"
                     }))
                     .ToList();
@@ -65,7 +65,10 @@ namespace MyCC.Forms.View.Pages.Settings
                 i.Item2.GestureRecognizers.Add(recognizer);
                 contentStack.Children.Add(i.Item2);
             }
+
+            contentStack.Children.Add(new SectionFooterView { Text = $"*{I18N.InfoNoDirectRate}" });
             contentStack.Children.Last().Margin = new Thickness(0, 0, 0, 40);
+
             changingStack.Children.Add(new ScrollView { Content = contentStack });
 
             Content = changingStack;
@@ -75,11 +78,21 @@ namespace MyCC.Forms.View.Pages.Settings
             {
                 foreach (var i in _items)
                 {
-                    i.Item2.Detail =
-                    (ExchangeRateHelper.GetStoredRate(Currency.Btc, Currency.Usd, i.Item1)?.AsMoney ??
-                     new Money(0, Currency.Usd)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+                    i.Item2.Detail = GetDetailText(i.Item1);
                 }
             }));
+        }
+
+        private static string GetDetailText(int i)
+        {
+            var usd = ExchangeRateHelper.GetStoredRate(Currency.Btc, Currency.Usd, i)?.AsMoney;
+            var eur = ExchangeRateHelper.GetStoredRate(Currency.Btc, Currency.Eur, i)?.AsMoney;
+
+            var usdString = (usd ?? new Money(0, Currency.Usd)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+            var eurString = (eur ?? ExchangeRateHelper.GetRate(Currency.Btc, Currency.Eur, i)?.AsMoney ?? new Money(0, Currency.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+            var note = eur == null && usd != null ? "*" : string.Empty;
+
+            return $"{usdString} / {eurString}{note}";
         }
 
         private void SetCheckmark()

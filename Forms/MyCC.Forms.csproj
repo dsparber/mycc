@@ -70,6 +70,7 @@
     <Compile Include="View\Components\CellViews\CustomSwitchView.cs" />
     <Compile Include="View\Components\CellViews\CustomCellView.cs" />
     <Compile Include="View\Components\CellViews\CustomCellViewActionItem.cs" />
+    <Compile Include="View\Components\CellViews\SectionFooterView.cs" />
     <Compile Include="View\Components\CellViews\SectionHeaderView.cs" />
     <Compile Include="View\Components\ChangingStackLayout.cs" />
     <Compile Include="View\Components\CoinTableComponent.cs" />

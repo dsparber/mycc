@@ -150,7 +150,7 @@ namespace MyCC.Forms.view.components.CellViews
             var content = new ContentView { Content = mainView, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.White };
 
             Panel = content;
-            Content = new ContentView { Content = new ContentView { Content = Panel, BackgroundColor = Color.White, Padding = new Thickness(0, 5) }, BackgroundColor = Color.FromHex("#ccc"), Padding = new Thickness(0, 0.5) };
+            Content = new ContentView { Content = new ContentView { Content = Panel, BackgroundColor = Color.White, Padding = new Thickness(0, 5) }, BackgroundColor = Color.FromHex("#ccc"), Padding = new Thickness(0, 0, 0, 0.5) };
 
             IsLoading = false;
         }

@@ -519,4 +519,7 @@
   <data name="AvailableRates" xml:space="preserve">
     <value>Verfügbare Kurse</value>
   </data>
+  <data name="InfoNoDirectRate" xml:space="preserve">
+    <value>Kein direkter Wechselkurs gefunden. Dieser Kurs wurde über USD berechnet.</value>
+  </data>
 </root>

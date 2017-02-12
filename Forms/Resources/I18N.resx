@@ -519,4 +519,7 @@
   <data name="AvailableRates" xml:space="preserve">
     <value>Available rates</value>
   </data>
+  <data name="InfoNoDirectRate" xml:space="preserve">
+    <value>No direct rate found. This rate is calculated via USD.</value>
+  </data>
 </root>

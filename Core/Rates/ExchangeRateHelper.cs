@@ -10,9 +10,9 @@ namespace MyCC.Core.Rates
     public static class ExchangeRateHelper
     {
 
-        public static ExchangeRate GetRate(ExchangeRate rate) => GetRate(new Currency.Model.Currency(rate.ReferenceCurrencyCode, rate.ReferenceCurrencyIsCryptoCurrency), new Currency.Model.Currency(rate.SecondaryCurrencyCode, rate.SecondaryCurrencyIsCryptoCurrency));
+        public static ExchangeRate GetRate(ExchangeRate rate, int? repository = null) => GetRate(new Currency.Model.Currency(rate.ReferenceCurrencyCode, rate.ReferenceCurrencyIsCryptoCurrency), new Currency.Model.Currency(rate.SecondaryCurrencyCode, rate.SecondaryCurrencyIsCryptoCurrency), repository);
 
-        public static ExchangeRate GetRate(Currency.Model.Currency currency1, Currency.Model.Currency currency2)
+        public static ExchangeRate GetRate(Currency.Model.Currency currency1, Currency.Model.Currency currency2, int? repository = null)
         {
             if (string.IsNullOrWhiteSpace(currency1?.Code) ||
                 string.IsNullOrWhiteSpace(currency2?.Code)) throw new ArgumentException();
@@ -20,22 +20,27 @@ namespace MyCC.Core.Rates
             if (currency1.Equals(currency2)) return new ExchangeRate(currency1, currency2, DateTime.Now, 1);
 
 
-            var r1 = GetRateToBtc(currency1);
-            var r2 = GetRateToBtc(currency2);
+            var r1 = GetRateToBtc(currency1, repository);
+            var r2 = GetRateToBtc(currency2, repository);
 
             if (r1 == null || r2 == null) return null;
 
             return GetCombinedRate(r1, r2);
         }
 
-        private static ExchangeRate GetRateToBtc(Currency.Model.Currency currency)
+        private static ExchangeRate GetRateToBtc(Currency.Model.Currency currency, int? repository = null)
         {
             if (currency.Code.Equals("BTC")) return new ExchangeRate(Currency.Model.Currency.Btc, Currency.Model.Currency.Btc, DateTime.Now, 1);
 
             if (currency.IsCryptoCurrency) return GetStoredRate(currency, Currency.Model.Currency.Btc);
+            if (currency.Code.Equals("USD") || currency.Code.Equals("EUR"))
+            {
+                var r = GetStoredRate(currency, Currency.Model.Currency.Btc, repository ?? ApplicationSettings.PreferredBitcoinRepository);
+                if (r != null) return r;
+            }
 
             var rate = currency.Code.Equals("USD") ? new ExchangeRate(Currency.Model.Currency.Usd, Currency.Model.Currency.Usd, DateTime.Now, 1) : GetStoredRate(currency, Currency.Model.Currency.Usd);
-            var usdBtc = GetStoredRate(Currency.Model.Currency.Usd, Currency.Model.Currency.Btc, ApplicationSettings.PreferredBitcoinRepository);
+            var usdBtc = GetStoredRate(Currency.Model.Currency.Usd, Currency.Model.Currency.Btc, repository ?? ApplicationSettings.PreferredBitcoinRepository);
             return GetCombinedRate(rate, usdBtc);
         }
 
@@ -157,6 +162,8 @@ namespace MyCC.Core.Rates
                 else
                 {
                     await ((ISingleRateRepository)r).FetchRate(new ExchangeRate(Currency.Model.Currency.Btc, Currency.Model.Currency.Usd));
+                    var eurRate = new ExchangeRate(Currency.Model.Currency.Btc, Currency.Model.Currency.Eur);
+                    if (r.IsAvailable(eurRate)) await ((ISingleRateRepository)r).FetchRate(eurRate);
                 }
 
                 progress += 1;
@@ -184,10 +191,12 @@ namespace MyCC.Core.Rates
 
             if (currency.IsCryptoCurrency) return new List<ExchangeRate> { new ExchangeRate(currency, Currency.Model.Currency.Btc) };
 
-            return new List<ExchangeRate> {
-                new ExchangeRate(currency, Currency.Model.Currency.Usd),
-                new ExchangeRate(Currency.Model.Currency.Usd, Currency.Model.Currency.Btc)
-            }.Where(r => r.ReferenceCurrencyCode != r.SecondaryCurrencyCode);
+            return (currency.Equals(Currency.Model.Currency.Eur) ?
+                new List<ExchangeRate> { new ExchangeRate(Currency.Model.Currency.Eur, Currency.Model.Currency.Btc) } :
+                new List<ExchangeRate> {
+                    new ExchangeRate(currency, Currency.Model.Currency.Usd),
+                    new ExchangeRate(Currency.Model.Currency.Usd, Currency.Model.Currency.Btc)
+                }).Where(r => r.ReferenceCurrencyCode != r.SecondaryCurrencyCode);
         }
 
 

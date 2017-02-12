@@ -638,6 +638,15 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No direct rate found. This rate is calculated via USD. ähnelt.
+        /// </summary>
+        public static string InfoNoDirectRate {
+            get {
+                return ResourceManager.GetString("InfoNoDirectRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {0} is equal to ähnelt.
         /// </summary>
         public static string IsEqualTo {
