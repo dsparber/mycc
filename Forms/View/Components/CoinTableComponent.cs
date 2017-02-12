@@ -138,7 +138,8 @@ namespace MyCC.Forms.View.Components
                     default: sortLambda = d => 1; break;
                 }
 
-                items = ApplicationSettings.SortDirectionTable == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
+                items = (ApplicationSettings.SortDirectionTable == SortDirection.Ascending ? items.Where(d => !d.Disabled).OrderBy(sortLambda) : items.Where(d => !d.Disabled).OrderByDescending(sortLambda)).Concat
+                        (ApplicationSettings.SortDirectionTable == SortDirection.Ascending ? items.Where(d => d.Disabled).OrderBy(sortLambda) : items.Where(d => d.Disabled).OrderByDescending(sortLambda)).ToList();
 
                 Device.BeginInvokeOnMainThread(() =>
                 {

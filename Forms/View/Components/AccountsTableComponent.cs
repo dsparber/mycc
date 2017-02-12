@@ -88,20 +88,21 @@ namespace MyCC.Forms.View.Components
 
         public void OnAppearing()
         {
-            if (!_appeared)
-            {
-                _appeared = true;
-                _webView.LoadFromContent("Html/accountsTable.html");
-                _webView.LoadFinished = (sender, e) => UpdateView();
-            }
+            if (_appeared) return;
+
+            _appeared = true;
+            _webView.LoadFromContent("Html/accountsTable.html");
+            _webView.LoadFinished = (sender, e) => UpdateView();
         }
 
         private void UpdateView()
         {
             try
             {
-                var items = AccountStorage.AccountsWithCurrency(_currency).Select(a => new Data(a)).ToList();
-                var itemsExisting = (items.Count > 0);
+                var items = AccountStorage.AccountsWithCurrency(_currency).Where(a => a.IsEnabled).Select(a => new Data(a)).ToList();
+                var itemsDisabled = AccountStorage.AccountsWithCurrency(_currency).Where(a => !a.IsEnabled).Select(a => new Data(a)).ToList();
+
+                var itemsExisting = items.Any() || itemsDisabled.Any();
 
                 if (!itemsExisting || !_appeared) return;
 
@@ -116,15 +117,16 @@ namespace MyCC.Forms.View.Components
                 }
 
                 items = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
+                itemsDisabled = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending ? itemsDisabled.OrderBy(sortLambda).ToList() : itemsDisabled.OrderByDescending(sortLambda).ToList();
 
                 Device.BeginInvokeOnMainThread(() =>
-                               {
-                                   _webView.CallJsFunction("setHeader", new[]{
+                {
+                    _webView.CallJsFunction("setHeader", new[]{
                     new HeaderData(I18N.Label, SortOrder.Alphabetical.ToString()),
                     new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
                         }, string.Empty);
-                                   _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
-                               });
+                    _webView.CallJsFunction("updateTable", items.Concat(itemsDisabled).ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+                });
             }
             catch (Exception e)
             {
