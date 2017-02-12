@@ -5,34 +5,34 @@ namespace MyCC.Forms.View.Components.Cells
 {
     internal class CustomPickerCell : ViewCell
     {
-        public readonly Picker Picker;
-        protected readonly Label TitleLabel;
+        private readonly Picker _picker;
+        private readonly Label _titleLabel;
 
         private string _title;
 
         public string Title
         {
             get { return _title; }
-            set { _title = value; TitleLabel.Text = _title; }
+            set { _title = value; _titleLabel.Text = _title; }
         }
 
         public bool IsEditable
         {
             set
             {
-                Picker.IsEnabled = value;
-                Picker.Opacity = value ? 1 : 0.5;
+                _picker.IsEnabled = value;
+                _picker.Opacity = value ? 1 : 0.5;
             }
         }
 
         public CustomPickerCell()
         {
-            Picker = new Picker { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
-            TitleLabel = new Label { WidthRequest = AppConstants.LabelWidth, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = Color.FromHex("222") };
+            _picker = new Picker { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
+            _titleLabel = new Label { WidthRequest = AppConstants.LabelWidth, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = Color.FromHex("222") };
 
             var stack = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand };
-            stack.Children.Add(TitleLabel);
-            stack.Children.Add(Picker);
+            stack.Children.Add(_titleLabel);
+            stack.Children.Add(_picker);
 
             if (Device.OS == TargetPlatform.iOS)
             {
@@ -43,7 +43,7 @@ namespace MyCC.Forms.View.Components.Cells
 
             if (Device.OS == TargetPlatform.Android)
             {
-                TitleLabel.FontSize = AppConstants.AndroidFontSize;
+                _titleLabel.FontSize = AppConstants.AndroidFontSize;
             }
 
             stack.HorizontalOptions = LayoutOptions.FillAndExpand;
@@ -59,7 +59,7 @@ namespace MyCC.Forms.View.Components.Cells
             }
 
             var gestureRecogniser = new TapGestureRecognizer();
-            gestureRecogniser.Tapped += (sender, e) => Picker.Focus();
+            gestureRecogniser.Tapped += (sender, e) => _picker.Focus();
             View.GestureRecognizers.Add(gestureRecogniser);
         }
     }

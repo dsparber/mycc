@@ -1,4 +1,5 @@
 using System;
+using MyCC.Core.Account.Models.Base;
 using SQLite;
 
 namespace MyCC.Core.Rates
@@ -115,6 +116,9 @@ namespace MyCC.Core.Rates
             get { return new DateTime(LastUpdateTicks); }
             set { LastUpdateTicks = value.Ticks; }
         }
+
+        [Ignore]
+        public Money AsMoney => new Money(Rate ?? 0, new Currency.Model.Currency(SecondaryCurrencyCode, SecondaryCurrencyIsCryptoCurrency));
 
         private decimal? _rate;
         /// <summary>

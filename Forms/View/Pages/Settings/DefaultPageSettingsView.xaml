@@ -4,13 +4,12 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
-	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.Settings.DefaultPageSettingsView"
 	Title="{resources:Translate DefaultView}">
-  <components1:ChangingStackLayout>
-    <components1:HeaderView
+  <components:ChangingStackLayout>
+    <components:HeaderView
 			TitleText="{resources:Translate AppName}"
 			x:Name="Header" />
     <StackLayout
@@ -40,5 +39,5 @@
         </TableSection>
       </TableView>
     </StackLayout>
-  </components1:ChangingStackLayout>
+  </components:ChangingStackLayout>
 </ContentPage>

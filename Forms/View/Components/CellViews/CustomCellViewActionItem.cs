@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MyCC.Forms.View.Components.Cells
+namespace MyCC.Forms.view.components.CellViews
 {
-    public class CustomViewCellActionItem
+    public class CustomCellViewActionItem
     {
         public string Icon;
         public EventHandler Action;

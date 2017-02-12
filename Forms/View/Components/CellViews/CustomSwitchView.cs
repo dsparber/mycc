@@ -1,7 +1,7 @@
 ﻿using MyCC.Forms.Constants;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.View.Components.CellViews
+namespace MyCC.Forms.view.components.CellViews
 {
     public sealed class CustomSwitchView : ContentView
     {

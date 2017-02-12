@@ -3,7 +3,6 @@ using System.Linq;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Types;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
@@ -72,7 +71,8 @@ namespace MyCC.Forms.View.Pages.Settings
             }
             Device.BeginInvokeOnMainThread(() =>
             {
-                SortHelper.ApplySortOrder(cells, AccountsSection, SortOrder.None, SortDirection.Ascending);
+                AccountsSection.Clear();
+                AccountsSection.Add(cells);
             });
 
             if (_repository is AddressAccountRepository)
@@ -103,7 +103,7 @@ namespace MyCC.Forms.View.Pages.Settings
             RepositoryNameEntryCell.IsEditable = true;
             if (!(_repository is LocalAccountRepository))
             {
-                TableView.Root.Add((TableSection)DeleteSection);
+                TableView.Root.Add(DeleteSection);
             }
             TableView.Root.Remove(AccountsSection);
 
@@ -174,7 +174,7 @@ namespace MyCC.Forms.View.Pages.Settings
                 RepositoryNameEntryCell.IsEditable = false;
                 AddressEntryCell.IsEditable = false;
 
-                TableView.Root.Add((TableSection)AccountsSection);
+                TableView.Root.Add(AccountsSection);
                 TableView.Root.Remove(DeleteSection);
 
                 ToolbarItems.Remove(SaveItem);

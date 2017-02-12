@@ -95,5 +95,8 @@ namespace MyCC.Core.Rates
         {
             await Task.WhenAll(Repositories.Select(r => r.FetchAvailableRates()));
         }
+
+        public static IRateRepository PreferredBtcRepository
+            => Instance.Repositories.First(r => r.TypeId == ApplicationSettings.PreferredBitcoinRepository);
     }
 }

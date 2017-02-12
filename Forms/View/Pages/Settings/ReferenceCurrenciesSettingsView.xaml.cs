@@ -10,6 +10,7 @@ using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
+using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components.Cells;
 using MyCC.Forms.View.Overlays;
 using Xamarin.Forms;
@@ -53,9 +54,9 @@ namespace MyCC.Forms.View.Pages.Settings
         {
             var cell = new CustomViewCell { Text = currency.Code, Detail = currency.Name };
 
-            var delete = new CustomViewCellActionItem { Icon = "delete.png", Data = cell };
-            var star = new CustomViewCellActionItem { Icon = ApplicationSettings.MainCurrencies.Contains(currency) ? "starFilled.png" : "star.png", Data = cell };
-            var items = new List<CustomViewCellActionItem> { star, delete };
+            var delete = new CustomCellViewActionItem { Icon = "delete.png", Data = cell };
+            var star = new CustomCellViewActionItem { Icon = ApplicationSettings.MainCurrencies.Contains(currency) ? "starFilled.png" : "star.png", Data = cell };
+            var items = new List<CustomCellViewActionItem> { star, delete };
 
             delete.Action = (sender, e) =>
             {

@@ -6,6 +6,7 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Currency.Model;
 using MyCC.Forms.Resources;
+using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 using ZXing;

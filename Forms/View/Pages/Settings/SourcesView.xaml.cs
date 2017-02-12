@@ -7,6 +7,7 @@ using MyCC.Core.Account.Storage;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
+using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components.Cells;
 using MyCC.Forms.View.Overlays;
 using Xamarin.Forms;

@@ -6,7 +6,7 @@
 	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
-	xmlns:cellViews="clr-namespace:MyCC.Forms.View.Components.CellViews;assembly=MyCC.Forms"
+	xmlns:cellViews="clr-namespace:MyCC.Forms.view.components.CellViews;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.Settings.SettingsView"
 	Title="{resources:Translate Settings}">
   <ContentPage.BackgroundColor>
@@ -34,6 +34,10 @@
           <cells:CustomViewCell
 						Text="{resources:Translate Rates}"
 						x:Name="RatesCell"
+						Image="more.png" />
+          <cells:CustomViewCell
+						Text="{resources:Translate PreferredBitcoinRate}"
+						x:Name="PreferredRateCell"
 						Image="more.png" />
         </TableSection>
         <TableSection

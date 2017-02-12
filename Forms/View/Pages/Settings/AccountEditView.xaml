@@ -5,7 +5,6 @@
     xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
-	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="MyCC.Forms.View.Pages.Settings.AccountEditView">
@@ -20,8 +19,8 @@
 			Clicked="DoneEditing" />
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
-    <components1:ChangingStackLayout>
-      <components1:HeaderView
+    <components:ChangingStackLayout>
+      <components:HeaderView
 				x:Name="Header" />
       <StackLayout
 				Spacing="0">
@@ -57,6 +56,6 @@
           </TableView.Root>
         </TableView>
       </StackLayout>
-    </components1:ChangingStackLayout>
+    </components:ChangingStackLayout>
   </ContentPage.Content>
 </ContentPage>

@@ -8,8 +8,8 @@ using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
+using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components;
-using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Overlays;
 using Xamarin.Forms;
 

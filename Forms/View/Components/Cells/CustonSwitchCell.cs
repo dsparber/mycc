@@ -1,4 +1,4 @@
-﻿using MyCC.Forms.View.Components.CellViews;
+﻿using MyCC.Forms.view.components.CellViews;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Components.Cells

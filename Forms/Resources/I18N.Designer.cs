@@ -242,6 +242,15 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Available rates ähnelt.
+        /// </summary>
+        public static string AvailableRates {
+            get {
+                return ResourceManager.GetString("AvailableRates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Bitcoin can not be removed from the reference currencies. ähnelt.
         /// </summary>
         public static string BitcoinCanNotBeRemoved {
@@ -922,6 +931,15 @@ namespace MyCC.Forms.Resources {
         public static string PinToShort {
             get {
                 return ResourceManager.GetString("PinToShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Preferred Bitcoin exchange rate ähnelt.
+        /// </summary>
+        public static string PreferredBitcoinRate {
+            get {
+                return ResourceManager.GetString("PreferredBitcoinRate", resourceCulture);
             }
         }
         

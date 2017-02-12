@@ -35,7 +35,11 @@
     <Compile Include="Account\Helper\AccountStringHelper.cs" />
     <Compile Include="Currency\Repositories\OpenexchangeCurrencyRepository.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Rates\Repositories\BitPayExchangeRateRepository.cs" />
+    <Compile Include="Rates\Repositories\ItBitExchangeRateRepository.cs" />
+    <Compile Include="Rates\Repositories\CoinapultExchangeRateRepository.cs" />
     <Compile Include="Rates\Repositories\CoinbaseExchangeRateRepository.cs" />
+    <Compile Include="Rates\Repositories\BitfinexExchangeRateRepository.cs" />
     <Compile Include="Rates\Repositories\QuadrigaCxExchangeRateRepository.cs" />
     <Compile Include="Rates\Repositories\CryptonatorExchangeRateRepository.cs" />
     <Compile Include="Rates\Repositories\Interfaces\IRateRepository.cs" />

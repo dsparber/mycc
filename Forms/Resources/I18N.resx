@@ -513,4 +513,10 @@
   <data name="Never" xml:space="preserve">
     <value>Never</value>
   </data>
+  <data name="PreferredBitcoinRate" xml:space="preserve">
+    <value>Preferred Bitcoin exchange rate</value>
+  </data>
+  <data name="AvailableRates" xml:space="preserve">
+    <value>Available rates</value>
+  </data>
 </root>

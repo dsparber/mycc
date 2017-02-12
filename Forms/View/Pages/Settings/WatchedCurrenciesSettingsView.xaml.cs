@@ -5,6 +5,7 @@ using MyCC.Core.Currency.Model;
 using MyCC.Core.Currency.Storage;
 using MyCC.Core.Settings;
 using MyCC.Forms.Messages;
+using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components.Cells;
 using MyCC.Forms.View.Overlays;
 using Xamarin.Forms;
@@ -27,8 +28,8 @@ namespace MyCC.Forms.View.Pages.Settings
 
             foreach (var c in watchedCurrencies)
             {
-                var delete = new CustomViewCellActionItem { Icon = "delete.png", Data = c };
-                var items = new List<CustomViewCellActionItem> { delete };
+                var delete = new CustomCellViewActionItem { Icon = "delete.png", Data = c };
+                var items = new List<CustomCellViewActionItem> { delete };
 
                 delete.Action = (sender, e) =>
                 {

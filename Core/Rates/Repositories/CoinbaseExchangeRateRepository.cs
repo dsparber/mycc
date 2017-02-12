@@ -14,8 +14,8 @@ namespace MyCC.Core.Rates.Repositories
 {
     public class CoinbaseExchangeRateRepository : ISingleRateRepository
     {
-        private const string UrlUsd = "GET https://api.coinbase.com/v2/prices/BTC-USD/spot";
-        private const string UrlEur = "GET https://api.coinbase.com/v2/prices/BTC-EUR/spot";
+        private const string UrlUsd = "https://api.coinbase.com/v2/prices/BTC-USD/spot";
+        private const string UrlEur = "https://api.coinbase.com/v2/prices/BTC-EUR/spot";
         private const string KeyData = "data";
         private const string KeyPrice = "amount";
 

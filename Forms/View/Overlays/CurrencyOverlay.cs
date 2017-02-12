@@ -5,6 +5,7 @@ using MyCC.Core.Currency.Model;
 using MyCC.Core.Currency.Storage;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
+using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 

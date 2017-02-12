@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Helpers;
@@ -28,10 +29,12 @@ namespace MyCC.Forms.View.Pages.Settings
             SourcesCell.Tapped += (sender, e) => Navigation.PushAsync(new SourcesView());
             SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
             RatesCell.Tapped += (sender, e) => Navigation.PushAsync(new WatchedCurrenciesSettingsView());
+            PreferredRateCell.Tapped += (s, e) => Navigation.PushAsync(new PreferredBittcoinSettingsPage());
             RatesCell.DetailBreakMode = Xamarin.Forms.LineBreakMode.TailTruncation;
             SetRatesCellDetail();
             SetPinCellText();
             SetAboutCell();
+            SetPreferredRateCellDetail();
         }
 
         private void SetDefaultPageCellText()
@@ -77,11 +80,17 @@ namespace MyCC.Forms.View.Pages.Settings
             ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies);
             SetDefaultPageCellText();
             SetPinCellText();
+            SetPreferredRateCellDetail();
         }
 
         private void SetRatesCellDetail()
         {
             RatesCell.Detail = ApplicationSettings.WatchedCurrencies.Count == 0 ? I18N.AllCurrenciesFromAccounts : string.Join(" + ", new List<string> { I18N.AllCurrenciesFromAccounts, string.Join(", ", ApplicationSettings.WatchedCurrencies) });
+        }
+
+        private void SetPreferredRateCellDetail()
+        {
+            PreferredRateCell.Detail = ExchangeRatesStorage.PreferredBtcRepository.Name;
         }
 
         private void SetAboutCell()
