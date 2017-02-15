@@ -25,7 +25,7 @@ namespace MyCC.Forms.iOS
             UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, false);
             UINavigationBar.Appearance.TintColor = Color.White.ToUIColor();
             UINavigationBar.Appearance.BarTintColor = AppConstants.ThemeColor.ToUIColor();
-            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes()
+            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes
             {
                 TextColor = UIColor.White
             });

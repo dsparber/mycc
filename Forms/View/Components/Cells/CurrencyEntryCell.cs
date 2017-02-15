@@ -44,8 +44,8 @@ namespace MyCC.Forms.View.Components.Cells
             {
                 _selectedCurrency = value;
 
-                _selectedCurrencyLabel.Text = (_selectedCurrency != null) ? _selectedCurrency.Code : I18N.SelectCurrency;
-                _selectedCurrencyLabel.TextColor = (_selectedCurrency != null) ? AppConstants.FontColor : AppConstants.FontColorLight;
+                _selectedCurrencyLabel.Text = _selectedCurrency != null ? _selectedCurrency.Code : I18N.SelectCurrency;
+                _selectedCurrencyLabel.TextColor = _selectedCurrency != null ? AppConstants.FontColor : AppConstants.FontColorLight;
             }
             get { return _selectedCurrency; }
         }
@@ -96,7 +96,7 @@ namespace MyCC.Forms.View.Components.Cells
             set
             {
                 _isFormRepresentation = value;
-                _selectedCurrencyLabel.HorizontalOptions = (IsAmountEnabled) ? LayoutOptions.End : (value) ? LayoutOptions.FillAndExpand : LayoutOptions.EndAndExpand;
+                _selectedCurrencyLabel.HorizontalOptions = IsAmountEnabled ? LayoutOptions.End : value ? LayoutOptions.FillAndExpand : LayoutOptions.EndAndExpand;
             }
             private get { return _isFormRepresentation; }
         }
@@ -127,7 +127,7 @@ namespace MyCC.Forms.View.Components.Cells
                 WidthRequest = AppConstants.LabelWidth,
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 LineBreakMode = LineBreakMode.NoWrap,
-                Text = (IsAmountEnabled) ? I18N.Value : I18N.Currency
+                Text = IsAmountEnabled ? I18N.Value : I18N.Currency
             };
 
             _selectedCurrencyLabel = new Label
@@ -135,10 +135,10 @@ namespace MyCC.Forms.View.Components.Cells
                 TextColor = AppConstants.FontColor,
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 LineBreakMode = LineBreakMode.NoWrap,
-                HorizontalOptions = (IsAmountEnabled) ? LayoutOptions.End : (IsFormRepresentation) ? LayoutOptions.FillAndExpand : LayoutOptions.EndAndExpand,
-                Text = (_selectedCurrency != null) ? _selectedCurrency.Code : I18N.SelectCurrency
+                HorizontalOptions = IsAmountEnabled ? LayoutOptions.End : IsFormRepresentation ? LayoutOptions.FillAndExpand : LayoutOptions.EndAndExpand,
+                Text = _selectedCurrency != null ? _selectedCurrency.Code : I18N.SelectCurrency
             };
-            _selectedCurrencyLabel.TextColor = (_selectedCurrency != null) ? AppConstants.FontColor : AppConstants.FontColorLight;
+            _selectedCurrencyLabel.TextColor = _selectedCurrency != null ? AppConstants.FontColor : AppConstants.FontColorLight;
 
             _amountEntry = new Entry { IsVisible = IsAmountEnabled, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand, Keyboard = Keyboard.Numeric, Placeholder = I18N.Value };
             _amountEntry.TextChanged += (sender, e) => OnTyped(SelectedMoney);

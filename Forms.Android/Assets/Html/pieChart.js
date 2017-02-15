@@ -99,7 +99,7 @@ function showChart(data, textAccounts, textCurrencies, textFurther, textNoData, 
 
     createMainGraph(data);
 
-    $("#pieChart").resize(function() {
+    $("#pieChart").resize(function () {
         createMainGraph(data);
     });
 
@@ -124,13 +124,15 @@ function createMainGraph(data) {
         sum += data[i]["value"];
     }
     chartOptions["header"]["title"].text = formatNumber(sum);
-    chartOptions["header"]["subtitle"].text = data.length == 1 ? _textCurrencies[0] : data.length + " " + _textCurrencies[1]
+    chartOptions["header"]["subtitle"].text = data.length === 1 ? _textCurrencies[0] : data.length + " " + _textCurrencies[1];
 
     var div = document.getElementById("pieChart");
     chartOptions["size"]["canvasWidth"] = div.offsetWidth;
     chartOptions["size"]["canvasHeight"] = div.offsetHeight;
 
-    var pie = new d3pie("pieChart", chartOptions);
+    // ReSharper disable once InconsistentNaming
+    // ReSharper disable once ConstructorCallNotUsed
+    new d3pie(id, chartOptions);
 }
 
 function showOverlay(id, callback) {
@@ -139,11 +141,11 @@ function showOverlay(id, callback) {
     overlay.id = id;
     var close = document.createElement("div");
     close.className = "close";
-    close.onclick = function() {
+    close.onclick = function () {
         $("#" + id).toggle("scale", {
-                direction: "both"
-            },
-            function() {
+            direction: "both"
+        },
+            function () {
                 document.getElementById("content").removeChild(document.getElementById(id));
             });
     };
@@ -171,23 +173,24 @@ function labelFormatter(context) {
         return chartOptions["data"]["content"][context.index]["money"];
     }
     return chartOptions["data"]["content"][context.index]["label"];
-};
+}
 
 function clickedListener(data) {
     data = data["data"];
 
+    var id;
     if (data["isGrouped"]) {
-        var id = "overlay_" + $(".overlay").length + 1;
-        var createGroupedGraph = function() {
+        id = "overlay_" + $(".overlay").length + 1;
+        var createGroupedGraph = function () {
+            var numAccounts = 0;
             if (data["groupedData"][0].hasOwnProperty("accounts")) {
-                var numAccounts = 0;
                 for (var i in data["groupedData"]) {
                     numAccounts += data["groupedData"][i]["accounts"].length;
                 }
                 chartOptions["header"]["title"].text = formatNumber(data["value"]); //
                 chartOptions["header"]["subtitle"].text = data["groupedData"].length === 1 ? _textCurrencies[0] : data["groupedData"].length + " " + _textCurrencies[1];
             } else {
-                var numAccounts = data["groupedData"].length;
+                numAccounts = data["groupedData"].length;
                 chartOptions["header"]["subtitle"].text = numAccounts === 1 ? _textAccounts[0] : numAccounts + " " + _textAccounts[1];
             }
             chartOptions["data"]["content"] = data["groupedData"];
@@ -196,25 +199,27 @@ function clickedListener(data) {
             chartOptions["size"]["canvasHeight"] = div.offsetHeight;
             chartOptions["data"]["smallSegmentGrouping"].enabled = groupData(data["groupedData"]);
 
-            var pie = new d3pie(id, chartOptions);
+            // ReSharper disable once InconsistentNaming
+            // ReSharper disable once ConstructorCallNotUsed
+            new d3pie(id, chartOptions);
         };
 
-        showOverlay(id, function() {
+        showOverlay(id, function () {
             createGroupedGraph();
 
-            $("#" + id).resize(function() {
+            $("#" + id).resize(function () {
                 clearChartArea(id);
                 createGroupedGraph();
             });
         });
     } else if (data.hasOwnProperty("accounts")) {
-        var id = "overlay_" + $(".overlay").length + 1;
+        id = "overlay_" + $(".overlay").length + 1;
 
         if (data["accounts"].length === 1) {
             // ReSharper disable once UseOfImplicitGlobalInFunctionScope
             Native("selectedCallback", data["accounts"][0]["id"]);
         } else {
-            var createAccountsGraph = function() {
+            var createAccountsGraph = function () {
                 chartOptions["header"]["title"].text = formatNumber(data["value"]);
                 chartOptions["header"]["subtitle"].text = data["accounts"].length === 1 ? _textAccounts[0] : data["accounts"].length + " " + _textAccounts[1];
                 chartOptions["data"]["content"] = data["accounts"];
@@ -223,13 +228,15 @@ function clickedListener(data) {
                 chartOptions["size"]["canvasHeight"] = div.offsetHeight;
                 chartOptions["data"]["smallSegmentGrouping"].enabled = groupData(data["accounts"]);
 
-                var pie = new d3pie(id, chartOptions);
+                // ReSharper disable once InconsistentNaming
+                // ReSharper disable once ConstructorCallNotUsed
+                new d3pie(id, chartOptions);
             };
 
-            showOverlay(id, function() {
+            showOverlay(id, function () {
                 createAccountsGraph();
 
-                $("#" + id).resize(function() {
+                $("#" + id).resize(function () {
                     clearChartArea(id);
                     createAccountsGraph();
                 });
@@ -238,15 +245,15 @@ function clickedListener(data) {
     } else
         // ReSharper disable once UseOfImplicitGlobalInFunctionScope
         Native("selectedCallback", data["id"]);
-};
+}
 
 function groupData(data) {
-    var sum = 0;
-    for (var i in data) {
+    var sum = 0, i;
+    for (i in data) {
         sum += data[i]["value"];
     }
     var countBelow5Percent = 0;
-    for (var i in data) {
+    for (i in data) {
         if (0.05 * sum > data[i]["value"]) {
             countBelow5Percent += 1;
         }
@@ -256,7 +263,7 @@ function groupData(data) {
 
 function formatNumber(inputNumber) {
     var number = _roundNumbers ? Math.round(inputNumber * 100) / 100 : Math.floor(inputNumber * 100) / 100;
-    return number.toLocaleString(_culture) + " " + _currencyCode;;
+    return number.toLocaleString(_culture) + " " + _currencyCode;
 }
 
 function clearChartArea(id) {

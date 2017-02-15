@@ -11,39 +11,39 @@ namespace MyCC.Forms.View.Pages.Settings
 {
     public partial class AccountEditView
     {
-        private readonly CurrencyEntryCell currencyEntryCell;
+        private readonly CurrencyEntryCell _currencyEntryCell;
 
-        private FunctionalAccount account;
-        private readonly LocalAccountRepository repository;
+        private FunctionalAccount _account;
+        private readonly LocalAccountRepository _repository;
 
 
         public AccountEditView(FunctionalAccount account, LocalAccountRepository repository)
         {
             InitializeComponent();
 
-            this.account = account;
-            this.repository = repository;
+            _account = account;
+            _repository = repository;
 
             Title = account.Name;
             Header.TitleText = account.Money.ToString();
             Header.InfoText = I18N.ManuallyAdded;
 
             AccountName.Text = account.Name;
-            currencyEntryCell = new CurrencyEntryCell(Navigation) { IsAmountEnabled = true, IsEditable = false, SelectedMoney = account.Money };
-            AccountSection.Add(currencyEntryCell);
+            _currencyEntryCell = new CurrencyEntryCell(Navigation) { IsAmountEnabled = true, IsEditable = false, SelectedMoney = account.Money };
+            AccountSection.Add(_currencyEntryCell);
 
             DeleteButtonCell.Tapped += Delete;
 
             ToolbarItems.Remove(SaveItem);
             EditView.Root.Remove(DeleteSection);
 
-            currencyEntryCell.OnSelected = (c) => Header.TitleText = currencyEntryCell.SelectedMoney.ToString();
-            currencyEntryCell.OnTyped = (m) => Header.TitleText = m.ToString();
+            _currencyEntryCell.OnSelected = c => Header.TitleText = _currencyEntryCell.SelectedMoney.ToString();
+            _currencyEntryCell.OnTyped = m => Header.TitleText = m.ToString();
         }
 
         private void StartEditing(object sender, EventArgs e)
         {
-            currencyEntryCell.IsEditable = true;
+            _currencyEntryCell.IsEditable = true;
             AccountName.IsEditable = true;
             EditView.Root.Add(DeleteSection);
 
@@ -57,22 +57,22 @@ namespace MyCC.Forms.View.Pages.Settings
         private async void DoneEditing(object sender, EventArgs e)
         {
             AccountName.Entry.Unfocus();
-            currencyEntryCell.Unfocus();
+            _currencyEntryCell.Unfocus();
 
-            currencyEntryCell.IsEditable = false;
+            _currencyEntryCell.IsEditable = false;
             AccountName.IsEditable = false;
             EditView.Root.Remove(DeleteSection);
 
-            account.Name = AccountName.Text ?? string.Empty;
+            _account.Name = AccountName.Text ?? string.Empty;
 
-            account = new LocalAccount(account.Id, account.Name, currencyEntryCell.SelectedMoney, account.IsEnabled, DateTime.Now, account.ParentId);
-            await repository.Update(account);
+            _account = new LocalAccount(_account.Id, _account.Name, _currencyEntryCell.SelectedMoney, _account.IsEnabled, DateTime.Now, _account.ParentId);
+            await _repository.Update(_account);
 
             Messaging.UpdatingAccounts.SendFinished();
 
 
-            Title = account.Name;
-            Header.TitleText = account.Money.ToString();
+            Title = _account.Name;
+            Header.TitleText = _account.Money.ToString();
 
             ToolbarItems.Clear();
             ToolbarItems.Add(EditItem);
@@ -81,9 +81,9 @@ namespace MyCC.Forms.View.Pages.Settings
         private async void Delete(object sender, EventArgs e)
         {
             AccountName.Entry.Unfocus();
-            currencyEntryCell.Unfocus();
+            _currencyEntryCell.Unfocus();
 
-            await AccountStorage.Instance.LocalRepository.Remove(account);
+            await AccountStorage.Instance.LocalRepository.Remove(_account);
             Messaging.UpdatingAccounts.SendFinished();
 
             await Navigation.PopAsync();

@@ -224,6 +224,15 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} are equal to ähnelt.
+        /// </summary>
+        public static string AreEqualTo {
+            get {
+                return ResourceManager.GetString("AreEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die as {0} ähnelt.
         /// </summary>
         public static string AsCurrency {

@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Overlays
 {
-    public partial class PinOverlay : ContentPage
+    public partial class PinOverlay
     {
         private readonly PinAction _pinAction;
 

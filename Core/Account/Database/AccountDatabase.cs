@@ -9,7 +9,7 @@ namespace MyCC.Core.Account.Database
 {
     public class AccountDatabase : AbstractDatabase<AccountDbm, FunctionalAccount, int>
     {
-        public override async Task<IEnumerable<AccountDbm>> GetAllDbObjects()
+        protected override async Task<IEnumerable<AccountDbm>> GetAllDbObjects()
         {
             return await (await Connection).Table<AccountDbm>().ToListAsync();
         }

@@ -8,15 +8,13 @@ namespace MyCC.Core.Tasks
 {
     public static partial class ApplicationTasks
     {
-        private static Task _loadAllEverythingTask;
-
-        public static Task LoadEverything(Action whenFinished) => _loadAllEverythingTask = _loadAllEverythingTask.GetTask(async () =>
+        public static async Task LoadEverything(Action whenFinished)
         {
             await CurrencyRepositoryMapStorage.Instance.LoadFromDatabase();
             await CurrencyStorage.Instance.LoadFromDatabase();
             await AccountStorage.Instance.LoadFromDatabase();
             await ExchangeRatesStorage.Instance.LoadRates();
             whenFinished();
-        });
+        }
     }
 }

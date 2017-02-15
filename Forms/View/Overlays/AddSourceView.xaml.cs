@@ -54,7 +54,7 @@ namespace MyCC.Forms.View.Overlays
                 _specificAddView = addViews[index];
                 NameEntryCell.Placeholder = _specificAddView.DefaultName;
                 var txt = NameEntryCell.Text?.Trim();
-                Header.InfoText = (string.Empty.Equals(txt) || txt == null) ? _specificAddView.DefaultName : txt;
+                Header.InfoText = string.Empty.Equals(txt) || txt == null ? _specificAddView.DefaultName : txt;
 
                 TableViewComponent.Root.Clear();
                 foreach (var s in _specificAddView.InputSections)
@@ -66,13 +66,13 @@ namespace MyCC.Forms.View.Overlays
 
             Header.InfoText = _specificAddView.DefaultName;
             NameEntryCell.Placeholder = _specificAddView.DefaultName;
-            NameEntryCell.Entry.TextChanged += (sender, e) => Header.InfoText = (e.NewTextValue.Length != 0) ? e.NewTextValue : _specificAddView.DefaultName;
+            NameEntryCell.Entry.TextChanged += (sender, e) => Header.InfoText = e.NewTextValue.Length != 0 ? e.NewTextValue : _specificAddView.DefaultName;
         }
 
         private void Cancel(object sender, EventArgs e)
         {
             UnfocusAll();
-            NavigationHelper.PopOrPopModal(Navigation);
+            Navigation.PopOrPopModal();
         }
 
         private async void Save(object sender, EventArgs e)
@@ -101,7 +101,7 @@ namespace MyCC.Forms.View.Overlays
                     else if (AccountStorage.Instance.RepositoriesOfType(repository.GetType()).Any(r => r.Data.Equals(repository.Data)))
                     {
                         await DisplayAlert(I18N.Error, I18N.RepositoryAlreadyAdded, I18N.Cancel);
-                        await NavigationHelper.PopOrPopModal(Navigation);
+                        await Navigation.PopOrPopModal();
                     }
                     else
                     {
@@ -112,7 +112,7 @@ namespace MyCC.Forms.View.Overlays
                             Header.LoadingText = I18N.Fetching;
                             Messaging.UpdatingAccounts.SendFinished();
                             await AppTaskHelper.FetchMissingRates();
-                            await NavigationHelper.PopOrPopModal(Navigation);
+                            await Navigation.PopOrPopModal();
 
                         }
                         else

@@ -26,7 +26,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public override Currency.Model.Currency Currency => Core.Currency.Model.Currency.Btc;
         public override IEnumerable<Currency.Model.Currency> SupportedCurrencies => new List<Currency.Model.Currency> { Currency };
 
-        protected override Func<string, decimal> Balance => (httpContent) => JObject.Parse(httpContent)[ResponseKey].Select(d => decimal.Parse((string)d[ConfirmedKey], CultureInfo.InvariantCulture)).Sum();
+        protected override Func<string, decimal> Balance => httpContent => JObject.Parse(httpContent)[ResponseKey].Select(d => decimal.Parse((string)d[ConfirmedKey], CultureInfo.InvariantCulture)).Sum();
         protected override decimal BalanceFactor => 1e8M;
 
         protected override Uri Url => new Uri("https://www.blockonomics.co/api/balance");

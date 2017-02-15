@@ -36,7 +36,7 @@ namespace MyCC.Core.Currency.Database
 
         public override int GetHashCode()
         {
-            return Code.GetHashCode() + Id.GetHashCode();
+            return Id.GetHashCode();
         }
     }
 }

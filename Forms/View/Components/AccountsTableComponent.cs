@@ -12,6 +12,7 @@ using MyCC.Core.Types;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
+using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Pages;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
@@ -71,11 +72,9 @@ namespace MyCC.Forms.View.Components
                 UpdateView();
             });
 
-            var label = I18N.Accounts;
-
             var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-            stack.Children.Add(new Label { Text = (Device.OS == TargetPlatform.iOS) ? label.ToUpper() : label, VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.Start, Margin = new Thickness(15, 24, 15, 8), FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.TableSectionColor });
+            stack.Children.Add(new SectionHeaderView { Title = I18N.Accounts });
             stack.Children.Add(_webView);
 
             Content = stack;

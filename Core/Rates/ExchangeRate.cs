@@ -165,8 +165,8 @@ namespace MyCC.Core.Rates
         /// <param name="isCrypto">Wether the currency is a crypro currency</param>
         public bool Contains(string currencyCode, bool isCrypto)
         {
-            return (ReferenceCurrencyCode != null && ReferenceCurrencyCode.Equals(currencyCode) && ReferenceCurrencyIsCryptoCurrency == isCrypto)
-                || (SecondaryCurrencyCode != null && SecondaryCurrencyCode.Equals(currencyCode) && SecondaryCurrencyIsCryptoCurrency == isCrypto);
+            return ReferenceCurrencyCode != null && ReferenceCurrencyCode.Equals(currencyCode) && ReferenceCurrencyIsCryptoCurrency == isCrypto
+                || SecondaryCurrencyCode != null && SecondaryCurrencyCode.Equals(currencyCode) && SecondaryCurrencyIsCryptoCurrency == isCrypto;
         }
 
         /// <summary>
@@ -187,10 +187,7 @@ namespace MyCC.Core.Rates
         /// Gets the hash code.
         /// </summary>
         /// <returns>The hash code.</returns>
-        public override int GetHashCode()
-        {
-            return ReferenceCurrencyCode?.GetHashCode() ?? 0 + SecondaryCurrencyCode?.GetHashCode() ?? 0;
-        }
+        public override int GetHashCode() => 1;
 
         /// <summary>
         /// Get the exchange rate as String.

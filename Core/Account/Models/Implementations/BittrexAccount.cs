@@ -19,7 +19,7 @@ namespace MyCC.Core.Account.Models.Implementations
 
         protected override async Task FetchBalanceOnlineTask()
         {
-            var result = (await _repository.GetResult(Money.Currency));
+            var result = await _repository.GetResult(Money.Currency);
             var balance = decimal.Parse((string)result[BalanceKey], CultureInfo.InvariantCulture);
             Money = new Money(balance, Money.Currency);
             await AccountDatabase.Update(this);

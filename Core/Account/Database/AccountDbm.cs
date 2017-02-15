@@ -75,16 +75,16 @@ namespace MyCC.Core.Account.Database
 
             var money = new Money(MoneyAmount, currency);
 
-            var LastUpdate = new DateTime(LastUpdateTicks);
+            var lastUpdate = new DateTime(LastUpdateTicks);
 
-            if (repository is BittrexAccountRepository) return new BittrexAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, (BittrexAccountRepository)repository);
-            if (repository is BlockchainAccountRepository) return new BlockchainAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, (BlockchainAccountRepository)repository);
-            if (repository is BlockExpertsAccountRepository) return new BlockExpertsAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, (BlockExpertsAccountRepository)repository);
-            if (repository is CryptoIdAccountRepository) return new CryptoIdAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, (CryptoIdAccountRepository)repository);
-            if (repository is EthereumAccountRepository) return new EthereumAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, (EthereumAccountRepository)repository);
-            if (repository is LocalAccountRepository) return new LocalAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, repository.Id);
-            if (repository is BlockchainXpubAccountRepository) return new BlockchainXpubAccount(Id, Name, money, IsEnabled ?? true, LastUpdate, (BlockchainXpubAccountRepository)repository);
-            throw new System.NotSupportedException();
+            if (repository is BittrexAccountRepository) return new BittrexAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (BittrexAccountRepository)repository);
+            if (repository is BlockchainAccountRepository) return new BlockchainAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (BlockchainAccountRepository)repository);
+            if (repository is BlockExpertsAccountRepository) return new BlockExpertsAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (BlockExpertsAccountRepository)repository);
+            if (repository is CryptoIdAccountRepository) return new CryptoIdAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (CryptoIdAccountRepository)repository);
+            if (repository is EthereumAccountRepository) return new EthereumAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (EthereumAccountRepository)repository);
+            if (repository is LocalAccountRepository) return new LocalAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, repository.Id);
+            if (repository is BlockchainXpubAccountRepository) return new BlockchainXpubAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (BlockchainXpubAccountRepository)repository);
+            throw new NotSupportedException();
         }
 
         public AccountDbm(FunctionalAccount account)

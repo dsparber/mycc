@@ -14,7 +14,7 @@ namespace MyCC.Forms.Android.renderer
             if (Control == null)
                 return;
 
-            var listView = Control as global::Android.Widget.ListView;
+            var listView = Control;
             listView.DividerHeight = 0;
             listView.SetHeaderDividersEnabled(false);
         }

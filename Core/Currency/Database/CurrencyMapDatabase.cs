@@ -7,7 +7,7 @@ namespace MyCC.Core.Currency.Database
 {
     public class CurrencyMapDatabase : AbstractDatabase<CurrencyMapDbm, CurrencyMapDbm, string>
     {
-        public override async Task<IEnumerable<CurrencyMapDbm>> GetAllDbObjects()
+        protected override async Task<IEnumerable<CurrencyMapDbm>> GetAllDbObjects()
         {
             var result = await (await Connection).Table<CurrencyMapDbm>().ToListAsync();
             return result;

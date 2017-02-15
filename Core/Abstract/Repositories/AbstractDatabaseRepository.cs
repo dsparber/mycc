@@ -35,7 +35,7 @@ namespace MyCC.Core.Abstract.Repositories
             get { return v => v.ParentId == Id; }
         }
 
-        protected virtual async Task<bool> FetchFromDatabase()
+        protected async Task<bool> FetchFromDatabase()
         {
             try
             {
@@ -82,8 +82,9 @@ namespace MyCC.Core.Abstract.Repositories
 
         public async Task Update(IEnumerable<TModel> updateElements)
         {
-            _elements.RemoveAll(updateElements.Contains);
-            updateElements = await _database.Update(updateElements);
+            var enumerable = updateElements as IList<TModel> ?? updateElements.ToList();
+            _elements.RemoveAll(enumerable.Contains);
+            updateElements = await _database.Update(enumerable);
             _elements.AddRange(updateElements);
         }
 

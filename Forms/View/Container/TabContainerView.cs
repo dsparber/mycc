@@ -1,10 +1,10 @@
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
+using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Pages;
 using MyCC.Forms.View.Pages.Settings;
 using Xamarin.Forms;
-using RateView = MyCC.Forms.View.Pages.RateView;
 
 namespace MyCC.Forms.View.Container
 {
@@ -13,6 +13,8 @@ namespace MyCC.Forms.View.Container
         public TabContainerView()
         {
             Title = I18N.AppName;
+            BackgroundColor = AppConstants.TableBackgroundColor;
+
             var ratesPage = new NavigationPage(new RateView()) { Title = I18N.Rates, Icon = "rate.png", BarTextColor = Color.White };
             var coinGraphPage = new NavigationPage(new CoinGraphView()) { Title = I18N.Graph, Icon = "graph.png", BarTextColor = Color.White };
             var coinTablePage = new NavigationPage(new CoinTableView()) { Title = I18N.Table, Icon = "table.png", BarTextColor = Color.White };

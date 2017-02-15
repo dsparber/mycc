@@ -9,36 +9,36 @@ namespace MyCC.Forms.View.Components
     {
         public Action<int> SelectionChanged;
 
-        private int selectedIndex;
+        private int _selectedIndex;
 
         public int SelectedIndex
         {
-            set { selectedIndex = value; UpdateView(); }
+            set { _selectedIndex = value; UpdateView(); }
         }
 
-        private readonly StackLayout stack;
+        private readonly StackLayout _stack;
 
-        private List<string> tabs;
+        private List<string> _tabs;
 
         public List<string> Tabs
         {
-            set { tabs = value; UpdateView(); }
+            set { _tabs = value; UpdateView(); }
         }
 
-        public Color backgroundColor;
+        private Color _backgroundColor;
         public new Color BackgroundColor
         {
-            get { return backgroundColor; }
-            set { backgroundColor = value; UpdateView(); }
+            get { return _backgroundColor; }
+            set { _backgroundColor = value; UpdateView(); }
         }
 
         public SegmentedControl()
         {
-            tabs = new List<string>();
-            selectedIndex = 0;
+            _tabs = new List<string>();
+            _selectedIndex = 0;
 
-            stack = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.Center, Spacing = 1 };
-            var frame = new Frame { Content = stack, OutlineColor = AppConstants.ThemeColor, BackgroundColor = AppConstants.ThemeColor, HasShadow = false, Padding = 0, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center };
+            _stack = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.Center, Spacing = 1 };
+            var frame = new Frame { Content = _stack, OutlineColor = AppConstants.ThemeColor, BackgroundColor = AppConstants.ThemeColor, HasShadow = false, Padding = 0, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center };
             if (Device.OS == TargetPlatform.Android)
             {
                 frame.Padding = 1;
@@ -51,13 +51,13 @@ namespace MyCC.Forms.View.Components
 
         public void UpdateView()
         {
-            stack.Children.Clear();
+            _stack.Children.Clear();
 
             var i = 0;
-            foreach (var t in tabs)
+            foreach (var t in _tabs)
             {
-                var selected = (selectedIndex == i);
-                var last = i == (tabs.Count - 1);
+                var selected = _selectedIndex == i;
+                var last = i == _tabs.Count - 1;
                 var first = i == 0;
 
                 var label = new Label { Text = t, TextColor = selected ? Color.White : AppConstants.ThemeColor };
@@ -73,14 +73,14 @@ namespace MyCC.Forms.View.Components
                     border.Margin = new Thickness(0, 0, 10, 0);
                     border.Padding = new Thickness(0, 0, -10, 0);
                 }
-                stack.Children.Add(border);
+                _stack.Children.Add(border);
 
                 var gestureRecognizer = new TapGestureRecognizer();
                 gestureRecognizer.Tapped += (sender, e) =>
                 {
                     var title = ((sender as ContentView)?.Content as Label)?.Text;
-                    selectedIndex = tabs.IndexOf(title);
-                    SelectionChanged(selectedIndex);
+                    _selectedIndex = _tabs.IndexOf(title);
+                    SelectionChanged(_selectedIndex);
                     UpdateView();
                 };
 

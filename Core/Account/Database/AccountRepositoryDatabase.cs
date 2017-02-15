@@ -8,7 +8,7 @@ namespace MyCC.Core.Account.Database
 {
     public class AccountRepositoryDatabase : AbstractDatabase<AccountRepositoryDbm, AccountRepository, int>
     {
-        public override async Task<IEnumerable<AccountRepositoryDbm>> GetAllDbObjects()
+        protected override async Task<IEnumerable<AccountRepositoryDbm>> GetAllDbObjects()
         {
             return await (await Connection).Table<AccountRepositoryDbm>().ToListAsync();
         }

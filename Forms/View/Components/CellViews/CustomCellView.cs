@@ -31,7 +31,7 @@ namespace MyCC.Forms.view.components.CellViews
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     _masterLabel.Text = _text;
-                    _detailLabel.IsVisible = (_detail != null);
+                    _detailLabel.IsVisible = _detail != null;
                 });
             }
         }

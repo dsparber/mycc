@@ -1,11 +1,11 @@
 $(document).ready(function () {
-    var h4s = $("h4");
-    for (var i = 0; i < h4s.length; i++) {
-        $(h4s[i]).next().toggle();
-        $(h4s[i]).click(function () {
-            $header = $(this);
+    var h4 = $("h4");
+    for (var i = 0; i < h4.length; i++) {
+        $(h4[i]).next().toggle();
+        $(h4[i]).click(function () {
+            var $header = $(this);
             //getting the next element
-            $content = $header.next();
+            var $content = $header.next();
             // icon
             var icon = $content.css('display') === "none" ? "collapse.png" : "expand.png";
             $header.css("background-image", "url(\"" + icon + "\")");

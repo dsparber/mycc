@@ -42,7 +42,7 @@ a {
     color: red;
 }
 
-div > *:first-child {
+div > h1:first-child, div > h2:first-child, div > h3:first-child, div > h4:first-child {
     margin-top: 0;
 }
 
@@ -53,6 +53,7 @@ div > *:first-child {
 .footer {
     position: fixed;
     background-color: rgb(238, 239, 243);
+    border-top: 1px solid #aaa;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     bottom: 0;
     width: 100%;

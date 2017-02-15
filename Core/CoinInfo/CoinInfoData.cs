@@ -107,10 +107,7 @@ namespace MyCC.Core.CoinInfo
             return CurrencyCode.Equals((obj as CoinInfoData)?.CurrencyCode);
         }
 
-        public override int GetHashCode()
-        {
-            return CurrencyCode.GetHashCode();
-        }
+        public override int GetHashCode() => 1;
 
         /// <summary>
         /// Returns an updated info object, where the new informations are added to the existing

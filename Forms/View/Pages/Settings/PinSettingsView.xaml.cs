@@ -34,7 +34,7 @@ namespace MyCC.Forms.View.Pages.Settings
         private void SetPinCells()
         {
 
-            Header.InfoText = (ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled) ? I18N.FingerprintActive : (ApplicationSettings.IsPinSet) ? I18N.PinActive : I18N.NotConfigured;
+            Header.InfoText = ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled ? I18N.FingerprintActive : ApplicationSettings.IsPinSet ? I18N.PinActive : I18N.NotConfigured;
 
             if (!ApplicationSettings.IsPinSet)
             {
@@ -78,12 +78,12 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void EnableDisablePin(object sender, EventArgs e)
         {
-            NavigationHelper.PushOrPushModal(Navigation, new PinOverlay(PinAction.EnableOrDisable));
+            Navigation.PushOrPushModal(new PinOverlay(PinAction.EnableOrDisable));
         }
 
         private void ChangePin(object sender, EventArgs e)
         {
-            NavigationHelper.PushOrPushModal(Navigation, new PinOverlay(PinAction.Change));
+            Navigation.PushOrPushModal(new PinOverlay(PinAction.Change));
         }
     }
 }

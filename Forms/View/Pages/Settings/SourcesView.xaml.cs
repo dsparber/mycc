@@ -7,7 +7,6 @@ using MyCC.Core.Account.Storage;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components.Cells;
 using MyCC.Forms.View.Overlays;
 using Xamarin.Forms;
@@ -39,32 +38,32 @@ namespace MyCC.Forms.View.Pages.Settings
             var local = _repositories.Where(r => r is LocalAccountRepository).ToList().Count - (AnyLocalAccounts ? 0 : 1);
 
             Header.TitleText = AccountsText(AccountStorage.Instance.AllElements.Count);
-            Func<int, string> sourcesText = (count) => PluralHelper.GetText(I18N.NoSources, I18N.OneSource, I18N.Sources, count);
+            Func<int, string> sourcesText = count => PluralHelper.GetText(I18N.NoSources, I18N.OneSource, I18N.Sources, count);
             var localOnlineText = string.Empty;
 
-            if (local >= 1 && (sources - local) >= 1)
+            if (local >= 1 && sources - local >= 1)
             {
-                localOnlineText = $" ({local} {I18N.Local}, {(sources - local)} {I18N.Online})";
+                localOnlineText = $" ({local} {I18N.Local}, {sources - local} {I18N.Online})";
             }
             else if (local >= 1)
             {
                 localOnlineText = local == 1 ? $" ({I18N.Local})" : $" ({local} {I18N.Local})";
             }
-            else if ((sources - local) >= 1)
+            else if (sources - local >= 1)
             {
-                localOnlineText = (sources - local) == 1 ? $" ({I18N.Online})" : $" ({(sources - local)} {I18N.Online})";
+                localOnlineText = sources - local == 1 ? $" ({I18N.Online})" : $" ({sources - local} {I18N.Online})";
             }
 
             Header.InfoText = $"{sourcesText(sources)}{localOnlineText}";
         }
 
-        private static Func<int, string> AccountsText => (count) => PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, count);
+        private static Func<int, string> AccountsText => count => PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, count);
 
         private void SetView()
         {
             _repositories = AccountStorage.Instance.Repositories ?? new List<AccountRepository>();
 
-            Func<AccountRepository, CustomViewCell> GetCell = r =>
+            Func<AccountRepository, CustomViewCell> getCell = r =>
                {
                    var c = new CustomViewCell { Image = "more.png", Text = r.Name };
                    c.Tapped += (sender, e) => Navigation.PushAsync(new RepositoryView(r));
@@ -79,13 +78,13 @@ namespace MyCC.Forms.View.Pages.Settings
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
             var bittrexCells = _repositories.OfType<BittrexAccountRepository>().Select(r =>
             {
-                var c = GetCell(r);
+                var c = getCell(r);
                 c.Detail = PluralHelper.GetTextAccounts(r.Elements.ToList().Count);
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
             var addressCells = _repositories.OfType<AddressAccountRepository>().Select(r =>
             {
-                var c = GetCell(r);
+                var c = getCell(r);
                 c.Detail = $"{I18N.Address}: {r.Address}";
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
@@ -149,7 +148,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void Add(object sender, EventArgs e)
         {
-            NavigationHelper.PushOrPushModal(Navigation, new AddSourceView());
+            Navigation.PushOrPushModal(new AddSourceView());
         }
     }
 }

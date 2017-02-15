@@ -48,7 +48,7 @@ namespace MyCC.Forms.View.Pages
         {
             HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
             HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
-            HeaderCarousel.ShowIndicators = (HeaderCarousel.ItemsSource.Count > 1);
+            HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
 
 
             if (HeaderCarousel.ItemTemplate != null) return;
@@ -62,7 +62,7 @@ namespace MyCC.Forms.View.Pages
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                NoSourcesView.IsVisible = (AccountStorage.Instance.AllElements.Count == 0);
+                NoSourcesView.IsVisible = AccountStorage.Instance.AllElements.Count == 0;
                 Stack.IsVisible = AccountStorage.Instance.AllElements.Count != 0;
             });
         }

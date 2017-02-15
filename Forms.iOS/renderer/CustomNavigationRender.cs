@@ -9,16 +9,16 @@ namespace MyCC.Forms.iOS.renderer
 {
     internal class CustomNavigationRender : NavigationRenderer
     {
-        private UIImage backgroudImage;
-        private UIImage shadowImage;
-        private UIImage emptyImage;
+        private UIImage _backgroudImage;
+        private UIImage _shadowImage;
+        private UIImage _emptyImage;
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            backgroudImage = NavigationBar.GetBackgroundImage(UIBarMetrics.Default);
-            shadowImage = NavigationBar.ShadowImage;
-            emptyImage = new UIImage();
+            _backgroudImage = NavigationBar.GetBackgroundImage(UIBarMetrics.Default);
+            _shadowImage = NavigationBar.ShadowImage;
+            _emptyImage = new UIImage();
 
             SetNavigationBar();
         }
@@ -43,22 +43,22 @@ namespace MyCC.Forms.iOS.renderer
 
             if (isPortrait)
             {
-                NavigationBar.SetBackgroundImage(emptyImage, UIBarMetrics.Default);
-                NavigationBar.ShadowImage = emptyImage;
+                NavigationBar.SetBackgroundImage(_emptyImage, UIBarMetrics.Default);
+                NavigationBar.ShadowImage = _emptyImage;
                 NavigationBar.TintColor = Color.White.ToUIColor();
                 NavigationBar.BarTintColor = AppConstants.ThemeColor.ToUIColor();
-                NavigationBar.TitleTextAttributes = new UIStringAttributes()
+                NavigationBar.TitleTextAttributes = new UIStringAttributes
                 {
                     ForegroundColor = UIColor.White
                 };
             }
             else
             {
-                NavigationBar.SetBackgroundImage(backgroudImage, UIBarMetrics.Default);
-                NavigationBar.ShadowImage = shadowImage;
+                NavigationBar.SetBackgroundImage(_backgroudImage, UIBarMetrics.Default);
+                NavigationBar.ShadowImage = _shadowImage;
                 NavigationBar.TintColor = AppConstants.ThemeColor.ToUIColor();
                 NavigationBar.BarTintColor = UIColor.White;
-                NavigationBar.TitleTextAttributes = new UIStringAttributes()
+                NavigationBar.TitleTextAttributes = new UIStringAttributes
                 {
                     ForegroundColor = UIColor.Black
                 };

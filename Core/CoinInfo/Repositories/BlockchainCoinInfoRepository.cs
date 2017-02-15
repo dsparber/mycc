@@ -32,9 +32,9 @@ namespace MyCC.Core.CoinInfo.Repositories
             var supplyTask = client.GetAsync(GetUri(KeySupply));
             var blockRewardTask = client.GetAsync(GetUri(KeyBlockReward));
 
-            Func<Task<HttpResponseMessage>, Task<string>> getString = async (m) =>
+            Func<Task<HttpResponseMessage>, Task<string>> getString = async m =>
             {
-                var s = (await (await m).Content.ReadAsStringAsync());
+                var s = await (await m).Content.ReadAsStringAsync();
                 return string.IsNullOrWhiteSpace(s) ? null : s;
             };
 

@@ -118,7 +118,7 @@ namespace MyCC.Forms.View.Components
                 .Where(c => !c.Equals(ApplicationSettings.SelectedRatePageCurrency))
                 .Select(c => new Data(c)).ToList();
 
-            var itemsExisting = (items.Count > 0);
+            var itemsExisting = items.Count > 0;
 
             Device.BeginInvokeOnMainThread(() =>
             {

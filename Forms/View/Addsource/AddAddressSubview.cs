@@ -6,7 +6,6 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Currency.Model;
 using MyCC.Forms.Resources;
-using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 using ZXing;
@@ -84,7 +83,7 @@ namespace MyCC.Forms.View.Addsource
                     };
                     torch.GestureRecognizers.Add(recognizer);
 
-                    scanPage.OnScanResult += (result) =>
+                    scanPage.OnScanResult += result =>
                     {
                         scanPage.IsScanning = false;
 

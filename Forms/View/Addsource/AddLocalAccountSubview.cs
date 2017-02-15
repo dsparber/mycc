@@ -11,43 +11,43 @@ namespace MyCC.Forms.View.Addsource
 {
     public class AddLocalAccountSubview : AddAccountSubview
     {
-        private readonly TableSection inputSection;
-        private readonly CurrencyEntryCell currencyCell;
-        private readonly CustomEntryCell amountEntryCell;
+        private readonly TableSection _inputSection;
+        private readonly CurrencyEntryCell _currencyCell;
+        private readonly CustomEntryCell _amountEntryCell;
 
         public AddLocalAccountSubview(INavigation navigation)
         {
-            inputSection = new TableSection { Title = I18N.AmountAndCurrency };
-            amountEntryCell = new CustomEntryCell { Title = I18N.Amount, Placeholder = "0" };
-            amountEntryCell.Entry.Keyboard = Keyboard.Numeric;
-            currencyCell = new CurrencyEntryCell(navigation) { IsAmountEnabled = false, IsFormRepresentation = true };
-            inputSection.Add(amountEntryCell);
-            inputSection.Add(currencyCell);
+            _inputSection = new TableSection { Title = I18N.AmountAndCurrency };
+            _amountEntryCell = new CustomEntryCell { Title = I18N.Amount, Placeholder = "0" };
+            _amountEntryCell.Entry.Keyboard = Keyboard.Numeric;
+            _currencyCell = new CurrencyEntryCell(navigation) { IsAmountEnabled = false, IsFormRepresentation = true };
+            _inputSection.Add(_amountEntryCell);
+            _inputSection.Add(_currencyCell);
 
         }
 
-        public override List<TableSection> InputSections => new List<TableSection> { inputSection };
+        public override List<TableSection> InputSections => new List<TableSection> { _inputSection };
         public override string Description => I18N.Manually;
 
         public override bool Enabled
         {
             set
             {
-                currencyCell.IsEditable = value;
+                _currencyCell.IsEditable = value;
             }
         }
 
         public override FunctionalAccount GetAccount(string name)
         {
-            var currency = currencyCell.SelectedCurrency;
-            var amount = decimal.Parse(string.IsNullOrEmpty(amountEntryCell.Text) ? "0" : amountEntryCell.Text);
+            var currency = _currencyCell.SelectedCurrency;
+            var amount = decimal.Parse(string.IsNullOrEmpty(_amountEntryCell.Text) ? "0" : _amountEntryCell.Text);
 
             return currency == null ? null : new LocalAccount(null, name, new Money(amount, currency), true, DateTime.Now, AccountStorage.Instance.LocalRepository.Id);
         }
 
         public override void Unfocus()
         {
-            currencyCell.Unfocus();
+            _currencyCell.Unfocus();
         }
     }
 }

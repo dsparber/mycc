@@ -38,7 +38,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             var overlay = new CurrencyOverlay(currencies)
             {
-                CurrencySelected = (c) =>
+                CurrencySelected = c =>
                 {
                     ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Concat(new List<Currency> { c }).ToList();
                     var index = Math.Min(ApplicationSettings.AllReferenceCurrencies.OrderBy(x => x.Code).ToList().IndexOf(c), 0);

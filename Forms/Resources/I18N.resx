@@ -522,4 +522,7 @@
   <data name="InfoNoDirectRate" xml:space="preserve">
     <value>No direct rate found. This rate is calculated via USD.</value>
   </data>
+  <data name="AreEqualTo" xml:space="preserve">
+    <value>{0} are equal to</value>
+  </data>
 </root>

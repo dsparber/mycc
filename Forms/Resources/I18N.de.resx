@@ -522,4 +522,7 @@
   <data name="InfoNoDirectRate" xml:space="preserve">
     <value>Kein direkter Wechselkurs gefunden. Dieser Kurs wurde über USD berechnet.</value>
   </data>
+  <data name="AreEqualTo" xml:space="preserve">
+    <value>{0} entspricht</value>
+  </data>
 </root>

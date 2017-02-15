@@ -59,7 +59,7 @@ namespace MyCC.Forms.View.Pages
         {
             HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
             HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.SelectedRatePageCurrency);
-            HeaderCarousel.ShowIndicators = (HeaderCarousel.ItemsSource.Count > 1);
+            HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
 
             if (HeaderCarousel.ItemTemplate != null) return;
 

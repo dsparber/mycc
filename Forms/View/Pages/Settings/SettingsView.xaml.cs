@@ -68,7 +68,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetPinCellText()
         {
-            PinSettingsCell.Detail = (ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled) ? I18N.FingerprintActive : (ApplicationSettings.IsPinSet) ? I18N.PinActive : I18N.NotConfigured;
+            PinSettingsCell.Detail = ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled ? I18N.FingerprintActive : ApplicationSettings.IsPinSet ? I18N.PinActive : I18N.NotConfigured;
         }
 
         protected override void OnAppearing()

@@ -9,7 +9,7 @@ namespace MyCC.Forms.view.components.CellViews
 
         public SectionHeaderView()
         {
-            _label = new Label { TextColor = AppConstants.TableSectionColor, FontSize = AppConstants.TableSectionFontSize, Margin = new Thickness(15, 25, 15, 15) };
+            _label = new Label { TextColor = AppConstants.TableSectionColor, FontSize = AppConstants.TableSectionFontSize, Margin = new Thickness(15, 25, 15, 7.5) };
             Content = new ContentView { Content = new ContentView { Content = _label, BackgroundColor = AppConstants.TableBackgroundColor }, BackgroundColor = Color.FromHex("#ccc"), Padding = new Thickness(0, 0, 0, 0.5) };
         }
 

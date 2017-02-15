@@ -19,7 +19,7 @@ namespace MyCC.Forms.View.Pages
         private IEnumerable<Tuple<FunctionalAccount, AccountRepository>> _accounts;
 
         private readonly Currency _currency;
-        private Money MoneySum => (_accounts.ToList().Count == 0) ? null : new Money(_accounts.Where(a => a.Item1.IsEnabled).Sum(a => a.Item1.Money.Amount), _accounts.First().Item1.Money.Currency);
+        private Money MoneySum => _accounts.ToList().Count == 0 ? null : new Money(_accounts.Where(a => a.Item1.IsEnabled).Sum(a => a.Item1.Money.Amount), _accounts.First().Item1.Money.Currency);
 
         public CoinDetailView(Currency pageCurrency)
         {

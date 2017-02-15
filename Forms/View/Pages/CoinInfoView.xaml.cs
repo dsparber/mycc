@@ -115,7 +115,7 @@ namespace MyCC.Forms.View.Pages
 
                     _infos[I18N.Type].Item1.IsVisible = info.IsProofOfWork != null || info.IsProofOfStake != null;
                     _infos[I18N.Type].Item2.IsVisible = info.IsProofOfWork != null || info.IsProofOfStake != null;
-                    _infos[I18N.Type].Item2.Text = (info.IsProofOfWork.GetValueOrDefault() && info.IsProofOfStake.GetValueOrDefault()) ? I18N.ProofOfWorkAndState : (info.IsProofOfWork.GetValueOrDefault()) ? I18N.ProofOfWork : info.IsProofOfStake.GetValueOrDefault() ? I18N.ProofOfStake : string.Empty;
+                    _infos[I18N.Type].Item2.Text = info.IsProofOfWork.GetValueOrDefault() && info.IsProofOfStake.GetValueOrDefault() ? I18N.ProofOfWorkAndState : info.IsProofOfWork.GetValueOrDefault() ? I18N.ProofOfWork : info.IsProofOfStake.GetValueOrDefault() ? I18N.ProofOfStake : string.Empty;
 
                     _infos[I18N.Hashrate].Item1.IsVisible = info.Hashrate != null;
                     _infos[I18N.Hashrate].Item2.IsVisible = info.Hashrate != null;

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using MyCC.Forms.Android.renderer;

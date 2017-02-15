@@ -5,6 +5,7 @@ html, body {
     font-weight: lighter;
     margin: 0;
     -webkit-touch-callout: none;
+    -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -19,7 +20,7 @@ table {
 }
 
 td:first-child {
-    padding-left: 8px;
+    padding-left: 15px;
     width: 1px;
 }
 
@@ -96,10 +97,10 @@ thead td {
         padding-right: 1.25em;
     }
 
-    thead td.down span {
-        background-image: url("up.svg");
-    }
+thead .down span {
+    background-image: url("up.svg");
+}
 
-    thead td.up span {
-        background-image: url("down.svg");
-    }
+thead .up span {
+    background-image: url("down.svg");
+}

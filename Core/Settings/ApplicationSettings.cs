@@ -208,7 +208,7 @@ namespace MyCC.Core.Settings
         {
             get
             {
-                var defaultValue = SortOrder.Alphabetical;
+                const SortOrder defaultValue = SortOrder.Alphabetical;
                 var stringValue = Settings.Get(Settings.KeySortOrderTable, defaultValue.ToString());
                 var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
                 return enumValue;
@@ -237,7 +237,7 @@ namespace MyCC.Core.Settings
         {
             get
             {
-                var defaultValue = SortOrder.Alphabetical;
+                const SortOrder defaultValue = SortOrder.Alphabetical;
                 var stringValue = Settings.Get(Settings.KeySortOrderRates, defaultValue.ToString());
                 var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
                 return enumValue;
@@ -266,7 +266,7 @@ namespace MyCC.Core.Settings
         {
             get
             {
-                var defaultValue = SortOrder.Alphabetical;
+                const SortOrder defaultValue = SortOrder.Alphabetical;
                 var stringValue = Settings.Get(Settings.KeySortOrderAccounts, defaultValue.ToString());
                 var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
                 return enumValue;
@@ -295,7 +295,7 @@ namespace MyCC.Core.Settings
         {
             get
             {
-                var defaultValue = SortOrder.ByUnits;
+                const SortOrder defaultValue = SortOrder.ByUnits;
                 var stringValue = Settings.Get(Settings.KeySortOrderReferenceValues, defaultValue.ToString());
                 var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
                 return enumValue;

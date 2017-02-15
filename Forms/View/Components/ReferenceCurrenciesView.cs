@@ -13,6 +13,7 @@ using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
+using MyCC.Forms.view.components.CellViews;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
 using XLabs.Ioc;
@@ -23,13 +24,13 @@ namespace MyCC.Forms.View.Components
 {
     public class ReferenceCurrenciesView : ContentView
     {
-        public Money ReferenceMoney { get; set; }
+        public Money ReferenceMoney { private get; set; }
 
         private readonly HybridWebView _webView;
-        private readonly Label _lastUpdateLabel;
+        private readonly SectionFooterView _lastUpdateLabel;
         private bool _appeared;
 
-        private string TableHeaderLabel => string.Format(I18N.IsEqualTo, ReferenceMoney);
+        private string TableHeaderLabel => string.Format(ReferenceMoney.Amount == 1 ? I18N.IsEqualTo : I18N.AreEqualTo, ReferenceMoney);
         private IEnumerable<Currency> ReferenceCurrencies => ApplicationSettings.AllReferenceCurrencies.Except(new List<Currency> { ReferenceMoney?.Currency });
 
         public ReferenceCurrenciesView(Money reference)
@@ -71,26 +72,13 @@ namespace MyCC.Forms.View.Components
                 UpdateView();
             });
 
-            _lastUpdateLabel = new Label { HorizontalTextAlignment = TextAlignment.End, TextColor = AppConstants.TableSectionColor, FontSize = AppConstants.TableSectionFontSize, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.End };
-            var headingLabel = new Label
-            {
-                Text = (Device.OS == TargetPlatform.iOS) ? TableHeaderLabel.ToUpper() : TableHeaderLabel,
-                HorizontalOptions = LayoutOptions.StartAndExpand,
-                FontSize = AppConstants.TableSectionFontSize,
-                TextColor = AppConstants.TableSectionColor
-            };
-            var labelStack = new StackLayout
-            {
-                Orientation = StackOrientation.Horizontal,
-                Margin = new Thickness(15, 15, 15, 8)
-            };
-            labelStack.Children.Add(headingLabel);
-            labelStack.Children.Add(_lastUpdateLabel);
+            _lastUpdateLabel = new SectionFooterView();
 
             var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-            stack.Children.Add(labelStack);
+            stack.Children.Add(new SectionHeaderView { Title = TableHeaderLabel });
             stack.Children.Add(_webView);
+            stack.Children.Add(_lastUpdateLabel);
 
             Content = stack;
 
@@ -117,7 +105,7 @@ namespace MyCC.Forms.View.Components
             try
             {
                 var items = ReferenceCurrencies.Select(c => new Data(ReferenceMoney, c)).ToList();
-                var itemsExisting = (items.Count > 0);
+                var itemsExisting = items.Count > 0;
 
                 if (!itemsExisting || !_appeared) return;
 

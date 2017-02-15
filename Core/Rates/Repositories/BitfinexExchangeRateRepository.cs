@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Rates.Repositories.Interfaces;
 using MyCC.Core.Resources;
-using Newtonsoft.Json.Linq;
 using SQLite;
 
 namespace MyCC.Core.Rates.Repositories

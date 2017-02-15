@@ -36,12 +36,10 @@ namespace MyCC.Core.Currency.Database
         public async Task<Model.Currency> Resolve()
         {
             var code = Id.Substring(0, Id.Length - 1);
-            if (string.IsNullOrWhiteSpace(code) || code.Length < 2)
-            {
-                await (await (new CurrencyDatabase()).Connection).DeleteAsync(this);
-                return null;
-            }
-            return new Model.Currency(code, Name, IsCryptoCurrency);
+            if (!string.IsNullOrWhiteSpace(code) && code.Length >= 2) return new Model.Currency(code, Name, IsCryptoCurrency);
+
+            await (await new CurrencyDatabase().Connection).DeleteAsync(this);
+            return null;
         }
     }
 }

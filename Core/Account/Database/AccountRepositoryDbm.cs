@@ -49,10 +49,7 @@ namespace MyCC.Core.Account.Database
             return Id == dbm?.Id;
         }
 
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
-        }
+        public override int GetHashCode() => 1;
 
         public Task<AccountRepository> Resolve()
         {

@@ -34,7 +34,7 @@ namespace MyCC.Core.Abstract.Storage
         protected virtual Task OnFirstLaunch() { return Task.Factory.StartNew(() => { }); }
 
 
-        public virtual async Task Add(TV repository)
+        protected async Task Add(TV repository)
         {
             repository = await Database.Insert(repository);
             Repositories.Add(repository);
@@ -46,14 +46,14 @@ namespace MyCC.Core.Abstract.Storage
             Repositories.Remove(repository);
         }
 
-        public virtual async Task Update(TV repository)
+        public async Task Update(TV repository)
         {
             Repositories.Remove(repository);
             repository = await Database.Update(repository);
             Repositories.Add(repository);
         }
 
-        public List<TA> RepositoriesOfType<TA>() where TA : TV
+        private List<TA> RepositoriesOfType<TA>() where TA : TV
         {
             return Repositories.OfType<TA>().ToList();
         }
@@ -73,11 +73,6 @@ namespace MyCC.Core.Abstract.Storage
             return RepositoriesOfType(type).FirstOrDefault();
         }
 
-        protected virtual Task BeforeFetching()
-        {
-            return Task.Factory.StartNew(() => { });
-        }
-
         protected virtual Task BeforeFastFetching()
         {
             return Task.Factory.StartNew(() => { });
@@ -86,7 +81,6 @@ namespace MyCC.Core.Abstract.Storage
         public async Task FetchOnline(Action<double> progressCallback = null)
         {
             await _onCreationTask;
-            await BeforeFetching();
             var i = .0;
             await Task.WhenAll(Repositories.Select(async x =>
             {

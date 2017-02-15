@@ -13,12 +13,12 @@ namespace MyCC.Forms.Resources
     [ContentProperty("Text")]
     public class TranslateExtension : IMarkupExtension
     {
-        private readonly CultureInfo ci;
+        private readonly CultureInfo _ci;
         private const string ResourceId = "MyCC.Forms.Resources.I18N";
 
         public TranslateExtension()
         {
-            ci = DependencyService.Get<ILocalise>().GetCurrentCultureInfo();
+            _ci = DependencyService.Get<ILocalise>().GetCurrentCultureInfo();
         }
 
         public string Text { get; set; }
@@ -32,11 +32,11 @@ namespace MyCC.Forms.Resources
 
             var temp = new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
-            var translation = temp.GetString(Text, ci);
+            var translation = temp.GetString(Text, _ci);
             if (translation == null)
             {
 #if DEBUG
-                throw new ArgumentException($"Key '{Text}' was not found in resources '{ResourceId}' for culture '{ci.Name}'.");
+                throw new ArgumentException($"Key '{Text}' was not found in resources '{ResourceId}' for culture '{_ci.Name}'.");
 #else
 				translation = Text; // HACK: returns the key, which GETS DISPLAYED TO THE USER
 #endif

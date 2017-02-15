@@ -67,7 +67,6 @@
     <Compile Include="Types\PinAction.cs" />
     <Compile Include="Settings\ApplicationSettings.cs" />
     <Compile Include="Settings\Settings.cs" />
-    <Compile Include="Tasks\ApplicationTasksHelper.cs" />
     <Compile Include="Tasks\LoadTasks.cs" />
     <Compile Include="Tasks\FetchTasks.cs" />
     <Compile Include="Account\Repositories\Base\AccountRepository.cs" />
@@ -223,6 +222,7 @@
     <EmbeddedResource Include="Resources\I18N.de.resx">
       <LastGenOutput>I18N.de.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\I18N.resx">
       <Generator>ResXFileCodeGenerator</Generator>

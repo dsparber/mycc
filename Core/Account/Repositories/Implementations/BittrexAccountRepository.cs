@@ -58,7 +58,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public async Task<JToken> GetResult(Currency.Model.Currency currency = null)
         {
             var nounce = Convert.ToUInt64((DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds);
-            var uri = new Uri(string.Format(BaseUrl, _apiKey, nounce, (currency != null ? $"?currency={currency.Code}&" : "s?")));
+            var uri = new Uri(string.Format(BaseUrl, _apiKey, nounce, currency != null ? $"?currency={currency.Code}&" : "s?"));
 
             var keyBytes = Encoding.UTF8.GetBytes(_privateApiKey);
             var dataBytes = Encoding.UTF8.GetBytes(uri.AbsoluteUri);
@@ -88,7 +88,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
         {
             try
             {
-                return (await GetResult()) != null;
+                return await GetResult() != null;
             }
             catch (Exception)
             {

@@ -60,7 +60,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             var overlay = new CurrencyOverlay(currencies)
             {
-                CurrencySelected = (c) =>
+                CurrencySelected = c =>
                 {
                     ApplicationSettings.WatchedCurrencies = new List<Currency>(ApplicationSettings.WatchedCurrencies) { c };
                     Messaging.ReferenceCurrencies.SendValueChanged();

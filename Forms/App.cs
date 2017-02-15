@@ -32,8 +32,13 @@ namespace MyCC.Forms
 
             if (ApplicationSettings.FirstLaunch)
             {
-                ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished);
-                Task.Run(async () => await ApplicationTasks.FetchCurrenciesAndAvailableRates(Messaging.UpdatingCurrenciesAndAvailableRates.SendStarted, Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display));
+                Task.Run(async () =>
+                {
+                    await ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished);
+                    await ApplicationTasks.FetchCurrenciesAndAvailableRates(
+                        Messaging.UpdatingCurrenciesAndAvailableRates.SendStarted,
+                        Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display);
+                });
             }
             else
             {
@@ -50,7 +55,7 @@ namespace MyCC.Forms
                 {
                     Messaging.Loading.SubscribeFinished(this, async () => await ApplicationTasks.FetchCurrenciesAndAvailableRates(Messaging.UpdatingCurrenciesAndAvailableRates.SendStarted, Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display));
                 }
-                ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished);
+                Task.Run(async () => await ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished));
             }
         }
 
@@ -66,7 +71,7 @@ namespace MyCC.Forms
 
         protected override async void OnResume()
         {
-            var passwordView = (GetCurrentPage() as PasswordView);
+            var passwordView = GetCurrentPage() as PasswordView;
             if (passwordView != null)
             {
                 await passwordView.Authenticate();

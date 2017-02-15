@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -56,16 +55,11 @@ namespace MyCC.Core.Account.Storage
         public static async Task<bool> AddRepository(OnlineAccountRepository repository)
         {
             var success = await repository.Test();
-            if (success)
-            {
-                await Instance.Add(repository);
-                await Instance.FetchOnline();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (!success) return false;
+
+            await Instance.Add(repository);
+            await Instance.FetchOnline();
+            return true;
         }
 
     }

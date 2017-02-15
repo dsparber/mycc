@@ -63,7 +63,7 @@ function updateTable(data, sort) {
     }
 
     $("#coinTable thead").children().removeClass();
-    $("#coinTable td[type=" + sort["Type"] + "]").addClass((sort["Direction"] == "Ascending") ? "down" : "up");
+    $("#coinTable td[type=" + sort["Type"] + "]").addClass(sort["Direction"] === "Ascending" ? "down" : "up");
 
     sizeAllocated();
 }

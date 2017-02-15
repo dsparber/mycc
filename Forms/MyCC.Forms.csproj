@@ -81,7 +81,6 @@
     </Compile>
     <Compile Include="View\Components\CoinInfoHeaderComponent.cs" />
     <Compile Include="View\Components\SegmentedControl.cs" />
-    <Compile Include="View\Container\MasterDetailContainerView.cs" />
     <Compile Include="View\Container\TabContainerView.cs" />
     <Compile Include="View\Overlays\CurrencyOverlay.cs" />
     <Compile Include="View\Overlays\PinOverlay.xaml.cs">

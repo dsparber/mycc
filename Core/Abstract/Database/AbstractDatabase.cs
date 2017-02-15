@@ -60,7 +60,7 @@ namespace MyCC.Core.Abstract.Database
         }
         public async Task<IEnumerable<TV>> Insert(IEnumerable<TV> elemets)
         {
-            var dbElements = elemets.Distinct().Select(Resolve);
+            var dbElements = elemets.Distinct().Select(Resolve).ToList();
             await (await Connection).InsertAllAsync(dbElements);
             return await Task.WhenAll(dbElements.Select(e => e.Resolve()));
         }
@@ -84,8 +84,9 @@ namespace MyCC.Core.Abstract.Database
 
         public async Task<IEnumerable<TV>> Update(IEnumerable<TV> elemets)
         {
-            var dbElements = elemets.Select(Resolve);
-            await (await Connection).UpdateAllAsync(elemets);
+            var enumerable = elemets as IList<TV> ?? elemets.ToList();
+            var dbElements = enumerable.Select(Resolve).ToList();
+            await (await Connection).UpdateAllAsync(enumerable);
             return await Task.WhenAll(dbElements.Select(e => e.Resolve()));
         }
 
@@ -94,7 +95,7 @@ namespace MyCC.Core.Abstract.Database
             await (await Connection).DeleteAsync(Resolve(element));
         }
 
-        public abstract Task<IEnumerable<T>> GetAllDbObjects();
+        protected abstract Task<IEnumerable<T>> GetAllDbObjects();
         public async Task<IEnumerable<TV>> GetAll()
         {
             return await Task.WhenAll((await GetAllDbObjects()).Select(o => o.Resolve()));

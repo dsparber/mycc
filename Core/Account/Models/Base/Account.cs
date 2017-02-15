@@ -93,10 +93,7 @@ namespace MyCC.Core.Account.Models.Base
             return Name.Equals(a.Name) && Money.Currency.Equals(a.Money.Currency);
         }
 
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
-        }
+        public override int GetHashCode() => 1;
 
         public override string ToString()
         {

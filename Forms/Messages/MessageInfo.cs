@@ -2,11 +2,11 @@
 {
     public class MessageInfo
     {
-        private readonly string action;
+        private readonly string _action;
 
         private MessageInfo(string action)
         {
-            this.action = action;
+            _action = action;
         }
 
         public static readonly MessageInfo Started = new MessageInfo("started");
@@ -18,11 +18,11 @@
         public bool IsFinished => Equals(Finished);
         public bool IsValueChanged => Equals(ValueChanged);
 
-        public override bool Equals(object obj) => (obj as MessageInfo)?.action.Equals(action) ?? false;
+        public override bool Equals(object obj) => (obj as MessageInfo)?._action.Equals(_action) ?? false;
 
-        public override int GetHashCode() => action.GetHashCode();
+        public override int GetHashCode() => _action.GetHashCode();
 
-        public override string ToString() => action;
+        public override string ToString() => _action;
     }
 }
 

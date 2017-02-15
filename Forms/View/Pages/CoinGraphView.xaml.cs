@@ -12,19 +12,19 @@ namespace MyCC.Forms.View.Pages
 {
     public partial class CoinGraphView
     {
-        private readonly CoinGraphComponent graphView;
+        private readonly CoinGraphComponent _graphView;
 
         public CoinGraphView()
         {
             InitializeComponent();
 
-            graphView = new CoinGraphComponent(Navigation)
+            _graphView = new CoinGraphComponent(Navigation)
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
 
-            Stack.Children.Add(graphView);
+            Stack.Children.Add(_graphView);
 
             AddSubscriber();
 
@@ -35,7 +35,7 @@ namespace MyCC.Forms.View.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            graphView.OnAppearing();
+            _graphView.OnAppearing();
         }
 
         private void PositionSelected(object sender, EventArgs e)
@@ -50,7 +50,7 @@ namespace MyCC.Forms.View.Pages
         {
             HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
             HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
-            HeaderCarousel.ShowIndicators = (HeaderCarousel.ItemsSource.Count > 1);
+            HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
 
             if (HeaderCarousel.ItemTemplate != null) return;
 
@@ -63,7 +63,7 @@ namespace MyCC.Forms.View.Pages
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                NoSourcesView.IsVisible = (AccountStorage.Instance.AllElements.Count == 0);
+                NoSourcesView.IsVisible = AccountStorage.Instance.AllElements.Count == 0;
                 Stack.IsVisible = AccountStorage.Instance.AllElements.Count != 0;
             });
         }

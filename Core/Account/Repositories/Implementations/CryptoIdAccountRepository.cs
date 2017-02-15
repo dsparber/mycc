@@ -25,7 +25,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
             }
         }
 
-        protected override Func<string, decimal> Balance => (httpContent) => decimal.Parse(httpContent, CultureInfo.InvariantCulture);
+        protected override Func<string, decimal> Balance => httpContent => decimal.Parse(httpContent, CultureInfo.InvariantCulture);
         protected override Uri Url => new Uri($"https://chainz.cryptoid.info/{Currency.Code.ToLower()}/api.dws?q=getbalance&a={Address}");
 
         public CryptoIdAccountRepository(int id, string name, string data) : base(id, name, data) { }
