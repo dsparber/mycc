@@ -2,12 +2,11 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
+	BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
 	xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
     xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
-	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.RateView"
 	Title="{resources:Translate Rates}">
   <ContentPage.ToolbarItems>
@@ -18,7 +17,7 @@
 			Icon="refresh.png" />
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
-    <components1:ChangingStackLayout>
+    <components:ChangingStackLayout>
       <carousel:CarouselViewControl
 				x:Name="HeaderCarousel"
 				Arrows="true"
@@ -26,21 +25,16 @@
 				ShowIndicators="true"
 				WidthRequest="280"
 				PageIndicatorTintColor="#5FFF"
-				CurrentPageIndicatorTintColor="White" />
+				CurrentPageIndicatorTintColor="White"
+        BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"/>
       <StackLayout
 				VerticalOptions="FillAndExpand">
         <StackLayout
 					x:Name="Stack"
 					Spacing="0"
 					HorizontalOptions="FillAndExpand"
-					VerticalOptions="FillAndExpand">
-          <StackLayout.BackgroundColor>
-            <OnPlatform
-							x:TypeArguments="Color"
-							Android="#EEE" />
-          </StackLayout.BackgroundColor>
-        </StackLayout>
+					VerticalOptions="FillAndExpand"/>
       </StackLayout>
-    </components1:ChangingStackLayout>
+    </components:ChangingStackLayout>
   </ContentPage.Content>
 </ContentPage>
