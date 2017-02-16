@@ -7,7 +7,7 @@ $(document).ready(function () {
             //getting the next element
             var $content = $header.next();
             // icon
-            var icon = $content.css("display") === "none" ? "collapse.png" : "expand.png";
+            var icon = $content.css('display') === "none" ? "collapse.png" : "expand.png";
             $header.css("background-image", "url(\"" + icon + "\")");
             //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
             $content.slideToggle(300, function () {

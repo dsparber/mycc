@@ -132,7 +132,7 @@ function createMainGraph(data) {
 
     // ReSharper disable once InconsistentNaming
     // ReSharper disable once ConstructorCallNotUsed
-    new d3pie(id, chartOptions);
+    new d3pie("pieChart", chartOptions);
 }
 
 function showOverlay(id, callback) {

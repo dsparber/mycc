@@ -302,93 +302,35 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Html\about.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\about.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\about.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\accountsTable.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\accountsTable.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\accountsTable.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\close.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\coinTable.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\coinTable.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\coinTable.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\collapse.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\d3.min.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\d3pie.min.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\down.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\equalsTable.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\equalsTable.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\equalsTable.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\expand.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\jquery-latest.min.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\jquery-ui.min.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\more.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\pieChart.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\pieChart.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\pieChart.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\ratesTable.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\ratesTable.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\ratesTable.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\up.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Html\upDown.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
+    <AndroidAsset Include="Assets\Html\about.css" />
+    <AndroidAsset Include="Assets\Html\about.html" />
+    <AndroidAsset Include="Assets\Html\about.js" />
+    <AndroidAsset Include="Assets\Html\accountsTable.css" />
+    <AndroidAsset Include="Assets\Html\accountsTable.html" />
+    <AndroidAsset Include="Assets\Html\accountsTable.js" />
+    <AndroidAsset Include="Assets\Html\close.svg" />
+    <AndroidAsset Include="Assets\Html\coinTable.css" />
+    <AndroidAsset Include="Assets\Html\coinTable.html" />
+    <AndroidAsset Include="Assets\Html\coinTable.js" />
+    <AndroidAsset Include="Assets\Html\collapse.png" />
+    <AndroidAsset Include="Assets\Html\d3.min.js" />
+    <AndroidAsset Include="Assets\Html\d3pie.min.js" />
+    <AndroidAsset Include="Assets\Html\down.svg" />
+    <AndroidAsset Include="Assets\Html\equalsTable.css" />
+    <AndroidAsset Include="Assets\Html\equalsTable.html" />
+    <AndroidAsset Include="Assets\Html\equalsTable.js" />
+    <AndroidAsset Include="Assets\Html\expand.png" />
+    <AndroidAsset Include="Assets\Html\jquery-latest.min.js" />
+    <AndroidAsset Include="Assets\Html\jquery-ui.min.js" />
+    <AndroidAsset Include="Assets\Html\more.png" />
+    <AndroidAsset Include="Assets\Html\pieChart.css" />
+    <AndroidAsset Include="Assets\Html\pieChart.html" />
+    <AndroidAsset Include="Assets\Html\pieChart.js" />
+    <AndroidAsset Include="Assets\Html\ratesTable.css" />
+    <AndroidAsset Include="Assets\Html\ratesTable.html" />
+    <AndroidAsset Include="Assets\Html\ratesTable.js" />
+    <AndroidAsset Include="Assets\Html\up.svg" />
+    <AndroidAsset Include="Assets\Html\upDown.svg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\fingerprint.png" />

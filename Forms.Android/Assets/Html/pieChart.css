@@ -35,9 +35,9 @@
     height: 100%;
     /*background-color: rgb(36, 39, 46);*/
     -webkit-touch-callout: none;
+    -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-    -moz-user-select: none;
     user-select: none;
 }
 

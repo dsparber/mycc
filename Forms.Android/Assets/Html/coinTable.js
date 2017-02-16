@@ -70,11 +70,15 @@ function updateTable(data, sort) {
         amountCell.innerHTML = data[i]["Amount"];
         referenceCell.innerHTML = data[i]["Reference"];
 
+        if (data[i]["Disabled"]) {
+            row.className = "disabled";
+        }
+
         row.onclick = rowClicked(data[i]["CallbackString"]);
     }
 
     $("#coinTable thead").children().removeClass();
-    $("#coinTable td[type=" + sort["Type"] + "]").addClass((sort["Direction"] === "Ascending") ? "down" : "up");
+    $("#coinTable td[type=" + sort["Type"] + "]").addClass(sort["Direction"] === "Ascending" ? "down" : "up");
 
     sizeAllocated();
 }

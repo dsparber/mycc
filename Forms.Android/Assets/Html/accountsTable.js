@@ -1,7 +1,7 @@
 "use strict";
 
 var testData = [{
-    "Name": "Georg",
+    "Name": "Georgs langer Testname",
     "Amount": "23,525.31",
     "Id": 1
 }, {
@@ -57,7 +57,11 @@ function updateTable(data, sort) {
         var amountCell = row.insertCell(1);
         row.insertCell(2); // For Arrow
         amountCell.innerHTML = "<span>" + data[i]["Amount"].substring(0, data[i]["Amount"].length - 5) + "</span><span>" + data[i]["Amount"].substring(data[i]["Amount"].length - 5) + "</span>";
-        nameCell.innerHTML = data[i]["Name"];
+        nameCell.innerHTML = "<div><span>"+data[i]["Name"]+"</span></div>";
+
+        if (data[i]["Disabled"]) {
+            row.className = "disabled";
+        }
 
         row.onclick = rowClicked(data[i]["Id"]);
     }
