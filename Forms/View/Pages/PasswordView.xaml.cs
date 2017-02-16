@@ -22,6 +22,8 @@ namespace MyCC.Forms.View.Pages
             recognizer.Tapped += async (sender, e) =>
             {
                 _fingerprintCanceled = false;
+                PasswordEntry.Unfocus();
+                ShowFingerprintIcon.Focus();
                 await Authenticate();
             };
             ShowFingerprintIcon.GestureRecognizers.Add(recognizer);
@@ -47,7 +49,6 @@ namespace MyCC.Forms.View.Pages
             if (ApplicationSettings.IsFingerprintEnabled && !_fingerprintCanceled)
             {
                 ShowFingerprintIcon.IsVisible = true;
-                PasswordEntry.Unfocus();
 
                 var result = await CrossFingerprint.Current.AuthenticateAsync(I18N.UnlockTheApplication);
                 if (result.Authenticated)
@@ -57,10 +58,13 @@ namespace MyCC.Forms.View.Pages
                 if (result.Status.Equals(FingerprintAuthenticationResultStatus.Canceled))
                 {
                     _fingerprintCanceled = true;
-                    PasswordEntry.Focus();
                 }
             }
-            PasswordEntry.Focus();
+            else
+            {
+                PasswordEntry.Focus();
+            }
+
         }
 
         private async void PinTextChanged(object sender, TextChangedEventArgs e)
