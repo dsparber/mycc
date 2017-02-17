@@ -248,7 +248,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\hamburger.png" />
     <AndroidResource Include="Resources\drawable\down.png" />
     <AndroidResource Include="Resources\drawable\Icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

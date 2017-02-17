@@ -1232,15 +1232,6 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Unlock the application ähnelt.
-        /// </summary>
-        public static string UnlockTheApplication {
-            get {
-                return ResourceManager.GetString("UnlockTheApplication", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Unnamed ähnelt.
         /// </summary>
         public static string Unnamed {
