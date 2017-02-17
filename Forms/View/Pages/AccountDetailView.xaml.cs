@@ -3,6 +3,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
+using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
@@ -10,6 +11,7 @@ using MyCC.Forms.Tasks;
 using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Overlays;
+using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages
@@ -18,6 +20,8 @@ namespace MyCC.Forms.View.Pages
     {
         private readonly FunctionalAccount _account;
         private readonly ReferenceCurrenciesView _referenceView;
+        private readonly PullToRefreshLayout _pullToRefresh;
+
 
         public AccountDetailView(FunctionalAccount account)
         {
@@ -49,14 +53,23 @@ namespace MyCC.Forms.View.Pages
             {
                 var qrButton = new ToolbarItem { Icon = "qr.png" };
                 qrButton.Clicked += (sender, e) => Navigation.PushOrPushModal(new AccountQrCodeOverlay((AddressAccountRepository)repo));
-                ToolbarItems.Insert(0, qrButton);
+                ToolbarItems.Add(qrButton);
             }
 
             stack.Children.Add(disableCell);
             stack.Children.Add(_referenceView);
 
 
-            ContentView.Content = stack;
+            _pullToRefresh = new PullToRefreshLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Content = new ScrollView { Content = stack },
+                BackgroundColor = AppConstants.TableBackgroundColor,
+                RefreshCommand = new Command(Refresh),
+            };
+
+            ContentView.Content = _pullToRefresh;
 
             SetView();
         }
@@ -73,11 +86,10 @@ namespace MyCC.Forms.View.Pages
             _referenceView.OnAppearing();
         }
 
-        private async void Refresh(object sender, EventArgs args)
+        private async void Refresh()
         {
-            RefreshItem.Clicked -= Refresh;
             await AppTaskHelper.FetchBalanceAndRates(_account);
-            RefreshItem.Clicked += Refresh;
+            _pullToRefresh.IsRefreshing = false;
         }
 
         private void ShowInfo(object sender, EventArgs args)

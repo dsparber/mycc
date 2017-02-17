@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Abbreviation" xml:space="preserve">
-    <value>Abbreviation</value>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>Currency code</value>
   </data>
   <data name="AccountInformation" xml:space="preserve">
     <value>Account information</value>
@@ -132,22 +132,16 @@
   <data name="AdditionalCurrencies" xml:space="preserve">
     <value>Additional currencies</value>
   </data>
-  <data name="AddRepositoryTitle" xml:space="preserve">
-    <value>Add source</value>
-  </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
   </data>
   <data name="AddressAdded" xml:space="preserve">
     <value>Added with Address</value>
   </data>
-  <data name="AddressOrXpub" xml:space="preserve">
-    <value>Address / xPub</value>
-  </data>
   <data name="AddSource" xml:space="preserve">
-    <value>Add new source</value>
+    <value>New source</value>
   </data>
-  <data name="Algorithm" xml:space="preserve">
+  <data name="CoinAlgorithm" xml:space="preserve">
     <value>Algorithm</value>
   </data>
   <data name="AllCurrenciesFromAccounts" xml:space="preserve">
@@ -156,10 +150,7 @@
   <data name="Amount" xml:space="preserve">
     <value>Amount</value>
   </data>
-  <data name="AmountAndCurrency" xml:space="preserve">
-    <value>Amount and currency</value>
-  </data>
-  <data name="ApiKey" xml:space="preserve">
+  <data name="BittrexKey" xml:space="preserve">
     <value>Key</value>
   </data>
   <data name="AppName" xml:space="preserve">
@@ -175,10 +166,7 @@
     <value>Assets</value>
   </data>
   <data name="BitcoinCanNotBeRemoved" xml:space="preserve">
-    <value>Bitcoin can not be removed from the reference currencies.</value>
-  </data>
-  <data name="BitcoinCanNotBeUnstared" xml:space="preserve">
-    <value>Bitcoin can not be removed from the stared reference currencies.</value>
+    <value>Bitcoin can not be removed.</value>
   </data>
   <data name="Bittrex" xml:space="preserve">
     <value>Bittrex</value>
@@ -186,16 +174,16 @@
   <data name="BittrexAdded" xml:space="preserve">
     <value>Added with Bittrex</value>
   </data>
-  <data name="BlockExplorer" xml:space="preserve">
-    <value>Block explorer</value>
+  <data name="CoinExplorer" xml:space="preserve">
+    <value>Coin explorer</value>
   </data>
-  <data name="BlockHeight" xml:space="preserve">
+  <data name="CoinBlockHeight" xml:space="preserve">
     <value>Block height</value>
   </data>
-  <data name="BlockReward" xml:space="preserve">
+  <data name="CoinBlockReward" xml:space="preserve">
     <value>Block reward</value>
   </data>
-  <data name="Blocktime" xml:space="preserve">
+  <data name="CoinBlocktime" xml:space="preserve">
     <value>Blocktime</value>
   </data>
   <data name="Cancel" xml:space="preserve">
@@ -234,7 +222,7 @@
   <data name="Deleting" xml:space="preserve">
     <value>Deleting</value>
   </data>
-  <data name="Difficulty" xml:space="preserve">
+  <data name="CoinDifficulty" xml:space="preserve">
     <value>Difficulty</value>
   </data>
   <data name="DisablePin" xml:space="preserve">
@@ -282,13 +270,10 @@
   <data name="GoToSourcesToAddAccount" xml:space="preserve">
     <value>You can go to the settings page to add data.</value>
   </data>
-  <data name="GrantAccess" xml:space="preserve">
-    <value>Grant access</value>
-  </data>
   <data name="Graph" xml:space="preserve">
     <value>Graph</value>
   </data>
-  <data name="Hashrate" xml:space="preserve">
+  <data name="CoinHashrate" xml:space="preserve">
     <value>Hashrate</value>
   </data>
   <data name="Info" xml:space="preserve">
@@ -312,10 +297,10 @@
   <data name="ManuallyAdded" xml:space="preserve">
     <value>Manually added</value>
   </data>
-  <data name="MarketCap" xml:space="preserve">
+  <data name="CoinMarketCap" xml:space="preserve">
     <value>Market cap.</value>
   </data>
-  <data name="MaxCoinSupply" xml:space="preserve">
+  <data name="CoinSupplyMax" xml:space="preserve">
     <value>Max. coin supply</value>
   </data>
   <data name="Name" xml:space="preserve">
@@ -387,14 +372,11 @@
   <data name="PinToShort" xml:space="preserve">
     <value>The entered PIN is to short!</value>
   </data>
-  <data name="ProofOfStake" xml:space="preserve">
-    <value>Proof of stake</value>
+  <data name="CoinProofOfStake" xml:space="preserve">
+    <value>PoS</value>
   </data>
-  <data name="ProofOfWork" xml:space="preserve">
-    <value>Proof of work</value>
-  </data>
-  <data name="ProofOfWorkAndState" xml:space="preserve">
-    <value>Proof of work and stake</value>
+  <data name="CoinProofOfWork" xml:space="preserve">
+    <value>PoW</value>
   </data>
   <data name="Rates" xml:space="preserve">
     <value>Rates</value>
@@ -441,7 +423,7 @@
   <data name="SearchCurrencies" xml:space="preserve">
     <value>Search currencies</value>
   </data>
-  <data name="SecretApiKey" xml:space="preserve">
+  <data name="BittrexSecret" xml:space="preserve">
     <value>Secret</value>
   </data>
   <data name="Security" xml:space="preserve">
@@ -521,5 +503,8 @@
   </data>
   <data name="AreEqualTo" xml:space="preserve">
     <value>{0} are equal to</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
   </data>
 </root>

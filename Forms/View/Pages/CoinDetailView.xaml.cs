@@ -5,9 +5,12 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
+using MyCC.Forms.Constants;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
+using Refractored.XamForms.PullToRefresh;
+using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages
 {
@@ -15,6 +18,7 @@ namespace MyCC.Forms.View.Pages
     {
         private readonly ReferenceCurrenciesView _referenceView;
         private readonly AccountsTableComponent _accountsView;
+        private readonly PullToRefreshLayout _pullToRefresh;
 
         private IEnumerable<Tuple<FunctionalAccount, AccountRepository>> _accounts;
 
@@ -35,10 +39,22 @@ namespace MyCC.Forms.View.Pages
 
             _accountsView = new AccountsTableComponent(Navigation, _currency);
 
-            ContentView.Children.Add(_accountsView);
-
+            var stack = new StackLayout { Spacing = 0 };
+            stack.Children.Add(_accountsView);
             _referenceView = new ReferenceCurrenciesView(MoneySum);
-            ContentView.Children.Add(_referenceView);
+
+            stack.Children.Add(_referenceView);
+
+            _pullToRefresh = new PullToRefreshLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Content = new ScrollView { Content = stack },
+                BackgroundColor = AppConstants.TableBackgroundColor,
+                RefreshCommand = new Command(Refresh),
+            };
+
+            ContentView.Content = _pullToRefresh;
 
             Subscribe();
         }
@@ -69,11 +85,10 @@ namespace MyCC.Forms.View.Pages
             Messaging.ReferenceCurrencies.SubscribeValueChanged(this, LoadData);
         }
 
-        private async void Refresh(object sender, EventArgs args)
+        private async void Refresh()
         {
-            RefreshItem.Clicked -= Refresh;
             await AppTaskHelper.FetchBalanceAndRates(_currency);
-            RefreshItem.Clicked += Refresh;
+            _pullToRefresh.IsRefreshing = false;
         }
 
         protected override void OnAppearing()

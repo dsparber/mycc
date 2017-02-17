@@ -2,6 +2,7 @@
 using Foundation;
 using HockeyApp.iOS;
 using MyCC.Forms.Constants;
+using Refractored.XamForms.PullToRefresh.iOS;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -16,6 +17,7 @@ namespace MyCC.Forms.iOS
         {
             Xamarin.Forms.Forms.Init();
             CarouselViewRenderer.Init();
+            PullToRefreshLayoutRenderer.Init();
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
 
             LoadApplication(new App());

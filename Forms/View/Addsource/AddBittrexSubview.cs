@@ -15,10 +15,10 @@ namespace MyCC.Forms.View.Addsource
 
         public AddBittrexSubview()
         {
-            _apiKeyEntryCell = new CustomEntryCell { Title = I18N.ApiKey, Placeholder = I18N.ApiKey };
-            _apiPrivateKeyEntryCell = new CustomEntryCell { Title = I18N.SecretApiKey, Placeholder = I18N.SecretApiKey };
+            _apiKeyEntryCell = new CustomEntryCell { Title = I18N.BittrexKey, Placeholder = I18N.BittrexKey };
+            _apiPrivateKeyEntryCell = new CustomEntryCell { Title = I18N.BittrexSecret, Placeholder = I18N.BittrexSecret };
 
-            _section = new TableSection { Title = I18N.GrantAccess };
+            _section = new TableSection { Title = I18N.Details };
             _section.Add(_apiKeyEntryCell);
             _section.Add(_apiPrivateKeyEntryCell);
         }

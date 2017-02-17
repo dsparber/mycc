@@ -33,11 +33,11 @@ namespace MyCC.Forms.View.Addsource
             var supportedCurrencies = _availableRepositories.SelectMany(a => a(null, null, null).SupportedCurrencies).ToList();
 
             _currencyEntryCell = new CurrencyEntryCell(navigation) { IsAmountEnabled = false, CurrenciesToSelect = supportedCurrencies, IsFormRepresentation = true };
-            _addressEntryCell = new CustomEntryCell { Title = I18N.Address, Placeholder = I18N.AddressOrXpub };
+            _addressEntryCell = new CustomEntryCell { Title = I18N.Address, Placeholder = I18N.Address };
             var scanActionCell = new CustomViewCell { Text = I18N.ScanQrCode, IsActionCell = true, IsCentered = true };
 
             var sectionQr = new TableSection();
-            var sectionInfo = new TableSection { Title = I18N.AccountInformation };
+            var sectionInfo = new TableSection { Title = I18N.Details };
 
             sectionQr.Add(scanActionCell);
             sectionInfo.Add(_addressEntryCell);

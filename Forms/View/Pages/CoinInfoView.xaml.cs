@@ -21,6 +21,7 @@ namespace MyCC.Forms.View.Pages
         private readonly Currency _currency;
         private readonly ReferenceCurrenciesView _referenceView;
 
+
         private readonly Dictionary<string, Tuple<Label, Label>> _infos;
 
         public CoinInfoView(Currency currency)
@@ -43,20 +44,20 @@ namespace MyCC.Forms.View.Pages
 
             _infos = new Dictionary<string, Tuple<Label, Label>> {
                 {I18N.Name, getTuple()},
-                {I18N.Abbreviation, getTuple()},
+                {I18N.CurrencyCode, getTuple()},
 
-                {I18N.BlockExplorer, getTuple()},
-                {I18N.Algorithm, getTuple()},
+                {I18N.CoinExplorer, getTuple()},
+                {I18N.CoinAlgorithm, getTuple()},
                 {I18N.Type, getTuple()},
 
-                {I18N.Hashrate, getTuple()},
-                {I18N.Difficulty, getTuple()},
-                {I18N.BlockReward, getTuple()},
-                {I18N.BlockHeight, getTuple()},
-                {I18N.Blocktime, getTuple()},
-                {I18N.MaxCoinSupply, getTuple()},
+                {I18N.CoinHashrate, getTuple()},
+                {I18N.CoinDifficulty, getTuple()},
+                {I18N.CoinBlockReward, getTuple()},
+                {I18N.CoinBlockHeight, getTuple()},
+                {I18N.CoinBlocktime, getTuple()},
+                {I18N.CoinSupplyMax, getTuple()},
                 {I18N.CoinSupply, getTuple()},
-                {I18N.MarketCap, getTuple()}
+                {I18N.CoinMarketCap, getTuple()}
             };
 
             foreach (var i in _infos)
@@ -68,8 +69,6 @@ namespace MyCC.Forms.View.Pages
                 InfoStackValues.Children.Add(i.Value.Item2);
             }
 
-
-
             UpdateView();
 
             var explorer = CoinInfoStorage.Instance.GetExplorer(_currency).Select(e => e.Name).ToList();
@@ -78,6 +77,8 @@ namespace MyCC.Forms.View.Pages
             {
                 Task.Run(() => AppTaskHelper.FetchCoinInfo(_currency));
             }
+
+            PullToRefresh.RefreshCommand = new Command(Refresh);
 
             Messaging.Progress.SubscribeToComplete(this, () => UpdateView(true));
         }
@@ -96,90 +97,90 @@ namespace MyCC.Forms.View.Pages
                 _infos[I18N.Name].Item2.IsVisible = true;
                 _infos[I18N.Name].Item2.Text = _currency.Name;
 
-                _infos[I18N.Abbreviation].Item1.IsVisible = true;
-                _infos[I18N.Abbreviation].Item2.IsVisible = true;
-                _infos[I18N.Abbreviation].Item2.Text = _currency.Code;
+                _infos[I18N.CurrencyCode].Item1.IsVisible = true;
+                _infos[I18N.CurrencyCode].Item2.IsVisible = true;
+                _infos[I18N.CurrencyCode].Item2.Text = _currency.Code;
 
-                _infos[I18N.BlockExplorer].Item1.IsVisible = explorer.Any();
-                _infos[I18N.BlockExplorer].Item2.IsVisible = explorer.Any();
-                _infos[I18N.BlockExplorer].Item2.Text = string.Join(", ", explorer);
+                _infos[I18N.CoinExplorer].Item1.IsVisible = explorer.Any();
+                _infos[I18N.CoinExplorer].Item2.IsVisible = explorer.Any();
+                _infos[I18N.CoinExplorer].Item2.Text = string.Join(", ", explorer);
 
                 _referenceView.UpdateView();
 
 
                 if (info != null)
                 {
-                    _infos[I18N.Algorithm].Item1.IsVisible = info.Algorithm != null;
-                    _infos[I18N.Algorithm].Item2.IsVisible = info.Algorithm != null;
-                    _infos[I18N.Algorithm].Item2.Text = info.Algorithm;
+                    _infos[I18N.CoinAlgorithm].Item1.IsVisible = info.Algorithm != null;
+                    _infos[I18N.CoinAlgorithm].Item2.IsVisible = info.Algorithm != null;
+                    _infos[I18N.CoinAlgorithm].Item2.Text = info.Algorithm;
 
                     _infos[I18N.Type].Item1.IsVisible = info.IsProofOfWork != null || info.IsProofOfStake != null;
                     _infos[I18N.Type].Item2.IsVisible = info.IsProofOfWork != null || info.IsProofOfStake != null;
-                    _infos[I18N.Type].Item2.Text = info.IsProofOfWork.GetValueOrDefault() && info.IsProofOfStake.GetValueOrDefault() ? I18N.ProofOfWorkAndState : info.IsProofOfWork.GetValueOrDefault() ? I18N.ProofOfWork : info.IsProofOfStake.GetValueOrDefault() ? I18N.ProofOfStake : string.Empty;
+                    _infos[I18N.Type].Item2.Text = info.IsProofOfWork.GetValueOrDefault() && info.IsProofOfStake.GetValueOrDefault() ? $"{I18N.CoinProofOfWork}, {I18N.CoinProofOfStake}" : info.IsProofOfWork.GetValueOrDefault() ? I18N.CoinProofOfWork : info.IsProofOfStake.GetValueOrDefault() ? I18N.CoinProofOfStake : string.Empty;
 
-                    _infos[I18N.Hashrate].Item1.IsVisible = info.Hashrate != null;
-                    _infos[I18N.Hashrate].Item2.IsVisible = info.Hashrate != null;
-                    _infos[I18N.Hashrate].Item2.Text = $"{info.Hashrate:#,0.########} {I18N.GHps}";
+                    _infos[I18N.CoinHashrate].Item1.IsVisible = info.Hashrate != null;
+                    _infos[I18N.CoinHashrate].Item2.IsVisible = info.Hashrate != null;
+                    _infos[I18N.CoinHashrate].Item2.Text = $"{info.Hashrate:#,0.########} {I18N.GHps}";
 
-                    _infos[I18N.Difficulty].Item1.IsVisible = info.Difficulty != null;
-                    _infos[I18N.Difficulty].Item2.IsVisible = info.Difficulty != null;
-                    _infos[I18N.Difficulty].Item2.Text = $"{info.Difficulty.GetValueOrDefault():#,0.########}";
+                    _infos[I18N.CoinDifficulty].Item1.IsVisible = info.Difficulty != null;
+                    _infos[I18N.CoinDifficulty].Item2.IsVisible = info.Difficulty != null;
+                    _infos[I18N.CoinDifficulty].Item2.Text = $"{info.Difficulty.GetValueOrDefault():#,0.########}";
 
-                    _infos[I18N.BlockReward].Item1.IsVisible = info.Blockreward != null;
-                    _infos[I18N.BlockReward].Item2.IsVisible = info.Blockreward != null;
-                    _infos[I18N.BlockReward].Item2.Text = new Money(info.Blockreward.GetValueOrDefault(), _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+                    _infos[I18N.CoinBlockReward].Item1.IsVisible = info.Blockreward != null;
+                    _infos[I18N.CoinBlockReward].Item2.IsVisible = info.Blockreward != null;
+                    _infos[I18N.CoinBlockReward].Item2.Text = new Money(info.Blockreward.GetValueOrDefault(), _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
 
-                    _infos[I18N.BlockHeight].Item1.IsVisible = info.BlockHeight != null;
-                    _infos[I18N.BlockHeight].Item2.IsVisible = info.BlockHeight != null;
-                    _infos[I18N.BlockHeight].Item2.Text = $"{info.BlockHeight.GetValueOrDefault():#,0}";
+                    _infos[I18N.CoinBlockHeight].Item1.IsVisible = info.BlockHeight != null;
+                    _infos[I18N.CoinBlockHeight].Item2.IsVisible = info.BlockHeight != null;
+                    _infos[I18N.CoinBlockHeight].Item2.Text = $"{info.BlockHeight.GetValueOrDefault():#,0}";
 
-                    _infos[I18N.Blocktime].Item1.IsVisible = info.Blocktime != null;
-                    _infos[I18N.Blocktime].Item2.IsVisible = info.Blocktime != null;
-                    _infos[I18N.Blocktime].Item2.Text = $"{ info.Blocktime.GetValueOrDefault():#,0.##}{I18N.UnitSecond}";
+                    _infos[I18N.CoinBlocktime].Item1.IsVisible = info.Blocktime != null;
+                    _infos[I18N.CoinBlocktime].Item2.IsVisible = info.Blocktime != null;
+                    _infos[I18N.CoinBlocktime].Item2.Text = $"{ info.Blocktime.GetValueOrDefault():#,0.##}{I18N.UnitSecond}";
 
-                    _infos[I18N.MaxCoinSupply].Item1.IsVisible = info.MaxCoinSupply != null;
-                    _infos[I18N.MaxCoinSupply].Item2.IsVisible = info.MaxCoinSupply != null;
-                    _infos[I18N.MaxCoinSupply].Item2.Text = new Money(info.MaxCoinSupply.GetValueOrDefault(), _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+                    _infos[I18N.CoinSupplyMax].Item1.IsVisible = info.MaxCoinSupply != null;
+                    _infos[I18N.CoinSupplyMax].Item2.IsVisible = info.MaxCoinSupply != null;
+                    _infos[I18N.CoinSupplyMax].Item2.Text = new Money(info.MaxCoinSupply.GetValueOrDefault(), _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
 
                     _infos[I18N.CoinSupply].Item1.IsVisible = info.CoinSupply != null;
                     _infos[I18N.CoinSupply].Item2.IsVisible = info.CoinSupply != null;
                     _infos[I18N.CoinSupply].Item2.Text = new Money(info.CoinSupply.GetValueOrDefault(), _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
 
-                    _infos[I18N.MarketCap].Item1.IsVisible = info.CoinSupply != null && rate.Rate != null;
-                    _infos[I18N.MarketCap].Item2.IsVisible = info.CoinSupply != null && rate.Rate != null;
-                    _infos[I18N.MarketCap].Item2.Text = new Money(info.CoinSupply.GetValueOrDefault() * rate.Rate ?? 0, Currency.Btc).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+                    _infos[I18N.CoinMarketCap].Item1.IsVisible = info.CoinSupply != null && rate.Rate != null;
+                    _infos[I18N.CoinMarketCap].Item2.IsVisible = info.CoinSupply != null && rate.Rate != null;
+                    _infos[I18N.CoinMarketCap].Item2.Text = new Money(info.CoinSupply.GetValueOrDefault() * rate.Rate ?? 0, Currency.Btc).ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 }
                 else
                 {
-                    _infos[I18N.Algorithm].Item1.IsVisible = false;
-                    _infos[I18N.Algorithm].Item2.IsVisible = false;
+                    _infos[I18N.CoinAlgorithm].Item1.IsVisible = false;
+                    _infos[I18N.CoinAlgorithm].Item2.IsVisible = false;
 
                     _infos[I18N.Type].Item1.IsVisible = false;
                     _infos[I18N.Type].Item2.IsVisible = false;
 
-                    _infos[I18N.Hashrate].Item1.IsVisible = false;
-                    _infos[I18N.Hashrate].Item2.IsVisible = false;
+                    _infos[I18N.CoinHashrate].Item1.IsVisible = false;
+                    _infos[I18N.CoinHashrate].Item2.IsVisible = false;
 
-                    _infos[I18N.Difficulty].Item1.IsVisible = false;
-                    _infos[I18N.Difficulty].Item2.IsVisible = false;
+                    _infos[I18N.CoinDifficulty].Item1.IsVisible = false;
+                    _infos[I18N.CoinDifficulty].Item2.IsVisible = false;
 
-                    _infos[I18N.BlockReward].Item1.IsVisible = false;
-                    _infos[I18N.BlockReward].Item2.IsVisible = false;
+                    _infos[I18N.CoinBlockReward].Item1.IsVisible = false;
+                    _infos[I18N.CoinBlockReward].Item2.IsVisible = false;
 
-                    _infos[I18N.BlockHeight].Item1.IsVisible = false;
-                    _infos[I18N.BlockHeight].Item2.IsVisible = false;
+                    _infos[I18N.CoinBlockHeight].Item1.IsVisible = false;
+                    _infos[I18N.CoinBlockHeight].Item2.IsVisible = false;
 
-                    _infos[I18N.Blocktime].Item1.IsVisible = false;
-                    _infos[I18N.Blocktime].Item2.IsVisible = false;
+                    _infos[I18N.CoinBlocktime].Item1.IsVisible = false;
+                    _infos[I18N.CoinBlocktime].Item2.IsVisible = false;
 
                     _infos[I18N.CoinSupply].Item1.IsVisible = false;
                     _infos[I18N.CoinSupply].Item2.IsVisible = false;
 
-                    _infos[I18N.MaxCoinSupply].Item1.IsVisible = false;
-                    _infos[I18N.MaxCoinSupply].Item2.IsVisible = false;
+                    _infos[I18N.CoinSupplyMax].Item1.IsVisible = false;
+                    _infos[I18N.CoinSupplyMax].Item2.IsVisible = false;
 
-                    _infos[I18N.MarketCap].Item1.IsVisible = false;
-                    _infos[I18N.MarketCap].Item2.IsVisible = false;
+                    _infos[I18N.CoinMarketCap].Item1.IsVisible = false;
+                    _infos[I18N.CoinMarketCap].Item2.IsVisible = false;
                 }
             };
 
@@ -193,11 +194,10 @@ namespace MyCC.Forms.View.Pages
             }
         }
 
-        private async void Refresh(object sender, EventArgs e)
+        private async void Refresh()
         {
-            RefreshItem.Clicked -= Refresh;
             await AppTaskHelper.FetchCoinDetails(_currency);
-            RefreshItem.Clicked += Refresh;
+            PullToRefresh.IsRefreshing = false;
         }
 
         protected override void OnAppearing()

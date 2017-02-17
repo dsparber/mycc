@@ -12,17 +12,12 @@
 			Text="{resources:Translate Info}"
 			Clicked="ShowInfo"
 			Icon="info.png" />
-    <ToolbarItem
-			Text="{resources:Translate Refresh}"
-			Clicked="Refresh"
-			x:Name="RefreshItem"
-			Icon="refresh.png" />
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <components1:ChangingStackLayout
 			x:Name="ChangingStack"
 			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-      <ScrollView
+      <ContentView
 				x:Name="ContentView" />
     </components1:ChangingStackLayout>
   </ContentPage.Content>

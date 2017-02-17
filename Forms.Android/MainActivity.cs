@@ -4,6 +4,7 @@ using Android.OS;
 using CarouselView.FormsPlugin.Android;
 using HockeyApp.Android;
 using HockeyApp.Android.Metrics;
+using Refractored.XamForms.PullToRefresh.Droid;
 using Xamarin.Forms.Platform.Android;
 
 namespace MyCC.Forms.Android
@@ -16,6 +17,7 @@ namespace MyCC.Forms.Android
             base.OnCreate(savedInstanceState);
             Xamarin.Forms.Forms.Init(this, savedInstanceState);
             CarouselViewRenderer.Init();
+            PullToRefreshLayoutRenderer.Init();
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             LoadApplication(new App());
 

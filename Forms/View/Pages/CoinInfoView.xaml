@@ -2,41 +2,40 @@
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
+  xmlns:pullToRefresh="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
 	x:Class="MyCC.Forms.View.Pages.CoinInfoView">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem
-			Text="{resources:Translate Refresh}"
-			Clicked="Refresh"
-			x:Name="RefreshItem"
-			Icon="refresh.png" />
-  </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <components:ChangingStackLayout
       x:Name="ChangingStack"
 			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-      <ScrollView
-         IsClippedToBounds="true">
-        <StackLayout
-					Spacing="0"
-					x:Name="ContentView">
-          <Label
-						x:Name="InfoHeading"
-						Margin="15"
-						FontSize="14" />
+      <pullToRefresh:PullToRefreshLayout
+        x:Name="PullToRefresh"
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand"
+        BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
+        <ScrollView
+           IsClippedToBounds="true">
           <StackLayout
-						Margin="15,0,15,40"
-						Orientation="Horizontal">
+            Spacing="0"
+            x:Name="ContentView">
+            <Label
+              x:Name="InfoHeading"
+              Margin="15"
+              FontSize="14" />
             <StackLayout
-							x:Name="InfoStackHeadings"
-							HorizontalOptions="StartAndExpand" />
-            <StackLayout
-							x:Name="InfoStackValues" />
+              Margin="15,0,15,40"
+              Orientation="Horizontal">
+              <StackLayout
+                x:Name="InfoStackHeadings"
+                HorizontalOptions="StartAndExpand" />
+              <StackLayout
+                x:Name="InfoStackValues" />
+            </StackLayout>
           </StackLayout>
-        </StackLayout>
-      </ScrollView>
+        </ScrollView>
+      </pullToRefresh:PullToRefreshLayout>
     </components:ChangingStackLayout>
   </ContentPage.Content>
 </ContentPage>

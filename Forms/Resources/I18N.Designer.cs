@@ -62,15 +62,6 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Abbreviation ähnelt.
-        /// </summary>
-        public static string Abbreviation {
-            get {
-                return ResourceManager.GetString("Abbreviation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die About ähnelt.
         /// </summary>
         public static string About {
@@ -116,15 +107,6 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Add source ähnelt.
-        /// </summary>
-        public static string AddRepositoryTitle {
-            get {
-                return ResourceManager.GetString("AddRepositoryTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Address ähnelt.
         /// </summary>
         public static string Address {
@@ -143,29 +125,11 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Address / xPub ähnelt.
-        /// </summary>
-        public static string AddressOrXpub {
-            get {
-                return ResourceManager.GetString("AddressOrXpub", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Add new source ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die New source ähnelt.
         /// </summary>
         public static string AddSource {
             get {
                 return ResourceManager.GetString("AddSource", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Algorithm ähnelt.
-        /// </summary>
-        public static string Algorithm {
-            get {
-                return ResourceManager.GetString("Algorithm", resourceCulture);
             }
         }
         
@@ -184,24 +148,6 @@ namespace MyCC.Forms.Resources {
         public static string Amount {
             get {
                 return ResourceManager.GetString("Amount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Amount and currency ähnelt.
-        /// </summary>
-        public static string AmountAndCurrency {
-            get {
-                return ResourceManager.GetString("AmountAndCurrency", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Key ähnelt.
-        /// </summary>
-        public static string ApiKey {
-            get {
-                return ResourceManager.GetString("ApiKey", resourceCulture);
             }
         }
         
@@ -260,20 +206,11 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Bitcoin can not be removed from the reference currencies. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bitcoin can not be removed. ähnelt.
         /// </summary>
         public static string BitcoinCanNotBeRemoved {
             get {
                 return ResourceManager.GetString("BitcoinCanNotBeRemoved", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Bitcoin can not be removed from the stared reference currencies. ähnelt.
-        /// </summary>
-        public static string BitcoinCanNotBeUnstared {
-            get {
-                return ResourceManager.GetString("BitcoinCanNotBeUnstared", resourceCulture);
             }
         }
         
@@ -296,38 +233,20 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Block explorer ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key ähnelt.
         /// </summary>
-        public static string BlockExplorer {
+        public static string BittrexKey {
             get {
-                return ResourceManager.GetString("BlockExplorer", resourceCulture);
+                return ResourceManager.GetString("BittrexKey", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Block height ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Secret ähnelt.
         /// </summary>
-        public static string BlockHeight {
+        public static string BittrexSecret {
             get {
-                return ResourceManager.GetString("BlockHeight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Block reward ähnelt.
-        /// </summary>
-        public static string BlockReward {
-            get {
-                return ResourceManager.GetString("BlockReward", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Blocktime ähnelt.
-        /// </summary>
-        public static string Blocktime {
-            get {
-                return ResourceManager.GetString("Blocktime", resourceCulture);
+                return ResourceManager.GetString("BittrexSecret", resourceCulture);
             }
         }
         
@@ -350,11 +269,110 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Algorithm ähnelt.
+        /// </summary>
+        public static string CoinAlgorithm {
+            get {
+                return ResourceManager.GetString("CoinAlgorithm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Block height ähnelt.
+        /// </summary>
+        public static string CoinBlockHeight {
+            get {
+                return ResourceManager.GetString("CoinBlockHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Block reward ähnelt.
+        /// </summary>
+        public static string CoinBlockReward {
+            get {
+                return ResourceManager.GetString("CoinBlockReward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Blocktime ähnelt.
+        /// </summary>
+        public static string CoinBlocktime {
+            get {
+                return ResourceManager.GetString("CoinBlocktime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Difficulty ähnelt.
+        /// </summary>
+        public static string CoinDifficulty {
+            get {
+                return ResourceManager.GetString("CoinDifficulty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Coin explorer ähnelt.
+        /// </summary>
+        public static string CoinExplorer {
+            get {
+                return ResourceManager.GetString("CoinExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hashrate ähnelt.
+        /// </summary>
+        public static string CoinHashrate {
+            get {
+                return ResourceManager.GetString("CoinHashrate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Market cap. ähnelt.
+        /// </summary>
+        public static string CoinMarketCap {
+            get {
+                return ResourceManager.GetString("CoinMarketCap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die PoS ähnelt.
+        /// </summary>
+        public static string CoinProofOfStake {
+            get {
+                return ResourceManager.GetString("CoinProofOfStake", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die PoW ähnelt.
+        /// </summary>
+        public static string CoinProofOfWork {
+            get {
+                return ResourceManager.GetString("CoinProofOfWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Coin supply ähnelt.
         /// </summary>
         public static string CoinSupply {
             get {
                 return ResourceManager.GetString("CoinSupply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Max. coin supply ähnelt.
+        /// </summary>
+        public static string CoinSupplyMax {
+            get {
+                return ResourceManager.GetString("CoinSupplyMax", resourceCulture);
             }
         }
         
@@ -391,6 +409,15 @@ namespace MyCC.Forms.Resources {
         public static string Currency {
             get {
                 return ResourceManager.GetString("Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Currency code ähnelt.
+        /// </summary>
+        public static string CurrencyCode {
+            get {
+                return ResourceManager.GetString("CurrencyCode", resourceCulture);
             }
         }
         
@@ -440,20 +467,20 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Details ähnelt.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Developed by Daniel Sparber ähnelt.
         /// </summary>
         public static string DevelopedBy {
             get {
                 return ResourceManager.GetString("DevelopedBy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Difficulty ähnelt.
-        /// </summary>
-        public static string Difficulty {
-            get {
-                return ResourceManager.GetString("Difficulty", resourceCulture);
             }
         }
         
@@ -611,29 +638,11 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Grant access ähnelt.
-        /// </summary>
-        public static string GrantAccess {
-            get {
-                return ResourceManager.GetString("GrantAccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Graph ähnelt.
         /// </summary>
         public static string Graph {
             get {
                 return ResourceManager.GetString("Graph", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hashrate ähnelt.
-        /// </summary>
-        public static string Hashrate {
-            get {
-                return ResourceManager.GetString("Hashrate", resourceCulture);
             }
         }
         
@@ -715,24 +724,6 @@ namespace MyCC.Forms.Resources {
         public static string ManuallyAdded {
             get {
                 return ResourceManager.GetString("ManuallyAdded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Market cap. ähnelt.
-        /// </summary>
-        public static string MarketCap {
-            get {
-                return ResourceManager.GetString("MarketCap", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Max. coin supply ähnelt.
-        /// </summary>
-        public static string MaxCoinSupply {
-            get {
-                return ResourceManager.GetString("MaxCoinSupply", resourceCulture);
             }
         }
         
@@ -962,33 +953,6 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Proof of stake ähnelt.
-        /// </summary>
-        public static string ProofOfStake {
-            get {
-                return ResourceManager.GetString("ProofOfStake", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Proof of work ähnelt.
-        /// </summary>
-        public static string ProofOfWork {
-            get {
-                return ResourceManager.GetString("ProofOfWork", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Proof of work and stake ähnelt.
-        /// </summary>
-        public static string ProofOfWorkAndState {
-            get {
-                return ResourceManager.GetString("ProofOfWorkAndState", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Rates ähnelt.
         /// </summary>
         public static string Rates {
@@ -1124,15 +1088,6 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Secret ähnelt.
-        /// </summary>
-        public static string SecretApiKey {
-            get {
-                return ResourceManager.GetString("SecretApiKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Security ähnelt.
         /// </summary>
         public static string Security {
@@ -1147,15 +1102,6 @@ namespace MyCC.Forms.Resources {
         public static string SelectCurrency {
             get {
                 return ResourceManager.GetString("SelectCurrency", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Send feedback ähnelt.
-        /// </summary>
-        public static string SendFeedback {
-            get {
-                return ResourceManager.GetString("SendFeedback", resourceCulture);
             }
         }
         

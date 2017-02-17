@@ -3,9 +3,11 @@ using System.Linq;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Settings;
+using MyCC.Forms.Constants;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
+using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages
@@ -13,14 +15,24 @@ namespace MyCC.Forms.View.Pages
     public partial class CoinTableView
     {
         private readonly CoinTableComponent _tableView;
+        private readonly PullToRefreshLayout _pullToRefresh;
 
         public CoinTableView()
         {
             InitializeComponent();
 
             _tableView = new CoinTableComponent(Navigation);
+            _pullToRefresh = new PullToRefreshLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Content = _tableView,
+                BackgroundColor = AppConstants.TableBackgroundColor,
+                RefreshCommand = new Command(Refresh),
+            };
 
-            Stack.Children.Add(_tableView);
+
+            Stack.Children.Add(_pullToRefresh);
 
             AddSubscriber();
 
@@ -78,11 +90,10 @@ namespace MyCC.Forms.View.Pages
             Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoSourcesView);
         }
 
-        private async void Refresh(object sender, EventArgs e)
+        private async void Refresh()
         {
-            RefreshItem.Clicked -= Refresh;
             await AppTaskHelper.FetchBalancesAndRates();
-            RefreshItem.Clicked += Refresh;
+            _pullToRefresh.IsRefreshing = false;
         }
 
         private class HeaderTemplateSelector : DataTemplateSelector

@@ -115,7 +115,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             if (currency.Equals(Currency.Btc))
             {
-                star.Action = (sender, e) => DisplayAlert(I18N.Error, I18N.BitcoinCanNotBeUnstared, I18N.Ok);
+                star.Action = (sender, e) => DisplayAlert(I18N.Error, I18N.BitcoinCanNotBeRemoved, I18N.Ok);
                 delete.Action = (sender, e) => DisplayAlert(I18N.Error, I18N.BitcoinCanNotBeRemoved, I18N.Ok);
             }
 

@@ -17,7 +17,7 @@ namespace MyCC.Forms.View.Addsource
 
         public AddLocalAccountSubview(INavigation navigation)
         {
-            _inputSection = new TableSection { Title = I18N.AmountAndCurrency };
+            _inputSection = new TableSection { Title = I18N.Details };
             _amountEntryCell = new CustomEntryCell { Title = I18N.Amount, Placeholder = "0" };
             _amountEntryCell.Entry.Keyboard = Keyboard.Numeric;
             _currencyCell = new CurrencyEntryCell(navigation) { IsAmountEnabled = false, IsFormRepresentation = true };

@@ -22,7 +22,6 @@ namespace MyCC.Forms.View.Overlays
         public AddSourceView(bool local = false)
         {
             InitializeComponent();
-            Title = I18N.AddRepositoryTitle;
             Header.TitleText = I18N.NewSource;
             Header.LoadingText = I18N.Testing;
 

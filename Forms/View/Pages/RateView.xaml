@@ -9,13 +9,6 @@
 	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.RateView"
 	Title="{resources:Translate Rates}">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem
-			Text="{resources:Translate Refresh}"
-			Clicked="Refresh"
-			x:Name="RefreshItem"
-			Icon="refresh.png" />
-  </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <components:ChangingStackLayout>
       <carousel:CarouselViewControl

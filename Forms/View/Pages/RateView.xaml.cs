@@ -5,15 +5,18 @@ using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
+using MyCC.Forms.Constants;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
+using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages
 {
     public partial class RateView
     {
+        private readonly PullToRefreshLayout _pullToRefresh;
         private readonly RatesTableComponent _tableView;
 
         public RateView()
@@ -22,7 +25,17 @@ namespace MyCC.Forms.View.Pages
 
             _tableView = new RatesTableComponent(Navigation);
 
-            Stack.Children.Add(_tableView);
+            _pullToRefresh = new PullToRefreshLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Content = _tableView,
+                BackgroundColor = AppConstants.TableBackgroundColor,
+                RefreshCommand = new Command(Refresh),
+            };
+
+
+            Stack.Children.Add(_pullToRefresh);
 
             AddSubscriber();
 
@@ -73,11 +86,10 @@ namespace MyCC.Forms.View.Pages
             Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
         }
 
-        private async void Refresh(object sender, EventArgs e)
+        private async void Refresh()
         {
-            RefreshItem.Clicked -= Refresh;
             await AppTaskHelper.UpdateRates();
-            RefreshItem.Clicked += Refresh;
+            _pullToRefresh.IsRefreshing = false;
         }
 
         private class HeaderTemplateSelector : DataTemplateSelector
