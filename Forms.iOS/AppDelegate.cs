@@ -1,5 +1,6 @@
 ﻿using CarouselView.FormsPlugin.iOS;
 using Foundation;
+using HockeyApp.iOS;
 using MyCC.Forms.Constants;
 using UIKit;
 using Xamarin.Forms;
@@ -34,6 +35,11 @@ namespace MyCC.Forms.iOS
             UIProgressView.Appearance.TrackTintColor = Color.Transparent.ToUIColor();
 
             UITabBar.Appearance.TintColor = AppConstants.ThemeColor.ToUIColor();
+
+            var manager = BITHockeyManager.SharedHockeyManager;
+            manager.Configure("3e42251c3ae84c498abf08fbdd56a818");
+            manager.StartManager();
+            manager.Authenticator.AuthenticateInstallation();
 
             return result;
         }

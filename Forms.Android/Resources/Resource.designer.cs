@@ -1855,6 +1855,126 @@ namespace MyCC.Forms.Android
 			global::CarouselView.FormsPlugin.Android.Resource.Styleable.ViewStubCompat_android_id = global::MyCC.Forms.Android.Resource.Styleable.ViewStubCompat_android_id;
 			global::CarouselView.FormsPlugin.Android.Resource.Styleable.ViewStubCompat_android_inflatedId = global::MyCC.Forms.Android.Resource.Styleable.ViewStubCompat_android_inflatedId;
 			global::CarouselView.FormsPlugin.Android.Resource.Styleable.ViewStubCompat_android_layout = global::MyCC.Forms.Android.Resource.Styleable.ViewStubCompat_android_layout;
+			global::HockeyApp.Resource.Color.hockeyapp_background_header = global::MyCC.Forms.Android.Resource.Color.hockeyapp_background_header;
+			global::HockeyApp.Resource.Color.hockeyapp_background_light = global::MyCC.Forms.Android.Resource.Color.hockeyapp_background_light;
+			global::HockeyApp.Resource.Color.hockeyapp_background_white = global::MyCC.Forms.Android.Resource.Color.hockeyapp_background_white;
+			global::HockeyApp.Resource.Color.hockeyapp_button_background = global::MyCC.Forms.Android.Resource.Color.hockeyapp_button_background;
+			global::HockeyApp.Resource.Color.hockeyapp_button_background_pressed = global::MyCC.Forms.Android.Resource.Color.hockeyapp_button_background_pressed;
+			global::HockeyApp.Resource.Color.hockeyapp_button_background_selected = global::MyCC.Forms.Android.Resource.Color.hockeyapp_button_background_selected;
+			global::HockeyApp.Resource.Color.hockeyapp_text_black = global::MyCC.Forms.Android.Resource.Color.hockeyapp_text_black;
+			global::HockeyApp.Resource.Color.hockeyapp_text_light = global::MyCC.Forms.Android.Resource.Color.hockeyapp_text_light;
+			global::HockeyApp.Resource.Color.hockeyapp_text_normal = global::MyCC.Forms.Android.Resource.Color.hockeyapp_text_normal;
+			global::HockeyApp.Resource.Color.hockeyapp_text_white = global::MyCC.Forms.Android.Resource.Color.hockeyapp_text_white;
+			global::HockeyApp.Resource.Drawable.hockeyapp_btn_background = global::MyCC.Forms.Android.Resource.Drawable.hockeyapp_btn_background;
+			global::HockeyApp.Resource.Id.button_add_response = global::MyCC.Forms.Android.Resource.Id.button_add_response;
+			global::HockeyApp.Resource.Id.button_attachment = global::MyCC.Forms.Android.Resource.Id.button_attachment;
+			global::HockeyApp.Resource.Id.button_login = global::MyCC.Forms.Android.Resource.Id.button_login;
+			global::HockeyApp.Resource.Id.button_refresh = global::MyCC.Forms.Android.Resource.Id.button_refresh;
+			global::HockeyApp.Resource.Id.button_send = global::MyCC.Forms.Android.Resource.Id.button_send;
+			global::HockeyApp.Resource.Id.button_update = global::MyCC.Forms.Android.Resource.Id.button_update;
+			global::HockeyApp.Resource.Id.input_email = global::MyCC.Forms.Android.Resource.Id.input_email;
+			global::HockeyApp.Resource.Id.input_message = global::MyCC.Forms.Android.Resource.Id.input_message;
+			global::HockeyApp.Resource.Id.input_name = global::MyCC.Forms.Android.Resource.Id.input_name;
+			global::HockeyApp.Resource.Id.input_password = global::MyCC.Forms.Android.Resource.Id.input_password;
+			global::HockeyApp.Resource.Id.input_subject = global::MyCC.Forms.Android.Resource.Id.input_subject;
+			global::HockeyApp.Resource.Id.label_author = global::MyCC.Forms.Android.Resource.Id.label_author;
+			global::HockeyApp.Resource.Id.label_date = global::MyCC.Forms.Android.Resource.Id.label_date;
+			global::HockeyApp.Resource.Id.label_last_updated = global::MyCC.Forms.Android.Resource.Id.label_last_updated;
+			global::HockeyApp.Resource.Id.label_message = global::MyCC.Forms.Android.Resource.Id.label_message;
+			global::HockeyApp.Resource.Id.label_text = global::MyCC.Forms.Android.Resource.Id.label_text;
+			global::HockeyApp.Resource.Id.label_title = global::MyCC.Forms.Android.Resource.Id.label_title;
+			global::HockeyApp.Resource.Id.label_version = global::MyCC.Forms.Android.Resource.Id.label_version;
+			global::HockeyApp.Resource.Id.list_attachments = global::MyCC.Forms.Android.Resource.Id.list_attachments;
+			global::HockeyApp.Resource.Id.list_feedback_messages = global::MyCC.Forms.Android.Resource.Id.list_feedback_messages;
+			global::HockeyApp.Resource.Id.text_headline = global::MyCC.Forms.Android.Resource.Id.text_headline;
+			global::HockeyApp.Resource.Id.view_header = global::MyCC.Forms.Android.Resource.Id.view_header;
+			global::HockeyApp.Resource.Id.web_update_details = global::MyCC.Forms.Android.Resource.Id.web_update_details;
+			global::HockeyApp.Resource.Id.wrapper_attachments = global::MyCC.Forms.Android.Resource.Id.wrapper_attachments;
+			global::HockeyApp.Resource.Id.wrapper_feedback = global::MyCC.Forms.Android.Resource.Id.wrapper_feedback;
+			global::HockeyApp.Resource.Id.wrapper_feedback_scroll = global::MyCC.Forms.Android.Resource.Id.wrapper_feedback_scroll;
+			global::HockeyApp.Resource.Id.wrapper_messages = global::MyCC.Forms.Android.Resource.Id.wrapper_messages;
+			global::HockeyApp.Resource.Id.wrapper_messages_buttons = global::MyCC.Forms.Android.Resource.Id.wrapper_messages_buttons;
+			global::HockeyApp.Resource.Layout.hockeyapp_activity_expiry_info = global::MyCC.Forms.Android.Resource.Layout.hockeyapp_activity_expiry_info;
+			global::HockeyApp.Resource.Layout.hockeyapp_activity_feedback = global::MyCC.Forms.Android.Resource.Layout.hockeyapp_activity_feedback;
+			global::HockeyApp.Resource.Layout.hockeyapp_activity_login = global::MyCC.Forms.Android.Resource.Layout.hockeyapp_activity_login;
+			global::HockeyApp.Resource.Layout.hockeyapp_activity_update = global::MyCC.Forms.Android.Resource.Layout.hockeyapp_activity_update;
+			global::HockeyApp.Resource.Layout.hockeyapp_fragment_update = global::MyCC.Forms.Android.Resource.Layout.hockeyapp_fragment_update;
+			global::HockeyApp.Resource.Layout.hockeyapp_view_feedback_message = global::MyCC.Forms.Android.Resource.Layout.hockeyapp_view_feedback_message;
+			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_app_name_fallback = global::MyCC.Forms.Android.Resource.String.hockeyapp_crash_dialog_app_name_fallback;
+			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_message = global::MyCC.Forms.Android.Resource.String.hockeyapp_crash_dialog_message;
+			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_negative_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_crash_dialog_negative_button;
+			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_neutral_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_crash_dialog_neutral_button;
+			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_positive_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_crash_dialog_positive_button;
+			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_title = global::MyCC.Forms.Android.Resource.String.hockeyapp_crash_dialog_title;
+			global::HockeyApp.Resource.String.hockeyapp_dialog_error_message = global::MyCC.Forms.Android.Resource.String.hockeyapp_dialog_error_message;
+			global::HockeyApp.Resource.String.hockeyapp_dialog_error_title = global::MyCC.Forms.Android.Resource.String.hockeyapp_dialog_error_title;
+			global::HockeyApp.Resource.String.hockeyapp_dialog_negative_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_dialog_negative_button;
+			global::HockeyApp.Resource.String.hockeyapp_dialog_positive_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_dialog_positive_button;
+			global::HockeyApp.Resource.String.hockeyapp_download_failed_dialog_message = global::MyCC.Forms.Android.Resource.String.hockeyapp_download_failed_dialog_message;
+			global::HockeyApp.Resource.String.hockeyapp_download_failed_dialog_negative_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_download_failed_dialog_negative_button;
+			global::HockeyApp.Resource.String.hockeyapp_download_failed_dialog_positive_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_download_failed_dialog_positive_button;
+			global::HockeyApp.Resource.String.hockeyapp_download_failed_dialog_title = global::MyCC.Forms.Android.Resource.String.hockeyapp_download_failed_dialog_title;
+			global::HockeyApp.Resource.String.hockeyapp_error_no_network_message = global::MyCC.Forms.Android.Resource.String.hockeyapp_error_no_network_message;
+			global::HockeyApp.Resource.String.hockeyapp_expiry_info_text = global::MyCC.Forms.Android.Resource.String.hockeyapp_expiry_info_text;
+			global::HockeyApp.Resource.String.hockeyapp_expiry_info_title = global::MyCC.Forms.Android.Resource.String.hockeyapp_expiry_info_title;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_attach_file = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_attach_file;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_attach_picture = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_attach_picture;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_attachment_button_text = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_attachment_button_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_attachment_error = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_attachment_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_attachment_loading = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_attachment_loading;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_email_hint = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_email_hint;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_failed_text = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_failed_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_failed_title = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_failed_title;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_fetching_feedback_text = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_fetching_feedback_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_generic_error = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_generic_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_last_updated_text = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_last_updated_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_max_attachments_allowed = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_max_attachments_allowed;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_message_hint = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_message_hint;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_name_hint = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_name_hint;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_refresh_button_text = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_refresh_button_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_response_button_text = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_response_button_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_select_file = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_select_file;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_select_picture = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_select_picture;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_send_button_text = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_send_button_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_send_generic_error = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_send_generic_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_send_network_error = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_send_network_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_sending_feedback_text = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_sending_feedback_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_subject_hint = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_subject_hint;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_title = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_title;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_email_empty = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_validate_email_empty;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_email_error = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_validate_email_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_name_error = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_validate_name_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_subject_error = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_validate_subject_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_text_error = global::MyCC.Forms.Android.Resource.String.hockeyapp_feedback_validate_text_error;
+			global::HockeyApp.Resource.String.hockeyapp_login_email_hint = global::MyCC.Forms.Android.Resource.String.hockeyapp_login_email_hint;
+			global::HockeyApp.Resource.String.hockeyapp_login_headline_text = global::MyCC.Forms.Android.Resource.String.hockeyapp_login_headline_text;
+			global::HockeyApp.Resource.String.hockeyapp_login_headline_text_email_only = global::MyCC.Forms.Android.Resource.String.hockeyapp_login_headline_text_email_only;
+			global::HockeyApp.Resource.String.hockeyapp_login_login_button_text = global::MyCC.Forms.Android.Resource.String.hockeyapp_login_login_button_text;
+			global::HockeyApp.Resource.String.hockeyapp_login_missing_credentials_toast = global::MyCC.Forms.Android.Resource.String.hockeyapp_login_missing_credentials_toast;
+			global::HockeyApp.Resource.String.hockeyapp_login_password_hint = global::MyCC.Forms.Android.Resource.String.hockeyapp_login_password_hint;
+			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_message = global::MyCC.Forms.Android.Resource.String.hockeyapp_paint_dialog_message;
+			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_negative_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_paint_dialog_negative_button;
+			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_neutral_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_paint_dialog_neutral_button;
+			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_positive_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_paint_dialog_positive_button;
+			global::HockeyApp.Resource.String.hockeyapp_paint_indicator_toast = global::MyCC.Forms.Android.Resource.String.hockeyapp_paint_indicator_toast;
+			global::HockeyApp.Resource.String.hockeyapp_paint_menu_clear = global::MyCC.Forms.Android.Resource.String.hockeyapp_paint_menu_clear;
+			global::HockeyApp.Resource.String.hockeyapp_paint_menu_save = global::MyCC.Forms.Android.Resource.String.hockeyapp_paint_menu_save;
+			global::HockeyApp.Resource.String.hockeyapp_paint_menu_undo = global::MyCC.Forms.Android.Resource.String.hockeyapp_paint_menu_undo;
+			global::HockeyApp.Resource.String.hockeyapp_permission_dialog_negative_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_permission_dialog_negative_button;
+			global::HockeyApp.Resource.String.hockeyapp_permission_dialog_positive_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_permission_dialog_positive_button;
+			global::HockeyApp.Resource.String.hockeyapp_permission_update_message = global::MyCC.Forms.Android.Resource.String.hockeyapp_permission_update_message;
+			global::HockeyApp.Resource.String.hockeyapp_permission_update_title = global::MyCC.Forms.Android.Resource.String.hockeyapp_permission_update_title;
+			global::HockeyApp.Resource.String.hockeyapp_update_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_update_button;
+			global::HockeyApp.Resource.String.hockeyapp_update_dialog_message = global::MyCC.Forms.Android.Resource.String.hockeyapp_update_dialog_message;
+			global::HockeyApp.Resource.String.hockeyapp_update_dialog_negative_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_update_dialog_negative_button;
+			global::HockeyApp.Resource.String.hockeyapp_update_dialog_positive_button = global::MyCC.Forms.Android.Resource.String.hockeyapp_update_dialog_positive_button;
+			global::HockeyApp.Resource.String.hockeyapp_update_dialog_title = global::MyCC.Forms.Android.Resource.String.hockeyapp_update_dialog_title;
+			global::HockeyApp.Resource.String.hockeyapp_update_mandatory_toast = global::MyCC.Forms.Android.Resource.String.hockeyapp_update_mandatory_toast;
+			global::HockeyApp.Resource.String.hockeyapp_update_version_details_label = global::MyCC.Forms.Android.Resource.String.hockeyapp_update_version_details_label;
+			global::HockeyApp.Resource.String.library_name = global::MyCC.Forms.Android.Resource.String.library_name;
+			global::HockeyApp.Resource.Style.HockeyApp_ButtonStyle = global::MyCC.Forms.Android.Resource.Style.HockeyApp_ButtonStyle;
+			global::HockeyApp.Resource.Style.HockeyApp_EditTextStyle = global::MyCC.Forms.Android.Resource.Style.HockeyApp_EditTextStyle;
+			global::HockeyApp.Resource.Style.HockeyApp_SingleLineInputStyle = global::MyCC.Forms.Android.Resource.Style.HockeyApp_SingleLineInputStyle;
 			global::ModernHttpClient.Resource.String.library_name = global::MyCC.Forms.Android.Resource.String.library_name;
 			global::PCLCrypto.Resource.String.ApplicationName = global::MyCC.Forms.Android.Resource.String.ApplicationName;
 			global::PCLCrypto.Resource.String.Hello = global::MyCC.Forms.Android.Resource.String.Hello;
@@ -4795,32 +4915,32 @@ namespace MyCC.Forms.Android
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f0b0062
-			public const int abc_background_cache_hint_selector_material_dark = 2131427426;
+			// aapt resource value: 0x7f0b006c
+			public const int abc_background_cache_hint_selector_material_dark = 2131427436;
 			
-			// aapt resource value: 0x7f0b0063
-			public const int abc_background_cache_hint_selector_material_light = 2131427427;
+			// aapt resource value: 0x7f0b006d
+			public const int abc_background_cache_hint_selector_material_light = 2131427437;
 			
-			// aapt resource value: 0x7f0b0064
-			public const int abc_color_highlight_material = 2131427428;
+			// aapt resource value: 0x7f0b006e
+			public const int abc_color_highlight_material = 2131427438;
 			
 			// aapt resource value: 0x7f0b0004
 			public const int abc_input_method_navigation_guard = 2131427332;
 			
-			// aapt resource value: 0x7f0b0065
-			public const int abc_primary_text_disable_only_material_dark = 2131427429;
+			// aapt resource value: 0x7f0b006f
+			public const int abc_primary_text_disable_only_material_dark = 2131427439;
 			
-			// aapt resource value: 0x7f0b0066
-			public const int abc_primary_text_disable_only_material_light = 2131427430;
+			// aapt resource value: 0x7f0b0070
+			public const int abc_primary_text_disable_only_material_light = 2131427440;
 			
-			// aapt resource value: 0x7f0b0067
-			public const int abc_primary_text_material_dark = 2131427431;
+			// aapt resource value: 0x7f0b0071
+			public const int abc_primary_text_material_dark = 2131427441;
 			
-			// aapt resource value: 0x7f0b0068
-			public const int abc_primary_text_material_light = 2131427432;
+			// aapt resource value: 0x7f0b0072
+			public const int abc_primary_text_material_light = 2131427442;
 			
-			// aapt resource value: 0x7f0b0069
-			public const int abc_search_url_text = 2131427433;
+			// aapt resource value: 0x7f0b0073
+			public const int abc_search_url_text = 2131427443;
 			
 			// aapt resource value: 0x7f0b0005
 			public const int abc_search_url_text_normal = 2131427333;
@@ -4831,14 +4951,14 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f0b0007
 			public const int abc_search_url_text_selected = 2131427335;
 			
+			// aapt resource value: 0x7f0b0074
+			public const int abc_secondary_text_material_dark = 2131427444;
+			
+			// aapt resource value: 0x7f0b0075
+			public const int abc_secondary_text_material_light = 2131427445;
+			
 			// aapt resource value: 0x7f0b006a
-			public const int abc_secondary_text_material_dark = 2131427434;
-			
-			// aapt resource value: 0x7f0b006b
-			public const int abc_secondary_text_material_light = 2131427435;
-			
-			// aapt resource value: 0x7f0b0060
-			public const int accent = 2131427424;
+			public const int accent = 2131427434;
 			
 			// aapt resource value: 0x7f0b0008
 			public const int accent_material_dark = 2131427336;
@@ -4912,8 +5032,8 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f0b0051
 			public const int calendar_text_selected = 2131427409;
 			
-			// aapt resource value: 0x7f0b006c
-			public const int calendar_text_selector = 2131427436;
+			// aapt resource value: 0x7f0b0076
+			public const int calendar_text_selector = 2131427446;
 			
 			// aapt resource value: 0x7f0b0052
 			public const int calendar_text_unselectable = 2131427410;
@@ -4930,14 +5050,14 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f0b0003
 			public const int cardview_shadow_start_color = 2131427331;
 			
-			// aapt resource value: 0x7f0b005b
-			public const int default_circle_indicator_fill_color = 2131427419;
+			// aapt resource value: 0x7f0b0065
+			public const int default_circle_indicator_fill_color = 2131427429;
 			
-			// aapt resource value: 0x7f0b005c
-			public const int default_circle_indicator_page_color = 2131427420;
+			// aapt resource value: 0x7f0b0066
+			public const int default_circle_indicator_page_color = 2131427430;
 			
-			// aapt resource value: 0x7f0b005d
-			public const int default_circle_indicator_stroke_color = 2131427421;
+			// aapt resource value: 0x7f0b0067
+			public const int default_circle_indicator_stroke_color = 2131427431;
 			
 			// aapt resource value: 0x7f0b003e
 			public const int design_fab_shadow_end_color = 2131427390;
@@ -4999,6 +5119,36 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f0b001f
 			public const int hint_foreground_material_light = 2131427359;
 			
+			// aapt resource value: 0x7f0b0053
+			public const int hockeyapp_background_header = 2131427411;
+			
+			// aapt resource value: 0x7f0b0054
+			public const int hockeyapp_background_light = 2131427412;
+			
+			// aapt resource value: 0x7f0b0055
+			public const int hockeyapp_background_white = 2131427413;
+			
+			// aapt resource value: 0x7f0b0056
+			public const int hockeyapp_button_background = 2131427414;
+			
+			// aapt resource value: 0x7f0b0057
+			public const int hockeyapp_button_background_pressed = 2131427415;
+			
+			// aapt resource value: 0x7f0b0058
+			public const int hockeyapp_button_background_selected = 2131427416;
+			
+			// aapt resource value: 0x7f0b0059
+			public const int hockeyapp_text_black = 2131427417;
+			
+			// aapt resource value: 0x7f0b005a
+			public const int hockeyapp_text_light = 2131427418;
+			
+			// aapt resource value: 0x7f0b005b
+			public const int hockeyapp_text_normal = 2131427419;
+			
+			// aapt resource value: 0x7f0b005c
+			public const int hockeyapp_text_white = 2131427420;
+			
 			// aapt resource value: 0x7f0b0020
 			public const int material_blue_grey_800 = 2131427360;
 			
@@ -5035,11 +5185,11 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f0b002b
 			public const int material_grey_900 = 2131427371;
 			
-			// aapt resource value: 0x7f0b005e
-			public const int primary = 2131427422;
+			// aapt resource value: 0x7f0b0068
+			public const int primary = 2131427432;
 			
-			// aapt resource value: 0x7f0b005f
-			public const int primaryDark = 2131427423;
+			// aapt resource value: 0x7f0b0069
+			public const int primaryDark = 2131427433;
 			
 			// aapt resource value: 0x7f0b002c
 			public const int primary_dark_material_dark = 2131427372;
@@ -5089,11 +5239,11 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f0b003b
 			public const int switch_thumb_disabled_material_light = 2131427387;
 			
-			// aapt resource value: 0x7f0b006d
-			public const int switch_thumb_material_dark = 2131427437;
+			// aapt resource value: 0x7f0b0077
+			public const int switch_thumb_material_dark = 2131427447;
 			
-			// aapt resource value: 0x7f0b006e
-			public const int switch_thumb_material_light = 2131427438;
+			// aapt resource value: 0x7f0b0078
+			public const int switch_thumb_material_light = 2131427448;
 			
 			// aapt resource value: 0x7f0b003c
 			public const int switch_thumb_normal_material_dark = 2131427388;
@@ -5101,32 +5251,32 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f0b003d
 			public const int switch_thumb_normal_material_light = 2131427389;
 			
-			// aapt resource value: 0x7f0b0053
-			public const int vpi__background_holo_dark = 2131427411;
+			// aapt resource value: 0x7f0b005d
+			public const int vpi__background_holo_dark = 2131427421;
 			
-			// aapt resource value: 0x7f0b0054
-			public const int vpi__background_holo_light = 2131427412;
-			
-			// aapt resource value: 0x7f0b0057
-			public const int vpi__bright_foreground_disabled_holo_dark = 2131427415;
-			
-			// aapt resource value: 0x7f0b0058
-			public const int vpi__bright_foreground_disabled_holo_light = 2131427416;
-			
-			// aapt resource value: 0x7f0b0055
-			public const int vpi__bright_foreground_holo_dark = 2131427413;
-			
-			// aapt resource value: 0x7f0b0056
-			public const int vpi__bright_foreground_holo_light = 2131427414;
-			
-			// aapt resource value: 0x7f0b0059
-			public const int vpi__bright_foreground_inverse_holo_dark = 2131427417;
-			
-			// aapt resource value: 0x7f0b005a
-			public const int vpi__bright_foreground_inverse_holo_light = 2131427418;
+			// aapt resource value: 0x7f0b005e
+			public const int vpi__background_holo_light = 2131427422;
 			
 			// aapt resource value: 0x7f0b0061
-			public const int window_background = 2131427425;
+			public const int vpi__bright_foreground_disabled_holo_dark = 2131427425;
+			
+			// aapt resource value: 0x7f0b0062
+			public const int vpi__bright_foreground_disabled_holo_light = 2131427426;
+			
+			// aapt resource value: 0x7f0b005f
+			public const int vpi__bright_foreground_holo_dark = 2131427423;
+			
+			// aapt resource value: 0x7f0b0060
+			public const int vpi__bright_foreground_holo_light = 2131427424;
+			
+			// aapt resource value: 0x7f0b0063
+			public const int vpi__bright_foreground_inverse_holo_dark = 2131427427;
+			
+			// aapt resource value: 0x7f0b0064
+			public const int vpi__bright_foreground_inverse_holo_light = 2131427428;
+			
+			// aapt resource value: 0x7f0b006b
+			public const int window_background = 2131427435;
 			
 			static Color()
 			{
@@ -5794,7 +5944,7 @@ namespace MyCC.Forms.Android
 			public const int graph = 2130837593;
 			
 			// aapt resource value: 0x7f02005a
-			public const int hamburger = 2130837594;
+			public const int hockeyapp_btn_background = 2130837594;
 			
 			// aapt resource value: 0x7f02005b
 			public const int ic_audiotrack = 2130837595;
@@ -6097,8 +6247,8 @@ namespace MyCC.Forms.Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070096
-			public const int action0 = 2131165334;
+			// aapt resource value: 0x7f0700b2
+			public const int action0 = 2131165362;
 			
 			// aapt resource value: 0x7f07005c
 			public const int action_bar = 2131165276;
@@ -6124,8 +6274,8 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f07005d
 			public const int action_context_bar = 2131165277;
 			
-			// aapt resource value: 0x7f07009a
-			public const int action_divider = 2131165338;
+			// aapt resource value: 0x7f0700b6
+			public const int action_divider = 2131165366;
 			
 			// aapt resource value: 0x7f070003
 			public const int action_menu_divider = 2131165187;
@@ -6160,8 +6310,26 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f070046
 			public const int buttonPanel = 2131165254;
 			
-			// aapt resource value: 0x7f07007c
-			public const int calendar_grid = 2131165308;
+			// aapt resource value: 0x7f070089
+			public const int button_add_response = 2131165321;
+			
+			// aapt resource value: 0x7f070084
+			public const int button_attachment = 2131165316;
+			
+			// aapt resource value: 0x7f07008e
+			public const int button_login = 2131165326;
+			
+			// aapt resource value: 0x7f07008a
+			public const int button_refresh = 2131165322;
+			
+			// aapt resource value: 0x7f070085
+			public const int button_send = 2131165317;
+			
+			// aapt resource value: 0x7f070092
+			public const int button_update = 2131165330;
+			
+			// aapt resource value: 0x7f070098
+			public const int calendar_grid = 2131165336;
 			
 			// aapt resource value: 0x7f07006c
 			public const int calendar_view = 2131165292;
@@ -6169,8 +6337,8 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f07006b
 			public const int calendarr_pager = 2131165291;
 			
-			// aapt resource value: 0x7f070097
-			public const int cancel_action = 2131165335;
+			// aapt resource value: 0x7f0700b3
+			public const int cancel_action = 2131165363;
 			
 			// aapt resource value: 0x7f07002b
 			public const int center = 2131165227;
@@ -6184,8 +6352,8 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f070054
 			public const int checkbox = 2131165268;
 			
-			// aapt resource value: 0x7f07009d
-			public const int chronometer = 2131165341;
+			// aapt resource value: 0x7f0700b9
+			public const int chronometer = 2131165369;
 			
 			// aapt resource value: 0x7f070033
 			public const int clip_horizontal = 2131165235;
@@ -6196,8 +6364,8 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f07001f
 			public const int collapseActionView = 2131165215;
 			
-			// aapt resource value: 0x7f0700a5
-			public const int contentFrame = 2131165349;
+			// aapt resource value: 0x7f0700c1
+			public const int contentFrame = 2131165377;
 			
 			// aapt resource value: 0x7f07004c
 			public const int contentPanel = 2131165260;
@@ -6238,8 +6406,8 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f07001c
 			public const int end = 2131165212;
 			
-			// aapt resource value: 0x7f0700a2
-			public const int end_padder = 2131165346;
+			// aapt resource value: 0x7f0700be
+			public const int end_padder = 2131165374;
 			
 			// aapt resource value: 0x7f070023
 			public const int enterAlways = 2131165219;
@@ -6298,14 +6466,50 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f070041
 			public const int image = 2131165249;
 			
-			// aapt resource value: 0x7f0700a4
-			public const int indicator = 2131165348;
+			// aapt resource value: 0x7f0700c0
+			public const int indicator = 2131165376;
 			
-			// aapt resource value: 0x7f0700a1
-			public const int info = 2131165345;
+			// aapt resource value: 0x7f0700bd
+			public const int info = 2131165373;
+			
+			// aapt resource value: 0x7f070080
+			public const int input_email = 2131165312;
+			
+			// aapt resource value: 0x7f070082
+			public const int input_message = 2131165314;
+			
+			// aapt resource value: 0x7f07007f
+			public const int input_name = 2131165311;
+			
+			// aapt resource value: 0x7f07008d
+			public const int input_password = 2131165325;
+			
+			// aapt resource value: 0x7f070081
+			public const int input_subject = 2131165313;
 			
 			// aapt resource value: 0x7f070000
 			public const int item_touch_helper_previous_elevation = 2131165184;
+			
+			// aapt resource value: 0x7f070094
+			public const int label_author = 2131165332;
+			
+			// aapt resource value: 0x7f070095
+			public const int label_date = 2131165333;
+			
+			// aapt resource value: 0x7f070087
+			public const int label_last_updated = 2131165319;
+			
+			// aapt resource value: 0x7f07007c
+			public const int label_message = 2131165308;
+			
+			// aapt resource value: 0x7f070096
+			public const int label_text = 2131165334;
+			
+			// aapt resource value: 0x7f070090
+			public const int label_title = 2131165328;
+			
+			// aapt resource value: 0x7f070091
+			public const int label_version = 2131165329;
 			
 			// aapt resource value: 0x7f07002f
 			public const int left = 2131165231;
@@ -6313,20 +6517,26 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f07006e
 			public const int left_arrow = 2131165294;
 			
-			// aapt resource value: 0x7f07009b
-			public const int line1 = 2131165339;
+			// aapt resource value: 0x7f0700b7
+			public const int line1 = 2131165367;
 			
-			// aapt resource value: 0x7f07009f
-			public const int line3 = 2131165343;
+			// aapt resource value: 0x7f0700bb
+			public const int line3 = 2131165371;
 			
 			// aapt resource value: 0x7f07000b
 			public const int listMode = 2131165195;
 			
+			// aapt resource value: 0x7f070097
+			public const int list_attachments = 2131165335;
+			
+			// aapt resource value: 0x7f07008b
+			public const int list_feedback_messages = 2131165323;
+			
 			// aapt resource value: 0x7f070043
 			public const int list_item = 2131165251;
 			
-			// aapt resource value: 0x7f070099
-			public const int media_actions = 2131165337;
+			// aapt resource value: 0x7f0700b5
+			public const int media_actions = 2131165365;
 			
 			// aapt resource value: 0x7f07001d
 			public const int middle = 2131165213;
@@ -6334,77 +6544,77 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f070037
 			public const int mini = 2131165239;
 			
-			// aapt resource value: 0x7f070088
-			public const int mr_art = 2131165320;
+			// aapt resource value: 0x7f0700a4
+			public const int mr_art = 2131165348;
 			
-			// aapt resource value: 0x7f07007d
-			public const int mr_chooser_list = 2131165309;
+			// aapt resource value: 0x7f070099
+			public const int mr_chooser_list = 2131165337;
 			
-			// aapt resource value: 0x7f070080
-			public const int mr_chooser_route_desc = 2131165312;
+			// aapt resource value: 0x7f07009c
+			public const int mr_chooser_route_desc = 2131165340;
 			
-			// aapt resource value: 0x7f07007e
-			public const int mr_chooser_route_icon = 2131165310;
+			// aapt resource value: 0x7f07009a
+			public const int mr_chooser_route_icon = 2131165338;
 			
-			// aapt resource value: 0x7f07007f
-			public const int mr_chooser_route_name = 2131165311;
+			// aapt resource value: 0x7f07009b
+			public const int mr_chooser_route_name = 2131165339;
 			
-			// aapt resource value: 0x7f070085
-			public const int mr_close = 2131165317;
+			// aapt resource value: 0x7f0700a1
+			public const int mr_close = 2131165345;
 			
-			// aapt resource value: 0x7f07008b
-			public const int mr_control_divider = 2131165323;
+			// aapt resource value: 0x7f0700a7
+			public const int mr_control_divider = 2131165351;
 			
-			// aapt resource value: 0x7f070091
-			public const int mr_control_play_pause = 2131165329;
+			// aapt resource value: 0x7f0700ad
+			public const int mr_control_play_pause = 2131165357;
 			
-			// aapt resource value: 0x7f070094
-			public const int mr_control_subtitle = 2131165332;
+			// aapt resource value: 0x7f0700b0
+			public const int mr_control_subtitle = 2131165360;
 			
-			// aapt resource value: 0x7f070093
-			public const int mr_control_title = 2131165331;
+			// aapt resource value: 0x7f0700af
+			public const int mr_control_title = 2131165359;
 			
-			// aapt resource value: 0x7f070092
-			public const int mr_control_title_container = 2131165330;
+			// aapt resource value: 0x7f0700ae
+			public const int mr_control_title_container = 2131165358;
 			
-			// aapt resource value: 0x7f070086
-			public const int mr_custom_control = 2131165318;
+			// aapt resource value: 0x7f0700a2
+			public const int mr_custom_control = 2131165346;
 			
-			// aapt resource value: 0x7f070087
-			public const int mr_default_control = 2131165319;
+			// aapt resource value: 0x7f0700a3
+			public const int mr_default_control = 2131165347;
 			
-			// aapt resource value: 0x7f070082
-			public const int mr_dialog_area = 2131165314;
+			// aapt resource value: 0x7f07009e
+			public const int mr_dialog_area = 2131165342;
 			
-			// aapt resource value: 0x7f070081
-			public const int mr_expandable_area = 2131165313;
+			// aapt resource value: 0x7f07009d
+			public const int mr_expandable_area = 2131165341;
 			
-			// aapt resource value: 0x7f070095
-			public const int mr_group_expand_collapse = 2131165333;
+			// aapt resource value: 0x7f0700b1
+			public const int mr_group_expand_collapse = 2131165361;
 			
-			// aapt resource value: 0x7f070089
-			public const int mr_media_main_control = 2131165321;
+			// aapt resource value: 0x7f0700a5
+			public const int mr_media_main_control = 2131165349;
 			
-			// aapt resource value: 0x7f070084
-			public const int mr_name = 2131165316;
+			// aapt resource value: 0x7f0700a0
+			public const int mr_name = 2131165344;
 			
-			// aapt resource value: 0x7f07008a
-			public const int mr_playback_control = 2131165322;
+			// aapt resource value: 0x7f0700a6
+			public const int mr_playback_control = 2131165350;
 			
-			// aapt resource value: 0x7f070083
-			public const int mr_title_bar = 2131165315;
+			// aapt resource value: 0x7f07009f
+			public const int mr_title_bar = 2131165343;
 			
-			// aapt resource value: 0x7f07008c
-			public const int mr_volume_control = 2131165324;
+			// aapt resource value: 0x7f0700a8
+			public const int mr_volume_control = 2131165352;
 			
-			// aapt resource value: 0x7f07008d
-			public const int mr_volume_group_list = 2131165325;
+			// aapt resource value: 0x7f0700a9
+			public const int mr_volume_group_list = 2131165353;
 			
-			// aapt resource value: 0x7f07008f
-			public const int mr_volume_item_icon = 2131165327;
+			// aapt resource value: 0x7f0700ab
+			public const int mr_volume_item_icon = 2131165355;
 			
-			// aapt resource value: 0x7f070090
-			public const int mr_volume_slider = 2131165328;
+			// aapt resource value: 0x7f0700ac
+			public const int mr_volume_slider = 2131165356;
 			
 			// aapt resource value: 0x7f070016
 			public const int multiply = 2131165206;
@@ -6421,8 +6631,8 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f07000c
 			public const int normal = 2131165196;
 			
-			// aapt resource value: 0x7f0700a3
-			public const int pager = 2131165347;
+			// aapt resource value: 0x7f0700bf
+			public const int pager = 2131165375;
 			
 			// aapt resource value: 0x7f070028
 			public const int parallax = 2131165224;
@@ -6538,8 +6748,8 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f070031
 			public const int start = 2131165233;
 			
-			// aapt resource value: 0x7f070098
-			public const int status_bar_latest_event_content = 2131165336;
+			// aapt resource value: 0x7f0700b4
+			public const int status_bar_latest_event_content = 2131165364;
 			
 			// aapt resource value: 0x7f070067
 			public const int submit_area = 2131165287;
@@ -6547,17 +6757,20 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f07000d
 			public const int tabMode = 2131165197;
 			
-			// aapt resource value: 0x7f0700a0
-			public const int text = 2131165344;
+			// aapt resource value: 0x7f0700bc
+			public const int text = 2131165372;
 			
-			// aapt resource value: 0x7f07009e
-			public const int text2 = 2131165342;
+			// aapt resource value: 0x7f0700ba
+			public const int text2 = 2131165370;
 			
 			// aapt resource value: 0x7f07004f
 			public const int textSpacerNoButtons = 2131165263;
 			
-			// aapt resource value: 0x7f07009c
-			public const int time = 2131165340;
+			// aapt resource value: 0x7f07008c
+			public const int text_headline = 2131165324;
+			
+			// aapt resource value: 0x7f0700b8
+			public const int time = 2131165368;
 			
 			// aapt resource value: 0x7f070045
 			public const int title = 2131165253;
@@ -6583,17 +6796,38 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f07003b
 			public const int vertical = 2131165243;
 			
+			// aapt resource value: 0x7f07008f
+			public const int view_header = 2131165327;
+			
 			// aapt resource value: 0x7f07000a
 			public const int view_offset_helper = 2131165194;
 			
-			// aapt resource value: 0x7f07008e
-			public const int volume_item_container = 2131165326;
+			// aapt resource value: 0x7f0700aa
+			public const int volume_item_container = 2131165354;
+			
+			// aapt resource value: 0x7f070093
+			public const int web_update_details = 2131165331;
 			
 			// aapt resource value: 0x7f070022
 			public const int withText = 2131165218;
 			
 			// aapt resource value: 0x7f070015
 			public const int wrap_content = 2131165205;
+			
+			// aapt resource value: 0x7f070083
+			public const int wrapper_attachments = 2131165315;
+			
+			// aapt resource value: 0x7f07007e
+			public const int wrapper_feedback = 2131165310;
+			
+			// aapt resource value: 0x7f07007d
+			public const int wrapper_feedback_scroll = 2131165309;
+			
+			// aapt resource value: 0x7f070086
+			public const int wrapper_messages = 2131165318;
+			
+			// aapt resource value: 0x7f070088
+			public const int wrapper_messages_buttons = 2131165320;
 			
 			static Id()
 			{
@@ -6800,76 +7034,94 @@ namespace MyCC.Forms.Android
 			public const int FingerprintDialog = 2130903081;
 			
 			// aapt resource value: 0x7f03002a
-			public const int month = 2130903082;
+			public const int hockeyapp_activity_expiry_info = 2130903082;
 			
 			// aapt resource value: 0x7f03002b
-			public const int mr_chooser_dialog = 2130903083;
+			public const int hockeyapp_activity_feedback = 2130903083;
 			
 			// aapt resource value: 0x7f03002c
-			public const int mr_chooser_list_item = 2130903084;
+			public const int hockeyapp_activity_login = 2130903084;
 			
 			// aapt resource value: 0x7f03002d
-			public const int mr_controller_material_dialog_b = 2130903085;
+			public const int hockeyapp_activity_update = 2130903085;
 			
 			// aapt resource value: 0x7f03002e
-			public const int mr_controller_volume_item = 2130903086;
+			public const int hockeyapp_fragment_update = 2130903086;
 			
 			// aapt resource value: 0x7f03002f
-			public const int mr_playback_control = 2130903087;
+			public const int hockeyapp_view_feedback_message = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public const int mr_volume_control = 2130903088;
+			public const int month = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public const int notification_media_action = 2130903089;
+			public const int mr_chooser_dialog = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public const int notification_media_cancel_action = 2130903090;
+			public const int mr_chooser_list_item = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public const int notification_template_big_media = 2130903091;
+			public const int mr_controller_material_dialog_b = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public const int notification_template_big_media_narrow = 2130903092;
+			public const int mr_controller_volume_item = 2130903092;
 			
 			// aapt resource value: 0x7f030035
-			public const int notification_template_lines = 2130903093;
+			public const int mr_playback_control = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public const int notification_template_media = 2130903094;
+			public const int mr_volume_control = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public const int notification_template_part_chronometer = 2130903095;
+			public const int notification_media_action = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public const int notification_template_part_time = 2130903096;
+			public const int notification_media_cancel_action = 2130903096;
 			
 			// aapt resource value: 0x7f030039
-			public const int select_dialog_item_material = 2130903097;
+			public const int notification_template_big_media = 2130903097;
 			
 			// aapt resource value: 0x7f03003a
-			public const int select_dialog_multichoice_material = 2130903098;
+			public const int notification_template_big_media_narrow = 2130903098;
 			
 			// aapt resource value: 0x7f03003b
-			public const int select_dialog_singlechoice_material = 2130903099;
+			public const int notification_template_lines = 2130903099;
 			
 			// aapt resource value: 0x7f03003c
-			public const int support_simple_spinner_dropdown_item = 2130903100;
+			public const int notification_template_media = 2130903100;
 			
 			// aapt resource value: 0x7f03003d
-			public const int vertical_viewpager = 2130903101;
+			public const int notification_template_part_chronometer = 2130903101;
 			
 			// aapt resource value: 0x7f03003e
-			public const int viewpager = 2130903102;
+			public const int notification_template_part_time = 2130903102;
 			
 			// aapt resource value: 0x7f03003f
-			public const int week = 2130903103;
+			public const int select_dialog_item_material = 2130903103;
 			
 			// aapt resource value: 0x7f030040
-			public const int zxingscanneractivitylayout = 2130903104;
+			public const int select_dialog_multichoice_material = 2130903104;
 			
 			// aapt resource value: 0x7f030041
-			public const int zxingscannerfragmentlayout = 2130903105;
+			public const int select_dialog_singlechoice_material = 2130903105;
+			
+			// aapt resource value: 0x7f030042
+			public const int support_simple_spinner_dropdown_item = 2130903106;
+			
+			// aapt resource value: 0x7f030043
+			public const int vertical_viewpager = 2130903107;
+			
+			// aapt resource value: 0x7f030044
+			public const int viewpager = 2130903108;
+			
+			// aapt resource value: 0x7f030045
+			public const int week = 2130903109;
+			
+			// aapt resource value: 0x7f030046
+			public const int zxingscanneractivitylayout = 2130903110;
+			
+			// aapt resource value: 0x7f030047
+			public const int zxingscannerfragmentlayout = 2130903111;
 			
 			static Layout()
 			{
@@ -6961,6 +7213,219 @@ namespace MyCC.Forms.Android
 			
 			// aapt resource value: 0x7f08002c
 			public const int full_date_format = 2131230764;
+			
+			// aapt resource value: 0x7f08002d
+			public const int hockeyapp_crash_dialog_app_name_fallback = 2131230765;
+			
+			// aapt resource value: 0x7f08002e
+			public const int hockeyapp_crash_dialog_message = 2131230766;
+			
+			// aapt resource value: 0x7f08002f
+			public const int hockeyapp_crash_dialog_negative_button = 2131230767;
+			
+			// aapt resource value: 0x7f080030
+			public const int hockeyapp_crash_dialog_neutral_button = 2131230768;
+			
+			// aapt resource value: 0x7f080031
+			public const int hockeyapp_crash_dialog_positive_button = 2131230769;
+			
+			// aapt resource value: 0x7f080032
+			public const int hockeyapp_crash_dialog_title = 2131230770;
+			
+			// aapt resource value: 0x7f080033
+			public const int hockeyapp_dialog_error_message = 2131230771;
+			
+			// aapt resource value: 0x7f080034
+			public const int hockeyapp_dialog_error_title = 2131230772;
+			
+			// aapt resource value: 0x7f080035
+			public const int hockeyapp_dialog_negative_button = 2131230773;
+			
+			// aapt resource value: 0x7f080036
+			public const int hockeyapp_dialog_positive_button = 2131230774;
+			
+			// aapt resource value: 0x7f080037
+			public const int hockeyapp_download_failed_dialog_message = 2131230775;
+			
+			// aapt resource value: 0x7f080038
+			public const int hockeyapp_download_failed_dialog_negative_button = 2131230776;
+			
+			// aapt resource value: 0x7f080039
+			public const int hockeyapp_download_failed_dialog_positive_button = 2131230777;
+			
+			// aapt resource value: 0x7f08003a
+			public const int hockeyapp_download_failed_dialog_title = 2131230778;
+			
+			// aapt resource value: 0x7f08003b
+			public const int hockeyapp_error_no_network_message = 2131230779;
+			
+			// aapt resource value: 0x7f08003c
+			public const int hockeyapp_expiry_info_text = 2131230780;
+			
+			// aapt resource value: 0x7f08003d
+			public const int hockeyapp_expiry_info_title = 2131230781;
+			
+			// aapt resource value: 0x7f08003e
+			public const int hockeyapp_feedback_attach_file = 2131230782;
+			
+			// aapt resource value: 0x7f08003f
+			public const int hockeyapp_feedback_attach_picture = 2131230783;
+			
+			// aapt resource value: 0x7f080040
+			public const int hockeyapp_feedback_attachment_button_text = 2131230784;
+			
+			// aapt resource value: 0x7f080041
+			public const int hockeyapp_feedback_attachment_error = 2131230785;
+			
+			// aapt resource value: 0x7f080042
+			public const int hockeyapp_feedback_attachment_loading = 2131230786;
+			
+			// aapt resource value: 0x7f080043
+			public const int hockeyapp_feedback_email_hint = 2131230787;
+			
+			// aapt resource value: 0x7f080044
+			public const int hockeyapp_feedback_failed_text = 2131230788;
+			
+			// aapt resource value: 0x7f080045
+			public const int hockeyapp_feedback_failed_title = 2131230789;
+			
+			// aapt resource value: 0x7f080046
+			public const int hockeyapp_feedback_fetching_feedback_text = 2131230790;
+			
+			// aapt resource value: 0x7f080047
+			public const int hockeyapp_feedback_generic_error = 2131230791;
+			
+			// aapt resource value: 0x7f080048
+			public const int hockeyapp_feedback_last_updated_text = 2131230792;
+			
+			// aapt resource value: 0x7f080049
+			public const int hockeyapp_feedback_max_attachments_allowed = 2131230793;
+			
+			// aapt resource value: 0x7f08004a
+			public const int hockeyapp_feedback_message_hint = 2131230794;
+			
+			// aapt resource value: 0x7f08004b
+			public const int hockeyapp_feedback_name_hint = 2131230795;
+			
+			// aapt resource value: 0x7f08004c
+			public const int hockeyapp_feedback_refresh_button_text = 2131230796;
+			
+			// aapt resource value: 0x7f08004d
+			public const int hockeyapp_feedback_response_button_text = 2131230797;
+			
+			// aapt resource value: 0x7f08004e
+			public const int hockeyapp_feedback_select_file = 2131230798;
+			
+			// aapt resource value: 0x7f08004f
+			public const int hockeyapp_feedback_select_picture = 2131230799;
+			
+			// aapt resource value: 0x7f080050
+			public const int hockeyapp_feedback_send_button_text = 2131230800;
+			
+			// aapt resource value: 0x7f080051
+			public const int hockeyapp_feedback_send_generic_error = 2131230801;
+			
+			// aapt resource value: 0x7f080052
+			public const int hockeyapp_feedback_send_network_error = 2131230802;
+			
+			// aapt resource value: 0x7f080053
+			public const int hockeyapp_feedback_sending_feedback_text = 2131230803;
+			
+			// aapt resource value: 0x7f080054
+			public const int hockeyapp_feedback_subject_hint = 2131230804;
+			
+			// aapt resource value: 0x7f080055
+			public const int hockeyapp_feedback_title = 2131230805;
+			
+			// aapt resource value: 0x7f080056
+			public const int hockeyapp_feedback_validate_email_empty = 2131230806;
+			
+			// aapt resource value: 0x7f080057
+			public const int hockeyapp_feedback_validate_email_error = 2131230807;
+			
+			// aapt resource value: 0x7f080058
+			public const int hockeyapp_feedback_validate_name_error = 2131230808;
+			
+			// aapt resource value: 0x7f080059
+			public const int hockeyapp_feedback_validate_subject_error = 2131230809;
+			
+			// aapt resource value: 0x7f08005a
+			public const int hockeyapp_feedback_validate_text_error = 2131230810;
+			
+			// aapt resource value: 0x7f08005b
+			public const int hockeyapp_login_email_hint = 2131230811;
+			
+			// aapt resource value: 0x7f08005c
+			public const int hockeyapp_login_headline_text = 2131230812;
+			
+			// aapt resource value: 0x7f08005d
+			public const int hockeyapp_login_headline_text_email_only = 2131230813;
+			
+			// aapt resource value: 0x7f08005e
+			public const int hockeyapp_login_login_button_text = 2131230814;
+			
+			// aapt resource value: 0x7f08005f
+			public const int hockeyapp_login_missing_credentials_toast = 2131230815;
+			
+			// aapt resource value: 0x7f080060
+			public const int hockeyapp_login_password_hint = 2131230816;
+			
+			// aapt resource value: 0x7f080061
+			public const int hockeyapp_paint_dialog_message = 2131230817;
+			
+			// aapt resource value: 0x7f080062
+			public const int hockeyapp_paint_dialog_negative_button = 2131230818;
+			
+			// aapt resource value: 0x7f080063
+			public const int hockeyapp_paint_dialog_neutral_button = 2131230819;
+			
+			// aapt resource value: 0x7f080064
+			public const int hockeyapp_paint_dialog_positive_button = 2131230820;
+			
+			// aapt resource value: 0x7f080065
+			public const int hockeyapp_paint_indicator_toast = 2131230821;
+			
+			// aapt resource value: 0x7f080066
+			public const int hockeyapp_paint_menu_clear = 2131230822;
+			
+			// aapt resource value: 0x7f080067
+			public const int hockeyapp_paint_menu_save = 2131230823;
+			
+			// aapt resource value: 0x7f080068
+			public const int hockeyapp_paint_menu_undo = 2131230824;
+			
+			// aapt resource value: 0x7f080069
+			public const int hockeyapp_permission_dialog_negative_button = 2131230825;
+			
+			// aapt resource value: 0x7f08006a
+			public const int hockeyapp_permission_dialog_positive_button = 2131230826;
+			
+			// aapt resource value: 0x7f08006b
+			public const int hockeyapp_permission_update_message = 2131230827;
+			
+			// aapt resource value: 0x7f08006c
+			public const int hockeyapp_permission_update_title = 2131230828;
+			
+			// aapt resource value: 0x7f08006d
+			public const int hockeyapp_update_button = 2131230829;
+			
+			// aapt resource value: 0x7f08006e
+			public const int hockeyapp_update_dialog_message = 2131230830;
+			
+			// aapt resource value: 0x7f08006f
+			public const int hockeyapp_update_dialog_negative_button = 2131230831;
+			
+			// aapt resource value: 0x7f080070
+			public const int hockeyapp_update_dialog_positive_button = 2131230832;
+			
+			// aapt resource value: 0x7f080071
+			public const int hockeyapp_update_dialog_title = 2131230833;
+			
+			// aapt resource value: 0x7f080072
+			public const int hockeyapp_update_mandatory_toast = 2131230834;
+			
+			// aapt resource value: 0x7f080073
+			public const int hockeyapp_update_version_details_label = 2131230835;
 			
 			// aapt resource value: 0x7f08002a
 			public const int invalid_date = 2131230762;
@@ -7500,11 +7965,20 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f0a001a
 			public const int CardView_Light = 2131361818;
 			
-			// aapt resource value: 0x7f0a017a
-			public const int MyActionBar = 2131362170;
+			// aapt resource value: 0x7f0a0176
+			public const int HockeyApp_ButtonStyle = 2131362166;
 			
-			// aapt resource value: 0x7f0a0179
-			public const int MyCryptosTheme = 2131362169;
+			// aapt resource value: 0x7f0a0177
+			public const int HockeyApp_EditTextStyle = 2131362167;
+			
+			// aapt resource value: 0x7f0a0178
+			public const int HockeyApp_SingleLineInputStyle = 2131362168;
+			
+			// aapt resource value: 0x7f0a017d
+			public const int MyActionBar = 2131362173;
+			
+			// aapt resource value: 0x7f0a017c
+			public const int MyCryptosTheme = 2131362172;
 			
 			// aapt resource value: 0x7f0a0032
 			public const int Platform_AppCompat = 2131361842;
@@ -7848,8 +8322,8 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f0a0003
 			public const int Theme_MediaRouter_LightControlPanel = 2131361795;
 			
-			// aapt resource value: 0x7f0a0176
-			public const int Theme_PageIndicatorDefaults = 2131362166;
+			// aapt resource value: 0x7f0a0179
+			public const int Theme_PageIndicatorDefaults = 2131362169;
 			
 			// aapt resource value: 0x7f0a010e
 			public const int ThemeOverlay_AppCompat = 2131362062;
@@ -7866,8 +8340,8 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f0a0112
 			public const int ThemeOverlay_AppCompat_Light = 2131362066;
 			
-			// aapt resource value: 0x7f0a0177
-			public const int Widget = 2131362167;
+			// aapt resource value: 0x7f0a017a
+			public const int Widget = 2131362170;
 			
 			// aapt resource value: 0x7f0a0113
 			public const int Widget_AppCompat_ActionBar = 2131362067;
@@ -8079,8 +8553,8 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f0a0158
 			public const int Widget_AppCompat_Toolbar_Button_Navigation = 2131362136;
 			
-			// aapt resource value: 0x7f0a0178
-			public const int Widget_CirclePageIndicator = 2131362168;
+			// aapt resource value: 0x7f0a017b
+			public const int Widget_CirclePageIndicator = 2131362171;
 			
 			// aapt resource value: 0x7f0a0169
 			public const int Widget_Design_AppBarLayout = 2131362153;

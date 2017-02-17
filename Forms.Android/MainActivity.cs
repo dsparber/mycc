@@ -2,6 +2,8 @@
 using Android.Content.PM;
 using Android.OS;
 using CarouselView.FormsPlugin.Android;
+using HockeyApp.Android;
+using HockeyApp.Android.Metrics;
 using Xamarin.Forms.Platform.Android;
 
 namespace MyCC.Forms.Android
@@ -16,6 +18,9 @@ namespace MyCC.Forms.Android
             CarouselViewRenderer.Init();
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             LoadApplication(new App());
+
+            CrashManager.Register(this, "7792ee5321a64433ace4955a1693cca5");
+            MetricsManager.Register(Application, "7792ee5321a64433ace4955a1693cca5");
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
