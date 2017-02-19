@@ -20,14 +20,11 @@
 				PageIndicatorTintColor="#5FFF"
 				CurrentPageIndicatorTintColor="White"
         BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"/>
-      <StackLayout
-				VerticalOptions="FillAndExpand">
-        <StackLayout
-					x:Name="Stack"
-					Spacing="0"
-					HorizontalOptions="FillAndExpand"
-					VerticalOptions="FillAndExpand"/>
-      </StackLayout>
+      <ContentView
+        x:Name="Content"
+        BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand"/>
     </components:ChangingStackLayout>
   </ContentPage.Content>
 </ContentPage>

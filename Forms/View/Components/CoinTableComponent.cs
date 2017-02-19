@@ -90,7 +90,7 @@ namespace MyCC.Forms.View.Components
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             stack.Children.Add(_noDataLabel);
-            stack.Children.Add(new ScrollView { Content = _webView });
+            stack.Children.Add(_webView);
             Content = stack;
 
             UpdateView();

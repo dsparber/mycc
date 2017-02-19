@@ -22,17 +22,22 @@ namespace MyCC.Forms.View.Pages
             InitializeComponent();
 
             _tableView = new CoinTableComponent(Navigation);
+
+            var stack = new StackLayout { Spacing = 0, VerticalOptions = LayoutOptions.FillAndExpand };
+            stack.Children.Add(_tableView);
+            stack.Children.Add(new ContentView { VerticalOptions = LayoutOptions.FillAndExpand });
+
             _pullToRefresh = new PullToRefreshLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Content = _tableView,
+                Content = new ScrollView { Content = stack, VerticalOptions = LayoutOptions.FillAndExpand },
                 BackgroundColor = AppConstants.TableBackgroundColor,
                 RefreshCommand = new Command(Refresh),
             };
 
 
-            Stack.Children.Add(_pullToRefresh);
+            Content.Content = _pullToRefresh;
 
             AddSubscriber();
 
@@ -75,7 +80,7 @@ namespace MyCC.Forms.View.Pages
             Device.BeginInvokeOnMainThread(() =>
             {
                 NoSourcesView.IsVisible = AccountStorage.Instance.AllElements.Count == 0;
-                Stack.IsVisible = AccountStorage.Instance.AllElements.Count != 0;
+                Content.IsVisible = AccountStorage.Instance.AllElements.Count != 0;
             });
         }
 

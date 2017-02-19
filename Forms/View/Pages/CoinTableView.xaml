@@ -22,12 +22,10 @@
 				BackgroundColor="{x:Static constants:AppConstants.ThemeColor}" />
       <StackLayout
 				VerticalOptions="FillAndExpand">
-        <StackLayout
-					x:Name="Stack"
-					Spacing="0"
+        <ContentView
+					x:Name="Content"
 					HorizontalOptions="FillAndExpand"
-					VerticalOptions="FillAndExpand">
-        </StackLayout>
+					VerticalOptions="FillAndExpand"/>
         <ContentView
 					x:Name="NoSourcesView"
 					VerticalOptions="FillAndExpand"

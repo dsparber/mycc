@@ -75,8 +75,10 @@ namespace MyCC.Forms.View.Components
                 Text = I18N.NoDataToDisplay,
                 IsVisible = false,
                 TextColor = AppConstants.FontColorLight,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.CenterAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                VerticalTextAlignment = TextAlignment.Center,
+                HorizontalTextAlignment = TextAlignment.Center
             };
 
             var stack = new StackLayout
@@ -84,8 +86,9 @@ namespace MyCC.Forms.View.Components
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
+
             stack.Children.Add(_noDataLabel);
-            stack.Children.Add(new ScrollView { Content = _webView, IsClippedToBounds = true });
+            stack.Children.Add(_webView);
             Content = stack;
 
             UpdateView();

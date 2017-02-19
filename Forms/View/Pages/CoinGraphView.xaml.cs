@@ -32,7 +32,7 @@ namespace MyCC.Forms.View.Pages
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Content = _graphView,
+                Content = new ScrollView { VerticalOptions = LayoutOptions.FillAndExpand, Content = _graphView },
                 BackgroundColor = AppConstants.TableBackgroundColor,
                 RefreshCommand = new Command(Refresh),
             };
@@ -90,6 +90,12 @@ namespace MyCC.Forms.View.Pages
             Messaging.FetchMissingRates.SubscribeFinished(this, SetNoSourcesView);
             Messaging.UpdatingAccounts.SubscribeFinished(this, SetNoSourcesView);
             Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoSourcesView);
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+            _graphView.HeightRequest = _pullToRefresh.Height;
         }
 
         private async void Refresh()
