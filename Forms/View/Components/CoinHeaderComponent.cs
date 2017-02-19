@@ -68,7 +68,7 @@ namespace MyCC.Forms.View.Components
             else if (_useOnlyThisCurrency)
             {
                 var online = AccountStorage.AccountsWithCurrency(_currency).Where(a => a is OnlineFunctionalAccount).ToList();
-                var time = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.AccountsWithCurrency(_currency).Max(a => a.LastUpdate);
+                var time = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.AccountsWithCurrency(_currency).Any() ? AccountStorage.AccountsWithCurrency(_currency).Max(a => a.LastUpdate) : DateTime.Now;
 
                 _infoTexts[0] = PluralHelper.GetTextAccounts(AccountStorage.AccountsWithCurrency(_currency).Count);
                 _infoTexts[2] = time.LastUpdateString();
