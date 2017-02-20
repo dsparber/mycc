@@ -7,9 +7,9 @@ using MyCC.Forms.Messages;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Container;
 using MyCC.Forms.View.Overlays;
+using MyCC.Forms.View.Pages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using PasswordView = MyCC.Forms.View.Pages.PasswordView;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace MyCC.Forms

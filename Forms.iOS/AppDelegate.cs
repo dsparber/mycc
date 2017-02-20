@@ -40,8 +40,8 @@ namespace MyCC.Forms.iOS
 
             var manager = BITHockeyManager.SharedHockeyManager;
             manager.Configure("3e42251c3ae84c498abf08fbdd56a818");
+            manager.DisableUpdateManager = true;
             manager.StartManager();
-            manager.Authenticator.AuthenticateInstallation();
 
             return result;
         }
