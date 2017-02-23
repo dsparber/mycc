@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;

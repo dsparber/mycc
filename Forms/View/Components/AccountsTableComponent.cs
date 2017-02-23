@@ -74,7 +74,7 @@ namespace MyCC.Forms.View.Components
 
             var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-            stack.Children.Add(new SectionHeaderView { Title = I18N.Accounts });
+            stack.Children.Add(new SectionHeaderView(false) { Title = I18N.Accounts });
             stack.Children.Add(_webView);
 
             Content = stack;

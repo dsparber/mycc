@@ -10,7 +10,6 @@ using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Constants;
-using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.view.components.CellViews;
@@ -27,7 +26,6 @@ namespace MyCC.Forms.View.Components
         public Money ReferenceMoney { private get; set; }
 
         private readonly HybridWebView _webView;
-        private readonly SectionFooterView _lastUpdateLabel;
         private bool _appeared;
 
         private string TableHeaderLabel => string.Format(ReferenceMoney.Amount == 1 ? I18N.IsEqualTo : I18N.AreEqualTo, ReferenceMoney);
@@ -72,13 +70,11 @@ namespace MyCC.Forms.View.Components
                 UpdateView();
             });
 
-            _lastUpdateLabel = new SectionFooterView();
 
             var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-            stack.Children.Add(new SectionHeaderView { Title = TableHeaderLabel });
+            stack.Children.Add(new SectionHeaderView(false) { Title = TableHeaderLabel });
             stack.Children.Add(_webView);
-            stack.Children.Add(_lastUpdateLabel);
 
             Content = stack;
 
@@ -120,12 +116,6 @@ namespace MyCC.Forms.View.Components
                 }
                 items = ApplicationSettings.SortDirectionReferenceValues == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
-                var updateTime = ReferenceCurrencies
-                                    .Select(e => new ExchangeRate(ReferenceMoney.Currency, e))
-                                    .SelectMany(ExchangeRateHelper.GetNeededRates)
-                                    .Distinct()
-                                    .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).Min();
-
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     _webView.CallJsFunction("setHeader", new[]{
@@ -133,7 +123,6 @@ namespace MyCC.Forms.View.Components
                       new HeaderData($"{I18N.Currency[0]}.", SortOrder.Alphabetical.ToString())
                           }, string.Empty);
                     _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), ReferenceMoney.Amount == 1);
-                    _lastUpdateLabel.Text = updateTime.LastUpdateString();
                 });
             }
             catch (Exception e)

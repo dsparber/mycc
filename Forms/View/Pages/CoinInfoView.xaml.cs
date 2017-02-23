@@ -8,6 +8,7 @@ using MyCC.Core.Currency.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
@@ -192,6 +193,23 @@ namespace MyCC.Forms.View.Pages
             {
                 updateUi();
             }
+
+            SetFooter();
+        }
+
+        private void SetFooter()
+        {
+            var ratesTime = ApplicationSettings.AllReferenceCurrencies
+                                    .Select(e => new ExchangeRate(_currency, e))
+                                    .SelectMany(ExchangeRateHelper.GetNeededRates)
+                                    .Distinct()
+                                    .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).Min();
+
+            var infoTime = CoinInfoStorage.Instance.Get(_currency)?.LastUpdate ?? DateTime.Now;
+
+            var text = (ratesTime < infoTime ? ratesTime : infoTime).LastUpdateString();
+
+            Device.BeginInvokeOnMainThread(() => Footer.Text = text);
         }
 
         private async void Refresh()

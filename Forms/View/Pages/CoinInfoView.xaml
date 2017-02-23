@@ -16,16 +16,18 @@
         HorizontalOptions="FillAndExpand"
         BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
         <ScrollView
+          VerticalOptions="FillAndExpand"
            IsClippedToBounds="true">
           <StackLayout
             Spacing="0"
-            x:Name="ContentView">
+            x:Name="ContentView"
+            VerticalOptions="FillAndExpand">
             <Label
               x:Name="InfoHeading"
               Margin="15"
               FontSize="14" />
             <StackLayout
-              Margin="15,0,15,40"
+              Margin="15,0,15,0"
               Orientation="Horizontal">
               <StackLayout
                 x:Name="InfoStackHeadings"
@@ -36,6 +38,9 @@
           </StackLayout>
         </ScrollView>
       </pullToRefresh:PullToRefreshLayout>
+      <ContentView VerticalOptions="FillAndExpand"/>
+      <components:InfoFooterComponent
+        x:Name="Footer"/>
     </components:ChangingStackLayout>
   </ContentPage.Content>
 </ContentPage>
