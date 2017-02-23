@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
@@ -18,11 +17,6 @@ namespace MyCC.Forms.View.Components
         private FunctionalAccount _account;
 
         private readonly bool _useOnlyThisCurrency;
-
-        private readonly List<string> _infoTexts;
-        private static int _currentInfoText = 1;
-        private static readonly List<CoinHeaderComponent> Instances = new List<CoinHeaderComponent>();
-
 
         public CoinHeaderComponent(FunctionalAccount account) : this()
         {
@@ -43,48 +37,31 @@ namespace MyCC.Forms.View.Components
 
         private CoinHeaderComponent() : base(true)
         {
-            var recognizer = new TapGestureRecognizer();
-            recognizer.Tapped += (sender, e) =>
-            {
-                SetInfoText(1);
-            };
-
-            _infoTexts = new List<string> { string.Empty, string.Empty, string.Empty };
-
-            GestureRecognizers.Add(recognizer);
             AddSubscriber();
-
-            Instances.Add(this);
         }
 
         private void UpdateView()
         {
-
+            string infoTextFallback;
             if (_account != null)
             {
-                _infoTexts[0] = _account.Name;
-                _infoTexts[2] = _account.LastUpdate.LastUpdateString();
+                infoTextFallback = _account.Name;
             }
             else if (_useOnlyThisCurrency)
             {
-                var online = AccountStorage.AccountsWithCurrency(_currency).Where(a => a is OnlineFunctionalAccount).ToList();
-                var time = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.AccountsWithCurrency(_currency).Any() ? AccountStorage.AccountsWithCurrency(_currency).Max(a => a.LastUpdate) : DateTime.Now;
-
-                _infoTexts[0] = PluralHelper.GetTextAccounts(AccountStorage.AccountsWithCurrency(_currency).Count);
-                _infoTexts[2] = time.LastUpdateString();
+                infoTextFallback = PluralHelper.GetTextAccounts(AccountStorage.AccountsWithCurrency(_currency).Count);
             }
             else
             {
                 var amountDifferentCurrencies = AccountStorage.Instance.AllElements.Select(a => a.Money.Currency).Distinct().Count();
-                var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
-                var time = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
 
-                _infoTexts[0] = PluralHelper.GetTextCurrencies(amountDifferentCurrencies);
-                _infoTexts[2] = time.LastUpdateString();
+                infoTextFallback = PluralHelper.GetTextCurrencies(amountDifferentCurrencies);
             }
-            _infoTexts[1] = string.Join(" / ", ApplicationSettings.MainCurrencies.Where(c => !c.Equals(_currency))
+            var infoText = string.Join(" / ", ApplicationSettings.MainCurrencies.Where(c => !c.Equals(_currency))
                                        .Select(c => ((_useOnlyThisCurrency ? CoinSumAs(c) : MoneySumOf(c)) ?? new Money(0, c))
                                        .ToStringTwoDigits(ApplicationSettings.RoundMoney)));
+
+            infoText = string.IsNullOrWhiteSpace(infoText) ? infoTextFallback : infoText;
 
             if (_account != null)
             {
@@ -113,7 +90,7 @@ namespace MyCC.Forms.View.Components
                     TitleText = Sum.ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 }
 
-                SetInfoText();
+                InfoText = infoText;
             });
         }
 
@@ -147,27 +124,6 @@ namespace MyCC.Forms.View.Components
             Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
             Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
             Messaging.UpdatingRates.SubscribeFinished(this, UpdateView);
-        }
-
-        private void SetInfoText(int increment = 0, bool updateOthers = true)
-        {
-            _currentInfoText = (_currentInfoText + increment) % _infoTexts.Count;
-
-            if (_infoTexts == null || _infoTexts.Count < _currentInfoText) return;
-
-            var text = _infoTexts[_currentInfoText];
-            if (string.IsNullOrEmpty(text?.Trim()))
-            {
-                text = _infoTexts[(_currentInfoText + 1) % _infoTexts.Count];
-            }
-            InfoText = text;
-
-            if (!updateOthers) return;
-
-            foreach (var i in Instances)
-            {
-                i.SetInfoText(0, false);
-            }
         }
     }
 }

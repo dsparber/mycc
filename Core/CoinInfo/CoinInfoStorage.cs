@@ -24,12 +24,13 @@ namespace MyCC.Core.CoinInfo
             _elements = new List<CoinInfoData>();
 
             _dbConnection = DependencyService.Get<ISqLiteConnection>().GetConnection();
-            _dbConnection.CreateTableAsync<CoinInfoData>();
 
             Task.Run(async () =>
             {
                 if (_alreadyCalled) return;
                 _alreadyCalled = true;
+
+                await _dbConnection.CreateTableAsync<CoinInfoData>();
 
                 if (ApplicationSettings.FirstLaunch)
                 {

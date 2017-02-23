@@ -1,12 +1,18 @@
 using System;
 using System.Linq;
+using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
+using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
+using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
+using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components;
+using MyCC.Forms.View.Overlays;
 using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
 
@@ -38,6 +44,12 @@ namespace MyCC.Forms.View.Pages
 
 
             Content.Content = _pullToRefresh;
+
+            var recognizer = new TapGestureRecognizer();
+            recognizer.Tapped += AddSource;
+            var addCell = new CustomCellView(true) { Text = I18N.AddSource, IsActionCell = true, IsCentered = true };
+            addCell.GestureRecognizers.Add(recognizer);
+            NoDataStack.Children.Add(addCell);
 
             AddSubscriber();
 
@@ -79,9 +91,11 @@ namespace MyCC.Forms.View.Pages
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                NoSourcesView.IsVisible = AccountStorage.Instance.AllElements.Count == 0;
-                Content.IsVisible = AccountStorage.Instance.AllElements.Count != 0;
+                NoDataView.IsVisible = AccountStorage.Instance.AllElements.Count == 0;
+                DataView.IsVisible = AccountStorage.Instance.AllElements.Count != 0;
             });
+
+            SetFooter();
         }
 
         private void AddSubscriber()
@@ -104,6 +118,23 @@ namespace MyCC.Forms.View.Pages
         private class HeaderTemplateSelector : DataTemplateSelector
         {
             protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent((Currency)item));
+        }
+
+        private void AddSource(object sender, EventArgs e)
+        {
+            Navigation.PushOrPushModal(new AddSourceView());
+        }
+
+        private void SetFooter()
+        {
+            var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
+            var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
+            var ratesTimes = AccountStorage.NeededRatesFor(ApplicationSettings.BaseCurrency).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).ToList();
+            var ratesTime = ratesTimes.Any() ? ratesTimes.Min() : DateTime.Now;
+
+            var time = online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
+
+            Device.BeginInvokeOnMainThread(() => Footer.Text = time.LastUpdateString());
         }
     }
 }
