@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using MyCC.Core.Account.Repositories.Base;
-using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
@@ -15,11 +14,9 @@ namespace MyCC.Forms.View.Overlays
         public AccountQrCodeOverlay(AddressAccountRepository accountRepository)
         {
             ToolbarItems.Add(new ToolbarItem { Text = I18N.Cancel });
-            ToolbarItems.Add(new ToolbarItem { Text = I18N.Done });
             ToolbarItems[0].Clicked += (s, e) => Navigation.PopOrPopModal();
-            ToolbarItems[1].Clicked += (s, e) => Navigation.PopOrPopModal();
 
-            Title = accountRepository.Name;
+            Title = I18N.QrCode;
             BackgroundColor = AppConstants.TableBackgroundColor;
 
             var barcodeView = new ZXingBarcodeImageView
@@ -52,8 +49,8 @@ namespace MyCC.Forms.View.Overlays
             var changingStack = new ChangingStackLayout();
             changingStack.Children.Add(new HeaderView
             {
-                TitleText = accountRepository.Elements.First().Money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
-                InfoText = accountRepository.Elements.First().Money.Currency.Name
+                TitleText = accountRepository.Elements.First().Money.Currency.Name,
+                InfoText = accountRepository.Name
             });
             changingStack.Children.Add(stack);
 

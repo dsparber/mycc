@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Currency.Storage;
+using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
+using MyCC.Forms.Helpers;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
@@ -15,33 +18,20 @@ namespace MyCC.Forms.View.Overlays
         public Action<Currency> CurrencySelected;
 
         private readonly SearchBar _searchBar;
-        private readonly CurrencyEntryCell _parent;
 
-        public CurrencyOverlay(List<Currency> currenciesToSelect = null) : this(null, currenciesToSelect)
-        { }
+        private readonly bool _isModal;
 
-        public CurrencyOverlay(CurrencyEntryCell parent, List<Currency> currenciesToSelect = null)
+        public CurrencyOverlay(IEnumerable<Currency> currenciesToSelect, string title, bool isModal = false)
         {
-            _parent = parent;
+            _isModal = isModal;
+            var selectableCurrencies = currenciesToSelect.Distinct().Where(c => c != null).OrderBy(c => c.Code).ToList();
 
-            var currencies = currenciesToSelect ?? _parent?.CurrenciesToSelect?.OrderBy(c => c?.Code).ToList() ?? CurrencyStorage.Instance.AllElements;
+            Title = title;
 
-            Title = I18N.Currency;
-
-            if (_parent != null)
-            {
-                var done = new ToolbarItem { Text = I18N.Save };
-                done.Clicked += (sender, e) =>
-                {
-                    _parent.OnSelected(_parent.SelectedCurrency);
-                    Navigation.PopAsync();
-                };
-                ToolbarItems.Add(done);
-            }
-            else
+            if (_isModal)
             {
                 var cancel = new ToolbarItem { Text = I18N.Cancel };
-                cancel.Clicked += (sender, e) => Navigation.PopAsync();
+                cancel.Clicked += (sender, e) => Navigation.PopOrPopModal();
                 ToolbarItems.Add(cancel);
             }
 
@@ -64,46 +54,57 @@ namespace MyCC.Forms.View.Overlays
 
             var section = new TableSection();
 
-            var currenciesSorted = currencies.Where(c => c != null).Distinct().OrderBy(c => c.Code);
-            SetTableContent(section, currenciesSorted);
+            SetTableContent(section, selectableCurrencies);
 
             _searchBar.TextChanged += (sender, e) =>
             {
-                var txt = e.NewTextValue ?? string.Empty;
-                var filtered = currenciesSorted.Where(c => c.Code.ToLower().Contains(txt.ToLower()) || c.Name.ToLower().Contains(txt.ToLower()));
+                var filtered = string.IsNullOrWhiteSpace(e.NewTextValue) ? selectableCurrencies.Where(c => c.Code.ToLower().Contains(e.NewTextValue.ToLower()) || c.Name.ToLower().Contains(e.NewTextValue.ToLower())) : selectableCurrencies;
                 SetTableContent(section, filtered);
             };
 
             currenciesTableView.Root.Add(section);
-
-            currenciesTableView.IsVisible = true;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
             _searchBar.Focus();
         }
 
         private void SetTableContent(TableSection section, IEnumerable<Currency> currenciesSorted)
         {
             section.Clear();
-            foreach (var c in currenciesSorted)
+            var items = currenciesSorted.Select(c =>
             {
                 var cell = new CustomViewCell { Text = c.Code, Detail = c.Name };
                 cell.Tapped += (sender, e) =>
                 {
-                    if (_parent != null)
-                    {
-                        _parent.SelectedCurrency = c;
-                        _parent.OnSelected(_parent.SelectedCurrency);
-                    }
                     CurrencySelected?.Invoke(c);
-                    Navigation.PopAsync();
+                    if (_isModal) Navigation.PopOrPopModal();
+                    else Navigation.PopAsync();
                 };
-                section.Add(cell);
-            }
+                return cell;
+            });
+            section.Add(items);
+        }
+
+        public static void ShowAddRateOverlay(INavigation navigation, Action onComplete = null)
+        {
+            var allReferenceCurrencies = ApplicationSettings.WatchedCurrencies.ToArray();
+            var currencies = CurrencyStorage.Instance.AllElements.Where(c => !allReferenceCurrencies.Contains(c)).ToList();
+
+            var overlay = new CurrencyOverlay(currencies, I18N.AddRate, true)
+            {
+                CurrencySelected = c =>
+                {
+                    onComplete?.Invoke();
+                    ApplicationSettings.WatchedCurrencies = new List<Currency>(ApplicationSettings.WatchedCurrencies) { c };
+                    Messaging.ReferenceCurrencies.SendValueChanged();
+                    Messaging.UpdatingRates.SendFinished();
+                }
+            };
+
+            navigation.PushOrPushModal(overlay);
         }
     }
 }

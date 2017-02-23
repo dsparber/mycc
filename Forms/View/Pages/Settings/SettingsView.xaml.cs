@@ -85,7 +85,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetRatesCellDetail()
         {
-            RatesCell.Detail = ApplicationSettings.WatchedCurrencies.Count == 0 ? I18N.AllCurrenciesFromAccounts : string.Join(" + ", new List<string> { I18N.AllCurrenciesFromAccounts, string.Join(", ", ApplicationSettings.WatchedCurrencies) });
+            RatesCell.Detail = ApplicationSettings.WatchedCurrencies.Count == 0 ? I18N.None : string.Join(", ", ApplicationSettings.WatchedCurrencies);
         }
 
         private void SetPreferredRateCellDetail()

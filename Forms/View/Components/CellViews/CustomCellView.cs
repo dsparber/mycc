@@ -120,7 +120,7 @@ namespace MyCC.Forms.view.components.CellViews
             set { Device.BeginInvokeOnMainThread(() => _masterLabel.HorizontalOptions = value ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand); }
         }
 
-        public CustomCellView()
+        public CustomCellView(bool isStandalone = false)
         {
             _masterLabel = new Label { TextColor = Color.FromHex("222"), LineBreakMode = LineBreakMode.TailTruncation, VerticalOptions = LayoutOptions.Center };
 
@@ -150,7 +150,7 @@ namespace MyCC.Forms.view.components.CellViews
             var content = new ContentView { Content = mainView, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.White };
 
             Panel = content;
-            Content = new ContentView { Content = new ContentView { Content = Panel, BackgroundColor = Color.White, Padding = new Thickness(0, 5) }, BackgroundColor = Color.FromHex("#ccc"), Padding = new Thickness(0, 0, 0, 0.5) };
+            Content = new ContentView { Content = new ContentView { Content = Panel, BackgroundColor = Color.White, Padding = new Thickness(0, isStandalone ? 10 : 5) }, BackgroundColor = Color.FromHex("#ccc"), Padding = new Thickness(0, isStandalone ? 0.5 : 0, 0, 0.5) };
 
             IsLoading = false;
         }

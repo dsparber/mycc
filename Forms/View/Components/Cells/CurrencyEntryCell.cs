@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currency.Model;
+using MyCC.Core.Currency.Storage;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Overlays;
@@ -24,12 +25,7 @@ namespace MyCC.Forms.View.Components.Cells
 
         public IEnumerable<Currency> CurrenciesToSelect;
 
-        private Action<Currency> _onSelected;
-        public Action<Currency> OnSelected
-        {
-            get { return _onSelected ?? (c => { }); }
-            set { _onSelected = value; }
-        }
+        public Action<Currency> OnSelected;
 
         private Action<Money> _onTyped;
         public Action<Money> OnTyped
@@ -190,7 +186,14 @@ namespace MyCC.Forms.View.Components.Cells
             {
                 if (IsEditable)
                 {
-                    _navigation.PushAsync(new CurrencyOverlay(this));
+                    _navigation.PushAsync(new CurrencyOverlay(CurrenciesToSelect ?? CurrencyStorage.Instance.AllElements, I18N.Currency)
+                    {
+                        CurrencySelected = c =>
+                        {
+                            SelectedCurrency = c;
+                            OnSelected?.Invoke(c);
+                        }
+                    });
                 }
             };
             if (_selectedCurrencyLabel != null)

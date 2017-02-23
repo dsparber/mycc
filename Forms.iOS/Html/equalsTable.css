@@ -12,16 +12,16 @@ html, body {
     background-color: rgb(238, 239, 243);
 }
 
-body > div{
-  position: fixed;
-  width: 100%;
-  overflow-x: auto;
-}
+    body > div {
+        position: fixed;
+        width: 100%;
+        overflow-x: auto;
+    }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
 }
 
 td:first-child {
@@ -77,11 +77,11 @@ thead td {
 }
 
 tr:first-child {
-    border-top: 1px solid #ccc;
+    border-top: 0.5px solid #ccc;
 }
 
 tr {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.5px solid #ccc;
 }
 
 thead tr {
@@ -89,7 +89,7 @@ thead tr {
 }
 
 thead td {
-    border-right: 1px solid lightgray;
+    border-right: 0.5px solid lightgray;
     padding-right: 0.35em;
 }
 

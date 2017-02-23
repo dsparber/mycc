@@ -36,7 +36,7 @@ namespace MyCC.Forms.View.Pages.Settings
         {
             var currencies = CurrencyStorage.Instance.AllElements.Where(c => !ApplicationSettings.AllReferenceCurrencies.Contains(c)).ToList();
 
-            var overlay = new CurrencyOverlay(currencies)
+            var overlay = new CurrencyOverlay(currencies, I18N.AddReferenceCurrency)
             {
                 CurrencySelected = c =>
                 {

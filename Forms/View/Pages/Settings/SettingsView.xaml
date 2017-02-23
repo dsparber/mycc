@@ -30,7 +30,7 @@
 						x:Name="ReferenceCurrenciesCell"
 						Image="more.png" />
           <cells:CustomViewCell
-						Text="{resources:Translate Rates}"
+						Text="{resources:Translate AdditionalRates}"
 						x:Name="RatesCell"
 						Image="more.png" />
           <cells:CustomViewCell

@@ -80,6 +80,7 @@
       <DependentUpon>HeaderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Components\CoinInfoHeaderComponent.cs" />
+    <Compile Include="View\Components\InfoFooterComponent.cs" />
     <Compile Include="View\Components\SegmentedControl.cs" />
     <Compile Include="View\Container\TabContainerView.cs" />
     <Compile Include="View\Overlays\CurrencyOverlay.cs" />

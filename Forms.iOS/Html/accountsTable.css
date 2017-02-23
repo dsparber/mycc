@@ -9,41 +9,41 @@ html, body {
     user-select: none;
 }
 
-body > div{
-  position: fixed;
-  width: 100%;
-  overflow-x: auto;
-}
+    body > div {
+        position: fixed;
+        width: 100%;
+        overflow-x: auto;
+    }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 td:first-child {
     padding-left: 15px;
 }
 
-td:first-child  > div {
-    position: relative;
-    overflow: hidden;
-    height: 1.33em;
-}
+    td:first-child > div {
+        position: relative;
+        overflow: hidden;
+        height: 1.33em;
+    }
 
-/* visible content */
-td:first-child  > div > span {
-    display: block;
-    position: absolute;
-    max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.33em;
-}
+        /* visible content */
+        td:first-child > div > span {
+            display: block;
+            position: absolute;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.33em;
+        }
 
-td:first-child+td, td:first-child+td+td {
-    text-align: right;
-}
+    td:first-child + td, td:first-child + td + td {
+        text-align: right;
+    }
 
 th:last-child, td:last-child {
     width: 30px;
@@ -68,11 +68,11 @@ td {
 }
 
 tr:first-child {
-    border-top: 1px solid #ccc;
+    border-top: 0.5px solid #ccc;
 }
 
 tr {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.5px solid #ccc;
 }
 
 thead tr {
@@ -80,18 +80,18 @@ thead tr {
 }
 
 thead td {
-    border-right: 1px solid lightgray;
+    border-right: 0.5px solid lightgray;
     padding-right: 0.35em;
 }
 
-thead td span {
-    display: block;
-    background-image: url("upDown.svg");
-    background-repeat: no-repeat;
-    background-position: right center;
-    background-size: auto 1em;
-    padding-right: 1.25em;
-}
+    thead td span {
+        display: block;
+        background-image: url("upDown.svg");
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: auto 1em;
+        padding-right: 1.25em;
+    }
 
 thead .down span {
     background-image: url("up.svg");

@@ -107,6 +107,33 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Additional rates ähnelt.
+        /// </summary>
+        public static string AdditionalRates {
+            get {
+                return ResourceManager.GetString("AdditionalRates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add rate ähnelt.
+        /// </summary>
+        public static string AddRate {
+            get {
+                return ResourceManager.GetString("AddRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add reference currency ähnelt.
+        /// </summary>
+        public static string AddReferenceCurrency {
+            get {
+                return ResourceManager.GetString("AddReferenceCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Address ähnelt.
         /// </summary>
         public static string Address {
@@ -809,6 +836,15 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die None ähnelt.
+        /// </summary>
+        public static string None {
+            get {
+                return ResourceManager.GetString("None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No sources ähnelt.
         /// </summary>
         public static string NoSources {
@@ -953,6 +989,15 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die QR Code ähnelt.
+        /// </summary>
+        public static string QrCode {
+            get {
+                return ResourceManager.GetString("QrCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Rates ähnelt.
         /// </summary>
         public static string Rates {
@@ -994,24 +1039,6 @@ namespace MyCC.Forms.Resources {
         public static string ReferenceCurrencyInfoP2 {
             get {
                 return ResourceManager.GetString("ReferenceCurrencyInfoP2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Refresh ähnelt.
-        /// </summary>
-        public static string Refresh {
-            get {
-                return ResourceManager.GetString("Refresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Refreshing ähnelt.
-        /// </summary>
-        public static string Refreshing {
-            get {
-                return ResourceManager.GetString("Refreshing", resourceCulture);
             }
         }
         

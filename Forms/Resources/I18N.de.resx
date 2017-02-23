@@ -343,7 +343,7 @@
     <value>Die eingegebene alte PIN ist nicht korrekt!</value>
   </data>
   <data name="OneAccount" xml:space="preserve">
-    <value>Ein Account</value>
+    <value>Ein Konto</value>
   </data>
   <data name="OneCurrency" xml:space="preserve">
     <value>Eine Währung</value>
@@ -389,15 +389,6 @@
   </data>
   <data name="ReferenceCurrencyInfoP2" xml:space="preserve">
     <value>Die Werte, welche mit einem Stern markierten sind, werden im blauen Kopffeld angezeigt.</value>
-  </data>
-  <data name="Refresh" xml:space="preserve">
-    <value>Aktualisieren</value>
-  </data>
-  <data name="Refreshing" xml:space="preserve">
-    <value>Aktualisieren</value>
-  </data>
-  <data name="RefreshingDots" xml:space="preserve">
-    <value>Aktualisieren ...</value>
   </data>
   <data name="RefreshOnStartup" xml:space="preserve">
     <value>Aktualiserung beim Start</value>
@@ -506,5 +497,23 @@
   </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
+  </data>
+  <data name="QrCode" xml:space="preserve">
+    <value>QR Code</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Aktualisieren ...</value>
+  </data>
+  <data name="AddRate" xml:space="preserve">
+    <value>Kurs hinzufügen</value>
+  </data>
+  <data name="AddReferenceCurrency" xml:space="preserve">
+    <value>Referenzwährung hinzufügen</value>
+  </data>
+  <data name="AdditionalRates" xml:space="preserve">
+    <value>Zusätzliche Kurse</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Keine</value>
   </data>
 </root>

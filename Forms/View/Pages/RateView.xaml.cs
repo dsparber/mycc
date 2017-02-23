@@ -6,9 +6,13 @@ using MyCC.Core.Currency.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
+using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
+using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components;
+using MyCC.Forms.View.Overlays;
 using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
 
@@ -43,6 +47,15 @@ namespace MyCC.Forms.View.Pages
             AddSubscriber();
 
             SetHeaderCarousel();
+
+            SetFooterText();
+            SetNoData();
+
+            var recognizer = new TapGestureRecognizer();
+            recognizer.Tapped += AddRate;
+            var addCell = new CustomCellView(true) { Text = I18N.AddRate, IsActionCell = true, IsCentered = true };
+            addCell.GestureRecognizers.Add(recognizer);
+            NoDataStack.Children.Add(addCell);
 
             if (ApplicationSettings.FirstLaunch)
             {
@@ -86,6 +99,11 @@ namespace MyCC.Forms.View.Pages
         private void AddSubscriber()
         {
             Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
+            Messaging.UpdatingRates.SubscribeFinished(this, () => { SetFooterText(); SetNoData(); });
+
+            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoData);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, SetNoData);
+            Messaging.Loading.SubscribeFinished(this, SetNoData);
         }
 
         private async void Refresh()
@@ -93,6 +111,8 @@ namespace MyCC.Forms.View.Pages
             await AppTaskHelper.UpdateRates();
             _pullToRefresh.IsRefreshing = false;
         }
+
+        private void AddRate(object sender, EventArgs e) => CurrencyOverlay.ShowAddRateOverlay(Navigation);
 
         private class HeaderTemplateSelector : DataTemplateSelector
         {
@@ -102,6 +122,35 @@ namespace MyCC.Forms.View.Pages
 
                  return new RatesHeaderComponent(c);
              });
+        }
+
+        private void SetFooterText()
+        {
+            var lastUpdate = ApplicationSettings.WatchedCurrencies
+                            .Concat(ApplicationSettings.AllReferenceCurrencies)
+                            .Concat(AccountStorage.UsedCurrencies)
+                            .Select(e => new ExchangeRate(ApplicationSettings.SelectedRatePageCurrency, e))
+                            .SelectMany(ExchangeRateHelper.GetNeededRates)
+                            .Distinct()
+                            .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).ToList();
+            var text = lastUpdate.Any() ? lastUpdate.Min().LastUpdateString() : DateTime.Now.LastUpdateString();
+
+            Device.BeginInvokeOnMainThread(() => Footer.Text = text);
+        }
+
+        private void SetNoData()
+        {
+            var anyItems = ApplicationSettings.WatchedCurrencies
+                .Concat(ApplicationSettings.AllReferenceCurrencies)
+                .Concat(AccountStorage.UsedCurrencies)
+                .Distinct()
+                .Any(c => !c.Equals(ApplicationSettings.SelectedRatePageCurrency));
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                NoDataView.IsVisible = !anyItems;
+                DataView.IsVisible = anyItems;
+            });
         }
     }
 }

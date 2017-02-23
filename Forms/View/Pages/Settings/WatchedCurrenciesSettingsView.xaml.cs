@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using MyCC.Core.Currency.Model;
-using MyCC.Core.Currency.Storage;
 using MyCC.Core.Settings;
 using MyCC.Forms.Messages;
 using MyCC.Forms.view.components.CellViews;
@@ -18,6 +16,8 @@ namespace MyCC.Forms.View.Pages.Settings
         {
             InitializeComponent();
             SetReferenceCurrencyCells();
+
+            Messaging.UpdatingRates.SubscribeFinished(this, SetReferenceCurrencyCells);
         }
 
         private void SetReferenceCurrencyCells()
@@ -36,7 +36,7 @@ namespace MyCC.Forms.View.Pages.Settings
                     var cu = (e as TappedEventArgs)?.Parameter as Currency;
                     watchedCurrencies.Remove(cu);
                     ApplicationSettings.WatchedCurrencies = watchedCurrencies;
-                    Messaging.ReferenceCurrencies.SendValueChanged();
+                    Messaging.UpdatingRates.SendFinished();
                     SetReferenceCurrencyCells();
                 };
 
@@ -55,20 +55,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void Add(object sender, EventArgs args)
         {
-            var allReferenceCurrencies = ApplicationSettings.WatchedCurrencies.ToArray();
-            var currencies = CurrencyStorage.Instance.AllElements.Where(c => !allReferenceCurrencies.Contains(c)).ToList();
-
-            var overlay = new CurrencyOverlay(currencies)
-            {
-                CurrencySelected = c =>
-                {
-                    ApplicationSettings.WatchedCurrencies = new List<Currency>(ApplicationSettings.WatchedCurrencies) { c };
-                    Messaging.ReferenceCurrencies.SendValueChanged();
-                    SetReferenceCurrencyCells();
-                }
-            };
-
-            Navigation.PushAsync(overlay);
+            CurrencyOverlay.ShowAddRateOverlay(Navigation, SetReferenceCurrencyCells);
         }
     }
 }

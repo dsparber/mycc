@@ -393,15 +393,6 @@
   <data name="ReferenceCurrencyInfoP2" xml:space="preserve">
     <value>The values of the stared currencies are shown within the blue header.</value>
   </data>
-  <data name="Refresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="Refreshing" xml:space="preserve">
-    <value>Refreshing</value>
-  </data>
-  <data name="RefreshingDots" xml:space="preserve">
-    <value>Refreshing ...</value>
-  </data>
   <data name="RefreshOnStartup" xml:space="preserve">
     <value>Refresh on startup</value>
   </data>
@@ -506,5 +497,23 @@
   </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
+  </data>
+  <data name="QrCode" xml:space="preserve">
+    <value>QR Code</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Refreshing ...</value>
+  </data>
+  <data name="AddRate" xml:space="preserve">
+    <value>Add rate</value>
+  </data>
+  <data name="AddReferenceCurrency" xml:space="preserve">
+    <value>Add reference currency</value>
+  </data>
+  <data name="AdditionalRates" xml:space="preserve">
+    <value>Additional rates</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
   </data>
 </root>

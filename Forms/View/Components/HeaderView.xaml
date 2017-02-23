@@ -2,7 +2,6 @@
 <ContentView
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
     xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
     x:Class="MyCC.Forms.View.Components.HeaderView"
 	BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
@@ -53,7 +52,6 @@
           <Label
             x:Name="RefreshingLabel"
             FontSize="18"
-            Text="{resources:Translate Refreshing}"
             TextColor="White">
           </Label>
           <ActivityIndicator

@@ -7,7 +7,7 @@
 	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.Settings.WatchedCurrenciesSettingsView"
     BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
-	Title="{resources:Translate Rates}">
+	Title="{resources:Translate AdditionalRates}">
   <ContentPage.ToolbarItems>
     <ToolbarItem
 			Text="{resources:Translate Add}"

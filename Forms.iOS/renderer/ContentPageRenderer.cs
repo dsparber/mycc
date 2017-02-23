@@ -70,10 +70,6 @@ namespace MyCC.Forms.iOS.renderer
                     {
                         systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Cancel);
                     }
-                    else if (info.Text.Equals(I18N.Refresh))
-                    {
-                        nativeItem.Image = new UIImage("refresh.png");
-                    }
                 }
                 if (systemItem != null)
                 {

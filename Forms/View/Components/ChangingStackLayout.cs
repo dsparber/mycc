@@ -1,4 +1,5 @@
-﻿using MyCC.Forms.Messages;
+﻿using MyCC.Forms.Constants;
+using MyCC.Forms.Messages;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Components
@@ -8,6 +9,9 @@ namespace MyCC.Forms.View.Components
         public ChangingStackLayout()
         {
             Spacing = 0;
+            HorizontalOptions = LayoutOptions.FillAndExpand;
+            VerticalOptions = LayoutOptions.FillAndExpand;
+            BackgroundColor = AppConstants.TableBackgroundColor;
             SetChildLayout();
         }
 
