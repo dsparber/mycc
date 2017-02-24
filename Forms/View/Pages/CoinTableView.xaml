@@ -32,7 +32,7 @@
 					x:Name="DataView"
 					HorizontalOptions="FillAndExpand"
 					VerticalOptions="FillAndExpand">
-          <StackLayout VerticalOptions="FillAndExpand">
+          <StackLayout VerticalOptions="FillAndExpand" Spacing="0">
             <ContentView x:Name="Content" VerticalOptions="FillAndExpand"/>
             <components:InfoFooterComponent
             x:Name="Footer"/>
