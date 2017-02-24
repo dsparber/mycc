@@ -70,7 +70,7 @@ namespace MyCC.Forms.View.Components
         {
             try
             {
-                var items = AccountStorage.AccountsGroupedByCurrency.Select(e => new Data(e, ApplicationSettings.BaseCurrency)).OrderByDescending(d => d.value).ToArray();
+                var items = AccountStorage.AccountsGroupedByCurrency.Select(e => new Data(e, ApplicationSettings.BaseCurrency)).Where(d => d.value > 0).OrderByDescending(d => d.value).ToArray();
                 Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new[] { I18N.OneAccount, I18N.Accounts }, new[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, ApplicationSettings.BaseCurrency.Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString()));
             }
             catch (Exception e)
@@ -116,7 +116,7 @@ namespace MyCC.Forms.View.Components
                 value = totalMoney.Amount * rate.Rate ?? 0;
                 money = totalMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 reference = new Money(value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-                accounts = group.Select(a => new AccountData(a, rate, referenceCurrency)).OrderByDescending(d => d.value).ToArray();
+                accounts = group.Select(a => new AccountData(a, rate, referenceCurrency)).Where(d => d.value > 0).OrderByDescending(d => d.value).ToArray();
             }
         }
 

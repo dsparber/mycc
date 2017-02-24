@@ -9,6 +9,12 @@
 	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.CoinGraphView"
 	Title="{resources:Translate Assets}">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem
+          Text="{resources:Translate Add}"
+          Icon="add.png"
+          Clicked="AddSource"/>
+  </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <components:ChangingStackLayout>
       <carousel:CarouselViewControl
@@ -22,30 +28,28 @@
 				BackgroundColor="{x:Static constants:AppConstants.ThemeColor}" />
       <StackLayout
 				VerticalOptions="FillAndExpand">
-        <StackLayout
-					x:Name="Stack"
-					Spacing="0"
+        <ContentView
+					x:Name="DataView"
 					HorizontalOptions="FillAndExpand"
 					VerticalOptions="FillAndExpand">
-        </StackLayout>
+          <StackLayout VerticalOptions="FillAndExpand" Spacing="0">
+            <ContentView x:Name="Content" VerticalOptions="FillAndExpand"/>
+            <components:InfoFooterComponent
+            x:Name="Footer"/>
+          </StackLayout>
+        </ContentView>
         <ContentView
-					IsVisible="false"
-					x:Name="NoSourcesView"
+					x:Name="NoDataView"
 					VerticalOptions="FillAndExpand"
 					BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
           <StackLayout
 						VerticalOptions="CenterAndExpand"
-						Margin="40">
+						Spacing="20"
+            x:Name="NoDataStack">
             <Label
 							Text="{resources:Translate NoDataToDisplay}"
 							VerticalOptions="Center"
 							HorizontalTextAlignment="Center"
-							TextColor="{x:Static constants:AppConstants.FontColorLight}" />
-            <Label
-							Text="{resources:Translate GoToSourcesToAddAccount}"
-							VerticalOptions="Center"
-							HorizontalTextAlignment="Center"
-							WidthRequest="150"
 							TextColor="{x:Static constants:AppConstants.FontColorLight}" />
           </StackLayout>
         </ContentView>

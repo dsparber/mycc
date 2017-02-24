@@ -58,7 +58,7 @@ namespace MyCC.Forms.View.Overlays
 
             _searchBar.TextChanged += (sender, e) =>
             {
-                var filtered = string.IsNullOrWhiteSpace(e.NewTextValue) ? selectableCurrencies.Where(c => c.Code.ToLower().Contains(e.NewTextValue.ToLower()) || c.Name.ToLower().Contains(e.NewTextValue.ToLower())) : selectableCurrencies;
+                var filtered = !string.IsNullOrWhiteSpace(e.NewTextValue) ? selectableCurrencies.Where(c => c.Code.ToLower().Contains(e.NewTextValue.ToLower()) || c.Name.ToLower().Contains(e.NewTextValue.ToLower())) : selectableCurrencies;
                 SetTableContent(section, filtered);
             };
 

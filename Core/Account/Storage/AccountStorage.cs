@@ -52,6 +52,15 @@ namespace MyCC.Core.Account.Storage
 
         public static IEnumerable<FunctionalAccount> EnabledAccounts => Instance.AllElements.Where(a => a.IsEnabled);
 
+        public static int CurrenciesForGraph => AccountsGroupedByCurrency
+            .Select(e => e.Select(a =>
+            {
+                var rate = new ExchangeRate(e.Key, ApplicationSettings.BaseCurrency);
+                rate = ExchangeRateHelper.GetRate(rate) ?? rate;
+
+                return a.IsEnabled ? a.Money.Amount * rate.Rate ?? 0 : 0;
+            }).Sum()).Count(v => v > 0);
+
         public static async Task<bool> AddRepository(OnlineAccountRepository repository)
         {
             var success = await repository.Test();
