@@ -7,18 +7,22 @@
 	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="MyCC.Forms.View.Pages.AccountDetailView">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+			Text="{resources:Translate Edit}"
+			Clicked="Edit"
+			Icon="edit.png" />
+        <ToolbarItem
 			Text="{resources:Translate Info}"
 			Clicked="ShowInfo"
 			Icon="info.png" />
-  </ContentPage.ToolbarItems>
-  <ContentPage.Content>
-    <components1:ChangingStackLayout
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <components1:ChangingStackLayout
 			x:Name="ChangingStack"
 			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-      <ContentView
+            <ContentView
 				x:Name="ContentView" />
-    </components1:ChangingStackLayout>
-  </ContentPage.Content>
+        </components1:ChangingStackLayout>
+    </ContentPage.Content>
 </ContentPage>

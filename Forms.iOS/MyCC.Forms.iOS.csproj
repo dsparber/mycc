@@ -447,6 +447,9 @@
     <BundleResource Include="Resources\qr%402x.png" />
     <BundleResource Include="Resources\qr%403x.png" />
     <BundleResource Include="Resources\qr.png" />
+    <BundleResource Include="Resources\edit.png" />
+    <BundleResource Include="Resources\edit%402x.png" />
+    <BundleResource Include="Resources\edit%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\MyCC.Core.csproj">

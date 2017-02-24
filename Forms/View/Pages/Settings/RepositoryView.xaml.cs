@@ -16,10 +16,13 @@ namespace MyCC.Forms.View.Pages.Settings
     {
         private readonly AccountRepository _repository;
 
-        public RepositoryView(AccountRepository repository)
+        private readonly bool _isEditModal;
+
+        public RepositoryView(AccountRepository repository, bool isEditModal = false)
         {
             InitializeComponent();
             _repository = repository;
+            _isEditModal = isEditModal;
 
             Header.TitleText = repository.Name;
             if (repository is AddressAccountRepository)
@@ -47,6 +50,13 @@ namespace MyCC.Forms.View.Pages.Settings
             RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
 
             SetView();
+
+            if (!_isEditModal) return;
+
+            EditClicked(null, null);
+            var cancel = new ToolbarItem { Text = I18N.Cancel };
+            cancel.Clicked += (s, e) => Navigation.PopOrPopModal();
+            ToolbarItems.Add(cancel);
         }
 
         private void SetView()
@@ -170,6 +180,11 @@ namespace MyCC.Forms.View.Pages.Settings
 
                 await AccountStorage.Instance.Update(_repository);
                 Messaging.UpdatingAccounts.SendFinished();
+
+                if (_isEditModal)
+                {
+                    await Navigation.PopOrPopModal();
+                }
 
                 RepositoryNameEntryCell.IsEditable = false;
                 AddressEntryCell.IsEditable = false;

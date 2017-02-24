@@ -1,5 +1,6 @@
 using System;
 using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
@@ -11,6 +12,7 @@ using MyCC.Forms.Tasks;
 using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Overlays;
+using MyCC.Forms.View.Pages.Settings;
 using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
 
@@ -95,6 +97,19 @@ namespace MyCC.Forms.View.Pages
         private void ShowInfo(object sender, EventArgs args)
         {
             Navigation.PushAsync(new CoinInfoView(_account.Money.Currency));
+        }
+
+        private void Edit(object sender, EventArgs args)
+        {
+            var repo = AccountStorage.RepositoryOf(_account);
+            if (repo is LocalAccountRepository)
+            {
+                Navigation.PushOrPushModal(new AccountEditView(_account, repo as LocalAccountRepository, true));
+            }
+            else
+            {
+                Navigation.PushOrPushModal(new RepositoryView(repo, true));
+            }
         }
     }
 }

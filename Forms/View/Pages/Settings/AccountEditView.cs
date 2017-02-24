@@ -3,9 +3,11 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
+using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages.Settings
 {
@@ -16,13 +18,15 @@ namespace MyCC.Forms.View.Pages.Settings
         private FunctionalAccount _account;
         private readonly LocalAccountRepository _repository;
 
+        private readonly bool _isEditModal;
 
-        public AccountEditView(FunctionalAccount account, LocalAccountRepository repository)
+        public AccountEditView(FunctionalAccount account, LocalAccountRepository repository, bool isEditModal = false)
         {
             InitializeComponent();
 
             _account = account;
             _repository = repository;
+            _isEditModal = isEditModal;
 
             Title = account.Name;
             Header.TitleText = account.Money.ToString();
@@ -39,6 +43,13 @@ namespace MyCC.Forms.View.Pages.Settings
 
             _currencyEntryCell.OnSelected = c => Header.TitleText = _currencyEntryCell.SelectedMoney.ToString();
             _currencyEntryCell.OnTyped = m => Header.TitleText = m.ToString();
+
+            if (!isEditModal) return;
+
+            StartEditing(null, null);
+            var cancel = new ToolbarItem { Text = I18N.Cancel };
+            cancel.Clicked += (s, e) => Navigation.PopOrPopModal();
+            ToolbarItems.Add(cancel);
         }
 
         private void StartEditing(object sender, EventArgs e)
@@ -51,7 +62,6 @@ namespace MyCC.Forms.View.Pages.Settings
             ToolbarItems.Add(SaveItem);
 
             Title = I18N.Editing;
-
         }
 
         private async void DoneEditing(object sender, EventArgs e)
@@ -70,6 +80,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             Messaging.UpdatingAccounts.SendFinished();
 
+            if (_isEditModal) await Navigation.PopOrPopModal();
 
             Title = _account.Name;
             Header.TitleText = _account.Money.ToString();
