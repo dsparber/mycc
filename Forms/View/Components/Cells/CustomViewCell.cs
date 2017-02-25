@@ -67,6 +67,11 @@ namespace MyCC.Forms.View.Components.Cells
             set { _view.IsCentered = value; }
         }
 
+        public bool IsDisabled
+        {
+            set { _view.IsDisaled = value; }
+        }
+
         public LineBreakMode DetailBreakMode
         {
             set { _view.DetailBreakMode = value; }

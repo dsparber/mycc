@@ -1,7 +1,7 @@
 ﻿namespace MyCC.Core.Settings
 {
-	public static class Constants
-	{
-		public static readonly Version AppVersion = new Version("0.5.33");
-	}
+    public static class Constants
+    {
+        public static readonly Version AppVersion = new Version("0.5.34");
+    }
 }

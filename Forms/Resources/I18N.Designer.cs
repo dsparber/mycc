@@ -512,24 +512,6 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Disable account ähnelt.
-        /// </summary>
-        public static string DisableAccount {
-            get {
-                return ResourceManager.GetString("DisableAccount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hidden in overview ähnelt.
-        /// </summary>
-        public static string DisabledInOverview {
-            get {
-                return ResourceManager.GetString("DisabledInOverview", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Disable PIN ähnelt.
         /// </summary>
         public static string DisablePin {
@@ -562,6 +544,24 @@ namespace MyCC.Forms.Resources {
         public static string Editing {
             get {
                 return ResourceManager.GetString("Editing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enable account ähnelt.
+        /// </summary>
+        public static string EnableAccount {
+            get {
+                return ResourceManager.GetString("EnableAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Shown in the overview ähnelt.
+        /// </summary>
+        public static string EnabledInOverview {
+            get {
+                return ResourceManager.GetString("EnabledInOverview", resourceCulture);
             }
         }
         

@@ -9,13 +9,13 @@
 	x:Class="MyCC.Forms.View.Pages.AccountDetailView">
     <ContentPage.ToolbarItems>
         <ToolbarItem
-			Text="{resources:Translate Edit}"
-			Clicked="Edit"
-			Icon="edit.png" />
-        <ToolbarItem
 			Text="{resources:Translate Info}"
 			Clicked="ShowInfo"
 			Icon="info.png" />
+        <ToolbarItem
+			Text="{resources:Translate Edit}"
+			Clicked="Edit"
+			Icon="edit.png" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <components1:ChangingStackLayout

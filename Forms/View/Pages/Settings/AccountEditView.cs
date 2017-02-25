@@ -40,9 +40,12 @@ namespace MyCC.Forms.View.Pages.Settings
 
             ToolbarItems.Remove(SaveItem);
             EditView.Root.Remove(DeleteSection);
+            EditView.Root.Remove(EnableSection);
 
             _currencyEntryCell.OnSelected = c => Header.TitleText = _currencyEntryCell.SelectedMoney.ToString();
             _currencyEntryCell.OnTyped = m => Header.TitleText = m.ToString();
+
+            EnableAccountCell.On = account.IsEnabled;
 
             if (!isEditModal) return;
 
@@ -56,6 +59,7 @@ namespace MyCC.Forms.View.Pages.Settings
         {
             _currencyEntryCell.IsEditable = true;
             AccountName.IsEditable = true;
+            EditView.Root.Add(EnableSection);
             EditView.Root.Add(DeleteSection);
 
             ToolbarItems.Clear();
@@ -71,9 +75,9 @@ namespace MyCC.Forms.View.Pages.Settings
 
             _currencyEntryCell.IsEditable = false;
             AccountName.IsEditable = false;
-            EditView.Root.Remove(DeleteSection);
 
             _account.Name = AccountName.Text ?? string.Empty;
+            _account.IsEnabled = EnableAccountCell.On;
 
             _account = new LocalAccount(_account.Id, _account.Name, _currencyEntryCell.SelectedMoney, _account.IsEnabled, DateTime.Now, _account.ParentId);
             await _repository.Update(_account);
@@ -81,6 +85,9 @@ namespace MyCC.Forms.View.Pages.Settings
             Messaging.UpdatingAccounts.SendFinished();
 
             if (_isEditModal) await Navigation.PopOrPopModal();
+
+            EditView.Root.Remove(DeleteSection);
+            EditView.Root.Remove(EnableSection);
 
             Title = _account.Name;
             Header.TitleText = _account.Money.ToString();

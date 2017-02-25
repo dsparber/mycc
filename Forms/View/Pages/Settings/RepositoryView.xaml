@@ -9,51 +9,54 @@
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	Title="{resources:Translate Accounts}"
 	x:Class="MyCC.Forms.View.Pages.Settings.RepositoryView">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
 			x:Name="EditItem"
 			Clicked="EditClicked"
 			Text="{resources:Translate Edit}" />
-    <ToolbarItem
+        <ToolbarItem
 			x:Name="SaveItem"
 			Clicked="SaveClicked"
 			Text="{resources:Translate Save}" />
-  </ContentPage.ToolbarItems>
-  <ContentPage.Content>
-    <components1:ChangingStackLayout>
-      <components1:HeaderView
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <components1:ChangingStackLayout>
+            <components1:HeaderView
 				x:Name="Header" />
-      <TableView
+            <TableView
 				x:Name="TableView"
 				Intent="Form">
-        <TableView.BackgroundColor>
-          <OnPlatform
+                <TableView.BackgroundColor>
+                    <OnPlatform
 						x:TypeArguments="Color"
 						Android="#EEE" />
-        </TableView.BackgroundColor>
-        <TableSection
+                </TableView.BackgroundColor>
+                <TableSection
 					Title="{resources:Translate AccountInformation}"
 					x:Name="GeneralSection">
-          <cells:CustomEntryCell
+                    <cells:CustomEntryCell
 						x:Name="RepositoryNameEntryCell"
 						Title="{resources:Translate Name}"
 						IsEditable="false"
 						Placeholder="{resources:Translate Name}" />
-          <cells:CustomEntryCell
+                    <cells:CustomEntryCell
 						x:Name="AddressEntryCell"
 						IsEditable="false"
 						Title="{resources:Translate Address}" />
-        </TableSection>
-        <TableSection
+                </TableSection>
+                <TableSection
 					x:Name="AccountsSection" />
-        <TableSection
+                <TableSection
+                    Title="{resources:Translate EnableAccount}"
+					x:Name="EnableAccountsSection" />
+                <TableSection
 					x:Name="DeleteSection">
-          <cells:CustomViewCell
+                    <cells:CustomViewCell
 						x:Name="DeleteButtonCell"
 						Text="{resources:Translate Delete}"
 						IsDeleteActionCell="true" />
-        </TableSection>
-      </TableView>
-    </components1:ChangingStackLayout>
-  </ContentPage.Content>
+                </TableSection>
+            </TableView>
+        </components1:ChangingStackLayout>
+    </ContentPage.Content>
 </ContentPage>

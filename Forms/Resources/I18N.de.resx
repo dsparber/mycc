@@ -468,11 +468,11 @@
   <data name="ShowQrCode" xml:space="preserve">
     <value>QR Code zeigen</value>
   </data>
-  <data name="DisableAccount" xml:space="preserve">
-    <value>Account ausblenden</value>
+  <data name="EnableAccount" xml:space="preserve">
+    <value>Account einblenden</value>
   </data>
-  <data name="DisabledInOverview" xml:space="preserve">
-    <value>In Übersicht ausgeblendet</value>
+  <data name="EnabledInOverview" xml:space="preserve">
+    <value>In Übersicht eingeblendet</value>
   </data>
   <data name="LastUpdate" xml:space="preserve">
     <value>Aktualisiert</value>

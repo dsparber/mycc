@@ -102,6 +102,17 @@ namespace MyCC.Forms.view.components.CellViews
             }
         }
 
+        public bool IsDisaled
+        {
+            set
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    _masterLabel.TextColor = value ? AppConstants.FontColorLight : AppConstants.FontColor;
+                });
+            }
+        }
+
         public bool IsDeleteActionCell
         {
             set

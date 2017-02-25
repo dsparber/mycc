@@ -471,11 +471,11 @@
   <data name="ShowQrCode" xml:space="preserve">
     <value>Show QR code</value>
   </data>
-  <data name="DisableAccount" xml:space="preserve">
-    <value>Disable account</value>
+  <data name="EnableAccount" xml:space="preserve">
+    <value>Enable account</value>
   </data>
-  <data name="DisabledInOverview" xml:space="preserve">
-    <value>Hidden in overview</value>
+  <data name="EnabledInOverview" xml:space="preserve">
+    <value>Shown in the overview</value>
   </data>
   <data name="LastUpdate" xml:space="preserve">
     <value>Last update</value>

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
@@ -15,6 +17,7 @@ namespace MyCC.Forms.View.Pages.Settings
     public partial class RepositoryView
     {
         private readonly AccountRepository _repository;
+        private readonly List<Tuple<FunctionalAccount, bool>> _changedAccounts;
 
         private readonly bool _isEditModal;
 
@@ -23,6 +26,8 @@ namespace MyCC.Forms.View.Pages.Settings
             InitializeComponent();
             _repository = repository;
             _isEditModal = isEditModal;
+
+            _changedAccounts = new List<Tuple<FunctionalAccount, bool>>();
 
             Header.TitleText = repository.Name;
             if (repository is AddressAccountRepository)
@@ -45,6 +50,7 @@ namespace MyCC.Forms.View.Pages.Settings
             DeleteButtonCell.Tapped += Delete;
 
             TableView.Root.Remove(DeleteSection);
+            TableView.Root.Remove(EnableAccountsSection);
             ToolbarItems.Remove(SaveItem);
 
             RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
@@ -63,7 +69,7 @@ namespace MyCC.Forms.View.Pages.Settings
         {
             var cells = _repository.Elements.OrderBy(e => e.Money.Currency.Code).Select(e =>
             {
-                var cell = new CustomViewCell { Text = e.Money.ToString(), Detail = e.Money.Currency.Name };
+                var cell = new CustomViewCell { Text = e.Money.ToString(), Detail = e.Money.Currency.Name, IsDisabled = !e.IsEnabled };
                 if (!(_repository is LocalAccountRepository)) return cell;
 
                 cell.Image = "more.png";
@@ -79,11 +85,25 @@ namespace MyCC.Forms.View.Pages.Settings
                     Text = I18N.NoAccounts
                 });
             }
-            Device.BeginInvokeOnMainThread(() =>
+
+            var enableCells = _repository.Elements.OrderBy(e => e.Money.Currency.Code).Select(e =>
             {
-                AccountsSection.Clear();
-                AccountsSection.Add(cells);
-            });
+                var cell = new CustomSwitchCell { Title = e.Money.ToString(), Info = e.Money.Currency.Name, On = e.IsEnabled };
+                cell.Switch.Toggled += (sender, args) =>
+                {
+                    _changedAccounts.RemoveAll(t => t.Item1.Equals(e));
+                    _changedAccounts.Add(Tuple.Create(e, args.Value));
+                };
+                return cell;
+            }).ToList();
+
+            Device.BeginInvokeOnMainThread(() =>
+                 {
+                     AccountsSection.Clear();
+                     AccountsSection.Add(cells);
+                     EnableAccountsSection.Clear();
+                     EnableAccountsSection.Add(enableCells);
+                 });
 
             if (_repository is AddressAccountRepository)
             {
@@ -111,6 +131,7 @@ namespace MyCC.Forms.View.Pages.Settings
         private void EditClicked(object sender, EventArgs e)
         {
             RepositoryNameEntryCell.IsEditable = true;
+            TableView.Root.Add(EnableAccountsSection);
             if (!(_repository is LocalAccountRepository))
             {
                 TableView.Root.Add(DeleteSection);
@@ -179,6 +200,11 @@ namespace MyCC.Forms.View.Pages.Settings
             {
 
                 await AccountStorage.Instance.Update(_repository);
+                foreach (var a in _changedAccounts)
+                {
+                    a.Item1.IsEnabled = a.Item2;
+                    await AccountStorage.Update(a.Item1);
+                }
                 Messaging.UpdatingAccounts.SendFinished();
 
                 if (_isEditModal)
@@ -191,6 +217,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
                 TableView.Root.Add(AccountsSection);
                 TableView.Root.Remove(DeleteSection);
+                TableView.Root.Remove(EnableAccountsSection);
 
                 ToolbarItems.Remove(SaveItem);
                 ToolbarItems.Add(EditItem);
@@ -204,6 +231,8 @@ namespace MyCC.Forms.View.Pages.Settings
             }
             SaveItem.Clicked += SaveClicked;
             Header.IsLoading = false;
+
+            SetView();
         }
 
         private void UnfocusAll()

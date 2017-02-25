@@ -1,15 +1,11 @@
 using System;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
-using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
-using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Overlays;
 using MyCC.Forms.View.Pages.Settings;
@@ -35,21 +31,8 @@ namespace MyCC.Forms.View.Pages
             ChangingStack.Children.Insert(0, header);
             _referenceView = new ReferenceCurrenciesView(account.Money);
 
-            var stack = new StackLayout { Spacing = 40, Margin = new Thickness(0, 40) };
+            var stack = new StackLayout { Spacing = 0, Margin = new Thickness(0, 0, 0, 40) };
             var repo = AccountStorage.Instance.Repositories.Find(r => r.Id == account.ParentId);
-
-            var disableCell = new CustomSwitchView
-            {
-                On = !_account.IsEnabled,
-                Title = I18N.DisableAccount,
-                Info = I18N.DisabledInOverview
-            };
-            disableCell.Switch.Toggled += async (sender, args) =>
-            {
-                _account.IsEnabled = !disableCell.On;
-                await AccountStorage.Update(_account);
-                Messaging.UpdatingAccounts.SendFinished();
-            };
 
             if (repo is AddressAccountRepository && !(repo is BlockchainXpubAccountRepository))
             {
@@ -58,7 +41,6 @@ namespace MyCC.Forms.View.Pages
                 ToolbarItems.Add(qrButton);
             }
 
-            stack.Children.Add(disableCell);
             stack.Children.Add(_referenceView);
 
 
