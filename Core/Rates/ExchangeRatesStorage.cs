@@ -8,7 +8,6 @@ using MyCC.Core.Rates.Repositories.Interfaces;
 using MyCC.Core.Settings;
 using SQLite;
 using Xamarin.Forms;
-using Version = MyCC.Core.Settings.Version;
 
 namespace MyCC.Core.Rates
 {

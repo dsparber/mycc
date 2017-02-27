@@ -9,15 +9,15 @@
 	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.CoinGraphView"
 	Title="{resources:Translate Assets}">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
           Text="{resources:Translate Add}"
           Icon="add.png"
           Clicked="AddSource"/>
-  </ContentPage.ToolbarItems>
-  <ContentPage.Content>
-    <components:ChangingStackLayout>
-      <carousel:CarouselViewControl
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <components:ChangingStackLayout>
+            <carousel:CarouselViewControl
 				x:Name="HeaderCarousel"
 				Arrows="true"
 				InterPageSpacing="0"
@@ -26,34 +26,39 @@
 				PageIndicatorTintColor="#5FFF"
 				CurrentPageIndicatorTintColor="White"
 				BackgroundColor="{x:Static constants:AppConstants.ThemeColor}" />
-      <StackLayout
+            <StackLayout
 				VerticalOptions="FillAndExpand">
-        <ContentView
+                <ContentView
 					x:Name="DataView"
-					HorizontalOptions="FillAndExpand"
 					VerticalOptions="FillAndExpand">
-          <StackLayout VerticalOptions="FillAndExpand" Spacing="0">
-            <ContentView x:Name="Content" VerticalOptions="FillAndExpand"/>
-            <components:InfoFooterComponent
-            x:Name="Footer"/>
-          </StackLayout>
-        </ContentView>
-        <ContentView
-					x:Name="NoDataView"
-					VerticalOptions="FillAndExpand"
-					BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-          <StackLayout
-						VerticalOptions="CenterAndExpand"
-						Spacing="20"
-            x:Name="NoDataStack">
-            <Label
-							Text="{resources:Translate NoDataToDisplay}"
-							VerticalOptions="Center"
-							HorizontalTextAlignment="Center"
-							TextColor="{x:Static constants:AppConstants.FontColorLight}" />
-          </StackLayout>
-        </ContentView>
-      </StackLayout>
-    </components:ChangingStackLayout>
-  </ContentPage.Content>
+                    <StackLayout  
+                        Spacing="0"
+                        VerticalOptions="FillAndExpand">
+                        <ContentView 
+                        x:Name="Content" 
+                        BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"/>
+                        <components:InfoFooterComponent
+                            x:Name="Footer"/>
+                    </StackLayout>
+                </ContentView>
+                <ContentView
+		            x:Name="NoDataView"
+                    IsVisible="False"
+		            VerticalOptions="FillAndExpand"
+		            BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
+                    <StackLayout
+  			            Spacing="20"
+			            VerticalOptions="CenterAndExpand"
+                        x:Name="NoDataStack">
+                        <Label
+						    Text="{resources:Translate NoDataToDisplay}"
+						    HorizontalTextAlignment="Center"
+						    TextColor="{x:Static constants:AppConstants.FontColorLight}" />
+                    </StackLayout>
+                </ContentView>
+            </StackLayout>
+        </components:ChangingStackLayout>
+    </ContentPage.Content>
 </ContentPage>
