@@ -203,7 +203,7 @@ namespace MyCC.Forms.View.Pages
                                     .Select(e => new ExchangeRate(_currency, e))
                                     .SelectMany(ExchangeRateHelper.GetNeededRates)
                                     .Distinct()
-                                    .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).Min();
+                                    .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty().Min();
 
             var infoTime = CoinInfoStorage.Instance.Get(_currency)?.LastUpdate ?? DateTime.Now;
 

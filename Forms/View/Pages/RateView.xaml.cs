@@ -126,14 +126,13 @@ namespace MyCC.Forms.View.Pages
 
         private void SetFooterText()
         {
-            var lastUpdate = ApplicationSettings.WatchedCurrencies
+            var text = ApplicationSettings.WatchedCurrencies
                             .Concat(ApplicationSettings.AllReferenceCurrencies)
                             .Concat(AccountStorage.UsedCurrencies)
                             .Select(e => new ExchangeRate(ApplicationSettings.SelectedRatePageCurrency, e))
                             .SelectMany(ExchangeRateHelper.GetNeededRates)
                             .Distinct()
-                            .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).ToList();
-            var text = lastUpdate.Any() ? lastUpdate.Min().LastUpdateString() : DateTime.Now.LastUpdateString();
+                            .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min().LastUpdateString();
 
             Device.BeginInvokeOnMainThread(() => Footer.Text = text);
         }
