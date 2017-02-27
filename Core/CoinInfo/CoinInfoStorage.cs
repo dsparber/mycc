@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Database;
 using MyCC.Core.CoinInfo.Repositories;
-using MyCC.Core.Settings;
 using SQLite;
 using Xamarin.Forms;
 
@@ -17,47 +16,12 @@ namespace MyCC.Core.CoinInfo
 
         private readonly List<ICoinInfoRepository> _repositories;
 
-        private static bool _alreadyCalled;
-
         private CoinInfoStorage()
         {
             _elements = new List<CoinInfoData>();
 
             _dbConnection = DependencyService.Get<ISqLiteConnection>().GetConnection();
-
-            Task.Run(async () =>
-            {
-                if (_alreadyCalled) return;
-                _alreadyCalled = true;
-
-                await _dbConnection.CreateTableAsync<CoinInfoData>();
-
-                if (ApplicationSettings.FirstLaunch)
-                {
-                    await _dbConnection.ExecuteAsync("CREATE TABLE CoinInfos ( Code varchar primary key not null, " +
-                                                     "Algorithm varchar, " +
-                                                     "Hashrate float, " +
-                                                     "Difficulty float, " +
-                                                     "CoinSupply float, " +
-                                                     "MaxSupply float, " +
-                                                     "Height integer, " +
-                                                     "PoS integer, " +
-                                                     "PoW integer, " +
-                                                     "Blocktime float , " +
-                                                     "Blockreward float, " +
-                                                     "LastUpdate integer)");
-                }
-                if (ApplicationSettings.VersionLastLaunch < new Version("0.5.0"))
-                {
-                    await _dbConnection.ExecuteAsync("ALTER TABLE CoinInfos ADD COLUMN MaxSupply float;");
-                    await _dbConnection.ExecuteAsync("ALTER TABLE CoinInfos ADD COLUMN Blockreward float;");
-                }
-                if (ApplicationSettings.VersionLastLaunch < new Version("0.5.23"))
-                {
-                    await _dbConnection.ExecuteAsync("ALTER TABLE CoinInfos ADD COLUMN LastUpdate INTEGER;");
-                }
-                _elements.AddRange(await _dbConnection.Table<CoinInfoData>().ToListAsync());
-            });
+            _dbConnection.CreateTableAsync<CoinInfoData>();
 
             _repositories = new List<ICoinInfoRepository> {
                 new CryptoIdCoinInfoRepository(),

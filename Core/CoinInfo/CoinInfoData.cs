@@ -3,7 +3,7 @@ using SQLite;
 
 namespace MyCC.Core.CoinInfo
 {
-    [Table("CoinInfos")]
+    [Table("CoinInfo")]
     public class CoinInfoData
     {
         /// <summary>
@@ -86,6 +86,7 @@ namespace MyCC.Core.CoinInfo
         [Column("LastUpdate")]
         public long LastUpdateTicks { get; set; }
 
+        [Ignore]
         public DateTime LastUpdate
         {
             get { return new DateTime(LastUpdateTicks); }

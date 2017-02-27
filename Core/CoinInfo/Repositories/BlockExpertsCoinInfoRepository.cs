@@ -31,10 +31,10 @@ namespace MyCC.Core.CoinInfo.Repositories
             var diffTask = client.GetAsync(GetUri(currency, KeyDifficulty));
             var supplyTask = client.GetAsync(GetUri(currency, KeySupply));
 
-            var heigh = int.Parse(await (await heightTask).Content.ReadAsStringAsync());
-            var hashrate = decimal.Parse(await (await hashrateTask).Content.ReadAsStringAsync(), CultureInfo.InvariantCulture);
-            var diff = decimal.Parse(await (await diffTask).Content.ReadAsStringAsync(), CultureInfo.InvariantCulture);
-            var supply = decimal.Parse(await (await supplyTask).Content.ReadAsStringAsync(), CultureInfo.InvariantCulture);
+            int heigh; int.TryParse(await (await heightTask).Content.ReadAsStringAsync(), out heigh);
+            var hashrate = TryParse(await (await hashrateTask).Content.ReadAsStringAsync());
+            var diff = TryParse(await (await diffTask).Content.ReadAsStringAsync());
+            var supply = TryParse(await (await supplyTask).Content.ReadAsStringAsync());
 
             return new CoinInfoData(currency)
             {
@@ -44,6 +44,11 @@ namespace MyCC.Core.CoinInfo.Repositories
                 Difficulty = diff != 0 ? diff as decimal? : null,
                 LastUpdate = DateTime.Now
             };
+        }
+
+        private static decimal TryParse(string s)
+        {
+            return string.IsNullOrWhiteSpace(s) ? 0 : decimal.Parse(s, CultureInfo.InvariantCulture);
         }
     }
 }

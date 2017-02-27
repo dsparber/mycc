@@ -8,6 +8,8 @@ namespace MyCC.Core.Currency.Database
 {
     public class CurrencyDatabase : AbstractDatabase<CurrencyDbm, Model.Currency, string>
     {
+        private static bool _executeAdditionalCommands;
+
         protected override async Task<IEnumerable<CurrencyDbm>> GetAllDbObjects()
         {
             return await (await Connection).Table<CurrencyDbm>().ToListAsync();
@@ -16,19 +18,11 @@ namespace MyCC.Core.Currency.Database
         protected override async Task Create(SQLiteAsyncConnection connection)
         {
             await connection.CreateTableAsync<CurrencyDbm>();
-            if (ApplicationSettings.VersionLastLaunch < new Version("0.5.4"))
-            {
-                try
-                {
-                    await connection.ExecuteAsync("ALTER TABLE Currencies ADD COLUMN IsCrypto INTEGER;");
-                }
-                catch
-                {
-                    System.Diagnostics.Debug.WriteLine("Skipped \"ALTER TABLE Currencies ADD COLUMN IsCrypto INTEGER;\"");
-                }
-                await connection.ExecuteAsync("DELETE FROM Currencies;");
-            }
-            if (ApplicationSettings.VersionLastLaunch < new Version("0.5.16"))
+
+            if (_executeAdditionalCommands) return;
+            _executeAdditionalCommands = true;
+
+            if (ApplicationSettings.VersionLastLaunch < new Version("0.5.35"))
             {
                 await connection.ExecuteAsync("DELETE FROM Currencies;");
                 await connection.ExecuteAsync("DELETE FROM CurrencyMap;");
