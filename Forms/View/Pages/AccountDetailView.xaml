@@ -4,7 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
-	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="MyCC.Forms.View.Pages.AccountDetailView">
     <ContentPage.ToolbarItems>
@@ -18,11 +18,23 @@
 			Icon="edit.png" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <components1:ChangingStackLayout
+        <components:ChangingStackLayout
 			x:Name="ChangingStack"
 			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
             <ContentView
-				x:Name="ContentView" />
-        </components1:ChangingStackLayout>
+                VerticalOptions="FillAndExpand">
+                <StackLayout 
+                    Spacing="0" 
+                    VerticalOptions="FillAndExpand">
+                    <ContentView
+                        x:Name="ContentView"
+                        BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"/>
+                    <components:InfoFooterComponent
+                        x:Name="Footer"/>
+                </StackLayout>
+            </ContentView>
+        </components:ChangingStackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -5,7 +5,9 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
+using MyCC.Core.Rates;
 using MyCC.Forms.Constants;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
@@ -57,6 +59,7 @@ namespace MyCC.Forms.View.Pages
             ContentView.Content = _pullToRefresh;
 
             Subscribe();
+            SetFooter();
         }
 
         private void LoadData()
@@ -73,6 +76,8 @@ namespace MyCC.Forms.View.Pages
 
             _referenceView.ReferenceMoney = MoneySum;
             _referenceView.UpdateView();
+
+            SetFooter();
         }
 
         private void Subscribe()
@@ -102,6 +107,17 @@ namespace MyCC.Forms.View.Pages
         private void ShowInfo(object sender, EventArgs args)
         {
             Navigation.PushAsync(new CoinInfoView(_currency));
+        }
+
+        private void SetFooter()
+        {
+            var online = AccountStorage.AccountsWithCurrency(_currency).Where(a => a is OnlineFunctionalAccount).ToList();
+            var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.AccountsWithCurrency(_currency).Select(a => a.LastUpdate).DefaultIfEmpty(DateTime.Now).Max();
+            var ratesTime = AccountStorage.NeededRatesFor(_currency).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+
+            var time = online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
+
+            Device.BeginInvokeOnMainThread(() => Footer.Text = time.LastUpdateString());
         }
     }
 }

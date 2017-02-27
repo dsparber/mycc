@@ -1,10 +1,14 @@
 using System;
+using System.Linq;
 using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Rates;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Overlays;
@@ -56,6 +60,9 @@ namespace MyCC.Forms.View.Pages
             ContentView.Content = _pullToRefresh;
 
             SetView();
+            SetFooter();
+
+            Messaging.Progress.SubscribeToComplete(this, SetFooter);
         }
 
         private void SetView()
@@ -92,6 +99,16 @@ namespace MyCC.Forms.View.Pages
             {
                 Navigation.PushOrPushModal(new RepositoryView(repo, true));
             }
+        }
+
+        private void SetFooter()
+        {
+            var accountTime = _account.LastUpdate;
+            var ratesTime = AccountStorage.NeededRatesFor(_account).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+
+            var time = _account is LocalAccount ? ratesTime : ratesTime < accountTime ? ratesTime : accountTime;
+
+            Device.BeginInvokeOnMainThread(() => Footer.Text = time.LastUpdateString());
         }
     }
 }

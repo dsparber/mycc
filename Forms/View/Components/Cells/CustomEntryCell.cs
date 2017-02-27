@@ -6,20 +6,18 @@ namespace MyCC.Forms.View.Components.Cells
     public class CustomEntryCell : ViewCell
     {
         public readonly Entry Entry;
-        protected readonly Label TitleLabel;
+        private readonly Label _titleLabel;
 
         private string _title;
         private string _placeholder;
 
         public string Title
         {
-            get { return _title; }
-            set { _title = value; TitleLabel.Text = _title; }
+            set { _title = value; _titleLabel.Text = _title; }
         }
 
         public string Placeholder
         {
-            get { return _placeholder; }
             set { _placeholder = value; Entry.Placeholder = _placeholder; }
         }
 
@@ -41,16 +39,16 @@ namespace MyCC.Forms.View.Components.Cells
         public CustomEntryCell()
         {
             Entry = new Entry { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
-            TitleLabel = new Label { WidthRequest = AppConstants.LabelWidth, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = AppConstants.FontColor, LineBreakMode = LineBreakMode.NoWrap };
+            _titleLabel = new Label { WidthRequest = AppConstants.LabelWidth, MinimumWidthRequest = AppConstants.LabelWidth, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = AppConstants.FontColor, LineBreakMode = LineBreakMode.NoWrap };
 
             var stack = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand };
-            stack.Children.Add(TitleLabel);
+            stack.Children.Add(_titleLabel);
             stack.Children.Add(Entry);
 
 
             if (Device.OS == TargetPlatform.Android)
             {
-                TitleLabel.FontSize = AppConstants.AndroidFontSize;
+                _titleLabel.FontSize = AppConstants.AndroidFontSize;
                 Entry.FontSize = AppConstants.AndroidFontSize;
             }
 
