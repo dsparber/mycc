@@ -1,4 +1,5 @@
 using System;
+using System.Dynamic;
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
@@ -9,7 +10,9 @@ using MyCC.Core.Rates;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
+using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
+using MyCC.Forms.view.components.CellViews;
 using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Overlays;
 using MyCC.Forms.View.Pages.Settings;
@@ -36,7 +39,7 @@ namespace MyCC.Forms.View.Pages
             _referenceView = new ReferenceCurrenciesView(account.Money);
 
             var stack = new StackLayout { Spacing = 0, Margin = new Thickness(0, 0, 0, 40) };
-            var repo = AccountStorage.Instance.Repositories.Find(r => r.Id == account.ParentId);
+            var repo = AccountStorage.RepositoryOf(_account);
 
             if (repo is AddressAccountRepository && !(repo is BlockchainXpubAccountRepository))
             {
@@ -45,6 +48,49 @@ namespace MyCC.Forms.View.Pages
                 ToolbarItems.Add(qrButton);
             }
 
+            var infoStackContainer = new StackLayout { Orientation = StackOrientation.Horizontal, Margin = new Thickness(15, 0) };
+            var headerStack = new StackLayout { HorizontalOptions = LayoutOptions.FillAndExpand };
+            var dataStack = new StackLayout();
+
+
+            headerStack.Children.Add(new Label { Text = $"{I18N.Name}:", FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight });
+
+            var nameLabel = new Label
+            {
+                Text = _account.Name,
+                FontSize = AppConstants.TableSectionFontSize,
+                TextColor = AppConstants.FontColorLight,
+                LineBreakMode = LineBreakMode.TailTruncation
+            };
+            dataStack.Children.Add(nameLabel);
+
+            headerStack.Children.Add(new Label { Text = $"{I18N.Source}:", FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight });
+            dataStack.Children.Add(new Label { Text = repo is LocalAccountRepository ? I18N.ManuallyAdded : repo.Description, FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight, LineBreakMode = LineBreakMode.TailTruncation });
+
+            Action updateLabelAction = () => nameLabel.Text = _account.Name;
+
+            if (repo is AddressAccountRepository)
+            {
+                headerStack.Children.Add(new Label { Text = $"{I18N.Address}:", FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight });
+                var addressLabel = new Label
+                {
+                    Text = (repo as AddressAccountRepository).Address,
+                    FontSize = AppConstants.TableSectionFontSize,
+                    TextColor = AppConstants.FontColorLight,
+                    LineBreakMode = LineBreakMode.TailTruncation
+                };
+                dataStack.Children.Add(addressLabel);
+                updateLabelAction = () =>
+                {
+                    nameLabel.Text = _account.Name;
+                    addressLabel.Text = (repo as AddressAccountRepository)?.Address ?? string.Empty;
+                };
+            }
+
+            infoStackContainer.Children.Add(headerStack);
+            infoStackContainer.Children.Add(dataStack);
+            stack.Children.Add(new SectionHeaderView(false) { Title = I18N.Info });
+            stack.Children.Add(infoStackContainer);
             stack.Children.Add(_referenceView);
 
 
@@ -63,6 +109,7 @@ namespace MyCC.Forms.View.Pages
             SetFooter();
 
             Messaging.Progress.SubscribeToComplete(this, SetFooter);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, updateLabelAction);
         }
 
         private void SetView()
