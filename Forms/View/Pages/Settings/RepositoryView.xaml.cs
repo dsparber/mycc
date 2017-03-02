@@ -65,6 +65,16 @@ namespace MyCC.Forms.View.Pages.Settings
             ToolbarItems.Add(cancel);
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (!AccountStorage.Instance.Repositories.Contains(_repository))
+            {
+                Navigation.PopAsync();
+            }
+        }
+
         private void SetView()
         {
             var cells = _repository.Elements.OrderBy(e => e.Money.Currency.Code).Select(e =>
@@ -125,7 +135,14 @@ namespace MyCC.Forms.View.Pages.Settings
             await AccountStorage.Instance.Remove(_repository);
             Messaging.UpdatingAccounts.SendFinished();
             Header.IsLoading = false;
-            await Navigation.PopAsync();
+            if (_isEditModal)
+            {
+                await Navigation.PopOrPopModal();
+            }
+            else
+            {
+                await Navigation.PopAsync();
+            }
         }
 
         private void EditClicked(object sender, EventArgs e)

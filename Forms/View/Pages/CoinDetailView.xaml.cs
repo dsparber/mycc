@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Base;
@@ -69,7 +70,6 @@ namespace MyCC.Forms.View.Pages
 
             if (_accounts.ToList().Count == 0)
             {
-                Navigation.RemovePage(this);
                 return;
             }
             if (_referenceView == null) return;
@@ -102,6 +102,11 @@ namespace MyCC.Forms.View.Pages
 
             _accountsView.OnAppearing();
             _referenceView.OnAppearing();
+
+            if (_accounts.ToList().Count == 0)
+            {
+                Navigation.PopAsync();
+            }
         }
 
         private void ShowInfo(object sender, EventArgs args)

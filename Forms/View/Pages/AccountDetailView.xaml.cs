@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
@@ -52,31 +53,31 @@ namespace MyCC.Forms.View.Pages
             var dataStack = new StackLayout();
 
 
-            headerStack.Children.Add(new Label { Text = $"{I18N.Name}:", FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight });
+            headerStack.Children.Add(new Label { Text = $"{I18N.Name}:", FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight, LineBreakMode = LineBreakMode.NoWrap });
 
             var nameLabel = new Label
             {
                 Text = _account.Name,
                 FontSize = AppConstants.TableSectionFontSize,
                 TextColor = AppConstants.FontColorLight,
-                LineBreakMode = LineBreakMode.TailTruncation
+                LineBreakMode = LineBreakMode.MiddleTruncation
             };
             dataStack.Children.Add(nameLabel);
 
-            headerStack.Children.Add(new Label { Text = $"{I18N.Source}:", FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight });
-            dataStack.Children.Add(new Label { Text = repo is LocalAccountRepository ? I18N.ManuallyAdded : repo.Description, FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight, LineBreakMode = LineBreakMode.TailTruncation });
+            headerStack.Children.Add(new Label { LineBreakMode = LineBreakMode.NoWrap, Text = $"{I18N.Source}:", FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight });
+            dataStack.Children.Add(new Label { Text = repo is LocalAccountRepository ? I18N.ManuallyAdded : repo.Description, FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight, LineBreakMode = LineBreakMode.MiddleTruncation });
 
             Action updateLabelAction = () => nameLabel.Text = _account.Name;
 
             if (repo is AddressAccountRepository)
             {
-                headerStack.Children.Add(new Label { Text = $"{I18N.Address}:", FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight });
+                headerStack.Children.Add(new Label { LineBreakMode = LineBreakMode.NoWrap, Text = $"{I18N.Address}:", FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight });
                 var addressLabel = new Label
                 {
                     Text = (repo as AddressAccountRepository).Address,
                     FontSize = AppConstants.TableSectionFontSize,
                     TextColor = AppConstants.FontColorLight,
-                    LineBreakMode = LineBreakMode.TailTruncation
+                    LineBreakMode = LineBreakMode.MiddleTruncation
                 };
                 dataStack.Children.Add(addressLabel);
                 updateLabelAction = () =>
@@ -121,6 +122,11 @@ namespace MyCC.Forms.View.Pages
             base.OnAppearing();
 
             _referenceView.OnAppearing();
+
+            if (!AccountStorage.Instance.AllElements.Contains(_account))
+            {
+                Navigation.PopAsync();
+            }
         }
 
         private async void Refresh()
