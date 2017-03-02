@@ -45,6 +45,8 @@ namespace MyCC.Core.Settings
             }
         }
 
+        public static bool DataLoaded;
+
         public static Currency.Model.Currency BaseCurrency
         {
             get

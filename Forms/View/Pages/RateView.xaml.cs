@@ -65,6 +65,11 @@ namespace MyCC.Forms.View.Pages
                                        .Where(r => r.Rate == null)
                                        .Concat(AccountStorage.NeededRates).ToList()));
             }
+
+            if (ApplicationSettings.DataLoaded)
+            {
+                SetNoData();
+            }
         }
 
         protected override void OnAppearing()
@@ -72,7 +77,6 @@ namespace MyCC.Forms.View.Pages
             base.OnAppearing();
             _tableView.OnAppearing();
         }
-
 
         private void PositionSelected(object sender, EventArgs e)
         {

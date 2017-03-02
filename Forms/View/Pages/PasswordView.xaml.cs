@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MyCC.Core.Settings;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Container;
 using Plugin.Fingerprint;
@@ -43,6 +44,13 @@ namespace MyCC.Forms.View.Pages
             {
                 await Authenticate();
             }
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+
+            IconView.IsVisible = height >= 400;
         }
 
         public async Task Authenticate()

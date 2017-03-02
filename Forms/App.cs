@@ -49,11 +49,22 @@ namespace MyCC.Forms
                         Messaging.UpdatingRates.Unsubscribe(this);
                         await ApplicationTasks.FetchCurrenciesAndAvailableRates(Messaging.UpdatingCurrenciesAndAvailableRates.SendStarted, Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display);
                     });
-                    Messaging.Loading.SubscribeFinished(this, async () => await AppTaskHelper.FetchBalancesAndRates());
+                    Messaging.Loading.SubscribeFinished(this,
+                        async () =>
+                        {
+                            ApplicationSettings.DataLoaded = true;
+                            await AppTaskHelper.FetchBalancesAndRates();
+                        });
                 }
                 else
                 {
-                    Messaging.Loading.SubscribeFinished(this, async () => await ApplicationTasks.FetchCurrenciesAndAvailableRates(Messaging.UpdatingCurrenciesAndAvailableRates.SendStarted, Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display));
+                    Messaging.Loading.SubscribeFinished(this, async () =>
+                    {
+                        ApplicationSettings.DataLoaded = true;
+                        await ApplicationTasks.FetchCurrenciesAndAvailableRates(
+                            Messaging.UpdatingCurrenciesAndAvailableRates.SendStarted,
+                            Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display);
+                    });
                 }
                 Task.Run(async () => await ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished));
             }
