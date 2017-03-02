@@ -45,8 +45,7 @@ namespace MyCC.Core.Account.Storage
 
         public static List<ExchangeRate> NeededRatesFor(FunctionalAccount account) => NeededRatesFor(account.Money.Currency);
 
-        public static AccountRepository RepositoryOf(FunctionalAccount account)
-            => Instance.Repositories.Find(r => r.Elements.Any(a => a.Id == account.Id));
+        public static AccountRepository RepositoryOf(FunctionalAccount account) => Instance.Repositories.Find(r => r.Id == account.ParentId);
 
         public static Task Update(FunctionalAccount account) => RepositoryOf(account).Update(account);
 

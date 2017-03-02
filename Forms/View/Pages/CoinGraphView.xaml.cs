@@ -54,7 +54,6 @@ namespace MyCC.Forms.View.Pages
             AddSubscriber();
 
             SetHeaderCarousel();
-            SetNoSourcesView();
         }
 
         protected override void OnAppearing()

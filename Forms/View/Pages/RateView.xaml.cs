@@ -49,7 +49,6 @@ namespace MyCC.Forms.View.Pages
             SetHeaderCarousel();
 
             SetFooterText();
-            SetNoData();
 
             var recognizer = new TapGestureRecognizer();
             recognizer.Tapped += AddRate;

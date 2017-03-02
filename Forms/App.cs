@@ -22,7 +22,7 @@ namespace MyCC.Forms
 
             if (ApplicationSettings.IsPinSet)
             {
-                startPage = new PasswordView(startPage);
+                startPage = new PasswordView(true);
             }
 
             MainPage = startPage;
@@ -66,7 +66,7 @@ namespace MyCC.Forms
             var page = GetCurrentPage();
             if (page is PasswordView) return;
 
-            page?.Navigation.PushModalAsync(new PasswordView(true), false);
+            page?.Navigation.PushModalAsync(new PasswordView(false, true), false);
         }
 
         protected override async void OnResume()

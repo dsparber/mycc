@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MyCC.Core.Settings;
 using MyCC.Forms.Resources;
+using MyCC.Forms.View.Container;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 using Xamarin.Forms;
@@ -9,11 +11,11 @@ namespace MyCC.Forms.View.Pages
 {
     public partial class PasswordView
     {
-        private readonly Page _nextStartupPage;
+        private readonly bool _pushMainView;
         private readonly bool _goesToBckground;
         private bool _fingerprintCanceled;
 
-        public PasswordView(bool background = false)
+        private PasswordView(bool background)
         {
             InitializeComponent();
             _goesToBckground = background;
@@ -29,9 +31,9 @@ namespace MyCC.Forms.View.Pages
             ShowFingerprintIcon.GestureRecognizers.Add(recognizer);
         }
 
-        public PasswordView(Page page, bool background = false) : this(background)
+        public PasswordView(bool pushMainView, bool background = false) : this(background)
         {
-            _nextStartupPage = page;
+            _pushMainView = pushMainView;
         }
 
         protected override async void OnAppearing()
@@ -89,9 +91,9 @@ namespace MyCC.Forms.View.Pages
 
         private async Task Disappear()
         {
-            if (_nextStartupPage != null)
+            if (_pushMainView)
             {
-                await Navigation.PushModalAsync(_nextStartupPage);
+                await Navigation.PushModalAsync(new TabContainerView());
             }
             else
             {
