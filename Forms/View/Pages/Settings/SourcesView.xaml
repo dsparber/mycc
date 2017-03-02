@@ -8,55 +8,56 @@
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="MyCC.Forms.View.Pages.Settings.SourcesView"
 	Title="{resources:Translate Sources}">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
 			Text="{resources:Translate Add}"
 			Clicked="Add"
-      Icon="add.png"/>
-  </ContentPage.ToolbarItems>
-  <ContentPage.Content>
-    <components1:ChangingStackLayout>
-      <components1:HeaderView
+            Icon="add.png"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <components1:ChangingStackLayout>
+            <components1:HeaderView
+                TitleText="{resources:Translate AppName}"
 				x:Name="Header" />
-      <StackLayout
+            <StackLayout
 				VerticalOptions="FillAndExpand">
-        <TableView
+                <TableView
 					Intent="Form"
 					x:Name="Table"
 					VerticalOptions="FillAndExpand">
-          <TableView.BackgroundColor>
-            <OnPlatform
+                    <TableView.BackgroundColor>
+                        <OnPlatform
 							x:TypeArguments="Color"
 							Android="#EEE" />
-          </TableView.BackgroundColor>
-          <TableSection
+                    </TableView.BackgroundColor>
+                    <TableSection
 						x:Name="AddressSection" />
-          <TableSection
+                    <TableSection
 						x:Name="BittrexSection" />
-          <TableSection
+                    <TableSection
 						x:Name="ManualSection" />
-        </TableView>
-        <ContentView
+                </TableView>
+                <ContentView
 					x:Name="NoSourcesView"
 					VerticalOptions="FillAndExpand"
 					BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-          <StackLayout
+                    <StackLayout
 						VerticalOptions="CenterAndExpand"
 						Margin="40">
-            <Label
+                        <Label
 							Text="{resources:Translate NoSources}"
 							VerticalOptions="Center"
 							HorizontalTextAlignment="Center"
 							TextColor="{x:Static constants:AppConstants.FontColorLight}" />
-            <Label
+                        <Label
 							Text="{resources:Translate NoSourcesDescriptionAdd}"
 							VerticalOptions="Center"
 							HorizontalTextAlignment="Center"
 							WidthRequest="150"
 							TextColor="{x:Static constants:AppConstants.FontColorLight}" />
-          </StackLayout>
-        </ContentView>
-      </StackLayout>
-    </components1:ChangingStackLayout>
-  </ContentPage.Content>
+                    </StackLayout>
+                </ContentView>
+            </StackLayout>
+        </components1:ChangingStackLayout>
+    </ContentPage.Content>
 </ContentPage>

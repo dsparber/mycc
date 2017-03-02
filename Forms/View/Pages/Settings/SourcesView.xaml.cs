@@ -34,27 +34,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetHeader()
         {
-            var sources = _repositories.Count - (AnyLocalAccounts ? 0 : 1);
-            var local = _repositories.Where(r => r is LocalAccountRepository).ToList().Count - (AnyLocalAccounts ? 0 : 1);
-
-            Header.TitleText = AccountsText(AccountStorage.Instance.AllElements.Count);
-            Func<int, string> sourcesText = count => PluralHelper.GetText(I18N.NoSources, I18N.OneSource, I18N.Sources, count);
-            var localOnlineText = string.Empty;
-
-            if (local >= 1 && sources - local >= 1)
-            {
-                localOnlineText = $" ({local} {I18N.Local}, {sources - local} {I18N.Online})";
-            }
-            else if (local >= 1)
-            {
-                localOnlineText = local == 1 ? $" ({I18N.Local})" : $" ({local} {I18N.Local})";
-            }
-            else if (sources - local >= 1)
-            {
-                localOnlineText = sources - local == 1 ? $" ({I18N.Online})" : $" ({sources - local} {I18N.Online})";
-            }
-
-            Header.InfoText = $"{sourcesText(sources)}{localOnlineText}";
+            Header.InfoText = AccountsText(AccountStorage.Instance.AllElements.Count);
         }
 
         private static Func<int, string> AccountsText => count => PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, count);
@@ -64,27 +44,29 @@ namespace MyCC.Forms.View.Pages.Settings
             _repositories = AccountStorage.Instance.Repositories ?? new List<AccountRepository>();
 
             Func<AccountRepository, CustomViewCell> getCell = r =>
-               {
-                   var c = new CustomViewCell { Image = "more.png", Text = r.Name };
-                   c.Tapped += (sender, e) => Navigation.PushAsync(new RepositoryView(r));
-                   return c;
-               };
+            {
+                var c = new CustomViewCell { Image = "more.png" };
+                c.Tapped += (sender, e) => Navigation.PushAsync(new RepositoryView(r));
+                return c;
+            };
 
             var manualCells = _repositories.OfType<LocalAccountRepository>().SelectMany(r => r.Elements).Select(a =>
             {
-                var c = new CustomViewCell { Image = "more.png", Text = a.Money.ToString(), Detail = a.Name };
+                var c = new CustomViewCell { Image = "more.png", Text = $"{a.Money.Currency.Code} - {a.Name}", Detail = a.Money.ToString() };
                 c.Tapped += (sender, e) => Navigation.PushAsync(new AccountEditView(a, AccountStorage.Instance.LocalRepository as LocalAccountRepository));
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
             var bittrexCells = _repositories.OfType<BittrexAccountRepository>().Select(r =>
             {
                 var c = getCell(r);
+                c.Text = r.Name;
                 c.Detail = PluralHelper.GetTextAccounts(r.Elements.ToList().Count);
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
             var addressCells = _repositories.OfType<AddressAccountRepository>().Select(r =>
             {
                 var c = getCell(r);
+                c.Text = $"{r.Currency.Code} - {r.Name}";
                 c.Detail = $"{I18N.Address}: {r.Address}";
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
@@ -143,8 +125,6 @@ namespace MyCC.Forms.View.Pages.Settings
                     }
                 });
         }
-
-        private static bool AnyLocalAccounts => AccountStorage.Instance.LocalRepository?.Elements.ToList().Count > 0;
 
         private void Add(object sender, EventArgs e)
         {
