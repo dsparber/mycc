@@ -3,7 +3,7 @@ using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.components.CellViews
+namespace MyCC.Forms.View.Components.CellViews
 {
     public class CustomCellView : ContentView
     {

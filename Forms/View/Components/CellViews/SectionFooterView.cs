@@ -1,7 +1,7 @@
 ﻿using MyCC.Forms.Constants;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.view.components.CellViews
+namespace MyCC.Forms.View.Components.CellViews
 {
     public class SectionFooterView : ContentView
     {

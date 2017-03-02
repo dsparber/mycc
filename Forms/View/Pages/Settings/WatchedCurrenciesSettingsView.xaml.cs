@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Settings;
 using MyCC.Forms.Messages;
-using MyCC.Forms.view.components.CellViews;
+using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Components.Cells;
 using MyCC.Forms.View.Overlays;
 using Xamarin.Forms;

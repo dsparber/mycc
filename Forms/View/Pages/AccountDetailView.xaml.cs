@@ -11,7 +11,7 @@ using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
-using MyCC.Forms.view.components.CellViews;
+using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Overlays;
 using MyCC.Forms.View.Pages.Settings;
@@ -47,12 +47,17 @@ namespace MyCC.Forms.View.Pages
                 ToolbarItems.Add(qrButton);
             }
 
-            var infoStackContainer = new StackLayout { Orientation = StackOrientation.Horizontal, Margin = new Thickness(15, 0) };
-            var headerStack = new StackLayout { HorizontalOptions = LayoutOptions.FillAndExpand };
-            var dataStack = new StackLayout();
+            var infoStackContainer = new StackLayout { Spacing = 30, Orientation = StackOrientation.Horizontal, Margin = new Thickness(15, 0) };
+            var headerStack = new StackLayout();
+            var dataStack = new StackLayout { HorizontalOptions = LayoutOptions.FillAndExpand };
 
-
-            headerStack.Children.Add(new Label { Text = $"{I18N.Name}:", FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight, LineBreakMode = LineBreakMode.NoWrap });
+            headerStack.Children.Add(new Label
+            {
+                Text = $"{I18N.Name}:",
+                FontSize = AppConstants.TableSectionFontSize,
+                TextColor = AppConstants.FontColorLight,
+                LineBreakMode = LineBreakMode.NoWrap
+            });
 
             var nameLabel = new Label
             {
@@ -63,17 +68,60 @@ namespace MyCC.Forms.View.Pages
             };
             dataStack.Children.Add(nameLabel);
 
-            headerStack.Children.Add(new Label { LineBreakMode = LineBreakMode.NoWrap, Text = $"{I18N.Source}:", FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight });
-            dataStack.Children.Add(new Label { Text = repo is LocalAccountRepository ? I18N.ManuallyAdded : repo.Description, FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight, LineBreakMode = LineBreakMode.MiddleTruncation });
+            headerStack.Children.Add(new Label
+            {
+                LineBreakMode = LineBreakMode.NoWrap,
+                Text = $"{I18N.Type}:",
+                FontSize = AppConstants.TableSectionFontSize,
+                TextColor = AppConstants.FontColorLight
+            });
+            dataStack.Children.Add(new Label
+            {
+                Text = repo is LocalAccountRepository ? I18N.ManuallyAdded : repo is AddressAccountRepository ? I18N.AddressAdded : I18N.BittrexAdded,
+                FontSize = AppConstants.TableSectionFontSize,
+                TextColor = AppConstants.FontColorLight,
+                LineBreakMode = LineBreakMode.MiddleTruncation
+            });
 
             Action updateLabelAction = () => nameLabel.Text = _account.Name;
 
             if (repo is AddressAccountRepository)
             {
-                headerStack.Children.Add(new Label { LineBreakMode = LineBreakMode.NoWrap, Text = $"{I18N.Address}:", FontSize = AppConstants.TableSectionFontSize, TextColor = AppConstants.FontColorLight });
+                Func<string, string> shorten = address =>
+                {
+                    if (string.IsNullOrWhiteSpace(address)) return string.Empty;
+
+                    var firstNumbers = address.Length >= 5 ? address.Substring(0, 5) : address.Substring(0, address.Length - 1);
+                    var lastNumbers = address.Length >= 10 ? address.Substring(address.Length - 5, 5) : string.Empty;
+                    return $"{firstNumbers}...{lastNumbers}";
+                };
+
+                headerStack.Children.Add(new Label
+                {
+                    LineBreakMode = LineBreakMode.NoWrap,
+                    Text = $"{I18N.Source}:",
+                    FontSize = AppConstants.TableSectionFontSize,
+                    TextColor = AppConstants.FontColorLight
+                });
+                var sourceLabel = new Label
+                {
+                    Text = repo.Description,
+                    FontSize = AppConstants.TableSectionFontSize,
+                    TextColor = AppConstants.FontColorLight,
+                    LineBreakMode = LineBreakMode.MiddleTruncation
+                };
+                dataStack.Children.Add(sourceLabel);
+
+                headerStack.Children.Add(new Label
+                {
+                    LineBreakMode = LineBreakMode.NoWrap,
+                    Text = $"{I18N.Address}:",
+                    FontSize = AppConstants.TableSectionFontSize,
+                    TextColor = AppConstants.FontColorLight
+                });
                 var addressLabel = new Label
                 {
-                    Text = (repo as AddressAccountRepository).Address,
+                    Text = shorten((repo as AddressAccountRepository).Address),
                     FontSize = AppConstants.TableSectionFontSize,
                     TextColor = AppConstants.FontColorLight,
                     LineBreakMode = LineBreakMode.MiddleTruncation
@@ -82,7 +130,8 @@ namespace MyCC.Forms.View.Pages
                 updateLabelAction = () =>
                 {
                     nameLabel.Text = _account.Name;
-                    addressLabel.Text = (repo as AddressAccountRepository)?.Address ?? string.Empty;
+                    addressLabel.Text = shorten((repo as AddressAccountRepository)?.Address);
+                    sourceLabel.Text = repo.Description;
                 };
             }
 

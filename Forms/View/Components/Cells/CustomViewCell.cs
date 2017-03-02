@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MyCC.Forms.view.components.CellViews;
+using MyCC.Forms.View.Components.CellViews;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Components.Cells

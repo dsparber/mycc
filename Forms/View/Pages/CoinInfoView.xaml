@@ -6,41 +6,41 @@
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
   xmlns:pullToRefresh="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
 	x:Class="MyCC.Forms.View.Pages.CoinInfoView">
-  <ContentPage.Content>
-    <components:ChangingStackLayout
+    <ContentPage.Content>
+        <components:ChangingStackLayout
       x:Name="ChangingStack"
 			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-      <pullToRefresh:PullToRefreshLayout
+            <pullToRefresh:PullToRefreshLayout
         x:Name="PullToRefresh"
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand"
         BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-        <ScrollView
+                <ScrollView
           VerticalOptions="FillAndExpand"
            IsClippedToBounds="true">
-          <StackLayout
+                    <StackLayout
             Spacing="0"
             x:Name="ContentView"
             VerticalOptions="FillAndExpand">
-            <Label
+                        <Label
               x:Name="InfoHeading"
-              Margin="15"
+              Margin="15, 25, 15, 7.5"
               FontSize="14" />
-            <StackLayout
+                        <StackLayout
               Margin="15,0,15,0"
               Orientation="Horizontal">
-              <StackLayout
+                            <StackLayout
                 x:Name="InfoStackHeadings"
                 HorizontalOptions="StartAndExpand" />
-              <StackLayout
+                            <StackLayout
                 x:Name="InfoStackValues" />
-            </StackLayout>
-          </StackLayout>
-        </ScrollView>
-      </pullToRefresh:PullToRefreshLayout>
-      <ContentView VerticalOptions="FillAndExpand"/>
-      <components:InfoFooterComponent
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </pullToRefresh:PullToRefreshLayout>
+            <ContentView VerticalOptions="FillAndExpand"/>
+            <components:InfoFooterComponent
         x:Name="Footer"/>
-    </components:ChangingStackLayout>
-  </ContentPage.Content>
+        </components:ChangingStackLayout>
+    </ContentPage.Content>
 </ContentPage>

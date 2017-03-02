@@ -11,7 +11,7 @@ using MyCC.Forms.Constants;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
-using MyCC.Forms.view.components.CellViews;
+using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Components;
 using Xamarin.Forms;
 

@@ -12,7 +12,7 @@ using MyCC.Core.Types;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCC.Forms.view.components.CellViews;
+using MyCC.Forms.View.Components.CellViews;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
 using XLabs.Ioc;
