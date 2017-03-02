@@ -11,7 +11,6 @@ using MyCC.Core.Rates;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
-using MyCC.Forms.Constants;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Pages;
@@ -26,7 +25,6 @@ namespace MyCC.Forms.View.Components
     public class CoinTableComponent : ContentView
     {
         private readonly HybridWebView _webView;
-        private readonly Label _noDataLabel;
         private bool _appeared;
 
         public CoinTableComponent(INavigation navigation)
@@ -75,23 +73,7 @@ namespace MyCC.Forms.View.Components
                 UpdateView();
             });
 
-            _noDataLabel = new Label
-            {
-                Text = I18N.NoDataToDisplay,
-                IsVisible = false,
-                TextColor = AppConstants.FontColorLight,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.CenterAndExpand
-            };
-
-            var stack = new StackLayout
-            {
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand
-            };
-            stack.Children.Add(_noDataLabel);
-            stack.Children.Add(_webView);
-            Content = stack;
+            Content = _webView;
 
             UpdateView();
 
@@ -119,12 +101,6 @@ namespace MyCC.Forms.View.Components
             {
                 var items = AccountStorage.UsedCurrencies.Select(c => new Data(c)).ToList();
                 var itemsExisting = items.Count > 0;
-
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    _noDataLabel.IsVisible = !itemsExisting;
-                    _webView.IsVisible = itemsExisting;
-                });
 
                 if (!itemsExisting || !_appeared) return;
 
