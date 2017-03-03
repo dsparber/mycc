@@ -1,4 +1,5 @@
-﻿using MyCC.Forms.Helpers;
+﻿using System.Linq;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using Xamarin.Forms;
 
@@ -36,6 +37,18 @@ namespace MyCC.Forms.View.Components
             set
             {
                 InfoLabel.Text = GetText(value);
+                InfoLabelStack.Children.Clear();
+                foreach (var part in GetText(value).Split('/').Select(s => s.Trim()))
+                {
+                    InfoLabelStack.Children.Add(new Label
+                    {
+                        Text = part,
+                        FontSize = 18,
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        TextColor = Color.White,
+                        LineBreakMode = LineBreakMode.TailTruncation
+                    });
+                }
             }
         }
 
@@ -102,6 +115,14 @@ namespace MyCC.Forms.View.Components
         {
             text = text?.Trim();
             return string.IsNullOrEmpty(text) ? " " : text;
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+
+            InfoLabel.IsVisible = width >= height;
+            InfoLabelStack.IsVisible = width < height;
         }
 
         private void AdaptSize()
