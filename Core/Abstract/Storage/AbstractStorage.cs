@@ -34,7 +34,7 @@ namespace MyCC.Core.Abstract.Storage
         protected virtual Task OnFirstLaunch() { return Task.Factory.StartNew(() => { }); }
 
 
-        protected async Task Add(TV repository)
+        public async Task Add(TV repository)
         {
             repository = await Database.Insert(repository);
             Repositories.Add(repository);

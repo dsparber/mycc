@@ -159,7 +159,5 @@ namespace MyCC.Core.Account.Repositories.Implementations
         }
 
         public override string Description => I18N.Bittrex;
-
-        public override string Info => Name;
     }
 }

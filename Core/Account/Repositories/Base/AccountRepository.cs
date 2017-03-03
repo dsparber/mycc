@@ -17,6 +17,12 @@ namespace MyCC.Core.Account.Repositories.Base
 
         public abstract string Description { get; }
 
-        public abstract string Info { get; }
+        public override bool Equals(object obj)
+        {
+            var repository = obj as AccountRepository;
+            return repository != null && repository.Id == Id;
+        }
+
+        public override int GetHashCode() => 1;
     }
 }

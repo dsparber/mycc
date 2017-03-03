@@ -4,10 +4,10 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
-	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	Title="{resources:Translate Accounts}"
+	Title="{resources:Translate Details}"
 	x:Class="MyCC.Forms.View.Pages.Settings.RepositoryView">
     <ContentPage.ToolbarItems>
         <ToolbarItem
@@ -20,8 +20,8 @@
 			Text="{resources:Translate Save}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <components1:ChangingStackLayout>
-            <components1:HeaderView
+        <components:ChangingStackLayout>
+            <components:HeaderView
 				x:Name="Header" />
             <TableView
 				x:Name="TableView"
@@ -57,6 +57,6 @@
 						IsDeleteActionCell="true" />
                 </TableSection>
             </TableView>
-        </components1:ChangingStackLayout>
+        </components:ChangingStackLayout>
     </ContentPage.Content>
 </ContentPage>

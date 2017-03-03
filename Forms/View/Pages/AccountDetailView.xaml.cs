@@ -22,7 +22,7 @@ namespace MyCC.Forms.View.Pages
 {
     public partial class AccountDetailView
     {
-        private readonly FunctionalAccount _account;
+        private FunctionalAccount _account;
         private readonly ReferenceCurrenciesView _referenceView;
         private readonly PullToRefreshLayout _pullToRefresh;
 
@@ -43,11 +43,17 @@ namespace MyCC.Forms.View.Pages
             if (repo is AddressAccountRepository && !(repo is BlockchainXpubAccountRepository))
             {
                 var qrButton = new ToolbarItem { Icon = "qr.png" };
-                qrButton.Clicked += (sender, e) => Navigation.PushOrPushModal(new AccountQrCodeOverlay((AddressAccountRepository)repo));
+                qrButton.Clicked +=
+                    (sender, e) => Navigation.PushOrPushModal(new AccountQrCodeOverlay((AddressAccountRepository)repo));
                 ToolbarItems.Add(qrButton);
             }
 
-            var infoStackContainer = new StackLayout { Spacing = 30, Orientation = StackOrientation.Horizontal, Margin = new Thickness(15, 0) };
+            var infoStackContainer = new StackLayout
+            {
+                Spacing = 30,
+                Orientation = StackOrientation.Horizontal,
+                Margin = new Thickness(15, 0)
+            };
             var headerStack = new StackLayout();
             var dataStack = new StackLayout { HorizontalOptions = LayoutOptions.FillAndExpand };
 
@@ -77,7 +83,10 @@ namespace MyCC.Forms.View.Pages
             });
             dataStack.Children.Add(new Label
             {
-                Text = repo is LocalAccountRepository ? I18N.ManuallyAdded : repo is AddressAccountRepository ? I18N.AddressAdded : I18N.BittrexAdded,
+                Text =
+                    repo is LocalAccountRepository
+                        ? I18N.ManuallyAdded
+                        : repo is AddressAccountRepository ? I18N.AddressAdded : I18N.BittrexAdded,
                 FontSize = AppConstants.TableSectionFontSize,
                 TextColor = AppConstants.FontColorLight,
                 LineBreakMode = LineBreakMode.MiddleTruncation
@@ -91,7 +100,9 @@ namespace MyCC.Forms.View.Pages
                 {
                     if (string.IsNullOrWhiteSpace(address)) return string.Empty;
 
-                    var firstNumbers = address.Length >= 5 ? address.Substring(0, 5) : address.Substring(0, address.Length - 1);
+                    var firstNumbers = address.Length >= 5
+                        ? address.Substring(0, 5)
+                        : address.Substring(0, address.Length - 1);
                     var lastNumbers = address.Length >= 10 ? address.Substring(address.Length - 5, 5) : string.Empty;
                     return $"{firstNumbers}...{lastNumbers}";
                 };
@@ -129,7 +140,7 @@ namespace MyCC.Forms.View.Pages
                 dataStack.Children.Add(addressLabel);
                 updateLabelAction = () =>
                 {
-                    nameLabel.Text = _account.Name;
+                    nameLabel.Text = _account?.Name ?? repo.Name;
                     addressLabel.Text = shorten((repo as AddressAccountRepository)?.Address);
                     sourceLabel.Text = repo.Description;
                 };
@@ -157,7 +168,13 @@ namespace MyCC.Forms.View.Pages
             SetFooter();
 
             Messaging.Progress.SubscribeToComplete(this, SetFooter);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, updateLabelAction);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, () =>
+            {
+                updateLabelAction();
+                if (_account is LocalAccount) return;
+                _account = AccountStorage.Instance.Repositories.Find(r => r.Id == _account.ParentId)?
+                            .Elements.FirstOrDefault(e => e.Money.Currency.Equals(_account.Money.Currency));
+            });
         }
 
         private void SetView()
@@ -197,7 +214,7 @@ namespace MyCC.Forms.View.Pages
             }
             else
             {
-                Navigation.PushOrPushModal(new RepositoryView(repo, true));
+                Navigation.PushOrPushModal(new RepositoryView(repo as OnlineAccountRepository, true));
             }
         }
 

@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using MyCC.Core.Account.Helper;
 using MyCC.Core.Account.Repositories.Base;
-using MyCC.Core.Account.Repositories.Implementations;
-using MyCC.Core.Currency.Model;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
@@ -16,23 +13,14 @@ namespace MyCC.Forms.View.Addsource
 {
     public class AddAddressSubview : AddRepositorySubview
     {
-        private readonly List<Func<string, Currency, string, AddressAccountRepository>> _availableRepositories;
-
         private readonly CurrencyEntryCell _currencyEntryCell;
         private readonly CustomEntryCell _addressEntryCell;
 
         public AddAddressSubview(INavigation navigation, Entry nameEntry)
         {
-            _availableRepositories = new List<Func<string, Currency, string, AddressAccountRepository>> {
-                (name, coin, address) => new BlockchainAccountRepository(default(int), name, address),
-                (name, coin, address) => new EthereumAccountRepository(default(int), name, address),
-                (name, coin, address) => new BlockExpertsAccountRepository(default(int), name, coin, address),
-                (name, coin, address) => new CryptoIdAccountRepository(default(int), name, coin, address)
-            };
 
-            var supportedCurrencies = _availableRepositories.SelectMany(a => a(null, null, null).SupportedCurrencies).ToList();
 
-            _currencyEntryCell = new CurrencyEntryCell(navigation) { IsAmountEnabled = false, CurrenciesToSelect = supportedCurrencies, IsFormRepresentation = true };
+            _currencyEntryCell = new CurrencyEntryCell(navigation) { IsAmountEnabled = false, CurrenciesToSelect = AddressAccountRepository.AllSupportedCurrencies, IsFormRepresentation = true };
             _addressEntryCell = new CustomEntryCell { Title = I18N.Address, Placeholder = I18N.Address };
             var scanActionCell = new CustomViewCell { Text = I18N.ScanQrCode, IsActionCell = true, IsCentered = true };
 
@@ -89,7 +77,7 @@ namespace MyCC.Forms.View.Addsource
 
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                            var values = result.Text.Parse(supportedCurrencies);
+                            var values = result.Text.Parse(AddressAccountRepository.AllSupportedCurrencies);
 
                             _addressEntryCell.Text = values.Item1 ?? _addressEntryCell.Text;
                             _currencyEntryCell.SelectedCurrency = values.Item2 ?? _currencyEntryCell.SelectedCurrency;
@@ -115,11 +103,7 @@ namespace MyCC.Forms.View.Addsource
             var coin = _currencyEntryCell.SelectedCurrency;
             var address = _addressEntryCell.Text ?? string.Empty;
 
-            if (Currency.Btc.Equals(coin) && address.StartsWith("xpub", StringComparison.CurrentCultureIgnoreCase))
-            {
-                return new BlockchainXpubAccountRepository(default(int), name, address);
-            }
-            return _availableRepositories.Select(a => a(name, coin, address)).FirstOrDefault(r => r.SupportedCurrencies.Contains(coin));
+            return AddressAccountRepository.CreateAddressAccountRepository(name, coin, address);
         }
 
         public override bool Enabled

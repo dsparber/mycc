@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using MyCC.Core.Account.Database;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
@@ -23,6 +25,25 @@ namespace MyCC.Core.Account.Repositories.Implementations
                 var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == id).Select(e => e.Code);
                 return CurrencyStorage.Instance.AllElements.Where(c => codes.Any(x => x.Equals(c?.Code)));
             }
+        }
+
+        public override async Task<bool> Test()
+        {
+            var uri = new Uri($"https://chainz.cryptoid.info/{Currency.Code.ToLower()}/api.dws?q=addressfirstseen&a={Address}");
+            HttpResponseMessage response;
+            if (PostContent == null)
+            {
+                response = await Client.GetAsync(uri);
+            }
+            else
+            {
+                response = await Client.PostAsync(uri, PostContent);
+            }
+
+            if (!response.IsSuccessStatusCode) return false;
+
+            var content = await response.Content.ReadAsStringAsync();
+            return !content.StartsWith("ERROR");
         }
 
         protected override Func<string, decimal> Balance => httpContent => decimal.Parse(httpContent, CultureInfo.InvariantCulture);

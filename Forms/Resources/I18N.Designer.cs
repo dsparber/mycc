@@ -602,7 +602,7 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Error! Fetching data was not successful. Please verify your input and internet connection! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error! Fetching data was not successful. Please verify your input. ähnelt.
         /// </summary>
         public static string FetchingNoSuccessText {
             get {

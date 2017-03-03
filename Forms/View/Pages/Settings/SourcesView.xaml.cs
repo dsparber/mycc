@@ -46,7 +46,7 @@ namespace MyCC.Forms.View.Pages.Settings
             Func<AccountRepository, CustomViewCell> getCell = r =>
             {
                 var c = new CustomViewCell { Image = "more.png" };
-                c.Tapped += (sender, e) => Navigation.PushAsync(new RepositoryView(r));
+                c.Tapped += (sender, e) => Navigation.PushAsync(new RepositoryView(r as OnlineAccountRepository));
                 return c;
             };
 

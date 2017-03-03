@@ -104,7 +104,8 @@ namespace MyCC.Forms.View.Pages.Settings
             await AccountStorage.Instance.LocalRepository.Remove(_account);
             Messaging.UpdatingAccounts.SendFinished();
 
-            await Navigation.PopAsync();
+            if (_isEditModal) await Navigation.PopOrPopModal();
+            else await Navigation.PopAsync();
         }
     }
 }

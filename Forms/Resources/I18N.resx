@@ -250,7 +250,7 @@
     <value>Fetching</value>
   </data>
   <data name="FetchingNoSuccessText" xml:space="preserve">
-    <value>Error! Fetching data was not successful. Please verify your input and internet connection!</value>
+    <value>Error! Fetching data was not successful. Please verify your input.</value>
   </data>
   <data name="FingerprintActive" xml:space="preserve">
     <value>PIN and fingerprint active</value>

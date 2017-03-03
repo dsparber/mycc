@@ -26,8 +26,6 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public override string Data => string.Empty;
 
         public override string Description => I18N.ManuallyAdded;
-
-        public override string Info => Name;
     }
 }
 

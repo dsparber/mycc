@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Resources;
+using MyCC.Core.Account.Repositories.Implementations;
 
 namespace MyCC.Core.Account.Repositories.Base
 {
@@ -16,20 +16,21 @@ namespace MyCC.Core.Account.Repositories.Base
         protected virtual HttpContent PostContent => null;
 
         protected abstract Uri Url { get; }
+
         protected abstract Func<string, decimal> Balance { get; }
 
         public abstract Currency.Model.Currency Currency { get; }
         public abstract IEnumerable<Currency.Model.Currency> SupportedCurrencies { get; }
 
         private const int BufferSize = 256000;
-        private readonly HttpClient _client;
+        protected readonly HttpClient Client;
 
         public override string Data => Address;
 
         protected AddressAccountRepository(int id, string name, string address) : base(id, name)
         {
             Address = address;
-            _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
+            Client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
         }
 
         private async Task<decimal?> GetBalance()
@@ -38,11 +39,11 @@ namespace MyCC.Core.Account.Repositories.Base
             HttpResponseMessage response;
             if (PostContent == null)
             {
-                response = await _client.GetAsync(uri);
+                response = await Client.GetAsync(uri);
             }
             else
             {
-                response = await _client.PostAsync(uri, PostContent);
+                response = await Client.PostAsync(uri, PostContent);
             }
 
             if (!response.IsSuccessStatusCode) return null;
@@ -51,7 +52,8 @@ namespace MyCC.Core.Account.Repositories.Base
             return Balance(content) / BalanceFactor;
         }
 
-        public sealed override async Task<bool> Test()
+
+        public override async Task<bool> Test()
         {
             try
             {
@@ -95,6 +97,26 @@ namespace MyCC.Core.Account.Repositories.Base
 
         protected abstract FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled);
 
-        public override string Info => $"{I18N.Address}: {Address}";
+        private static IEnumerable<AddressAccountRepository> Repositories(string name, Currency.Model.Currency currency, string address) => new AddressAccountRepository[]
+        {
+            new BlockchainAccountRepository(default(int), name, address),
+            new EthereumAccountRepository(default(int), name, address),
+            new CryptoIdAccountRepository(default(int), name, currency, address),
+            new BlockExpertsAccountRepository(default(int), name, currency, address)
+        };
+
+        public static AddressAccountRepository CreateAddressAccountRepository(string name, Currency.Model.Currency currency, string address)
+        {
+            if (currency == null || string.IsNullOrWhiteSpace(address)) return null;
+
+            if (Core.Currency.Model.Currency.Btc.Equals(currency) && address.StartsWith("xpub", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return new BlockchainXpubAccountRepository(default(int), name, address);
+            }
+            return Repositories(name, currency, address).FirstOrDefault(r => r.SupportedCurrencies.Contains(currency));
+        }
+
+        public static IEnumerable<Currency.Model.Currency> AllSupportedCurrencies
+            => Repositories(null, null, null).SelectMany(r => r.SupportedCurrencies);
     }
 }

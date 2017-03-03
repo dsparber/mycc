@@ -247,7 +247,7 @@
     <value>Daten laden</value>
   </data>
   <data name="FetchingNoSuccessText" xml:space="preserve">
-    <value>Fehler! Daten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Eingabe und Internetverbindung!</value>
+    <value>Fehler! Daten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Eingaben.</value>
   </data>
   <data name="FingerprintActive" xml:space="preserve">
     <value>PIN und Fingerprint sind aktiviert</value>
