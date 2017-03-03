@@ -516,4 +516,7 @@
   <data name="None" xml:space="preserve">
     <value>Keine</value>
   </data>
+  <data name="DisabledAccounts" xml:space="preserve">
+    <value>Deaktivierte Konten</value>
+  </data>
 </root>

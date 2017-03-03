@@ -27,10 +27,12 @@ namespace MyCC.Forms.View.Components
         private readonly HybridWebView _webView;
         private readonly Currency _currency;
         private bool _appeared;
+        private readonly bool _useEnabledAccounts;
 
-        public AccountsTableComponent(INavigation navigation, Currency currency)
+        public AccountsTableComponent(INavigation navigation, Currency currency, bool useEnabledAccounts)
         {
             _currency = currency;
+            _useEnabledAccounts = useEnabledAccounts;
 
             var resolverContainer = new SimpleContainer();
 
@@ -74,7 +76,7 @@ namespace MyCC.Forms.View.Components
 
             var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-            stack.Children.Add(new SectionHeaderView(false) { Title = I18N.Accounts });
+            stack.Children.Add(new SectionHeaderView(false) { Title = _useEnabledAccounts ? I18N.Accounts : I18N.DisabledAccounts });
             stack.Children.Add(_webView);
 
             Content = stack;
@@ -98,12 +100,9 @@ namespace MyCC.Forms.View.Components
         {
             try
             {
-                var items = AccountStorage.AccountsWithCurrency(_currency).Where(a => a.IsEnabled).Select(a => new Data(a)).ToList();
-                var itemsDisabled = AccountStorage.AccountsWithCurrency(_currency).Where(a => !a.IsEnabled).Select(a => new Data(a)).ToList();
+                var items = AccountStorage.AccountsWithCurrency(_currency).Where(a => a.IsEnabled == _useEnabledAccounts).Select(a => new Data(a)).ToList();
 
-                var itemsExisting = items.Any() || itemsDisabled.Any();
-
-                if (!itemsExisting || !_appeared) return;
+                if (!items.Any() || !_appeared) return;
 
                 Func<Data, object> sortLambda;
                 switch (ApplicationSettings.SortOrderAccounts)
@@ -116,7 +115,6 @@ namespace MyCC.Forms.View.Components
                 }
 
                 items = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
-                itemsDisabled = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending ? itemsDisabled.OrderBy(sortLambda).ToList() : itemsDisabled.OrderByDescending(sortLambda).ToList();
 
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -124,7 +122,7 @@ namespace MyCC.Forms.View.Components
                     new HeaderData(I18N.Label, SortOrder.Alphabetical.ToString()),
                     new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
                         }, string.Empty);
-                    _webView.CallJsFunction("updateTable", items.Concat(itemsDisabled).ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+                    _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
                 });
             }
             catch (Exception e)

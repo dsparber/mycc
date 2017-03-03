@@ -20,7 +20,7 @@ namespace MyCC.Core.Account.Repositories.Base
         public override bool Equals(object obj)
         {
             var repository = obj as AccountRepository;
-            return repository != null && repository.Id == Id;
+            return repository != null && Id != default(int) && repository.Id == Id;
         }
 
         public override int GetHashCode() => 1;

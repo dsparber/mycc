@@ -512,6 +512,15 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Disabled accounts ähnelt.
+        /// </summary>
+        public static string DisabledAccounts {
+            get {
+                return ResourceManager.GetString("DisabledAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Disable PIN ähnelt.
         /// </summary>
         public static string DisablePin {

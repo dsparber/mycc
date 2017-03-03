@@ -19,7 +19,8 @@ namespace MyCC.Forms.View.Pages
     public partial class CoinDetailView
     {
         private readonly ReferenceCurrenciesView _referenceView;
-        private readonly AccountsTableComponent _accountsView;
+        private readonly AccountsTableComponent _accountsViewEnabled;
+        private readonly AccountsTableComponent _accountsViewDisabled;
         private readonly PullToRefreshLayout _pullToRefresh;
 
         private IEnumerable<Tuple<FunctionalAccount, AccountRepository>> _accounts;
@@ -39,13 +40,15 @@ namespace MyCC.Forms.View.Pages
 
             LoadData();
 
-            _accountsView = new AccountsTableComponent(Navigation, _currency);
+            _accountsViewEnabled = new AccountsTableComponent(Navigation, _currency, true);
+            _accountsViewDisabled = new AccountsTableComponent(Navigation, _currency, false);
 
             var stack = new StackLayout { Spacing = 0 };
-            stack.Children.Add(_accountsView);
+            stack.Children.Add(_accountsViewEnabled);
             _referenceView = new ReferenceCurrenciesView(MoneySum);
 
             stack.Children.Add(_referenceView);
+            stack.Children.Add(_accountsViewDisabled);
 
             _pullToRefresh = new PullToRefreshLayout
             {
@@ -67,16 +70,21 @@ namespace MyCC.Forms.View.Pages
             var accs = AccountStorage.Instance.AllElementsWithRepositories;
             _accounts = accs.Where(t => t.Item1.Money.Currency.Code.Equals(_currency.Code)).ToList();
 
-            if (_accounts.ToList().Count == 0)
+            if (_accounts.ToList().Count == 0) return;
+
+
+            SetFooter();
+            Device.BeginInvokeOnMainThread(() =>
             {
-                return;
-            }
+                _accountsViewEnabled.IsVisible = _accounts.Any(a => a.Item1.IsEnabled);
+                _accountsViewDisabled.IsVisible = _accounts.Any(a => !a.Item1.IsEnabled);
+            });
+
+
             if (_referenceView == null) return;
 
             _referenceView.ReferenceMoney = MoneySum;
             _referenceView.UpdateView();
-
-            SetFooter();
         }
 
         private void Subscribe()
@@ -99,7 +107,8 @@ namespace MyCC.Forms.View.Pages
         {
             base.OnAppearing();
 
-            _accountsView.OnAppearing();
+            _accountsViewEnabled.OnAppearing();
+            _accountsViewDisabled.OnAppearing();
             _referenceView.OnAppearing();
 
             if (_accounts.ToList().Count == 0)

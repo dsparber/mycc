@@ -98,7 +98,7 @@ namespace MyCC.Core.Abstract.Database
         protected abstract Task<IEnumerable<T>> GetAllDbObjects();
         public async Task<IEnumerable<TV>> GetAll()
         {
-            return await Task.WhenAll((await GetAllDbObjects()).Select(o => o.Resolve()));
+            return (await Task.WhenAll((await GetAllDbObjects()).Select(o => o.Resolve()))).Where(o => o != null);
         }
 
         public async Task<IEnumerable<TV>> Get(Func<T, bool> predicate)

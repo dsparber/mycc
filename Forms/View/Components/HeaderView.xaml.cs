@@ -63,7 +63,13 @@ namespace MyCC.Forms.View.Components
 
         public bool IsLoading
         {
-            set { LoadingPanel.IsVisible = value; LoadingIndicator.IsRunning = value; InfoLabel.IsVisible = !value; }
+            set
+            {
+                LoadingPanel.IsVisible = value;
+                LoadingIndicator.IsRunning = value;
+                InfoLabel.IsVisible = !value && Width >= Height;
+                InfoLabelStack.IsVisible = !value && Width < Height;
+            }
         }
 
         public HeaderView(bool subscribeToRefresh) : this()

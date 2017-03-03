@@ -32,7 +32,7 @@ namespace MyCC.Core.Abstract.Repositories
 
         protected virtual Func<TModel, bool> DatabaseFilter
         {
-            get { return v => v.ParentId == Id; }
+            get { return v => v != null && v.ParentId == Id; }
         }
 
         protected async Task<bool> FetchFromDatabase()
