@@ -171,9 +171,17 @@ namespace MyCC.Forms.View.Pages
             Messaging.UpdatingAccounts.SubscribeFinished(this, () =>
             {
                 updateLabelAction();
-                if (_account is LocalAccount) return;
-                _account = AccountStorage.Instance.Repositories.Find(r => r.Id == _account.ParentId)?
-                            .Elements.FirstOrDefault(e => e.Money.Currency.Equals(_account.Money.Currency));
+
+                if (!(_account is LocalAccount))
+                {
+                    _account = AccountStorage.Instance.Repositories.Find(r => r.Id == _account.ParentId)?
+                                .Elements.FirstOrDefault(e => e.Money.Currency.Equals(_account.Money.Currency));
+                }
+
+                if (_account == null) return;
+
+                _referenceView.ReferenceMoney = _account.Money;
+                _referenceView.UpdateView();
             });
         }
 

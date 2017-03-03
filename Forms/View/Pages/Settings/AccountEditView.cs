@@ -76,11 +76,12 @@ namespace MyCC.Forms.View.Pages.Settings
             _currencyEntryCell.IsEditable = false;
             AccountName.IsEditable = false;
 
-            _account.Name = AccountName.Text ?? string.Empty;
+            _account.Money = _currencyEntryCell.SelectedMoney;
+            _account.LastUpdate = DateTime.Now;
+            _account.Name = string.IsNullOrWhiteSpace(AccountName.Text) ? I18N.Unnamed : AccountName.Text;
             _account.IsEnabled = EnableAccountCell.On;
 
-            _account = new LocalAccount(_account.Id, _account.Name, _currencyEntryCell.SelectedMoney, _account.IsEnabled, DateTime.Now, _account.ParentId);
-            await _repository.Update(_account);
+            await AccountStorage.Update(_account);
 
             Messaging.UpdatingAccounts.SendFinished();
 

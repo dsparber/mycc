@@ -25,6 +25,7 @@ namespace MyCC.Forms.View.Components
     {
         public Money ReferenceMoney { private get; set; }
 
+        private readonly SectionHeaderView _sectionHeader;
         private readonly HybridWebView _webView;
         private bool _appeared;
 
@@ -73,7 +74,8 @@ namespace MyCC.Forms.View.Components
 
             var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-            stack.Children.Add(new SectionHeaderView(false) { Title = TableHeaderLabel });
+            _sectionHeader = new SectionHeaderView(false) { Title = TableHeaderLabel };
+            stack.Children.Add(_sectionHeader);
             stack.Children.Add(_webView);
 
             Content = stack;
@@ -118,6 +120,7 @@ namespace MyCC.Forms.View.Components
 
                 Device.BeginInvokeOnMainThread(() =>
                 {
+                    _sectionHeader.Title = TableHeaderLabel;
                     _webView.CallJsFunction("setHeader", new[]{
                       new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
                       new HeaderData($"{I18N.Currency[0]}.", SortOrder.Alphabetical.ToString())

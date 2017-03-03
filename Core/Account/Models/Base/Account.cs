@@ -49,7 +49,7 @@ namespace MyCC.Core.Account.Models.Base
             {
                 return _money;
             }
-            protected set
+            set
             {
                 if (value == null)
                 {
