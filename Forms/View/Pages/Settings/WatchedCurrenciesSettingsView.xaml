@@ -4,39 +4,39 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
-	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.Settings.WatchedCurrenciesSettingsView"
     BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
 	Title="{resources:Translate AdditionalRates}">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
 			Text="{resources:Translate Add}"
 			Clicked="Add"
       Icon="add.png"/>
-  </ContentPage.ToolbarItems>
-  <ContentPage.Content>
-    <components1:ChangingStackLayout>
-      <components1:HeaderView
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <components:ChangingStackLayout>
+            <components:HeaderView
 				TitleText="{resources:Translate AppName}"
-				InfoText="{resources:Translate CurrenciesForRateView}" />
-      <ScrollView
+				x:Name="Header"/>
+            <ScrollView
 				IsClippedToBounds="true">
-        <StackLayout
+                <StackLayout
 					Spacing="0"
 					BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-          <Label
+                    <Label
 						Text="{resources:Translate RatesCurrenciesInfo}"
 						Margin="15,15,15,0"
 						TextColor="{x:Static constants:AppConstants.TableSectionColor}"
 						FontSize="14" />
-          <TableView
+                    <TableView
 						Intent="Settings">
-            <TableSection
+                        <TableSection
 							Title="{resources:Translate AdditionalCurrencies}"
 							x:Name="AllCurrenciesSection" />
-          </TableView>
-        </StackLayout>
-      </ScrollView>
-    </components1:ChangingStackLayout>
-  </ContentPage.Content>
+                    </TableView>
+                </StackLayout>
+            </ScrollView>
+        </components:ChangingStackLayout>
+    </ContentPage.Content>
 </ContentPage>

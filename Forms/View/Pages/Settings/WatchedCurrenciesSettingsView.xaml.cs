@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Settings;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Components.Cells;
@@ -25,6 +26,7 @@ namespace MyCC.Forms.View.Pages.Settings
             var currencyCells = new List<CustomViewCell>();
 
             var watchedCurrencies = new List<Currency>(ApplicationSettings.WatchedCurrencies);
+            Header.InfoText = PluralHelper.GetTextCurrencies(watchedCurrencies.Count);
 
             foreach (var c in watchedCurrencies)
             {
@@ -34,7 +36,7 @@ namespace MyCC.Forms.View.Pages.Settings
                 delete.Action = (sender, e) =>
                 {
                     var cu = (e as TappedEventArgs)?.Parameter as Currency;
-                    watchedCurrencies.Remove(cu);
+                    watchedCurrencies.RemoveAll(x => x.Equals(cu));
                     ApplicationSettings.WatchedCurrencies = watchedCurrencies;
                     Messaging.UpdatingRates.SendFinished();
                     SetReferenceCurrencyCells();
