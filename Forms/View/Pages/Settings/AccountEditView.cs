@@ -1,7 +1,5 @@
 using System;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Account.Models.Implementations;
-using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
@@ -15,17 +13,15 @@ namespace MyCC.Forms.View.Pages.Settings
     {
         private readonly CurrencyEntryCell _currencyEntryCell;
 
-        private FunctionalAccount _account;
-        private readonly LocalAccountRepository _repository;
+        private readonly FunctionalAccount _account;
 
         private readonly bool _isEditModal;
 
-        public AccountEditView(FunctionalAccount account, LocalAccountRepository repository, bool isEditModal = false)
+        public AccountEditView(FunctionalAccount account, bool isEditModal = false)
         {
             InitializeComponent();
 
             _account = account;
-            _repository = repository;
             _isEditModal = isEditModal;
 
             Title = account.Name;

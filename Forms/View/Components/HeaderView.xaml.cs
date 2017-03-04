@@ -67,8 +67,8 @@ namespace MyCC.Forms.View.Components
             {
                 LoadingPanel.IsVisible = value;
                 LoadingIndicator.IsRunning = value;
-                InfoLabel.IsVisible = !value && Width >= Height;
-                InfoLabelStack.IsVisible = !value && Width < Height;
+                InfoLabel.IsVisible = !value && Height <= 150;
+                InfoLabelStack.IsVisible = !value && Height > 150;
             }
         }
 
@@ -127,8 +127,8 @@ namespace MyCC.Forms.View.Components
         {
             base.OnSizeAllocated(width, height);
 
-            InfoLabel.IsVisible = width >= height;
-            InfoLabelStack.IsVisible = width < height;
+            InfoLabel.IsVisible = height <= 150;
+            InfoLabelStack.IsVisible = height > 150;
         }
 
         private void AdaptSize()

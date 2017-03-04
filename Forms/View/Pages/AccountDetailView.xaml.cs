@@ -218,7 +218,7 @@ namespace MyCC.Forms.View.Pages
             var repo = AccountStorage.RepositoryOf(_account);
             if (repo is LocalAccountRepository)
             {
-                Navigation.PushOrPushModal(new AccountEditView(_account, repo as LocalAccountRepository, true));
+                Navigation.PushOrPushModal(new AccountEditView(_account, true));
             }
             else
             {

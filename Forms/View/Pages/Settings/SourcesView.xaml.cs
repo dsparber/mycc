@@ -53,7 +53,7 @@ namespace MyCC.Forms.View.Pages.Settings
             var manualCells = _repositories.OfType<LocalAccountRepository>().SelectMany(r => r.Elements).Select(a =>
             {
                 var c = new CustomViewCell { Image = "more.png", Text = $"{a.Money.Currency.Code} - {a.Name}", Detail = a.Money.ToString() };
-                c.Tapped += (sender, e) => Navigation.PushAsync(new AccountEditView(a, AccountStorage.Instance.LocalRepository as LocalAccountRepository));
+                c.Tapped += (sender, e) => Navigation.PushAsync(new AccountEditView(a));
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
             var bittrexCells = _repositories.OfType<BittrexAccountRepository>().Select(r =>
