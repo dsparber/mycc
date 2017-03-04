@@ -519,4 +519,7 @@
   <data name="DisabledAccounts" xml:space="preserve">
     <value>Deaktivierte Konten</value>
   </data>
+  <data name="Units" xml:space="preserve">
+    <value>Stk.</value>
+  </data>
 </root>

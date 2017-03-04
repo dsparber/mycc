@@ -96,17 +96,6 @@ namespace MyCC.Forms.View.Pages
 
             if (repo is AddressAccountRepository)
             {
-                Func<string, string> shorten = address =>
-                {
-                    if (string.IsNullOrWhiteSpace(address)) return string.Empty;
-
-                    var firstNumbers = address.Length >= 5
-                        ? address.Substring(0, 5)
-                        : address.Substring(0, address.Length - 1);
-                    var lastNumbers = address.Length >= 10 ? address.Substring(address.Length - 5, 5) : string.Empty;
-                    return $"{firstNumbers}...{lastNumbers}";
-                };
-
                 headerStack.Children.Add(new Label
                 {
                     LineBreakMode = LineBreakMode.NoWrap,
@@ -132,7 +121,7 @@ namespace MyCC.Forms.View.Pages
                 });
                 var addressLabel = new Label
                 {
-                    Text = shorten((repo as AddressAccountRepository).Address),
+                    Text = (repo as AddressAccountRepository).Address.MiddleTruncate(),
                     FontSize = AppConstants.TableSectionFontSize,
                     TextColor = AppConstants.FontColorLight,
                     LineBreakMode = LineBreakMode.MiddleTruncation
@@ -141,7 +130,7 @@ namespace MyCC.Forms.View.Pages
                 updateLabelAction = () =>
                 {
                     nameLabel.Text = _account?.Name ?? repo.Name;
-                    addressLabel.Text = shorten((repo as AddressAccountRepository)?.Address);
+                    addressLabel.Text = (repo as AddressAccountRepository)?.Address.MiddleTruncate() ?? string.Empty;
                     sourceLabel.Text = repo.Description;
                 };
             }

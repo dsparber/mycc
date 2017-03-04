@@ -23,5 +23,28 @@ namespace MyCC.Forms.Helpers
             var dateTimeString = dateTime.Subtract(DateTime.MinValue).Days == 0 ? I18N.Never : dateTime.ToString(DateTime.Now.Subtract(dateTime).Days > 0 ? format.ShortDatePattern : format.ShortTimePattern);
             return $"{I18N.LastUpdate}: {dateTimeString}";
         }
+
+        public static string MiddleTruncate(this string text, int charactersToShowCount = 5)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return string.Empty;
+
+            var firstPart = string.Empty;
+            var lastPart = string.Empty;
+
+            if (text.Length > 2 * charactersToShowCount)
+            {
+                firstPart = text.Substring(0, charactersToShowCount);
+                lastPart = text.Substring(text.Length - charactersToShowCount);
+            }
+            else if (text.Length > 2)
+            {
+                firstPart = text.Substring(0, text.Length / 2);
+                lastPart = text.Substring(text.Length / 2 + 1);
+            }
+
+            return $"{firstPart}...{lastPart}";
+        }
+
     }
 }
+

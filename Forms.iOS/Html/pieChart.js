@@ -1,19 +1,19 @@
 var chartColors =
 [
-  "#ba9043",
-  "#ffc700",
-  "#ed4040",
-  "#ec8644",
-  "#ab75f9",
-  "#2dc4e6",
-  "#62c366",
-  "#c173d5",
-  "#f2826d",
-  "#6b9ae9",
-  "#f26d75",
-  "#6df2c2",
-  "#6df2c2",
-]
+    "#ba9043",
+    "#ffc700",
+    "#ed4040",
+    "#ec8644",
+    "#ab75f9",
+    "#2dc4e6",
+    "#62c366",
+    "#c173d5",
+    "#f2826d",
+    "#6b9ae9",
+    "#f26d75",
+    "#6df2c2",
+    "#6df2c2"
+];
 
 
 var chartOptions = {
@@ -186,18 +186,18 @@ function labelFormatter(context) {
     }
     if (context.section === "outer" && context.part === "mainLabel") {
         var length = chartOptions["data"]["content"].length;
-        return (length -1 !== context.index) ? "" : chartOptions["data"]["content"][context.index]["label"];
+        return (length - 1 !== context.index) ? "" : chartOptions["data"]["content"][context.index]["label"];
     }
     if (context.section === "outer" && context.part === "value") {
-      return "";
+        return "";
         //return "\u2248 " + chartOptions["data"]["content"][context.index]["reference"];
     }
     if (context.section === "outer" && context.part === "mainLabel") {
         return chartOptions["data"]["content"][context.index]["money"];
     }
     if (context.section === "inner") {
-      var length = chartOptions["data"]["content"].length;
-      return (length -1 === context.index) ? "" : chartOptions["data"]["content"][context.index]["label"];
+        var length = chartOptions["data"]["content"].length;
+        return (length - 1 === context.index) ? "" : chartOptions["data"]["content"][context.index]["label"];
     }
     return chartOptions["data"]["content"][context.index]["label"];
 }
@@ -217,8 +217,7 @@ function clickedListener(data) {
                 chartOptions["header"]["title"].text = formatNumber(data["value"]); //
                 chartOptions["header"]["subtitle"].text = data["groupedData"].length === 1 ? _textCurrencies[0] : data["groupedData"].length + " " + _textCurrencies[1];
             } else {
-                numAccounts = data["groupedData"].length;
-                chartOptions["header"]["subtitle"].text =  data["name"];
+                chartOptions["header"]["subtitle"].text = data["name"];
             }
             chartOptions["data"]["content"] = data["groupedData"];
             var div = document.getElementById(id);

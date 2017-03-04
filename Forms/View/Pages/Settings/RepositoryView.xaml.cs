@@ -89,9 +89,9 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetView()
         {
-            var cells = _repository.Elements.OrderBy(e => e.Money.Currency.Code).Select(e =>
+            var cells = _repository.Elements.OrderBy(e => e.Money.Currency.Name).Select(e =>
             {
-                var cell = new CustomViewCell { Text = e.Money.ToString(), Detail = e.Money.Currency.Name, IsDisabled = !e.IsEnabled };
+                var cell = new CustomViewCell { Detail = e.Money.ToString(), Text = e.Money.Currency.Name, IsDisabled = !e.IsEnabled };
                 return cell;
             }).ToList();
 
@@ -103,9 +103,9 @@ namespace MyCC.Forms.View.Pages.Settings
                 });
             }
 
-            var enableCells = _repository.Elements.OrderBy(e => e.Money.Currency.Code).Select(e =>
+            var enableCells = _repository.Elements.OrderBy(e => e.Money.Currency.Name).Select(e =>
             {
-                var cell = new CustomSwitchCell { Title = e.Money.ToString(), Info = e.Money.Currency.Name, On = e.IsEnabled };
+                var cell = new CustomSwitchCell { Info = e.Money.ToString(), Title = e.Money.Currency.Name, On = e.IsEnabled };
                 cell.Switch.Toggled += (sender, args) =>
                 {
                     _changedAccounts.RemoveAll(t => t.Item1.Equals(e));
