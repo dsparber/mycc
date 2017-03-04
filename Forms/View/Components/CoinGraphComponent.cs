@@ -53,6 +53,7 @@ namespace MyCC.Forms.View.Components
 
             Messaging.Loading.SubscribeFinished(this, UpdateView);
             Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
+            Messaging.UpdatingAccounts.SubscribeValueChanged(this, UpdateView);
 
             Messaging.Progress.SubscribeToComplete(this, UpdateView);
         }
