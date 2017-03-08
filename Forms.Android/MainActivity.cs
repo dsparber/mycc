@@ -6,31 +6,39 @@ using HockeyApp.Android;
 using HockeyApp.Android.Metrics;
 using Refractored.XamForms.PullToRefresh.Droid;
 using Xamarin.Forms.Platform.Android;
+using Java.Lang;
 
 namespace MyCC.Forms.Android
 {
-    [Activity(Label = "MyCC", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : FormsApplicationActivity
-    {
-        protected override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-            Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            CarouselViewRenderer.Init();
-            PullToRefreshLayoutRenderer.Init();
-            ZXing.Net.Mobile.Forms.Android.Platform.Init();
-            LoadApplication(new App());
+	[Activity(Label = "MyCC", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+	public class MainActivity : FormsApplicationActivity
+	{
+		protected override void OnCreate(Bundle savedInstanceState)
+		{
+			base.OnCreate(savedInstanceState);
+			Xamarin.Forms.Forms.Init(this, savedInstanceState);
+			CarouselViewRenderer.Init();
+			PullToRefreshLayoutRenderer.Init();
+			ZXing.Net.Mobile.Forms.Android.Platform.Init();
 
-            CrashManager.Register(this, "7792ee5321a64433ace4955a1693cca5");
-            MetricsManager.Register(Application, "7792ee5321a64433ace4955a1693cca5");
+			var y = (int)(Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
+			var x = (int)(Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density);
 
-            ActionBar.Elevation = 0;
-        }
+			App.ScreenHeight = Math.Max(x, y);
+			App.ScreenWidth = Math.Min(x, y);
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
-        {
-            ZXing.Net.Mobile.Forms.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
+			LoadApplication(new App());
+
+			CrashManager.Register(this, "7792ee5321a64433ace4955a1693cca5");
+			MetricsManager.Register(Application, "7792ee5321a64433ace4955a1693cca5");
+
+			ActionBar.Elevation = 0;
+		}
+
+		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+		{
+			ZXing.Net.Mobile.Forms.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+		}
+	}
 }
 

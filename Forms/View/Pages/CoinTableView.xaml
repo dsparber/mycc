@@ -22,7 +22,6 @@
 				Arrows="true"
 				InterPageSpacing="0"
 				ShowIndicators="true"
-				WidthRequest="280"
 				PageIndicatorTintColor="#5FFF"
 				CurrentPageIndicatorTintColor="White"
 				BackgroundColor="{x:Static constants:AppConstants.ThemeColor}" />

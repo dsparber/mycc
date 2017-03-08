@@ -5,7 +5,6 @@
     xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
     x:Class="MyCC.Forms.View.Components.HeaderView"
 	BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
-	WidthRequest="280"
     MinimumWidthRequest="240"
     MinimumHeightRequest="90">
     <ContentView.Content>
@@ -20,8 +19,7 @@
                 <StackLayout
                     Orientation="Horizontal"
                     HorizontalOptions="CenterAndExpand"
-                    Spacing="0"
-                    Margin="5,0,5,0">
+                    Spacing="0">
                     <Label
                         x:Name="TitleLabel"
                         FontSize="36"
@@ -48,7 +46,7 @@
                     HorizontalOptions="CenterAndExpand"
                     IsVisible="False"
                     Spacing="3"
-                    Margin="15"
+                    Margin="0,15,0,0"
                     x:Name="InfoLabelStack"/>
                 <StackLayout
                     x:Name="LoadingPanel"
