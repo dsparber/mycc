@@ -4,7 +4,6 @@ using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 
 namespace MyCC.Forms.View.Pages.Settings
@@ -18,11 +17,13 @@ namespace MyCC.Forms.View.Pages.Settings
             SetDefaultPageCellText();
 
             AutoRefresh.On = ApplicationSettings.AutoRefreshOnStartup;
-            RoundNumbers.On = ApplicationSettings.RoundMoney;
+
+            /*RoundNumbers.On = ApplicationSettings.RoundMoney;
+            RoundNumbers.Switch.Toggled += RoundNumbersChanged;*/
+
             Header.TitleText = I18N.AppName;
 
             AutoRefresh.Switch.Toggled += AutoRefreshChanged;
-            RoundNumbers.Switch.Toggled += RoundNumbersChanged;
             ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new ReferenceCurrenciesSettingsView());
             ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies);
             SourcesCell.Tapped += (sender, e) => Navigation.PushAsync(new SourcesView());
@@ -54,11 +55,11 @@ namespace MyCC.Forms.View.Pages.Settings
             }
         }
 
-        private void RoundNumbersChanged(object sender, EventArgs e)
-        {
-            ApplicationSettings.RoundMoney = RoundNumbers.On;
-            Messaging.RoundNumbers.SendValueChanged();
-        }
+        /* private void RoundNumbersChanged(object sender, EventArgs e)
+         {
+             ApplicationSettings.RoundMoney = RoundNumbers.On;
+             Messaging.RoundNumbers.SendValueChanged();
+         }*/
 
         private void PinCellTapped(object sender, EventArgs e)
         {

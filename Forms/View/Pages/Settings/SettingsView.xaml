@@ -7,66 +7,66 @@
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.Settings.SettingsView"
 	Title="{resources:Translate Settings}">
-  <ContentPage.BackgroundColor>
-    <OnPlatform
+    <ContentPage.BackgroundColor>
+        <OnPlatform
 			x:TypeArguments="Color"
 			Android="#EEE" />
-  </ContentPage.BackgroundColor>
-  <ContentPage.Content>
-    <components1:ChangingStackLayout>
-      <components1:HeaderView
+    </ContentPage.BackgroundColor>
+    <ContentPage.Content>
+        <components1:ChangingStackLayout>
+            <components1:HeaderView
 				x:Name="Header"
 				InfoText="{resources:Translate AppNameLong}" />
-      <TableView
+            <TableView
 				Intent="Settings">
-        <TableSection
+                <TableSection
 					Title="{resources:Translate Data}">
-          <cells:CustomViewCell
+                    <cells:CustomViewCell
 						Text="{resources:Translate Sources}"
 						x:Name="SourcesCell"
 						Image="more.png" />
-          <cells:CustomViewCell
+                    <cells:CustomViewCell
 						Text="{resources:Translate ReferenceCurrencies}"
 						x:Name="ReferenceCurrenciesCell"
 						Image="more.png" />
-          <cells:CustomViewCell
+                    <cells:CustomViewCell
 						Text="{resources:Translate AdditionalRates}"
 						x:Name="RatesCell"
 						Image="more.png" />
-          <cells:CustomViewCell
+                    <cells:CustomViewCell
 						Text="{resources:Translate PreferredBitcoinRate}"
 						x:Name="PreferredRateCell"
 						Image="more.png" />
-        </TableSection>
-        <TableSection
+                </TableSection>
+                <TableSection
 					Title="{resources:Translate General}">
-          <cells:CustomViewCell
+                    <cells:CustomViewCell
 						Text="{resources:Translate Security}"
 						x:Name="PinSettingsCell"
 						Tapped="PinCellTapped"
 						Image="more.png" />
-          <cells:CustomViewCell
+                    <cells:CustomViewCell
 						Text="{resources:Translate DefaultView}"
 						x:Name="DefaultViewCell"
 						Tapped="OpenDefaultViewPage"
 						Image="more.png" />
-          <cells:CustomSwitchCell
+                    <cells:CustomSwitchCell
 						x:Name="AutoRefresh"
 						Title="{resources:Translate RefreshOnStartup}"
 						Info="{resources:Translate LoadRatesAndBalancesOnStartup}" />
-          <cells:CustomSwitchCell
+                    <!--<cells:CustomSwitchCell
 						x:Name="RoundNumbers"
 						Title="{resources:Translate RoundNumbers}"
-						Info="{resources:Translate OtherwiseTruncate}" />
-        </TableSection>
-        <TableSection
+						Info="{resources:Translate OtherwiseTruncate}" />-->
+                </TableSection>
+                <TableSection
 					Title="{resources:Translate Info}">
-          <cells:CustomViewCell
+                    <cells:CustomViewCell
 						x:Name="AboutCell"
 						Text="{resources:Translate About}"
 						Image="more.png" />
-        </TableSection>
-      </TableView>
-    </components1:ChangingStackLayout>
-  </ContentPage.Content>
+                </TableSection>
+            </TableView>
+        </components1:ChangingStackLayout>
+    </ContentPage.Content>
 </ContentPage>
