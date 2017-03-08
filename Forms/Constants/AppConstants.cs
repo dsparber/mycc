@@ -9,6 +9,7 @@ namespace MyCC.Forms.Constants
 
         public const int AndroidFontSize = 17;
         public const double FontFactorSmall = 0.75;
+        public static readonly Color BorderColor = Color.FromHex("ccc");
         public static readonly Color FontColor = Color.FromHex("222");
         public static readonly Color BackgroundColor = Device.OS == TargetPlatform.Android ? Color.FromHex("EEE") : Color.FromHex("FFF");
         public static readonly Color TableBackgroundColor = Device.OS == TargetPlatform.Android ? Color.FromHex("EEE") : Color.FromRgb(238, 239, 243);
