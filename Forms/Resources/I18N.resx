@@ -519,7 +519,4 @@
   <data name="DisabledAccounts" xml:space="preserve">
     <value>Disabled accounts</value>
   </data>
-  <data name="Units" xml:space="preserve">
-    <value>Units</value>
-  </data>
 </root>

@@ -52,7 +52,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             var manualCells = _repositories.OfType<LocalAccountRepository>().SelectMany(r => r.Elements).Select(a =>
             {
-                var c = new CustomViewCell { Image = "more.png", Text = $"{a.Money.Currency.Code} - {a.Name}", Detail = $"{a.Money.Currency.Name} - {a.Money.ToString(false)} {I18N.Units}" };
+                var c = new CustomViewCell { Image = "more.png", Text = $"{a.Money.Currency.Code} - {a.Name}", Detail = $"{a.Money.ToString(false)} {a.Money.Currency.Name}" };
                 c.Tapped += (sender, e) => Navigation.PushAsync(new AccountEditView(a));
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
@@ -67,7 +67,7 @@ namespace MyCC.Forms.View.Pages.Settings
             {
                 var c = getCell(r);
                 c.Text = $"{r.Currency.Code} - {r.Name}";
-                c.Detail = $"{r.Currency.Name} - {I18N.Address}: {r.Address.MiddleTruncate()}";
+                c.Detail = $"{r.Currency.Name} ({r.Address.MiddleTruncate()})";
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
 

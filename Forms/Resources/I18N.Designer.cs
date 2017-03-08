@@ -1205,15 +1205,6 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Units ähnelt.
-        /// </summary>
-        public static string Units {
-            get {
-                return ResourceManager.GetString("Units", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die s ähnelt.
         /// </summary>
         public static string UnitSecond {
