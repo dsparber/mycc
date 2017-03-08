@@ -12,16 +12,16 @@ html, body {
     background-color: rgb(238, 239, 243);
 }
 
-body > div{
-  position: fixed;
-  width: 100%;
-  overflow-x: auto;
-}
+    body > div {
+        position: fixed;
+        width: 100%;
+        overflow-x: auto;
+    }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
 }
 
 td:first-child {

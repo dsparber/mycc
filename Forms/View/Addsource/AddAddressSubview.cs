@@ -54,6 +54,7 @@ namespace MyCC.Forms.View.Addsource
                     {
                         Source = "flashOff.png",
                         Margin = 20,
+                        WidthRequest = 40,
                         VerticalOptions = LayoutOptions.Start,
                         HorizontalOptions = LayoutOptions.EndAndExpand
                     };

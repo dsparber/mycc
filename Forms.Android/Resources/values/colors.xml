@@ -2,11 +2,11 @@
 <resources>
   <!-- https://www.materialpalette.com/blue-grey/light-blue -->
   <color
-		name="primary">#3498db</color>
+		name="primary">#ba9043</color>
   <color
-		name="primaryDark">#027ab0</color>
+		name="primaryDark">#666</color>
   <color
-		name="accent">#3498db</color>
+		name="accent">#ba9043</color>
   <color
 		name="window_background">#FFFFFF</color>
 </resources>

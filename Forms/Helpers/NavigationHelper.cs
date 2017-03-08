@@ -15,6 +15,6 @@ namespace MyCC.Forms.Helpers
             return Modal ? navigation.PopModalAsync() : navigation.PopAsync();
         }
 
-        private static bool Modal => Device.OS != TargetPlatform.Android;
+        private static bool Modal => true; //Device.OS != TargetPlatform.Android;
     }
 }

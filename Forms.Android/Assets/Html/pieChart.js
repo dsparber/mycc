@@ -1,3 +1,21 @@
+var chartColors =
+[
+    "#ba9043",
+    "#ffc700",
+    "#ed4040",
+    "#ec8644",
+    "#ab75f9",
+    "#2dc4e6",
+    "#62c366",
+    "#c173d5",
+    "#f2826d",
+    "#6b9ae9",
+    "#f26d75",
+    "#6df2c2",
+    "#6df2c2"
+];
+
+
 var chartOptions = {
     "header": {
         "title": {
@@ -14,7 +32,7 @@ var chartOptions = {
         "titleSubtitlePadding": 2
     },
     "size": {
-        "pieInnerRadius": "67%",
+        "pieInnerRadius": "60%",
         "pieOuterRadius": "85%"
     },
     "data": {
@@ -29,15 +47,14 @@ var chartOptions = {
     "labels": {
         "formatter": labelFormatter,
         "outer": {
-            "format": "none",
-            // "format": "label-value2",
-            "pieDistance": 20
+            "format": "label",
+            "pieDistance": 3
         },
         "inner": {
             "format": "percentage"
         },
         "mainLabel": {
-            "color": "#000",
+            "color": "segment",
             "font": "arial",
             "fontSize": 14
         },
@@ -53,7 +70,7 @@ var chartOptions = {
             "fontSize": 14
         },
         "lines": {
-            "enabled": true,
+            "enabled": false,
             "style": "curved",
             "color": "segment"
         }
@@ -73,7 +90,8 @@ var chartOptions = {
     },
     "misc": {
         "colors": {
-            "segmentStroke": "#fff"
+            "segmentStroke": "#fff",
+            "segments": chartColors
         }
     },
     "callbacks": {
@@ -163,14 +181,23 @@ function labelFormatter(context) {
             return _textFurter;
         }
         if (context.section === "inner") {
-            return _textFurter;
+            return "";
         }
     }
+    if (context.section === "outer" && context.part === "mainLabel") {
+        var length = chartOptions["data"]["content"].length;
+        return (length - 1 !== context.index) ? "" : chartOptions["data"]["content"][context.index]["label"];
+    }
     if (context.section === "outer" && context.part === "value") {
-        return "\u2248 " + chartOptions["data"]["content"][context.index]["reference"];
+        return "";
+        //return "\u2248 " + chartOptions["data"]["content"][context.index]["reference"];
     }
     if (context.section === "outer" && context.part === "mainLabel") {
         return chartOptions["data"]["content"][context.index]["money"];
+    }
+    if (context.section === "inner") {
+        var length = chartOptions["data"]["content"].length;
+        return (length - 1 === context.index) ? "" : chartOptions["data"]["content"][context.index]["label"];
     }
     return chartOptions["data"]["content"][context.index]["label"];
 }
@@ -190,8 +217,7 @@ function clickedListener(data) {
                 chartOptions["header"]["title"].text = formatNumber(data["value"]); //
                 chartOptions["header"]["subtitle"].text = data["groupedData"].length === 1 ? _textCurrencies[0] : data["groupedData"].length + " " + _textCurrencies[1];
             } else {
-                numAccounts = data["groupedData"].length;
-                chartOptions["header"]["subtitle"].text = numAccounts === 1 ? _textAccounts[0] : numAccounts + " " + _textAccounts[1];
+                chartOptions["header"]["subtitle"].text = data["name"];
             }
             chartOptions["data"]["content"] = data["groupedData"];
             var div = document.getElementById(id);
@@ -221,7 +247,7 @@ function clickedListener(data) {
         } else {
             var createAccountsGraph = function () {
                 chartOptions["header"]["title"].text = formatNumber(data["value"]);
-                chartOptions["header"]["subtitle"].text = data["accounts"].length === 1 ? _textAccounts[0] : data["accounts"].length + " " + _textAccounts[1];
+                chartOptions["header"]["subtitle"].text = data["name"];
                 chartOptions["data"]["content"] = data["accounts"];
                 var div = document.getElementById(id);
                 chartOptions["size"]["canvasWidth"] = div.offsetWidth;
