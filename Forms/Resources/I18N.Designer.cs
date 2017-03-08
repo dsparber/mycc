@@ -719,6 +719,15 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last change ähnelt.
+        /// </summary>
+        public static string LastChange {
+            get {
+                return ResourceManager.GetString("LastChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Last update ähnelt.
         /// </summary>
         public static string LastUpdate {

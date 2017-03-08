@@ -134,6 +134,30 @@ namespace MyCC.Forms.View.Pages
                     sourceLabel.Text = repo.Description;
                 };
             }
+            else if (_account is LocalAccount)
+            {
+                headerStack.Children.Add(new Label
+                {
+                    LineBreakMode = LineBreakMode.NoWrap,
+                    Text = $"{I18N.LastChange}:",
+                    FontSize = AppConstants.TableSectionFontSize,
+                    TextColor = AppConstants.FontColorLight
+                });
+                var lastChangeLabel = new Label
+                {
+                    Text = _account.LastUpdate.AsString(),
+                    FontSize = AppConstants.TableSectionFontSize,
+                    TextColor = AppConstants.FontColorLight,
+                    LineBreakMode = LineBreakMode.MiddleTruncation
+                };
+                dataStack.Children.Add(lastChangeLabel);
+
+                updateLabelAction = () =>
+                {
+                    nameLabel.Text = _account?.Name ?? repo.Name;
+                    lastChangeLabel.Text = _account.LastUpdate.AsString();
+                };
+            }
 
             infoStackContainer.Children.Add(headerStack);
             infoStackContainer.Children.Add(dataStack);

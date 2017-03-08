@@ -519,4 +519,7 @@
   <data name="DisabledAccounts" xml:space="preserve">
     <value>Deaktivierte Konten</value>
   </data>
+  <data name="LastChange" xml:space="preserve">
+    <value>Letzte Änderung</value>
+  </data>
 </root>

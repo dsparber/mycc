@@ -19,9 +19,13 @@ namespace MyCC.Forms.Helpers
 
         public static string LastUpdateString(this DateTime dateTime)
         {
+            return $"{I18N.LastUpdate}: {dateTime.AsString()}";
+        }
+
+        public static string AsString(this DateTime dateTime)
+        {
             var format = CultureInfo.CurrentCulture.DateTimeFormat;
-            var dateTimeString = dateTime.Subtract(DateTime.MinValue).Days == 0 ? I18N.Never : dateTime.ToString(DateTime.Now.Subtract(dateTime).Days > 0 ? format.ShortDatePattern : format.ShortTimePattern);
-            return $"{I18N.LastUpdate}: {dateTimeString}";
+            return dateTime.Subtract(DateTime.MinValue).Days == 0 ? I18N.Never : dateTime.ToString(DateTime.Now.Subtract(dateTime).Days > 0 ? format.ShortDatePattern : format.ShortTimePattern);
         }
 
         public static string MiddleTruncate(this string text, int charactersToShowCount = 5)
