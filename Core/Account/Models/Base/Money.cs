@@ -20,7 +20,7 @@ namespace MyCC.Core.Account.Models.Base
             {
                 throw new ArgumentNullException();
             }
-            Amount = Math.Truncate(amount * 100000000) / 100000000;
+            Amount = (long)Math.Truncate(amount * 10e8m) / 10e8m;
             Currency = currency;
         }
 

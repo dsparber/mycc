@@ -33,7 +33,7 @@ namespace MyCC.Core.Rates
             SecondaryCurrencyCode = secondaryCurrencyCode.ToUpper();
             ReferenceCurrencyIsCryptoCurrency = referenceIsCrypto;
             SecondaryCurrencyIsCryptoCurrency = secondaryIsCrypto;
-            Rate = rate == null ? (decimal?)null : Math.Truncate(rate.Value * 100000000) / 100000000;
+            Rate = rate;
             LastUpdate = lastUpdate ?? DateTime.MinValue;
         }
 
@@ -131,11 +131,18 @@ namespace MyCC.Core.Rates
             get { return _rate; }
             set
             {
-                if (value != null && value < 0)
+                if (value == null)
+                {
+                    _rate = null;
+                }
+                else if (value < 0)
                 {
                     throw new ArgumentException("The rate can not be negative!");
                 }
-                _rate = value;
+                else
+                {
+                    _rate = Math.Truncate(value.Value * 10e7m) / 10e7m;
+                }
             }
         }
 
