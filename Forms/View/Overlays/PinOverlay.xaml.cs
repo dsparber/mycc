@@ -94,7 +94,7 @@ namespace MyCC.Forms.View.Overlays
             var newPin = NewPinCell.Entry.Text ?? string.Empty;
 
             var repeatOk = newPin.Equals(NewPinRepeatCell.Entry.Text) || _pinAction == PinAction.Disable;
-            var oldPinOk = ApplicationSettings.IsPinValid(oldPin) || _pinAction == PinAction.Enable;
+            var oldPinOk = _pinAction == PinAction.Enable || ApplicationSettings.IsPinValid(oldPin);
             var pinLongEnough = newPin.Length >= 4 || _pinAction == PinAction.Disable;
 
 

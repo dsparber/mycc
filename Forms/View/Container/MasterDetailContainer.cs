@@ -50,7 +50,7 @@ namespace MyCC.Forms.View.Container
                 Func<string, string, Page, Xamarin.Forms.View> item = (title, icon, page) => new ContentView
                 {
                     BackgroundColor = AppConstants.BorderColor,
-                    Padding = new Thickness(0, 0, 0, 0.5),
+                    Padding = new Thickness(0, 0, 0, 1),
                     Content = new StackLayout
                     {
                         BackgroundColor = Color.White,
