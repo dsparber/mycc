@@ -16,6 +16,15 @@
                 Margin="5"
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand">
+				<Label
+                    x:Name="HeadingLabel"
+                    FontSize="24"
+					Margin="0,15,0,15"
+                    FontAttributes="Bold"
+                    TextColor="White"
+					HorizontalOptions="CenterAndExpand"
+					HorizontalTextAlignment="Center"
+                    LineBreakMode="TailTruncation" />
                 <StackLayout
                     Orientation="Horizontal"
                     HorizontalOptions="CenterAndExpand"

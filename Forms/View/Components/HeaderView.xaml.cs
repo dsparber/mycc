@@ -22,6 +22,11 @@ namespace MyCC.Forms.View.Components
 			}
 		}
 
+		public string HeadingText
+		{
+			set { HeadingLabel.Text = GetText(value); }
+		}
+
 		protected string TitleTextSmall
 		{
 			private get { return TitleLabelSmall.Text ?? string.Empty; }
@@ -132,6 +137,7 @@ namespace MyCC.Forms.View.Components
 
 			InfoLabel.IsVisible = height <= 150;
 			InfoLabelStack.IsVisible = height > 150;
+			HeadingLabel.IsVisible = height > 150;
 		}
 
 		private void AdaptSize()
