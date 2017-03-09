@@ -80,6 +80,7 @@ namespace MyCC.Forms
 			var page = GetCurrentPage();
 			if (page is PasswordView) return;
 
+			if (page != null) Messaging.DarkStatusBar.Send(true);
 			page?.Navigation.PushModalAsync(new PasswordView(false, true), false);
 		}
 

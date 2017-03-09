@@ -5,106 +5,111 @@ using MyCC.Forms.View.Container;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 using Xamarin.Forms;
+using MyCC.Forms.Constants;
+using MyCC.Forms.Messages;
 
 namespace MyCC.Forms.View.Pages
 {
-    public partial class PasswordView
-    {
-        private readonly bool _pushMainView;
-        private readonly bool _goesToBckground;
-        private bool _fingerprintCanceled;
+	public partial class PasswordView
+	{
+		private readonly bool _pushMainView;
+		private readonly bool _goesToBckground;
+		private bool _fingerprintCanceled;
 
-        private PasswordView(bool background)
-        {
-            InitializeComponent();
-            _goesToBckground = background;
+		private PasswordView(bool background)
+		{
+			InitializeComponent();
+			_goesToBckground = background;
 
-            var recognizer = new TapGestureRecognizer();
-            recognizer.Tapped += async (sender, e) =>
-            {
-                _fingerprintCanceled = false;
-                PasswordEntry.Unfocus();
-                ShowFingerprintIcon.Focus();
-                await Authenticate();
-            };
-            ShowFingerprintIcon.GestureRecognizers.Add(recognizer);
-        }
+			var recognizer = new TapGestureRecognizer();
+			recognizer.Tapped += async (sender, e) =>
+			{
+				_fingerprintCanceled = false;
+				PasswordEntry.Unfocus();
+				ShowFingerprintIcon.Focus();
+				await Authenticate();
+			};
+			ShowFingerprintIcon.GestureRecognizers.Add(recognizer);
 
-        public PasswordView(bool pushMainView, bool background = false) : this(background)
-        {
-            _pushMainView = pushMainView;
-        }
+			Messaging.DarkStatusBar.Send(true);
+		}
 
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
+		public PasswordView(bool pushMainView, bool background = false) : this(background)
+		{
+			_pushMainView = pushMainView;
+		}
 
-            if (!_goesToBckground)
-            {
-                await Authenticate();
-            }
-        }
+		protected override async void OnAppearing()
+		{
+			base.OnAppearing();
 
-        protected override void OnSizeAllocated(double width, double height)
-        {
-            base.OnSizeAllocated(width, height);
+			if (!_goesToBckground)
+			{
+				await Authenticate();
+			}
+		}
 
-            IconView.IsVisible = height >= 350;
-        }
+		protected override void OnSizeAllocated(double width, double height)
+		{
+			base.OnSizeAllocated(width, height);
 
-        public async Task Authenticate()
-        {
-            if (ApplicationSettings.IsFingerprintEnabled && !_fingerprintCanceled)
-            {
-                ShowFingerprintIcon.IsVisible = true;
+			IconView.IsVisible = height >= 350;
+		}
 
-                var result = await CrossFingerprint.Current.AuthenticateAsync(I18N.UnlockApplication);
-                if (result.Authenticated)
-                {
-                    await Disappear();
-                }
-                if (result.Status.Equals(FingerprintAuthenticationResultStatus.Canceled))
-                {
-                    _fingerprintCanceled = true;
-                }
-            }
-            else
-            {
-                PasswordEntry.Focus();
-            }
+		public async Task Authenticate()
+		{
+			if (ApplicationSettings.IsFingerprintEnabled && !_fingerprintCanceled)
+			{
+				ShowFingerprintIcon.IsVisible = true;
 
-        }
+				var result = await CrossFingerprint.Current.AuthenticateAsync(I18N.UnlockApplication);
+				if (result.Authenticated)
+				{
+					await Disappear();
+				}
+				if (result.Status.Equals(FingerprintAuthenticationResultStatus.Canceled))
+				{
+					_fingerprintCanceled = true;
+				}
+			}
+			else
+			{
+				PasswordEntry.Focus();
+			}
 
-        private async void PinTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (e.NewTextValue.Length > 0)
-            {
-                PinFrame.OutlineColor = Color.White;
-            }
+		}
 
-            if (e.NewTextValue?.Length != ApplicationSettings.PinLength) return;
+		private async void PinTextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (e.NewTextValue.Length > 0)
+			{
+				PinFrame.OutlineColor = AppConstants.BorderColor;
+			}
 
-            if (ApplicationSettings.IsPinValid(e.NewTextValue))
-            {
-                await Disappear();
-            }
-            else
-            {
-                PasswordEntry.Text = string.Empty;
-                PinFrame.OutlineColor = Color.Red;
-            }
-        }
+			if (e.NewTextValue?.Length != ApplicationSettings.PinLength) return;
 
-        private async Task Disappear()
-        {
-            if (_pushMainView)
-            {
-                await Navigation.PushModalAsync(new TabContainerView());
-            }
-            else
-            {
-                await Navigation.PopModalAsync();
-            }
-        }
-    }
+			if (ApplicationSettings.IsPinValid(e.NewTextValue))
+			{
+				await Disappear();
+			}
+			else
+			{
+				PasswordEntry.Text = string.Empty;
+				PinFrame.OutlineColor = Color.Red;
+			}
+		}
+
+		private async Task Disappear()
+		{
+			Messaging.DarkStatusBar.Send(false);
+			if (_pushMainView)
+			{
+				await Navigation.PushModalAsync(new TabContainerView());
+			}
+			else
+			{
+				await Navigation.PopModalAsync();
+			}
+		}
+	}
 }

@@ -22,6 +22,8 @@
 		public const string UpdatingCurrenciesAndAvailableRates = "UpdatingCurrenciesAndAvailableRates";
 
 		public const string Progress = "Progress";
+
+		public const string DarkStatusBar = "DarkStatusBar";
 	}
 }
 

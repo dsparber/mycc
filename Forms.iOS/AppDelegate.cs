@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XLabs.Forms.Controls;
 using System;
+using MyCC.Forms.Messages;
 
 namespace MyCC.Forms.iOS
 {
@@ -31,7 +32,9 @@ namespace MyCC.Forms.iOS
 
 			var result = base.FinishedLaunching(uiApplication, launchOptions);
 
-			UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, false);
+			Messaging.DarkStatusBar.SubscribeToBool(this, b => UIApplication.SharedApplication.SetStatusBarStyle(b ? UIStatusBarStyle.Default : UIStatusBarStyle.LightContent, false));
+
+			UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.Default, false);
 			UINavigationBar.Appearance.TintColor = Color.White.ToUIColor();
 			UINavigationBar.Appearance.BarTintColor = AppConstants.ThemeColor.ToUIColor();
 			UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes
