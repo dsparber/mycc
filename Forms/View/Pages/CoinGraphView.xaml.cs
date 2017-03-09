@@ -15,133 +15,134 @@ using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Overlays;
 using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
+using static MyCC.Forms.App;
 
 namespace MyCC.Forms.View.Pages
 {
-	public partial class CoinGraphView
-	{
-		private readonly CoinGraphComponent _graphView;
-		private readonly PullToRefreshLayout _pullToRefresh;
+    public partial class CoinGraphView
+    {
+        private readonly CoinGraphComponent _graphView;
+        private readonly PullToRefreshLayout _pullToRefresh;
 
 
-		public CoinGraphView()
-		{
-			InitializeComponent();
+        public CoinGraphView()
+        {
+            InitializeComponent();
 
-			_graphView = new CoinGraphComponent(Navigation)
-			{
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				VerticalOptions = LayoutOptions.FillAndExpand
-			};
+            _graphView = new CoinGraphComponent(Navigation)
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
 
-			_pullToRefresh = new PullToRefreshLayout
-			{
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				Content = new ScrollView { VerticalOptions = LayoutOptions.FillAndExpand, Content = _graphView },
-				BackgroundColor = AppConstants.TableBackgroundColor,
-				RefreshCommand = new Command(Refresh),
-			};
+            _pullToRefresh = new PullToRefreshLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Content = new ScrollView { VerticalOptions = LayoutOptions.FillAndExpand, Content = _graphView },
+                BackgroundColor = AppConstants.TableBackgroundColor,
+                RefreshCommand = new Command(Refresh),
+            };
 
-			Content.Content = _pullToRefresh;
+            Content.Content = _pullToRefresh;
 
-			var recognizer = new TapGestureRecognizer();
-			recognizer.Tapped += AddSource;
-			var addCell = new CustomCellView(true) { Text = I18N.AddSource, IsActionCell = true, IsCentered = true };
-			addCell.GestureRecognizers.Add(recognizer);
-			NoDataStack.Children.Add(addCell);
+            var recognizer = new TapGestureRecognizer();
+            recognizer.Tapped += AddSource;
+            var addCell = new CustomCellView(true) { Text = I18N.AddSource, IsActionCell = true, IsCentered = true };
+            addCell.GestureRecognizers.Add(recognizer);
+            NoDataStack.Children.Add(addCell);
 
-			AddSubscriber();
+            AddSubscriber();
 
-			SetHeaderCarousel();
+            SetHeaderCarousel();
 
-			if (ApplicationSettings.DataLoaded)
-			{
-				SetNoSourcesView();
-			}
-		}
+            if (ApplicationSettings.DataLoaded)
+            {
+                SetNoSourcesView();
+            }
+        }
 
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
-			_graphView.OnAppearing();
-		}
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _graphView.OnAppearing();
+        }
 
-		private void PositionSelected(object sender, EventArgs e)
-		{
-			var currencies = ApplicationSettings.MainCurrencies;
+        private void PositionSelected(object sender, EventArgs e)
+        {
+            var currencies = ApplicationSettings.MainCurrencies;
 
-			ApplicationSettings.BaseCurrency = currencies[HeaderCarousel.Position];
-			MessagingCenter.Send(MessageInfo.ValueChanged, Messaging.ReferenceCurrency);
-		}
+            ApplicationSettings.BaseCurrency = currencies[HeaderCarousel.Position];
+            MessagingCenter.Send(MessageInfo.ValueChanged, Messaging.ReferenceCurrency);
+        }
 
-		private void SetHeaderCarousel()
-		{
-			HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
-			HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
-			HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
+        private void SetHeaderCarousel()
+        {
+            HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
+            HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
+            HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
 
-			if (HeaderCarousel.ItemTemplate != null) return;
+            if (HeaderCarousel.ItemTemplate != null) return;
 
-			HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
-			HeaderCarousel.PositionSelected += PositionSelected;
-			HeaderCarousel.HeightRequest = 100;
-			HeaderCarousel.WidthRequest = App.ScreenHeight / 3;
-		}
+            HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
+            HeaderCarousel.PositionSelected += PositionSelected;
+            HeaderCarousel.HeightRequest = 100;
+            HeaderCarousel.WidthRequest = ScreenHeight / 3.0;
+        }
 
-		private void SetNoSourcesView()
-		{
-			Device.BeginInvokeOnMainThread(() =>
-			{
-				NoDataView.IsVisible = AccountStorage.CurrenciesForGraph == 0;
-				DataView.IsVisible = AccountStorage.CurrenciesForGraph != 0;
-			});
+        private void SetNoSourcesView()
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                NoDataView.IsVisible = AccountStorage.CurrenciesForGraph == 0;
+                DataView.IsVisible = AccountStorage.CurrenciesForGraph != 0;
+            });
 
-			SetFooter();
-		}
+            SetFooter();
+        }
 
-		private void SetFooter()
-		{
-			var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
-			var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
-			var ratesTime = AccountStorage.NeededRatesFor(ApplicationSettings.BaseCurrency).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+        private void SetFooter()
+        {
+            var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
+            var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
+            var ratesTime = AccountStorage.NeededRatesFor(ApplicationSettings.BaseCurrency).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
 
-			var time = online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
+            var time = online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
 
-			Device.BeginInvokeOnMainThread(() => Footer.Text = time.LastUpdateString());
-		}
+            Device.BeginInvokeOnMainThread(() => Footer.Text = time.LastUpdateString());
+        }
 
-		private void AddSubscriber()
-		{
-			Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.BaseCurrency));
-			Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
+        private void AddSubscriber()
+        {
+            Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.BaseCurrency));
+            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
 
-			Messaging.Loading.SubscribeFinished(this, SetNoSourcesView);
-			Messaging.FetchMissingRates.SubscribeFinished(this, SetNoSourcesView);
-			Messaging.UpdatingAccounts.SubscribeFinished(this, SetNoSourcesView);
-			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoSourcesView);
-		}
+            Messaging.Loading.SubscribeFinished(this, SetNoSourcesView);
+            Messaging.FetchMissingRates.SubscribeFinished(this, SetNoSourcesView);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, SetNoSourcesView);
+            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoSourcesView);
+        }
 
-		protected override void OnSizeAllocated(double width, double height)
-		{
-			base.OnSizeAllocated(width, height);
-			_graphView.HeightRequest = _pullToRefresh.Height;
-		}
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+            _graphView.HeightRequest = _pullToRefresh.Height;
+        }
 
-		private async void Refresh()
-		{
-			await AppTaskHelper.FetchBalancesAndRates();
-			_pullToRefresh.IsRefreshing = false;
-		}
+        private async void Refresh()
+        {
+            await AppTaskHelper.FetchBalancesAndRates();
+            _pullToRefresh.IsRefreshing = false;
+        }
 
-		private void AddSource(object sender, EventArgs e)
-		{
-			Navigation.PushOrPushModal(new AddSourceView());
-		}
+        private void AddSource(object sender, EventArgs e)
+        {
+            Navigation.PushOrPushModal(new AddSourceView());
+        }
 
-		private class HeaderTemplateSelector : DataTemplateSelector
-		{
-			protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent((Currency)item));
-		}
-	}
+        private class HeaderTemplateSelector : DataTemplateSelector
+        {
+            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent((Currency)item));
+        }
+    }
 }

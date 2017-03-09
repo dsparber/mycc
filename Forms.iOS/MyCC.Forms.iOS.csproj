@@ -329,16 +329,28 @@
     <ImageAsset Include="Resources\Images.xcassets\Contents.json">
       <InProject>false</InProject>
     </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\Icon.png.imageset\Contents.json">
+    <ImageAsset Include="Resources\Images.xcassets\Fingerprint.imageset\Contents.json">
       <InProject>false</InProject>
     </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\Icon.png.imageset\Icon.png">
+    <ImageAsset Include="Resources\Images.xcassets\Fingerprint.imageset\fingerprint.png">
       <InProject>false</InProject>
     </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\Icon.png.imageset\Icon@2x.png">
+    <ImageAsset Include="Resources\Images.xcassets\Fingerprint.imageset\fingerprint2.png">
       <InProject>false</InProject>
     </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\Icon.png.imageset\Icon@3x.png">
+    <ImageAsset Include="Resources\Images.xcassets\Fingerprint.imageset\fingerprint3.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\Icon.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\Icon.imageset\Icon.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\Icon.imageset\Icon@2x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\Icon.imageset\Icon@3x.png">
       <InProject>false</InProject>
     </ImageAsset>
   </ItemGroup>
@@ -404,9 +416,6 @@
     <BundleResource Include="Resources\starFilled.png" />
     <BundleResource Include="Resources\starFilled%402x.png" />
     <BundleResource Include="Resources\starFilled%403x.png" />
-    <BundleResource Include="Resources\fingerprint.png" />
-    <BundleResource Include="Resources\fingerprint%402x.png" />
-    <BundleResource Include="Resources\fingerprint%403x.png" />
     <BundleResource Include="Resources\flashOff%402x.png" />
     <BundleResource Include="Resources\flashOff%403x.png" />
     <BundleResource Include="Resources\flashOff.png" />

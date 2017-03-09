@@ -1,10 +1,9 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -20,36 +19,36 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MyCC" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb" misplaced="YES">
-                                <rect key="frame" x="20" y="330.5" width="374" height="43"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MyCC" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
+                                <rect key="frame" x="20" y="330.66666666666669" width="374" height="43"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                                 <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="deviceRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="bZf-Wz-6jL" misplaced="YES">
-                                <rect key="frame" x="143" y="182.5" width="128" height="128"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="bZf-Wz-6jL">
+                                <rect key="frame" x="143" y="182.66666666666669" width="128" height="128.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="bZf-Wz-6jL" secondAttribute="height" multiplier="1:1" id="Xig-Pf-9Ql"/>
                                     <constraint firstAttribute="width" constant="128" id="nWb-Sp-ILu"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Cryptocurrencies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwb-Jo-3BR" misplaced="YES">
-                                <rect key="frame" x="126.5" y="381.5" width="161" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Cryptocurrencies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwb-Jo-3BR">
+                                <rect key="frame" x="126.66666666666669" y="381.66666666666669" width="161" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="deviceRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Developed by Daniel Sparber" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiP-Sc-58B" misplaced="YES">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Developed by Daniel Sparber" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiP-Sc-58B">
                                 <rect key="frame" x="113" y="699" width="188" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="deviceRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© Ing. Georg Sparber" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSU-v8-FBu" misplaced="YES">
-                                <rect key="frame" x="137.5" y="678" width="139" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© Ing. Georg Sparber" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSU-v8-FBu">
+                                <rect key="frame" x="137.66666666666669" y="678" width="139.00000000000006" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="deviceRGB"/>
                                 <nil key="highlightedColor"/>
@@ -74,36 +73,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="50.625" y="373.9437"/>
+            <point key="canvasLocation" x="50.625" y="373.94369999999998"/>
         </scene>
     </scenes>
     <resources>
-        <image name="Html/collapse.png" width="50" height="50"/>
-        <image name="Html/expand.png" width="50" height="50"/>
-        <image name="Html/more.png" width="100" height="100"/>
-        <image name="accounts.png" width="30" height="30"/>
-        <image name="add.png" width="22" height="22"/>
-        <image name="checkmark.png" width="20" height="20"/>
-        <image name="coins.png" width="30" height="30"/>
-        <image name="delete.png" width="20" height="20"/>
-        <image name="down.png" width="20" height="20"/>
-        <image name="edit.png" width="22" height="22"/>
-        <image name="fingerprint.png" width="40" height="40"/>
-        <image name="flashOff.png" width="40" height="40"/>
-        <image name="flashOn.png" width="40" height="40"/>
-        <image name="graph.png" width="30" height="30"/>
-        <image name="info.png" width="25" height="25"/>
-        <image name="more.png" width="20" height="20"/>
-        <image name="qr.png" width="22" height="22"/>
-        <image name="rate.png" width="30" height="30"/>
-        <image name="refresh.png" width="22" height="22"/>
-        <image name="settings.png" width="30" height="30"/>
-        <image name="sources.png" width="30" height="30"/>
-        <image name="star.png" width="20" height="20"/>
-        <image name="starFilled.png" width="20" height="20"/>
-        <image name="table.png" width="30" height="30"/>
-        <image name="tags.png" width="30" height="30"/>
-        <image name="up.png" width="20" height="20"/>
-        <image name="Icon.png" width="120" height="120"/>
+        <image name="Icon" width="120" height="120"/>
     </resources>
 </document>
