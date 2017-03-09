@@ -43,7 +43,7 @@ td:last-child {
 }
 
 td div div:first-child:not(:last-child) {
-    color: #aaa;
+    color: rgb(107, 107, 112);
 }
 
 td > div {
