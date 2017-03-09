@@ -101,13 +101,14 @@ namespace MyCC.Forms.View.Pages
 
 		private async Task Disappear()
 		{
-			Messaging.DarkStatusBar.Send(false);
 			if (_pushMainView)
 			{
-				await Navigation.PushModalAsync(new TabContainerView());
+				await Navigation.PushModalAsync(Device.OS == TargetPlatform.Android ? new MasterDetailContainer() as Page : new TabContainerView());
+				Messaging.DarkStatusBar.Send(false);
 			}
 			else
 			{
+				Messaging.DarkStatusBar.Send(false);
 				await Navigation.PopModalAsync();
 			}
 		}

@@ -5,50 +5,54 @@ using MyCC.Forms.Resources;
 
 namespace MyCC.Forms.Helpers
 {
-    public static class StringHelper
-    {
-        public static string CapitalizeFirstLetter(this string input)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                return input;
-            }
+	public static class StringHelper
+	{
+		public static string CapitalizeFirstLetter(this string input)
+		{
+			if (string.IsNullOrEmpty(input))
+			{
+				return input;
+			}
 
-            return input.First().ToString().ToUpper() + string.Join("", input.Skip(1));
-        }
+			return input.First().ToString().ToUpper() + string.Join("", input.Skip(1));
+		}
 
-        public static string LastUpdateString(this DateTime dateTime)
-        {
-            return $"{I18N.LastUpdate}: {dateTime.AsString()}";
-        }
+		public static string LastUpdateString(this DateTime dateTime)
+		{
+			return $"{I18N.LastUpdate}: {dateTime.AsString()}";
+		}
 
-        public static string AsString(this DateTime dateTime)
-        {
-            var format = CultureInfo.CurrentCulture.DateTimeFormat;
-            return dateTime.Subtract(DateTime.MinValue).Days == 0 ? I18N.Never : dateTime.ToString(DateTime.Now.Subtract(dateTime).Days > 0 ? format.ShortDatePattern : format.ShortTimePattern);
-        }
+		public static string AsString(this DateTime dateTime)
+		{
+			var format = CultureInfo.CurrentCulture.DateTimeFormat;
 
-        public static string MiddleTruncate(this string text, int charactersToShowCount = 5)
-        {
-            if (string.IsNullOrWhiteSpace(text)) return string.Empty;
+			if (dateTime.Subtract(DateTime.MinValue).Days == 0) return I18N.Never;
+			if (DateTime.Now.Subtract(dateTime).Days > 0) return dateTime.ToString($"{format.ShortDatePattern} {format.ShortTimePattern}");
+			if (DateTime.Now.Subtract(dateTime).Minutes > 0) return dateTime.ToString(format.ShortTimePattern);
+			return dateTime.ToString(format.LongTimePattern);
+		}
 
-            var firstPart = string.Empty;
-            var lastPart = string.Empty;
+		public static string MiddleTruncate(this string text, int charactersToShowCount = 5)
+		{
+			if (string.IsNullOrWhiteSpace(text)) return string.Empty;
 
-            if (text.Length > 2 * charactersToShowCount)
-            {
-                firstPart = text.Substring(0, charactersToShowCount);
-                lastPart = text.Substring(text.Length - charactersToShowCount);
-            }
-            else if (text.Length > 2)
-            {
-                firstPart = text.Substring(0, text.Length / 2);
-                lastPart = text.Substring(text.Length / 2 + 1);
-            }
+			var firstPart = string.Empty;
+			var lastPart = string.Empty;
 
-            return $"{firstPart}...{lastPart}";
-        }
+			if (text.Length > 2 * charactersToShowCount)
+			{
+				firstPart = text.Substring(0, charactersToShowCount);
+				lastPart = text.Substring(text.Length - charactersToShowCount);
+			}
+			else if (text.Length > 2)
+			{
+				firstPart = text.Substring(0, text.Length / 2);
+				lastPart = text.Substring(text.Length / 2 + 1);
+			}
 
-    }
+			return $"{firstPart}...{lastPart}";
+		}
+
+	}
 }
 
