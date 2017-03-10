@@ -45,6 +45,11 @@
 								Title="{resources:Translate Name}"
 								Placeholder="{resources:Translate Name}"
 								IsEditable="false" />
+							<cells:CustomEntryCell
+								x:Name="AmountEntry"
+								Title="{resources:Translate Amount}"
+								Placeholder="{resources:Translate Amount}"
+								IsEditable="false" />
                         </TableSection>
                         <TableSection x:Name="EnableSection">
                             <cells:CustomSwitchCell
