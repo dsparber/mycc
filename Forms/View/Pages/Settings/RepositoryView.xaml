@@ -25,7 +25,8 @@
 				x:Name="Header" />
             <TableView
 				x:Name="TableView"
-				Intent="Form">
+				Intent="Form"
+				HasUnevenRows="true">
                 <TableView.BackgroundColor>
                     <OnPlatform
 						x:TypeArguments="Color"
@@ -39,7 +40,7 @@
 						Title="{resources:Translate Name}"
 						IsEditable="false"
 						Placeholder="{resources:Translate Name}" />
-                    <cells:CustomEntryCell
+                    <cells:CustomEditorCell
 						x:Name="AddressEntryCell"
 						IsEditable="false"
 						Title="{resources:Translate Address}" />

@@ -183,6 +183,7 @@ namespace MyCC.Forms.View.Components.Cells
 			{
 				View = contentView;
 			}
+			Height = 44;
 			SetTapRecognizer();
 		}
 
