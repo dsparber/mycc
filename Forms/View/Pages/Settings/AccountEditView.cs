@@ -39,7 +39,9 @@ namespace MyCC.Forms.View.Pages.Settings
                 var entry = (Entry)sender;
                 var val = entry.Text;
 
+#pragma warning disable 168
                 if (val.Length == 0 || decimal.TryParse(val, out decimal n)) return;
+#pragma warning restore 168
 
                 val = val.Remove(val.Length - 1);
                 entry.Text = val;
