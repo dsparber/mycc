@@ -25,42 +25,42 @@
 				x:Name="Header" />
             <StackLayout Spacing="0">
                 <TableView
-				x:Name="TableView"
-				Intent="Form"
-				HasUnevenRows="true">
+				    x:Name="TableView"
+				    Intent="Form"
+				    HasUnevenRows="true">
                     <TableView.BackgroundColor>
                         <OnPlatform
-						x:TypeArguments="Color"
-						Android="#EEE" />
+						    x:TypeArguments="Color"
+						    Android="#EEE" />
                     </TableView.BackgroundColor>
                     <TableSection
-					Title="{resources:Translate AccountInformation}"
-					x:Name="GeneralSection">
+					    Title="{resources:Translate AccountInformation}"
+					    x:Name="GeneralSection">
                         <cells:CustomEntryCell
-						x:Name="RepositoryNameEntryCell"
-						Title="{resources:Translate Name}"
-						IsEditable="false"
-						Placeholder="{resources:Translate Name}" />
+						    x:Name="RepositoryNameEntryCell"
+						    Title="{resources:Translate Name}"
+						    IsEditable="false"
+						    Placeholder="{resources:Translate Name}" />
                         <cells:CustomEditorCell
-						x:Name="AddressEntryCell"
-						IsEditable="false"
-						Title="{resources:Translate Address}" />
+						    x:Name="AddressEntryCell"
+						    IsEditable="false"
+						    Title="{resources:Translate Address}" />
                     </TableSection>
                     <TableSection
-					x:Name="AccountsSection" />
+					    x:Name="AccountsSection" />
                     <TableSection
-                    Title="{resources:Translate EnableAccount}"
-					x:Name="EnableAccountsSection" />
+                        Title="{resources:Translate EnableAccount}"
+					    x:Name="EnableAccountsSection" />
                     <TableSection
-					x:Name="DeleteSection">
+					    x:Name="DeleteSection">
                         <cells:CustomViewCell
-						x:Name="DeleteButtonCell"
-						Text="{resources:Translate Delete}"
-						IsDeleteActionCell="true" />
+						    x:Name="DeleteButtonCell"
+						    Text="{resources:Translate Delete}"
+						    IsDeleteActionCell="true" />
                     </TableSection>
                 </TableView>
                 <components:InfoFooterComponent
-                            x:Name="Footer"/>
+                    x:Name="Footer"/>
             </StackLayout>
         </components:ChangingStackLayout>
     </ContentPage.Content>

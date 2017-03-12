@@ -58,6 +58,11 @@ namespace MyCC.Forms.View.Pages.Settings
             {
                 AccountsSection.Title = I18N.Accounts;
             }
+            if (repository is BlockchainXpubAccountRepository)
+            {
+                GeneralSection.Remove(AddressEntryCell);
+                GeneralSection.Remove(_currencyEntryCell);
+            }
 
             RepositoryNameEntryCell.Text = repository.Name;
             DeleteButtonCell.Tapped += Delete;

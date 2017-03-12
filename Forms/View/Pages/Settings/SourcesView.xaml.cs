@@ -67,7 +67,7 @@ namespace MyCC.Forms.View.Pages.Settings
             {
                 var c = getCell(r);
                 c.Text = $"{r.Currency.Code} - {r.Name}";
-                c.Detail = $"{r.Currency.Name} ({r.Address.MiddleTruncate()})";
+                c.Detail = $"{r.Currency.Name} ({(r is BlockchainXpubAccountRepository ? r.Address.Substring(0, 4) : r.Address.MiddleTruncate())})";
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
 
