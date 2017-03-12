@@ -1,19 +1,19 @@
 var chartColors =
-[
-    "#ba9043",
-    "#ffc700",
-    "#ed4040",
-    "#ec8644",
-    "#ab75f9",
-    "#2dc4e6",
-    "#62c366",
-    "#c173d5",
-    "#f2826d",
-    "#6b9ae9",
-    "#f26d75",
-    "#6df2c2",
-    "#6df2c2"
-];
+    [
+        "#ba9043",
+        "#ffc700",
+        "#ed4040",
+        "#ec8644",
+        "#ab75f9",
+        "#2dc4e6",
+        "#62c366",
+        "#c173d5",
+        "#f2826d",
+        "#6b9ae9",
+        "#f26d75",
+        "#6df2c2",
+        "#6df2c2"
+    ];
 
 
 var chartOptions = {
@@ -115,6 +115,7 @@ function showChart(data, textAccounts, textCurrencies, textFurther, textNoData, 
     _roundNumbers = roundNumbers;
     _culture = culture;
 
+    $("div.overlay").remove();
     createMainGraph(data);
 
     $("#pieChart").resize(function () {
