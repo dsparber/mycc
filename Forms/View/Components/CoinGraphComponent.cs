@@ -42,8 +42,7 @@ namespace MyCC.Forms.View.Components
             _webView.RegisterCallback("selectedCallback", id =>
             {
                 var element = AccountStorage.Instance.AllElements.Find(e => e.Id == Convert.ToInt32(id));
-
-                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(element)));
+                if (element != null) Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(element)));
             });
 
             Content = _webView;

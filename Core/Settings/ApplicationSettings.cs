@@ -338,7 +338,8 @@ namespace MyCC.Core.Settings
         {
             get
             {
-                return Settings.Get(Settings.RoundMoney, false);
+                return false;
+                // return Settings.Get(Settings.RoundMoney, false);
             }
             set
             {
