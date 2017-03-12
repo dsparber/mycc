@@ -27,7 +27,8 @@ namespace MyCC.Core.CoinInfo
                 new CryptoIdCoinInfoRepository(),
                 new BlockExpertsCoinInfoRepository(),
                 new BlockchainCoinInfoRepository(),
-                new BlockrCoinInfoRepository()
+                new BlockrCoinInfoRepository(),
+                new EtherchainCoinInfoRepository()
             };
         }
 

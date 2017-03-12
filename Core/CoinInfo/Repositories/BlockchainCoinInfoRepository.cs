@@ -10,7 +10,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class BlockchainCoinInfoRepository : ICoinInfoRepository
     {
-        private Uri GetUri(string action) => new Uri($"https://blockchain.info/de/q/{action}");
+        private static Uri GetUri(string action) => new Uri($"https://blockchain.info/de/q/{action}");
 
         private const string KeyHeight = "getblockcount";
         private const string KeyDifficulty = "getdifficulty";

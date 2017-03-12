@@ -6,126 +6,123 @@ using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
-using System.Linq;
 
 namespace MyCC.Forms.View.Pages.Settings
 {
-	public partial class AccountEditView
-	{
-		private readonly CurrencyEntryCell _currencyEntryCell;
+    public partial class AccountEditView
+    {
+        private readonly CurrencyEntryCell _currencyEntryCell;
 
-		private readonly FunctionalAccount _account;
+        private readonly FunctionalAccount _account;
 
-		private readonly bool _isEditModal;
+        private readonly bool _isEditModal;
 
-		public AccountEditView(FunctionalAccount account, bool isEditModal = false)
-		{
-			InitializeComponent();
+        public AccountEditView(FunctionalAccount account, bool isEditModal = false)
+        {
+            InitializeComponent();
 
-			_account = account;
-			_isEditModal = isEditModal;
+            _account = account;
+            _isEditModal = isEditModal;
 
-			Title = account.Name;
-			Header.TitleText = account.Money.ToString();
-			Header.InfoText = I18N.ManuallyAdded;
+            Title = account.Name;
+            Header.TitleText = account.Money.ToString();
+            Header.InfoText = I18N.ManuallyAdded;
 
-			AccountName.Text = account.Name;
-			AmountEntry.Text = account.Money.Amount.ToString();
-			AmountEntry.Entry.Keyboard = Keyboard.Numeric;
-			_currencyEntryCell = new CurrencyEntryCell(Navigation) { IsAmountEnabled = false, IsFormRepresentation = true, IsEditable = false, SelectedCurrency = account.Money.Currency };
-			AccountSection.Add(_currencyEntryCell);
+            AccountName.Text = account.Name;
+            AmountEntry.Text = account.Money.Amount.ToString();
+            AmountEntry.Entry.Keyboard = Keyboard.Numeric;
+            _currencyEntryCell = new CurrencyEntryCell(Navigation) { IsAmountEnabled = false, IsFormRepresentation = true, IsEditable = false, SelectedCurrency = account.Money.Currency };
+            AccountSection.Add(_currencyEntryCell);
 
-			AmountEntry.Entry.TextChanged += (sender, e) =>
-			{
-				var entry = sender as Entry;
-				var val = entry.Text;
+            AmountEntry.Entry.TextChanged += (sender, e) =>
+            {
+                var entry = (Entry)sender;
+                var val = entry.Text;
 
-				decimal n;
-				if (val.Length > 0 && !decimal.TryParse(val, out n))
-				{
-					val = val.Remove(val.Length - 1);
-					entry.Text = val;
-				}
-			};
+                if (val.Length == 0 || decimal.TryParse(val, out decimal n)) return;
 
-			DeleteButtonCell.Tapped += Delete;
+                val = val.Remove(val.Length - 1);
+                entry.Text = val;
+            };
 
-			ToolbarItems.Remove(SaveItem);
-			EditView.Root.Remove(DeleteSection);
-			EditView.Root.Remove(EnableSection);
+            DeleteButtonCell.Tapped += Delete;
 
-			_currencyEntryCell.OnSelected = c => Header.TitleText = _currencyEntryCell.SelectedMoney.ToString();
-			_currencyEntryCell.OnTyped = m => Header.TitleText = m.ToString();
+            ToolbarItems.Remove(SaveItem);
+            EditView.Root.Remove(DeleteSection);
+            EditView.Root.Remove(EnableSection);
 
-			EnableAccountCell.On = account.IsEnabled;
+            _currencyEntryCell.OnSelected = c => Header.TitleText = _currencyEntryCell.SelectedMoney.ToString();
+            _currencyEntryCell.OnTyped = m => Header.TitleText = m.ToString();
 
-			if (!isEditModal) return;
+            EnableAccountCell.On = account.IsEnabled;
 
-			StartEditing(null, null);
-			var cancel = new ToolbarItem { Text = I18N.Cancel };
-			cancel.Clicked += (s, e) => Navigation.PopOrPopModal();
-			ToolbarItems.Add(cancel);
-		}
+            if (!isEditModal) return;
 
-		private void StartEditing(object sender, EventArgs e)
-		{
-			_currencyEntryCell.IsEditable = true;
-			AccountName.IsEditable = true;
-			AmountEntry.IsEditable = true;
-			EditView.Root.Add(EnableSection);
-			EditView.Root.Add(DeleteSection);
+            StartEditing(null, null);
+            var cancel = new ToolbarItem { Text = I18N.Cancel };
+            cancel.Clicked += (s, e) => Navigation.PopOrPopModal();
+            ToolbarItems.Add(cancel);
+        }
 
-			ToolbarItems.Clear();
-			ToolbarItems.Add(SaveItem);
+        private void StartEditing(object sender, EventArgs e)
+        {
+            _currencyEntryCell.IsEditable = true;
+            AccountName.IsEditable = true;
+            AmountEntry.IsEditable = true;
+            EditView.Root.Add(EnableSection);
+            EditView.Root.Add(DeleteSection);
 
-			Title = I18N.Editing;
-		}
+            ToolbarItems.Clear();
+            ToolbarItems.Add(SaveItem);
 
-		private async void DoneEditing(object sender, EventArgs e)
-		{
-			AccountName.Entry.Unfocus();
-			AmountEntry.Entry.Unfocus();
-			_currencyEntryCell.Unfocus();
+            Title = I18N.Editing;
+        }
 
-			_currencyEntryCell.IsEditable = false;
-			AccountName.IsEditable = false;
-			AmountEntry.IsEditable = false;
+        private async void DoneEditing(object sender, EventArgs e)
+        {
+            AccountName.Entry.Unfocus();
+            AmountEntry.Entry.Unfocus();
+            _currencyEntryCell.Unfocus();
 
-			decimal amount;
-			amount = decimal.TryParse(AmountEntry.Text, out amount) ? amount : 0;
-			_account.Money = new Money(amount, _currencyEntryCell.SelectedCurrency);
-			_account.LastUpdate = DateTime.Now;
-			_account.Name = string.IsNullOrWhiteSpace(AccountName.Text) ? I18N.Unnamed : AccountName.Text;
-			_account.IsEnabled = EnableAccountCell.On;
+            _currencyEntryCell.IsEditable = false;
+            AccountName.IsEditable = false;
+            AmountEntry.IsEditable = false;
 
-			await AccountStorage.Update(_account);
+            decimal amount;
+            amount = decimal.TryParse(AmountEntry.Text, out amount) ? amount : 0;
+            _account.Money = new Money(amount, _currencyEntryCell.SelectedCurrency);
+            _account.LastUpdate = DateTime.Now;
+            _account.Name = string.IsNullOrWhiteSpace(AccountName.Text) ? I18N.Unnamed : AccountName.Text;
+            _account.IsEnabled = EnableAccountCell.On;
 
-			Messaging.UpdatingAccounts.SendFinished();
+            await AccountStorage.Update(_account);
 
-			if (_isEditModal) await Navigation.PopOrPopModal();
+            Messaging.UpdatingAccounts.SendFinished();
 
-			EditView.Root.Remove(DeleteSection);
-			EditView.Root.Remove(EnableSection);
+            if (_isEditModal) await Navigation.PopOrPopModal();
 
-			Title = _account.Name;
-			Header.TitleText = _account.Money.ToString();
+            EditView.Root.Remove(DeleteSection);
+            EditView.Root.Remove(EnableSection);
 
-			ToolbarItems.Clear();
-			ToolbarItems.Add(EditItem);
-		}
+            Title = _account.Name;
+            Header.TitleText = _account.Money.ToString();
 
-		private async void Delete(object sender, EventArgs e)
-		{
-			AccountName.Entry.Unfocus();
-			AmountEntry.Entry.Unfocus();
-			_currencyEntryCell.Unfocus();
+            ToolbarItems.Clear();
+            ToolbarItems.Add(EditItem);
+        }
 
-			await AccountStorage.Instance.LocalRepository.Remove(_account);
-			Messaging.UpdatingAccounts.SendFinished();
+        private async void Delete(object sender, EventArgs e)
+        {
+            AccountName.Entry.Unfocus();
+            AmountEntry.Entry.Unfocus();
+            _currencyEntryCell.Unfocus();
 
-			if (_isEditModal) await Navigation.PopOrPopModal();
-			else await Navigation.PopAsync();
-		}
-	}
+            await AccountStorage.Instance.LocalRepository.Remove(_account);
+            Messaging.UpdatingAccounts.SendFinished();
+
+            if (_isEditModal) await Navigation.PopOrPopModal();
+            else await Navigation.PopAsync();
+        }
+    }
 }
 

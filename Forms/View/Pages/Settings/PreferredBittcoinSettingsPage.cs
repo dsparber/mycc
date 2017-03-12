@@ -66,7 +66,7 @@ namespace MyCC.Forms.View.Pages.Settings
                 contentStack.Children.Add(i.Item2);
             }
 
-            contentStack.Children.Add(new SectionFooterView { Text = $"*{I18N.InfoNoDirectRate}" });
+            contentStack.Children.Add(new SectionFooterView { Text = $"* {I18N.InfoNoDirectRate}" });
             contentStack.Children.Last().Margin = new Thickness(0, 0, 0, 40);
 
             changingStack.Children.Add(new ScrollView { Content = contentStack });
@@ -92,7 +92,7 @@ namespace MyCC.Forms.View.Pages.Settings
             var eurString = (eur ?? ExchangeRateHelper.GetRate(Currency.Btc, Currency.Eur, i)?.AsMoney ?? new Money(0, Currency.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
             var note = eur == null && usd != null ? "*" : string.Empty;
 
-            return $"{usdString} / {eurString}{note}";
+            return $"{eurString}{note} / {usdString}";
         }
 
         private void SetCheckmark()
