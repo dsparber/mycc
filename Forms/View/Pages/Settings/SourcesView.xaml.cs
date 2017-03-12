@@ -88,6 +88,10 @@ namespace MyCC.Forms.View.Pages.Settings
                     BittrexSection.Add(bittrexCells);
                     ManualSection.Add(manualCells);
 
+                    AddressSection.Title = $"{I18N.AddressAdded} ({PluralHelper.GetTextSourcs(AccountStorage.AddressRepositories.Count())})";
+                    BittrexSection.Title = $"{I18N.BittrexAdded} ({PluralHelper.GetTextSourcs(AccountStorage.BittrexRepositories.Count())})";
+                    ManualSection.Title = $"{I18N.ManuallyAdded} ({PluralHelper.GetTextSourcs(AccountStorage.ManuallyAddedAccounts.Count())})";
+
                     if (addressCells.Count == 0)
                     {
                         Table.Root.Remove(AddressSection);
