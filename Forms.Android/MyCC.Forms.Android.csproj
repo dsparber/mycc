@@ -341,37 +341,6 @@
     <AndroidResource Include="Resources\drawable\edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Html\about.css" />
-    <AndroidAsset Include="Assets\Html\about.html" />
-    <AndroidAsset Include="Assets\Html\about.js" />
-    <AndroidAsset Include="Assets\Html\accountsTable.css" />
-    <AndroidAsset Include="Assets\Html\accountsTable.html" />
-    <AndroidAsset Include="Assets\Html\accountsTable.js" />
-    <AndroidAsset Include="Assets\Html\close.svg" />
-    <AndroidAsset Include="Assets\Html\coinTable.css" />
-    <AndroidAsset Include="Assets\Html\coinTable.html" />
-    <AndroidAsset Include="Assets\Html\coinTable.js" />
-    <AndroidAsset Include="Assets\Html\collapse.png" />
-    <AndroidAsset Include="Assets\Html\d3.min.js" />
-    <AndroidAsset Include="Assets\Html\d3pie.min.js" />
-    <AndroidAsset Include="Assets\Html\down.svg" />
-    <AndroidAsset Include="Assets\Html\equalsTable.css" />
-    <AndroidAsset Include="Assets\Html\equalsTable.html" />
-    <AndroidAsset Include="Assets\Html\equalsTable.js" />
-    <AndroidAsset Include="Assets\Html\expand.png" />
-    <AndroidAsset Include="Assets\Html\jquery-latest.min.js" />
-    <AndroidAsset Include="Assets\Html\jquery-ui.min.js" />
-    <AndroidAsset Include="Assets\Html\more.png" />
-    <AndroidAsset Include="Assets\Html\pieChart.css" />
-    <AndroidAsset Include="Assets\Html\pieChart.html" />
-    <AndroidAsset Include="Assets\Html\pieChart.js" />
-    <AndroidAsset Include="Assets\Html\ratesTable.css" />
-    <AndroidAsset Include="Assets\Html\ratesTable.html" />
-    <AndroidAsset Include="Assets\Html\ratesTable.js" />
-    <AndroidAsset Include="Assets\Html\up.svg" />
-    <AndroidAsset Include="Assets\Html\upDown.svg" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\Icon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -454,6 +423,37 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\graph.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Html\about.css" />
+    <AndroidAsset Include="Assets\Html\about.html" />
+    <AndroidAsset Include="Assets\Html\about.js" />
+    <AndroidAsset Include="Assets\Html\accountsTable.css" />
+    <AndroidAsset Include="Assets\Html\accountsTable.html" />
+    <AndroidAsset Include="Assets\Html\accountsTable.js" />
+    <AndroidAsset Include="Assets\Html\close.svg" />
+    <AndroidAsset Include="Assets\Html\coinTable.css" />
+    <AndroidAsset Include="Assets\Html\coinTable.html" />
+    <AndroidAsset Include="Assets\Html\coinTable.js" />
+    <AndroidAsset Include="Assets\Html\collapse.png" />
+    <AndroidAsset Include="Assets\Html\d3.min.js" />
+    <AndroidAsset Include="Assets\Html\d3pie.min.js" />
+    <AndroidAsset Include="Assets\Html\down.svg" />
+    <AndroidAsset Include="Assets\Html\equalsTable.css" />
+    <AndroidAsset Include="Assets\Html\equalsTable.html" />
+    <AndroidAsset Include="Assets\Html\equalsTable.js" />
+    <AndroidAsset Include="Assets\Html\expand.png" />
+    <AndroidAsset Include="Assets\Html\jquery-latest.min.js" />
+    <AndroidAsset Include="Assets\Html\jquery-ui.min.js" />
+    <AndroidAsset Include="Assets\Html\more.png" />
+    <AndroidAsset Include="Assets\Html\pieChart.css" />
+    <AndroidAsset Include="Assets\Html\pieChart.html" />
+    <AndroidAsset Include="Assets\Html\pieChart.js" />
+    <AndroidAsset Include="Assets\Html\ratesTable.css" />
+    <AndroidAsset Include="Assets\Html\ratesTable.html" />
+    <AndroidAsset Include="Assets\Html\ratesTable.js" />
+    <AndroidAsset Include="Assets\Html\up.svg" />
+    <AndroidAsset Include="Assets\Html\upDown.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

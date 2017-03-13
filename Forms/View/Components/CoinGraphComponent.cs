@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -53,6 +52,7 @@ namespace MyCC.Forms.View.Components
             Messaging.Loading.SubscribeFinished(this, UpdateView);
             Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
             Messaging.UpdatingAccounts.SubscribeValueChanged(this, UpdateView);
+            Messaging.UpdatingAccountsAndRates.SubscribeValueChanged(this, UpdateView);
 
             Messaging.Progress.SubscribeToComplete(this, UpdateView);
         }
@@ -68,15 +68,12 @@ namespace MyCC.Forms.View.Components
 
         private void UpdateView()
         {
-            try
-            {
-                var items = AccountStorage.AccountsGroupedByCurrency.Select(e => new Data(e, ApplicationSettings.BaseCurrency)).Where(d => d.value > 0).OrderByDescending(d => d.value).ToArray();
-                Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new[] { I18N.OneAccount, I18N.Accounts }, new[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, ApplicationSettings.BaseCurrency.Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString()));
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
+
+            var items = AccountStorage.AccountsGroupedByCurrency
+                        .Select(e => new Data(e, ApplicationSettings.BaseCurrency)).Where(d => d.value > 0)
+                        .OrderByDescending(d => d.value).ToArray();
+
+            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new[] { I18N.OneAccount, I18N.Accounts }, new[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, ApplicationSettings.BaseCurrency.Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString()));
         }
 
         [DataContract]
