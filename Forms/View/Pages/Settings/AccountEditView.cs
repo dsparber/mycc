@@ -51,12 +51,12 @@ namespace MyCC.Forms.View.Pages.Settings
 
             ToolbarItems.Remove(SaveItem);
             EditView.Root.Remove(DeleteSection);
-            EditView.Root.Remove(EnableSection);
 
             _currencyEntryCell.OnSelected = c => Header.TitleText = _currencyEntryCell.SelectedMoney.ToString();
             _currencyEntryCell.OnTyped = m => Header.TitleText = m.ToString();
 
             EnableAccountCell.On = account.IsEnabled;
+            EnableAccountCell.Switch.IsEnabled = false;
 
             if (!isEditModal) return;
 
@@ -71,7 +71,8 @@ namespace MyCC.Forms.View.Pages.Settings
             _currencyEntryCell.IsEditable = true;
             AccountName.IsEditable = true;
             AmountEntry.IsEditable = true;
-            EditView.Root.Add(EnableSection);
+            EnableAccountCell.Switch.IsEnabled = true;
+
             EditView.Root.Add(DeleteSection);
 
             ToolbarItems.Clear();
@@ -89,6 +90,8 @@ namespace MyCC.Forms.View.Pages.Settings
             _currencyEntryCell.IsEditable = false;
             AccountName.IsEditable = false;
             AmountEntry.IsEditable = false;
+            EnableAccountCell.Switch.IsEnabled = false;
+            EditView.Root.Remove(DeleteSection);
 
             decimal amount;
             amount = decimal.TryParse(AmountEntry.Text, out amount) ? amount : 0;
@@ -103,8 +106,6 @@ namespace MyCC.Forms.View.Pages.Settings
 
             if (_isEditModal) await Navigation.PopOrPopModal();
 
-            EditView.Root.Remove(DeleteSection);
-            EditView.Root.Remove(EnableSection);
 
             Title = _account.Name;
             Header.TitleText = _account.Money.ToString();

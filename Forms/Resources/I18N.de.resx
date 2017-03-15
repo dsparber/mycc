@@ -522,4 +522,7 @@
   <data name="LastChange" xml:space="preserve">
     <value>Letzte Änderung</value>
   </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>eingeblendet</value>
+  </data>
 </root>

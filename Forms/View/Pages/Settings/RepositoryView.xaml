@@ -47,9 +47,6 @@
 						    Title="{resources:Translate Address}" />
                     </TableSection>
                     <TableSection
-					    x:Name="AccountsSection" />
-                    <TableSection
-                        Title="{resources:Translate EnableAccount}"
 					    x:Name="EnableAccountsSection" />
                     <TableSection
 					    x:Name="DeleteSection">

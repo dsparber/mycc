@@ -36,7 +36,7 @@ namespace MyCC.Forms.View.Pages.Settings
             var addressAccountRepository = repository as AddressAccountRepository;
             if (addressAccountRepository != null)
             {
-                AccountsSection.Title = I18N.Amount;
+                EnableAccountsSection.Title = I18N.EnableAccount;
                 AddressEntryCell.Text = addressAccountRepository.Address.MiddleTruncate();
 
                 _currencyEntryCell = new CurrencyEntryCell(Navigation)
@@ -56,7 +56,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             if (repository is BittrexAccountRepository)
             {
-                AccountsSection.Title = I18N.Accounts;
+                EnableAccountsSection.Title = $"{I18N.Accounts} ({repository.Elements.Count(r => r.IsEnabled)} {I18N.Enabled})";
             }
             if (repository is BlockchainXpubAccountRepository)
             {
@@ -68,7 +68,6 @@ namespace MyCC.Forms.View.Pages.Settings
             DeleteButtonCell.Tapped += Delete;
 
             TableView.Root.Remove(DeleteSection);
-            TableView.Root.Remove(EnableAccountsSection);
             ToolbarItems.Remove(SaveItem);
 
             RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
@@ -77,6 +76,8 @@ namespace MyCC.Forms.View.Pages.Settings
 
             Messaging.UpdatingAccounts.SubscribeFinished(this, SetView);
             Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetView);
+
+            IsEditable = false;
 
             if (!_isEditModal) return;
 
@@ -100,35 +101,22 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetView()
         {
-            var cells = _repository.Elements.OrderBy(e => e.Money.Currency.Name).Select(e =>
-            {
-                var cell = new CustomViewCell { Detail = $"{e.Money.ToString(false)} {e.Money.Currency.Name}", Text = e.Money.Currency.Code, IsDisabled = !e.IsEnabled };
-                return cell;
-            }).ToList();
-
-            if (cells.Count == 0)
-            {
-                cells.Add(new CustomViewCell
-                {
-                    Text = I18N.NoAccounts
-                });
-            }
-
             var enableCells = _repository.Elements.OrderBy(e => e.Money.Currency.Name).Select(e =>
-            {
-                var cell = new CustomSwitchCell { Info = $"{e.Money.ToString(false)} {e.Money.Currency.Name}", Title = e.Money.Currency.Code, On = e.IsEnabled };
-                cell.Switch.Toggled += (sender, args) =>
-                {
-                    _changedAccounts.RemoveAll(t => t.Item1.Equals(e));
-                    _changedAccounts.Add(Tuple.Create(e, args.Value));
-                };
-                return cell;
-            }).ToList();
+             {
+                 var cell = new CustomSwitchCell { Info = $"{e.Money.ToString(false)} {e.Money.Currency.Name}", Title = e.Money.Currency.Code, On = e.IsEnabled };
+                 cell.Switch.Toggled += (sender, args) =>
+                 {
+                     _changedAccounts.RemoveAll(t => t.Item1.Equals(e));
+                     _changedAccounts.Add(Tuple.Create(e, args.Value));
+                 };
+                 cell.Switch.IsEnabled = IsEditable;
+                 return (ViewCell)cell;
+             }).ToList();
+
+            if (enableCells.Count == 0) { enableCells.Add(new CustomViewCell { Text = I18N.NoAccounts }); }
 
             Device.BeginInvokeOnMainThread(() =>
             {
-                AccountsSection.Clear();
-                AccountsSection.Add(cells);
                 EnableAccountsSection.Clear();
                 EnableAccountsSection.Add(enableCells);
                 Footer.Text = _repository.LastFetch.LastUpdateString();
@@ -158,20 +146,19 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private bool IsEditable
         {
+            get { return RepositoryNameEntryCell.IsEditable; }
             set
             {
                 if (_currencyEntryCell != null) _currencyEntryCell.IsEditable = value;
                 RepositoryNameEntryCell.IsEditable = value;
                 AddressEntryCell.IsEditable = value;
+                foreach (var c in EnableAccountsSection.OfType<CustomSwitchCell>()) c.Switch.IsEnabled = value;
             }
         }
 
         private void EditClicked(object sender, EventArgs e)
         {
             IsEditable = true;
-
-            TableView.Root.Add(EnableAccountsSection);
-            TableView.Root.Remove(AccountsSection);
 
             TableView.Root.Add(DeleteSection);
 
@@ -229,8 +216,6 @@ namespace MyCC.Forms.View.Pages.Settings
                 return;
             }
 
-            TableView.Root.Add(AccountsSection);
-            TableView.Root.Remove(EnableAccountsSection);
             TableView.Root.Remove(DeleteSection);
 
             ToolbarItems.Remove(SaveItem);

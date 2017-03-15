@@ -566,6 +566,15 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die enabled ähnelt.
+        /// </summary>
+        public static string Enabled {
+            get {
+                return ResourceManager.GetString("Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Shown in the overview ähnelt.
         /// </summary>
         public static string EnabledInOverview {
