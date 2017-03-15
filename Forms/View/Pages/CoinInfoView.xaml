@@ -5,7 +5,15 @@
 	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
     xmlns:pullToRefresh="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
+    xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.CoinInfoView">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            x:Name="AccountsButton"
+			Text="{resources:Translate Accounts}"
+			Clicked="ShowAccounts"
+			Icon="ToTable" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <components:ChangingStackLayout
             x:Name="ChangingStack"

@@ -119,7 +119,7 @@ namespace MyCC.Forms.View.Components
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     _webView.CallJsFunction("setHeader", new[]{
-                    new HeaderData(I18N.Label, SortOrder.Alphabetical.ToString()),
+                    new HeaderData(I18N.Name, SortOrder.Alphabetical.ToString()),
                     new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
                         }, string.Empty);
                     _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);

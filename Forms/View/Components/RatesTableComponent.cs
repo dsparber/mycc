@@ -44,7 +44,7 @@ namespace MyCC.Forms.View.Components
                 var currency = new Currency(code.Split(',')[0], bool.Parse(code.Split(',')[1]));
                 currency = CurrencyStorage.Instance.Find(currency) ?? currency;
 
-                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinInfoView(currency)));
+                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinInfoView(currency, true)));
             });
 
             _webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
