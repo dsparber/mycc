@@ -21,6 +21,14 @@ namespace MyCC.Forms.View.Pages.Settings
             Content = stack;
             BackgroundColor = AppConstants.TableBackgroundColor;
             Title = I18N.About;
+
+            _webView.Navigating += (sender, args) =>
+            {
+                if (!args.Value.AbsoluteUri.StartsWith("http")) return;
+
+                _webView.LoadFinished += (s, e) => Navigation.PopAsync(false);
+                Device.OpenUri(args.Value);
+            };
         }
 
         protected override void OnAppearing()
