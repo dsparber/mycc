@@ -8,6 +8,7 @@ using MyCC.Core.Rates;
 using MyCC.Core.Rates.Repositories.Interfaces;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
+using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
@@ -32,7 +33,7 @@ namespace MyCC.Forms.View.Pages.Settings
             _header = new HeaderView(true)
             {
                 TitleText = I18N.AppName,
-                InfoText = ExchangeRatesStorage.PreferredBtcRepository.Name
+                InfoText = PluralHelper.GetTextSourcs(ExchangeRatesStorage.Instance.Repositories.Count(r => r.RatesType == RateRepositoryType.CryptoToFiat))
             };
 
             changingStack.Children.Add(_header);
@@ -51,7 +52,7 @@ namespace MyCC.Forms.View.Pages.Settings
             SetCheckmark();
 
             var contentStack = new StackLayout { Spacing = 0 };
-            contentStack.Children.Add(new SectionHeaderView { Title = I18N.AvailableRates });
+            contentStack.Children.Add(new SectionHeaderView { Title = I18N.Sources });
 
             foreach (var i in _items)
             {
