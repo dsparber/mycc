@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
+using System.Globalization;
 
 namespace MyCC.Core.CoinInfo.Repositories
 {
 	public class EtherchainCoinInfoRepository : ICoinInfoRepository
 	{
-		private static readonly Uri UrlStats = new Uri("https://etherchain.org/api/basic_stats");
+		private static readonly Uri UrlMining = new Uri("https://etherchain.org/api/miningEstimator");
+		private static readonly Uri UrlBlockCount = new Uri("https://etherchain.org/api/blocks/count");
 		private static readonly Uri UrlSupply = new Uri("https://api.etherscan.io/api?module=stats&action=ethsupply");
 
 		private const string KeyData = "data";
@@ -20,7 +22,8 @@ namespace MyCC.Core.CoinInfo.Repositories
 		private const string KeyStats = "stats";
 		private const string KeyBlocktime = "blockTime";
 		private const string KeyHashrate = "hashRate";
-		private const string KeyResult = "hashRate";
+		private const string KeyResult = "result";
+		private const string KeyCount = "count";
 
 		public List<Currency.Model.Currency> SupportedCoins => new List<Currency.Model.Currency> { new Currency.Model.Currency("ETH", "Ethereum", true) };
 
@@ -30,7 +33,8 @@ namespace MyCC.Core.CoinInfo.Repositories
 		{
 			var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 
-			var json = JObject.Parse(await (await client.GetAsync(UrlStats)).Content.ReadAsStringAsync())[KeyData];
+			var jsonMining = JObject.Parse(await (await client.GetAsync(UrlMining)).Content.ReadAsStringAsync());
+			var jsonBlockCount = JObject.Parse(await (await client.GetAsync(UrlBlockCount)).Content.ReadAsStringAsync());
 			var supply = (string)JObject.Parse(await (await client.GetAsync(UrlSupply)).Content.ReadAsStringAsync())[KeyResult];
 
 			int n1, n5;
@@ -38,10 +42,10 @@ namespace MyCC.Core.CoinInfo.Repositories
 
 			return new CoinInfoData(currency)
 			{
-				BlockHeight = int.TryParse((string)json[KeyBlockCount][KeyNumber], out n1) ? n1 as int? : null,
-				Hashrate = decimal.TryParse((string)json[KeyStats][KeyHashrate], out n2) ? n2 as decimal? : null,
-				Difficulty = decimal.TryParse((string)json[KeyStats][KeyDifficulty], out n3) ? n3 as decimal? : null,
-				Blocktime = decimal.TryParse((string)json[KeyStats][KeyBlocktime], out n4) ? n4 as decimal? : null,
+				BlockHeight = int.TryParse((string)jsonBlockCount[KeyData][0][KeyCount], out n1) ? n1 as int? : null,
+				Hashrate = decimal.TryParse((string)jsonMining[KeyData][0][KeyHashrate], NumberStyles.Float, CultureInfo.InvariantCulture, out n2) ? n2 / 10e8m as decimal? : null,
+				Difficulty = decimal.TryParse((string)jsonMining[KeyData][0][KeyDifficulty], NumberStyles.Float, CultureInfo.InvariantCulture, out n3) ? n3 as decimal? : null,
+				Blocktime = decimal.TryParse((string)jsonMining[KeyData][0][KeyBlocktime], NumberStyles.Float, CultureInfo.InvariantCulture, out n4) ? n4 as decimal? : null,
 				CoinSupply = int.TryParse(supply, out n5) ? n5 / 10e18m as decimal? : null,
 				Algorithm = "Ethash",
 				IsProofOfStake = true,

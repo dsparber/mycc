@@ -109,8 +109,8 @@
     </IpaPackageName>
     <CodesignProvision>
     </CodesignProvision>
-    <MtouchSdkVersion>10.1</MtouchSdkVersion>
-    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchSdkVersion></MtouchSdkVersion>
+    <MtouchLink>None</MtouchLink>
     <MtouchFastDev>True</MtouchFastDev>
     <MtouchUseLlvm>False</MtouchUseLlvm>
     <MtouchUseThumb>False</MtouchUseThumb>
