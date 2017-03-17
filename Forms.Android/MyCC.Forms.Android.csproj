@@ -43,13 +43,9 @@
     <ConsolePause>false</ConsolePause>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-    <BundleAssemblies>False</BundleAssemblies>
-    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
     <Debugger>.Net (Xamarin)</Debugger>
     <AotAssemblies>True</AotAssemblies>
     <EnableLLVM>True</EnableLLVM>
-    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
-    <EnableProguard>False</EnableProguard>
     <DebugSymbols>False</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
@@ -265,6 +261,7 @@
     <Compile Include="renderer\CustomNavigationRenderer.cs" />
     <Compile Include="Helpers\AndroidTextSizeHelper.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="SplashActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -274,6 +271,17 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\down.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\StartupIcon.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\StartupIcon.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\StartupIcon.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\StartupIcon.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\StartupIcon.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\splash.9.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\splash.9.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\splash.9.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\splash.9.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\splash.9.png" />
+    <AndroidResource Include="Resources\values\splash.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />

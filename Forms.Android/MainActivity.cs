@@ -10,7 +10,7 @@ using Java.Lang;
 
 namespace MyCC.Forms.Android
 {
-	[Activity(Label = "MyCC", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+	[Activity(Label = "MyCC", Icon = "@drawable/icon", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : FormsApplicationActivity
 	{
 		protected override void OnCreate(Bundle savedInstanceState)
