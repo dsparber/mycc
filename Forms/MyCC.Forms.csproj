@@ -103,7 +103,7 @@
     <Compile Include="View\Pages\Settings\PinSettingsView.xaml.cs">
       <DependentUpon>PinSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Pages\Settings\PreferredBittcoinSettingsPage.cs" />
+    <Compile Include="View\Pages\Settings\PreferredBitcoinSettingsPage.cs" />
     <Compile Include="View\Pages\Settings\ReferenceCurrenciesSettingsView.xaml.cs">
       <DependentUpon>ReferenceCurrenciesSettingsView.xaml</DependentUpon>
     </Compile>

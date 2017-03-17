@@ -29,7 +29,7 @@ namespace MyCC.Forms.View.Pages.Settings
             SourcesCell.Tapped += (sender, e) => Navigation.PushAsync(new SourcesView());
             SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
             RatesCell.Tapped += (sender, e) => Navigation.PushAsync(new WatchedCurrenciesSettingsView());
-            PreferredRateCell.Tapped += (s, e) => Navigation.PushAsync(new PreferredBittcoinSettingsPage());
+            PreferredRateCell.Tapped += (s, e) => Navigation.PushAsync(new PreferredBitcoinSettingsPage());
             RatesCell.DetailBreakMode = Xamarin.Forms.LineBreakMode.TailTruncation;
             SetRatesCellDetail();
             SetPinCellText();
