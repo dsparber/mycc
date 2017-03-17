@@ -56,7 +56,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
 			if (repository is BittrexAccountRepository)
 			{
-				EnableAccountsSection.Title = $"{I18N.Accounts} ({repository.Elements.Count(r => r.IsEnabled)} {I18N.Enabled})";
+				EnableAccountsSection.Title = I18N.Accounts;
 			}
 			if (repository is BlockchainXpubAccountRepository)
 			{
