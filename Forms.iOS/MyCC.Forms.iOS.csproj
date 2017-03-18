@@ -58,18 +58,18 @@
     <MtouchUseSGen>True</MtouchUseSGen>
     <CodesignKey>iPhone Distribution</CodesignKey>
     <MtouchUseRefCounting>True</MtouchUseRefCounting>
-    <CodesignProvision>
-    </CodesignProvision>
-    <MtouchSdkVersion>
-    </MtouchSdkVersion>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>False</MtouchDebug>
     <MtouchProfiling>False</MtouchProfiling>
     <MtouchFastDev>False</MtouchFastDev>
-    <MtouchUseLlvm>true</MtouchUseLlvm>
+    <MtouchUseLlvm>True</MtouchUseLlvm>
     <MtouchUseThumb>False</MtouchUseThumb>
     <MtouchEnableBitcode>False</MtouchEnableBitcode>
     <OptimizePNGs>True</OptimizePNGs>
+    <MtouchNoSymbolStrip>False</MtouchNoSymbolStrip>
+    <CodesignProvision>8486fb74-ba37-4517-92a0-fa8bc789c7e0</CodesignProvision>
+    <MtouchSdkVersion>10.2</MtouchSdkVersion>
+    <MtouchEnableGenericValueTypeSharing>True</MtouchEnableGenericValueTypeSharing>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
   </PropertyGroup>
@@ -99,7 +99,7 @@
     <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchFloat32>True</MtouchFloat32>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution</CodesignKey>
     <DeviceSpecificBuild>False</DeviceSpecificBuild>
     <MtouchDebug>True</MtouchDebug>
     <MtouchUseSGen>True</MtouchUseSGen>
@@ -107,8 +107,7 @@
     <MtouchProfiling>False</MtouchProfiling>
     <IpaPackageName>
     </IpaPackageName>
-    <CodesignProvision>
-    </CodesignProvision>
+    <CodesignProvision>8486fb74-ba37-4517-92a0-fa8bc789c7e0</CodesignProvision>
     <MtouchSdkVersion>
     </MtouchSdkVersion>
     <MtouchLink>None</MtouchLink>
