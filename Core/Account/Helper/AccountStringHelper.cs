@@ -17,7 +17,7 @@ namespace MyCC.Core.Account.Helper
             var currencyString = i1 != 0 ? qrCodeText.Split(':')[0] : null;
             var argsText = qrCodeText.Contains('?') ? qrCodeText.Split('?')[1] : null;
 
-            var currency = supportedCurrencies.FirstOrDefault(c => c.Name.EqualsIgnore(currencyString) || c.Code.EqualsIgnore(currencyString));
+            var currency = supportedCurrencies.FirstOrDefault(c => EqualsIgnore(c?.Name, currencyString) || EqualsIgnore(c?.Code, currencyString));
 
             var args = argsText?.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries)
                .Select(part => part.Split('='))
