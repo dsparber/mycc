@@ -20,10 +20,12 @@ namespace MyCC.Forms.View.Overlays
         private readonly SearchBar _searchBar;
 
         private readonly bool _isModal;
+        private readonly bool _viewOnly;
 
-        public CurrencyOverlay(IEnumerable<Currency> currenciesToSelect, string title, bool isModal = false)
+        public CurrencyOverlay(IEnumerable<Currency> currenciesToSelect, string title, bool isModal = false, bool viewOnly = false)
         {
             _isModal = isModal;
+            _viewOnly = viewOnly;
             var selectableCurrencies = currenciesToSelect.Distinct().Where(c => c != null).OrderBy(c => c.Code).ToList();
 
             Title = title;
@@ -68,6 +70,7 @@ namespace MyCC.Forms.View.Overlays
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
             _searchBar.Focus();
         }
 
@@ -77,6 +80,9 @@ namespace MyCC.Forms.View.Overlays
             var items = currenciesSorted.Select(c =>
             {
                 var cell = new CustomViewCell { Text = c.Code, Detail = c.Name };
+
+                if (_viewOnly) return cell;
+
                 cell.Tapped += (sender, e) =>
                 {
                     CurrencySelected?.Invoke(c);

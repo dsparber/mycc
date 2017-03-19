@@ -525,4 +525,28 @@
   <data name="Enabled" xml:space="preserve">
     <value>eingeblendet</value>
   </data>
+  <data name="AllCurrencies" xml:space="preserve">
+    <value>Alle Währungen</value>
+  </data>
+  <data name="AvailableCurrencies" xml:space="preserve">
+    <value>Verfügbare Währungen</value>
+  </data>
+  <data name="Cryptocurrencies" xml:space="preserve">
+    <value>Cryptowährungen</value>
+  </data>
+  <data name="FiatCurrencies" xml:space="preserve">
+    <value>Fiatwährungen</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>Kontostand</value>
+  </data>
+  <data name="BalanceAvailable" xml:space="preserve">
+    <value>Kontostand verfügbar</value>
+  </data>
+  <data name="BalanceAvailableAddress" xml:space="preserve">
+    <value>Kontostand über Adresse</value>
+  </data>
+  <data name="BalanceAvailableBittrex" xml:space="preserve">
+    <value>Kontostand über Bittrex</value>
+  </data>
 </root>

@@ -117,6 +117,6 @@ namespace MyCC.Core.Account.Repositories.Base
         }
 
         public static IEnumerable<Currency.Model.Currency> AllSupportedCurrencies
-            => Repositories(null, null, null).SelectMany(r => r.SupportedCurrencies);
+            => Repositories(null, null, null).SelectMany(r => r.SupportedCurrencies).Distinct();
     }
 }

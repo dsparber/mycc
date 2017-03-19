@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Storage;
 using MyCC.Core.Currency.Database;
@@ -39,6 +41,15 @@ namespace MyCC.Core.Currency.Storage
         protected override async Task BeforeFastFetching()
         {
             await LocalRepository.FetchOnline();
+        }
+
+        public static IEnumerable<Model.Currency> CurrenciesOf<T>() where T : CurrencyRepository
+        {
+
+            var id = Instance.RepositoryOfType<T>().Id;
+            var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == id).Select(e => e.Code);
+            return Instance.AllElements.Where(c => codes.Any(x => x.Equals(c?.Code)));
+
         }
     }
 }

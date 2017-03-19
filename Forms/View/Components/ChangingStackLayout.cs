@@ -12,6 +12,7 @@ namespace MyCC.Forms.View.Components
             HorizontalOptions = LayoutOptions.FillAndExpand;
             VerticalOptions = LayoutOptions.FillAndExpand;
             BackgroundColor = AppConstants.TableBackgroundColor;
+            InputTransparent = true;
             SetChildLayout();
         }
 

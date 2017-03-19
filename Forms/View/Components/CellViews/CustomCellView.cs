@@ -162,7 +162,6 @@ namespace MyCC.Forms.View.Components.CellViews
 
             Panel = content;
             Content = new ContentView { Content = new ContentView { Content = Panel, BackgroundColor = Color.White, Padding = new Thickness(0, isStandalone ? 10 : 5) }, BackgroundColor = Color.FromHex("#ccc"), Padding = new Thickness(0, isStandalone ? 0.5 : 0, 0, 0.5) };
-
             IsLoading = false;
         }
 

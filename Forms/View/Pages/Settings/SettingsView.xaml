@@ -65,6 +65,10 @@
 						x:Name="AboutCell"
 						Text="{resources:Translate About}"
 						Image="more.png" />
+                    <cells:CustomViewCell
+						x:Name="AvailableCurrenciesCell"
+						Text="{resources:Translate AvailableCurrencies}"
+						Image="more.png" />
                 </TableSection>
             </TableView>
         </components1:ChangingStackLayout>

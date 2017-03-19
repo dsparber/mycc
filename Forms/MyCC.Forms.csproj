@@ -97,6 +97,7 @@
     <Compile Include="View\Pages\CoinGraphView.xaml.cs">
       <DependentUpon>CoinGraphView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\Info\CurrencyGroupedInfoView.cs" />
     <Compile Include="View\Pages\PasswordView.xaml.cs">
       <DependentUpon>PasswordView.xaml</DependentUpon>
     </Compile>

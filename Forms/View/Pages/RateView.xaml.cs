@@ -10,7 +10,6 @@ using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
-using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Overlays;
 using Refractored.XamForms.PullToRefresh;
@@ -51,11 +50,9 @@ namespace MyCC.Forms.View.Pages
 
             SetFooterText();
 
-            var recognizer = new TapGestureRecognizer();
-            recognizer.Tapped += AddRate;
-            var addCell = new CustomCellView(true) { Text = I18N.AddRate, IsActionCell = true, IsCentered = true };
-            addCell.GestureRecognizers.Add(recognizer);
-            NoDataStack.Children.Add(addCell);
+            var button = new Button { Text = I18N.AddSource, BorderColor = AppConstants.BorderColor, BackgroundColor = Color.White, BorderRadius = 0, TextColor = AppConstants.ThemeColor, FontAttributes = FontAttributes.None };
+            button.Clicked += AddRate;
+            NoDataStack.Children.Add(button);
 
             if (ApplicationSettings.FirstLaunch)
             {

@@ -161,6 +161,15 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die All currencies ähnelt.
+        /// </summary>
+        public static string AllCurrencies {
+            get {
+                return ResourceManager.GetString("AllCurrencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die All currencies from accounts ähnelt.
         /// </summary>
         public static string AllCurrenciesFromAccounts {
@@ -224,11 +233,56 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Available currencies ähnelt.
+        /// </summary>
+        public static string AvailableCurrencies {
+            get {
+                return ResourceManager.GetString("AvailableCurrencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Available rates ähnelt.
         /// </summary>
         public static string AvailableRates {
             get {
                 return ResourceManager.GetString("AvailableRates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Balance ähnelt.
+        /// </summary>
+        public static string Balance {
+            get {
+                return ResourceManager.GetString("Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Balance available ähnelt.
+        /// </summary>
+        public static string BalanceAvailable {
+            get {
+                return ResourceManager.GetString("BalanceAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Balance via Address ähnelt.
+        /// </summary>
+        public static string BalanceAvailableAddress {
+            get {
+                return ResourceManager.GetString("BalanceAvailableAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Balance via Bittrex ähnelt.
+        /// </summary>
+        public static string BalanceAvailableBittrex {
+            get {
+                return ResourceManager.GetString("BalanceAvailableBittrex", resourceCulture);
             }
         }
         
@@ -409,6 +463,15 @@ namespace MyCC.Forms.Resources {
         public static string Copyright {
             get {
                 return ResourceManager.GetString("Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cryptocurrencies ähnelt.
+        /// </summary>
+        public static string Cryptocurrencies {
+            get {
+                return ResourceManager.GetString("Cryptocurrencies", resourceCulture);
             }
         }
         
@@ -625,6 +688,15 @@ namespace MyCC.Forms.Resources {
         public static string FetchingNoSuccessText {
             get {
                 return ResourceManager.GetString("FetchingNoSuccessText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fiat currencies ähnelt.
+        /// </summary>
+        public static string FiatCurrencies {
+            get {
+                return ResourceManager.GetString("FiatCurrencies", resourceCulture);
             }
         }
         

@@ -12,15 +12,15 @@ using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
-using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Components;
+using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages.Settings
 {
     public class PreferredBitcoinSettingsPage : ContentPage
     {
-        private readonly List<Tuple<int, CustomCellView>> _items;
+        private readonly List<Tuple<int, CustomViewCell>> _items;
 
         public PreferredBitcoinSettingsPage()
         {
@@ -43,7 +43,7 @@ namespace MyCC.Forms.View.Pages.Settings
                     .Select(r => Tuple.Create(r, GetDetailText(r.TypeId))).ToList();
 
             _items = query
-                .Select(r => Tuple.Create(r.Item1.TypeId, new CustomCellView
+                .Select(r => Tuple.Create(r.Item1.TypeId, new CustomViewCell()
                 {
                     Text = r.Item1.Name,
                     Detail = r.Item2.Item1,
@@ -53,27 +53,20 @@ namespace MyCC.Forms.View.Pages.Settings
 
             SetCheckmark();
 
-            var contentStack = new StackLayout { Spacing = 0 };
-            contentStack.Children.Add(new SectionHeaderView
-            {
-                Title = I18N.Sources
-            });
+            var section = new TableSection(I18N.Sources);
+            var tableView = new TableView();
+            tableView.Root.Add(section);
 
             foreach (var i in _items)
             {
-                var recognizer = new TapGestureRecognizer();
-                recognizer.Tapped += (sender, args) =>
-                                {
-                                    ApplicationSettings.PreferredBitcoinRepository = _items.Find(x => x.Item2.Equals(sender)).Item1;
-                                    SetCheckmark();
-                                    Messaging.UpdatingRates.SendFinished();
-                                };
-                i.Item2.GestureRecognizers.Add(recognizer);
-                contentStack.Children.Add(i.Item2);
+                i.Item2.Tapped += (sender, args) =>
+                {
+                    ApplicationSettings.PreferredBitcoinRepository = _items.Find(x => x.Item2.Equals(sender)).Item1;
+                    SetCheckmark();
+                    Messaging.UpdatingRates.SendFinished();
+                };
             }
-
-            contentStack.Children.Add(new SectionFooterView { Text = $"* {I18N.InfoNoDirectRate}" });
-            contentStack.Children.Last().Margin = new Thickness(0, 0, 0, 40);
+            section.Add(_items.Select(e => e.Item2));
 
             var infoView = new InfoFooterComponent { Text = query.Min(q => q.Item2.Item2).LastUpdateString() };
 
@@ -81,11 +74,11 @@ namespace MyCC.Forms.View.Pages.Settings
             {
                 Spacing = 0,
                 Children = {
-                    new ScrollView {
-                        Content = contentStack,
-                        VerticalOptions = LayoutOptions.FillAndExpand
-                    },
-                    infoView }
+                    tableView,
+                    infoView,
+                    new InfoFooterComponent { Text = $"* {I18N.InfoNoDirectRate}" }
+
+                }
             });
 
             Content = changingStack;

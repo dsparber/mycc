@@ -60,5 +60,8 @@ namespace MyCC.Core.CoinInfo
         public CoinInfoData Get(Currency.Model.Currency currency) => _elements.Find(e => string.Equals(e.CurrencyCode, currency.Code));
 
         public static readonly CoinInfoStorage Instance = new CoinInfoStorage();
+
+        public static IEnumerable<Currency.Model.Currency> SupportetCurrencies
+            => Instance._repositories.SelectMany(r => r.SupportedCoins).Distinct();
     }
 }
