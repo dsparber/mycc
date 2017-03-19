@@ -449,6 +449,10 @@
     <BundleResource Include="Resources\refresh.png" />
     <BundleResource Include="Resources\refresh%402x.png" />
     <Content Include="Html\jquery-latest.min.js" />
+    <Content Include="Html\qrCode.css" />
+    <Content Include="Html\qrCode.html" />
+    <Content Include="Html\qrCode.js" />
+    <Content Include="Html\qrcode.min.js" />
     <Content Include="Html\up.svg" />
     <Content Include="Html\upDown.svg" />
     <Content Include="Html\ratesTable.css" />

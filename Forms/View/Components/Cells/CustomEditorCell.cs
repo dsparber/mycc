@@ -76,7 +76,7 @@ namespace MyCC.Forms.View.Components.Cells
                 View = stack;
             }
 
-            Height = 72;
+            Height = Device.OS == TargetPlatform.Android ? 80 : 72;
 
             var gestureRecogniser = new TapGestureRecognizer();
             gestureRecogniser.Tapped += (sender, e) => Editor.Focus();

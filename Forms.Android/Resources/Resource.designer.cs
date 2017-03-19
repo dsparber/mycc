@@ -5846,26 +5846,26 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f020055
 			public const int avd_hide_password = 2130837589;
 			
-			// aapt resource value: 0x7f020123
-			public const int avd_hide_password_1 = 2130837795;
-			
 			// aapt resource value: 0x7f020124
-			public const int avd_hide_password_2 = 2130837796;
+			public const int avd_hide_password_1 = 2130837796;
 			
 			// aapt resource value: 0x7f020125
-			public const int avd_hide_password_3 = 2130837797;
+			public const int avd_hide_password_2 = 2130837797;
+			
+			// aapt resource value: 0x7f020126
+			public const int avd_hide_password_3 = 2130837798;
 			
 			// aapt resource value: 0x7f020056
 			public const int avd_show_password = 2130837590;
 			
-			// aapt resource value: 0x7f020126
-			public const int avd_show_password_1 = 2130837798;
-			
 			// aapt resource value: 0x7f020127
-			public const int avd_show_password_2 = 2130837799;
+			public const int avd_show_password_1 = 2130837799;
 			
 			// aapt resource value: 0x7f020128
-			public const int avd_show_password_3 = 2130837800;
+			public const int avd_show_password_2 = 2130837800;
+			
+			// aapt resource value: 0x7f020129
+			public const int avd_show_password_3 = 2130837801;
 			
 			// aapt resource value: 0x7f020057
 			public const int calendar_bg_selector = 2130837591;
@@ -6440,11 +6440,11 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f020115
 			public const int notification_icon_background = 2130837781;
 			
-			// aapt resource value: 0x7f020121
-			public const int notification_template_icon_bg = 2130837793;
-			
 			// aapt resource value: 0x7f020122
-			public const int notification_template_icon_low_bg = 2130837794;
+			public const int notification_template_icon_bg = 2130837794;
+			
+			// aapt resource value: 0x7f020123
+			public const int notification_template_icon_low_bg = 2130837795;
 			
 			// aapt resource value: 0x7f020116
 			public const int notification_tile_bg = 2130837782;
@@ -6453,31 +6453,34 @@ namespace MyCC.Forms.Android
 			public const int notify_panel_notification_icon_bg = 2130837783;
 			
 			// aapt resource value: 0x7f020118
-			public const int rate = 2130837784;
+			public const int qr = 2130837784;
 			
 			// aapt resource value: 0x7f020119
-			public const int settings = 2130837785;
+			public const int rate = 2130837785;
 			
 			// aapt resource value: 0x7f02011a
-			public const int splash = 2130837786;
+			public const int settings = 2130837786;
 			
 			// aapt resource value: 0x7f02011b
-			public const int star = 2130837787;
+			public const int splash = 2130837787;
 			
 			// aapt resource value: 0x7f02011c
-			public const int starFilled = 2130837788;
+			public const int star = 2130837788;
 			
 			// aapt resource value: 0x7f02011d
-			public const int StartupIcon = 2130837789;
+			public const int starFilled = 2130837789;
 			
 			// aapt resource value: 0x7f02011e
-			public const int table = 2130837790;
+			public const int StartupIcon = 2130837790;
 			
 			// aapt resource value: 0x7f02011f
-			public const int ToTable = 2130837791;
+			public const int table = 2130837791;
 			
 			// aapt resource value: 0x7f020120
-			public const int up = 2130837792;
+			public const int ToTable = 2130837792;
+			
+			// aapt resource value: 0x7f020121
+			public const int up = 2130837793;
 			
 			static Drawable()
 			{

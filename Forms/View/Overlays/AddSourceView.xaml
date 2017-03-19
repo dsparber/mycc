@@ -10,14 +10,13 @@
 	x:Class="MyCC.Forms.View.Overlays.AddSourceView"
 	Title="{resources:Translate AddSource}">
   <ContentPage.ToolbarItems>
-    <ToolbarItem
+        <ToolbarItem
+			Text="{resources:Translate Cancel}"
+			Clicked="Cancel" />
+        <ToolbarItem
 			Text="{resources:Translate Save}"
 			Clicked="Save" />
-    <ToolbarItem
-			Text="{resources:Translate Cancel}"
-			Clicked="Cancel"
-			x:Name="CancelItem" />
-  </ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <components1:ChangingStackLayout>
       <components1:HeaderView

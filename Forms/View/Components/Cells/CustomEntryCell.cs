@@ -49,6 +49,7 @@ namespace MyCC.Forms.View.Components.Cells
 
             if (Device.OS == TargetPlatform.Android)
             {
+                stack.Spacing = 3;
                 _titleLabel.FontSize = AppConstants.AndroidFontSize;
                 Entry.FontSize = AppConstants.AndroidFontSize;
             }

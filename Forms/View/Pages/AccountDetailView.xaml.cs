@@ -121,7 +121,7 @@ namespace MyCC.Forms.View.Pages
                 });
                 var addressLabel = new Label
                 {
-                    Text = (repo as AddressAccountRepository).Address.MiddleTruncate(),
+                    Text = repo is BlockchainXpubAccountRepository ? "xpub" : (repo as AddressAccountRepository).Address.MiddleTruncate(),
                     FontSize = AppConstants.TableSectionFontSize,
                     TextColor = AppConstants.FontColorLight,
                     LineBreakMode = LineBreakMode.MiddleTruncation
@@ -130,7 +130,7 @@ namespace MyCC.Forms.View.Pages
                 updateLabelAction = () =>
                 {
                     nameLabel.Text = _account?.Name ?? repo.Name;
-                    addressLabel.Text = (repo as AddressAccountRepository)?.Address.MiddleTruncate() ?? string.Empty;
+                    addressLabel.Text = repo is BlockchainXpubAccountRepository ? "xpub" : (repo as AddressAccountRepository)?.Address.MiddleTruncate() ?? string.Empty;
                     sourceLabel.Text = repo.Description;
                 };
             }
