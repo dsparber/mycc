@@ -7,11 +7,12 @@ using HockeyApp.Android.Metrics;
 using Refractored.XamForms.PullToRefresh.Droid;
 using Xamarin.Forms.Platform.Android;
 using Java.Lang;
+using Plugin.Fingerprint;
 
 namespace MyCC.Forms.Android
 {
     [Activity(Label = "MyCC", Icon = "@drawable/icon", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : FormsApplicationActivity
+    public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -20,6 +21,7 @@ namespace MyCC.Forms.Android
             CarouselViewRenderer.Init();
             PullToRefreshLayoutRenderer.Init();
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
+            CrossFingerprint.SetCurrentActivityResolver(() => Xamarin.Forms.Forms.Context as Activity);
 
             var y = (int)(Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
             var x = (int)(Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density);
