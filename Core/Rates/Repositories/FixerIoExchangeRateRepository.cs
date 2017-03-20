@@ -41,32 +41,43 @@ namespace MyCC.Core.Rates.Repositories
 
         public async Task<IEnumerable<ExchangeRate>> FetchRates()
         {
-            var uri = new Uri(Url);
-            var response = await _client.GetAsync(uri);
-
-            if (!response.IsSuccessStatusCode) return null;
-
-            var content = await response.Content.ReadAsStringAsync();
-            var json = JObject.Parse(content);
-            var ratesJson = (JObject)json[JsonKeyRates];
-
-            var fetchedRates = new List<ExchangeRate>();
-
-            foreach (var r in ratesJson)
+            try
             {
-                var rate = new ExchangeRate(Currency.Model.Currency.Eur, new Currency.Model.Currency(r.Key, false), DateTime.Now, decimal.Parse((string)r.Value, CultureInfo.InvariantCulture)) { RepositoryId = TypeId };
-                fetchedRates.Add(rate);
+                var uri = new Uri(Url);
+                var response = await _client.GetAsync(uri);
+
+                if (!response.IsSuccessStatusCode) return null;
+
+                var content = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(content);
+                var ratesJson = (JObject)json[JsonKeyRates];
+
+                var fetchedRates = new List<ExchangeRate>();
+
+                foreach (var r in ratesJson)
+                {
+                    var rate = new ExchangeRate(Currency.Model.Currency.Eur, new Currency.Model.Currency(r.Key, false),
+                        DateTime.Now, decimal.Parse((string)r.Value, CultureInfo.InvariantCulture))
+                    {
+                        RepositoryId = TypeId
+                    };
+                    fetchedRates.Add(rate);
+                }
+
+                var old = Rates.Except(fetchedRates).ToList();
+
+                Rates.Clear();
+                Rates.AddRange(fetchedRates);
+
+                await Task.WhenAll(old.Select(_connection.DeleteAsync));
+                await Task.WhenAll(fetchedRates.Select(_connection.InsertOrReplaceAsync));
+
+                return Rates;
             }
-
-            var old = Rates.Except(fetchedRates).ToList();
-
-            Rates.Clear();
-            Rates.AddRange(fetchedRates);
-
-            await Task.WhenAll(old.Select(_connection.DeleteAsync));
-            await Task.WhenAll(fetchedRates.Select(_connection.InsertOrReplaceAsync));
-
-            return Rates;
+            catch
+            {
+                return null;
+            }
         }
 
         public Task FetchAvailableRates() => FetchRates();
