@@ -4,15 +4,15 @@ using Android.OS;
 using CarouselView.FormsPlugin.Android;
 using HockeyApp.Android;
 using HockeyApp.Android.Metrics;
-using Refractored.XamForms.PullToRefresh.Droid;
 using Xamarin.Forms.Platform.Android;
 using Java.Lang;
 using Plugin.Fingerprint;
+using Refractored.XamForms.PullToRefresh.Droid;
 
 namespace MyCC.Forms.Android
 {
     [Activity(Label = "MyCC", Icon = "@drawable/icon", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : FormsAppCompatActivity
+    public class MainActivity : FormsApplicationActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {

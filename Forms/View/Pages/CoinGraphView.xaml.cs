@@ -21,7 +21,7 @@ namespace MyCC.Forms.View.Pages
     public partial class CoinGraphView
     {
         private readonly CoinGraphComponent _graphView;
-        private readonly PullToRefreshLayout _pullToRefresh;
+        private PullToRefreshLayout _pullToRefresh;
 
 
         public CoinGraphView()
@@ -34,16 +34,7 @@ namespace MyCC.Forms.View.Pages
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
 
-            _pullToRefresh = new PullToRefreshLayout
-            {
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Content = new ScrollView { VerticalOptions = LayoutOptions.FillAndExpand, Content = _graphView },
-                BackgroundColor = AppConstants.TableBackgroundColor,
-                RefreshCommand = new Command(Refresh),
-            };
-
-            Content.Content = _pullToRefresh;
+            InitPullToRefresh();
 
             var button = new Button { Text = I18N.AddSource, BorderColor = AppConstants.BorderColor, BackgroundColor = Color.White, BorderRadius = 0, TextColor = AppConstants.ThemeColor, FontAttributes = FontAttributes.None };
             button.Clicked += AddSource;
@@ -59,10 +50,36 @@ namespace MyCC.Forms.View.Pages
             }
         }
 
+        private void InitPullToRefresh()
+        {
+            _pullToRefresh = new PullToRefreshLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Content = new ScrollView { VerticalOptions = LayoutOptions.FillAndExpand, Content = _graphView },
+                BackgroundColor = AppConstants.TableBackgroundColor,
+                RefreshCommand = new Command(Refresh),
+            };
+
+            Content.Content = _pullToRefresh;
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
             _graphView.OnAppearing();
+
+            if (Device.OS != TargetPlatform.Android) return;
+            InitPullToRefresh();
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+            _graphView.HeightRequest = _pullToRefresh.Height;
+
+            if (Device.OS != TargetPlatform.Android) return;
+            InitPullToRefresh();
         }
 
         private void PositionSelected(object sender, EventArgs e)
@@ -118,12 +135,6 @@ namespace MyCC.Forms.View.Pages
             Messaging.FetchMissingRates.SubscribeFinished(this, SetNoSourcesView);
             Messaging.UpdatingAccounts.SubscribeFinished(this, SetNoSourcesView);
             Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoSourcesView);
-        }
-
-        protected override void OnSizeAllocated(double width, double height)
-        {
-            base.OnSizeAllocated(width, height);
-            _graphView.HeightRequest = _pullToRefresh.Height;
         }
 
         private async void Refresh()

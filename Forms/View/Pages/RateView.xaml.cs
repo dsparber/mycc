@@ -20,7 +20,7 @@ namespace MyCC.Forms.View.Pages
 {
     public partial class RateView
     {
-        private readonly PullToRefreshLayout _pullToRefresh;
+        private PullToRefreshLayout _pullToRefresh;
         private readonly RatesTableComponent _tableView;
 
         public RateView()
@@ -29,20 +29,7 @@ namespace MyCC.Forms.View.Pages
 
             _tableView = new RatesTableComponent(Navigation);
 
-            var stack = new StackLayout { Spacing = 0, VerticalOptions = LayoutOptions.FillAndExpand };
-            stack.Children.Add(_tableView);
-            stack.Children.Add(new ContentView { VerticalOptions = LayoutOptions.FillAndExpand });
-
-            _pullToRefresh = new PullToRefreshLayout
-            {
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Content = new ScrollView { Content = stack, VerticalOptions = LayoutOptions.FillAndExpand },
-                BackgroundColor = AppConstants.TableBackgroundColor,
-                RefreshCommand = new Command(Refresh),
-            };
-
-            Content.Content = _pullToRefresh;
+            InitPullToRefresh();
 
             AddSubscriber();
 
@@ -70,10 +57,41 @@ namespace MyCC.Forms.View.Pages
             }
         }
 
+        private void InitPullToRefresh()
+        {
+            var stack = new StackLayout { Spacing = 0, VerticalOptions = LayoutOptions.FillAndExpand };
+            stack.Children.Add(_tableView);
+            stack.Children.Add(new ContentView { VerticalOptions = LayoutOptions.FillAndExpand });
+
+            _pullToRefresh = new PullToRefreshLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Content = new ScrollView { Content = stack, VerticalOptions = LayoutOptions.FillAndExpand },
+                BackgroundColor = AppConstants.TableBackgroundColor,
+                RefreshCommand = new Command(Refresh),
+            };
+
+            Content.Content = _pullToRefresh;
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
             _tableView.OnAppearing();
+
+            if (Device.OS != TargetPlatform.Android) return;
+
+            InitPullToRefresh();
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+
+            if (Device.OS != TargetPlatform.Android) return;
+
+            InitPullToRefresh();
         }
 
         private void PositionSelected(object sender, EventArgs e)

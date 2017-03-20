@@ -21,7 +21,7 @@ namespace MyCC.Forms.View.Pages
     public partial class CoinTableView
     {
         private readonly CoinTableComponent _tableView;
-        private readonly PullToRefreshLayout _pullToRefresh;
+        private PullToRefreshLayout _pullToRefresh;
 
         public CoinTableView()
         {
@@ -29,21 +29,7 @@ namespace MyCC.Forms.View.Pages
 
             _tableView = new CoinTableComponent(Navigation);
 
-            var stack = new StackLayout { Spacing = 0, VerticalOptions = LayoutOptions.FillAndExpand };
-            stack.Children.Add(_tableView);
-            stack.Children.Add(new ContentView { VerticalOptions = LayoutOptions.FillAndExpand });
-
-            _pullToRefresh = new PullToRefreshLayout
-            {
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Content = new ScrollView { Content = stack, VerticalOptions = LayoutOptions.FillAndExpand },
-                BackgroundColor = AppConstants.TableBackgroundColor,
-                RefreshCommand = new Command(Refresh),
-            };
-
-
-            Content.Content = _pullToRefresh;
+            InitPullToRefresh();
 
             var button = new Button { Text = I18N.AddSource, BorderColor = AppConstants.BorderColor, BackgroundColor = Color.White, BorderRadius = 0, TextColor = AppConstants.ThemeColor, FontAttributes = FontAttributes.None };
             button.Clicked += AddSource;
@@ -59,10 +45,40 @@ namespace MyCC.Forms.View.Pages
             }
         }
 
+        private void InitPullToRefresh()
+        {
+            var stack = new StackLayout { Spacing = 0, VerticalOptions = LayoutOptions.FillAndExpand };
+            stack.Children.Add(_tableView);
+            stack.Children.Add(new ContentView { VerticalOptions = LayoutOptions.FillAndExpand });
+
+            _pullToRefresh = new PullToRefreshLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Content = new ScrollView { Content = stack, VerticalOptions = LayoutOptions.FillAndExpand },
+                BackgroundColor = AppConstants.TableBackgroundColor,
+                RefreshCommand = new Command(Refresh),
+            };
+
+
+            Content.Content = _pullToRefresh;
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
             _tableView.OnAppearing();
+
+            if (Device.OS != TargetPlatform.Android) return;
+            InitPullToRefresh();
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+
+            if (Device.OS != TargetPlatform.Android) return;
+            InitPullToRefresh();
         }
 
 
