@@ -326,18 +326,6 @@
     <ImageAsset Include="Resources\Images.xcassets\Contents.json">
       <InProject>false</InProject>
     </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\Fingerprint.imageset\Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\Fingerprint.imageset\fingerprint.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\Fingerprint.imageset\fingerprint2.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\Fingerprint.imageset\fingerprint3.png">
-      <InProject>false</InProject>
-    </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\ToTable.imageset\1.png">
       <InProject>false</InProject>
     </ImageAsset>
@@ -360,6 +348,18 @@
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\StartupIcon.imageset\Icon%403x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\fingerprint.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\fingerprint.imageset\fingerprint.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\fingerprint.imageset\fingerprint2.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\fingerprint.imageset\fingerprint3.png">
       <InProject>false</InProject>
     </ImageAsset>
   </ItemGroup>
@@ -512,6 +512,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Images.xcassets\StartupIcon.imageset\" />
+    <Folder Include="Resources\Images.xcassets\fingerprint.imageset\" />
   </ItemGroup>
   <Import Project="..\packages\Xamarin.Forms.2.3.3.193\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.3.193\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

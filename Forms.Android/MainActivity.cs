@@ -6,6 +6,7 @@ using HockeyApp.Android;
 using HockeyApp.Android.Metrics;
 using Xamarin.Forms.Platform.Android;
 using Java.Lang;
+using MyCC.Forms.Android.renderer;
 using Plugin.Fingerprint;
 using Refractored.XamForms.PullToRefresh.Droid;
 
@@ -22,6 +23,7 @@ namespace MyCC.Forms.Android
             PullToRefreshLayoutRenderer.Init();
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             CrossFingerprint.SetCurrentActivityResolver(() => Xamarin.Forms.Forms.Context as Activity);
+            CrossFingerprint.SetDialogFragmentType<CustomFingerprintDialog>();
 
             var y = (int)(Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
             var x = (int)(Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density);

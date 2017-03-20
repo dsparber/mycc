@@ -64,7 +64,12 @@ namespace MyCC.Forms.View.Pages
             {
                 ShowFingerprintIcon.IsVisible = true;
 
-                var result = await CrossFingerprint.Current.AuthenticateAsync(I18N.UnlockApplication);
+                var result =
+                    await CrossFingerprint.Current.AuthenticateAsync(new AuthenticationRequestConfiguration(I18N.UnlockApplication)
+                    {
+                        CancelTitle = I18N.Cancel,
+                        FallbackTitle = I18N.Cancel
+                    });
                 if (result.Authenticated)
                 {
                     await Disappear();

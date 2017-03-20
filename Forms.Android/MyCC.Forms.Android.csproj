@@ -270,6 +270,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="renderer\CustomFingerprintDialog.cs" />
     <Compile Include="renderer\CustomProgressBarRenderer.cs" />
     <Compile Include="renderer\CustomTableViewModelRenderer .cs" />
     <Compile Include="renderer\CustomTableViewRenderer.cs" />
@@ -464,7 +465,7 @@
     <AndroidResource Include="Resources\drawable-hdpi\edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\fingerprint.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\Fingerprint.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\flashOff.png" />
@@ -506,7 +507,7 @@
     <AndroidResource Include="Resources\drawable-mdpi\edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-mdpi\fingerprint.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\Fingerprint.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-mdpi\flashOff.png" />
@@ -539,7 +540,7 @@
     <AndroidResource Include="Resources\drawable-xhdpi\edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xhdpi\fingerprint.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\Fingerprint.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xhdpi\flashOff.png" />
@@ -584,7 +585,7 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxhdpi\fingerprint.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\Fingerprint.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\flashOff.png" />
@@ -620,7 +621,7 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxxhdpi\fingerprint.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\Fingerprint.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\flashOff.png" />
