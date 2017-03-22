@@ -97,7 +97,7 @@
     <Compile Include="View\Pages\CoinGraphView.xaml.cs">
       <DependentUpon>CoinGraphView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Pages\Info\CurrencyGroupedInfoView.cs" />
+    <Compile Include="View\Pages\Settings\Info\CurrencyGroupedInfoView.cs" />
     <Compile Include="View\Pages\PasswordView.xaml.cs">
       <DependentUpon>PasswordView.xaml</DependentUpon>
     </Compile>
@@ -132,16 +132,16 @@
     <Compile Include="View\Pages\CoinInfoView.xaml.cs">
       <DependentUpon>CoinInfoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Pages\Settings\SourcesView.xaml.cs">
+    <Compile Include="View\Pages\Settings\Source\SourcesView.xaml.cs">
       <DependentUpon>SourcesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Pages\Settings\RepositoryView.xaml.cs">
+    <Compile Include="View\Pages\Settings\Source\RepositoryView.xaml.cs">
       <DependentUpon>RepositoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Overlays\AddSourceView.xaml.cs">
       <DependentUpon>AddSourceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Pages\Settings\AccountEditView.cs">
+    <Compile Include="View\Pages\Settings\Source\AccountEditView.cs">
       <DependentUpon>AccountEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\Settings\AboutView.cs" />
@@ -182,13 +182,13 @@
     <EmbeddedResource Include="View\Pages\CoinInfoView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Pages\Settings\SourcesView.xaml">
+    <EmbeddedResource Include="View\Pages\Settings\Source\SourcesView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
       </SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Pages\Settings\RepositoryView.xaml">
+    <EmbeddedResource Include="View\Pages\Settings\Source\RepositoryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
       </SubType>
@@ -198,7 +198,7 @@
       <SubType>
       </SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Pages\Settings\AccountEditView.xaml">
+    <EmbeddedResource Include="View\Pages\Settings\Source\AccountEditView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
       </SubType>
@@ -290,6 +290,12 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\portable-net45+win8+wpa81+wp8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Connectivity, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xam.Plugin.Connectivity.2.3.0\lib\portable-net45+wp80+win8+wpa81\Plugin.Connectivity.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Connectivity.Abstractions, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xam.Plugin.Connectivity.2.3.0\lib\portable-net45+wp80+win8+wpa81\Plugin.Connectivity.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Fingerprint, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Plugin.Fingerprint.1.4.2\lib\portable-net45+win8+wpa81+wp8\Plugin.Fingerprint.dll</HintPath>

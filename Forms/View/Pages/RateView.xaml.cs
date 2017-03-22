@@ -12,6 +12,7 @@ using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Overlays;
+using Plugin.Connectivity;
 using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
 using static MyCC.Forms.App;
@@ -128,8 +129,16 @@ namespace MyCC.Forms.View.Pages
 
         private async void Refresh()
         {
-            await AppTaskHelper.UpdateRates();
-            _pullToRefresh.IsRefreshing = false;
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                await AppTaskHelper.UpdateRates();
+                _pullToRefresh.IsRefreshing = false;
+            }
+            else
+            {
+                _pullToRefresh.IsRefreshing = false;
+                await DisplayAlert(I18N.NoInternetAccess, I18N.ErrorRefreshingNotPossibleWithoutInternet, I18N.Cancel);
+            }
         }
 
         private void AddRate(object sender, EventArgs e) => CurrencyOverlay.ShowAddRateOverlay(Navigation);

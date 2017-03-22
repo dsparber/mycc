@@ -9,8 +9,10 @@ using MyCC.Core.Rates;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
+using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
+using Plugin.Connectivity;
 using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
 
@@ -99,8 +101,16 @@ namespace MyCC.Forms.View.Pages
 
         private async void Refresh()
         {
-            await AppTaskHelper.FetchBalanceAndRates(_currency);
-            _pullToRefresh.IsRefreshing = false;
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                await AppTaskHelper.FetchBalanceAndRates(_currency);
+                _pullToRefresh.IsRefreshing = false;
+            }
+            else
+            {
+                _pullToRefresh.IsRefreshing = false;
+                await DisplayAlert(I18N.NoInternetAccess, I18N.ErrorRefreshingNotPossibleWithoutInternet, I18N.Cancel);
+            }
         }
 
         protected override void OnAppearing()

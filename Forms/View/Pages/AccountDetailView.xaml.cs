@@ -14,9 +14,11 @@ using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Overlays;
-using MyCC.Forms.View.Pages.Settings;
+using Plugin.Connectivity;
 using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
+using AccountEditView = MyCC.Forms.View.Pages.Settings.Source.AccountEditView;
+using RepositoryView = MyCC.Forms.View.Pages.Settings.Source.RepositoryView;
 
 namespace MyCC.Forms.View.Pages
 {
@@ -227,8 +229,16 @@ namespace MyCC.Forms.View.Pages
 
         private async void Refresh()
         {
-            await AppTaskHelper.FetchBalanceAndRates(_account);
-            _pullToRefresh.IsRefreshing = false;
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                await AppTaskHelper.FetchBalanceAndRates(_account);
+                _pullToRefresh.IsRefreshing = false;
+            }
+            else
+            {
+                _pullToRefresh.IsRefreshing = false;
+                await DisplayAlert(I18N.NoInternetAccess, I18N.ErrorRefreshingNotPossibleWithoutInternet, I18N.Cancel);
+            }
         }
 
         private void ShowInfo(object sender, EventArgs args)

@@ -549,4 +549,13 @@
   <data name="BalanceAvailableBittrex" xml:space="preserve">
     <value>Kontostand über Bittrex</value>
   </data>
+  <data name="ErrorRefreshingNotPossibleWithoutInternet" xml:space="preserve">
+    <value>Aktualisieren ist ohne Internetverbindung nicht möglich!</value>
+  </data>
+  <data name="NoInternetAccess" xml:space="preserve">
+    <value>Kein Internetzugriff</value>
+  </data>
+  <data name="Offline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
 </root>
