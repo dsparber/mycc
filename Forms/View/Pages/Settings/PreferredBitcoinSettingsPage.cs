@@ -75,8 +75,8 @@ namespace MyCC.Forms.View.Pages.Settings
                 Spacing = 0,
                 Children = {
                     tableView,
-                    infoView,
-                    new InfoFooterComponent { Text = $"* {I18N.InfoNoDirectRate}" }
+                    new InfoFooterComponent(false) { Text = $"* {I18N.InfoNoDirectRate}" },
+                    infoView
 
                 }
             });

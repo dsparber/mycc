@@ -185,7 +185,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             // Test if data is valid
             var addressRepo = _repository as AddressAccountRepository;
-            if (addressRepo != null && (!addressRepo.Address.Equals(AddressEntryCell.Text) || !addressRepo.Currency.Equals(_currencyEntryCell.SelectedCurrency)))
+            if (addressRepo != null && (!addressRepo.Address.Equals((AddressEntryCell.Text ?? string.Empty).Contains("...") ? addressRepo.Address : AddressEntryCell.Text ?? string.Empty) || !addressRepo.Currency.Equals(_currencyEntryCell.SelectedCurrency)))
             {
                 var address = AddressEntryCell.Text ?? string.Empty;
                 var testRepo = AddressAccountRepository.CreateAddressAccountRepository(addressRepo.Name, _currencyEntryCell.SelectedCurrency, address.Contains("...") ? addressRepo.Address : address);

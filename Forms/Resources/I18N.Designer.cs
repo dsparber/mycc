@@ -674,6 +674,15 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Refreshing is not possible without an internet connection. ähnelt.
+        /// </summary>
+        public static string ErrorRefreshingNotPossibleWithoutInternet {
+            get {
+                return ResourceManager.GetString("ErrorRefreshingNotPossibleWithoutInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Fetching ähnelt.
         /// </summary>
         public static string Fetching {
@@ -935,6 +944,15 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No internet access ähnelt.
+        /// </summary>
+        public static string NoInternetAccess {
+            get {
+                return ResourceManager.GetString("NoInternetAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die None ähnelt.
         /// </summary>
         public static string None {
@@ -967,6 +985,15 @@ namespace MyCC.Forms.Resources {
         public static string NotConfigured {
             get {
                 return ResourceManager.GetString("NotConfigured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Offline ähnelt.
+        /// </summary>
+        public static string Offline {
+            get {
+                return ResourceManager.GetString("Offline", resourceCulture);
             }
         }
         

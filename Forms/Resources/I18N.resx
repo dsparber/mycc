@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -548,5 +548,14 @@
   </data>
   <data name="BalanceAvailableBittrex" xml:space="preserve">
     <value>Balance via Bittrex</value>
+  </data>
+  <data name="ErrorRefreshingNotPossibleWithoutInternet" xml:space="preserve">
+    <value>Refreshing is not possible without an internet connection.</value>
+  </data>
+  <data name="NoInternetAccess" xml:space="preserve">
+    <value>No internet access</value>
+  </data>
+  <data name="Offline" xml:space="preserve">
+    <value>Offline</value>
   </data>
 </root>
