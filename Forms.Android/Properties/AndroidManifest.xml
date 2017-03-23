@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.5.45.2" package="com.sparber.mycc" android:installLocation="auto" android:versionCode="8">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.5.46" package="com.sparber.mycc" android:installLocation="auto" android:versionCode="9">
 	<uses-sdk android:minSdkVersion="15" />
 	<application android:label="MyCC" android:theme="@style/MyCryptosTheme" android:icon="@drawable/Icon"></application>
 	<uses-permission android:name="android.permission.USE_FINGERPRINT" />
