@@ -15,6 +15,7 @@ using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
 using Xamarin.Forms;
 using MyCC.Forms.Messages;
+using Plugin.Connectivity;
 
 namespace MyCC.Forms.View.Pages
 {
@@ -80,7 +81,7 @@ namespace MyCC.Forms.View.Pages
 
             var explorer = CoinInfoStorage.Instance.GetExplorer(_currency).Select(e => e.Name).ToList();
             var info = CoinInfoStorage.Instance.Get(_currency);
-            if (info == null && explorer.Any())
+            if (info == null && explorer.Any() && CrossConnectivity.Current.IsConnected)
             {
                 Task.Run(() => AppTaskHelper.FetchCoinInfo(_currency));
             }
@@ -220,8 +221,16 @@ namespace MyCC.Forms.View.Pages
 
         private async void Refresh()
         {
-            await AppTaskHelper.FetchCoinDetails(_currency);
-            PullToRefresh.IsRefreshing = false;
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                await AppTaskHelper.FetchCoinDetails(_currency);
+                PullToRefresh.IsRefreshing = false;
+            }
+            else
+            {
+                PullToRefresh.IsRefreshing = false;
+                await DisplayAlert(I18N.NoInternetAccess, I18N.ErrorRefreshingNotPossibleWithoutInternet, I18N.Cancel);
+            }
         }
 
         protected override void OnAppearing()

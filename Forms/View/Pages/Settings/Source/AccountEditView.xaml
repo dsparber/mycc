@@ -7,7 +7,7 @@
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	x:Class="MyCC.Forms.View.Pages.Settings.AccountEditView">
+	x:Class="MyCC.Forms.View.Pages.Settings.Source.AccountEditView">
     <ContentPage.ToolbarItems>
         <ToolbarItem
 			x:Name="EditItem"

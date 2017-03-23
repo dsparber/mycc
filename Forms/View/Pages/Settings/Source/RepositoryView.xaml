@@ -8,7 +8,7 @@
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	Title="{resources:Translate Details}"
-	x:Class="MyCC.Forms.View.Pages.Settings.RepositoryView">
+	x:Class="MyCC.Forms.View.Pages.Settings.Source.RepositoryView">
     <ContentPage.ToolbarItems>
         <ToolbarItem
 			x:Name="EditItem"

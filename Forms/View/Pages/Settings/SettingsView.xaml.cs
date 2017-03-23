@@ -6,7 +6,8 @@ using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
-using MyCC.Forms.View.Pages.Info;
+using MyCC.Forms.View.Pages.Settings.Info;
+using MyCC.Forms.View.Pages.Settings.Source;
 
 namespace MyCC.Forms.View.Pages.Settings
 {

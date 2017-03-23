@@ -14,6 +14,7 @@ using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Components.Cells;
+using Plugin.Connectivity;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages.Settings
@@ -83,7 +84,13 @@ namespace MyCC.Forms.View.Pages.Settings
 
             Content = changingStack;
 
-            Task.Run(async () => await AppTaskHelper.FetchBtcUsdRates());
+            Task.Run(async () =>
+            {
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    await AppTaskHelper.FetchBtcUsdRates();
+                }
+            });
             Messaging.Progress.SubscribeToComplete(this, () => Device.BeginInvokeOnMainThread(() =>
             {
                 var time = DateTime.Now;

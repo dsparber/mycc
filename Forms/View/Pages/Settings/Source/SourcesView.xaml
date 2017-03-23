@@ -6,7 +6,7 @@
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
 	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	x:Class="MyCC.Forms.View.Pages.Settings.SourcesView"
+	x:Class="MyCC.Forms.View.Pages.Settings.Source.SourcesView"
 	Title="{resources:Translate Sources}">
     <ContentPage.ToolbarItems>
         <ToolbarItem

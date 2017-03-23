@@ -6204,8 +6204,8 @@ namespace MyCC.Forms.Android
 			// aapt resource value: 0x7f0200b0
 			public const int mr_ic_play_light = 2130837680;
 			
-			// aapt resource value: 0x7f0200bb
-			public const int notification_template_icon_bg = 2130837691;
+			// aapt resource value: 0x7f0200bc
+			public const int notification_template_icon_bg = 2130837692;
 			
 			// aapt resource value: 0x7f0200b1
 			public const int qr = 2130837681;
@@ -6236,6 +6236,9 @@ namespace MyCC.Forms.Android
 			
 			// aapt resource value: 0x7f0200ba
 			public const int up = 2130837690;
+			
+			// aapt resource value: 0x7f0200bb
+			public const int warning = 2130837691;
 			
 			static Drawable()
 			{
