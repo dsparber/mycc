@@ -53,7 +53,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>0.5.46</string>
 	<key>CFBundleVersion</key>
-	<string>0.5.46.1</string>
+	<string>0.5.46.2</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSAppTransportSecurity</key>
