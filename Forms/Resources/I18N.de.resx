@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -295,7 +295,7 @@
     <value>Manuell hinzugefügt</value>
   </data>
   <data name="CoinMarketCap" xml:space="preserve">
-    <value>Marktkap.</value>
+    <value>Marktkapitalisierung</value>
   </data>
   <data name="CoinSupplyMax" xml:space="preserve">
     <value>Max. coin supply</value>

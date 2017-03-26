@@ -9,10 +9,11 @@ using MyCC.Core.Currency.Storage;
 using MyCC.Core.Rates;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
-using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Components.Cells;
+using MyCC.Forms.View.Container;
 using MyCC.Forms.View.Overlays;
 using Xamarin.Forms;
+using HeaderView = MyCC.Forms.View.Components.Header.HeaderView;
 
 namespace MyCC.Forms.View.Pages.Settings.Info
 {

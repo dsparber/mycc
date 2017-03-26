@@ -3,10 +3,10 @@ using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
-using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Pages;
 using MyCC.Forms.View.Pages.Settings;
 using Xamarin.Forms;
+using HeaderView = MyCC.Forms.View.Components.Header.HeaderView;
 
 namespace MyCC.Forms.View.Container
 {

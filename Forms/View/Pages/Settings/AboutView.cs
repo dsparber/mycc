@@ -2,8 +2,8 @@
 using XLabs.Forms.Controls;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Constants;
-using MyCC.Forms.View.Components;
-using HeaderView = MyCC.Forms.View.Components.HeaderView;
+using MyCC.Forms.View.Container;
+using HeaderView = MyCC.Forms.View.Components.Header.HeaderView;
 
 namespace MyCC.Forms.View.Pages.Settings
 {

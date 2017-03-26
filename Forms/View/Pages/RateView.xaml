@@ -7,6 +7,7 @@
     xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
 	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.RateView"
 	Title="{resources:Translate Rates}">
     <ContentPage.ToolbarItems>
@@ -16,7 +17,7 @@
           Clicked="AddRate"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <components:ChangingStackLayout>
+        <container:ChangingStackLayout>
             <carousel:CarouselViewControl
 				x:Name="HeaderCarousel"
 				Arrows="true"
@@ -58,6 +59,6 @@
                     </StackLayout>
                 </ContentView>
             </StackLayout>
-        </components:ChangingStackLayout>
+        </container:ChangingStackLayout>
     </ContentPage.Content>
 </ContentPage>

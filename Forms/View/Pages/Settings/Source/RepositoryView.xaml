@@ -6,6 +6,8 @@
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
 	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
+	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
+	xmlns:header="clr-namespace:MyCC.Forms.View.Components.Header;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	Title="{resources:Translate Details}"
 	x:Class="MyCC.Forms.View.Pages.Settings.Source.RepositoryView">
@@ -20,8 +22,8 @@
 			Text="{resources:Translate Save}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <components:ChangingStackLayout>
-            <components:HeaderView
+        <container:ChangingStackLayout>
+            <header:HeaderView
 				x:Name="Header" />
             <StackLayout Spacing="0">
                 <TableView
@@ -59,6 +61,6 @@
                 <components:InfoFooterComponent
                     x:Name="Footer"/>
             </StackLayout>
-        </components:ChangingStackLayout>
+        </container:ChangingStackLayout>
     </ContentPage.Content>
 </ContentPage>

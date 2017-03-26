@@ -73,14 +73,14 @@
     <Compile Include="View\Components\CellViews\CustomCellViewActionItem.cs" />
     <Compile Include="View\Components\CellViews\SectionFooterView.cs" />
     <Compile Include="View\Components\CellViews\SectionHeaderView.cs" />
-    <Compile Include="View\Components\ChangingStackLayout.cs" />
-    <Compile Include="View\Components\CoinTableComponent.cs" />
+    <Compile Include="View\Container\ChangingStackLayout.cs" />
+    <Compile Include="View\Components\Table\CoinTableComponent.cs" />
     <Compile Include="View\Components\CoinGraphComponent.cs" />
-    <Compile Include="View\Components\CoinHeaderComponent.cs" />
-    <Compile Include="View\Components\HeaderView.xaml.cs">
+    <Compile Include="View\Components\Header\CoinHeaderComponent.cs" />
+    <Compile Include="View\Components\Header\HeaderView.xaml.cs">
       <DependentUpon>HeaderView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Components\CoinInfoHeaderComponent.cs" />
+    <Compile Include="View\Components\Header\CoinInfoHeaderComponent.cs" />
     <Compile Include="View\Components\InfoFooterComponent.cs" />
     <Compile Include="View\Components\BaseComponents\SegmentedControl.cs" />
     <Compile Include="View\Container\MasterDetailContainer.cs" />
@@ -123,13 +123,13 @@
     <Compile Include="View\Pages\RateView.xaml.cs">
       <DependentUpon>RateView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Components\RatesTableComponent.cs" />
-    <Compile Include="View\Components\ReferenceCurrenciesView.cs" />
-    <Compile Include="View\Components\AccountsTableComponent.cs" />
+    <Compile Include="View\Components\Table\RatesTableComponent.cs" />
+    <Compile Include="View\Components\Table\ReferenceCurrenciesView.cs" />
+    <Compile Include="View\Components\Table\AccountsTableComponent.cs" />
     <Compile Include="View\Pages\Settings\WatchedCurrenciesSettingsView.xaml.cs">
       <DependentUpon>WatchedCurrenciesSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Components\RatesHeaderComponent.cs" />
+    <Compile Include="View\Components\Header\RatesHeaderComponent.cs" />
     <Compile Include="View\Pages\CoinInfoView.xaml.cs">
       <DependentUpon>CoinInfoView.xaml</DependentUpon>
     </Compile>
@@ -206,7 +206,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="View\Components\HeaderView.xaml">
+    <EmbeddedResource Include="View\Components\Header\HeaderView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

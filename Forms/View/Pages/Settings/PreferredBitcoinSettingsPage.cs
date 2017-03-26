@@ -14,8 +14,10 @@ using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Components.Cells;
+using MyCC.Forms.View.Container;
 using Plugin.Connectivity;
 using Xamarin.Forms;
+using HeaderView = MyCC.Forms.View.Components.Header.HeaderView;
 
 namespace MyCC.Forms.View.Pages.Settings
 {
@@ -74,12 +76,17 @@ namespace MyCC.Forms.View.Pages.Settings
             changingStack.Children.Add(new StackLayout
             {
                 Spacing = 0,
+                BackgroundColor = AppConstants.BorderColor,
                 Children = {
                     tableView,
-                    new InfoFooterComponent(false) { Text = $"* {I18N.InfoNoDirectRate}" },
+                    new ContentView{
+                        Margin = new Thickness(0,1,0,0),
+                        Padding = 5,
+                        Content = new Label { Text = $"* {I18N.InfoNoDirectRate}", VerticalOptions = LayoutOptions.End, FontSize = 12, TextColor = AppConstants.FontColorLight },
+                        BackgroundColor = Color.White
+                    },
                     infoView
-
-                }
+                    }
             });
 
             Content = changingStack;

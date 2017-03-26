@@ -3,8 +3,9 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
+	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
+	xmlns:header="clr-namespace:MyCC.Forms.View.Components.Header;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.Settings.SettingsView"
 	Title="{resources:Translate Settings}">
     <ContentPage.BackgroundColor>
@@ -13,8 +14,8 @@
 			Android="#EEE" />
     </ContentPage.BackgroundColor>
     <ContentPage.Content>
-        <components1:ChangingStackLayout>
-            <components1:HeaderView
+        <container:ChangingStackLayout>
+            <header:HeaderView
 				x:Name="Header"
 				InfoText="{resources:Translate AppNameLong}" />
             <TableView
@@ -65,12 +66,12 @@
 						x:Name="AboutCell"
 						Text="{resources:Translate About}"
 						Image="more.png" />
-                    <cells:CustomViewCell
+                    <!--<cells:CustomViewCell
 						x:Name="AvailableCurrenciesCell"
 						Text="{resources:Translate AvailableCurrencies}"
-						Image="more.png" />
+						Image="more.png" />-->
                 </TableSection>
             </TableView>
-        </components1:ChangingStackLayout>
+        </container:ChangingStackLayout>
     </ContentPage.Content>
 </ContentPage>

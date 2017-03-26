@@ -4,7 +4,7 @@ using MyCC.Core.Rates;
 using MyCC.Forms.Messages;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.View.Components
+namespace MyCC.Forms.View.Components.Header
 {
     public class CoinInfoHeaderComponent : HeaderView
     {

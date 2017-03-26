@@ -4,7 +4,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
-	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
+	xmlns:header="clr-namespace:MyCC.Forms.View.Components.Header;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="MyCC.Forms.View.Pages.Settings.Source.SourcesView"
 	Title="{resources:Translate Sources}">
@@ -15,8 +16,8 @@
             Icon="add.png"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <components1:ChangingStackLayout>
-            <components1:HeaderView
+        <container:ChangingStackLayout>
+            <header:HeaderView
                 TitleText="{resources:Translate AppName}"
 				x:Name="Header" />
             <StackLayout
@@ -58,6 +59,6 @@
                     </StackLayout>
                 </ContentView>
             </StackLayout>
-        </components1:ChangingStackLayout>
+        </container:ChangingStackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -3,7 +3,7 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
-    x:Class="MyCC.Forms.View.Components.HeaderView"
+    x:Class="MyCC.Forms.View.Components.Header.HeaderView"
 	BackgroundColor="{x:Static constants:AppConstants.ThemeColor}"
     MinimumWidthRequest="240"
     MinimumHeightRequest="90">
@@ -16,30 +16,23 @@
                 Margin="5"
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand">
-				<Label
-                    x:Name="HeadingLabel"
-                    FontSize="24"
-					Margin="0,15,0,15"
-                    FontAttributes="Bold"
-                    TextColor="White"
-					HorizontalOptions="CenterAndExpand"
-					HorizontalTextAlignment="Center"
-                    LineBreakMode="TailTruncation" />
                 <StackLayout
                     Orientation="Horizontal"
+                    x:Name="MoneyStack"
                     HorizontalOptions="CenterAndExpand"
                     Spacing="0">
                     <Label
                         x:Name="TitleLabel"
                         FontSize="36"
                         FontAttributes="Bold"
+                        HorizontalOptions="CenterAndExpand"
                         TextColor="White"
                         LineBreakMode="TailTruncation" />
                     <Label
-                        x:Name="TitleLabelSmall"
-                        Margin="0,0,0,3"
-                        VerticalOptions="End"
-                        FontSize="24"
+                        x:Name="CodeLabel"
+                        HorizontalOptions="CenterAndExpand"
+                        FontSize="36"
+                        Margin="8,0,0,0"
                         FontAttributes="Bold"
                         TextColor="White"
                         LineBreakMode="TailTruncation" />

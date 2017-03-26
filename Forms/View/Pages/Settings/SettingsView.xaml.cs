@@ -1,12 +1,10 @@
 using System;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currency.Storage;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
-using MyCC.Forms.View.Pages.Settings.Info;
 using MyCC.Forms.View.Pages.Settings.Source;
 
 namespace MyCC.Forms.View.Pages.Settings
@@ -34,7 +32,9 @@ namespace MyCC.Forms.View.Pages.Settings
             RatesCell.Tapped += (sender, e) => Navigation.PushAsync(new WatchedCurrenciesSettingsView());
             PreferredRateCell.Tapped += (s, e) => Navigation.PushAsync(new PreferredBitcoinSettingsPage());
             RatesCell.DetailBreakMode = Xamarin.Forms.LineBreakMode.TailTruncation;
-            AvailableCurrenciesCell.Tapped += (sender, args) => Navigation.PushAsync(new CurrencyGroupedInfoView());
+            /*
+                        AvailableCurrenciesCell.Tapped += (sender, args) => Navigation.PushAsync(new CurrencyGroupedInfoView());
+            */
             SetRatesCellDetail();
             SetPinCellText();
             SetAboutCell();
@@ -107,7 +107,9 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetAvailableCurrenciesCell()
         {
-            AvailableCurrenciesCell.Detail = PluralHelper.GetTextCurrencies(CurrencyStorage.Instance.AllElements.Count);
+            /*
+                        AvailableCurrenciesCell.Detail = PluralHelper.GetTextCurrencies(CurrencyStorage.Instance.AllElements.Count);
+            */
         }
     }
 }

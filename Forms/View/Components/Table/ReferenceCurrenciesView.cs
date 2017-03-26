@@ -1,38 +1,40 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
-using MyCC.Core.Resources;
+using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.CellViews;
-using MyCC.Forms.View.Pages;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
 using XLabs.Ioc;
 using XLabs.Serialization;
 using XLabs.Serialization.JsonNET;
 
-namespace MyCC.Forms.View.Components
+namespace MyCC.Forms.View.Components.Table
 {
-    public class AccountsTableComponent : ContentView
+    public class ReferenceCurrenciesView : ContentView
     {
-        private readonly HybridWebView _webView;
-        private readonly Currency _currency;
-        private bool _appeared;
-        private readonly bool _useEnabledAccounts;
+        public Money ReferenceMoney { private get; set; }
 
-        public AccountsTableComponent(INavigation navigation, Currency currency, bool useEnabledAccounts)
+        private readonly SectionHeaderView _sectionHeader;
+        private readonly HybridWebView _webView;
+        private bool _appeared;
+
+        private string TableHeaderLabel => string.Format(ReferenceMoney.Amount == 1 ? I18N.IsEqualTo : I18N.AreEqualTo, ReferenceMoney);
+        private IEnumerable<Currency> ReferenceCurrencies => ApplicationSettings.AllReferenceCurrencies.Except(new List<Currency> { ReferenceMoney?.Currency });
+
+        public ReferenceCurrenciesView(Money reference)
         {
-            _currency = currency;
-            _useEnabledAccounts = useEnabledAccounts;
+            ReferenceMoney = reference;
 
             var resolverContainer = new SimpleContainer();
 
@@ -42,16 +44,9 @@ namespace MyCC.Forms.View.Components
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = Color.White,
+                BackgroundColor = AppConstants.TableBackgroundColor,
                 HeightRequest = 0
             };
-            _webView.RegisterCallback("Callback", idString =>
-            {
-                var id = int.Parse(idString);
-                var account = AccountStorage.Instance.AllElements.Find(a => a.Id.Equals(id));
-
-                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(account)));
-            });
 
             _webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
             {
@@ -63,28 +58,35 @@ namespace MyCC.Forms.View.Components
             {
                 SortOrder value;
                 var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
-                if (clickedSortOrder == ApplicationSettings.SortOrderAccounts)
+                if (clickedSortOrder == SortOrder.None) return;
+
+                if (clickedSortOrder == ApplicationSettings.SortOrderReferenceValues)
                 {
-                    ApplicationSettings.SortDirectionAccounts = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending
+                    ApplicationSettings.SortDirectionReferenceValues = ApplicationSettings.SortDirectionReferenceValues == SortDirection.Ascending
                         ? SortDirection.Descending
                         : SortDirection.Ascending;
                 }
-                ApplicationSettings.SortOrderAccounts = clickedSortOrder;
+                ApplicationSettings.SortOrderReferenceValues = clickedSortOrder;
 
                 UpdateView();
             });
 
+
             var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
-            stack.Children.Add(new SectionHeaderView(false) { Title = _useEnabledAccounts ? I18N.Accounts : I18N.DisabledAccounts });
+            _sectionHeader = new SectionHeaderView(false) { Title = TableHeaderLabel };
+            stack.Children.Add(_sectionHeader);
             stack.Children.Add(_webView);
 
             Content = stack;
 
-            UpdateView();
-
+            Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
             Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
+            Messaging.UpdatingRates.SubscribeFinished(this, UpdateView);
             Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
+
+            Messaging.RatesPageCurrency.SubscribeValueChanged(this, UpdateView);
+            Messaging.Loading.SubscribeFinished(this, UpdateView);
         }
 
         public void OnAppearing()
@@ -92,37 +94,38 @@ namespace MyCC.Forms.View.Components
             if (_appeared) return;
 
             _appeared = true;
-            _webView.LoadFromContent("Html/accountsTable.html");
+            _webView.LoadFromContent("Html/equalsTable.html");
             _webView.LoadFinished = (sender, e) => UpdateView();
         }
 
-        private void UpdateView()
+        public void UpdateView()
         {
             try
             {
-                var items = AccountStorage.AccountsWithCurrency(_currency).Where(a => a.IsEnabled == _useEnabledAccounts).Select(a => new Data(a)).ToList();
+                var items = ReferenceCurrencies.Select(c => new Data(ReferenceMoney, c)).ToList();
+                var itemsExisting = items.Count > 0;
 
-                if (!items.Any() || !_appeared) return;
+                if (!itemsExisting || !_appeared) return;
 
                 Func<Data, object> sortLambda;
-                switch (ApplicationSettings.SortOrderAccounts)
+                switch (ApplicationSettings.SortOrderReferenceValues)
                 {
-                    case SortOrder.Alphabetical: sortLambda = d => d.Name; break;
-                    case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("<", "").Trim()); break;
-                    case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Amount.Replace("<", "").Trim()); break;
+                    case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
+                    case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("< ", string.Empty)); break;
+                    case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Amount.Replace("< ", string.Empty)); break;
                     case SortOrder.None: sortLambda = d => 1; break;
                     default: sortLambda = d => 1; break;
                 }
-
-                items = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
+                items = ApplicationSettings.SortDirectionReferenceValues == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
                 Device.BeginInvokeOnMainThread(() =>
                 {
+                    _sectionHeader.Title = TableHeaderLabel;
                     _webView.CallJsFunction("setHeader", new[]{
-                    new HeaderData(I18N.Name, SortOrder.Alphabetical.ToString()),
-                    new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
-                        }, string.Empty);
-                    _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+                      new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
+                      new HeaderData($"{I18N.Currency[0]}.", SortOrder.Alphabetical.ToString())
+                          }, string.Empty);
+                    _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), ReferenceMoney.Amount == 1);
                 });
             }
             catch (Exception e)
@@ -137,20 +140,21 @@ namespace MyCC.Forms.View.Components
         public class Data
         {
             [DataMember]
-            public readonly string Name;
-            [DataMember]
             public readonly string Amount;
             [DataMember]
-            public readonly bool Disabled;
+            public readonly string Code;
             [DataMember]
-            public readonly int Id;
+            public readonly string Rate;
 
-            public Data(Account account)
+            public Data(Money reference, Currency currency)
             {
-                Name = account.Name;
-                Amount = account.Money.ToString8Digits(false);
-                Id = account.Id;
-                Disabled = !account.IsEnabled;
+                var neededRate = new ExchangeRate(reference.Currency, currency);
+                var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
+
+                Code = currency.Code;
+                var money = new Money(reference.Amount * rate.Rate ?? 0 * reference.Amount, currency);
+                Amount = money.ToString8Digits(false);
+                Rate = new Money(rate.Rate ?? 0, currency).ToString8Digits(false);
             }
         }
 
@@ -166,8 +170,8 @@ namespace MyCC.Forms.View.Components
 
             public SortData()
             {
-                Direction = ApplicationSettings.SortDirectionAccounts.ToString();
-                Type = ApplicationSettings.SortOrderAccounts.ToString();
+                Direction = ApplicationSettings.SortDirectionReferenceValues.ToString();
+                Type = ApplicationSettings.SortOrderReferenceValues.ToString();
             }
 
         }

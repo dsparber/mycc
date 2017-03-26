@@ -19,7 +19,7 @@ using XLabs.Ioc;
 using XLabs.Serialization;
 using XLabs.Serialization.JsonNET;
 
-namespace MyCC.Forms.View.Components
+namespace MyCC.Forms.View.Components.Table
 {
     public class RatesTableComponent : ContentView
     {

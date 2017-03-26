@@ -4,9 +4,10 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
     xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
-	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
-	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
+    xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
 	xmlns:baseComponents="clr-namespace:MyCC.Forms.View.Components.BaseComponents;assembly=MyCC.Forms"
+	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
+	xmlns:header="clr-namespace:MyCC.Forms.View.Components.Header;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="MyCC.Forms.View.Overlays.AddSourceView"
 	Title="{resources:Translate AddSource}">
@@ -19,8 +20,8 @@
 			Clicked="Save" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <components1:ChangingStackLayout>
-            <components1:HeaderView
+        <container:ChangingStackLayout>
+            <header:HeaderView
 				x:Name="Header" />
             <StackLayout
 				Spacing="0">
@@ -52,6 +53,6 @@
                     </TableView>
                 </ContentView>
             </StackLayout>
-        </components1:ChangingStackLayout>
+        </container:ChangingStackLayout>
     </ContentPage.Content>
 </ContentPage>

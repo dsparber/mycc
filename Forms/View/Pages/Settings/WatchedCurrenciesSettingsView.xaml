@@ -4,7 +4,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
+	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
+	xmlns:header="clr-namespace:MyCC.Forms.View.Components.Header;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.Settings.WatchedCurrenciesSettingsView"
     BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
 	Title="{resources:Translate AdditionalRates}">
@@ -15,8 +16,8 @@
       Icon="add.png"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <components:ChangingStackLayout>
-            <components:HeaderView
+        <container:ChangingStackLayout>
+            <header:HeaderView
 				TitleText="{resources:Translate AppName}"
 				x:Name="Header"/>
             <ScrollView
@@ -37,6 +38,6 @@
                     </TableView>
                 </StackLayout>
             </ScrollView>
-        </components:ChangingStackLayout>
+        </container:ChangingStackLayout>
     </ContentPage.Content>
 </ContentPage>

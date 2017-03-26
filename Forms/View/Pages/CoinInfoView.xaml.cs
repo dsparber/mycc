@@ -12,9 +12,10 @@ using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
-using MyCC.Forms.View.Components;
 using Xamarin.Forms;
 using MyCC.Forms.Messages;
+using MyCC.Forms.View.Components.Header;
+using MyCC.Forms.View.Components.Table;
 using Plugin.Connectivity;
 
 namespace MyCC.Forms.View.Pages

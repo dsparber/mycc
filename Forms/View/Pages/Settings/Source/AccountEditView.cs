@@ -38,9 +38,15 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             ToolbarItems.Remove(SaveItem);
             EditView.Root.Remove(DeleteSection);
 
-            _currencyEntryCell.OnSelected = c => Header.TitleText = _currencyEntryCell.SelectedMoney.ToString();
-            _currencyEntryCell.OnTyped = m => Header.TitleText = m.ToString();
-
+            _currencyEntryCell.OnSelected = c => Header.TitleText = new Money(decimal.Parse(string.IsNullOrWhiteSpace(AmountEntry.Text) ? "0" : AmountEntry.Text), _currencyEntryCell.SelectedCurrency).ToString();
+            AmountEntry.Entry.TextChanged += (s, o) =>
+            {
+                try
+                {
+                    Header.TitleText = new Money(decimal.Parse(string.IsNullOrWhiteSpace(AmountEntry.Text) ? "0" : AmountEntry.Text), _currencyEntryCell.SelectedCurrency).ToString();
+                }
+                catch { /* nothing */ }
+            };
             EnableAccountCell.On = account.IsEnabled;
             EnableAccountCell.Switch.IsEnabled = false;
 
@@ -65,6 +71,13 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             ToolbarItems.Add(SaveItem);
 
             Title = I18N.Editing;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            Header.AdaptSize();
+            if (_isEditModal) AmountEntry.Entry.Focus();
         }
 
         private async void DoneEditing(object sender, EventArgs e)

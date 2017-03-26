@@ -25,7 +25,7 @@ namespace MyCC.Core.Account.Models.Base
             try
             {
 
-                Amount = Math.Truncate(amount * 10e8m) / 10e8m;
+                Amount = Math.Truncate(amount * 10e7m) / 10e7m;
             }
             catch
             {

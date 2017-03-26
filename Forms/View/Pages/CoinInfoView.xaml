@@ -6,6 +6,7 @@
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
     xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
     xmlns:pullToRefresh="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
+    xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
     x:Class="MyCC.Forms.View.Pages.CoinInfoView">
     <ContentPage.ToolbarItems>
         <ToolbarItem
@@ -15,7 +16,7 @@
 			Icon="ToTable" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <components:ChangingStackLayout
+        <container:ChangingStackLayout
             x:Name="ChangingStack"
 		    BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
             <StackLayout
@@ -53,6 +54,6 @@
                 <components:InfoFooterComponent
                     x:Name="Footer"/>
             </StackLayout>
-        </components:ChangingStackLayout>
+        </container:ChangingStackLayout>
     </ContentPage.Content>
 </ContentPage>

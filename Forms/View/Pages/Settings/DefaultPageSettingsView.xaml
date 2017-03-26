@@ -3,41 +3,42 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
-	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
+	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
+	xmlns:header="clr-namespace:MyCC.Forms.View.Components.Header;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.Settings.DefaultPageSettingsView"
 	Title="{resources:Translate DefaultView}">
-  <components:ChangingStackLayout>
-    <components:HeaderView
+    <container:ChangingStackLayout>
+        <header:HeaderView
 			TitleText="{resources:Translate AppName}"
 			x:Name="Header" />
-    <StackLayout
+        <StackLayout
 			Spacing="0"
 			BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}">
-      <Label
+            <Label
 				Text="{resources:Translate DefaultPageInfo}"
 				Margin="15,15,15,0"
 				TextColor="{x:Static constants:AppConstants.TableSectionColor}"
 				FontSize="14" />
-      <TableView
+            <TableView
 				Intent="Settings">
-        <TableSection
+                <TableSection
 					Title="{resources:Translate DefaultView}">
-          <cells:CustomViewCell
+                    <cells:CustomViewCell
 						x:Name="RatesOptionCell"
 						Tapped="SelectionChanged"
 						Image="checkmark.png" />
-          <cells:CustomViewCell
+                    <cells:CustomViewCell
 						x:Name="TableOptionCell"
 						Tapped="SelectionChanged"
 						Image="checkmark.png" />
-          <cells:CustomViewCell
+                    <cells:CustomViewCell
 						x:Name="GraphOptionCell"
 						Tapped="SelectionChanged"
 						Image="checkmark.png" />
-        </TableSection>
-      </TableView>
-    </StackLayout>
-  </components:ChangingStackLayout>
+                </TableSection>
+            </TableView>
+        </StackLayout>
+    </container:ChangingStackLayout>
 </ContentPage>

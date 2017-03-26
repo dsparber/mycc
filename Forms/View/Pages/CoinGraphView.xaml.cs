@@ -11,6 +11,7 @@ using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
+using MyCC.Forms.View.Components.Header;
 using MyCC.Forms.View.Overlays;
 using Plugin.Connectivity;
 using Refractored.XamForms.PullToRefresh;

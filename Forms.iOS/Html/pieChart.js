@@ -47,11 +47,11 @@ var chartOptions = {
     "labels": {
         "formatter": labelFormatter,
         "outer": {
-            "format": "label",
-            "pieDistance": 3
+            "format": "label-percentage2",
+            "pieDistance": 15
         },
         "inner": {
-            "format": "percentage"
+            "format": "label-percentage2"
         },
         "mainLabel": {
             "color": "segment",
@@ -61,11 +61,11 @@ var chartOptions = {
         "percentage": {
             "color": "#000",
             "font": "arial",
-            "fontSize": 14,
-            "decimalPlaces": 0
+            "fontSize": 11,
+            "decimalPlaces": 2
         },
         "value": {
-            "color": "#999",
+            "color": "#fff",
             "font": "arial",
             "fontSize": 14
         },
@@ -177,30 +177,25 @@ function showOverlay(id, callback) {
 }
 
 function labelFormatter(context) {
-    if (context.value !== chartOptions["data"]["content"][context.index]["value"]) {
-        if (context.section === "outer" && context.part === "mainLabel") {
-            return _textFurter;
+    var sum = 0;
+    for (var i in chartOptions["data"]["content"]){
+      sum +=  chartOptions["data"]["content"][i]["value"];
+    }
+    var percent = chartOptions["data"]["content"][context.index]["value"] / sum;
+    var length = chartOptions["data"]["content"].length;
+
+    if (percent < 0.08) {
+        if (context.section === "outer") {
+            return context.part === "mainLabel" ? context.index === length - 1 ? context.label :   _textFurter : context.label + " %";
         }
         if (context.section === "inner") {
             return "";
         }
     }
-    if (context.section === "outer" && context.part === "mainLabel") {
-        var length = chartOptions["data"]["content"].length;
-        return (length - 1 !== context.index) ? "" : chartOptions["data"]["content"][context.index]["label"];
-    }
-    if (context.section === "outer" && context.part === "value") {
-        return "";
-        //return "\u2248 " + chartOptions["data"]["content"][context.index]["reference"];
-    }
-    if (context.section === "outer" && context.part === "mainLabel") {
-        return chartOptions["data"]["content"][context.index]["money"];
-    }
-    if (context.section === "inner") {
-        var length = chartOptions["data"]["content"].length;
-        return (length - 1 === context.index) ? "" : chartOptions["data"]["content"][context.index]["label"];
-    }
-    return chartOptions["data"]["content"][context.index]["label"];
+    if (context.section === "outer") return "";
+    if ( context.part === "mainLabel") return chartOptions["data"]["content"][context.index]["label"];
+    if ( context.part === "percentage") return context.label + " %";
+    return context.label;
 }
 
 function clickedListener(data) {
@@ -275,13 +270,14 @@ function clickedListener(data) {
 }
 
 function groupData(data) {
+    if (data.length < 3) return false;
     var sum = 0, i;
     for (i in data) {
         sum += data[i]["value"];
     }
     var countBelow5Percent = 0;
     for (i in data) {
-        if (0.05 * sum > data[i]["value"]) {
+        if (0.08 * sum > data[i]["value"]) {
             countBelow5Percent += 1;
         }
     }

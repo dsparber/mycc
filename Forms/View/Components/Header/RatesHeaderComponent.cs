@@ -6,7 +6,7 @@ using MyCC.Core.Settings;
 using MyCC.Forms.Messages;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.View.Components
+namespace MyCC.Forms.View.Components.Header
 {
     public class RatesHeaderComponent : HeaderView
     {

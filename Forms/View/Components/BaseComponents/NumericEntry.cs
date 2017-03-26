@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
@@ -18,14 +19,15 @@ namespace MyCC.Forms.View.Components.BaseComponents
             Keyboard = Keyboard.Numeric;
             TextChanged += (sender, args) =>
             {
-                var seperator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator;
+                var seperator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
 
                 var entry = (Entry)sender;
                 var val = entry.Text;
 
                 if (val.Length == 0) return;
-                if (!IsPin && val.Split(new[] { seperator }, StringSplitOptions.RemoveEmptyEntries).Length <= 2 &&
-                     Regex.IsMatch(val.Replace(seperator, string.Empty), @"^\d+$")) return;
+                if (!IsPin && (val.Count(x => x == seperator) == 0 || val.Count(x => x == seperator) == 1 &&
+                     $"{val}x".Split(new[] { seperator }, StringSplitOptions.RemoveEmptyEntries)[1].Length <= 9) &&
+                     Regex.IsMatch(val.Replace(seperator.ToString(), string.Empty), @"^\d+$")) return;
                 if (IsPin && Regex.IsMatch(val, @"^\d+$")) return;
 
                 val = val.Remove(val.Length - 1);

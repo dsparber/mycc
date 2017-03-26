@@ -3,12 +3,13 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
-using MyCC.Forms.View.Components;
+using MyCC.Forms.View.Container;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
 using XLabs.Ioc;
 using XLabs.Serialization;
 using XLabs.Serialization.JsonNET;
+using HeaderView = MyCC.Forms.View.Components.Header.HeaderView;
 
 
 namespace MyCC.Forms.View.Overlays
