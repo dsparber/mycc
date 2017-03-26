@@ -5,6 +5,7 @@ using MyCC.Core.Currency.Model;
 using MyCC.Core.Currency.Storage;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
+using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Overlays;
 using Xamarin.Forms;
 
@@ -144,7 +145,7 @@ namespace MyCC.Forms.View.Components.Cells
             };
             _selectedCurrencyLabel.TextColor = _selectedCurrency != null ? AppConstants.FontColor : AppConstants.FontColorLight;
 
-            _amountEntry = new Entry { IsVisible = IsAmountEnabled, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand, Keyboard = Keyboard.Numeric, Placeholder = I18N.Value };
+            _amountEntry = new NumericEntry { IsVisible = IsAmountEnabled, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand, Placeholder = I18N.Value };
             _amountEntry.TextChanged += (sender, e) => OnTyped(SelectedMoney);
 
             if (Device.OS == TargetPlatform.Android)

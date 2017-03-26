@@ -258,6 +258,7 @@
     <Compile Include="renderer\CustomFingerprintDialog.cs" />
     <Compile Include="renderer\CustomProgressBarRenderer.cs" />
     <Compile Include="renderer\CustomTableViewModelRenderer .cs" />
+    <Compile Include="renderer\CustomNumericEntryRenderer.cs" />
     <Compile Include="renderer\CustomTableViewRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

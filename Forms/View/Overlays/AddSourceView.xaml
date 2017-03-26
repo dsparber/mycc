@@ -6,10 +6,11 @@
     xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
 	xmlns:components1="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
+	xmlns:baseComponents="clr-namespace:MyCC.Forms.View.Components.BaseComponents;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
 	x:Class="MyCC.Forms.View.Overlays.AddSourceView"
 	Title="{resources:Translate AddSource}">
-  <ContentPage.ToolbarItems>
+    <ContentPage.ToolbarItems>
         <ToolbarItem
 			Text="{resources:Translate Cancel}"
 			Clicked="Cancel" />
@@ -17,40 +18,40 @@
 			Text="{resources:Translate Save}"
 			Clicked="Save" />
     </ContentPage.ToolbarItems>
-  <ContentPage.Content>
-    <components1:ChangingStackLayout>
-      <components1:HeaderView
+    <ContentPage.Content>
+        <components1:ChangingStackLayout>
+            <components1:HeaderView
 				x:Name="Header" />
-      <StackLayout
+            <StackLayout
 				Spacing="0">
-        <components1:SegmentedControl
+                <baseComponents:SegmentedControl
 					x:Name="SegmentedControl" />
-        <ContentView>
-          <ContentView.Padding>
-            <OnPlatform
+                <ContentView>
+                    <ContentView.Padding>
+                        <OnPlatform
 							x:TypeArguments="Thickness"
 							iOS="0,-10,0,0" />
-          </ContentView.Padding>
-          <TableView
+                    </ContentView.Padding>
+                    <TableView
 						x:Name="TableViewComponent"
 						Intent="Form">
-            <TableView.BackgroundColor>
-              <OnPlatform
+                        <TableView.BackgroundColor>
+                            <OnPlatform
 								x:TypeArguments="Color"
 								Android="#EEE" />
-            </TableView.BackgroundColor>
-            <TableView.Root>
-              <TableSection
+                        </TableView.BackgroundColor>
+                        <TableView.Root>
+                            <TableSection
 								Title="{resources:Translate Name}" x:Name="NameSection">
-                <cells:CustomEntryCell
+                                <cells:CustomEntryCell
 									x:Name="NameEntryCell"
 									Title="{resources:Translate Name}"
 									Placeholder="{resources:Translate Name}" />
-              </TableSection>
-            </TableView.Root>
-          </TableView>
-        </ContentView>
-      </StackLayout>
-    </components1:ChangingStackLayout>
-  </ContentPage.Content>
+                            </TableSection>
+                        </TableView.Root>
+                    </TableView>
+                </ContentView>
+            </StackLayout>
+        </components1:ChangingStackLayout>
+    </ContentPage.Content>
 </ContentPage>

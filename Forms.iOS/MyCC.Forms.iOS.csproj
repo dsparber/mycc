@@ -385,6 +385,7 @@
     <Compile Include="renderer\ContentPageRenderer.cs" />
     <Compile Include="renderer\CustomEntryRenderer.cs" />
     <Compile Include="renderer\CustomNavigationRender.cs" />
+    <Compile Include="renderer\CustomNumericEntryRenderer.cs" />
     <Compile Include="renderer\CustomPickerRenderer.cs" />
     <Compile Include="renderer\FrameRenderer.cs" />
     <Compile Include="Helpers\TextSizeHelper.cs" />

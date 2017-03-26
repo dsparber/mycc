@@ -30,23 +30,8 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 
             AccountName.Text = account.Name;
             AmountEntry.Text = account.Money.Amount.ToString();
-            AmountEntry.Entry.Keyboard = Keyboard.Numeric;
             _currencyEntryCell = new CurrencyEntryCell(Navigation) { IsAmountEnabled = false, IsFormRepresentation = true, IsEditable = false, SelectedCurrency = account.Money.Currency };
             AccountSection.Add(_currencyEntryCell);
-
-            AmountEntry.Entry.TextChanged += (sender, e) =>
-            {
-                var entry = (Entry)sender;
-                var val = entry.Text;
-
-#pragma warning disable 168
-                decimal n;
-                if (val.Length == 0 || decimal.TryParse(val, out n)) return;
-#pragma warning restore 168
-
-                val = val.Remove(val.Length - 1);
-                entry.Text = val;
-            };
 
             DeleteButtonCell.Tapped += Delete;
 

@@ -132,7 +132,7 @@ namespace MyCC.Core.Settings
             set
             {
                 PinLength = string.IsNullOrEmpty(value) ? -1 : value.Length;
-                Settings.Set(Settings.KeyPin, Hash(value ?? string.Empty));
+                Settings.Set(Settings.KeyPin, string.IsNullOrWhiteSpace(value) ? string.Empty : Hash(value));
             }
         }
 

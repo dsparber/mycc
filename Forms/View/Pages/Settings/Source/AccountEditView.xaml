@@ -47,6 +47,7 @@
 								IsEditable="false" />
                             <cells:CustomEntryCell
 								x:Name="AmountEntry"
+                                IsNumeric="True"
 								Title="{resources:Translate Amount}"
 								Placeholder="{resources:Translate Amount}"
 								IsEditable="false" />

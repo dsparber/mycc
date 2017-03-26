@@ -1,11 +1,31 @@
 ﻿using MyCC.Forms.Constants;
+using MyCC.Forms.View.Components.BaseComponents;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Components.Cells
 {
     public class CustomEntryCell : ViewCell
     {
-        public readonly Entry Entry;
+        private readonly Entry _entry;
+        private readonly NumericEntry _numericEntry;
+        private bool _isNumeric;
+
+        public Entry Entry => _isNumeric ? _numericEntry : _entry;
+
+        public bool IsNumeric
+        {
+            get
+            {
+                return _isNumeric;
+            }
+            set
+            {
+                _isNumeric = value;
+                _entry.IsVisible = !value;
+                _numericEntry.IsVisible = value;
+            }
+        }
+
         private readonly Label _titleLabel;
 
         private string _title;
@@ -18,7 +38,12 @@ namespace MyCC.Forms.View.Components.Cells
 
         public string Placeholder
         {
-            set { _placeholder = value; Entry.Placeholder = _placeholder; }
+            set
+            {
+                _placeholder = value;
+                _numericEntry.Placeholder = _placeholder;
+                _entry.Placeholder = _placeholder;
+            }
         }
 
         public string Text
@@ -32,26 +57,38 @@ namespace MyCC.Forms.View.Components.Cells
             get { return Entry.IsEnabled; }
             set
             {
-                Entry.IsEnabled = value;
-                Entry.Opacity = value ? 1 : 0.5;
+                _entry.IsEnabled = value;
+                _entry.Opacity = value ? 1 : 0.5;
+                _numericEntry.IsEnabled = value;
+                _numericEntry.Opacity = value ? 1 : 0.5;
             }
+        }
+
+        public bool IsPin
+        {
+            get { return _numericEntry.IsPin; }
+            set { _numericEntry.IsPin = value; }
         }
 
         public CustomEntryCell()
         {
-            Entry = new Entry { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
+            _numericEntry = new NumericEntry { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand, IsVisible = false };
+            _entry = new Entry { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
+
             _titleLabel = new Label { WidthRequest = AppConstants.LabelWidth, MinimumWidthRequest = AppConstants.LabelWidth, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = AppConstants.FontColor, LineBreakMode = LineBreakMode.NoWrap };
 
             var stack = new StackLayout { Orientation = StackOrientation.Horizontal, Padding = new Thickness(15, 0), VerticalOptions = LayoutOptions.CenterAndExpand };
             stack.Children.Add(_titleLabel);
-            stack.Children.Add(Entry);
+            stack.Children.Add(_numericEntry);
+            stack.Children.Add(_entry);
 
 
             if (Device.OS == TargetPlatform.Android)
             {
                 stack.Spacing = 3;
                 _titleLabel.FontSize = AppConstants.AndroidFontSize;
-                Entry.FontSize = AppConstants.AndroidFontSize;
+                _numericEntry.FontSize = AppConstants.AndroidFontSize;
+                _entry.FontSize = AppConstants.AndroidFontSize;
             }
 
             stack.HorizontalOptions = LayoutOptions.FillAndExpand;

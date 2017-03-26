@@ -4,7 +4,6 @@ using MyCC.Core.Types;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Overlays
 {
@@ -24,14 +23,6 @@ namespace MyCC.Forms.View.Overlays
             {
                 _pinAction = pinAction;
             }
-
-            OldPinCell.Entry.IsPassword = true;
-            NewPinCell.Entry.IsPassword = true;
-            NewPinRepeatCell.Entry.IsPassword = true;
-
-            OldPinCell.Entry.Keyboard = Keyboard.Numeric;
-            NewPinCell.Entry.Keyboard = Keyboard.Numeric;
-            NewPinRepeatCell.Entry.Keyboard = Keyboard.Numeric;
 
             OldPinCell.Entry.TextChanged += (sender, e) =>
             {

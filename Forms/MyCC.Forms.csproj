@@ -62,6 +62,7 @@
     <Compile Include="View\Addsource\AddLocalAccountSubview.cs" />
     <Compile Include="View\Addsource\AddRepositorySubview.cs" />
     <Compile Include="View\Addsource\AddSourceSubview.cs" />
+    <Compile Include="View\Components\BaseComponents\NumericEntry.cs" />
     <Compile Include="View\Components\Cells\CurrencyEntryCell.cs" />
     <Compile Include="View\Components\Cells\CustomEntryCell.cs" />
     <Compile Include="View\Components\Cells\CustomPickerCell.cs" />
@@ -81,7 +82,7 @@
     </Compile>
     <Compile Include="View\Components\CoinInfoHeaderComponent.cs" />
     <Compile Include="View\Components\InfoFooterComponent.cs" />
-    <Compile Include="View\Components\SegmentedControl.cs" />
+    <Compile Include="View\Components\BaseComponents\SegmentedControl.cs" />
     <Compile Include="View\Container\MasterDetailContainer.cs" />
     <Compile Include="View\Container\TabContainerView.cs" />
     <Compile Include="View\Overlays\CurrencyOverlay.cs" />
