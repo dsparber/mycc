@@ -10,7 +10,7 @@ namespace MyCC.Forms.View.Components.Header
 
         private readonly double _defaultSize = App.ScreenHeight > 480 ? 36 : 28;
         private readonly double _defaultSizeInfoText = App.ScreenHeight > 480 ? 18 : 15;
-        private const double MinSizeInfoText = 12;
+        private readonly double _minSizeInfoText = App.ScreenHeight > 480 ? 16 : 13;
 
         public string TitleText
         {
@@ -156,7 +156,7 @@ namespace MyCC.Forms.View.Components.Header
                 width = DependencyService.Get<ITextSizeHelper>().CalculateWidth(InfoText, sizeInfo, true).Item2;
                 availableWidth = Width - 40;
 
-            } while (sizeInfo > MinSizeInfoText && availableWidth > 0 && width > availableWidth);
+            } while (sizeInfo > _minSizeInfoText && availableWidth > 0 && width > availableWidth);
 
             TitleLabel.FontSize = (double)size;
             CodeLabel.FontSize = (double)size;

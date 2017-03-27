@@ -15,7 +15,7 @@ namespace MyCC.Forms.iOS.renderer
 
             if (Control == null) return;
 
-            Control.ClearButtonMode = UITextFieldViewMode.WhileEditing;
+            Control.ClearButtonMode = (e.NewElement as NumericEntry)?.IsPin ?? false ? UITextFieldViewMode.Never : UITextFieldViewMode.WhileEditing;
             Control.BorderStyle = UITextBorderStyle.None;
             Control.KeyboardType = (e.NewElement as NumericEntry)?.IsPin ?? false ? UIKeyboardType.NumberPad : UIKeyboardType.DecimalPad;
         }

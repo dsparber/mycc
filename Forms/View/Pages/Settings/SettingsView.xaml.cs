@@ -5,6 +5,8 @@ using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
+using MyCC.Forms.View.Pages.Settings.Data;
+using MyCC.Forms.View.Pages.Settings.Info;
 using MyCC.Forms.View.Pages.Settings.Source;
 
 namespace MyCC.Forms.View.Pages.Settings
@@ -49,7 +51,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void OpenDefaultViewPage(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new DefaultPageSettingsView());
+            Navigation.PushAsync(new General.DefaultPageSettingsView());
         }
 
         private void AutoRefreshChanged(object sender, EventArgs e)
@@ -68,7 +70,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void PinCellTapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new PinSettingsView());
+            Navigation.PushAsync(new General.PinSettingsView());
         }
 
         private void SetPinCellText()

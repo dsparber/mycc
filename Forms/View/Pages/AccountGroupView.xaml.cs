@@ -19,7 +19,7 @@ using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages
 {
-    public partial class CoinDetailView
+    public partial class AccountGroupView
     {
         private readonly ReferenceCurrenciesView _referenceView;
         private readonly AccountsTableComponent _accountsViewEnabled;
@@ -31,7 +31,7 @@ namespace MyCC.Forms.View.Pages
         private readonly Currency _currency;
         private Money MoneySum => _accounts.ToList().Count == 0 ? null : new Money(_accounts.Where(a => a.Item1.IsEnabled).Sum(a => a.Item1.Money.Amount), _accounts.First().Item1.Money.Currency);
 
-        public CoinDetailView(Currency pageCurrency)
+        public AccountGroupView(Currency pageCurrency)
         {
             InitializeComponent();
 
@@ -39,7 +39,7 @@ namespace MyCC.Forms.View.Pages
             ChangingStack.Children.Insert(0, header);
 
             _currency = pageCurrency;
-            Title = _currency.Code;
+            Title = $"\u03A3 {_currency.Code}";
 
             LoadData();
 

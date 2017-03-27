@@ -4,7 +4,7 @@ using MyCC.Core.Types;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 
-namespace MyCC.Forms.View.Pages.Settings
+namespace MyCC.Forms.View.Pages.Settings.General
 {
     public partial class DefaultPageSettingsView
     {

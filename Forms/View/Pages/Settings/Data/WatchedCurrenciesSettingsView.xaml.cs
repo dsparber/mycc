@@ -4,12 +4,12 @@ using MyCC.Core.Currency.Model;
 using MyCC.Core.Settings;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
-using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Components.Cells;
+using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Overlays;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.View.Pages.Settings
+namespace MyCC.Forms.View.Pages.Settings.Data
 {
     public partial class WatchedCurrenciesSettingsView
     {

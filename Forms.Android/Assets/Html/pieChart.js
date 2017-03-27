@@ -178,23 +178,23 @@ function showOverlay(id, callback) {
 
 function labelFormatter(context) {
     var sum = 0;
-    for (var i in chartOptions["data"]["content"]) {
-        sum += chartOptions["data"]["content"][i]["value"];
+    for (var i in chartOptions["data"]["content"]){
+      sum +=  chartOptions["data"]["content"][i]["value"];
     }
     var percent = chartOptions["data"]["content"][context.index]["value"] / sum;
     var length = chartOptions["data"]["content"].length;
 
     if (percent < 0.08) {
         if (context.section === "outer") {
-            return context.part === "mainLabel" ? context.index === length - 1 ? context.label : _textFurter : context.label + " %";
+            return context.part === "mainLabel" ? context.index === length - 1 ? context.label :   _textFurter : formatPercent(context.label) + " %";
         }
         if (context.section === "inner") {
             return "";
         }
     }
     if (context.section === "outer") return "";
-    if (context.part === "mainLabel") return chartOptions["data"]["content"][context.index]["label"];
-    if (context.part === "percentage") return context.label + " %";
+    if ( context.part === "mainLabel") return chartOptions["data"]["content"][context.index]["label"];
+    if ( context.part === "percentage") return formatPercent(context.label) + " %";
     return context.label;
 }
 
@@ -287,6 +287,11 @@ function groupData(data) {
 function formatNumber(inputNumber) {
     var number = _roundNumbers ? Math.round(inputNumber * 100) / 100 : Math.floor(inputNumber * 100) / 100;
     return number.toLocaleString(_culture) + " " + _currencyCode;
+}
+
+function formatPercent(inputNumber) {
+    var number =  Math.floor(inputNumber * 100) / 100;
+    return number.toLocaleString(_culture);
 }
 
 function clearChartArea(id) {

@@ -11,7 +11,7 @@ namespace MyCC.Forms.Android.renderer
         {
             var view = base.OnCreateView(inflater, container, savedInstanceState);
             view.FindViewById<Button>(Resource.Id.fingerprint_btnCancel).Visibility = ViewStates.Invisible;
-            view.FindViewById<ImageView>(Resource.Id.fingerprint_imgFingerprint).SetImageDrawable(Xamarin.Forms.Forms.Context.GetDrawable(Resource.Drawable.Fingerprint));
+            view.FindViewById<ImageView>(Resource.Id.fingerprint_imgFingerprint).SetImageDrawable(Xamarin.Forms.Forms.Context.GetDrawable(Resource.Drawable.fingerprint));
             view.FindViewById<ImageView>(Resource.Id.fingerprint_imgFingerprint).SetPadding(0, 50, 0, 0);
             return view;
         }

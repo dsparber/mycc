@@ -6,7 +6,7 @@
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
 	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
 	xmlns:header="clr-namespace:MyCC.Forms.View.Components.Header;assembly=MyCC.Forms"
-	x:Class="MyCC.Forms.View.Pages.Settings.WatchedCurrenciesSettingsView"
+	x:Class="MyCC.Forms.View.Pages.Settings.Data.WatchedCurrenciesSettingsView"
     BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
 	Title="{resources:Translate AdditionalRates}">
     <ContentPage.ToolbarItems>

@@ -10,8 +10,8 @@ using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
-using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Components.Header;
+using MyCC.Forms.View.Components.Table;
 using MyCC.Forms.View.Overlays;
 using Plugin.Connectivity;
 using Refractored.XamForms.PullToRefresh;
@@ -20,21 +20,16 @@ using static MyCC.Forms.App;
 
 namespace MyCC.Forms.View.Pages
 {
-    public partial class CoinGraphView
+    public partial class AssetsTableView
     {
-        private readonly CoinGraphComponent _graphView;
+        private readonly CoinTableComponent _tableView;
         private PullToRefreshLayout _pullToRefresh;
 
-
-        public CoinGraphView()
+        public AssetsTableView()
         {
             InitializeComponent();
 
-            _graphView = new CoinGraphComponent(Navigation)
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand
-            };
+            _tableView = new CoinTableComponent(Navigation);
 
             InitPullToRefresh();
 
@@ -54,14 +49,19 @@ namespace MyCC.Forms.View.Pages
 
         private void InitPullToRefresh()
         {
+            var stack = new StackLayout { Spacing = 0, VerticalOptions = LayoutOptions.FillAndExpand };
+            stack.Children.Add(_tableView);
+            stack.Children.Add(new ContentView { VerticalOptions = LayoutOptions.FillAndExpand });
+
             _pullToRefresh = new PullToRefreshLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Content = new ScrollView { VerticalOptions = LayoutOptions.FillAndExpand, Content = _graphView },
+                Content = new ScrollView { Content = stack, VerticalOptions = LayoutOptions.FillAndExpand },
                 BackgroundColor = AppConstants.TableBackgroundColor,
                 RefreshCommand = new Command(Refresh),
             };
+
 
             Content.Content = _pullToRefresh;
         }
@@ -69,7 +69,7 @@ namespace MyCC.Forms.View.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _graphView.OnAppearing();
+            _tableView.OnAppearing();
 
             if (Device.OS != TargetPlatform.Android) return;
             InitPullToRefresh();
@@ -78,11 +78,12 @@ namespace MyCC.Forms.View.Pages
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
-            _graphView.HeightRequest = _pullToRefresh.Height;
 
             if (Device.OS != TargetPlatform.Android) return;
             InitPullToRefresh();
         }
+
+
 
         private void PositionSelected(object sender, EventArgs e)
         {
@@ -98,6 +99,7 @@ namespace MyCC.Forms.View.Pages
             HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.BaseCurrency);
             HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
 
+
             if (HeaderCarousel.ItemTemplate != null) return;
 
             HeaderCarousel.ItemTemplate = new HeaderTemplateSelector();
@@ -110,22 +112,11 @@ namespace MyCC.Forms.View.Pages
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                NoDataView.IsVisible = AccountStorage.CurrenciesForGraph == 0;
-                DataView.IsVisible = AccountStorage.CurrenciesForGraph != 0;
+                NoDataView.IsVisible = AccountStorage.Instance.AllElements.Count == 0;
+                DataView.IsVisible = AccountStorage.Instance.AllElements.Count != 0;
             });
 
             SetFooter();
-        }
-
-        private void SetFooter()
-        {
-            var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
-            var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
-            var ratesTime = AccountStorage.NeededRatesFor(ApplicationSettings.BaseCurrency).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
-
-            var time = online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
-
-            Device.BeginInvokeOnMainThread(() => Footer.Text = time.LastUpdateString());
         }
 
         private void AddSubscriber()
@@ -153,14 +144,25 @@ namespace MyCC.Forms.View.Pages
             }
         }
 
-        private void AddSource(object sender, EventArgs e)
-        {
-            Navigation.PushOrPushModal(new AddSourceView());
-        }
-
         private class HeaderTemplateSelector : DataTemplateSelector
         {
             protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent((Currency)item));
+        }
+
+        private void AddSource(object sender, EventArgs e)
+        {
+            Navigation.PushOrPushModal(new AddSourceOverlay());
+        }
+
+        private void SetFooter()
+        {
+            var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
+            var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
+            var ratesTime = AccountStorage.NeededRates.Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+
+            var time = online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
+
+            Device.BeginInvokeOnMainThread(() => Footer.Text = time.LastUpdateString());
         }
     }
 }

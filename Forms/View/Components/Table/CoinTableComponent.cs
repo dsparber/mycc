@@ -54,8 +54,8 @@ namespace MyCC.Forms.View.Components.Table
 				Device.BeginInvokeOnMainThread(
 					() =>
 						navigation.PushAsync(accounts.Count == 1
-							? (Page)new AccountDetailView(accounts[0])
-											 : new CoinDetailView(currency)));
+							? (Page)new AccountView(accounts[0])
+											 : new AccountGroupView(currency)));
 			});
 
 			_webView.RegisterCallback("HeaderClickedCallback", type =>

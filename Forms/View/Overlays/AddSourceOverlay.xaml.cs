@@ -14,11 +14,11 @@ using MyCC.Forms.View.Addsource;
 
 namespace MyCC.Forms.View.Overlays
 {
-    public partial class AddSourceView
+    public partial class AddSourceOverlay
     {
         private AddSourceSubview _specificAddView;
 
-        public AddSourceView(bool local = false)
+        public AddSourceOverlay(bool local = false)
         {
             InitializeComponent();
             Header.TitleText = I18N.NewSource;

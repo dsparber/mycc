@@ -7,7 +7,7 @@ using MyCC.Forms.Resources;
 using MyCC.Forms.View.Overlays;
 using Plugin.Fingerprint;
 
-namespace MyCC.Forms.View.Pages.Settings
+namespace MyCC.Forms.View.Pages.Settings.General
 {
     public partial class PinSettingsView
     {

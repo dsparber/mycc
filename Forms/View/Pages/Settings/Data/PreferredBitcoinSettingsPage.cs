@@ -19,7 +19,7 @@ using Plugin.Connectivity;
 using Xamarin.Forms;
 using HeaderView = MyCC.Forms.View.Components.Header.HeaderView;
 
-namespace MyCC.Forms.View.Pages.Settings
+namespace MyCC.Forms.View.Pages.Settings.Data
 {
     public class PreferredBitcoinSettingsPage : ContentPage
     {

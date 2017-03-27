@@ -88,9 +88,9 @@ namespace MyCC.Forms.View.Pages.Settings.Source
                     BittrexSection.Add(bittrexCells);
                     ManualSection.Add(manualCells);
 
-                    //AddressSection.Title = $"{I18N.AddressAdded} ({PluralHelper.GetTextSourcs(AccountStorage.AddressRepositories.Count())})";
-                    //BittrexSection.Title = $"{I18N.BittrexAdded} ({PluralHelper.GetTextSourcs(AccountStorage.BittrexRepositories.Count())})";
-                    //ManualSection.Title = $"{I18N.ManuallyAdded} ({PluralHelper.GetTextSourcs(AccountStorage.ManuallyAddedAccounts.Count())})";
+                    AddressSection.Title = $"{I18N.AddressAdded}: {AccountStorage.AddressRepositories.Count()}";
+                    BittrexSection.Title = $"{I18N.BittrexAdded}: {AccountStorage.BittrexRepositories.SelectMany(r => r.Elements).Count()}";
+                    ManualSection.Title = $"{I18N.ManuallyAdded}: {AccountStorage.ManuallyAddedAccounts.Count()}";
 
                     if (addressCells.Count == 0)
                     {
@@ -132,7 +132,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 
         private void Add(object sender, EventArgs e)
         {
-            Navigation.PushOrPushModal(new AddSourceView());
+            Navigation.PushOrPushModal(new AddSourceOverlay());
         }
     }
 }

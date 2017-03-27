@@ -9,7 +9,7 @@
 	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
 	xmlns:header="clr-namespace:MyCC.Forms.View.Components.Header;assembly=MyCC.Forms"
 	BackgroundColor="{x:Static constants:AppConstants.BackgroundColor}"
-	x:Class="MyCC.Forms.View.Overlays.AddSourceView"
+	x:Class="MyCC.Forms.View.Overlays.AddSourceOverlay"
 	Title="{resources:Translate AddSource}">
     <ContentPage.ToolbarItems>
         <ToolbarItem

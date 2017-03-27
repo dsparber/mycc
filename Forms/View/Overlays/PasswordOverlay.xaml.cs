@@ -1,22 +1,22 @@
 ﻿using System.Threading.Tasks;
 using MyCC.Core.Settings;
+using MyCC.Forms.Constants;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Container;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 using Xamarin.Forms;
-using MyCC.Forms.Constants;
-using MyCC.Forms.Messages;
 
-namespace MyCC.Forms.View.Pages
+namespace MyCC.Forms.View.Overlays
 {
-    public partial class PasswordView
+    public partial class PasswordOverlay
     {
         private readonly bool _pushMainView;
         private readonly bool _goesToBckground;
         private bool _fingerprintCanceled;
 
-        private PasswordView(bool background)
+        private PasswordOverlay(bool background)
         {
             InitializeComponent();
             _goesToBckground = background;
@@ -36,7 +36,7 @@ namespace MyCC.Forms.View.Pages
             Messaging.DarkStatusBar.Send(true);
         }
 
-        public PasswordView(bool pushMainView, bool background = false) : this(background)
+        public PasswordOverlay(bool pushMainView, bool background = false) : this(background)
         {
             _pushMainView = pushMainView;
         }

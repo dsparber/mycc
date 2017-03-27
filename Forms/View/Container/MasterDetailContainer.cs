@@ -23,8 +23,8 @@ namespace MyCC.Forms.View.Container
             BackgroundColor = AppConstants.TableBackgroundColor;
 
             _ratesPage = new NavigationPage(new RateView()) { Title = I18N.Rates, Icon = "rate.png", BarTextColor = Color.White };
-            _coinGraphPage = new NavigationPage(new CoinGraphView()) { Title = I18N.Graph, Icon = "graph.png", BarTextColor = Color.White };
-            _coinTablePage = new NavigationPage(new CoinTableView()) { Title = I18N.Table, Icon = "table.png", BarTextColor = Color.White };
+            _coinGraphPage = new NavigationPage(new AssetsGraphView()) { Title = I18N.Graph, Icon = "graph.png", BarTextColor = Color.White };
+            _coinTablePage = new NavigationPage(new AssetsTableView()) { Title = I18N.Table, Icon = "table.png", BarTextColor = Color.White };
             _settingsPage = new NavigationPage(new SettingsView()) { Title = I18N.Settings, Icon = "settings.png", BarTextColor = Color.White };
 
             Master = new MasterPage(this);

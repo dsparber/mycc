@@ -8,7 +8,7 @@
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
 	xmlns:components="clr-namespace:MyCC.Forms.View.Components;assembly=MyCC.Forms"
 	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
-	x:Class="MyCC.Forms.View.Pages.CoinGraphView"
+	x:Class="MyCC.Forms.View.Pages.AssetsGraphView"
 	Title="{resources:Translate Assets}">
     <ContentPage.ToolbarItems>
         <ToolbarItem

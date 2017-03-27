@@ -50,7 +50,7 @@ namespace MyCC.Forms.View.Components.Table
                 var id = int.Parse(idString);
                 var account = AccountStorage.Instance.AllElements.Find(a => a.Id.Equals(id));
 
-                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountDetailView(account)));
+                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new AccountView(account)));
             });
 
             _webView.RegisterCallback("CallbackSizeAllocated", sizeString =>

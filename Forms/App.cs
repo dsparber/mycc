@@ -7,7 +7,6 @@ using MyCC.Forms.Messages;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Container;
 using MyCC.Forms.View.Overlays;
-using MyCC.Forms.View.Pages;
 using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -26,7 +25,7 @@ namespace MyCC.Forms
 
             if (ApplicationSettings.IsPinSet)
             {
-                startPage = new PasswordView(true);
+                startPage = new PasswordOverlay(true);
             }
 
             MainPage = startPage;
@@ -63,15 +62,15 @@ namespace MyCC.Forms
             if (!ApplicationSettings.IsPinSet) return;
 
             var page = GetCurrentPage();
-            if (page is PasswordView) return;
+            if (page is PasswordOverlay) return;
 
             if (page != null) Messaging.DarkStatusBar.Send(true);
-            page?.Navigation.PushModalAsync(new PasswordView(false, true), false);
+            page?.Navigation.PushModalAsync(new PasswordOverlay(false, true), false);
         }
 
         protected override async void OnResume()
         {
-            var passwordView = GetCurrentPage() as PasswordView;
+            var passwordView = GetCurrentPage() as PasswordOverlay;
             if (passwordView != null)
             {
                 await passwordView.Authenticate();

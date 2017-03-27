@@ -15,22 +15,21 @@ using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Components.Header;
 using MyCC.Forms.View.Components.Table;
 using MyCC.Forms.View.Overlays;
+using MyCC.Forms.View.Pages.Settings.Source;
 using Plugin.Connectivity;
 using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
-using AccountEditView = MyCC.Forms.View.Pages.Settings.Source.AccountEditView;
-using RepositoryView = MyCC.Forms.View.Pages.Settings.Source.RepositoryView;
 
 namespace MyCC.Forms.View.Pages
 {
-    public partial class AccountDetailView
+    public partial class AccountView
     {
         private FunctionalAccount _account;
         private readonly ReferenceCurrenciesView _referenceView;
         private readonly PullToRefreshLayout _pullToRefresh;
 
 
-        public AccountDetailView(FunctionalAccount account)
+        public AccountView(FunctionalAccount account)
         {
             InitializeComponent();
 

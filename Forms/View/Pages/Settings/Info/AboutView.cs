@@ -1,11 +1,11 @@
-﻿using Xamarin.Forms;
-using XLabs.Forms.Controls;
+﻿using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
-using MyCC.Forms.Constants;
 using MyCC.Forms.View.Container;
+using Xamarin.Forms;
+using XLabs.Forms.Controls;
 using HeaderView = MyCC.Forms.View.Components.Header.HeaderView;
 
-namespace MyCC.Forms.View.Pages.Settings
+namespace MyCC.Forms.View.Pages.Settings.Info
 {
     public class AboutView : ContentPage
     {

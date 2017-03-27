@@ -243,7 +243,7 @@ namespace MyCC.Forms.View.Pages
         private void ShowAccounts(object sender, EventArgs e)
         {
             var a = AccountStorage.AccountsWithCurrency(_currency);
-            Navigation.PushAsync(a.Count == 1 ? new AccountDetailView(a[0]) as Page : new CoinDetailView(_currency));
+            Navigation.PushAsync(a.Count == 1 ? new AccountView(a[0]) as Page : new AccountGroupView(_currency));
         }
     }
 }

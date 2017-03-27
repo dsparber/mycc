@@ -6,7 +6,7 @@
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
 	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
 	xmlns:header="clr-namespace:MyCC.Forms.View.Components.Header;assembly=MyCC.Forms"
-	x:Class="MyCC.Forms.View.Pages.Settings.PinSettingsView"
+	x:Class="MyCC.Forms.View.Pages.Settings.General.PinSettingsView"
 	Title="{resources:Translate Security}">
     <ContentPage.Content>
         <container:ChangingStackLayout>

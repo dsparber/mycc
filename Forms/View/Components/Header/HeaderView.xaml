@@ -35,7 +35,7 @@
                         Margin="8,0,0,0"
                         FontAttributes="Bold"
                         TextColor="White"
-                        LineBreakMode="TailTruncation" />
+                        LineBreakMode="NoWrap" />
                 </StackLayout>
                 <Label
                     HorizontalOptions="FillAndExpand"
@@ -43,7 +43,7 @@
                     FontSize="18"
                     HorizontalTextAlignment="Center"
                     TextColor="White"
-                    LineBreakMode="TailTruncation"/>
+                    LineBreakMode="WordWrap"/>
                 <StackLayout
                     HorizontalOptions="CenterAndExpand"
                     IsVisible="False"

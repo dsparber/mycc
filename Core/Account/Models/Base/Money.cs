@@ -67,13 +67,13 @@ namespace MyCC.Core.Account.Models.Base
         public string ToStringTwoDigits(bool round, bool showCurrency = true)
         {
             var amount = round ? Math.Round(Amount, 2) : Math.Truncate(Amount * 100) / 100;
-            return $"{(round && Amount < 0.01M && Amount > 0 ? $"< {0.01}" : $"{amount:#,0.00}")}{ (showCurrency ? $" {Currency.Code}" : string.Empty)}";
+            return $"{(round && Amount < 0.01M && Amount > 0 ? $"< {0.01}" : $"{amount:#,0.00}")}{ (showCurrency ? $"\u00A0{Currency.Code}" : string.Empty)}";
         }
 
         public string ToString8Digits(bool showCurrency = true)
         {
             var amount = Math.Truncate(Amount * 100000000) / 100000000;
-            return $"{amount:#,0.00000000}{(showCurrency ? $" {Currency.Code}" : string.Empty)}";
+            return $"{amount:#,0.00000000}{(showCurrency ? $"\u00A0{Currency.Code}" : string.Empty)}";
         }
     }
 }
