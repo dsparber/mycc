@@ -108,6 +108,7 @@ namespace MyCC.Forms.View.Overlays
 
         private async Task Disappear()
         {
+            PinFrame.Unfocus();
             if (_pushMainView)
             {
                 await Navigation.PushModalAsync(Device.OS == TargetPlatform.Android ? new MasterDetailContainer() as Page : new TabContainerView());
