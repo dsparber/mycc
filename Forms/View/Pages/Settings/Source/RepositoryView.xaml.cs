@@ -11,236 +11,238 @@ using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
+using MyCC.Core.Currency.Model;
 
 namespace MyCC.Forms.View.Pages.Settings.Source
 {
-    public partial class RepositoryView
-    {
-        private OnlineAccountRepository _repository;
-        private readonly List<Tuple<FunctionalAccount, bool>> _changedAccounts;
-        private readonly CurrencyEntryCell _currencyEntryCell;
+	public partial class RepositoryView
+	{
+		private OnlineAccountRepository _repository;
+		private readonly List<Tuple<FunctionalAccount, bool>> _changedAccounts;
+		private readonly CurrencyEntryCell _currencyEntryCell;
 
-        private readonly bool _isEditModal;
+		private readonly bool _isEditModal;
 
-        public RepositoryView(OnlineAccountRepository repository, bool isEditModal = false)
-        {
-            InitializeComponent();
-            _repository = repository;
-            _isEditModal = isEditModal;
+		public RepositoryView(OnlineAccountRepository repository, bool isEditModal = false)
+		{
+			InitializeComponent();
+			_repository = repository;
+			_isEditModal = isEditModal;
 
-            _changedAccounts = new List<Tuple<FunctionalAccount, bool>>();
+			_changedAccounts = new List<Tuple<FunctionalAccount, bool>>();
 
-            Header.TitleText = repository.Name;
-            Header.InfoText = $"{I18N.Source}: {_repository.Description}";
+			Header.TitleText = repository.Name;
+			Header.InfoText = $"{I18N.Source}: {_repository.Description}";
 
-            var addressAccountRepository = repository as AddressAccountRepository;
-            if (addressAccountRepository != null)
-            {
-                EnableAccountsSection.Title = I18N.EnableAccount;
-                AddressEntryCell.Text = addressAccountRepository.Address.MiddleTruncate();
+			var addressAccountRepository = repository as AddressAccountRepository;
+			if (addressAccountRepository != null)
+			{
+				EnableAccountsSection.Title = I18N.EnableAccount;
+				AddressEntryCell.Text = addressAccountRepository.Address.MiddleTruncate();
 
-                _currencyEntryCell = new CurrencyEntryCell(Navigation)
-                {
-                    IsAmountEnabled = false,
-                    IsEditable = false,
-                    SelectedCurrency = addressAccountRepository.Currency,
-                    IsFormRepresentation = true,
-                    CurrenciesToSelect = AddressAccountRepository.AllSupportedCurrencies
-                };
-                GeneralSection.Add(_currencyEntryCell);
-            }
-            else
-            {
-                GeneralSection.Remove(AddressEntryCell);
-            }
+				var currenciesTask = new Func<IEnumerable<Currency>>(() => AddressAccountRepository.AllSupportedCurrencies);
 
-            if (repository is BittrexAccountRepository)
-            {
-                EnableAccountsSection.Title = I18N.Accounts;
-            }
-            if (repository is BlockchainXpubAccountRepository)
-            {
-                GeneralSection.Remove(AddressEntryCell);
-                GeneralSection.Remove(_currencyEntryCell);
-            }
+				_currencyEntryCell = new CurrencyEntryCell(Navigation, currenciesTask)
+				{
+					IsAmountEnabled = false,
+					IsEditable = false,
+					SelectedCurrency = addressAccountRepository.Currency,
+					IsFormRepresentation = true
+				};
+				GeneralSection.Add(_currencyEntryCell);
+			}
+			else
+			{
+				GeneralSection.Remove(AddressEntryCell);
+			}
 
-            RepositoryNameEntryCell.Text = repository.Name;
-            DeleteButtonCell.Tapped += Delete;
+			if (repository is BittrexAccountRepository)
+			{
+				EnableAccountsSection.Title = I18N.Accounts;
+			}
+			if (repository is BlockchainXpubAccountRepository)
+			{
+				GeneralSection.Remove(AddressEntryCell);
+				GeneralSection.Remove(_currencyEntryCell);
+			}
 
-            TableView.Root.Remove(DeleteSection);
-            ToolbarItems.Remove(SaveItem);
+			RepositoryNameEntryCell.Text = repository.Name;
+			DeleteButtonCell.Tapped += Delete;
 
-            RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
+			TableView.Root.Remove(DeleteSection);
+			ToolbarItems.Remove(SaveItem);
 
-            SetView(isEditModal);
+			RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
 
-            Messaging.UpdatingAccounts.SubscribeFinished(this, SetView);
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetView);
+			SetView(isEditModal);
 
-            IsEditable = false;
+			Messaging.UpdatingAccounts.SubscribeFinished(this, SetView);
+			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetView);
 
-            AddressEntryCell.Editor.Focused += (sender, args) => AddressEntryCell.Text = (_repository as AddressAccountRepository)?.Address;
+			IsEditable = false;
 
-            if (!_isEditModal) return;
+			AddressEntryCell.Editor.Focused += (sender, args) => AddressEntryCell.Text = (_repository as AddressAccountRepository)?.Address;
 
-            EditClicked(null, null);
-            var cancel = new ToolbarItem { Text = I18N.Cancel };
-            cancel.Clicked += (s, e) => Navigation.PopOrPopModal();
-            ToolbarItems.Insert(0, cancel);
-            IsEditable = true;
-        }
+			if (!_isEditModal) return;
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
+			EditClicked(null, null);
+			var cancel = new ToolbarItem { Text = I18N.Cancel };
+			cancel.Clicked += (s, e) => Navigation.PopOrPopModal();
+			ToolbarItems.Insert(0, cancel);
+			IsEditable = true;
+		}
 
-            if (!AccountStorage.Instance.Repositories.Contains(_repository))
-            {
-                Navigation.PopAsync();
-            }
-        }
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
 
-        private void SetView() => SetView(false);
+			if (!AccountStorage.Instance.Repositories.Contains(_repository))
+			{
+				Navigation.PopAsync();
+			}
+		}
 
-        private void SetView(bool isEditable)
-        {
-            var enableCells = _repository.Elements.OrderBy(e => e.Money.Currency.Name).Select(e =>
-             {
-                 var cell = new CustomSwitchCell { Info = $"{e.Money.ToString(false)} {e.Money.Currency.Name}", Title = e.Money.Currency.Code, On = e.IsEnabled };
-                 cell.Switch.Toggled += (sender, args) =>
-                 {
-                     _changedAccounts.RemoveAll(t => t.Item1.Equals(e));
-                     _changedAccounts.Add(Tuple.Create(e, args.Value));
-                 };
-                 cell.Switch.IsEnabled = IsEditable;
-                 return (ViewCell)cell;
-             }).ToList();
+		private void SetView() => SetView(false);
 
-            if (enableCells.Count == 0) { enableCells.Add(new CustomViewCell { Text = I18N.NoAccounts }); }
+		private void SetView(bool isEditable)
+		{
+			var enableCells = _repository.Elements.OrderBy(e => e.Money.Currency.Name).Select(e =>
+			 {
+				 var cell = new CustomSwitchCell { Info = $"{e.Money.ToString(false)} {e.Money.Currency.Name}", Title = e.Money.Currency.Code, On = e.IsEnabled };
+				 cell.Switch.Toggled += (sender, args) =>
+				 {
+					 _changedAccounts.RemoveAll(t => t.Item1.Equals(e));
+					 _changedAccounts.Add(Tuple.Create(e, args.Value));
+				 };
+				 cell.Switch.IsEnabled = IsEditable;
+				 return (ViewCell)cell;
+			 }).ToList();
 
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                EnableAccountsSection.Clear();
-                EnableAccountsSection.Add(enableCells);
-                Footer.Text = _repository.LastFetch.LastUpdateString();
-                IsEditable = isEditable;
-            });
-        }
+			if (enableCells.Count == 0) { enableCells.Add(new CustomViewCell { Text = I18N.NoAccounts }); }
 
-        private async void Delete(object sender, EventArgs e)
-        {
-            UnfocusAll();
+			Device.BeginInvokeOnMainThread(() =>
+			{
+				EnableAccountsSection.Clear();
+				EnableAccountsSection.Add(enableCells);
+				Footer.Text = _repository.LastFetch.LastUpdateString();
+				IsEditable = isEditable;
+			});
+		}
 
-            Header.LoadingText = I18N.Deleting;
-            Header.IsLoading = true;
-            RepositoryNameEntryCell.IsEditable = false;
+		private async void Delete(object sender, EventArgs e)
+		{
+			UnfocusAll();
 
-            await AccountStorage.Instance.Remove(_repository);
-            Messaging.UpdatingAccounts.SendFinished();
-            Header.IsLoading = false;
-            if (_isEditModal)
-            {
-                await Navigation.PopOrPopModal();
-            }
-            else
-            {
-                await Navigation.PopAsync();
-            }
-        }
+			Header.LoadingText = I18N.Deleting;
+			Header.IsLoading = true;
+			RepositoryNameEntryCell.IsEditable = false;
 
-        private bool IsEditable
-        {
-            get { return RepositoryNameEntryCell.IsEditable; }
-            set
-            {
-                if (_currencyEntryCell != null) _currencyEntryCell.IsEditable = value;
-                RepositoryNameEntryCell.IsEditable = value;
-                AddressEntryCell.IsEditable = value;
-                foreach (var c in EnableAccountsSection.OfType<CustomSwitchCell>())
-                {
-                    c.Switch.IsEnabled = value;
-                }
-            }
-        }
+			await AccountStorage.Instance.Remove(_repository);
+			Messaging.UpdatingAccounts.SendFinished();
+			Header.IsLoading = false;
+			if (_isEditModal)
+			{
+				await Navigation.PopOrPopModal();
+			}
+			else
+			{
+				await Navigation.PopAsync();
+			}
+		}
 
-        private void EditClicked(object sender, EventArgs e)
-        {
-            IsEditable = true;
+		private bool IsEditable
+		{
+			get { return RepositoryNameEntryCell.IsEditable; }
+			set
+			{
+				if (_currencyEntryCell != null) _currencyEntryCell.IsEditable = value;
+				RepositoryNameEntryCell.IsEditable = value;
+				AddressEntryCell.IsEditable = value;
+				foreach (var c in EnableAccountsSection.OfType<CustomSwitchCell>())
+				{
+					c.Switch.IsEnabled = value;
+				}
+			}
+		}
 
-            TableView.Root.Add(DeleteSection);
+		private void EditClicked(object sender, EventArgs e)
+		{
+			IsEditable = true;
 
-            Title = I18N.Editing;
+			TableView.Root.Add(DeleteSection);
 
-            ToolbarItems.Remove(EditItem);
-            ToolbarItems.Add(SaveItem);
-        }
+			Title = I18N.Editing;
 
-        private async void SaveClicked(object sender, EventArgs e)
-        {
-            UnfocusAll();
+			ToolbarItems.Remove(EditItem);
+			ToolbarItems.Add(SaveItem);
+		}
 
-            // Disable Editing
-            Header.LoadingText = I18N.Testing;
-            SaveItem.Clicked -= SaveClicked; Header.IsLoading = true; IsEditable = false;
+		private async void SaveClicked(object sender, EventArgs e)
+		{
+			UnfocusAll();
 
-            // Test if data is valid
-            var addressRepo = _repository as AddressAccountRepository;
-            if (addressRepo != null && (!addressRepo.Address.Equals((AddressEntryCell.Text ?? string.Empty).Contains("...") ? addressRepo.Address : AddressEntryCell.Text ?? string.Empty) || !addressRepo.Currency.Equals(_currencyEntryCell.SelectedCurrency)))
-            {
-                var address = AddressEntryCell.Text ?? string.Empty;
-                var testRepo = AddressAccountRepository.CreateAddressAccountRepository(addressRepo.Name, _currencyEntryCell.SelectedCurrency, address.Contains("...") ? addressRepo.Address : address);
+			// Disable Editing
+			Header.LoadingText = I18N.Testing;
+			SaveItem.Clicked -= SaveClicked; Header.IsLoading = true; IsEditable = false;
 
-                if (testRepo == null || !await testRepo.Test())
-                {
-                    SaveItem.Clicked += SaveClicked; Header.IsLoading = false; IsEditable = true;
-                    await DisplayAlert(I18N.Error, I18N.FetchingNoSuccessText, I18N.Ok);
-                    return;
-                }
-                if (!addressRepo.Currency.Equals(_currencyEntryCell.SelectedCurrency))
-                {
-                    await AccountStorage.Instance.Remove(_repository);
-                    await testRepo.FetchOnline();
-                    await AccountStorage.Instance.Add(testRepo);
-                }
-                testRepo.Id = _repository.Id;
-                _repository = testRepo;
-                await _repository.FetchOnline();
-            }
+			// Test if data is valid
+			var addressRepo = _repository as AddressAccountRepository;
+			if (addressRepo != null && (!addressRepo.Address.Equals((AddressEntryCell.Text ?? string.Empty).Contains("...") ? addressRepo.Address : AddressEntryCell.Text ?? string.Empty) || !addressRepo.Currency.Equals(_currencyEntryCell.SelectedCurrency)))
+			{
+				var address = AddressEntryCell.Text ?? string.Empty;
+				var testRepo = AddressAccountRepository.CreateAddressAccountRepository(addressRepo.Name, _currencyEntryCell.SelectedCurrency, address.Contains("...") ? addressRepo.Address : address);
 
-            // Apply name and enabled status
-            _repository.Name = RepositoryNameEntryCell.Text ?? I18N.Unnamed;
-            foreach (var a in _repository.Elements) a.Name = _repository.Name;
-            foreach (var a in _changedAccounts) a.Item1.IsEnabled = a.Item2;
+				if (testRepo == null || !await testRepo.Test())
+				{
+					SaveItem.Clicked += SaveClicked; Header.IsLoading = false; IsEditable = true;
+					await DisplayAlert(I18N.Error, I18N.FetchingNoSuccessText, I18N.Ok);
+					return;
+				}
+				if (!addressRepo.Currency.Equals(_currencyEntryCell.SelectedCurrency))
+				{
+					await AccountStorage.Instance.Remove(_repository);
+					await testRepo.FetchOnline();
+					await AccountStorage.Instance.Add(testRepo);
+				}
+				testRepo.Id = _repository.Id;
+				_repository = testRepo;
+				await _repository.FetchOnline();
+			}
 
-            // Save changes
-            await AccountStorage.Instance.Update(_repository);
-            await Task.WhenAll(_repository.Elements.Select(AccountStorage.Update));
+			// Apply name and enabled status
+			_repository.Name = RepositoryNameEntryCell.Text ?? I18N.Unnamed;
+			foreach (var a in _repository.Elements) a.Name = _repository.Name;
+			foreach (var a in _changedAccounts) a.Item1.IsEnabled = a.Item2;
 
-            Messaging.UpdatingAccounts.SendFinished();
+			// Save changes
+			await AccountStorage.Instance.Update(_repository);
+			await Task.WhenAll(_repository.Elements.Select(AccountStorage.Update));
 
-            if (_isEditModal)
-            {
-                await Navigation.PopOrPopModal();
-                return;
-            }
+			Messaging.UpdatingAccounts.SendFinished();
 
-            TableView.Root.Remove(DeleteSection);
+			if (_isEditModal)
+			{
+				await Navigation.PopOrPopModal();
+				return;
+			}
 
-            ToolbarItems.Remove(SaveItem);
-            ToolbarItems.Add(EditItem);
+			TableView.Root.Remove(DeleteSection);
 
-            Title = I18N.Details;
-            Header.InfoText = $"{I18N.Source}: {_repository.Description}";
+			ToolbarItems.Remove(SaveItem);
+			ToolbarItems.Add(EditItem);
 
-            SaveItem.Clicked += SaveClicked;
-            Header.IsLoading = false;
+			Title = I18N.Details;
+			Header.InfoText = $"{I18N.Source}: {_repository.Description}";
 
-            SetView();
-        }
+			SaveItem.Clicked += SaveClicked;
+			Header.IsLoading = false;
 
-        private void UnfocusAll()
-        {
-            RepositoryNameEntryCell.Entry.Unfocus();
-        }
-    }
+			SetView();
+		}
+
+		private void UnfocusAll()
+		{
+			RepositoryNameEntryCell.Entry.Unfocus();
+		}
+	}
 }
