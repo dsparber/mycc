@@ -213,7 +213,10 @@ namespace MyCC.Core.Rates
             var r1 = InvertIfNeeded(rate1, CommonCurrency(rate1, rate2));
             var r2 = InvertIfNeeded(rate2, CommonCurrency(rate2, rate1));
 
-            r.Rate = r2.Rate / r1.Rate;
+            if (r1.Rate != null && r1.Rate != 0) // To avoid divided by 0
+            {
+                r.Rate = r2.Rate / r1.Rate;
+            }
 
             return r;
         }
