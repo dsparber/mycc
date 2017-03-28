@@ -1,23 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:versionName="0.5.47"
-	package="com.sparber.mycc"
-	android:installLocation="auto"
-	android:versionCode="11">
-	<uses-sdk
-		android:minSdkVersion="15" />
-	<application
-		android:label="MyCC"
-		android:theme="@style/MyCryptosTheme"
-		android:icon="@drawable/Icon">
-	</application>
-	<uses-permission
-		android:name="android.permission.USE_FINGERPRINT" />
-	<uses-permission
-		android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY" />
-	<uses-permission
-		android:name="android.permission.CAMERA" />
-	<uses-permission
-		android:name="android.permission.FLASHLIGHT" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.5.47.1" package="com.sparber.mycc" android:installLocation="auto" android:versionCode="12">
+	<uses-sdk android:minSdkVersion="15" />
+	<application android:label="MyCC" android:theme="@style/MyCryptosTheme" android:icon="@drawable/Icon"></application>
+	<uses-permission android:name="android.permission.USE_FINGERPRINT" />
+	<uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY" />
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.FLASHLIGHT" />
 </manifest>
