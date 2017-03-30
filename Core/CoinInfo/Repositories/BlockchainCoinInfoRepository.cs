@@ -10,7 +10,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class BlockchainCoinInfoRepository : ICoinInfoRepository
     {
-        private static Uri GetUri(string action) => new Uri($"https://blockchain.info/de/q/{action}");
+        private static Uri GetUri(string action) => new Uri($"https://blockchain.info/q/{action}");
 
         private const string KeyHeight = "getblockcount";
         private const string KeyDifficulty = "getdifficulty";
@@ -45,10 +45,10 @@ namespace MyCC.Core.CoinInfo.Repositories
             var stringBlockReward = await getString(blockRewardTask);
 
             var heigh = stringHeight != null ? int.Parse(stringHeight) as int? : null;
-            var hashrate = stringHashrate != null ? decimal.Parse(stringHashrate, CultureInfo.InvariantCulture) as decimal? : null;
-            var diff = stringDiff != null ? decimal.Parse(stringDiff, CultureInfo.InvariantCulture) as decimal? : null;
-            var supply = stringSupply != null ? decimal.Parse(stringSupply, CultureInfo.InvariantCulture) as decimal? : null;
-            var blockReward = stringBlockReward != null ? decimal.Parse(stringBlockReward, CultureInfo.InvariantCulture) as decimal? : null;
+            var hashrate = stringHashrate != null ? decimal.Parse(stringHashrate, NumberStyles.Float, CultureInfo.InvariantCulture) as decimal? : null;
+            var diff = stringDiff != null ? decimal.Parse(stringDiff, NumberStyles.Float, CultureInfo.InvariantCulture) as decimal? : null;
+            var supply = stringSupply != null ? decimal.Parse(stringSupply, NumberStyles.Float, CultureInfo.InvariantCulture) as decimal? : null;
+            var blockReward = stringBlockReward != null ? decimal.Parse(stringBlockReward, NumberStyles.Float, CultureInfo.InvariantCulture) as decimal? : null;
 
             return new CoinInfoData(currency)
             {

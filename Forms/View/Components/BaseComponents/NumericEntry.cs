@@ -25,7 +25,7 @@ namespace MyCC.Forms.View.Components.BaseComponents
                 var val = entry.Text;
 
                 if (val.Length == 0) return;
-                if (!IsPin && (val.Count(x => x == seperator) == 0 || val.Count(x => x == seperator) == 1 &&
+                if (!IsPin && char.IsDigit(val[0]) && (val.Count(x => x == seperator) == 0 || val.Count(x => x == seperator) == 1 &&
                      $"{val}x".Split(new[] { seperator }, StringSplitOptions.RemoveEmptyEntries)[1].Length <= 9) &&
                      Regex.IsMatch(val.Replace(seperator.ToString(), string.Empty), @"^\d+$")) return;
                 if (IsPin && Regex.IsMatch(val, @"^\d+$")) return;
