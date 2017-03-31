@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Constants\AppConstants.cs" />
+    <Compile Include="Helpers\IBaseUrl.cs" />
     <Compile Include="Helpers\NavigationHelper.cs" />
     <Compile Include="Helpers\PluralHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="View\Overlays\PinOverlay.xaml.cs">
       <DependentUpon>PinOverlay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Overlays\WebOverlay.cs" />
     <Compile Include="View\Pages\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
     </Compile>
@@ -109,7 +111,7 @@
     <Compile Include="View\Pages\Settings\Data\ReferenceCurrenciesSettingsView.xaml.cs">
       <DependentUpon>ReferenceCurrenciesSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Pages\Settings\Info\PrivacyPolicyView.cs" />
+    <Compile Include="View\Components\BaseComponents\WebContentView.cs" />
     <Compile Include="View\Pages\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>

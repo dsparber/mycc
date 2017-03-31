@@ -1,20 +1,25 @@
-﻿using MyCC.Forms.Constants;
+﻿using System;
+using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
-using MyCC.Forms.View.Components.Header;
-using MyCC.Forms.View.Container;
 using Xamarin.Forms;
 
-namespace MyCC.Forms.View.Pages.Settings.Info
+namespace MyCC.Forms.View.Overlays
 {
-    public class PrivacyPolicyView : ContentPage
+    public class WebOverlay : ContentPage
     {
-        public PrivacyPolicyView()
+        public WebOverlay(string url) : this(new Uri(url)) { }
+
+        public WebOverlay(Uri uri)
         {
+            var cancel = new ToolbarItem { Text = I18N.Cancel };
+            cancel.Clicked += (sender, args) => Navigation.PopModalAsync();
+            ToolbarItems.Add(cancel);
+
             var webView = new WebView
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Source = "https://www.iubenda.com/privacy-policy/8085117",
+                Source = uri,
                 IsVisible = false
             };
 
@@ -25,17 +30,12 @@ namespace MyCC.Forms.View.Pages.Settings.Info
                 IsRunning = true
             };
 
-            var stack = new ChangingStackLayout { VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
-            stack.Children.Add(new HeaderView
-            {
-                TitleText = I18N.AppName,
-                InfoText = $"{I18N.Version} {Core.Settings.Constants.AppVersion}"
-            });
+            var stack = new StackLayout() { VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
             stack.Children.Add(webView);
             stack.Children.Add(indicator);
             Content = stack;
             BackgroundColor = AppConstants.TableBackgroundColor;
-            Title = I18N.Privacy;
+            Title = uri.Host;
 
             webView.Navigated += (sender, args) =>
             {

@@ -5,6 +5,7 @@ using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
+using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Pages.Settings.Data;
 using MyCC.Forms.View.Pages.Settings.Info;
 using MyCC.Forms.View.Pages.Settings.Source;
@@ -33,7 +34,7 @@ namespace MyCC.Forms.View.Pages.Settings
             SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
             RatesCell.Tapped += (sender, e) => Navigation.PushAsync(new WatchedCurrenciesSettingsView());
             PreferredRateCell.Tapped += (s, e) => Navigation.PushAsync(new PreferredBitcoinSettingsPage());
-            PrivacyCell.Tapped += (sender, e) => Navigation.PushAsync(new PrivacyPolicyView());
+            PrivacyCell.Tapped += (sender, e) => Navigation.PushAsync(new WebContentView("https://www.iubenda.com/privacy-policy/8085117"));
             RatesCell.DetailBreakMode = Xamarin.Forms.LineBreakMode.TailTruncation;
             /*
                         AvailableCurrenciesCell.Tapped += (sender, args) => Navigation.PushAsync(new CurrencyGroupedInfoView());
@@ -105,7 +106,7 @@ namespace MyCC.Forms.View.Pages.Settings
         private void SetAboutCell()
         {
             AboutCell.Detail = $"{I18N.AppName} - {I18N.Version} {Core.Settings.Constants.AppVersion}";
-            AboutCell.Tapped += (sender, e) => Navigation.PushAsync(new AboutView());
+            AboutCell.Tapped += (sender, e) => Navigation.PushAsync(new WebContentView("Html/about.html", true));
         }
 
         private void SetAvailableCurrenciesCell()

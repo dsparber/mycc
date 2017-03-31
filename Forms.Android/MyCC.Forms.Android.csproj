@@ -273,6 +273,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\BaseUrl.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="renderer\CustomFingerprintDialog.cs" />
     <Compile Include="renderer\CustomProgressBarRenderer.cs" />
