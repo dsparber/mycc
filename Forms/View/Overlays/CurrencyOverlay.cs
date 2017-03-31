@@ -92,7 +92,7 @@ namespace MyCC.Forms.View.Overlays
             Task.Run(() =>
             {
                 var currencies = (_currenciesToSelect != null ? _currenciesToSelect() : CurrencyStorage.Instance.AllElements);
-                var selectableCurrencies = currencies.Distinct().Where(c => c != null).OrderBy(c => c.Code);
+                var selectableCurrencies = currencies.Distinct().Where(c => c != null).OrderBy(c => c.Code).ToList();
 
                 SetTableContent(section, selectableCurrencies);
                 Device.BeginInvokeOnMainThread(() =>
@@ -128,7 +128,7 @@ namespace MyCC.Forms.View.Overlays
                     else Navigation.PopAsync();
                 };
                 return cell;
-            });
+            }).ToList();
             Device.BeginInvokeOnMainThread(() =>
             {
                 section.Clear();

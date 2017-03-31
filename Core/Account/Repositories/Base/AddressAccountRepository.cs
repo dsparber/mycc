@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Implementations;
+using MyCC.Core.Helpers;
 
 namespace MyCC.Core.Account.Repositories.Base
 {
@@ -35,21 +36,28 @@ namespace MyCC.Core.Account.Repositories.Base
 
         private async Task<decimal?> GetBalance()
         {
-            var uri = Url;
-            HttpResponseMessage response;
-            if (PostContent == null)
+            try
             {
-                response = await Client.GetAsync(uri);
+                HttpResponseMessage response;
+                if (PostContent == null)
+                {
+                    response = await Client.GetAsync(Url);
+                }
+                else
+                {
+                    response = await Client.PostAsync(Url, PostContent);
+                }
+
+                if (!response.IsSuccessStatusCode) return null;
+
+                var content = await response.Content.ReadAsStringAsync();
+                return Balance(content) / BalanceFactor;
             }
-            else
+            catch (Exception e)
             {
-                response = await Client.PostAsync(uri, PostContent);
+                e.LogError();
+                return null;
             }
-
-            if (!response.IsSuccessStatusCode) return null;
-
-            var content = await response.Content.ReadAsStringAsync();
-            return Balance(content) / BalanceFactor;
         }
 
 

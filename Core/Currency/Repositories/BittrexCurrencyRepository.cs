@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Currency.Database;
+using MyCC.Core.Helpers;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Currency.Repositories
@@ -32,20 +33,31 @@ namespace MyCC.Core.Currency.Repositories
         {
             var uri = new Uri(UrlCurrencyList);
 
-            var response = await _client.GetAsync(uri);
+            try
+            {
+                var response = await _client.GetAsync(uri);
 
-            if (!response.IsSuccessStatusCode) return null;
+                if (!response.IsSuccessStatusCode) return null;
 
-            var content = await response.Content.ReadAsStringAsync();
-            var json = JObject.Parse(content);
-            var result = (JArray)json[CurrencyListResult];
+                var content = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(content);
+                var result = (JArray)json[CurrencyListResult];
 
-            var currentElements = (from token in result let name = (string)token[CurrencyListResultName] let code = (string)token[CurrencyListResultCurrency] select new Model.Currency(code, name, true)).ToList();
+                var currentElements = (from token in result
+                                       let name = (string)token[CurrencyListResultName]
+                                       let code = (string)token[CurrencyListResultCurrency]
+                                       select new Model.Currency(code, name, true)).ToList();
 
-            await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(Remove));
+                await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(Remove));
 
-            LastFetch = DateTime.Now;
-            return currentElements;
+                LastFetch = DateTime.Now;
+                return currentElements;
+            }
+            catch (Exception e)
+            {
+                e.LogError();
+                return new List<Model.Currency>();
+            }
         }
     }
 }

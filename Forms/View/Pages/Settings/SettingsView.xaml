@@ -63,6 +63,10 @@
                 <TableSection
 					Title="{resources:Translate Info}">
                     <cells:CustomViewCell
+						x:Name="PrivacyCell"
+						Text="{resources:Translate Privacy}"
+						Image="more.png" />
+                    <cells:CustomViewCell
 						x:Name="AboutCell"
 						Text="{resources:Translate About}"
 						Image="more.png" />

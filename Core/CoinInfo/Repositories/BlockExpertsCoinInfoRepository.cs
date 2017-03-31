@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Currency.Repositories;
 using MyCC.Core.Currency.Storage;
+using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 
 namespace MyCC.Core.CoinInfo.Repositories
@@ -31,10 +32,25 @@ namespace MyCC.Core.CoinInfo.Repositories
             var diffTask = client.GetAsync(GetUri(currency, KeyDifficulty));
             var supplyTask = client.GetAsync(GetUri(currency, KeySupply));
 
-            int heigh; int.TryParse(await (await heightTask).Content.ReadAsStringAsync(), out heigh);
-            var hashrate = TryParse(await (await hashrateTask).Content.ReadAsStringAsync());
-            var diff = TryParse(await (await diffTask).Content.ReadAsStringAsync());
-            var supply = TryParse(await (await supplyTask).Content.ReadAsStringAsync());
+            Func<Task<HttpResponseMessage>, Task<string>> getString = async task =>
+            {
+                try
+                {
+                    var response = await task;
+                    var s = await response.Content.ReadAsStringAsync();
+                    return s;
+                }
+                catch (Exception e)
+                {
+                    e.LogError();
+                    return null;
+                }
+            };
+
+            int heigh; int.TryParse(await getString(heightTask), out heigh);
+            var hashrate = TryParse(await getString(hashrateTask));
+            var diff = TryParse(await getString(diffTask));
+            var supply = TryParse(await getString(supplyTask));
 
             return new CoinInfoData(currency)
             {
@@ -48,7 +64,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 
         private static decimal TryParse(string s)
         {
-            return string.IsNullOrWhiteSpace(s) ? 0 : decimal.Parse(s, CultureInfo.InvariantCulture);
+            return string.IsNullOrWhiteSpace(s) ? 0 : decimal.Parse(s, NumberStyles.Float, CultureInfo.InvariantCulture);
         }
     }
 }

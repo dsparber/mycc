@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
+using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 
 namespace MyCC.Core.CoinInfo.Repositories
@@ -34,8 +35,16 @@ namespace MyCC.Core.CoinInfo.Repositories
 
             Func<Task<HttpResponseMessage>, Task<string>> getString = async m =>
             {
-                var s = await (await m).Content.ReadAsStringAsync();
-                return string.IsNullOrWhiteSpace(s) ? null : s;
+                try
+                {
+                    var s = await (await m).Content.ReadAsStringAsync();
+                    return string.IsNullOrWhiteSpace(s) ? null : s;
+                }
+                catch (Exception e)
+                {
+                    e.LogError();
+                    return null;
+                }
             };
 
             var stringHeight = await getString(heightTask);

@@ -109,6 +109,7 @@
     <Compile Include="View\Pages\Settings\Data\ReferenceCurrenciesSettingsView.xaml.cs">
       <DependentUpon>ReferenceCurrenciesSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\Settings\Info\PrivacyPolicyView.cs" />
     <Compile Include="View\Pages\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>

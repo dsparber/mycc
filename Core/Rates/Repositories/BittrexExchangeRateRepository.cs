@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
+using MyCC.Core.Helpers;
 using MyCC.Core.Rates.Repositories.Interfaces;
 using Newtonsoft.Json.Linq;
 using SQLite;
@@ -36,25 +37,33 @@ namespace MyCC.Core.Rates.Repositories
         public async Task<IEnumerable<ExchangeRate>> FetchRates()
         {
             var uri = new Uri(Url);
-            var response = await _client.GetAsync(uri);
+            try
+            {
+                var response = await _client.GetAsync(uri);
 
-            if (!response.IsSuccessStatusCode) return null;
+                if (!response.IsSuccessStatusCode) return null;
 
-            var content = await response.Content.ReadAsStringAsync();
-            var resultJson = JObject.Parse(content)[ResultKey];
+                var content = await response.Content.ReadAsStringAsync();
+                var resultJson = JObject.Parse(content)[ResultKey];
 
-            var fetchedRates = (from r in resultJson let market = ((string)r[MarketKey]).Split('-') let rate = decimal.Parse((string)r[RateKey], NumberStyles.Float, CultureInfo.InvariantCulture) select new ExchangeRate(market[0], true, market[1], true, DateTime.Now, rate != 0 ? 1 / rate : 0) { RepositoryId = TypeId }).ToList();
+                var fetchedRates = (from r in resultJson let market = ((string)r[MarketKey]).Split('-') let rate = decimal.Parse((string)r[RateKey], NumberStyles.Float, CultureInfo.InvariantCulture) select new ExchangeRate(market[0], true, market[1], true, DateTime.Now, rate != 0 ? 1 / rate : 0) { RepositoryId = TypeId }).ToList();
 
-            var rates = Rates.ToList();
-            var old = rates.Except(fetchedRates).ToList();
+                var rates = Rates.ToList();
+                var old = rates.Except(fetchedRates).ToList();
 
-            Rates.Clear();
-            Rates.AddRange(fetchedRates);
+                Rates.Clear();
+                Rates.AddRange(fetchedRates);
 
-            await Task.WhenAll(old.Select(_connection.DeleteAsync));
-            await Task.WhenAll(fetchedRates.Select(_connection.InsertOrReplaceAsync));
+                await Task.WhenAll(old.Select(_connection.DeleteAsync));
+                await Task.WhenAll(fetchedRates.Select(_connection.InsertOrReplaceAsync));
 
-            return Rates;
+                return Rates;
+            }
+            catch (Exception e)
+            {
+                e.LogError();
+                return null;
+            }
         }
 
         public int TypeId => (int)RatesRepositories.Bittrex;

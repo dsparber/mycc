@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Currency.Database;
 using MyCC.Core.Currency.Storage;
+using MyCC.Core.Helpers;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Currency.Repositories
@@ -33,21 +34,29 @@ namespace MyCC.Core.Currency.Repositories
         {
             var uri = new Uri(UrlCurrencyList);
 
-            var response = await _client.GetAsync(uri);
-            if (!response.IsSuccessStatusCode) return null;
+            try
+            {
+                var response = await _client.GetAsync(uri);
+                if (!response.IsSuccessStatusCode) return null;
 
-            var content = await response.Content.ReadAsStringAsync();
-            var json = JObject.Parse(content);
-            var result = (JArray)json[CurrencyListResult];
+                var content = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(content);
+                var result = (JArray)json[CurrencyListResult];
 
 
-            var currencies = (from token in result
-                              let name = (string)token[CurrencyListResultName]
-                              let code = (string)token[CurrencyListResultCurrency]
-                              let isCrypto = CurrencyStorage.Instance.AllElements.Find(c => Equals(c?.Code, code) && Equals(c?.Name, name))?.IsCryptoCurrency ?? true
-                              select new Model.Currency(code, name, isCrypto)).Where(c => c.IsCryptoCurrency).ToList();
+                var currencies = (from token in result
+                                  let name = (string)token[CurrencyListResultName]
+                                  let code = (string)token[CurrencyListResultCurrency]
+                                  let isCrypto = CurrencyStorage.Instance.AllElements.Find(c => Equals(c?.Code, code) && Equals(c?.Name, name))?.IsCryptoCurrency ?? true
+                                  select new Model.Currency(code, name, isCrypto)).Where(c => c.IsCryptoCurrency).ToList();
 
-            return currencies;
+                return currencies;
+            }
+            catch (Exception e)
+            {
+                e.LogError();
+                return new List<Model.Currency>();
+            }
         }
     }
 }

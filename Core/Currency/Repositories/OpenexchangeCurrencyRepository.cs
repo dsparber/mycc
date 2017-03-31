@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Currency.Database;
+using MyCC.Core.Helpers;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Currency.Repositories
@@ -27,29 +28,37 @@ namespace MyCC.Core.Currency.Repositories
         protected override async Task<IEnumerable<Model.Currency>> GetCurrencies()
         {
             var uri = new Uri(UrlCurrencyList);
-            var response = await _client.GetAsync(uri);
-
-            if (!response.IsSuccessStatusCode) return null;
-
-            var content = await response.Content.ReadAsStringAsync();
-            var json = JObject.Parse(content);
-
-            var currentElements = new List<Model.Currency>();
-
-            foreach (var key in json)
+            try
             {
-                var name = (string)key.Value;
-                var code = key.Key.ToUpperInvariant();
-                if (!code.Equals("BTC"))
+                var response = await _client.GetAsync(uri);
+
+                if (!response.IsSuccessStatusCode) return null;
+
+                var content = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(content);
+
+                var currentElements = new List<Model.Currency>();
+
+                foreach (var key in json)
                 {
-                    currentElements.Add(new Model.Currency(code, name, false));
+                    var name = (string)key.Value;
+                    var code = key.Key.ToUpperInvariant();
+                    if (!code.Equals("BTC"))
+                    {
+                        currentElements.Add(new Model.Currency(code, name, false));
+                    }
                 }
+
+                await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(Remove));
+
+                LastFetch = DateTime.Now;
+                return currentElements;
             }
-
-            await Task.WhenAll(Elements.Where(e => !currentElements.Contains(e)).Select(Remove));
-
-            LastFetch = DateTime.Now;
-            return currentElements;
+            catch (Exception e)
+            {
+                e.LogError();
+                return new List<Model.Currency>();
+            }
         }
     }
 }

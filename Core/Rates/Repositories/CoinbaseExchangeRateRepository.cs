@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
+using MyCC.Core.Helpers;
 using MyCC.Core.Rates.Repositories.Interfaces;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
@@ -55,30 +56,38 @@ namespace MyCC.Core.Rates.Repositories
             if (!IsAvailable(rate)) return null;
 
             var uri = new Uri(rate.SecondaryCurrencyCode.Equals("EUR") ? UrlEur : UrlUsd);
-            var response = await _client.GetAsync(uri);
-
-            if (!response.IsSuccessStatusCode) return null;
-
-            var content = await response.Content.ReadAsStringAsync();
-            var rateString = (string)JObject.Parse(content)[KeyData][KeyPrice];
-            var rateValue = decimal.Parse(rateString, CultureInfo.InvariantCulture);
-
-            rate.Rate = rateValue;
-            rate.LastUpdate = DateTime.Now;
-            rate.RepositoryId = TypeId;
-
-            if (Rates.Contains(rate))
+            try
             {
-                Rates.RemoveAll(r => r.Equals(rate));
-                await _connection.UpdateAsync(rate);
-            }
-            else
-            {
-                await _connection.InsertOrReplaceAsync(rate);
-            }
-            Rates.Add(rate);
+                var response = await _client.GetAsync(uri);
 
-            return rate;
+                if (!response.IsSuccessStatusCode) return null;
+
+                var content = await response.Content.ReadAsStringAsync();
+                var rateString = (string)JObject.Parse(content)[KeyData][KeyPrice];
+                var rateValue = decimal.Parse(rateString, CultureInfo.InvariantCulture);
+
+                rate.Rate = rateValue;
+                rate.LastUpdate = DateTime.Now;
+                rate.RepositoryId = TypeId;
+
+                if (Rates.Contains(rate))
+                {
+                    Rates.RemoveAll(r => r.Equals(rate));
+                    await _connection.UpdateAsync(rate);
+                }
+                else
+                {
+                    await _connection.InsertOrReplaceAsync(rate);
+                }
+                Rates.Add(rate);
+
+                return rate;
+            }
+            catch (Exception e)
+            {
+                e.LogError();
+                return null;
+            }
         }
     }
 }

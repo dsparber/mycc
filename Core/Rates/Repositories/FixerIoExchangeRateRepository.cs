@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using SQLite;
 using System.Linq;
 using ModernHttpClient;
+using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 
 namespace MyCC.Core.Rates.Repositories
@@ -74,8 +75,9 @@ namespace MyCC.Core.Rates.Repositories
 
                 return Rates;
             }
-            catch
+            catch (Exception e)
             {
+                e.LogError();
                 return null;
             }
         }

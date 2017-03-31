@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
+using MyCC.Core.Helpers;
 using MyCC.Core.Rates.Repositories.Interfaces;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
@@ -34,24 +35,32 @@ namespace MyCC.Core.Rates.Repositories
         public async Task<IEnumerable<ExchangeRate>> FetchRates()
         {
             var uri = new Uri(Url);
-            var response = await _client.GetAsync(uri);
+            try
+            {
+                var response = await _client.GetAsync(uri);
 
-            if (!response.IsSuccessStatusCode) return null;
+                if (!response.IsSuccessStatusCode) return null;
 
-            var content = await response.Content.ReadAsStringAsync();
-            var result = JObject.Parse(content)[KeyResult];
-            var rateUsd = decimal.Parse((string)result[KeyUsd][KeyLastPrice][0], CultureInfo.InvariantCulture);
-            var rateEur = decimal.Parse((string)result[KeyEur][KeyLastPrice][0], CultureInfo.InvariantCulture);
+                var content = await response.Content.ReadAsStringAsync();
+                var result = JObject.Parse(content)[KeyResult];
+                var rateUsd = decimal.Parse((string)result[KeyUsd][KeyLastPrice][0], CultureInfo.InvariantCulture);
+                var rateEur = decimal.Parse((string)result[KeyEur][KeyLastPrice][0], CultureInfo.InvariantCulture);
 
-            var itemsCount = Rates.Count;
-            Rates.Clear();
-            Rates.Add(new ExchangeRate("BTC", true, "EUR", false, DateTime.Now, rateEur) { RepositoryId = TypeId });
-            Rates.Add(new ExchangeRate("BTC", true, "USD", false, DateTime.Now, rateUsd) { RepositoryId = TypeId });
+                var itemsCount = Rates.Count;
+                Rates.Clear();
+                Rates.Add(new ExchangeRate("BTC", true, "EUR", false, DateTime.Now, rateEur) { RepositoryId = TypeId });
+                Rates.Add(new ExchangeRate("BTC", true, "USD", false, DateTime.Now, rateUsd) { RepositoryId = TypeId });
 
-            if (itemsCount == 0) await _connection.InsertAllAsync(Rates);
-            else await _connection.UpdateAllAsync(Rates.ToArray());
+                if (itemsCount == 0) await _connection.InsertAllAsync(Rates);
+                else await _connection.UpdateAllAsync(Rates.ToArray());
 
-            return Rates;
+                return Rates;
+            }
+            catch (Exception e)
+            {
+                e.LogError();
+                return null;
+            }
         }
 
         public int TypeId => (int)RatesRepositories.Kraken;

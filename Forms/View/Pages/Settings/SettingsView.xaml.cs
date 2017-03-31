@@ -33,6 +33,7 @@ namespace MyCC.Forms.View.Pages.Settings
             SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
             RatesCell.Tapped += (sender, e) => Navigation.PushAsync(new WatchedCurrenciesSettingsView());
             PreferredRateCell.Tapped += (s, e) => Navigation.PushAsync(new PreferredBitcoinSettingsPage());
+            PrivacyCell.Tapped += (sender, e) => Navigation.PushAsync(new PrivacyPolicyView());
             RatesCell.DetailBreakMode = Xamarin.Forms.LineBreakMode.TailTruncation;
             /*
                         AvailableCurrenciesCell.Tapped += (sender, args) => Navigation.PushAsync(new CurrencyGroupedInfoView());

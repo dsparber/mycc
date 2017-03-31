@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
+using MyCC.Core.Helpers;
 using MyCC.Forms.Resources;
 using Xamarin.Forms;
 
@@ -22,10 +21,7 @@ namespace MyCC.Forms.View.Overlays
             {
                 message = I18N.GeneralError;
             }
-            Debug.WriteLine(e);
-            HockeyApp.MetricsManager.TrackEvent($"{e.GetType().Name}: {e.Message}",
-                new Dictionary<string, string> { { "error", e.ToString() } },
-                new Dictionary<string, double> { { "time", DateTime.Now.Ticks } });
+            e.LogError();
 
             Device.BeginInvokeOnMainThread(() =>
             {
