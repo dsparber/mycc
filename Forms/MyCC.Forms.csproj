@@ -148,7 +148,6 @@
     <Compile Include="View\Pages\Settings\Source\AccountEditView.cs">
       <DependentUpon>AccountEditView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Pages\Settings\Info\AboutView.cs" />
     <Compile Include="View\Overlays\AccountQrCodeOverlay.cs" />
     <Compile Include="View\Components\Cells\CustomEditorCell.cs" />
   </ItemGroup>
