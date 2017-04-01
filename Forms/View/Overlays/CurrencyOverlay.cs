@@ -105,7 +105,7 @@ namespace MyCC.Forms.View.Overlays
 
                 _searchBar.TextChanged += (sender, e) =>
                 {
-                    var search = e.NewTextValue.ToLower();
+                    var search = (e.NewTextValue ?? string.Empty).ToLower();
                     var filtered = !string.IsNullOrWhiteSpace(e.NewTextValue) ? selectableCurrencies.AsParallel().Where(c => c.Code.ToLower().Contains(search) || c.Name.ToLower().Contains(search)) as IEnumerable<Currency> : selectableCurrencies;
                     SetTableContent(section, filtered);
                 };
