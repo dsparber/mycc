@@ -13,6 +13,10 @@
 			Text="{resources:Translate Info}"
 			Clicked="ShowInfo"
 			Icon="info.png" />
+		<ToolbarItem
+          Text="{resources:Translate Add}"
+          Icon="add.png"
+          Clicked="AddSource"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <container:ChangingStackLayout

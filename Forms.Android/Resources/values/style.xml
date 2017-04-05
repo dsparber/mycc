@@ -1,12 +1,17 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-
 <resources>
-  <style name="MyCryptosTheme" parent="android:Theme.Material.Light.DarkActionBar">
-    <item	name="android:colorPrimary">@color/primary</item>
-    <item name="android:windowContentOverlay">@null</item>
-    <item	name="android:colorPrimaryDark">@color/primaryDark</item>
-    <item	name="android:colorAccent">@color/accent</item>
-    <item	name="android:windowBackground">@color/window_background</item>
-  </style>
-
+	<style
+		name="MyCCTheme"
+		parent="android:Theme.Material.Light.DarkActionBar">
+		<item
+			name="android:colorPrimary">@color/primary</item>
+		<item
+			name="android:windowContentOverlay">@null</item>
+		<item
+			name="android:colorPrimaryDark">@color/primaryDark</item>
+		<item
+			name="android:colorAccent">@color/accent</item>
+		<item
+			name="android:windowBackground">@color/window_background</item>
+	</style>
 </resources>
