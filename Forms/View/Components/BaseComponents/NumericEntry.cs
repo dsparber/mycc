@@ -24,6 +24,12 @@ namespace MyCC.Forms.View.Components.BaseComponents
                 var entry = (Entry)sender;
                 var val = entry.Text;
 
+                if (val.StartsWith(seperator.ToString()))
+                {
+                    val = $"0{val}";
+                    entry.Text = val;
+                }
+
                 if (val.Length == 0) return;
                 if (!IsPin && char.IsDigit(val[0]) && (val.Count(x => x == seperator) == 0 || val.Count(x => x == seperator) == 1 &&
                      $"{val}x".Split(new[] { seperator }, StringSplitOptions.RemoveEmptyEntries)[1].Length <= 9) &&

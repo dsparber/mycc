@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Database;
 using MyCC.Core.Account.Models.Base;
@@ -44,6 +46,8 @@ namespace MyCC.Core.Account.Database
         [Column("LastUpdate")]
         public long LastUpdateTicks { get; set; }
 
+        private static readonly IEnumerable<string> CurrencyBlacklist = new[] { "CAD", "CNY", "EUR", "GBP", "JPY", "UAH", "USD" };
+
         public async Task<FunctionalAccount> Resolve()
         {
             var currency = CurrencyStorage.Instance.AllElements.Find(c => c?.Id.Equals(CurrencyId) ?? false) ?? CurrencyStorage.Instance.AllElements.Find(c => c?.Code.Equals(CurrencyId) ?? false);
@@ -65,12 +69,16 @@ namespace MyCC.Core.Account.Database
                 }
             }
 
-
             var repository = AccountStorage.Instance.Repositories.Find(r => r.Id == ParentId);
             if (repository == null)
             {
                 var db = new AccountRepositoryDatabase();
                 repository = await db.Get(ParentId);
+            }
+
+            if (repository is LocalAccountRepository && CurrencyBlacklist.Contains(currency.Code) && currency.IsCryptoCurrency)
+            {
+                currency.IsCryptoCurrency = false;
             }
 
             var money = new Money(MoneyAmount, currency);

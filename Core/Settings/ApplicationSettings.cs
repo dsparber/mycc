@@ -118,6 +118,7 @@ namespace MyCC.Core.Settings
                     WatchedCurrencies = data;
                 }
 
+                data.RemoveAll(c => c.IsCryptoCurrency && CurrencyBlacklist.Contains(c.Code));
                 return data.Contains(null) ? currencies : data.OrderBy(c => c.Code).ToList();
             }
             set
@@ -163,6 +164,7 @@ namespace MyCC.Core.Settings
                 }
 
                 if (!data.Contains(Currency.Model.Currency.Btc)) data.Add(Currency.Model.Currency.Btc);
+                data.RemoveAll(c => c.IsCryptoCurrency && CurrencyBlacklist.Contains(c.Code));
 
                 return data.Count > 0 ? data.OrderBy(c => c.Code).ToList() : currencies;
             }
@@ -195,6 +197,7 @@ namespace MyCC.Core.Settings
                 }
 
                 data.RemoveAll(MainCurrencies.Contains);
+                data.RemoveAll(c => c.IsCryptoCurrency && CurrencyBlacklist.Contains(c.Code));
                 return data.OrderBy(c => c.Code).ToList();
             }
             set
@@ -415,5 +418,7 @@ namespace MyCC.Core.Settings
             var hasher = algorithm.CreateHash(keyBytes);
             return ByteToString(hasher.GetValueAndReset());
         }
+
+        private static readonly IEnumerable<string> CurrencyBlacklist = new[] { "CAD", "CNY", "EUR", "GBP", "JPY", "UAH", "USD" };
     }
 }
