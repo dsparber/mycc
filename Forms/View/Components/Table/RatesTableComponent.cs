@@ -12,32 +12,21 @@ using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
+using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Pages;
 using Xamarin.Forms;
-using XLabs.Forms.Controls;
-using XLabs.Ioc;
-using XLabs.Serialization;
-using XLabs.Serialization.JsonNET;
 
 namespace MyCC.Forms.View.Components.Table
 {
     public class RatesTableComponent : ContentView
     {
         private readonly HybridWebView _webView;
-        private bool _appeared;
 
         public RatesTableComponent(INavigation navigation)
         {
-            var resolverContainer = new SimpleContainer();
-
-            resolverContainer.Register<IJsonSerializer, JsonSerializer>();
-
-            _webView = new HybridWebView
+            _webView = new HybridWebView("Html/ratesTable.html")
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = Color.White,
-                HeightRequest = 0
+                LoadFinished = UpdateView
             };
             _webView.RegisterCallback("Callback", code =>
             {
@@ -80,19 +69,8 @@ namespace MyCC.Forms.View.Components.Table
             Messaging.Loading.SubscribeFinished(this, UpdateView);
         }
 
-        public void OnAppearing()
-        {
-            if (_appeared) return;
-
-            _appeared = true;
-            _webView.LoadFromContent("Html/ratesTable.html");
-            _webView.LoadFinished = (sender, e) => UpdateView();
-        }
-
         private void UpdateView()
         {
-            if (!_appeared) return;
-
             var items = ApplicationSettings.WatchedCurrencies
                 .Concat(ApplicationSettings.AllReferenceCurrencies)
                 .Concat(AccountStorage.UsedCurrencies)
@@ -102,7 +80,7 @@ namespace MyCC.Forms.View.Components.Table
 
             var itemsExisting = items.Count > 0;
 
-            if (!itemsExisting || !_appeared) return;
+            if (!itemsExisting) return;
 
             Func<Data, object> sortLambda;
             switch (ApplicationSettings.SortOrderRates)

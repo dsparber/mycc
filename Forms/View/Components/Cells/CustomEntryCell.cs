@@ -83,7 +83,7 @@ namespace MyCC.Forms.View.Components.Cells
             stack.Children.Add(_entry);
 
 
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals(Device.Android))
             {
                 stack.Spacing = 3;
                 _titleLabel.FontSize = AppConstants.AndroidFontSize;
@@ -93,7 +93,7 @@ namespace MyCC.Forms.View.Components.Cells
 
             stack.HorizontalOptions = LayoutOptions.FillAndExpand;
             stack.VerticalOptions = LayoutOptions.FillAndExpand;
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals(Device.Android))
             {
                 stack.BackgroundColor = Color.White;
                 View = new ContentView { Content = stack, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5) };

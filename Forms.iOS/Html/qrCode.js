@@ -7,7 +7,7 @@ function setCode(code) {
     var size = document.body.clientHeight > document.body.clientWidth ? document.body.clientWidth : document.body.clientHeight;
     size -= 100;
 
-    $( "div" ).empty();
+    $("div").empty();
 
     // ReSharper disable once InconsistentNaming
     // ReSharper disable once ConstructorCallNotUsed
@@ -15,12 +15,12 @@ function setCode(code) {
         text: code,
         width: size,
         height: size,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
     });
 }
 
-$( window ).resize(function() {
-  setCode(_code);
+$(window).resize(function () {
+    setCode(_code);
 });

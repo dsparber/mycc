@@ -4,79 +4,79 @@ using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Components.Cells
 {
-	public class CustomViewCell : ViewCell
-	{
-		private readonly CustomCellView _view;
+    public class CustomViewCell : ViewCell
+    {
+        private readonly CustomCellView _view;
 
-		public CustomViewCell()
-		{
-			_view = new CustomCellView();
+        public CustomViewCell()
+        {
+            _view = new CustomCellView();
 
-			if (Device.OS == TargetPlatform.Android)
-			{
-				_view.Panel.BackgroundColor = Color.White;
-				View = new ContentView { Content = _view.Panel, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5) };
-			}
-			else
-			{
-				View = _view.Panel;
-			}
+            if (Device.RuntimePlatform.Equals(Device.Android))
+            {
+                _view.Panel.BackgroundColor = Color.White;
+                View = new ContentView { Content = _view.Panel, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5) };
+            }
+            else
+            {
+                View = _view.Panel;
+            }
 
-			View.MinimumHeightRequest = 44;
-			Height = 44;
-		}
+            View.MinimumHeightRequest = 44;
+            Height = 44;
+        }
 
-		public string Text
-		{
-			set { _view.Text = value; }
-			get { return _view.Text; }
-		}
+        public string Text
+        {
+            set { _view.Text = value; }
+            get { return _view.Text; }
+        }
 
-		public string Detail
-		{
-			set { _view.Detail = value; }
-			get { return _view.Detail; }
-		}
+        public string Detail
+        {
+            set { _view.Detail = value; }
+            get { return _view.Detail; }
+        }
 
-		public string Image
-		{
-			set { _view.Image = value; }
-		}
+        public string Image
+        {
+            set { _view.Image = value; }
+        }
 
-		public List<CustomCellViewActionItem> ActionItems
-		{
-			get { return _view.ActionItems; }
-			set { _view.ActionItems = value; }
-		}
+        public List<CustomCellViewActionItem> ActionItems
+        {
+            get { return _view.ActionItems; }
+            set { _view.ActionItems = value; }
+        }
 
-		public bool IsActionCell
-		{
-			set { _view.IsActionCell = value; }
-		}
+        public bool IsActionCell
+        {
+            set { _view.IsActionCell = value; }
+        }
 
-		public bool IsDeleteActionCell
-		{
-			set { _view.IsDeleteActionCell = value; }
-		}
+        public bool IsDeleteActionCell
+        {
+            set { _view.IsDeleteActionCell = value; }
+        }
 
-		public bool ShowIcon
-		{
-			set { _view.ShowIcon = value; }
-		}
+        public bool ShowIcon
+        {
+            set { _view.ShowIcon = value; }
+        }
 
-		public bool IsCentered
-		{
-			set { _view.IsCentered = value; }
-		}
+        public bool IsCentered
+        {
+            set { _view.IsCentered = value; }
+        }
 
-		public bool IsDisabled
-		{
-			set { _view.IsDisaled = value; }
-		}
+        public bool IsDisabled
+        {
+            set { _view.IsDisaled = value; }
+        }
 
-		public LineBreakMode DetailBreakMode
-		{
-			set { _view.DetailBreakMode = value; }
-		}
-	}
+        public LineBreakMode DetailBreakMode
+        {
+            set { _view.DetailBreakMode = value; }
+        }
+    }
 }

@@ -122,8 +122,7 @@ function showChart(data, textAccounts, textCurrencies, textFurther, textNoData, 
         createMainGraph(data);
     });
 
-    // ReSharper disable once UseOfImplicitGlobalInFunctionScope
-    Native("sizeAllocated", true);
+    window.open("/?" + "sizeAllocated=" + true, "_top");
 }
 
 function createMainGraph(data) {
@@ -178,23 +177,23 @@ function showOverlay(id, callback) {
 
 function labelFormatter(context) {
     var sum = 0;
-    for (var i in chartOptions["data"]["content"]){
-      sum +=  chartOptions["data"]["content"][i]["value"];
+    for (var i in chartOptions["data"]["content"]) {
+        sum += chartOptions["data"]["content"][i]["value"];
     }
     var percent = chartOptions["data"]["content"][context.index]["value"] / sum;
     var length = chartOptions["data"]["content"].length;
 
     if (percent < 0.08) {
         if (context.section === "outer") {
-            return context.part === "mainLabel" ? context.index === length - 1 ? context.label :   _textFurter : formatPercent(context.label) + " %";
+            return context.part === "mainLabel" ? context.index === length - 1 ? context.label : _textFurter : formatPercent(context.label) + " %";
         }
         if (context.section === "inner") {
             return "";
         }
     }
     if (context.section === "outer") return "";
-    if ( context.part === "mainLabel") return chartOptions["data"]["content"][context.index]["label"];
-    if ( context.part === "percentage") return formatPercent(context.label) + " %";
+    if (context.part === "mainLabel") return chartOptions["data"]["content"][context.index]["label"];
+    if (context.part === "percentage") return formatPercent(context.label) + " %";
     return context.label;
 }
 
@@ -238,8 +237,7 @@ function clickedListener(data) {
         id = "overlay_" + $(".overlay").length + 1;
 
         if (data["accounts"].length === 1) {
-            // ReSharper disable once UseOfImplicitGlobalInFunctionScope
-            Native("selectedCallback", data["accounts"][0]["id"]);
+            window.open("/?" + "selectedCallback=" + data["accounts"][0]["id"], "_top");
         } else {
             var createAccountsGraph = function () {
                 chartOptions["header"]["title"].text = formatNumber(data["value"]);
@@ -265,8 +263,7 @@ function clickedListener(data) {
             });
         }
     } else
-        // ReSharper disable once UseOfImplicitGlobalInFunctionScope
-        Native("selectedCallback", data["id"]);
+        window.open("/?" + "selectedCallback=" + data["id"], "_top");
 }
 
 function groupData(data) {
@@ -290,7 +287,7 @@ function formatNumber(inputNumber) {
 }
 
 function formatPercent(inputNumber) {
-    var number =  Math.floor(inputNumber * 100) / 100;
+    var number = Math.floor(inputNumber * 100) / 100;
     return number.toLocaleString(_culture);
 }
 

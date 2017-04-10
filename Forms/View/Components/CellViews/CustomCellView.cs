@@ -135,7 +135,7 @@ namespace MyCC.Forms.View.Components.CellViews
         {
             _masterLabel = new Label { TextColor = Color.FromHex("222"), LineBreakMode = LineBreakMode.TailTruncation, VerticalOptions = LayoutOptions.Center };
 
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals(Device.Android))
             {
                 _masterLabel.FontSize = AppConstants.AndroidFontSize;
             }

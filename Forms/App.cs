@@ -21,7 +21,7 @@ namespace MyCC.Forms
 
         public App()
         {
-            var startPage = Device.OS == TargetPlatform.Android ? new MasterDetailContainer() as Page : new TabContainerView();
+            var startPage = Device.RuntimePlatform.Equals(Device.Android) ? new MasterDetailContainer() as Page : new TabContainerView();
 
             if (ApplicationSettings.IsPinSet)
             {

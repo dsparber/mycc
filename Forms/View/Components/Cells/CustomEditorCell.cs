@@ -60,13 +60,13 @@ namespace MyCC.Forms.View.Components.Cells
             stack.Children.Add(Editor);
 
 
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals(Device.Android))
             {
                 _titleLabel.FontSize = AppConstants.AndroidFontSize;
                 Editor.FontSize = AppConstants.AndroidFontSize;
             }
 
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals(Device.Android))
             {
                 stack.BackgroundColor = Color.White;
                 View = new ContentView { Content = stack, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5) };
@@ -76,7 +76,7 @@ namespace MyCC.Forms.View.Components.Cells
                 View = stack;
             }
 
-            Height = Device.OS == TargetPlatform.Android ? 80 : 72;
+            Height = Device.RuntimePlatform.Equals(Device.Android) ? 80 : 72;
 
             var gestureRecogniser = new TapGestureRecognizer();
             gestureRecogniser.Tapped += (sender, e) => Editor.Focus();

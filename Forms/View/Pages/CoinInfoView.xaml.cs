@@ -42,7 +42,7 @@ namespace MyCC.Forms.View.Pages
             Title = _currency.Code;
             var header = new CoinInfoHeaderComponent(_currency);
             ChangingStack.Children.Insert(0, header);
-            InfoHeading.Text = Device.OS == TargetPlatform.iOS ? I18N.Info.ToUpper() : I18N.Info;
+            InfoHeading.Text = Device.RuntimePlatform.Equals(Device.iOS) ? I18N.Info.ToUpper() : I18N.Info;
             InfoHeading.TextColor = AppConstants.TableSectionColor;
 
             _referenceView = new ReferenceCurrenciesView(new Money(1, _currency));
@@ -232,12 +232,6 @@ namespace MyCC.Forms.View.Pages
                 PullToRefresh.IsRefreshing = false;
                 await DisplayAlert(I18N.NoInternetAccess, I18N.ErrorRefreshingNotPossibleWithoutInternet, I18N.Cancel);
             }
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            _referenceView.OnAppearing();
         }
 
         private void ShowAccounts(object sender, EventArgs e)

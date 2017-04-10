@@ -30,11 +30,6 @@
 				    x:Name="TableView"
 				    Intent="Form"
 				    HasUnevenRows="true">
-                    <TableView.BackgroundColor>
-                        <OnPlatform
-						    x:TypeArguments="Color"
-						    Android="#EEE" />
-                    </TableView.BackgroundColor>
                     <TableSection
 					    Title="{resources:Translate AccountInformation}"
 					    x:Name="GeneralSection">

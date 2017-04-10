@@ -54,7 +54,7 @@ namespace MyCC.Forms.View.Components.CellViews
             stack.Children.Add(Switch);
 
 
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals(Device.Android))
             {
                 _titleLabel.FontSize = AppConstants.AndroidFontSize;
             }

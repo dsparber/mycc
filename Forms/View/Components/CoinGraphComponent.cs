@@ -10,34 +10,21 @@ using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
+using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Pages;
 using Newtonsoft.Json;
 using Xamarin.Forms;
-using XLabs.Forms.Controls;
-using XLabs.Ioc;
-using XLabs.Serialization;
-using JsonSerializer = XLabs.Serialization.JsonNET.JsonSerializer;
 
 namespace MyCC.Forms.View.Components
 {
     public class CoinGraphComponent : ContentView
     {
         private readonly HybridWebView _webView;
-        private bool _appeared;
 
         public CoinGraphComponent(INavigation navigation)
         {
-            var resolverContainer = new SimpleContainer();
+            _webView = new HybridWebView("Html/pieChart.html") { LoadFinished = UpdateView };
 
-            resolverContainer.Register<IJsonSerializer, JsonSerializer>();
-
-            _webView = new HybridWebView
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = Color.White,
-                MinimumHeightRequest = 500
-            };
             _webView.RegisterCallback("selectedCallback", id =>
             {
                 var element = AccountStorage.Instance.AllElements.Find(e => e.Id == Convert.ToInt32(id));
@@ -55,15 +42,6 @@ namespace MyCC.Forms.View.Components
             Messaging.UpdatingAccountsAndRates.SubscribeValueChanged(this, UpdateView);
 
             Messaging.Progress.SubscribeToComplete(this, UpdateView);
-        }
-
-        public void OnAppearing()
-        {
-            if (_appeared) return;
-
-            _appeared = true;
-            _webView.LoadFromContent("Html/pieChart.html");
-            _webView.LoadFinished = (sender, e) => UpdateView();
         }
 
         private void UpdateView()

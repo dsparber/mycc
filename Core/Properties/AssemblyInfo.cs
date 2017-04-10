@@ -3,11 +3,11 @@
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("MyCC")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("MyCC Core")]
+[assembly: AssemblyDescription("My Cryptocurrencies - Core Utils")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
+[assembly: AssemblyProduct("MyCC")]
 [assembly: AssemblyCopyright("Daniel Sparber")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

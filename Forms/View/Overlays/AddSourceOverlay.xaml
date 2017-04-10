@@ -28,19 +28,9 @@
                 <baseComponents:SegmentedControl
 					x:Name="SegmentedControl" />
                 <ContentView>
-                    <ContentView.Padding>
-                        <OnPlatform
-							x:TypeArguments="Thickness"
-							iOS="0,-10,0,0" />
-                    </ContentView.Padding>
                     <TableView
 						x:Name="TableViewComponent"
 						Intent="Form">
-                        <TableView.BackgroundColor>
-                            <OnPlatform
-								x:TypeArguments="Color"
-								Android="#EEE" />
-                        </TableView.BackgroundColor>
                         <TableView.Root>
                             <TableSection
 								Title="{resources:Translate Name}" x:Name="NameSection">

@@ -104,7 +104,7 @@ namespace MyCC.Forms.View.Components.Header
             LoadingIndicator.WidthRequest = _defaultSizeInfoText;
             InfoLabel.FontSize = _defaultSizeInfoText;
 
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals(Device.Android))
             {
                 LoadingIndicator.VerticalOptions = LayoutOptions.Center;
                 ProgressBar.HeightRequest = 1;

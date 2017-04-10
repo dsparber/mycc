@@ -34,21 +34,21 @@ namespace MyCC.Forms.View.Components.Cells
             stack.Children.Add(_titleLabel);
             stack.Children.Add(_picker);
 
-            if (Device.OS == TargetPlatform.iOS)
+            if (Device.RuntimePlatform.Equals(Device.iOS))
             {
                 var icon = new Image { Source = ImageSource.FromFile("down.png"), HeightRequest = 20, HorizontalOptions = LayoutOptions.EndAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand };
                 stack.Children.Add(icon);
             }
 
 
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals(Device.Android))
             {
                 _titleLabel.FontSize = AppConstants.AndroidFontSize;
             }
 
             stack.HorizontalOptions = LayoutOptions.FillAndExpand;
             stack.VerticalOptions = LayoutOptions.FillAndExpand;
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals(Device.Android))
             {
                 stack.BackgroundColor = Color.White;
                 View = new ContentView { Content = stack, BackgroundColor = Color.FromHex("c7d7d4"), Padding = new Thickness(0, 0, 0, 0.5), Margin = new Thickness(0, 0, 0, -0.5) };

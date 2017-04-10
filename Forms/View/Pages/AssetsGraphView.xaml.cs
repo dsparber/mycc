@@ -63,15 +63,14 @@ namespace MyCC.Forms.View.Pages
                 RefreshCommand = new Command(Refresh),
             };
 
-            Content.Content = _pullToRefresh;
+            ContentView.Content = _pullToRefresh;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _graphView.OnAppearing();
 
-            if (Device.OS != TargetPlatform.Android) return;
+            if (!Device.RuntimePlatform.Equals(Device.Android)) return;
             InitPullToRefresh();
         }
 
@@ -80,7 +79,7 @@ namespace MyCC.Forms.View.Pages
             base.OnSizeAllocated(width, height);
             _graphView.HeightRequest = _pullToRefresh.Height;
 
-            if (Device.OS != TargetPlatform.Android) return;
+            if (!Device.RuntimePlatform.Equals(Device.Android)) return;
             InitPullToRefresh();
         }
 

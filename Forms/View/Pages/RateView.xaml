@@ -35,7 +35,7 @@
                         Spacing="0" 
                         VerticalOptions="FillAndExpand">
                         <ContentView
-                          x:Name="Content"
+                          x:Name="ContentView"
                           BackgroundColor="{x:Static constants:AppConstants.TableBackgroundColor}"
                           HorizontalOptions="FillAndExpand"
                           VerticalOptions="FillAndExpand"/>

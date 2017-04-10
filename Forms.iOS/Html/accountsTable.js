@@ -57,7 +57,7 @@ function updateTable(data, sort) {
         var amountCell = row.insertCell(1);
         row.insertCell(2); // For Arrow
         amountCell.innerHTML = "<span>" + data[i]["Amount"].substring(0, data[i]["Amount"].length - 5) + "</span><span>" + data[i]["Amount"].substring(data[i]["Amount"].length - 5) + "</span>";
-        nameCell.innerHTML = "<div><span>"+data[i]["Name"]+"</span></div>";
+        nameCell.innerHTML = "<div><span>" + data[i]["Name"] + "</span></div>";
 
         if (data[i]["Disabled"]) {
             row.className = "disabled";
@@ -74,17 +74,17 @@ function updateTable(data, sort) {
 
 function rowClicked(id) {
     return function () {
-        Native("Callback", id);
+        window.open("http://none?" + "Callback=" + id);
     };
 }
 
 function sizeAllocated() {
-    Native("CallbackSizeAllocated", document.getElementById("coinTable").offsetHeight);
+    window.open("http://none?" + "CallbackSizeAllocated=" + document.getElementById("coinTable").offsetHeight);
 }
 
 function headerClicked(type) {
     return function () {
-        Native("HeaderClickedCallback", type);
+        window.open("http://none?" + "HeaderClickedCallback=" + type);
     };
 }
 

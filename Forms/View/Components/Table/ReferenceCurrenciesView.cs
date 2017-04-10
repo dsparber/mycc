@@ -12,12 +12,9 @@ using MyCC.Core.Types;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
+using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Components.CellViews;
 using Xamarin.Forms;
-using XLabs.Forms.Controls;
-using XLabs.Ioc;
-using XLabs.Serialization;
-using XLabs.Serialization.JsonNET;
 
 namespace MyCC.Forms.View.Components.Table
 {
@@ -27,7 +24,6 @@ namespace MyCC.Forms.View.Components.Table
 
         private readonly SectionHeaderView _sectionHeader;
         private readonly HybridWebView _webView;
-        private bool _appeared;
 
         private string TableHeaderLabel => string.Format(ReferenceMoney.Amount == 1 ? I18N.IsEqualTo : I18N.AreEqualTo, ReferenceMoney);
         private IEnumerable<Currency> ReferenceCurrencies => ApplicationSettings.AllReferenceCurrencies.Except(new List<Currency> { ReferenceMoney?.Currency });
@@ -36,16 +32,9 @@ namespace MyCC.Forms.View.Components.Table
         {
             ReferenceMoney = reference;
 
-            var resolverContainer = new SimpleContainer();
-
-            resolverContainer.Register<IJsonSerializer, JsonSerializer>();
-
-            _webView = new HybridWebView
+            _webView = new HybridWebView("Html/equalsTable.html")
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = AppConstants.TableBackgroundColor,
-                HeightRequest = 0
+                LoadFinished = UpdateView
             };
 
             _webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
@@ -89,15 +78,6 @@ namespace MyCC.Forms.View.Components.Table
             Messaging.Loading.SubscribeFinished(this, UpdateView);
         }
 
-        public void OnAppearing()
-        {
-            if (_appeared) return;
-
-            _appeared = true;
-            _webView.LoadFromContent("Html/equalsTable.html");
-            _webView.LoadFinished = (sender, e) => UpdateView();
-        }
-
         public void UpdateView()
         {
             try
@@ -105,7 +85,7 @@ namespace MyCC.Forms.View.Components.Table
                 var items = ReferenceCurrencies.Select(c => new Data(ReferenceMoney, c)).ToList();
                 var itemsExisting = items.Count > 0;
 
-                if (!itemsExisting || !_appeared) return;
+                if (!itemsExisting) return;
 
                 Func<Data, object> sortLambda;
                 switch (ApplicationSettings.SortOrderReferenceValues)

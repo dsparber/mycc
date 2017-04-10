@@ -12,13 +12,10 @@ using MyCC.Core.Types;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
+using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Pages;
 using Xamarin.Forms;
-using XLabs.Forms.Controls;
-using XLabs.Ioc;
-using XLabs.Serialization;
-using XLabs.Serialization.JsonNET;
 
 namespace MyCC.Forms.View.Components.Table
 {
@@ -26,7 +23,6 @@ namespace MyCC.Forms.View.Components.Table
     {
         private readonly HybridWebView _webView;
         private readonly Currency _currency;
-        private bool _appeared;
         private readonly bool _useEnabledAccounts;
 
         public AccountsTableComponent(INavigation navigation, Currency currency, bool useEnabledAccounts)
@@ -34,17 +30,8 @@ namespace MyCC.Forms.View.Components.Table
             _currency = currency;
             _useEnabledAccounts = useEnabledAccounts;
 
-            var resolverContainer = new SimpleContainer();
+            _webView = new HybridWebView("Html/accountsTable.html") { LoadFinished = UpdateView };
 
-            resolverContainer.Register<IJsonSerializer, JsonSerializer>();
-
-            _webView = new HybridWebView
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = Color.White,
-                HeightRequest = 0
-            };
             _webView.RegisterCallback("Callback", idString =>
             {
                 var id = int.Parse(idString);
@@ -87,22 +74,13 @@ namespace MyCC.Forms.View.Components.Table
             Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
         }
 
-        public void OnAppearing()
-        {
-            if (_appeared) return;
-
-            _appeared = true;
-            _webView.LoadFromContent("Html/accountsTable.html");
-            _webView.LoadFinished = (sender, e) => UpdateView();
-        }
-
         private void UpdateView()
         {
             try
             {
                 var items = AccountStorage.AccountsWithCurrency(_currency).Where(a => a.IsEnabled == _useEnabledAccounts).Select(a => new Data(a)).ToList();
 
-                if (!items.Any() || !_appeared) return;
+                if (!items.Any()) return;
 
                 Func<Data, object> sortLambda;
                 switch (ApplicationSettings.SortOrderAccounts)

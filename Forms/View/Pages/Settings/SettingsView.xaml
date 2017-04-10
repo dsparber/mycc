@@ -8,11 +8,6 @@
 	xmlns:header="clr-namespace:MyCC.Forms.View.Components.Header;assembly=MyCC.Forms"
 	x:Class="MyCC.Forms.View.Pages.Settings.SettingsView"
 	Title="{resources:Translate Settings}">
-    <ContentPage.BackgroundColor>
-        <OnPlatform
-			x:TypeArguments="Color"
-			Android="#EEE" />
-    </ContentPage.BackgroundColor>
     <ContentPage.Content>
         <container:ChangingStackLayout>
             <header:HeaderView

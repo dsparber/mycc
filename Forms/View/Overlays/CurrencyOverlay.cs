@@ -43,7 +43,7 @@ namespace MyCC.Forms.View.Overlays
             }
 
             _searchBar = new SearchBar { Placeholder = I18N.SearchCurrencies };
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals(Device.Android))
             {
                 _searchBar.TextColor = AppConstants.FontColor;
                 _searchBar.PlaceholderColor = AppConstants.FontColorLight;

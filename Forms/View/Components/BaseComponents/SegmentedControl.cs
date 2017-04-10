@@ -39,7 +39,7 @@ namespace MyCC.Forms.View.Components.BaseComponents
 
             _stack = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.Center, Spacing = 1 };
             var frame = new Frame { Content = _stack, OutlineColor = AppConstants.ThemeColor, BackgroundColor = AppConstants.ThemeColor, HasShadow = false, Padding = 0, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center };
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform.Equals(Device.Android))
             {
                 frame.Padding = 1;
             }

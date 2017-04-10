@@ -26,11 +26,6 @@
 					Intent="Form"
 					x:Name="Table"
 					VerticalOptions="FillAndExpand">
-                    <TableView.BackgroundColor>
-                        <OnPlatform
-							x:TypeArguments="Color"
-							Android="#EEE" />
-                    </TableView.BackgroundColor>
                     <TableSection
 						x:Name="AddressSection" />
                     <TableSection

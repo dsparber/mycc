@@ -25,7 +25,6 @@ namespace MyCC.Forms.View.Pages
     public partial class AccountView
     {
         private FunctionalAccount _account;
-        private readonly ReferenceCurrenciesView _referenceView;
         private readonly PullToRefreshLayout _pullToRefresh;
 
 
@@ -37,7 +36,8 @@ namespace MyCC.Forms.View.Pages
 
             var header = new CoinHeaderComponent(account);
             ChangingStack.Children.Insert(0, header);
-            _referenceView = new ReferenceCurrenciesView(account.Money);
+
+            var referenceView = new ReferenceCurrenciesView(account.Money);
 
             var stack = new StackLayout { Spacing = 0, Margin = new Thickness(0, 0, 0, 40) };
             var repo = AccountStorage.RepositoryOf(_account);
@@ -165,7 +165,7 @@ namespace MyCC.Forms.View.Pages
             infoStackContainer.Children.Add(dataStack);
             stack.Children.Add(new SectionHeaderView(false) { Title = I18N.Info });
             stack.Children.Add(infoStackContainer);
-            stack.Children.Add(_referenceView);
+            stack.Children.Add(referenceView);
 
 
             _pullToRefresh = new PullToRefreshLayout
@@ -200,8 +200,8 @@ namespace MyCC.Forms.View.Pages
                 updateLabelAction();
                 SetFooter();
 
-                _referenceView.ReferenceMoney = _account.Money;
-                _referenceView.UpdateView();
+                referenceView.ReferenceMoney = _account.Money;
+                referenceView.UpdateView();
             };
 
             Messaging.Progress.SubscribeToComplete(this, update);
@@ -218,8 +218,6 @@ namespace MyCC.Forms.View.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            _referenceView.OnAppearing();
 
             if (!AccountStorage.Instance.AllElements.Contains(_account))
             {

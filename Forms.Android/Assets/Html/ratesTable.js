@@ -70,18 +70,18 @@ function updateTable(data, sort) {
 
 function rowClicked(code) {
     return function () {
-        Native("Callback", code);
+        window.open("http://none?" + "Callback=" + code);
     };
 }
 
 function headerClicked(type) {
     return function () {
-        Native("HeaderClickedCallback", type);
+        window.open("http://none?" + "HeaderClickedCallback=" + type);
     };
 }
 
 function sizeAllocated() {
-    Native("CallbackSizeAllocated", document.getElementById("coinTable").offsetHeight);
+    window.open("http://none?" + "CallbackSizeAllocated=" + document.getElementById("coinTable").offsetHeight);
 }
 
 function clearTable(table) {

@@ -63,15 +63,14 @@ namespace MyCC.Forms.View.Pages
             };
 
 
-            Content.Content = _pullToRefresh;
+            ContentView.Content = _pullToRefresh;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _tableView.OnAppearing();
 
-            if (Device.OS != TargetPlatform.Android) return;
+            if (!Device.RuntimePlatform.Equals(Device.Android)) return;
             InitPullToRefresh();
         }
 
@@ -79,7 +78,7 @@ namespace MyCC.Forms.View.Pages
         {
             base.OnSizeAllocated(width, height);
 
-            if (Device.OS != TargetPlatform.Android) return;
+            if (!Device.RuntimePlatform.Equals(Device.Android)) return;
             InitPullToRefresh();
         }
 

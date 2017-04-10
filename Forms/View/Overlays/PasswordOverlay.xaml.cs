@@ -21,7 +21,7 @@ namespace MyCC.Forms.View.Overlays
             InitializeComponent();
             _goesToBckground = background;
 
-            PinFrame.OutlineColor = Device.OS == TargetPlatform.Android ? AppConstants.TableBackgroundColor : AppConstants.BorderColor;
+            PinFrame.OutlineColor = Device.RuntimePlatform.Equals(Device.Android) ? AppConstants.TableBackgroundColor : AppConstants.BorderColor;
 
             var recognizer = new TapGestureRecognizer();
             recognizer.Tapped += async (sender, e) =>
@@ -90,7 +90,7 @@ namespace MyCC.Forms.View.Overlays
         {
             if (e.NewTextValue.Length > 0)
             {
-                PinFrame.OutlineColor = Device.OS == TargetPlatform.Android ? AppConstants.TableBackgroundColor : AppConstants.BorderColor;
+                PinFrame.OutlineColor = Device.RuntimePlatform.Equals(Device.Android) ? AppConstants.TableBackgroundColor : AppConstants.BorderColor;
             }
 
             if (e.NewTextValue?.Length != ApplicationSettings.PinLength) return;
@@ -111,7 +111,7 @@ namespace MyCC.Forms.View.Overlays
             PinFrame.Unfocus();
             if (_pushMainView)
             {
-                await Navigation.PushModalAsync(Device.OS == TargetPlatform.Android ? new MasterDetailContainer() as Page : new TabContainerView());
+                await Navigation.PushModalAsync(Device.RuntimePlatform.Equals(Device.Android) ? new MasterDetailContainer() as Page : new TabContainerView());
                 Messaging.DarkStatusBar.Send(false);
             }
             else

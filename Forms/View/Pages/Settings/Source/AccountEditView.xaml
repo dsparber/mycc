@@ -25,19 +25,9 @@
 				x:Name="Header" />
             <StackLayout
 				Spacing="0">
-                <StackLayout.BackgroundColor>
-                    <OnPlatform
-						x:TypeArguments="Color"
-						Android="#EEE" />
-                </StackLayout.BackgroundColor>
                 <TableView
 					x:Name="EditView"
 					Intent="Form">
-                    <TableView.BackgroundColor>
-                        <OnPlatform
-							x:TypeArguments="Color"
-							Android="#EEE" />
-                    </TableView.BackgroundColor>
                     <TableView.Root>
                         <TableSection
 							x:Name="AccountSection">

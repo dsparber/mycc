@@ -5,7 +5,6 @@ using MyCC.Forms.Constants;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using XLabs.Forms.Controls;
 using System;
 using MyCC.Forms.Messages;
 using Refractored.XamForms.PullToRefresh.iOS;
@@ -28,7 +27,6 @@ namespace MyCC.Forms.iOS
             App.ScreenWidth = Math.Min(x, y);
 
             LoadApplication(new App());
-            HybridWebViewRenderer.CopyBundleDirectory("Html");
 
             var result = base.FinishedLaunching(uiApplication, launchOptions);
 
