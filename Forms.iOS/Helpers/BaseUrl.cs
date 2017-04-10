@@ -11,7 +11,7 @@ namespace MyCC.Forms.iOS.Helpers
     {
         public string Get()
         {
-            return Environment.GetFolderPath(Environment.SpecialFolder.Personal).Replace("Documents", "tmp/");
+            return Foundation.NSBundle.MainBundle.BundlePath;
         }
     }
 }

@@ -38,8 +38,6 @@
     <ConsolePause>false</ConsolePause>
     <MtouchArch>i386, x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
-    <MtouchUseRefCounting>true</MtouchUseRefCounting>
-    <MtouchUseSGen>true</MtouchUseSGen>
     <MtouchFastDev>true</MtouchFastDev>
     <MtouchDebug>true</MtouchDebug>
     <CodesignKey>iPhone Developer</CodesignKey>
@@ -55,9 +53,7 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchFloat32>True</MtouchFloat32>
-    <MtouchUseSGen>True</MtouchUseSGen>
     <CodesignKey>iPhone Distribution</CodesignKey>
-    <MtouchUseRefCounting>True</MtouchUseRefCounting>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>False</MtouchDebug>
     <MtouchProfiling>False</MtouchProfiling>
@@ -82,9 +78,7 @@
     <ConsolePause>false</ConsolePause>
     <MtouchArch>i386, x86_64</MtouchArch>
     <MtouchLink>SdkOnly</MtouchLink>
-    <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchUseSGen>true</MtouchUseSGen>
     <MtouchUseLlvm>true</MtouchUseLlvm>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
@@ -102,8 +96,6 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
     <DeviceSpecificBuild>False</DeviceSpecificBuild>
     <MtouchDebug>True</MtouchDebug>
-    <MtouchUseSGen>True</MtouchUseSGen>
-    <MtouchUseRefCounting>True</MtouchUseRefCounting>
     <MtouchProfiling>False</MtouchProfiling>
     <IpaPackageName>
     </IpaPackageName>
@@ -411,12 +403,107 @@
     <BundleResource Include="Resources\flashOn.png" />
     <BundleResource Include="Resources\flashOn%402x.png" />
     <BundleResource Include="Resources\flashOn%403x.png" />
+    <BundleResource Include="Resources\Html\about.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\about.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\about.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\accountsTable.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\accountsTable.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\accountsTable.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\close.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\coinTable.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\coinTable.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\coinTable.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\collapse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\d3.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\d3pie.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\down.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\equalsTable.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\equalsTable.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\equalsTable.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\expand.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\jquery-latest.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\jquery-ui.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\more.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\pieChart.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\pieChart.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\pieChart.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\qrCode.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\qrCode.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\qrCode.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\qrcode.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\ratesTable.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\ratesTable.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\ratesTable.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\up.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Html\upDown.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Html\coinTable.css" />
-    <Content Include="Html\coinTable.html" />
-    <Content Include="Html\coinTable.js" />
-    <Content Include="Html\down.svg" />
     <BundleResource Include="Resources\delete.png" />
     <BundleResource Include="Resources\delete%402x.png" />
     <BundleResource Include="Resources\delete%403x.png" />
@@ -429,35 +516,6 @@
     <BundleResource Include="Resources\refresh%403x.png" />
     <BundleResource Include="Resources\refresh.png" />
     <BundleResource Include="Resources\refresh%402x.png" />
-    <Content Include="Html\jquery-latest.min.js" />
-    <Content Include="Html\qrCode.css" />
-    <Content Include="Html\qrCode.html" />
-    <Content Include="Html\qrCode.js" />
-    <Content Include="Html\qrcode.min.js" />
-    <Content Include="Html\up.svg" />
-    <Content Include="Html\upDown.svg" />
-    <Content Include="Html\ratesTable.css" />
-    <Content Include="Html\ratesTable.html" />
-    <Content Include="Html\ratesTable.js" />
-    <Content Include="Html\more.png" />
-    <Content Include="Html\equalsTable.css" />
-    <Content Include="Html\equalsTable.html" />
-    <Content Include="Html\equalsTable.js" />
-    <Content Include="Html\accountsTable.css" />
-    <Content Include="Html\accountsTable.html" />
-    <Content Include="Html\accountsTable.js" />
-    <Content Include="Html\close.svg" />
-    <Content Include="Html\d3.min.js" />
-    <Content Include="Html\d3pie.min.js" />
-    <Content Include="Html\jquery-ui.min.js" />
-    <Content Include="Html\pieChart.css" />
-    <Content Include="Html\pieChart.html" />
-    <Content Include="Html\pieChart.js" />
-    <Content Include="Html\about.css" />
-    <Content Include="Html\about.html" />
-    <Content Include="Html\about.js" />
-    <Content Include="Html\collapse.png" />
-    <Content Include="Html\expand.png" />
     <Content Include="Resources\add.png" />
     <Content Include="Resources\add%402x.png" />
     <Content Include="Resources\add%403x.png" />
@@ -493,6 +551,7 @@
   <ItemGroup>
     <Folder Include="Resources\Images.xcassets\fingerprint.imageset\" />
     <Folder Include="Resources\Images.xcassets\StartupIcon.imageset\" />
+    <Folder Include="Resources\Html\" />
   </ItemGroup>
   <Import Project="..\packages\Xamarin.Forms.2.3.4.224\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.224\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

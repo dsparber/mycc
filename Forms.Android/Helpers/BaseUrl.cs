@@ -5,11 +5,11 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(BaseUrl))]
 namespace MyCC.Forms.Android.Helpers
 {
-    public class BaseUrl : IBaseUrl
-    {
-        public string Get()
-        {
-            return "file:///android_asset/";
-        }
-    }
+	public class BaseUrl : IBaseUrl
+	{
+		public string Get()
+		{
+			return "file:///android_asset";
+		}
+	}
 }

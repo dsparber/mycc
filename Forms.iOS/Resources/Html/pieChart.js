@@ -121,7 +121,7 @@ function showChart(data, textAccounts, textCurrencies, textFurther, textNoData, 
     $("#pieChart").resize(function () {
         createMainGraph(data);
     });
-
+     
     window.open("/?" + "sizeAllocated=" + true, "_top");
 }
 
