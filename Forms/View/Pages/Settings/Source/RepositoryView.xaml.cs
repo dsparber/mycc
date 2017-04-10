@@ -12,6 +12,7 @@ using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 using MyCC.Core.Currency.Model;
+using MyCC.Core.Helpers;
 
 namespace MyCC.Forms.View.Pages.Settings.Source
 {
@@ -122,10 +123,14 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 
             Device.BeginInvokeOnMainThread(() =>
             {
-                EnableAccountsSection.Clear();
-                EnableAccountsSection.Add(enableCells);
-                Footer.Text = _repository.LastFetch.LastUpdateString();
-                IsEditable = isEditable;
+                try
+                {
+                    EnableAccountsSection.Clear();
+                    EnableAccountsSection.Add(enableCells);
+                    Footer.Text = _repository.LastFetch.LastUpdateString();
+                    IsEditable = isEditable;
+                }
+                catch (ObjectDisposedException e) { e.LogError(); }
             });
         }
 

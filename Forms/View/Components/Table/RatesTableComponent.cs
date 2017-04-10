@@ -101,6 +101,11 @@ namespace MyCC.Forms.View.Components.Table
                     new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.SelectedRatePageCurrency), SortOrder.ByValue.ToString())
                 }, string.Empty);
                 _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+
+                if (Device.RuntimePlatform.Equals(Device.Android))
+                {
+                    HeightRequest = 38 * (items.Count + 1) + 1;
+                }
             });
         }
 

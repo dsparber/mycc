@@ -22,19 +22,13 @@ namespace MyCC.Forms.View.Pages
 {
     public partial class AssetsGraphView
     {
-        private readonly CoinGraphComponent _graphView;
+        private CoinGraphComponent _graphView;
         private PullToRefreshLayout _pullToRefresh;
 
 
         public AssetsGraphView()
         {
             InitializeComponent();
-
-            _graphView = new CoinGraphComponent(Navigation)
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand
-            };
 
             InitPullToRefresh();
 
@@ -54,6 +48,8 @@ namespace MyCC.Forms.View.Pages
 
         private void InitPullToRefresh()
         {
+            _graphView = new CoinGraphComponent(Navigation);
+
             _pullToRefresh = new PullToRefreshLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,

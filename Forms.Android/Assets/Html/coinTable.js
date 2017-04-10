@@ -84,18 +84,18 @@ function updateTable(data, sort) {
 }
 
 function sizeAllocated() {
-    window.open("http://none?" + "CallbackSizeAllocated=" + document.getElementById("coinTable").offsetHeight);
+    window.open("/?" + "CallbackSizeAllocated=" + document.getElementById("coinTable").offsetHeight);
 }
 
 function rowClicked(code) {
     return function () {
-        window.open("http://none?" + "Callback=" + code);
+        window.open("/?" + "Callback=" + code);
     };
 }
 
 function headerClicked(type) {
     return function () {
-        window.open("http://none?" + "HeaderClickedCallback=" + type);
+        window.open("/?" + "HeaderClickedCallback=" + type);
     };
 }
 

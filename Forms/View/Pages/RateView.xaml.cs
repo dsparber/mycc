@@ -23,13 +23,11 @@ namespace MyCC.Forms.View.Pages
     public partial class RateView
     {
         private PullToRefreshLayout _pullToRefresh;
-        private readonly RatesTableComponent _tableView;
+        private RatesTableComponent _tableView;
 
         public RateView()
         {
             InitializeComponent();
-
-            _tableView = new RatesTableComponent(Navigation);
 
             InitPullToRefresh();
 
@@ -61,6 +59,8 @@ namespace MyCC.Forms.View.Pages
 
         private void InitPullToRefresh()
         {
+            _tableView = new RatesTableComponent(Navigation);
+
             var stack = new StackLayout { Spacing = 0, VerticalOptions = LayoutOptions.FillAndExpand };
             stack.Children.Add(_tableView);
             stack.Children.Add(new ContentView { VerticalOptions = LayoutOptions.FillAndExpand });
@@ -82,7 +82,6 @@ namespace MyCC.Forms.View.Pages
             base.OnAppearing();
 
             if (!Device.RuntimePlatform.Equals(Device.Android)) return;
-
             InitPullToRefresh();
         }
 
@@ -91,7 +90,6 @@ namespace MyCC.Forms.View.Pages
             base.OnSizeAllocated(width, height);
 
             if (!Device.RuntimePlatform.Equals(Device.Android)) return;
-
             InitPullToRefresh();
         }
 

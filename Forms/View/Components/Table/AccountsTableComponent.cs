@@ -101,6 +101,11 @@ namespace MyCC.Forms.View.Components.Table
                     new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
                         }, string.Empty);
                     _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+
+                    if (Device.RuntimePlatform.Equals(Device.Android))
+                    {
+                        _webView.HeightRequest = 38 * (items.Count + 1) + 1;
+                    }
                 });
             }
             catch (Exception e)

@@ -76,6 +76,8 @@ namespace MyCC.Forms.View.Components.Table
 
             Messaging.RatesPageCurrency.SubscribeValueChanged(this, UpdateView);
             Messaging.Loading.SubscribeFinished(this, UpdateView);
+
+            UpdateView();
         }
 
         public void UpdateView()
@@ -106,6 +108,11 @@ namespace MyCC.Forms.View.Components.Table
                       new HeaderData($"{I18N.Currency[0]}.", SortOrder.Alphabetical.ToString())
                           }, string.Empty);
                     _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), ReferenceMoney.Amount == 1);
+
+                    if (Device.RuntimePlatform.Equals(Device.Android))
+                    {
+                        _webView.HeightRequest = 39 + items.Count * (ReferenceMoney.Amount == 1 ? 35 : 55);
+                    }
                 });
             }
             catch (Exception e)
