@@ -1,5 +1,6 @@
 html {
     font-family: sans-serif;
+    -webkit-text-size-adjust: none;
 }
 
 body {
@@ -61,7 +62,7 @@ div > *:first-child {
     margin: 0 -1em;
 }
 
-.footer p {
-    margin: 0.7em;
-    font-size: 0.8em;
-}
+    .footer p {
+        margin: 0.7em;
+        font-size: 0.8em;
+    }

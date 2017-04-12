@@ -121,7 +121,7 @@ function showChart(data, textAccounts, textCurrencies, textFurther, textNoData, 
     $("#pieChart").resize(function () {
         createMainGraph(data);
     });
-     
+
     window.open("/?" + "sizeAllocated=" + true, "_top");
 }
 
@@ -201,18 +201,23 @@ function clickedListener(data) {
     data = data["data"];
 
     var id;
+    // Opend group - Either accounts or currencies
     if (data["isGrouped"]) {
         id = "overlay_" + $(".overlay").length + 1;
         var createGroupedGraph = function () {
             var numAccounts = 0;
+            // Opend group of currencies
             if (data["groupedData"][0].hasOwnProperty("accounts")) {
                 for (var i in data["groupedData"]) {
                     numAccounts += data["groupedData"][i]["accounts"].length;
                 }
                 chartOptions["header"]["title"].text = formatNumber(data["value"]); //
                 chartOptions["header"]["subtitle"].text = data["groupedData"].length === 1 ? _textCurrencies[0] : data["groupedData"].length + " " + _textCurrencies[1];
+            // Opend further accounts
             } else {
-                chartOptions["header"]["subtitle"].text = data["name"];
+                numAccounts = data["groupedData"].length;
+                chartOptions["header"]["subtitle"].text = numAccounts === 1 ? _textAccounts[0] : numAccounts + " " + _textAccounts[1];
+                chartOptions["header"]["title"].text = formatNumber(data["value"]);
             }
             chartOptions["data"]["content"] = data["groupedData"];
             var div = document.getElementById(id);
@@ -233,7 +238,9 @@ function clickedListener(data) {
                 createGroupedGraph();
             });
         });
-    } else if (data.hasOwnProperty("accounts")) {
+    }
+    // Directly selected one currency form overview
+    else if (data.hasOwnProperty("accounts")) {
         id = "overlay_" + $(".overlay").length + 1;
 
         if (data["accounts"].length === 1) {
@@ -241,7 +248,7 @@ function clickedListener(data) {
         } else {
             var createAccountsGraph = function () {
                 chartOptions["header"]["title"].text = formatNumber(data["value"]);
-                chartOptions["header"]["subtitle"].text = data["name"];
+                chartOptions["header"]["subtitle"].text = data["accounts"].length === 1 ? _textAccounts[0] : data["accounts"].length + " " + _textAccounts[1];
                 chartOptions["data"]["content"] = data["accounts"];
                 var div = document.getElementById(id);
                 chartOptions["size"]["canvasWidth"] = div.offsetWidth;
