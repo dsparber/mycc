@@ -144,7 +144,9 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Animation\ZoomOutPageTransformer.cs" />
     <Compile Include="Views\Fragments\HeaderFragment.cs" />
+    <Compile Include="Views\Fragments\ViewPagerFragment.cs" />
     <Compile Include="Views\Fragments\RatesContainerFragment.cs" />
     <Compile Include="Views\Fragments\SettingsContainerFragment.cs" />
     <Compile Include="Views\Fragments\AssetsGraphContainerFragment.cs" />
@@ -162,9 +164,14 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_assets_graph_container.axml" />
-    <AndroidResource Include="Resources\layout\fragment_rates_container.axml" />
+    <AndroidResource Include="Resources\layout\fragment_rates_container.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_settings_container.axml" />
     <AndroidResource Include="Resources\layout\fragment_header.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_view_pager.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -183,7 +190,9 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\colors.xml" />
+    <AndroidResource Include="Resources\values\colors.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\styles.xml" />

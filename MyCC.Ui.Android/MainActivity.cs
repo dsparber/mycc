@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using System.Collections.Generic;
+using Android.App;
 using Android.Content.Res;
 using Android.OS;
 using Android.Support.V4.Widget;
@@ -7,6 +8,7 @@ using Android.Views;
 using Android.Widget;
 using MyCC.Ui.Android.Views.Fragments;
 using ActionBarDrawerToggle = Android.Support.V7.App.ActionBarDrawerToggle;
+using Fragment = Android.Support.V4.App.Fragment;
 
 namespace MyCC.Ui.Android
 {
@@ -41,7 +43,7 @@ namespace MyCC.Ui.Android
                 global::Android.Support.V4.App.Fragment fragment;
                 switch (args.Position)
                 {
-                    case 0: fragment = new RatesContainerFragment(); break;
+                    case 0: fragment = new ViewPagerFragment(new List<Fragment> { new RatesContainerFragment(), new RatesContainerFragment(), new RatesContainerFragment() }); break;
                     case 1: fragment = new AssetsTableContainerFragment(); break;
                     case 2: fragment = new AssetsGraphContainerFragment(); break;
                     default: fragment = new SettingsContainerFragment(); break;
