@@ -145,7 +145,7 @@ namespace MyCC.Forms.View.Pages
 
                     _infos[I18N.CoinBlocktime].Item1.IsVisible = info.Blocktime != null;
                     _infos[I18N.CoinBlocktime].Item2.IsVisible = info.Blocktime != null;
-                    _infos[I18N.CoinBlocktime].Item2.Text = $"{ info.Blocktime.GetValueOrDefault():#,0.##}{I18N.UnitSecond}";
+                    _infos[I18N.CoinBlocktime].Item2.Text = $"{ info.Blocktime.GetValueOrDefault():#,0.##} {I18N.UnitSecond}";
 
                     _infos[I18N.CoinSupplyMax].Item1.IsVisible = info.MaxCoinSupply != null;
                     _infos[I18N.CoinSupplyMax].Item2.IsVisible = info.MaxCoinSupply != null;
