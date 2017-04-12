@@ -25,6 +25,11 @@ namespace MyCC.Ui.Android
             SetContentView(Resource.Layout.Main);
             SupportActionBar.Elevation = 2;
 
+            CreateDrawerLayout();
+        }
+
+        private void CreateDrawerLayout()
+        {
             _items = new[] { "Rates", "Table", "Graph", "Settings" };
             _drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             _drawerList = FindViewById<ListView>(Resource.Id.left_drawer);
