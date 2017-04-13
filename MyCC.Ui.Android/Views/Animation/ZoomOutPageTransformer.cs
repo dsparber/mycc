@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using Android.Runtime;
 using Android.Support.V4.View;
 using Android.Views;
 
@@ -9,7 +7,7 @@ namespace MyCC.Ui.Android.Views.Animation
     public class ZoomOutPageTransformer : Java.Lang.Object, ViewPager.IPageTransformer
     {
         private const float MinScale = 0.85f;
-        private const float MinAlpha = 0.85f;
+        private const float MinAlpha = 1f;
 
         public void TransformPage(View view, float position)
         {

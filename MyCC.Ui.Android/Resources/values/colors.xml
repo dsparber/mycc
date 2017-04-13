@@ -5,4 +5,5 @@
   <color name="colorAccent">#FF4081</color>
   <color name="colorBackground">#eeeff2</color>
   <color name="colorDevider">#ccc</color>
+  <color name="colorBackgroundTableHeader">#eee</color>
 </resources>

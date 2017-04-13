@@ -29,8 +29,8 @@ namespace MyCC.Ui.Android.Views.Fragments
             _mainTextView = view.FindViewById<TextView>(Resource.Id.main_text);
             _infoTextView = view.FindViewById<TextView>(Resource.Id.info_text);
 
-            MainText = "MyCC";
-            InfoText = "My Cryptocurrencies";
+            MainText = Resources.GetString(Resource.String.AppName);
+            InfoText = Resources.GetString(Resource.String.AppNameLong);
 
             return view;
         }

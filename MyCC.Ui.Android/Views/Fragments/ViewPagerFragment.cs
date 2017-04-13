@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Android.OS;
+using Android.Support.Design.Widget;
 using Android.Support.V4.App;
 using Android.Support.V4.View;
 using Android.Views;
@@ -17,6 +18,7 @@ namespace MyCC.Ui.Android.Views.Fragments
         public ViewPagerFragment(List<Fragment> childFragments)
         {
             _childFragments = childFragments;
+            RetainInstance = true;
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -28,6 +30,9 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             _pagerAdapter = new ScreenSlidePagerAdapter(FragmentManager, this);
             _viewPager.Adapter = _pagerAdapter;
+
+            var tabLayout = view.FindViewById<TabLayout>(Resource.Id.tab_dots);
+            tabLayout.SetupWithViewPager(_viewPager, true);
 
             return view;
         }

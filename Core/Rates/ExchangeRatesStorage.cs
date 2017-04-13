@@ -63,7 +63,7 @@ namespace MyCC.Core.Rates
             {
                 await r.UpdateRates();
                 i += 1;
-                progressCallback((double)i / Repositories.Count());
+                progressCallback?.Invoke((double)i / Repositories.Count());
             }));
         }
         public async Task FetchAvailableRates()
