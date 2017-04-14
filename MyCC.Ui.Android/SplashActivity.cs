@@ -9,7 +9,7 @@ using MyCC.Ui.Android.Messages;
 
 namespace MyCC.Ui.Android
 {
-    [Activity(Theme = "@style/SplashTheme.Splash", MainLauncher = true, NoHistory = true)]
+    [Activity(Theme = "@style/SplashTheme.Splash", MainLauncher = true, Icon = "@drawable/ic_launcher", NoHistory = true)]
     public class SplashActivity : AppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

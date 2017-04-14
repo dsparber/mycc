@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.sparber.mycc" android:versionName="0.9.2" android:installLocation="auto" android:versionCode="16">
 	<uses-sdk android:minSdkVersion="17" />
-	<application android:label="MyCC"></application>
+	<application android:label="MyCC" android:icon="@drawable/ic_launcher"></application>
 </manifest>

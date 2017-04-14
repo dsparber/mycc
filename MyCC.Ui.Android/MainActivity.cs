@@ -14,7 +14,7 @@ using Fragment = Android.Support.V4.App.Fragment;
 
 namespace MyCC.Ui.Android
 {
-    [Activity(Label = "@string/AppName", Icon = "@drawable/icon", Theme = "@style/MyCC")]
+    [Activity(Label = "@string/AppName", Icon = "@drawable/ic_launcher", Theme = "@style/MyCC")]
     public class MainActivity : AppCompatActivity
     {
         private string[] _items;
