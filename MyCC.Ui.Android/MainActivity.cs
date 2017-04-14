@@ -84,7 +84,10 @@ namespace MyCC.Ui.Android
                     var assetsfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsTableFragment(c) as Fragment).ToList();
                     fragment = new ViewPagerFragment(assetsfragments);
                     break;
-                case 2: fragment = new AssetsGraphContainerFragment(); break;
+                case 2:
+                    var graphfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsGraphFragment(c) as Fragment).ToList();
+                    fragment = new ViewPagerFragment(graphfragments);
+                    break;
                 default: fragment = new SettingsContainerFragment(); break;
             }
 

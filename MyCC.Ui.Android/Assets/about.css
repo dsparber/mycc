@@ -1,0 +1,68 @@
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: none;
+}
+
+body {
+    margin: 0;
+    padding: 1em;
+    background-color: rgb(238, 239, 243);
+    font-size: 80%;
+}
+
+h1 {
+    text-align: center;
+    margin: 0;
+}
+
+h3 {
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+}
+
+h4 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    cursor: pointer;
+    padding-left: 16px;
+    background-image: url("expand.png");
+    background-size: 12px;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+p {
+    margin: 0.5em 0;
+}
+
+a {
+    color: #3498db;
+}
+
+.red {
+    color: red;
+}
+
+div > *:first-child {
+    margin-top: 0;
+}
+
+.content {
+    margin-bottom: 3em;
+}
+
+.footer {
+    position: fixed;
+    background-color: rgb(238, 239, 243);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    margin: 0 -1em;
+}
+
+    .footer p {
+        margin: 0.7em;
+        font-size: 0.8em;
+    }

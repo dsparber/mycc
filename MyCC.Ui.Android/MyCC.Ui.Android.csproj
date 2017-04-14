@@ -52,6 +52,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
@@ -145,6 +146,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\AssetsGraphItem.cs" />
+    <Compile Include="Data\AssetsGraphViewData.cs" />
     <Compile Include="Data\CoinHeaderData.cs" />
     <Compile Include="Data\AssetItem.cs" />
     <Compile Include="Data\AssetsViewData.cs" />
@@ -170,7 +173,7 @@
     <Compile Include="Views\Fragments\ViewPagerFragment.cs" />
     <Compile Include="Views\Fragments\RatesFragment.cs" />
     <Compile Include="Views\Fragments\SettingsContainerFragment.cs" />
-    <Compile Include="Views\Fragments\AssetsGraphContainerFragment.cs" />
+    <Compile Include="Views\Fragments\AssetsGraphFragment.cs" />
     <Compile Include="Views\Fragments\AssetsTableFragment.cs" />
     <Compile Include="Views\Adapter\RatesListAdapter.cs" />
   </ItemGroup>
@@ -184,7 +187,7 @@
     <AndroidResource Include="Resources\layout\fragment_assets_table.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\fragment_assets_graph_container.axml" />
+    <AndroidResource Include="Resources\layout\fragment_assets_graph.axml" />
     <AndroidResource Include="Resources\layout\fragment_rates.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -308,9 +311,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\tab_selector.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_arrow_right.png" />
   </ItemGroup>
@@ -379,6 +380,45 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-de-xxxhdpi\ic_splash_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\expand.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\jquery-latest.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\jquery-ui.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\pieChart.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\pieChart.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\pieChart.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\about.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\about.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\about.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\close.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\collapse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\d3.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\d3pie.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -23,6 +23,7 @@
         {
             public const string RatesOverview = "UiUpdateRatesOverview";
             public const string AssetsTable = "UiUpdateAssetsTable";
+            public const string AssetsGraph = "UiUpdateAssetsGraph";
         }
 
     }
