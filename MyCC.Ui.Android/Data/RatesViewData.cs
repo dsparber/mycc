@@ -16,9 +16,9 @@ namespace MyCC.Ui.Android.Data
 {
     public class RatesViewData
     {
-        public Dictionary<Currency, List<RateItem>> RateItems { get; private set; }
-        public Dictionary<Currency, RateHeaderData> RateHeaders { get; private set; }
-        public Dictionary<Currency, List<SortButtonItem>> RateSortButtons { get; private set; }
+        public Dictionary<Currency, List<RateItem>> Items { get; private set; }
+        public Dictionary<Currency, CoinHeaderData> Headers { get; private set; }
+        public Dictionary<Currency, List<SortButtonItem>> SortButtons { get; private set; }
 
         private readonly Context _context;
 
@@ -29,16 +29,16 @@ namespace MyCC.Ui.Android.Data
 
         public void UpdateRateItems()
         {
-            RateItems = LoadRateItems();
-            RateHeaders = LoadRateHeaders();
-            RateSortButtons = LoadSortButtons();
+            Items = LoadRateItems();
+            Headers = LoadRateHeaders();
+            SortButtons = LoadSortButtons();
 
             Messaging.UiUpdate.RatesOverview.Send();
         }
 
 
 
-        private static Dictionary<Currency, RateHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
         {
             var referenceMoney = new Money(ExchangeRateHelper.GetRate(Currency.Btc, c)?.Rate ?? 0, c);
 
@@ -47,12 +47,12 @@ namespace MyCC.Ui.Android.Data
                 .Select(x => new Money(ExchangeRateHelper.GetRate(Currency.Btc, x)?.Rate ?? 0, x))
                 .ToList();
 
-            return new RateHeaderData(referenceMoney, additionalRefs);
+            return new CoinHeaderData(referenceMoney, additionalRefs);
         });
 
         private static Dictionary<Currency, List<RateItem>> LoadRateItems() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
         {
-            Func<Currency, Money> getReference = currency => ExchangeRateHelper.GetRate(currency, c).AsMoney;
+            Func<Currency, Money> getReference = currency => new Money(ExchangeRateHelper.GetRate(currency, c)?.Rate ?? 0, currency);
 
             var items = ApplicationSettings.WatchedCurrencies
                  .Concat(ApplicationSettings.AllReferenceCurrencies)
@@ -103,8 +103,8 @@ namespace MyCC.Ui.Android.Data
 
         private void SortAndNotify()
         {
-            RateItems = ApplicationSettings.MainCurrencies.ToDictionary(c => c, c => ApplySort(RateItems[c]));
-            RateSortButtons = LoadSortButtons();
+            Items = ApplicationSettings.MainCurrencies.ToDictionary(c => c, c => ApplySort(Items[c]));
+            SortButtons = LoadSortButtons();
             Messaging.UiUpdate.RatesOverview.Send();
         }
     }

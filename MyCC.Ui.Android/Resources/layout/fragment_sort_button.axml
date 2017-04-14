@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="false"
-    android:background="@color/colorDevider"
+    android:background="@color/colorDivider"
     android:clickable="true"
     android:paddingBottom="1dp"
     android:paddingLeft="0.5dp"

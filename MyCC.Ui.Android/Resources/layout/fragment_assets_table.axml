@@ -21,7 +21,13 @@
          android:id="@+id/button_currency_sort"
          android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.6"/>
+        android:layout_weight="0.8"/>
+    <fragment
+         android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+         android:id="@+id/button_amount_sort"
+         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
     <fragment
          android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
          android:id="@+id/button_value_sort"
@@ -42,7 +48,7 @@
       android:layout_height="match_parent">
 
       <ListView
-        android:id="@+id/list_rates"
+        android:id="@+id/list_assets"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:choiceMode="singleChoice"
@@ -57,7 +63,7 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        app:layout_anchor="@id/list_rates"
+        app:layout_anchor="@id/list_assets"
         app:layout_anchorGravity="bottom|right|end" />
 
   </android.support.design.widget.CoordinatorLayout>

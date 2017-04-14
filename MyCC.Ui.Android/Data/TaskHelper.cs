@@ -11,7 +11,6 @@ namespace MyCC.Ui.Android.Data
 {
     public static class TaskHelper
     {
-
         public static async void UpdateRates()
         {
             await ApplicationTasks.FetchRates();
@@ -19,7 +18,15 @@ namespace MyCC.Ui.Android.Data
             Messaging.Update.Rates.Send();
         }
 
-        public static async Task FetchMissingRates()
+        public static async void UpdateAssets()
+        {
+            await ApplicationTasks.FetchAccounts();
+            await ApplicationTasks.FetchRates();
+            await FetchMissingRates(AccountStorage.NeededRates.ToList());
+            Messaging.Update.Assets.Send();
+        }
+
+        public static async Task FetchMissingRates() // TODO Remove with new API --> FetchRates() should get all needed rates
         {
             var neededRates = ApplicationSettings.WatchedCurrencies
                 .Concat(ApplicationSettings.AllReferenceCurrencies)
@@ -31,7 +38,7 @@ namespace MyCC.Ui.Android.Data
             await FetchMissingRates(neededRates);
         }
 
-        public static async Task FetchMissingRates(List<ExchangeRate> neededRates)
+        private static async Task FetchMissingRates(List<ExchangeRate> neededRates)
         {
             if (neededRates.Count > 0)
             {

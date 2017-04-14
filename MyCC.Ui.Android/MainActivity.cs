@@ -86,10 +86,13 @@ namespace MyCC.Ui.Android
             switch (_position)
             {
                 case 0:
-                    var fragments = ApplicationSettings.MainCurrencies.Select(c => new RatesFragment(c) as Fragment).ToList();
-                    fragment = new ViewPagerFragment(fragments);
+                    var ratefragments = ApplicationSettings.MainCurrencies.Select(c => new RatesFragment(c) as Fragment).ToList();
+                    fragment = new ViewPagerFragment(ratefragments);
                     break;
-                case 1: fragment = new AssetsTableContainerFragment(); break;
+                case 1:
+                    var assetsfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsTableFragment(c) as Fragment).ToList();
+                    fragment = new ViewPagerFragment(assetsfragments);
+                    break;
                 case 2: fragment = new AssetsGraphContainerFragment(); break;
                 default: fragment = new SettingsContainerFragment(); break;
             }

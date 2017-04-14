@@ -4,6 +4,6 @@
   <color name="colorPrimaryDark">#7b5b1e</color>
   <color name="colorAccent">#FF4081</color>
   <color name="colorBackground">#eeeff2</color>
-  <color name="colorDevider">#ccc</color>
+  <color name="colorDivider">#ccc</color>
   <color name="colorBackgroundTableHeader">#eee</color>
 </resources>

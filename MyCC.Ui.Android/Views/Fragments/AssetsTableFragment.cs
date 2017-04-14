@@ -12,17 +12,17 @@ using Newtonsoft.Json;
 
 namespace MyCC.Ui.Android.Views.Fragments
 {
-    public class RatesFragment : Fragment
+    public class AssetsTableFragment : Fragment
     {
         private Currency _referenceCurrency;
-        private List<RateItem> _items;
+        private List<AssetItem> _items;
 
-        public RatesFragment(Currency referenceCurrency)
+        public AssetsTableFragment(Currency referenceCurrency)
         {
             _referenceCurrency = referenceCurrency;
         }
 
-        public RatesFragment() { }
+        public AssetsTableFragment() { }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -32,9 +32,9 @@ namespace MyCC.Ui.Android.Views.Fragments
                 _referenceCurrency = JsonConvert.DeserializeObject<Currency>(saved);
             }
 
-            var view = inflater.Inflate(Resource.Layout.fragment_rates, container, false);
+            var view = inflater.Inflate(Resource.Layout.fragment_assets_table, container, false);
 
-            var headerData = ViewData.Rates.Headers?[_referenceCurrency];
+            var headerData = ViewData.Assets.Headers?[_referenceCurrency];
             if (headerData != null)
             {
                 var header = (HeaderFragment)ChildFragmentManager.FindFragmentById(Resource.Id.header_fragment);
@@ -43,35 +43,35 @@ namespace MyCC.Ui.Android.Views.Fragments
             }
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
-            refreshView.Refresh += (sender, args) => Messaging.Request.Rates.Send();
+            refreshView.Refresh += (sender, args) => Messaging.Request.Assets.Send();
 
-            _items = ViewData.Rates.Items?[_referenceCurrency] ?? new List<RateItem>();
-            var adapter = new RatesListAdapter(Context, _items);
-            view.FindViewById<ListView>(Resource.Id.list_rates).Adapter = adapter;
+            _items = ViewData.Assets.Items?[_referenceCurrency] ?? new List<AssetItem>();
+            var adapter = new AssetsListAdapter(Context, _items);
+            view.FindViewById<ListView>(Resource.Id.list_assets).Adapter = adapter;
 
-            var sortData = ViewData.Rates.SortButtons?[_referenceCurrency];
+            var sortData = ViewData.Assets.SortButtons?[_referenceCurrency];
             var sortCurrency = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
+            var sortAmount = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_amount_sort);
             var sortValue = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
-            if (sortData != null) SetSortButtons(sortData, sortCurrency, sortValue);
+            if (sortData != null) SetSortButtons(sortData, sortCurrency, sortAmount, sortValue);
 
-
-            Messaging.UiUpdate.RatesOverview.Subscribe(this, () =>
+            Messaging.UiUpdate.AssetsTable.Subscribe(this, () =>
             {
-                _items = ViewData.Rates.Items[_referenceCurrency];
-                SetSortButtons(ViewData.Rates.SortButtons?[_referenceCurrency], sortCurrency, sortValue);
+                _items = ViewData.Assets.Items[_referenceCurrency];
+                SetSortButtons(ViewData.Assets.SortButtons?[_referenceCurrency], sortCurrency, sortAmount, sortValue);
                 adapter.Clear();
                 adapter.AddAll(_items);
                 refreshView.Refreshing = false;
             });
 
-
             return view;
         }
 
-        private static void SetSortButtons(IReadOnlyList<SortButtonItem> sortData, SortButtonFragment sortCurrency, SortButtonFragment sortValue)
+        private static void SetSortButtons(IReadOnlyList<SortButtonItem> sortData, SortButtonFragment sortCurrency, SortButtonFragment sortAmount, SortButtonFragment sortValue)
         {
             sortCurrency.Data = sortData[0];
-            sortValue.Data = sortData[1];
+            sortAmount.Data = sortData[1];
+            sortValue.Data = sortData[2];
         }
 
         public override void OnSaveInstanceState(Bundle outState)

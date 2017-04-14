@@ -4,11 +4,23 @@ using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Types;
+using MyCC.Ui.Android.Data;
 
 namespace MyCC.Ui.Android.Views.Fragments
 {
     public class SortButtonFragment : Fragment
     {
+        public SortButtonItem Data
+        {
+            set
+            {
+                Text = value.Text;
+                Direction = value.SortDirection;
+                Gravity = value.TextGravity;
+                OnClick = value.OnClick;
+            }
+        }
+
         public string Text
         {
             get { return _textView.Text; }

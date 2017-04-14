@@ -145,7 +145,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\RateHeaderData.cs" />
+    <Compile Include="Data\CoinHeaderData.cs" />
+    <Compile Include="Data\AssetItem.cs" />
+    <Compile Include="Data\AssetsViewData.cs" />
     <Compile Include="Data\RatesViewData.cs" />
     <Compile Include="Data\SortButtonItem.cs" />
     <Compile Include="Helpers\LinqOrderHelper.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\RateItem.cs" />
+    <Compile Include="Views\Adapter\AssetsListAdapter.cs" />
     <Compile Include="Views\Animation\ZoomOutPageTransformer.cs" />
     <Compile Include="Views\Fragments\HeaderFragment.cs" />
     <Compile Include="Views\Fragments\SortButtonFragment.cs" />
@@ -167,18 +170,17 @@
     <Compile Include="Views\Fragments\RatesFragment.cs" />
     <Compile Include="Views\Fragments\SettingsContainerFragment.cs" />
     <Compile Include="Views\Fragments\AssetsGraphContainerFragment.cs" />
-    <Compile Include="Views\Fragments\AssetsTableContainerFragment.cs" />
+    <Compile Include="Views\Fragments\AssetsTableFragment.cs" />
     <Compile Include="Views\Adapter\RatesListAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
-    <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\layout\item_navigation_drawer.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\fragment_assets_table_container.axml">
+    <AndroidResource Include="Resources\layout\fragment_assets_table.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_assets_graph_container.axml" />
@@ -196,6 +198,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_sort_button.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\item_asset.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -301,6 +306,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\tab_selector.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
