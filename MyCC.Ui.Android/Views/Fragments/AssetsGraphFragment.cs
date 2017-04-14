@@ -36,6 +36,10 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             var view = inflater.Inflate(Resource.Layout.fragment_assets_graph, container, false);
 
+            var data = ViewData.AssetsGraph.IsDataAvailable;
+            view.FindViewById(Resource.Id.data_container).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
+            view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;
+
             var webView = view.FindViewById<WebView>(Resource.Id.web_view);
 
             webView.Settings.JavaScriptEnabled = true;

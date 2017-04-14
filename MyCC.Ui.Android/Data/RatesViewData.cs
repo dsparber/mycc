@@ -20,6 +20,8 @@ namespace MyCC.Ui.Android.Data
         public Dictionary<Currency, CoinHeaderData> Headers { get; private set; }
         public Dictionary<Currency, List<SortButtonItem>> SortButtons { get; private set; }
 
+        public bool IsDataAvailable => Items != null && Items.Count > 0 && Items.Min(i => i.Value.Count) > 0;
+
         private readonly Context _context;
 
         public RatesViewData(Context context)

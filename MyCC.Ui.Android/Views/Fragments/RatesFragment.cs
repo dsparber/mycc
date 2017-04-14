@@ -34,6 +34,11 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             var view = inflater.Inflate(Resource.Layout.fragment_rates, container, false);
 
+            var data = ViewData.Rates.IsDataAvailable;
+            view.FindViewById(Resource.Id.sort_buttons).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
+            view.FindViewById(Resource.Id.swiperefresh).Visibility = data ? ViewStates.Visible : ViewStates.Invisible;
+            view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;
+
             var headerData = ViewData.Rates.Headers?[_referenceCurrency];
             if (headerData != null)
             {

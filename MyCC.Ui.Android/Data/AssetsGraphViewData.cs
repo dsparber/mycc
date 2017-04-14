@@ -19,6 +19,8 @@ namespace MyCC.Ui.Android.Data
         private Dictionary<Currency, AssetsGraphItem.Data[]> _items;
         public Dictionary<Currency, CoinHeaderData> Headers { get; private set; }
 
+        public bool IsDataAvailable => _items != null && _items.Count > 0 && _items.Min(i => i.Value.Length) > 0;
+
         public string JsDataString(Currency currency)
         {
             var data = JsonConvert.SerializeObject(_items[currency]);
