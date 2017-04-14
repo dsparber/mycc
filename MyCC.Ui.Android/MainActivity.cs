@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Android.App;
 using Android.Content.Res;
 using Android.OS;
@@ -8,17 +7,14 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Settings;
-using MyCC.Core.Tasks;
 using MyCC.Core.Types;
-using MyCC.Ui.Android.Data;
-using MyCC.Ui.Android.Messages;
 using MyCC.Ui.Android.Views.Fragments;
 using ActionBarDrawerToggle = Android.Support.V7.App.ActionBarDrawerToggle;
 using Fragment = Android.Support.V4.App.Fragment;
 
 namespace MyCC.Ui.Android
 {
-    [Activity(Label = "@string/AppName", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/MyCC")]
+    [Activity(Label = "@string/AppName", Icon = "@drawable/icon", Theme = "@style/MyCC")]
     public class MainActivity : AppCompatActivity
     {
         private string[] _items;
@@ -35,12 +31,7 @@ namespace MyCC.Ui.Android
             SetContentView(Resource.Layout.Main);
             SupportActionBar.Elevation = 3;
 
-            Xamarin.Forms.Forms.Init(this, bundle);
-
             CreateDrawerLayout();
-
-            ViewData.Init(this);
-            Task.Run(() => ApplicationTasks.LoadEverything(() => { Messaging.Update.AllItems.Send(); }));
         }
 
         private void CreateDrawerLayout()
