@@ -12,7 +12,7 @@ using MyCC.Ui.Android.Views.Fragments;
 using ActionBarDrawerToggle = Android.Support.V7.App.ActionBarDrawerToggle;
 using Fragment = Android.Support.V4.App.Fragment;
 
-namespace MyCC.Ui.Android
+namespace MyCC.Ui.Android.Views.Activities
 {
     [Activity(Label = "@string/AppName", Icon = "@drawable/ic_launcher", Theme = "@style/MyCC")]
     public class MainActivity : AppCompatActivity

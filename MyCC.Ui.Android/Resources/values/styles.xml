@@ -5,11 +5,8 @@
     <!-- Customize your theme here. -->
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
     <item name="colorAccent">@color/colorPrimary</item>
     <item name="android:colorBackground">@color/colorBackground</item>
-    <item name="android:windowActionBar">true</item>
-    <item name="android:windowContentOverlay">@null</item>
   </style>
 
   <style name="MyCC" parent="AppTheme" >
@@ -20,5 +17,4 @@
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowFullscreen">true</item>
   </style>
-
 </resources>

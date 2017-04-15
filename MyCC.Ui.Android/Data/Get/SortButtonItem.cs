@@ -2,7 +2,7 @@
 using Android.Views;
 using MyCC.Core.Types;
 
-namespace MyCC.Ui.Android.Data
+namespace MyCC.Ui.Android.Data.Get
 {
     public class SortButtonItem
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Settings;
 
-namespace MyCC.Ui.Android.Data
+namespace MyCC.Ui.Android.Data.Get
 {
     public class CoinHeaderData
     {

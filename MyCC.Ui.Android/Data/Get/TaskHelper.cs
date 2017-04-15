@@ -7,7 +7,7 @@ using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
 using MyCC.Ui.Android.Messages;
 
-namespace MyCC.Ui.Android.Data
+namespace MyCC.Ui.Android.Data.Get
 {
     public static class TaskHelper
     {

@@ -35,6 +35,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
         private const string ResultKey = "result";
         private const string CurrencyKey = "Currency";
         private const string BalanceKey = "Balance";
+        private const string KeySuccess = "success";
 
         private const int BufferSize = 256000;
 
@@ -58,30 +59,33 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
         public async Task<JToken> GetResult(Currency.Model.Currency currency = null)
         {
-            var nounce = Convert.ToUInt64((DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds);
-            var uri = new Uri(string.Format(BaseUrl, _apiKey, nounce, currency != null ? $"?currency={currency.Code}&" : "s?"));
-
-            var keyBytes = Encoding.UTF8.GetBytes(_privateApiKey);
-            var dataBytes = Encoding.UTF8.GetBytes(uri.AbsoluteUri);
-
-            var algorithm = WinRTCrypto.MacAlgorithmProvider.OpenAlgorithm(MacAlgorithm.HmacSha512);
-            var hasher = algorithm.CreateHash(keyBytes);
-            hasher.Append(dataBytes);
-            var hash = ByteToString(hasher.GetValueAndReset());
-
-            var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
-
-            client.DefaultRequestHeaders.Remove(Signing);
-            client.DefaultRequestHeaders.Add(Signing, hash);
-
             try
             {
+                var nounce = Convert.ToUInt64((DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds);
+                var uri = new Uri(string.Format(BaseUrl, _apiKey, nounce, currency != null ? $"?currency={currency.Code}&" : "s?"));
+
+                var keyBytes = Encoding.UTF8.GetBytes(_privateApiKey);
+                var dataBytes = Encoding.UTF8.GetBytes(uri.AbsoluteUri);
+
+                var algorithm = WinRTCrypto.MacAlgorithmProvider.OpenAlgorithm(MacAlgorithm.HmacSha512);
+                var hasher = algorithm.CreateHash(keyBytes);
+                hasher.Append(dataBytes);
+                var hash = ByteToString(hasher.GetValueAndReset());
+
+                var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
+
+                client.DefaultRequestHeaders.Remove(Signing);
+                client.DefaultRequestHeaders.Add(Signing, hash);
+
+
                 var response = await client.GetAsync(uri);
 
                 if (!response.IsSuccessStatusCode) return null;
 
                 var content = await response.Content.ReadAsStringAsync();
                 var json = JObject.Parse(content);
+
+                if (!(bool)json[KeySuccess]) return null;
 
                 var results = json[ResultKey];
                 return results;

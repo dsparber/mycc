@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
+using Android.App;
+using Android.Content;
 using Android.OS;
-using Android.Support.V4.App;
+using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Currency.Model;
-using MyCC.Ui.Android.Data;
+using MyCC.Ui.Android.Data.Get;
 using MyCC.Ui.Android.Messages;
+using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Android.Views.Adapter;
 using Newtonsoft.Json;
+using Fragment = Android.Support.V4.App.Fragment;
 
 namespace MyCC.Ui.Android.Views.Fragments
 {
@@ -60,14 +64,19 @@ namespace MyCC.Ui.Android.Views.Fragments
             var sortValue = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
             if (sortData != null) SetSortButtons(sortData, sortCurrency, sortAmount, sortValue);
 
-            Messaging.UiUpdate.AssetsTable.Subscribe(this, () =>
+            Messaging.UiUpdate.AssetsTable.Subscribe(this, () => Activity.RunOnUiThread(() =>
             {
                 _items = ViewData.Assets.Items[_referenceCurrency];
                 SetSortButtons(ViewData.Assets.SortButtons?[_referenceCurrency], sortCurrency, sortAmount, sortValue);
                 adapter.Clear();
                 adapter.AddAll(_items);
                 refreshView.Refreshing = false;
-            });
+            }));
+
+            view.FindViewById<FloatingActionButton>(Resource.Id.button_add).Click += (sender, args) =>
+            {
+                StartActivity(new Intent(Application.Context, typeof(AddSourceActivity)));
+            };
 
             return view;
         }

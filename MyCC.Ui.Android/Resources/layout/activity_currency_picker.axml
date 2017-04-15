@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+  <SearchView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:inputType="textNoSuggestions"
+      android:id="@+id/search" />
+  <ProgressBar
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      style="?android:attr/progressBarStyleHorizontal"
+      android:id="@+id/progress_bar"
+      android:indeterminate="true"
+      android:indeterminateBehavior="cycle"
+      android:indeterminateOnly="true" />
+  <TextView
+      android:id="@+id/text_loading_currencies"
+      android:text="@string/LoadingCurrencies"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:padding="8dp" />
+  <ListView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:id="@+id/list_currencies"
+      android:choiceMode="singleChoice"
+      android:fastScrollEnabled="true"
+      android:divider="@color/colorDivider"
+      android:dividerHeight="1dp"/>
+</LinearLayout>

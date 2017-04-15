@@ -10,8 +10,11 @@
         android:gravity="center"/>
   </item>
   <item
+    android:bottom="20dp">
+    <bitmap
     android:gravity="bottom|center_horizontal"
     android:bottom="20dp"
-    android:drawable="@drawable/splash_text"/>
-
+    android:tileMode="disabled"
+    android:src="@drawable/splash_text"/>
+  </item>
 </layer-list>

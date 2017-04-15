@@ -2,7 +2,7 @@
 using Android.Content;
 using Android.Views;
 using Android.Widget;
-using MyCC.Ui.Android.Data;
+using MyCC.Ui.Android.Data.Get;
 
 namespace MyCC.Ui.Android.Views.Adapter
 {

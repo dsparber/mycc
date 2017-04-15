@@ -7,12 +7,10 @@ using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
-using MyCC.Core.Types;
-using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Messages;
 using Newtonsoft.Json;
 
-namespace MyCC.Ui.Android.Data
+namespace MyCC.Ui.Android.Data.Get
 {
     public class AssetsGraphViewData
     {
@@ -50,17 +48,6 @@ namespace MyCC.Ui.Android.Data
             Messaging.UiUpdate.AssetsTable.Send();
         }
 
-        private static SortOrder SortOrder
-        {
-            get { return ApplicationSettings.SortOrderAccounts; }
-            set { ApplicationSettings.SortOrderAccounts = value; }
-        }
-        private static SortDirection SortDirection
-        {
-            get { return ApplicationSettings.SortDirectionAccounts; }
-            set { ApplicationSettings.SortDirectionAccounts = value; }
-        }
-
         public bool IsReady => _items != null;
 
         private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
@@ -82,14 +69,5 @@ namespace MyCC.Ui.Android.Data
                         .Where(d => d.Value > 0)
                         .OrderByDescending(d => d.Value)
                         .ToArray());
-
-        private static List<AssetItem> ApplySort(IEnumerable<AssetItem> items)
-        {
-            var alphabetical = SortOrder == SortOrder.Alphabetical;
-            var byValue = SortOrder == SortOrder.ByValue;
-
-            return items.OrderByWithDirection(r => alphabetical ? r.CurrencyCode as object : byValue ? r.ReferenceValue.Amount : r.Value.Amount,
-                    SortDirection == SortDirection.Ascending).ToList();
-        }
     }
 }

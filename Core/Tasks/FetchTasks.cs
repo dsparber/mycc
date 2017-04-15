@@ -30,22 +30,22 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchCurrenciesAndAvailableRates(Action onStarted, Action onFinished, Action<Exception> onError)
+        public static async Task FetchCurrenciesAndAvailableRates(Action onStarted = null, Action onFinished = null, Action<Exception> onError = null)
         {
             try
             {
-                onStarted();
+                onStarted?.Invoke();
                 await CurrencyRepositoryMapStorage.Instance.FetchOnline();
                 await CurrencyStorage.Instance.FetchOnline();
                 await ExchangeRatesStorage.Instance.FetchAvailableRates();
             }
             catch (Exception e)
             {
-                onError(e);
+                onError?.Invoke(e);
             }
             finally
             {
-                onFinished();
+                onFinished?.Invoke();
             }
         }
 

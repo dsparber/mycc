@@ -1,7 +1,7 @@
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currency.Model;
 
-namespace MyCC.Ui.Android.Data
+namespace MyCC.Ui.Android.Data.Get
 {
     public class RateItem
     {

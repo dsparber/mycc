@@ -1,79 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:background="@color/colorBackground">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/colorBackground">
   <fragment
       android:name="MyCC.Ui.Android.Views.Fragments.HeaderFragment"
       android:id="@+id/header_fragment"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"/>
-
+      android:layout_height="wrap_content" />
   <TextView
-    android:id="@+id/no_data_text"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center"
-    android:visibility="gone"
-    android:text="@string/NoDataToDisplay"/>
-
+      android:id="@+id/no_data_text"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:gravity="center"
+      android:visibility="gone"
+      android:text="@string/NoDataToDisplay" />
   <LinearLayout
-    android:id="@+id/sort_buttons"
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+      android:id="@+id/sort_buttons"
+      android:layout_below="@id/header_fragment"
+      android:orientation="horizontal"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
     <fragment
-         android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
-         android:id="@+id/button_currency_sort"
-         android:layout_width="0dp"
+        android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+        android:id="@+id/button_currency_sort"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8"/>
+        android:layout_weight="0.8" />
     <fragment
-         android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
-         android:id="@+id/button_amount_sort"
-         android:layout_width="0dp"
+        android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+        android:id="@+id/button_amount_sort"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
     <fragment
-         android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
-         android:id="@+id/button_value_sort"
-         android:layout_width="0dp"
+        android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+        android:id="@+id/button_value_sort"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
   </LinearLayout>
-
-  <android.support.design.widget.CoordinatorLayout
-    android:id="@+id/main_content"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
-    <android.support.v4.widget.SwipeRefreshLayout
+  <android.support.v4.widget.SwipeRefreshLayout
       android:id="@+id/swiperefresh"
+      android:layout_below="@id/sort_buttons"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent">
-
-      <ListView
+    <ListView
         android:id="@+id/list_assets"
         android:drawSelectorOnTop="true"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:choiceMode="singleChoice"
         android:divider="@color/colorDivider"
-        android:dividerHeight="1dp"/>
+        android:dividerHeight="1dp" />
+  </android.support.v4.widget.SwipeRefreshLayout>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.design.widget.FloatingActionButton
+  <android.support.design.widget.FloatingActionButton
+        android:id="@+id/button_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        app:layout_anchor="@id/list_assets"
-        app:layout_anchorGravity="bottom|right|end" />
-
-  </android.support.design.widget.CoordinatorLayout>
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        app:layout_anchorGravity="bottom|end" />
+</RelativeLayout>

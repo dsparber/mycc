@@ -56,6 +56,9 @@ namespace MyCC.Core.Account.Storage
         public static IEnumerable<BittrexAccountRepository> BittrexRepositories => Instance.Repositories.OfType<BittrexAccountRepository>();
         public static IEnumerable<LocalAccount> ManuallyAddedAccounts => Instance.AllElements.OfType<LocalAccount>();
 
+        public static bool AlreadyExists(AccountRepository repository)
+            => Instance.RepositoriesOfType(repository.GetType()).Any(r => r.Data.Equals(repository.Data));
+
         public static int CurrenciesForGraph => AccountsGroupedByCurrency
             .Select(e => e.Select(a =>
             {

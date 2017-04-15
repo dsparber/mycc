@@ -1,7 +1,7 @@
 ﻿using Android.Content;
 using MyCC.Ui.Android.Messages;
 
-namespace MyCC.Ui.Android.Data
+namespace MyCC.Ui.Android.Data.Get
 {
     public class ViewData
     {

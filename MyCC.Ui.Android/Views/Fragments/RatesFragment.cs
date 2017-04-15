@@ -5,7 +5,7 @@ using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Currency.Model;
-using MyCC.Ui.Android.Data;
+using MyCC.Ui.Android.Data.Get;
 using MyCC.Ui.Android.Messages;
 using MyCC.Ui.Android.Views.Adapter;
 using Newtonsoft.Json;
@@ -60,14 +60,14 @@ namespace MyCC.Ui.Android.Views.Fragments
             if (sortData != null) SetSortButtons(sortData, sortCurrency, sortValue);
 
 
-            Messaging.UiUpdate.RatesOverview.Subscribe(this, () =>
+            Messaging.UiUpdate.RatesOverview.Subscribe(this, () => Activity.RunOnUiThread(() =>
             {
                 _items = ViewData.Rates.Items[_referenceCurrency];
                 SetSortButtons(ViewData.Rates.SortButtons?[_referenceCurrency], sortCurrency, sortValue);
                 adapter.Clear();
                 adapter.AddAll(_items);
                 refreshView.Refreshing = false;
-            });
+            }));
 
 
             return view;

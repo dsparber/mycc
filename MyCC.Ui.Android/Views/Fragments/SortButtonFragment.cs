@@ -4,7 +4,7 @@ using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Types;
-using MyCC.Ui.Android.Data;
+using MyCC.Ui.Android.Data.Get;
 
 namespace MyCC.Ui.Android.Views.Fragments
 {

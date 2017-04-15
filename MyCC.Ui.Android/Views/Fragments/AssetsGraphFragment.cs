@@ -7,7 +7,7 @@ using Android.Webkit;
 using Android.Widget;
 using Java.Interop;
 using MyCC.Core.Currency.Model;
-using MyCC.Ui.Android.Data;
+using MyCC.Ui.Android.Data.Get;
 using MyCC.Ui.Android.Messages;
 using Newtonsoft.Json;
 
@@ -60,11 +60,11 @@ namespace MyCC.Ui.Android.Views.Fragments
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             refreshView.Refresh += (sender, args) => Messaging.Request.Assets.Send();
 
-            Messaging.UiUpdate.AssetsGraph.Subscribe(this, () =>
+            Messaging.UiUpdate.AssetsGraph.Subscribe(this, () => Activity.RunOnUiThread(() =>
             {
                 webView.EvaluateJavascript(ViewData.AssetsGraph.JsDataString(_referenceCurrency), null);
                 refreshView.Refreshing = false;
-            });
+            }));
 
             return view;
         }
@@ -105,6 +105,7 @@ namespace MyCC.Ui.Android.Views.Fragments
                 _context = c;
             }
 
+            // ReSharper disable once UnusedMember.Local
             [Export("OpenView")]
             [JavascriptInterface]
             public void OpenView(int accountId)

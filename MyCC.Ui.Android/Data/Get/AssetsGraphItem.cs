@@ -5,7 +5,7 @@ using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using Newtonsoft.Json;
 
-namespace MyCC.Ui.Android.Data
+namespace MyCC.Ui.Android.Data.Get
 {
     public class AssetsGraphItem
     {

@@ -12,7 +12,7 @@ using MyCC.Core.Types;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Messages;
 
-namespace MyCC.Ui.Android.Data
+namespace MyCC.Ui.Android.Data.Get
 {
     public class RatesViewData
     {

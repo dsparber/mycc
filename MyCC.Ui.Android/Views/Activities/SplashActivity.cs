@@ -4,10 +4,12 @@ using Android.Content;
 using Android.OS;
 using Android.Support.V7.App;
 using MyCC.Core.Tasks;
-using MyCC.Ui.Android.Data;
+using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Messages;
+using MyCC.Core.Settings;
+using MyCC.Ui.Android.Data.Get;
 
-namespace MyCC.Ui.Android
+namespace MyCC.Ui.Android.Views.Activities
 {
     [Activity(Theme = "@style/SplashTheme.Splash", MainLauncher = true, Icon = "@drawable/ic_launcher", NoHistory = true)]
     public class SplashActivity : AppCompatActivity
@@ -15,15 +17,18 @@ namespace MyCC.Ui.Android
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            ViewData.Init(this);
+            ConnectivityStatus.Init(this);
             Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             var startupWork = new Task(Startup);
             startupWork.Start();
+
         }
 
         private async void Startup()
         {
-            ViewData.Init(this);
             if (ViewData.Assets.Items == null)
             {
                 await ApplicationTasks.LoadEverything(() => { Messaging.Update.AllItems.Send(); });
@@ -31,6 +36,12 @@ namespace MyCC.Ui.Android
 
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
             Finish();
+
+            await Task.Run(async () => { if (ConnectivityStatus.IsConnected) await ApplicationTasks.FetchCurrenciesAndAvailableRates(); });
+            if (ApplicationSettings.AutoRefreshOnStartup && ConnectivityStatus.IsConnected)
+            {
+                await Task.Run(() => TaskHelper.UpdateAssets());
+            }
         }
     }
 }
