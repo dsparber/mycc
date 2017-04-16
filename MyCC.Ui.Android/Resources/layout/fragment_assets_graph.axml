@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:background="@color/colorBackground">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/colorBackground">
   <fragment
       android:name="MyCC.Ui.Android.Views.Fragments.HeaderFragment"
       android:id="@+id/header_fragment"
@@ -14,6 +14,7 @@
 
   <TextView
     android:id="@+id/no_data_text"
+    android:layout_below="@id/header_fragment"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
@@ -22,14 +23,14 @@
 
   <LinearLayout
     android:id="@+id/data_container"
+    android:layout_below="@id/header_fragment"
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <android.support.v4.widget.SwipeRefreshLayout
-      xmlns:android="http://schemas.android.com/apk/res/android"
       android:id="@+id/swiperefresh"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent">
 
       <ScrollView
         android:layout_width="match_parent"
@@ -44,13 +45,16 @@
       </ScrollView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add"
-        app:layout_anchorGravity="bottom|right|end" />
   </LinearLayout>
-</LinearLayout>
+  <android.support.design.widget.FloatingActionButton
+      android:id="@+id/button_add"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|right"
+      android:layout_margin="16dp"
+      android:src="@drawable/ic_add"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      app:layout_anchorGravity="bottom|end" />
+</RelativeLayout>

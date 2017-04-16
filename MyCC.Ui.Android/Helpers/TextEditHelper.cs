@@ -26,5 +26,10 @@ namespace MyCC.Ui.Android.Helpers
 
             return val.Remove(val.Length - 1);
         }
+
+        public static string TrimAll(this string value)
+        {
+            return string.Join(string.Empty, Regex.Replace(value ?? string.Empty, @"\t|\n|\r", "").Where(c => !char.IsWhiteSpace(c) && c != '\u200B'));
+        }
     }
 }

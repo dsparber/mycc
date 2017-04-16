@@ -38,10 +38,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             var view = inflater.Inflate(Resource.Layout.fragment_assets_table, container, false);
 
-            var data = ViewData.Assets.IsDataAvailable;
-            view.FindViewById(Resource.Id.sort_buttons).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
-            view.FindViewById(Resource.Id.swiperefresh).Visibility = data ? ViewStates.Visible : ViewStates.Invisible;
-            view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;
+            SetVisibleElements(view);
 
             var headerData = ViewData.Assets.Headers?[_referenceCurrency];
             if (headerData != null)
@@ -64,14 +61,19 @@ namespace MyCC.Ui.Android.Views.Fragments
             var sortValue = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
             if (sortData != null) SetSortButtons(sortData, sortCurrency, sortAmount, sortValue);
 
-            Messaging.UiUpdate.AssetsTable.Subscribe(this, () => Activity.RunOnUiThread(() =>
+            Messaging.UiUpdate.AssetsTable.Subscribe(this, () =>
             {
-                _items = ViewData.Assets.Items[_referenceCurrency];
-                SetSortButtons(ViewData.Assets.SortButtons?[_referenceCurrency], sortCurrency, sortAmount, sortValue);
-                adapter.Clear();
-                adapter.AddAll(_items);
-                refreshView.Refreshing = false;
-            }));
+                if (Activity == null) return;
+                Activity.RunOnUiThread(() =>
+                {
+                    _items = ViewData.Assets.Items[_referenceCurrency];
+                    SetSortButtons(ViewData.Assets.SortButtons?[_referenceCurrency], sortCurrency, sortAmount, sortValue);
+                    adapter.Clear();
+                    adapter.AddAll(_items);
+                    SetVisibleElements(view);
+                    refreshView.Refreshing = false;
+                });
+            });
 
             view.FindViewById<FloatingActionButton>(Resource.Id.button_add).Click += (sender, args) =>
             {
@@ -79,6 +81,14 @@ namespace MyCC.Ui.Android.Views.Fragments
             };
 
             return view;
+        }
+
+        private static void SetVisibleElements(View view)
+        {
+            var data = ViewData.Assets.IsDataAvailable;
+            view.FindViewById(Resource.Id.sort_buttons).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
+            view.FindViewById(Resource.Id.swiperefresh).Visibility = data ? ViewStates.Visible : ViewStates.Invisible;
+            view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;
         }
 
         private static void SetSortButtons(IReadOnlyList<SortButtonItem> sortData, SortButtonFragment sortCurrency, SortButtonFragment sortAmount, SortButtonFragment sortValue)

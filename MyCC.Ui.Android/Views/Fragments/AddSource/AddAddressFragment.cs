@@ -5,6 +5,7 @@ using Android.Views;
 using Android.Widget;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Currency.Model;
+using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;
 using Newtonsoft.Json;
 
@@ -27,7 +28,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
             var view = inflater.Inflate(Resource.Layout.fragment_add_address, container, false);
 
             var addressText = view.FindViewById<EditText>(Resource.Id.text_address);
-            addressText.TextChanged += (sender, args) => _address = string.Join(string.Empty, args.Text);
+            addressText.TextChanged += (sender, args) => _address = string.Join(string.Empty, args.Text).TrimAll();
 
             _nameEntry = view.FindViewById<EditText>(Resource.Id.text_name);
             _nameEntry.Text = AddSourceActivity.Name;
@@ -36,13 +37,14 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
                 if (!_nameEntry.HasFocus) return;
 
                 var name = _nameEntry.Text;
-                AddSourceActivity.Name = name;
+                AddSourceActivity.Name = name.TrimAll();
             };
 
             _currencyEntry = view.FindViewById<EditText>(Resource.Id.text_currency);
             _currencyEntry.Click += (sender, args) =>
             {
                 var intent = new Intent(Context, typeof(CurrencyPickerActivity));
+                intent.PutExtra(CurrencyPickerActivity.ExtraOnlyAddressCurrencies, true);
                 StartActivityForResult(intent, RequestCodeCurrency);
             };
 
@@ -53,7 +55,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
         {
             if (requestCode == RequestCodeCurrency && resultCode == (int)Result.Ok)
             {
-                _currency = JsonConvert.DeserializeObject<Currency>(data.GetStringExtra("currency"));
+                _currency = JsonConvert.DeserializeObject<Currency>(data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency));
                 _currencyEntry.Text = $"{_currency.Name} ({_currency.Code})";
                 AddSourceActivity.Currency = _currency;
             }

@@ -3,6 +3,7 @@ using Android.Views;
 using Android.Widget;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
+using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;
 
 namespace MyCC.Ui.Android.Views.Fragments.AddSource
@@ -21,10 +22,10 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
             var view = inflater.Inflate(Resource.Layout.fragment_add_bittrex, container, false);
 
             var keyText = view.FindViewById<EditText>(Resource.Id.text_key);
-            keyText.TextChanged += (sender, args) => _key = string.Join(string.Empty, args.Text);
+            keyText.TextChanged += (sender, args) => _key = string.Join(string.Empty, args.Text).TrimAll();
 
             var secretText = view.FindViewById<EditText>(Resource.Id.text_secret);
-            secretText.TextChanged += (sender, args) => _secret = string.Join(string.Empty, args.Text);
+            secretText.TextChanged += (sender, args) => _secret = string.Join(string.Empty, args.Text).TrimAll();
 
             _nameEntry = view.FindViewById<EditText>(Resource.Id.text_name);
             _nameEntry.Text = AddSourceActivity.Name;
@@ -33,7 +34,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
                 if (!_nameEntry.HasFocus) return;
 
                 var name = _nameEntry.Text;
-                AddSourceActivity.Name = name;
+                AddSourceActivity.Name = name.TrimAll();
             };
 
             return view;
@@ -43,7 +44,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
 
         public override OnlineAccountRepository GetRepository()
         {
-            return EntryComplete ? new BittrexAccountRepository(default(int), NameOrDefault, _key.Replace("\n", string.Empty).Trim(), _secret.Replace("\n", string.Empty).Trim()) : null;
+            return EntryComplete ? new BittrexAccountRepository(default(int), NameOrDefault, _key, _secret) : null;
         }
 
         public override void OnResume()

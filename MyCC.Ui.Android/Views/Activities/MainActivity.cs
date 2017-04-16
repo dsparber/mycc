@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content.Res;
 using Android.OS;
@@ -8,6 +9,8 @@ using Android.Views;
 using Android.Widget;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
+using MyCC.Ui.Android.Data.Get;
+using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
 using ActionBarDrawerToggle = Android.Support.V7.App.ActionBarDrawerToggle;
 using Fragment = Android.Support.V4.App.Fragment;
@@ -32,6 +35,14 @@ namespace MyCC.Ui.Android.Views.Activities
             SupportActionBar.Elevation = 3;
 
             CreateDrawerLayout();
+
+            Task.Run(() =>
+            {
+                if (ApplicationSettings.AutoRefreshOnStartup && ConnectivityStatus.IsConnected)
+                {
+                    TaskHelper.UpdateAssets();
+                }
+            });
         }
 
         private void CreateDrawerLayout()

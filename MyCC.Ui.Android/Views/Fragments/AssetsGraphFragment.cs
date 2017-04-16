@@ -1,6 +1,7 @@
-﻿using Android.Content;
+﻿using Android.App;
+using Android.Content;
 using Android.OS;
-using Android.Support.V4.App;
+using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Webkit;
@@ -9,7 +10,9 @@ using Java.Interop;
 using MyCC.Core.Currency.Model;
 using MyCC.Ui.Android.Data.Get;
 using MyCC.Ui.Android.Messages;
+using MyCC.Ui.Android.Views.Activities;
 using Newtonsoft.Json;
+using Fragment = Android.Support.V4.App.Fragment;
 
 namespace MyCC.Ui.Android.Views.Fragments
 {
@@ -36,9 +39,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             var view = inflater.Inflate(Resource.Layout.fragment_assets_graph, container, false);
 
-            var data = ViewData.AssetsGraph.IsDataAvailable;
-            view.FindViewById(Resource.Id.data_container).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
-            view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;
+            SetVisibleElements(view);
 
             var webView = view.FindViewById<WebView>(Resource.Id.web_view);
 
@@ -60,13 +61,30 @@ namespace MyCC.Ui.Android.Views.Fragments
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             refreshView.Refresh += (sender, args) => Messaging.Request.Assets.Send();
 
-            Messaging.UiUpdate.AssetsGraph.Subscribe(this, () => Activity.RunOnUiThread(() =>
+            Messaging.UiUpdate.AssetsGraph.Subscribe(this, () =>
             {
-                webView.EvaluateJavascript(ViewData.AssetsGraph.JsDataString(_referenceCurrency), null);
-                refreshView.Refreshing = false;
-            }));
+                if (Activity == null) return;
+                Activity.RunOnUiThread(() =>
+                {
+                    webView.EvaluateJavascript(ViewData.AssetsGraph.JsDataString(_referenceCurrency), null);
+                    SetVisibleElements(view);
+                    refreshView.Refreshing = false;
+                });
+            });
+
+            view.FindViewById<FloatingActionButton>(Resource.Id.button_add).Click += (sender, args) =>
+            {
+                StartActivity(new Intent(Application.Context, typeof(AddSourceActivity)));
+            };
 
             return view;
+        }
+
+        private static void SetVisibleElements(View view)
+        {
+            var data = ViewData.AssetsGraph.IsDataAvailable;
+            view.FindViewById(Resource.Id.data_container).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
+            view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;
         }
 
         public override void OnSaveInstanceState(Bundle outState)

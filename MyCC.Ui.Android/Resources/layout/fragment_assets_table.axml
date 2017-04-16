@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
@@ -12,6 +13,7 @@
       android:layout_height="wrap_content" />
   <TextView
       android:id="@+id/no_data_text"
+      android:layout_below="@id/header_fragment"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
       android:gravity="center"
@@ -54,7 +56,10 @@
         android:layout_height="fill_parent"
         android:choiceMode="singleChoice"
         android:divider="@color/colorDivider"
-        android:dividerHeight="1dp" />
+        android:dividerHeight="1dp"
+        android:paddingBottom="100dp"
+        android:clipToPadding="false"
+        android:scrollbarStyle="outsideOverlay"/>
   </android.support.v4.widget.SwipeRefreshLayout>
 
   <android.support.design.widget.FloatingActionButton

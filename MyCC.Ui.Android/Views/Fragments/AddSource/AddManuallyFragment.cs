@@ -48,7 +48,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
                 if (!_nameEntry.HasFocus) return;
 
                 var name = _nameEntry.Text;
-                AddSourceActivity.Name = name;
+                AddSourceActivity.Name = name.TrimAll();
             };
 
             _currencyEntry = view.FindViewById<EditText>(Resource.Id.text_currency);
@@ -67,7 +67,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
         {
             if (requestCode == RequestCodeCurrency && resultCode == (int)Result.Ok)
             {
-                _currency = JsonConvert.DeserializeObject<Currency>(data.GetStringExtra("currency"));
+                _currency = JsonConvert.DeserializeObject<Currency>(data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency));
                 _currencyEntry.Text = $"{_currency.Name} ({_currency.Code})";
                 AddSourceActivity.Currency = _currency;
             }

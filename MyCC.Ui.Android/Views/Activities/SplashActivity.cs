@@ -3,10 +3,11 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Support.V7.App;
+using HockeyApp.Android;
+using HockeyApp.Android.Metrics;
 using MyCC.Core.Tasks;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Messages;
-using MyCC.Core.Settings;
 using MyCC.Ui.Android.Data.Get;
 
 namespace MyCC.Ui.Android.Views.Activities
@@ -21,6 +22,8 @@ namespace MyCC.Ui.Android.Views.Activities
             ViewData.Init(this);
             ConnectivityStatus.Init(this);
             Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            CrashManager.Register(this, "7792ee5321a64433ace4955a1693cca5");
+            MetricsManager.Register(Application, "7792ee5321a64433ace4955a1693cca5");
 
             var startupWork = new Task(Startup);
             startupWork.Start();
@@ -35,13 +38,10 @@ namespace MyCC.Ui.Android.Views.Activities
             }
 
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
-            Finish();
 
-            await Task.Run(async () => { if (ConnectivityStatus.IsConnected) await ApplicationTasks.FetchCurrenciesAndAvailableRates(); });
-            if (ApplicationSettings.AutoRefreshOnStartup && ConnectivityStatus.IsConnected)
-            {
-                await Task.Run(() => TaskHelper.UpdateAssets());
-            }
+            if (ConnectivityStatus.IsConnected) await ApplicationTasks.FetchCurrenciesAndAvailableRates();
+
+            Finish();
         }
     }
 }

@@ -1,14 +1,19 @@
 ﻿using System.Collections.Generic;
+using Android.App;
+using Android.Content;
 using Android.OS;
-using Android.Support.V4.App;
+using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Currency.Model;
+using MyCC.Core.Settings;
 using MyCC.Ui.Android.Data.Get;
 using MyCC.Ui.Android.Messages;
+using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Android.Views.Adapter;
 using Newtonsoft.Json;
+using Fragment = Android.Support.V4.App.Fragment;
 
 namespace MyCC.Ui.Android.Views.Fragments
 {
@@ -16,6 +21,9 @@ namespace MyCC.Ui.Android.Views.Fragments
     {
         private Currency _referenceCurrency;
         private List<RateItem> _items;
+
+        private const int RequestCodeCurrency = 1;
+
 
         public RatesFragment(Currency referenceCurrency)
         {
@@ -34,10 +42,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             var view = inflater.Inflate(Resource.Layout.fragment_rates, container, false);
 
-            var data = ViewData.Rates.IsDataAvailable;
-            view.FindViewById(Resource.Id.sort_buttons).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
-            view.FindViewById(Resource.Id.swiperefresh).Visibility = data ? ViewStates.Visible : ViewStates.Invisible;
-            view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;
+            SetVisibleElements(view);
 
             var headerData = ViewData.Rates.Headers?[_referenceCurrency];
             if (headerData != null)
@@ -60,17 +65,47 @@ namespace MyCC.Ui.Android.Views.Fragments
             if (sortData != null) SetSortButtons(sortData, sortCurrency, sortValue);
 
 
-            Messaging.UiUpdate.RatesOverview.Subscribe(this, () => Activity.RunOnUiThread(() =>
+            Messaging.UiUpdate.RatesOverview.Subscribe(this, () =>
             {
-                _items = ViewData.Rates.Items[_referenceCurrency];
-                SetSortButtons(ViewData.Rates.SortButtons?[_referenceCurrency], sortCurrency, sortValue);
-                adapter.Clear();
-                adapter.AddAll(_items);
-                refreshView.Refreshing = false;
-            }));
+                if (Activity == null) return;
+                Activity.RunOnUiThread(() =>
+                {
+                    _items = ViewData.Rates.Items[_referenceCurrency];
+                    SetSortButtons(ViewData.Rates.SortButtons?[_referenceCurrency], sortCurrency, sortValue);
+                    adapter.Clear();
+                    adapter.AddAll(_items);
+                    SetVisibleElements(view);
+                    refreshView.Refreshing = false;
+                });
+            });
+
+            view.FindViewById<FloatingActionButton>(Resource.Id.button_add).Click += (sender, args) =>
+            {
+                var intent = new Intent(Context, typeof(CurrencyPickerActivity));
+                intent.PutExtra(CurrencyPickerActivity.ExtraWithoutAlreadyAddedCurrencies, true);
+                StartActivityForResult(intent, RequestCodeCurrency);
+            };
 
 
             return view;
+        }
+
+        public override void OnActivityResult(int requestCode, int resultCode, Intent data)
+        {
+            if (requestCode == RequestCodeCurrency && resultCode == (int)Result.Ok)
+            {
+                var currency = JsonConvert.DeserializeObject<Currency>(data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency));
+                ApplicationSettings.WatchedCurrencies = new List<Currency>(ApplicationSettings.WatchedCurrencies) { currency };
+                Messaging.Update.Rates.Send();
+            }
+        }
+
+        private static void SetVisibleElements(View view)
+        {
+            var data = ViewData.Rates.IsDataAvailable;
+            view.FindViewById(Resource.Id.sort_buttons).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
+            view.FindViewById(Resource.Id.swiperefresh).Visibility = data ? ViewStates.Visible : ViewStates.Invisible;
+            view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;
         }
 
         private static void SetSortButtons(IReadOnlyList<SortButtonItem> sortData, SortButtonFragment sortCurrency, SortButtonFragment sortValue)
