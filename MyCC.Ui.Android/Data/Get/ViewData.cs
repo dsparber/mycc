@@ -24,6 +24,7 @@ namespace MyCC.Ui.Android.Data.Get
 
             Messaging.Request.Rates.Subscribe(this, TaskHelper.UpdateRates);
             Messaging.Request.Assets.Subscribe(this, TaskHelper.UpdateAssets);
+            Messaging.Request.MissingRates.Subscribe(this, () => TaskHelper.FetchMissingRates());
         }
 
 

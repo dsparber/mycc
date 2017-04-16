@@ -38,6 +38,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
             Task.Run(() =>
             {
+                TaskHelper.FetchMissingRates();
                 if (ApplicationSettings.AutoRefreshOnStartup && ConnectivityStatus.IsConnected)
                 {
                     TaskHelper.UpdateAssets();

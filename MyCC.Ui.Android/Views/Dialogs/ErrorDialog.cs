@@ -1,18 +1,18 @@
 using System;
 using System.Net;
-using Android.Content;
+using Android.App;
 using MyCC.Core.Helpers;
 using MyCC.Ui.Android.Helpers;
-using Xamarin.Forms;
 
 namespace MyCC.Ui.Android.Views.Dialogs
 {
-    public static class ErrorOverlay
+    public static class ErrorDialog
     {
 
-        public static void Display(Exception e, Context context)
+        public static void Display(Exception e)
         {
             int messageId;
+            var context = Application.Context;
 
             if (e is WebException)
             {
@@ -24,7 +24,7 @@ namespace MyCC.Ui.Android.Views.Dialogs
             }
             e.LogError();
 
-            Device.BeginInvokeOnMainThread(() =>
+            ((Activity)context).RunOnUiThread(() =>
             {
                 context.ShowInfoDialog(Resource.String.Error, messageId);
             });

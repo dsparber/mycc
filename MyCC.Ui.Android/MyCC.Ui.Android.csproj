@@ -206,7 +206,7 @@
     <Compile Include="Views\Adapter\AssetsListAdapter.cs" />
     <Compile Include="Views\Adapter\CurrencyListAdapter.cs" />
     <Compile Include="Views\Animation\ZoomOutPageTransformer.cs" />
-    <Compile Include="Views\Dialogs\ErrorOverlay.cs" />
+    <Compile Include="Views\Dialogs\ErrorDialog.cs" />
     <Compile Include="Views\Fragments\AddSource\AddManuallyFragment.cs" />
     <Compile Include="Views\Fragments\AddSource\AddAddressFragment.cs" />
     <Compile Include="Views\Fragments\AddSource\AddBittrexFragment.cs" />

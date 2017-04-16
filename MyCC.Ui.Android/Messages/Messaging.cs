@@ -6,6 +6,7 @@
         public static class Request
         {
             public const string Rates = "RequestRates";
+            public const string MissingRates = "RequestMissingRates";
             public const string Assets = "RequestAssets";
         }
 

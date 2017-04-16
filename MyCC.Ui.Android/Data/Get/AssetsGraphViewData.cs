@@ -45,7 +45,7 @@ namespace MyCC.Ui.Android.Data.Get
             _items = LoadItems();
             Headers = LoadRateHeaders();
 
-            Messaging.UiUpdate.AssetsTable.Send();
+            Messaging.UiUpdate.AssetsGraph.Send();
         }
 
         public bool IsReady => _items != null;
