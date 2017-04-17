@@ -19,6 +19,6 @@ namespace MyCC.Ui.Android.Helpers
             _instance = _instance ?? new ConnectivityStatus(context);
         }
 
-        public static bool IsConnected => _instance._connectivityManager.ActiveNetworkInfo.IsConnected;
+        public static bool IsConnected => _instance._connectivityManager?.ActiveNetworkInfo?.IsConnected ?? false;
     }
 }

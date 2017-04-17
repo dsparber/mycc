@@ -201,20 +201,20 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchCoinInfo(Currency.Model.Currency coin, Action onStarted, Action onFinished, Action<Exception> onError)
+        public static async Task FetchCoinInfo(Currency.Model.Currency coin, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null)
         {
             try
             {
-                onStarted();
+                onStarted?.Invoke();
                 await CoinInfoStorage.Instance.FetchInfo(coin);
             }
             catch (Exception e)
             {
-                onError(e);
+                onError?.Invoke(e);
             }
             finally
             {
-                onFinished();
+                onFinished?.Invoke();
             }
         }
 

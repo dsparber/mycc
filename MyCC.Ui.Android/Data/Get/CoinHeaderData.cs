@@ -5,7 +5,7 @@ using MyCC.Core.Settings;
 
 namespace MyCC.Ui.Android.Data.Get
 {
-    public class CoinHeaderData
+    public class HeaderData
     {
         public string MainText => _referenceMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
         public string InfoText => string.Join(" / ", _additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney)));
@@ -13,7 +13,7 @@ namespace MyCC.Ui.Android.Data.Get
         private readonly Money _referenceMoney;
         private readonly List<Money> _additionalReferences;
 
-        public CoinHeaderData(Money referenceMoney, List<Money> additionalReferences)
+        public HeaderData(Money referenceMoney, List<Money> additionalReferences)
         {
             _referenceMoney = referenceMoney;
             _additionalReferences = additionalReferences;

@@ -174,13 +174,20 @@
     <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Forms.2.3.4.231\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+    <Reference Include="zxing.portable">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.2.9\lib\Xamarin.iOS10\zxing.portable.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Get\CoinInfoItem.cs" />
+    <Compile Include="Data\Get\ReferenceValueItem.cs" />
     <Compile Include="Data\Get\AssetsGraphItem.cs" />
     <Compile Include="Data\Get\AssetsGraphViewData.cs" />
+    <Compile Include="Data\Get\CoinInfoViewData.cs" />
     <Compile Include="Data\Get\CoinHeaderData.cs" />
     <Compile Include="Data\Get\AssetItem.cs" />
     <Compile Include="Data\Get\AssetsViewData.cs" />
+    <Compile Include="Data\Get\HeaderDataItem.cs" />
     <Compile Include="Data\Get\RatesViewData.cs" />
     <Compile Include="Data\Get\SortButtonItem.cs" />
     <Compile Include="Data\Add\AddAccountData.cs" />
@@ -193,6 +200,7 @@
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\SQLiteConnectionAndroid.cs" />
     <Compile Include="Helpers\TextEditHelper.cs" />
+    <Compile Include="Views\Activities\CoinInfoActivity.cs" />
     <Compile Include="Views\Activities\CurrencyPickerActivity.cs" />
     <Compile Include="Views\Activities\MainActivity.cs" />
     <Compile Include="Messages\MessageTools.cs" />
@@ -266,6 +274,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\item_currency.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\activity_coin_info.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -17,7 +17,7 @@ namespace MyCC.Ui.Android.Data.Get
     public class AssetsViewData
     {
         public Dictionary<Currency, List<AssetItem>> Items { get; private set; }
-        public Dictionary<Currency, CoinHeaderData> Headers { get; private set; }
+        public Dictionary<Currency, HeaderData> Headers { get; private set; }
         public Dictionary<Currency, List<SortButtonItem>> SortButtons { get; private set; }
 
         private readonly Context _context;
@@ -49,7 +49,7 @@ namespace MyCC.Ui.Android.Data.Get
             set { ApplicationSettings.SortDirectionAccounts = value; }
         }
 
-        private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, HeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
         {
             var amount = AccountStorage.EnabledAccounts.Sum(a => a.Money.Amount * ExchangeRateHelper.GetRate(a.Money.Currency, c)?.Rate ?? 0);
             var referenceMoney = new Money(amount, c);
@@ -59,7 +59,7 @@ namespace MyCC.Ui.Android.Data.Get
                 .Select(x => new Money(amount * ExchangeRateHelper.GetRate(c, x)?.Rate ?? 0, x))
                 .ToList();
 
-            return new CoinHeaderData(referenceMoney, additionalRefs);
+            return new HeaderData(referenceMoney, additionalRefs);
         });
 
         private static Dictionary<Currency, List<AssetItem>> LoadRateItems() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>

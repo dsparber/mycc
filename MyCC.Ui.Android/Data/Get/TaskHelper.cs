@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Currency.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
@@ -48,6 +49,12 @@ namespace MyCC.Ui.Android.Data.Get
             {
                 await ApplicationTasks.FetchMissingRates(neededRates, onError: ErrorDialog.Display);
             }
+        }
+
+        public static async void FetchCoinInfo(Currency currency)
+        {
+            await ApplicationTasks.FetchCoinInfo(currency, onError: ErrorDialog.Display);
+            Messaging.UiUpdate.CoinInfo.Send();
         }
     }
 }

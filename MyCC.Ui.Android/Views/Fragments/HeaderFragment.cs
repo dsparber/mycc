@@ -2,6 +2,7 @@
 using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
+using MyCC.Ui.Android.Data.Get;
 
 namespace MyCC.Ui.Android.Views.Fragments
 {
@@ -9,6 +10,15 @@ namespace MyCC.Ui.Android.Views.Fragments
     {
         private TextView _mainTextView;
         private TextView _infoTextView;
+
+        public HeaderDataItem Data
+        {
+            set
+            {
+                MainText = value.MainText;
+                InfoText = value.InfoText;
+            }
+        }
 
         public string MainText
         {

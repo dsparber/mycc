@@ -17,7 +17,7 @@ namespace MyCC.Ui.Android.Data.Get
     public class RatesViewData
     {
         public Dictionary<Currency, List<RateItem>> Items { get; private set; }
-        public Dictionary<Currency, CoinHeaderData> Headers { get; private set; }
+        public Dictionary<Currency, HeaderData> Headers { get; private set; }
         public Dictionary<Currency, List<SortButtonItem>> SortButtons { get; private set; }
 
         public bool IsDataAvailable => Items != null && Items.Count > 0 && Items.Min(i => i.Value.Count) > 0;
@@ -40,7 +40,7 @@ namespace MyCC.Ui.Android.Data.Get
 
 
 
-        private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, HeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
         {
             var referenceMoney = new Money(ExchangeRateHelper.GetRate(Currency.Btc, c)?.Rate ?? 0, c);
 
@@ -49,7 +49,7 @@ namespace MyCC.Ui.Android.Data.Get
                 .Select(x => new Money(ExchangeRateHelper.GetRate(Currency.Btc, x)?.Rate ?? 0, x))
                 .ToList();
 
-            return new CoinHeaderData(referenceMoney, additionalRefs);
+            return new HeaderData(referenceMoney, additionalRefs);
         });
 
         private static Dictionary<Currency, List<RateItem>> LoadRateItems() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>

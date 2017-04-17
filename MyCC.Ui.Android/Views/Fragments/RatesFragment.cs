@@ -57,7 +57,17 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             _items = ViewData.Rates.Items?[_referenceCurrency] ?? new List<RateItem>();
             var adapter = new RatesListAdapter(Context, _items);
-            view.FindViewById<ListView>(Resource.Id.list_rates).Adapter = adapter;
+
+            var list = view.FindViewById<ListView>(Resource.Id.list_rates);
+            list.Adapter = adapter;
+            list.ItemClick += (sender, args) =>
+            {
+                var currency = adapter.GetItem(args.Position).Currency;
+
+                var intent = new Intent(Activity, typeof(CoinInfoActivity));
+                intent.PutExtra(CoinInfoActivity.ExtraCurrency, JsonConvert.SerializeObject(currency));
+                StartActivity(intent);
+            };
 
             var sortData = ViewData.Rates.SortButtons?[_referenceCurrency];
             var sortCurrency = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
