@@ -33,5 +33,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
         protected override HttpContent PostContent => new StringContent($"{{\"{AddressKey}\":\"{Address}\"}}");
 
         protected override FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled) => new BlockchainXpubAccount(id, name, money, isEnabled, DateTime.Now, this);
+
+        public override string WebUrl => string.Empty;
     }
 }

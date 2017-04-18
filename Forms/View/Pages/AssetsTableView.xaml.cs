@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
@@ -24,6 +25,8 @@ namespace MyCC.Forms.View.Pages
     {
         private CoinTableComponent _tableView;
         private PullToRefreshLayout _pullToRefresh;
+
+        private bool _firstCall = true;
 
         public AssetsTableView()
         {
@@ -66,12 +69,16 @@ namespace MyCC.Forms.View.Pages
             ContentView.Content = _pullToRefresh;
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            if (!Device.RuntimePlatform.Equals(Device.Android)) return;
+            if (!_firstCall) return;
+
+            _firstCall = false;
             InitPullToRefresh();
+            await Task.Delay(1000);
+            Device.BeginInvokeOnMainThread(InitPullToRefresh);
         }
 
         protected override void OnSizeAllocated(double width, double height)

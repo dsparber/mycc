@@ -125,9 +125,17 @@ namespace MyCC.Forms.View.Pages
                 {
                     Text = repo is BlockchainXpubAccountRepository ? "xpub" : (repo as AddressAccountRepository).Address.MiddleTruncate(),
                     FontSize = AppConstants.TableSectionFontSize,
-                    TextColor = AppConstants.FontColorLight,
-                    LineBreakMode = LineBreakMode.MiddleTruncation
+                    TextColor = repo is BlockchainXpubAccountRepository ? AppConstants.FontColorLight : AppConstants.ThemeColor,
+                    LineBreakMode = LineBreakMode.MiddleTruncation,
                 };
+
+                if (!(repo is BlockchainXpubAccountRepository))
+                {
+                    var g = new TapGestureRecognizer();
+                    g.Tapped += (sender, args) => Navigation.PushModalAsync(new NavigationPage(new WebOverlay(((AddressAccountRepository)repo).WebUrl)));
+                    addressLabel.GestureRecognizers.Add(g);
+                }
+
                 dataStack.Children.Add(addressLabel);
                 updateLabelAction = () =>
                 {

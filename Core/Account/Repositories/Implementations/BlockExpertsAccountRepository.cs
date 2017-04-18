@@ -34,5 +34,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeBlockExpertsRepository;
 
         protected override FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled) => new BlockExpertsAccount(id, name, money, isEnabled, DateTime.Now, this);
+
+        public override string WebUrl => $"https://www.blockexperts.com/{Currency.Code.ToLower()}/address/{Address}";
     }
 }

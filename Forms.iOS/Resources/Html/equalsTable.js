@@ -63,8 +63,6 @@ function updateTable(data, sort, hideRate) {
         firstCell.innerHTML = "<div>" + (hideRate ? "" : "<div>x</div>") + "<div>=</div></div>";
         amountCell.innerHTML = "<div>" + (hideRate ? "" : rateHtml) + amountHtml + "</div>";
         codeCell.innerHTML = "<div><div>" + data[i]["Code"] + "</div></div>";
-
-        row.onclick = rowClicked(data[i]["Code"]);
     }
 
     $("#coinTable thead").children().removeClass();
@@ -73,18 +71,9 @@ function updateTable(data, sort, hideRate) {
     sizeAllocated();
 }
 
-function rowClicked(code) {
-    return function () {
-        // ReSharper disable once UndeclaredGlobalVariableUsing
-        Native("Callback", code);
-        window.open("http://none?" + "Callback=" + code);
-    };
-}
-
 function headerClicked(type) {
     return function () {
         // ReSharper disable once UndeclaredGlobalVariableUsing
-        Native("HeaderClickedCallback", type);
         window.open("http://none?" + "HeaderClickedCallback=" + type);
     };
 }

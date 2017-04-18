@@ -1,6 +1,10 @@
+@font-face {
+    font-family: "DroidSansMono";
+    src: url('DroidSansMono.ttf') format('truetype');
+}
 
 html, body {
-    font-family: "Droid Sans Mono", "Courier New", Consolas, monospace;
+    font-family: "DroidSansMono", "Courier New", Consolas, monospace;
     font-size: 8pt;
     font-weight: lighter;
     margin: 0;

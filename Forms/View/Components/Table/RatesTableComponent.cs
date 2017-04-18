@@ -59,7 +59,7 @@ namespace MyCC.Forms.View.Components.Table
 
             Content = _webView;
 
-            UpdateView();
+            _webView.LoadFinished = UpdateView;
 
             Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
             Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
@@ -67,6 +67,11 @@ namespace MyCC.Forms.View.Components.Table
 
             Messaging.RatesPageCurrency.SubscribeValueChanged(this, UpdateView);
             Messaging.Loading.SubscribeFinished(this, UpdateView);
+        }
+
+        public void OnAppearing()
+        {
+            UpdateView();
         }
 
         private void UpdateView()

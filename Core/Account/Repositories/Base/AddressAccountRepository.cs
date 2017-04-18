@@ -16,6 +16,8 @@ namespace MyCC.Core.Account.Repositories.Base
         protected virtual decimal BalanceFactor => 1;
         protected virtual HttpContent PostContent => null;
 
+        public abstract string WebUrl { get; }
+
         protected abstract Uri Url { get; }
 
         protected abstract Func<string, decimal> Balance { get; }

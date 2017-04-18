@@ -54,5 +54,6 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeCryptoidRepository;
 
         protected override FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled) => new CryptoIdAccount(id, name, money, isEnabled, DateTime.Now, this);
+        public override string WebUrl => $"https://chainz.cryptoid.info/{Currency.Code.ToLower()}/address.dws?{Address}.htm";
     }
 }

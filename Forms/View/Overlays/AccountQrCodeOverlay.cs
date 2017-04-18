@@ -35,7 +35,7 @@ namespace MyCC.Forms.View.Overlays
             stack.Children.Add(webView);
             stack.Children.Add(new Label
             {
-                Text = $"{I18N.Address}: {accountRepository.Address}",
+                Text = $"{I18N.Address}:\n{accountRepository.Address.Substring(0, accountRepository.Address.Length / 2)}\u200B{accountRepository.Address.Substring(accountRepository.Address.Length / 2)}",
                 TextColor = AppConstants.TableSectionColor,
                 FontSize = AppConstants.TableSectionFontSize,
                 HorizontalTextAlignment = TextAlignment.Center

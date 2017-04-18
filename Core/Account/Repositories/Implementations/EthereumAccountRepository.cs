@@ -30,5 +30,8 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeEthereumRepository;
 
         protected override FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled) => new EthereumAccount(id, name, money, isEnabled, DateTime.Now, this);
+
+        public override string WebUrl => $"https://etherchain.org/account/{Address}";
+
     }
 }

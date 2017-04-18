@@ -25,6 +25,8 @@ namespace MyCC.Forms.View.Pages
         private PullToRefreshLayout _pullToRefresh;
         private RatesTableComponent _tableView;
 
+        private bool _firstCall = true;
+
         public RateView()
         {
             InitializeComponent();
@@ -77,12 +79,16 @@ namespace MyCC.Forms.View.Pages
             ContentView.Content = _pullToRefresh;
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            if (!Device.RuntimePlatform.Equals(Device.Android)) return;
+            if (!_firstCall) return;
+
+            _firstCall = false;
             InitPullToRefresh();
+            await Task.Delay(1000);
+            Device.BeginInvokeOnMainThread(InitPullToRefresh);
         }
 
         protected override void OnSizeAllocated(double width, double height)
@@ -106,6 +112,7 @@ namespace MyCC.Forms.View.Pages
             HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
             HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.SelectedRatePageCurrency);
             HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
+            HeaderCarousel.PageIndicatorTintColor = Color.FromHex("#5FFF");
 
             if (HeaderCarousel.ItemTemplate != null) return;
 

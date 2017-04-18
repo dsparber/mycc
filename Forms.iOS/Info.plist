@@ -51,9 +51,9 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Needed for scanning QR Codes</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.9.1</string>
+	<string>0.9.2</string>
 	<key>CFBundleVersion</key>
-	<string>0.9.1.2</string>
+	<string>0.9.2</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSAppTransportSecurity</key>
