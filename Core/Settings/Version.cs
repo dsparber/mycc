@@ -15,16 +15,16 @@
 			Build = int.Parse(parts[2]);
 		}
 
-		public Version(int major, int? minor, int? build)
+		public Version(int major, int minor, int? build = null)
 		{
 			Major = major;
-			Minor = minor ?? 0;
+			Minor = minor;
 			Build = build ?? 0;
 		}
 
 		public override string ToString()
 		{
-			return $"{Major}.{Minor}.{Build}";
+			return $"{Major}.{Minor}{(Build != 0 ? $".{Build}" : string.Empty)}";
 		}
 
 		public override bool Equals(object obj)
