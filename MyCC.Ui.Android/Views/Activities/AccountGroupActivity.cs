@@ -11,6 +11,7 @@ using MyCC.Core.Settings;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Currency.Storage;
 using System.Linq;
+using Android.Content;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -30,21 +31,22 @@ namespace MyCC.Ui.Android.Views.Activities
 		{
 			base.OnCreate(savedInstanceState);
 
-			SetContentView(Resource.Layout.activity_account_detail);
+			SetContentView(Resource.Layout.activity_account_group);
 
 			SupportActionBar.Elevation = 3;
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
 			var currencyId = Intent?.GetStringExtra(ExtraCurrencyId);
-			if (string.IsNullOrWhiteSpace(currencyId))
+			if (!string.IsNullOrWhiteSpace(currencyId))
 			{
-				_currency = CurrencyStorage.Instance.AllElements.Find(c => c.Id.Equals(currencyId));
+				_currency = CurrencyStorage.Instance.AllElements.Find(c => currencyId.Equals(c?.Id));
 			}
 
 			SupportActionBar.Title = $"\u2211 {_currency.Code}";
-			var header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
 
+			var header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
 			header.Data = AccountsGroupViewData.HeaderData(_currency);
+
 
 			_sortReferenceAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
 			_sortReferenceCurrency = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
@@ -85,8 +87,8 @@ namespace MyCC.Ui.Android.Views.Activities
 			var referenceItems = AccountsGroupViewData.ReferenceItems(_currency);
 			var viewReference = FindViewById<LinearLayout>(Resource.Id.view_reference);
 
-			_sortReferenceAmount.Data = ViewData.AccountDetail.SortButtons[0];
-			_sortReferenceCurrency.Data = ViewData.AccountDetail.SortButtons[1];
+			_sortReferenceAmount.Data = ViewData.AccountGroup.SortButtonsReference[0];
+			_sortReferenceCurrency.Data = ViewData.AccountGroup.SortButtonsReference[1];
 
 			viewReference.RemoveAllViews();
 
@@ -102,8 +104,8 @@ namespace MyCC.Ui.Android.Views.Activities
 			var enabledItems = AccountsGroupViewData.EnabledAccountsItems(_currency);
 			var viewEnabled = FindViewById<LinearLayout>(Resource.Id.view_enabled_accounts);
 
-			_sortReferenceAmount.Data = ViewData.AccountDetail.SortButtons[0];
-			_sortReferenceCurrency.Data = ViewData.AccountDetail.SortButtons[1];
+			_sortAccountsName.Data = ViewData.AccountGroup.SortButtonsAccounts[0];
+			_sortAccountsAmount.Data = ViewData.AccountGroup.SortButtonsAccounts[1];
 
 			viewEnabled.RemoveAllViews();
 
@@ -112,22 +114,39 @@ namespace MyCC.Ui.Android.Views.Activities
 				var v = LayoutInflater.Inflate(Resource.Layout.item_account, null);
 				v.FindViewById<TextView>(Resource.Id.text_amount).Text = i.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
 				v.FindViewById<TextView>(Resource.Id.text_name).Text = i.Name;
+
+				v.Click += (sender, e) =>
+				{
+					var intent = new Intent(this, typeof(AccountDetailActivity));
+					intent.PutExtra(AccountDetailActivity.ExtraAccountId, i.Id);
+					StartActivity(intent);
+				};
+
 				viewEnabled.AddView(v);
 			}
 
 			var disabledItems = AccountsGroupViewData.DisabledAccountsItems(_currency);
 			var viewDisabled = FindViewById<LinearLayout>(Resource.Id.view_disabled_accounts);
 
-			_sortReferenceAmount.Data = ViewData.AccountDetail.SortButtons[0];
-			_sortReferenceCurrency.Data = ViewData.AccountDetail.SortButtons[1];
+			_sortDisabledName.Data = ViewData.AccountGroup.SortButtonsAccounts[0];
+			_sortDisabledAmount.Data = ViewData.AccountGroup.SortButtonsAccounts[1];
 
 			viewDisabled.RemoveAllViews();
 
-			foreach (var i in enabledItems)
+			foreach (var i in disabledItems)
 			{
 				var v = LayoutInflater.Inflate(Resource.Layout.item_account, null);
 				v.FindViewById<TextView>(Resource.Id.text_amount).Text = i.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
 				v.FindViewById<TextView>(Resource.Id.text_name).Text = i.Name;
+
+				v.Click += (sender, e) =>
+				{
+					var intent = new Intent(this, typeof(AccountDetailActivity));
+					intent.PutExtra(AccountDetailActivity.ExtraAccountId, i.Id);
+
+					StartActivity(intent);
+				};
+
 				viewDisabled.AddView(v);
 			}
 

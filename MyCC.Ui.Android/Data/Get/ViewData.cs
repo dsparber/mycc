@@ -10,6 +10,7 @@ namespace MyCC.Ui.Android.Data.Get
 		public static AssetsGraphViewData AssetsGraph => _instance._assetsGraphViewData;
 		public static CoinInfoViewData CoinInfo => _instance._coinInfoViewData;
 		public static AccountViewData AccountDetail => _instance._accountViewData;
+		public static AccountsGroupViewData AccountGroup => _instance._accountsGroupViewData;
 
 		private readonly RatesViewData _ratesViewData;
 		private readonly AssetsViewData _assetsViewData;
