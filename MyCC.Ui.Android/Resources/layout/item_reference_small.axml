@@ -3,19 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="1dp">
-    <TextView
-        android:id="@+id/text_amount"
-        android:padding="8dp"
-        android:gravity="end"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:background="#fff"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/text_currency"
-        android:padding="8dp"
-        android:layout_width="0dp"
-        android:layout_weight="0.6"
-        android:background="#fff"
-        android:layout_height="wrap_content" />
+  <TextView
+      android:id="@+id/text_amount"
+      android:typeface="monospace"
+      android:textColor="@color/primary_text_default_material_light"
+      android:padding="8dp"
+      android:gravity="end"
+      android:layout_width="0dp"
+      android:layout_weight="1"
+      android:background="#fff"
+      android:layout_height="wrap_content" />
+  <TextView
+      android:id="@+id/text_currency"
+      android:typeface="monospace"
+      android:textColor="@color/primary_text_default_material_light"
+      android:padding="8dp"
+      android:layout_width="0dp"
+      android:layout_weight="0.6"
+      android:background="#fff"
+      android:layout_height="wrap_content" />
 </LinearLayout>

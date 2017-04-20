@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Webkit;
 using Android.Widget;
 using Java.Interop;
+using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
 using MyCC.Ui.Android.Data.Get;
 using MyCC.Ui.Android.Messages;
@@ -128,7 +129,9 @@ namespace MyCC.Ui.Android.Views.Fragments
             [JavascriptInterface]
             public void OpenView(int accountId)
             {
-                Toast.MakeText(_context, $"Open Account (id = {accountId})", ToastLength.Short).Show();
+                var intent = new Intent(_context, typeof(AccountDetailActivity));
+                intent.PutExtra(AccountDetailActivity.ExtraAccountId, accountId);
+                _context.StartActivity(intent);
             }
 
         }

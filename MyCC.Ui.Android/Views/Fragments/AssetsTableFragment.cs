@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -6,6 +7,7 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
+using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
 using MyCC.Ui.Android.Data.Get;
 using MyCC.Ui.Android.Messages;
@@ -53,7 +55,25 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             _items = ViewData.Assets.Items?[_referenceCurrency] ?? new List<AssetItem>();
             var adapter = new AssetsListAdapter(Context, _items);
-            view.FindViewById<ListView>(Resource.Id.list_assets).Adapter = adapter;
+            var list = view.FindViewById<ListView>(Resource.Id.list_assets);
+            list.Adapter = adapter;
+            list.ItemClick += (sender, args) =>
+            {
+                var currency = adapter.GetItem(args.Position).Value.Currency;
+
+                var accounts = AccountStorage.AccountsWithCurrency(currency);
+
+                if (accounts.Count == 1)
+                {
+                    var intent = new Intent(Activity, typeof(AccountDetailActivity));
+                    intent.PutExtra(AccountDetailActivity.ExtraAccountId, accounts.First().Id);
+                    StartActivity(intent);
+                }
+                else
+                {
+                    // TODO
+                }
+            };
 
             var sortData = ViewData.Assets.SortButtons?[_referenceCurrency];
             var sortCurrency = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);

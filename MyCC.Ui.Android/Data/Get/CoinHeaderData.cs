@@ -16,7 +16,7 @@ namespace MyCC.Ui.Android.Data.Get
         public HeaderData(Money referenceMoney, List<Money> additionalReferences)
         {
             _referenceMoney = referenceMoney;
-            _additionalReferences = additionalReferences;
+            _additionalReferences = additionalReferences.OrderBy(m => m.Currency.Code).ToList();
         }
     }
 }

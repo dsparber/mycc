@@ -180,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Get\CoinInfoItem.cs" />
+    <Compile Include="Data\Get\AccountViewData.cs" />
     <Compile Include="Data\Get\ReferenceValueItem.cs" />
     <Compile Include="Data\Get\AssetsGraphItem.cs" />
     <Compile Include="Data\Get\AssetsGraphViewData.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\SQLiteConnectionAndroid.cs" />
     <Compile Include="Helpers\TextEditHelper.cs" />
+    <Compile Include="Views\Activities\AccountDetailActivity.cs" />
     <Compile Include="Views\Activities\CoinInfoActivity.cs" />
     <Compile Include="Views\Activities\CurrencyPickerActivity.cs" />
     <Compile Include="Views\Activities\MainActivity.cs" />
@@ -280,6 +282,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\item_reference_small.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\activity_account_detail.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\item_reference_full.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

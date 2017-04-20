@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="1dp">
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:background="#fff"
+      android:paddingTop="8dp">
+    <TextView
+        android:text="x"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_weight="0.3"
+        android:layout_height="wrap_content"
+        android:textColor="@color/secondary_text_default_material_light"
+        android:typeface="monospace" />
+    <TextView
+        android:id="@+id/text_rate"
+        android:gravity="end"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:paddingEnd="8dp"
+        android:textColor="@color/secondary_text_default_material_light"
+        android:typeface="monospace" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="0.6"
+        android:layout_height="wrap_content" />
+  </LinearLayout>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:background="#fff"
+      android:paddingBottom="8dp">
+    <TextView
+        android:text="="
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_weight="0.3"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text_default_material_light"
+        android:typeface="monospace" />
+    <TextView
+        android:id="@+id/text_amount"
+        android:gravity="end"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text_default_material_light"
+        android:paddingEnd="8dp"
+        android:typeface="monospace" />
+    <TextView
+        android:id="@+id/text_currency"
+        android:layout_width="0dp"
+        android:layout_weight="0.6"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text_default_material_light"
+        android:paddingStart="8dp"
+        android:typeface="monospace" />
+  </LinearLayout>
+</LinearLayout>

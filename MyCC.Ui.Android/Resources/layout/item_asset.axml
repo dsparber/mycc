@@ -8,20 +8,26 @@
     android:padding="8dp"
     android:layout_width="0dp"
     android:layout_weight="0.8"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:typeface="monospace"
+    android:textColor="@color/primary_text_default_material_light"/>
   <TextView
     android:id="@+id/text_amount"
     android:padding="8dp"
     android:gravity="end"
     android:layout_width="0dp"
     android:layout_weight="1"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:typeface="monospace"
+    android:textColor="@color/primary_text_default_material_light"/>
   <TextView
      android:id="@+id/text_reference"
      android:gravity="end"
      android:padding="8dp"
      android:layout_width="0dp"
      android:layout_weight="1"
-     android:layout_height="wrap_content"/>
+     android:layout_height="wrap_content"
+     android:typeface="monospace"
+     android:textColor="@color/primary_text_default_material_light"/>
 
 </LinearLayout>
