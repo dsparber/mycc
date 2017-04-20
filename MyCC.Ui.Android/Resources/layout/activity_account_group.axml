@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:p2="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <fragment
+        android:name="MyCC.Ui.Android.Views.Fragments.HeaderFragment"
+        android:id="@+id/header_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp">
+                <LinearLayout
+                    android:id="@+id/view_accounts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:text="@string/Accounts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        p2:textAllCaps="true"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="8dp" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <fragment
+                            android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+                            android:id="@+id/button_account_name_sort"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8" />
+                        <fragment
+                            android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+                            android:id="@+id/button_account_amount_sort"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                        <fragment
+                            android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+                            android:id="@+id/button_no_sort1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorDivider"
+                        android:id="@+id/view_enabled_accounts" />
+                </LinearLayout>
+                <TextView
+                    android:text="@string/EqualTo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_equal_to"
+                    p2:textAllCaps="true"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <fragment
+                        android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+                        android:id="@+id/button_no_sort"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3" />
+                    <fragment
+                        android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+                        android:id="@+id/button_value_sort"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                    <fragment
+                        android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+                        android:id="@+id/button_currency_sort"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorDivider"
+                    android:id="@+id/view_reference" />
+                <LinearLayout
+                    android:id="@+id/view_disabled_accounts_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:text="@string/DisabledAccounts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        p2:textAllCaps="true"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="8dp" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <fragment
+                            android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+                            android:id="@+id/button_disabled_name_sort"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8" />
+                        <fragment
+                            android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+                            android:id="@+id/button_disabled_amount_sort"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                        <fragment
+                            android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
+                            android:id="@+id/button_no_sort2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorDivider"
+                        android:id="@+id/view_disabled_accounts"
+                        android:layout_marginBottom="50dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

@@ -168,8 +168,6 @@ Global
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
 		$0.TextStylePolicy = $7
-		$7.FileWidth = 120
-		$7.TabsToSpaces = False
 		$7.inheritsSet = VisualStudio
 		$7.inheritsScope = text/plain
 		$0.DotNetNamingPolicy = $8

@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+using MyCC.Core.Settings;
 
 namespace MyCC.Forms.Constants
 {
@@ -22,5 +23,7 @@ namespace MyCC.Forms.Constants
 		public static readonly Color WarningColor = Color.FromHex("ff5722");
 
 		public const int LabelWidth = 100;
+
+		public static readonly Version AppVersion = new Version(1, 0);
 	}
 }
