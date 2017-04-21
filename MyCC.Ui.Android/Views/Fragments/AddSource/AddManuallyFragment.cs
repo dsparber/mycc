@@ -37,7 +37,10 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
                 var newText = string.Join(string.Empty, args.Text);
                 var text = TextEditHelper.CheckIfDecimal(newText);
                 if (!string.Equals(text, newText))
-                    amountText.Text = text;
+                {
+                    amountText.Text = string.Empty;
+                    amountText.Append(text);
+                }
                 decimal.TryParse(text, out _amount);
             };
 

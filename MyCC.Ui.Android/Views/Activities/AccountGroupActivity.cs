@@ -15,145 +15,155 @@ using Android.Content;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
-	[Activity(Theme = "@style/MyCC")]
-	public class AccountGroupActivity : AppCompatActivity
-	{
-		public const string ExtraCurrencyId = "currencyId";
+    [Activity(Theme = "@style/MyCC")]
+    public class AccountGroupActivity : AppCompatActivity
+    {
+        public const string ExtraCurrencyId = "currencyId";
 
-		private Currency _currency;
+        private Currency _currency;
 
-		private SortButtonFragment _sortReferenceAmount, _sortReferenceCurrency,
-		_sortAccountsName, _sortAccountsAmount, _sortDisabledName, _sortDisabledAmount;
+        private HeaderFragment _header;
 
-		private SwipeRefreshLayout _swipeToRefresh;
+        private SortButtonFragment _sortReferenceAmount, _sortReferenceCurrency,
+        _sortAccountsName, _sortAccountsAmount, _sortDisabledName, _sortDisabledAmount;
 
-		protected override void OnCreate(Bundle savedInstanceState)
-		{
-			base.OnCreate(savedInstanceState);
+        private SwipeRefreshLayout _swipeToRefresh;
 
-			SetContentView(Resource.Layout.activity_account_group);
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
 
-			SupportActionBar.Elevation = 3;
-			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+            SetContentView(Resource.Layout.activity_account_group);
 
-			var currencyId = Intent?.GetStringExtra(ExtraCurrencyId);
-			if (!string.IsNullOrWhiteSpace(currencyId))
-			{
-				_currency = CurrencyStorage.Instance.AllElements.Find(c => currencyId.Equals(c?.Id));
-			}
+            SupportActionBar.Elevation = 3;
+            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
-			SupportActionBar.Title = $"\u2211 {_currency.Code}";
+            var currencyId = Intent?.GetStringExtra(ExtraCurrencyId);
+            if (!string.IsNullOrWhiteSpace(currencyId))
+            {
+                _currency = CurrencyStorage.Instance.AllElements.Find(c => currencyId.Equals(c?.Id));
+            }
 
-			var header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
-			header.Data = AccountsGroupViewData.HeaderData(_currency);
+            SupportActionBar.Title = $"\u2211 {_currency.Code}";
 
-
-			_sortReferenceAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
-			_sortReferenceCurrency = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
-
-			_sortAccountsName = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_account_name_sort);
-			_sortAccountsAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_account_amount_sort);
-
-			_sortDisabledName = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_disabled_name_sort);
-			_sortDisabledAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_disabled_amount_sort);
-
-			Messaging.UiUpdate.AccountDetail.Subscribe(this, () => RunOnUiThread(SetData));
+            _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
+            _header.Data = AccountsGroupViewData.HeaderData(_currency);
 
 
-			_swipeToRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
+            _sortReferenceAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
+            _sortReferenceCurrency = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
 
-			_swipeToRefresh.Refresh += (sender, e) =>
-			{
-				Messaging.Request.Accounts.Send(_currency);
-				Messaging.Request.Rates.Send(_currency);
-			};
+            _sortAccountsName = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_account_name_sort);
+            _sortAccountsAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_account_amount_sort);
 
-			SetData();
-		}
+            _sortDisabledName = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_disabled_name_sort);
+            _sortDisabledAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_disabled_amount_sort);
 
-		public override bool OnOptionsItemSelected(IMenuItem item)
-		{
-			Finish();
-			return true;
-		}
+            Messaging.UiUpdate.AccountDetail.Subscribe(this, () => RunOnUiThread(SetData));
 
 
-		private void SetData()
-		{
-			var money = AccountsGroupViewData.GetEnabledSum(_currency);
-			FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(money.Amount == 1 ? Resource.String.IsEqualTo : Resource.String.AreEqualTo), money.ToStringTwoDigits(ApplicationSettings.RoundMoney));
+            _swipeToRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
+
+            _swipeToRefresh.Refresh += (sender, e) =>
+            {
+                Messaging.Request.Accounts.Send(_currency);
+                Messaging.Request.Rates.Send(_currency);
+            };
+
+            SetData();
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            Finish();
+            return true;
+        }
 
 
-			var referenceItems = AccountsGroupViewData.ReferenceItems(_currency);
-			var viewReference = FindViewById<LinearLayout>(Resource.Id.view_reference);
+        private void SetData()
+        {
+            if (!AccountsGroupViewData.DisabledAccountsItems(_currency).Any() && !AccountsGroupViewData.EnabledAccountsItems(_currency).Any())
+            {
+                Finish();
+                return;
+            }
 
-			_sortReferenceAmount.Data = ViewData.AccountGroup.SortButtonsReference[0];
-			_sortReferenceCurrency.Data = ViewData.AccountGroup.SortButtonsReference[1];
+            _header.Data = AccountsGroupViewData.HeaderData(_currency);
 
-			viewReference.RemoveAllViews();
+            var money = AccountsGroupViewData.GetEnabledSum(_currency);
+            FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(money.Amount == 1 ? Resource.String.IsEqualTo : Resource.String.AreEqualTo), money.ToStringTwoDigits(ApplicationSettings.RoundMoney));
 
-			foreach (var i in referenceItems)
-			{
-				var v = LayoutInflater.Inflate(Resource.Layout.item_reference_full, null);
-				v.FindViewById<TextView>(Resource.Id.text_amount).Text = i.FormattedAmount;
-				v.FindViewById<TextView>(Resource.Id.text_currency).Text = i.CurrencyCode;
-				v.FindViewById<TextView>(Resource.Id.text_rate).Text = i.FormattedRate;
-				viewReference.AddView(v);
-			}
 
-			var enabledItems = AccountsGroupViewData.EnabledAccountsItems(_currency);
-			var viewEnabled = FindViewById<LinearLayout>(Resource.Id.view_enabled_accounts);
+            var referenceItems = AccountsGroupViewData.ReferenceItems(_currency);
+            var viewReference = FindViewById<LinearLayout>(Resource.Id.view_reference);
 
-			_sortAccountsName.Data = ViewData.AccountGroup.SortButtonsAccounts[0];
-			_sortAccountsAmount.Data = ViewData.AccountGroup.SortButtonsAccounts[1];
+            _sortReferenceAmount.Data = ViewData.AccountGroup.SortButtonsReference[0];
+            _sortReferenceCurrency.Data = ViewData.AccountGroup.SortButtonsReference[1];
 
-			viewEnabled.RemoveAllViews();
+            viewReference.RemoveAllViews();
 
-			foreach (var i in enabledItems)
-			{
-				var v = LayoutInflater.Inflate(Resource.Layout.item_account, null);
-				v.FindViewById<TextView>(Resource.Id.text_amount).Text = i.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
-				v.FindViewById<TextView>(Resource.Id.text_name).Text = i.Name;
+            foreach (var i in referenceItems)
+            {
+                var v = LayoutInflater.Inflate(Resource.Layout.item_reference_full, null);
+                v.FindViewById<TextView>(Resource.Id.text_amount).Text = i.FormattedAmount;
+                v.FindViewById<TextView>(Resource.Id.text_currency).Text = i.CurrencyCode;
+                v.FindViewById<TextView>(Resource.Id.text_rate).Text = i.FormattedRate;
+                viewReference.AddView(v);
+            }
 
-				v.Click += (sender, e) =>
-				{
-					var intent = new Intent(this, typeof(AccountDetailActivity));
-					intent.PutExtra(AccountDetailActivity.ExtraAccountId, i.Id);
-					StartActivity(intent);
-				};
+            var enabledItems = AccountsGroupViewData.EnabledAccountsItems(_currency).ToList();
+            var viewEnabled = FindViewById<LinearLayout>(Resource.Id.view_enabled_accounts);
 
-				viewEnabled.AddView(v);
-			}
+            _sortAccountsName.Data = ViewData.AccountGroup.SortButtonsAccounts[0];
+            _sortAccountsAmount.Data = ViewData.AccountGroup.SortButtonsAccounts[1];
 
-			var disabledItems = AccountsGroupViewData.DisabledAccountsItems(_currency);
-			var viewDisabled = FindViewById<LinearLayout>(Resource.Id.view_disabled_accounts);
+            viewEnabled.RemoveAllViews();
 
-			_sortDisabledName.Data = ViewData.AccountGroup.SortButtonsAccounts[0];
-			_sortDisabledAmount.Data = ViewData.AccountGroup.SortButtonsAccounts[1];
+            foreach (var i in enabledItems)
+            {
+                var v = LayoutInflater.Inflate(Resource.Layout.item_account, null);
+                v.FindViewById<TextView>(Resource.Id.text_amount).Text = i.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
+                v.FindViewById<TextView>(Resource.Id.text_name).Text = i.Name;
 
-			viewDisabled.RemoveAllViews();
+                v.Click += (sender, e) =>
+                {
+                    var intent = new Intent(this, typeof(AccountDetailActivity));
+                    intent.PutExtra(AccountDetailActivity.ExtraAccountId, i.Id);
+                    StartActivity(intent);
+                };
 
-			foreach (var i in disabledItems)
-			{
-				var v = LayoutInflater.Inflate(Resource.Layout.item_account, null);
-				v.FindViewById<TextView>(Resource.Id.text_amount).Text = i.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
-				v.FindViewById<TextView>(Resource.Id.text_name).Text = i.Name;
+                viewEnabled.AddView(v);
+            }
 
-				v.Click += (sender, e) =>
-				{
-					var intent = new Intent(this, typeof(AccountDetailActivity));
-					intent.PutExtra(AccountDetailActivity.ExtraAccountId, i.Id);
+            var disabledItems = AccountsGroupViewData.DisabledAccountsItems(_currency).ToList();
+            var viewDisabled = FindViewById<LinearLayout>(Resource.Id.view_disabled_accounts);
 
-					StartActivity(intent);
-				};
+            _sortDisabledName.Data = ViewData.AccountGroup.SortButtonsAccounts[0];
+            _sortDisabledAmount.Data = ViewData.AccountGroup.SortButtonsAccounts[1];
 
-				viewDisabled.AddView(v);
-			}
+            viewDisabled.RemoveAllViews();
 
-			FindViewById(Resource.Id.view_accounts).Visibility = enabledItems.Any() ? ViewStates.Visible : ViewStates.Gone;
-			FindViewById(Resource.Id.view_disabled_accounts_container).Visibility = disabledItems.Any() ? ViewStates.Visible : ViewStates.Gone;
+            foreach (var i in disabledItems)
+            {
+                var v = LayoutInflater.Inflate(Resource.Layout.item_account, null);
+                v.FindViewById<TextView>(Resource.Id.text_amount).Text = i.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
+                v.FindViewById<TextView>(Resource.Id.text_name).Text = i.Name;
 
-			_swipeToRefresh.Refreshing = false;
-		}
-	}
+                v.Click += (sender, e) =>
+                {
+                    var intent = new Intent(this, typeof(AccountDetailActivity));
+                    intent.PutExtra(AccountDetailActivity.ExtraAccountId, i.Id);
+
+                    StartActivity(intent);
+                };
+
+                viewDisabled.AddView(v);
+            }
+
+            FindViewById(Resource.Id.view_accounts).Visibility = enabledItems.Any() ? ViewStates.Visible : ViewStates.Gone;
+            FindViewById(Resource.Id.view_disabled_accounts_container).Visibility = disabledItems.Any() ? ViewStates.Visible : ViewStates.Gone;
+
+            _swipeToRefresh.Refreshing = false;
+        }
+    }
 }
