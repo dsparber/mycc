@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Account.Repositories.Base;
@@ -18,7 +17,7 @@ using MyCC.Core.Settings;
 namespace MyCC.Ui.Android.Views.Activities
 {
     [Activity(Theme = "@style/MyCC")]
-    public class CurrencyPickerActivity : AppCompatActivity
+    public class CurrencyPickerActivity : MyccActivity
     {
         public const string ExtraOnlyAddressCurrencies = "onlyAddressCurrencies";
         public const string ExtraCurrency = "currency";

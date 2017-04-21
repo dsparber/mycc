@@ -4,7 +4,6 @@ using Android.App;
 using Android.Content.Res;
 using Android.OS;
 using Android.Support.V4.Widget;
-using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Settings;
@@ -18,7 +17,7 @@ using Fragment = Android.Support.V4.App.Fragment;
 namespace MyCC.Ui.Android.Views.Activities
 {
     [Activity(Label = "@string/AppName", Icon = "@drawable/ic_launcher", Theme = "@style/MyCC")]
-    public class MainActivity : AppCompatActivity
+    public class MainActivity : MyccActivity
     {
         private string[] _items;
         private DrawerLayout _drawerLayout;

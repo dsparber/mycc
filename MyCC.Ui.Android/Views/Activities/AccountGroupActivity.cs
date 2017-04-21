@@ -1,6 +1,5 @@
 ﻿using Android.App;
 using Android.OS;
-using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using MyCC.Ui.Android.Data.Get;
@@ -16,7 +15,7 @@ using Android.Content;
 namespace MyCC.Ui.Android.Views.Activities
 {
     [Activity(Theme = "@style/MyCC")]
-    public class AccountGroupActivity : AppCompatActivity
+    public class AccountGroupActivity : MyccActivity
     {
         public const string ExtraCurrencyId = "currencyId";
 

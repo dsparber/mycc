@@ -10,6 +10,16 @@
     <item name="colorButtonNormal">@color/colorPrimary</item>
   </style>
 
+  <style name="LockscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorPrimary</item>
+    <item name="android:colorBackground">@color/colorBackground</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowFullscreen">true</item>
+  </style>
+
   <style name="MyCC" parent="AppTheme" >
   </style>
 

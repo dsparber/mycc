@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Support.V7.App;
 using HockeyApp.Android;
 using HockeyApp.Android.Metrics;
+using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Messages;
@@ -36,6 +37,12 @@ namespace MyCC.Ui.Android.Views.Activities
             {
                 await ApplicationTasks.LoadEverything(() => { Messaging.Update.AllItems.Send(); });
             }
+
+#if DEBUG
+            ApplicationSettings.Pin = "1234";
+            ApplicationSettings.IsFingerprintEnabled = true;
+#endif
+
 
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
 

@@ -3,7 +3,6 @@ using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using MyCC.Ui.Android.Data.Get;
@@ -18,7 +17,7 @@ using MyCC.Core.Settings;
 namespace MyCC.Ui.Android.Views.Activities
 {
     [Activity(Theme = "@style/MyCC")]
-    public class AccountDetailActivity : AppCompatActivity
+    public class AccountDetailActivity : MyccActivity
     {
         public const string ExtraAccountId = "account";
 

@@ -3,7 +3,6 @@ using System.Globalization;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Account.Models.Base;
@@ -18,7 +17,7 @@ namespace MyCC.Ui.Android.Views.Activities
 {
     [Activity(Label = "@string/Editing", Theme = "@style/MyCC")]
 
-    public class EditAccountActivity : AppCompatActivity
+    public class EditAccountActivity : MyccActivity
     {
         private const int RequestCodeCurrency = 1;
 

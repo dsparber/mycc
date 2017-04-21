@@ -2,7 +2,6 @@
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.View;
-using Android.Support.V7.App;
 using Android.Views;
 using MyCC.Core.Currency.Model;
 using MyCC.Ui.Android.Data.Add;
@@ -14,7 +13,7 @@ using MyCC.Ui.Android.Views.Fragments.AddSource;
 namespace MyCC.Ui.Android.Views.Activities
 {
     [Activity(Label = "@string/AddSource", Theme = "@style/MyCC")]
-    public class AddSourceActivity : AppCompatActivity
+    public class AddSourceActivity : MyccActivity
     {
         private AddSourcePagerAdapter _pagerAdapter;
         private ViewPager _viewPager;

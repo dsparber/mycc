@@ -1,7 +1,6 @@
 ﻿using System;
 using Android.App;
 using Android.OS;
-using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Currency.Model;
@@ -16,7 +15,7 @@ using Android.Support.V4.Widget;
 namespace MyCC.Ui.Android.Views.Activities
 {
     [Activity(Theme = "@style/MyCC")]
-    public class CoinInfoActivity : AppCompatActivity
+    public class CoinInfoActivity : MyccActivity
     {
         public const string ExtraCurrency = "currency";
 

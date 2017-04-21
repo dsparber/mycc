@@ -152,4 +152,7 @@
   <string name="Value">Value</string>
   <string name="VerifyInput">Please verify your input!</string>
   <string name="Version">Version</string>
+  <string name="PinWrong">Wrong PIN entered</string>
+  <string name="fingerprint_hint">Touch sensor</string>
+  <string name="AuthenticationFailed">Authentication failed</string>
 </resources>
