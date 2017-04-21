@@ -57,6 +57,9 @@ namespace MyCC.Ui.Android.Views.Activities
 
             var tabLayout = FindViewById<TabLayout>(Resource.Id.sliding_tabs);
             tabLayout.SetupWithViewPager(_viewPager);
+
+            var activityRootView = FindViewById(Resource.Id.view_root);
+            activityRootView.ViewTreeObserver.GlobalLayout += (sender, args) => SupportFragmentManager.SetFragmentVisibility(_header, activityRootView.Height > this.DpToPx(480));
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

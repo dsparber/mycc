@@ -5,19 +5,20 @@
     android:fillViewport="true">
   <LinearLayout
       android:orientation="vertical"
+      android:layout_gravity="center_vertical"
       android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
       android:padding="@dimen/abc_action_bar_content_inset_material">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp">
+        android:layout_height="wrap_content" >
       <ImageView
           android:src="@drawable/ic_value"
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
-          android:padding="8dp" />
+          android:padding="8dp"/>
       <EditText
           android:layout_width="match_parent"
           android:layout_height="match_parent"
@@ -31,8 +32,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:layout_height="wrap_content">
       <ImageView
           android:src="@drawable/ic_currency"
           android:layout_width="wrap_content"
@@ -52,8 +52,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:layout_height="wrap_content">
       <ImageView
           android:src="@drawable/ic_label"
           android:layout_width="wrap_content"
@@ -62,6 +61,7 @@
       <AutoCompleteTextView
           android:id="@+id/text_name"
           android:maxLines="1"
+          android:inputType="text"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:hint="@string/Name" />

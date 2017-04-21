@@ -201,6 +201,7 @@
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\SQLiteConnectionAndroid.cs" />
     <Compile Include="Helpers\TextEditHelper.cs" />
+    <Compile Include="Helpers\UiHelper.cs" />
     <Compile Include="Views\Activities\AccountDetailActivity.cs" />
     <Compile Include="Views\Activities\CoinInfoActivity.cs" />
     <Compile Include="Views\Activities\CurrencyPickerActivity.cs" />
@@ -296,6 +297,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\activity_account_group.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\activity_edit_account.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\activity_edit_source.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

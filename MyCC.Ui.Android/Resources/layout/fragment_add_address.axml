@@ -7,12 +7,12 @@
       android:orientation="vertical"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
+      android:layout_marginTop="16dp"
       android:padding="@dimen/abc_action_bar_content_inset_material">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp">
+        android:layout_height="wrap_content">
       <ImageView
           android:src="@drawable/ic_id_card"
           android:layout_width="wrap_content"
@@ -22,14 +22,14 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:id="@+id/text_address"
-          android:lines="2"
+          android:maxLines="1"
+          android:inputType="text"
           android:hint="@string/Address" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:layout_height="wrap_content">
       <ImageView
           android:src="@drawable/ic_currency"
           android:layout_width="wrap_content"
@@ -49,8 +49,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:layout_height="wrap_content">
       <ImageView
           android:src="@drawable/ic_label"
           android:layout_width="wrap_content"
@@ -61,6 +60,7 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:maxLines="1"
+          android:inputType="text"
           android:hint="@string/Name" />
     </LinearLayout>
   </LinearLayout>

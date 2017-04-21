@@ -7,12 +7,12 @@
       android:orientation="vertical"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
+      android:layout_marginTop="16dp"
       android:padding="@dimen/abc_action_bar_content_inset_material">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp">
+        android:layout_height="wrap_content">
       <ImageView
           android:src="@drawable/ic_key"
           android:layout_width="wrap_content"
@@ -21,15 +21,15 @@
       <EditText
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:lines="2"
+          android:maxLines="1"
+          android:inputType="text"
           android:id="@+id/text_key"
           android:hint="@string/BittrexKey" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:layout_height="wrap_content">
       <ImageView
           android:src="@drawable/ic_lock"
           android:layout_width="wrap_content"
@@ -38,7 +38,8 @@
       <EditText
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:lines="2"
+          android:maxLines="1"
+          android:inputType="text"
           android:id="@+id/text_secret"
           android:hint="@string/BittrexSecret"
           android:password="false" />
@@ -46,8 +47,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:layout_height="wrap_content">
       <ImageView
           android:src="@drawable/ic_label"
           android:layout_width="wrap_content"
