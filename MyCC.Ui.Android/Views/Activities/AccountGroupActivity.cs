@@ -98,7 +98,9 @@ namespace MyCC.Ui.Android.Views.Activities
             var viewReference = FindViewById<LinearLayout>(Resource.Id.view_reference);
 
             _sortReferenceAmount.Data = ViewData.AccountGroup.SortButtonsReference[0];
+            _sortAccountsAmount.First = true;
             _sortReferenceCurrency.Data = ViewData.AccountGroup.SortButtonsReference[1];
+            _sortReferenceCurrency.Last = true;
 
             viewReference.RemoveAllViews();
 
@@ -115,6 +117,7 @@ namespace MyCC.Ui.Android.Views.Activities
             var viewEnabled = FindViewById<LinearLayout>(Resource.Id.view_enabled_accounts);
 
             _sortAccountsName.Data = ViewData.AccountGroup.SortButtonsAccounts[0];
+            _sortAccountsName.First = true;
             _sortAccountsAmount.Data = ViewData.AccountGroup.SortButtonsAccounts[1];
 
             viewEnabled.RemoveAllViews();
@@ -139,6 +142,7 @@ namespace MyCC.Ui.Android.Views.Activities
             var viewDisabled = FindViewById<LinearLayout>(Resource.Id.view_disabled_accounts);
 
             _sortDisabledName.Data = ViewData.AccountGroup.SortButtonsAccounts[0];
+            _sortDisabledName.First = true;
             _sortDisabledAmount.Data = ViewData.AccountGroup.SortButtonsAccounts[1];
 
             viewDisabled.RemoveAllViews();

@@ -59,7 +59,7 @@
             <TextView
                 android:text=":"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
           </LinearLayout>
           <TextView
               android:id="@+id/text_type" />
@@ -74,7 +74,7 @@
             <TextView
                 android:text=":"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
           </LinearLayout>
           <TextView
               android:id="@+id/text_source" />
@@ -112,19 +112,19 @@
               android:id="@+id/button_no_sort"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:layout_weight="0.3" />
+              android:layout_weight="0.2" />
           <fragment
               android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
               android:id="@+id/button_value_sort"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:layout_weight="1" />
+              android:layout_weight="1.1" />
           <fragment
               android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
               android:id="@+id/button_currency_sort"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:layout_weight="0.6" />
+              android:layout_weight="0.7" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

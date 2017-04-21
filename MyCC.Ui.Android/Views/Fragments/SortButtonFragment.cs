@@ -5,6 +5,7 @@ using Android.Views;
 using Android.Widget;
 using MyCC.Core.Types;
 using MyCC.Ui.Android.Data.Get;
+using MyCC.Ui.Android.Helpers;
 
 namespace MyCC.Ui.Android.Views.Fragments
 {
@@ -25,6 +26,15 @@ namespace MyCC.Ui.Android.Views.Fragments
         {
             get { return _textView.Text; }
             set { _textView.Text = value; }
+        }
+
+        public bool First
+        {
+            set { _textView.SetPadding((value ? 24 : 8).DpToPx(), 8.DpToPx(), 4.DpToPx(), 8.DpToPx()); }
+        }
+        public bool Last
+        {
+            set { _imageView.SetPadding(0, 0, (value ? 24 : 8).DpToPx(), 0); }
         }
 
         private SortDirection? _direction;

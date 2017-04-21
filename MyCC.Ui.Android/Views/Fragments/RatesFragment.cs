@@ -121,6 +121,7 @@ namespace MyCC.Ui.Android.Views.Fragments
         private static void SetSortButtons(IReadOnlyList<SortButtonItem> sortData, SortButtonFragment sortCurrency, SortButtonFragment sortValue)
         {
             sortCurrency.Data = sortData[0];
+            sortCurrency.First = true;
             sortValue.Data = sortData[1];
         }
 

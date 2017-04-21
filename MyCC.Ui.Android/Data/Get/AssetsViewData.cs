@@ -66,22 +66,32 @@ namespace MyCC.Ui.Android.Data.Get
         {
             Func<Money, Money> getReference = m => new Money(m.Amount * (ExchangeRateHelper.GetRate(m.Currency, c)?.Rate ?? 0), c);
 
-            var items = AccountStorage.AccountsGroupedByCurrency.Select(group =>
+            var items = AccountStorage.AccountsGroupedByCurrency.ToList();
+            var enabled = items.Select(group =>
             {
                 var money = new Money(group.Sum(a => a.IsEnabled ? a.Money.Amount : 0), group.Key);
-                return new AssetItem(money, getReference(money));
-            }).ToList();
+                return new AssetItem(money, getReference(money), true);
+            }).Where(i => i.Value.Amount > 0).ToList();
 
-            return ApplySort(items);
+            var disabled = items.Select(group =>
+            {
+                var money = new Money(group.Sum(a => a.IsEnabled ? 0 : a.Money.Amount), group.Key);
+                return new AssetItem(money, getReference(money), false);
+            }).Where(i => i.Value.Amount > 0 && !enabled.Any(x => x.Value.Currency.Equals(i.Value.Currency))).ToList();
+
+            return ApplySort(enabled, disabled);
         });
 
-        private static List<AssetItem> ApplySort(IEnumerable<AssetItem> items)
+        private static List<AssetItem> ApplySort(IEnumerable<AssetItem> enabledItems, IEnumerable<AssetItem> disabledItems)
         {
             var alphabetical = SortOrder == SortOrder.Alphabetical;
             var byValue = SortOrder == SortOrder.ByValue;
 
-            return items.OrderByWithDirection(r => alphabetical ? r.CurrencyCode as object : byValue ? r.ReferenceValue.Amount : r.Value.Amount,
-                    SortDirection == SortDirection.Ascending).ToList();
+            Func<AssetItem, object> sortLambda = r => alphabetical ? r.CurrencyCode as object : byValue ? r.ReferenceValue.Amount : r.Value.Amount;
+
+            return enabledItems.OrderByWithDirection(sortLambda, SortDirection == SortDirection.Ascending)
+                .Concat(disabledItems.OrderByWithDirection(sortLambda, SortDirection == SortDirection.Ascending))
+                .ToList();
         }
 
         private Dictionary<Currency, List<SortButtonItem>> LoadSortButtons() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c => new List<SortButtonItem>
@@ -118,7 +128,7 @@ namespace MyCC.Ui.Android.Data.Get
 
         private void SortAndNotify()
         {
-            Items = ApplicationSettings.MainCurrencies.ToDictionary(c => c, c => ApplySort(Items[c]));
+            Items = ApplicationSettings.MainCurrencies.ToDictionary(c => c, c => ApplySort(Items[c].Where(i => i.Enabled), Items[c].Where(i => !i.Enabled)));
             SortButtons = LoadSortButtons();
             Messaging.UiUpdate.AssetsTable.Send();
         }

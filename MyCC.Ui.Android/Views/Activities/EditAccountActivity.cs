@@ -45,7 +45,7 @@ namespace MyCC.Ui.Android.Views.Activities
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
             var accountId = Intent?.GetIntExtra(ExtraAccountId, -1) ?? -1;
-            if (accountId == -1) throw new System.NullReferenceException("The account id needs to be specified and passed with the intent!");
+            if (accountId == -1) throw new NullReferenceException("The account id needs to be specified and passed with the intent!");
 
             _account = AccountStorage.Instance.AllElements.Find(a => a.Id == accountId);
 
@@ -93,7 +93,7 @@ namespace MyCC.Ui.Android.Views.Activities
             };
 
             var activityRootView = FindViewById(Resource.Id.view_root);
-            activityRootView.ViewTreeObserver.GlobalLayout += (sender, args) => SupportFragmentManager.SetFragmentVisibility(_header, activityRootView.Height > this.DpToPx(480));
+            activityRootView.ViewTreeObserver.GlobalLayout += (sender, args) => SupportFragmentManager.SetFragmentVisibility(_header, activityRootView.Height > 480.DpToPx());
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)

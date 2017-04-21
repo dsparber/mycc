@@ -59,7 +59,7 @@ namespace MyCC.Ui.Android.Views.Activities
             tabLayout.SetupWithViewPager(_viewPager);
 
             var activityRootView = FindViewById(Resource.Id.view_root);
-            activityRootView.ViewTreeObserver.GlobalLayout += (sender, args) => SupportFragmentManager.SetFragmentVisibility(_header, activityRootView.Height > this.DpToPx(480));
+            activityRootView.ViewTreeObserver.GlobalLayout += (sender, args) => SupportFragmentManager.SetFragmentVisibility(_header, activityRootView.Height > 480.DpToPx());
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

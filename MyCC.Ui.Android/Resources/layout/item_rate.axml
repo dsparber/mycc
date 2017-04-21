@@ -3,32 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff">
-    <TextView
-        android:id="@+id/text_currency"
-        android:padding="8dp"
-        android:layout_width="0dp"
-        android:layout_weight="0.7"
+  <TextView
+      android:id="@+id/text_currency"
+       android:paddingLeft="24dp"
+      android:paddingRight="8dp"
+      android:paddingTop="8dp"
+      android:paddingBottom="8dp"
+      android:layout_width="0dp"
+      android:layout_weight="0.7"
+      android:layout_height="wrap_content"
+      android:typeface="monospace"
+      android:textColor="@color/primary_text_default_material_light" />
+  <TextView
+      android:id="@+id/text_reference"
+      android:gravity="end"
+      android:padding="8dp"
+      android:layout_width="0dp"
+      android:layout_weight="1.1"
+      android:layout_height="wrap_content"
+      android:typeface="monospace"
+      android:textColor="@color/primary_text_default_material_light" />
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_weight="0.2"
+      android:layout_height="match_parent"
+      android:background="#fff">
+    <ImageView
+        android:src="@drawable/ic_arrow_right"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:typeface="monospace"
-        android:textColor="@color/primary_text_default_material_light" />
-    <TextView
-        android:id="@+id/text_reference"
-        android:gravity="end"
-        android:padding="8dp"
-        android:layout_width="0dp"
-        android:layout_weight="1.1"
-        android:layout_height="wrap_content"
-        android:typeface="monospace"
-        android:textColor="@color/primary_text_default_material_light" />
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="0.2"
-        android:layout_height="match_parent"
-        android:background="#fff">
-        <ImageView
-            android:src="@drawable/ic_arrow_right"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </LinearLayout>
+        android:layout_gravity="center" />
+  </LinearLayout>
 </LinearLayout>

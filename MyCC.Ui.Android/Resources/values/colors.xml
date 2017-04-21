@@ -6,4 +6,5 @@
   <color name="colorBackground">#eeeff2</color>
   <color name="colorDivider">#ccc</color>
   <color name="colorBackgroundTableHeader">#eee</color>
+  <color name="colorDisabled">#aaa</color>
 </resources>

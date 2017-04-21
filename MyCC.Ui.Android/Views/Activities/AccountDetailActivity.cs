@@ -125,7 +125,9 @@ namespace MyCC.Ui.Android.Views.Activities
             var view = FindViewById<LinearLayout>(Resource.Id.view_reference);
 
             _sortAmount.Data = ViewData.AccountDetail.SortButtons[0];
+            _sortAmount.First = true;
             _sortCurrency.Data = ViewData.AccountDetail.SortButtons[1];
+            _sortCurrency.Last = true;
 
             view.RemoveAllViews();
 

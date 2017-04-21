@@ -12,9 +12,9 @@
       android:paddingTop="8dp">
     <TextView
         android:text="x"
-        android:gravity="center"
+        android:paddingLeft="24dp"
         android:layout_width="0dp"
-        android:layout_weight="0.3"
+        android:layout_weight="0.2"
         android:layout_height="wrap_content"
         android:textColor="@color/secondary_text_default_material_light"
         android:typeface="monospace" />
@@ -22,14 +22,14 @@
         android:id="@+id/text_rate"
         android:gravity="end"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.1"
         android:layout_height="wrap_content"
         android:paddingEnd="8dp"
         android:textColor="@color/secondary_text_default_material_light"
         android:typeface="monospace" />
     <TextView
         android:layout_width="0dp"
-        android:layout_weight="0.6"
+        android:layout_weight="0.7"
         android:layout_height="wrap_content" />
   </LinearLayout>
   <LinearLayout
@@ -40,9 +40,9 @@
       android:paddingBottom="8dp">
     <TextView
         android:text="="
-        android:gravity="center"
+        android:paddingLeft="24dp"
         android:layout_width="0dp"
-        android:layout_weight="0.3"
+        android:layout_weight="0.2"
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text_default_material_light"
         android:typeface="monospace" />
@@ -50,7 +50,7 @@
         android:id="@+id/text_amount"
         android:gravity="end"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.1"
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text_default_material_light"
         android:paddingEnd="8dp"
@@ -58,10 +58,11 @@
     <TextView
         android:id="@+id/text_currency"
         android:layout_width="0dp"
-        android:layout_weight="0.6"
+        android:layout_weight="0.7"
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text_default_material_light"
         android:paddingStart="8dp"
+        android:paddingEnd="24dp"
         android:typeface="monospace" />
   </LinearLayout>
 </LinearLayout>
