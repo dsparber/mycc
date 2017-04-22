@@ -12,7 +12,7 @@ namespace MyCC.Ui.Android.Views.Activities
         private static int _runningActivities;
         private static ShakeRecognizer _shakeRecognizer;
         private static DateTime _lastStop;
-        protected static bool Locked = true;
+        protected static bool Locked = ApplicationSettings.IsPinSet;
 
         protected override void OnStart()
         {
@@ -42,6 +42,8 @@ namespace MyCC.Ui.Android.Views.Activities
             {
                 OnShake = () =>
                 {
+                    if (!ApplicationSettings.IsPinSet) return;
+
                     Locked = true;
                     var intent = new Intent(this, typeof(PasswordActivity));
                     intent.SetFlags(ActivityFlags.NoAnimation);
