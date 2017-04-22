@@ -56,6 +56,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 {
                     if (ApplicationSettings.IsPinValid(_editPin.Text))
                     {
+                        Locked = false;
                         Finish();
                     }
                     else
@@ -98,6 +99,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 {
                     dialog.Dismiss();
                     _cancellationSignal.Cancel();
+                    Locked = false;
                     Finish();
                 },
                 OnError = () => dialog.AlertError(this)
@@ -134,5 +136,9 @@ namespace MyCC.Ui.Android.Views.Activities
             }
         }
 
+        public override void OnBackPressed()
+        {
+            // Ignore
+        }
     }
 }
