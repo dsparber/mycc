@@ -101,7 +101,10 @@ namespace MyCC.Ui.Android.Views.Activities
             RunOnUiThread(() =>
             {
                 _adapter.Clear();
-                _adapter.AddAll(currencies);
+                if (currencies != null && currencies.Any())
+                {
+                    _adapter.AddAll(currencies);
+                }
                 _adapter.NotifyDataSetChanged();
                 _progressBar.Visibility = ViewStates.Gone;
             });
