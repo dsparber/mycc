@@ -24,11 +24,7 @@ namespace MyCC.Ui.Android.Data.Get
 
         public HeaderDataItem HeaderData(Currency currency)
         {
-            return new HeaderDataItem
-            {
-                MainText = currency.Name,
-                InfoText = new Money(ExchangeRateHelper.GetRate(currency, Currency.Btc)?.Rate ?? 0, Currency.Btc).ToString8Digits()
-            };
+            return new HeaderDataItem(currency.Name, new Money(ExchangeRateHelper.GetRate(currency, Currency.Btc)?.Rate ?? 0, Currency.Btc).ToString8Digits());
         }
 
         public CoinInfoItem CoinInfo(Currency currency)

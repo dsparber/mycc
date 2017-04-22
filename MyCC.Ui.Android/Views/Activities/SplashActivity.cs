@@ -5,7 +5,6 @@ using Android.OS;
 using Android.Support.V7.App;
 using HockeyApp.Android;
 using HockeyApp.Android.Metrics;
-using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Messages;

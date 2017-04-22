@@ -18,6 +18,7 @@ namespace MyCC.Ui.Android.Views.Fragments
     public class AssetsGraphFragment : Fragment
     {
         private Currency _referenceCurrency;
+        private HeaderFragment _header;
 
         public AssetsGraphFragment(Currency referenceCurrency)
         {
@@ -50,12 +51,8 @@ namespace MyCC.Ui.Android.Views.Fragments
             webView.LoadUrl("file:///android_asset/pieChart.html");
 
             var headerData = ViewData.AssetsGraph.Headers?[_referenceCurrency];
-            if (headerData != null)
-            {
-                var header = (HeaderFragment)ChildFragmentManager.FindFragmentById(Resource.Id.header_fragment);
-                header.MainText = headerData.MainText;
-                header.InfoText = headerData.InfoText;
-            }
+            _header = (HeaderFragment)ChildFragmentManager.FindFragmentById(Resource.Id.header_fragment);
+            _header.Data = headerData;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             refreshView.Refresh += (sender, args) => Messaging.Request.Assets.Send();
@@ -65,7 +62,11 @@ namespace MyCC.Ui.Android.Views.Fragments
                 if (Activity == null) return;
                 Activity.RunOnUiThread(() =>
                 {
-                    webView.EvaluateJavascript(ViewData.AssetsGraph.JsDataString(_referenceCurrency), null);
+                    if (!ViewData.AssetsGraph.IsReady) return;
+
+                    _header.Data = ViewData.AssetsGraph.Headers[_referenceCurrency];
+                    var js = ViewData.AssetsGraph.JsDataString(_referenceCurrency);
+                    webView.LoadUrl($"javascript:{js}", null);
                     SetVisibleElements(view);
                     refreshView.Refreshing = false;
                 });

@@ -15,7 +15,7 @@ namespace MyCC.Ui.Android.Data.Get
     public class AssetsGraphViewData
     {
         private Dictionary<Currency, AssetsGraphItem.Data[]> _items;
-        public Dictionary<Currency, HeaderData> Headers { get; private set; }
+        public Dictionary<Currency, CoinHeaderData> Headers { get; private set; }
 
         public bool IsDataAvailable => _items != null && _items.Count > 0 && _items.Min(i => i.Value.Length) > 0;
 
@@ -50,7 +50,7 @@ namespace MyCC.Ui.Android.Data.Get
 
         public bool IsReady => _items != null;
 
-        private static Dictionary<Currency, HeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
         {
             var amount = AccountStorage.EnabledAccounts.Sum(a => a.Money.Amount * ExchangeRateHelper.GetRate(a.Money.Currency, c)?.Rate ?? 0);
             var referenceMoney = new Money(amount, c);
@@ -60,7 +60,7 @@ namespace MyCC.Ui.Android.Data.Get
                 .Select(x => new Money(amount * ExchangeRateHelper.GetRate(c, x)?.Rate ?? 0, x))
                 .ToList();
 
-            return new HeaderData(referenceMoney, additionalRefs);
+            return new CoinHeaderData(referenceMoney, additionalRefs);
         });
 
         private static Dictionary<Currency, AssetsGraphItem.Data[]> LoadItems() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>

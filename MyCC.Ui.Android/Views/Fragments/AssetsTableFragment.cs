@@ -22,6 +22,8 @@ namespace MyCC.Ui.Android.Views.Fragments
     {
         private Currency _referenceCurrency;
         private List<AssetItem> _items;
+        private HeaderFragment _header;
+
 
         public AssetsTableFragment(Currency referenceCurrency)
         {
@@ -43,12 +45,8 @@ namespace MyCC.Ui.Android.Views.Fragments
             SetVisibleElements(view);
 
             var headerData = ViewData.Assets.Headers?[_referenceCurrency];
-            if (headerData != null)
-            {
-                var header = (HeaderFragment)ChildFragmentManager.FindFragmentById(Resource.Id.header_fragment);
-                header.MainText = headerData.MainText;
-                header.InfoText = headerData.InfoText;
-            }
+            _header = (HeaderFragment)ChildFragmentManager.FindFragmentById(Resource.Id.header_fragment);
+            _header.Data = headerData;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             refreshView.Refresh += (sender, args) => Messaging.Request.Assets.Send();
@@ -88,6 +86,9 @@ namespace MyCC.Ui.Android.Views.Fragments
                 if (Activity == null) return;
                 Activity.RunOnUiThread(() =>
                 {
+                    if (!ViewData.Assets.IsDataAvailable) return;
+
+                    _header.Data = ViewData.Assets.Headers[_referenceCurrency];
                     _items = ViewData.Assets.Items[_referenceCurrency];
                     SetSortButtons(ViewData.Assets.SortButtons?[_referenceCurrency], sortCurrency, sortAmount, sortValue);
                     adapter.Clear();

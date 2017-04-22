@@ -2,13 +2,11 @@
 using System.Threading.Tasks;
 using Android.App;
 using Android.OS;
-using Android.Security.Keystore;
 using Android.Support.V4.Hardware.Fingerprint;
 using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
 using Java.Lang;
-using Javax.Crypto;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Views.Dialogs;
 using CancellationSignal = Android.Support.V4.OS.CancellationSignal;

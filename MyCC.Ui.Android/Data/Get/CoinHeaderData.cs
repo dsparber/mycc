@@ -5,15 +5,15 @@ using MyCC.Core.Settings;
 
 namespace MyCC.Ui.Android.Data.Get
 {
-    public class HeaderData
+    public class CoinHeaderData : HeaderDataItem
     {
-        public string MainText => _referenceMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
-        public string InfoText => string.Join(" / ", _additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney)));
+        public override string MainText => _referenceMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
+        public override string InfoText => string.Join(" / ", _additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney)));
 
         private readonly Money _referenceMoney;
         private readonly List<Money> _additionalReferences;
 
-        public HeaderData(Money referenceMoney, List<Money> additionalReferences)
+        public CoinHeaderData(Money referenceMoney, List<Money> additionalReferences) : base(null, null)
         {
             _referenceMoney = referenceMoney;
             _additionalReferences = additionalReferences.OrderBy(m => m.Currency.Code).ToList();

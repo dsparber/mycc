@@ -15,8 +15,8 @@ namespace MyCC.Ui.Android.Views.Fragments
         {
             set
             {
-                MainText = value.MainText;
-                InfoText = value.InfoText;
+                MainText = value?.MainText ?? MainText;
+                InfoText = value?.InfoText ?? InfoText;
             }
         }
 
