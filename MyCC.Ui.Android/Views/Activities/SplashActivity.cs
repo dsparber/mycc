@@ -38,12 +38,6 @@ namespace MyCC.Ui.Android.Views.Activities
                 await ApplicationTasks.LoadEverything(() => { Messaging.Update.AllItems.Send(); });
             }
 
-#if DEBUG
-            ApplicationSettings.Pin = "1234";
-            ApplicationSettings.IsFingerprintEnabled = true;
-#endif
-
-
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
 
             if (ConnectivityStatus.IsConnected) await ApplicationTasks.FetchCurrenciesAndAvailableRates();

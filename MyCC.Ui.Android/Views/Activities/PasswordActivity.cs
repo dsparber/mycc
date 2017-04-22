@@ -75,23 +75,7 @@ namespace MyCC.Ui.Android.Views.Activities
         {
             _cancellationSignal = new CancellationSignal();
 
-            const string keyName = "MyccFingerprintKey";
-
-            var keyGenerator = KeyGenerator.GetInstance(KeyProperties.KeyAlgorithmAes);
-            // ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
-            keyGenerator.Init(new KeyGenParameterSpec.Builder(keyName, KeyStorePurpose.Decrypt | KeyStorePurpose.Encrypt)
-            .SetBlockModes(KeyProperties.BlockModeCbc).SetUserAuthenticationRequired(true).SetEncryptionPaddings(KeyProperties.EncryptionPaddingPkcs7)
-            .Build());
-
-            var key = keyGenerator.GenerateKey();
-
-            var cipher = Cipher.GetInstance(KeyProperties.KeyAlgorithmAes + "/" + KeyProperties.BlockModeCbc + "/" + KeyProperties.EncryptionPaddingPkcs7);
-            cipher.Init(CipherMode.EncryptMode, key);
-
-            var dialog = new FingerprintDialog
-            {
-                OnCancel = () => _cancellationSignal.Cancel()
-            };
+            var dialog = new FingerprintDialog { OnCancel = () => _cancellationSignal.Cancel() };
 
             var callback = new CallbackManager
             {
@@ -108,7 +92,7 @@ namespace MyCC.Ui.Android.Views.Activities
             dialog.Show(SupportFragmentManager, "FingerprintDialog");
 
             var fingerprintManager = FingerprintManagerCompat.From(this);
-            fingerprintManager.Authenticate(new FingerprintManagerCompat.CryptoObject(cipher), 0, _cancellationSignal, callback, null);
+            fingerprintManager.Authenticate(null, 0, _cancellationSignal, callback, null);
         }
 
         private class CallbackManager : FingerprintManagerCompat.AuthenticationCallback
