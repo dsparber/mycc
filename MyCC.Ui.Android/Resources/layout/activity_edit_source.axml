@@ -23,7 +23,8 @@
       <LinearLayout
           android:orientation="horizontal"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+          android:layout_height="wrap_content"
+          android:id="@+id/view_address">
         <ImageView
             android:src="@drawable/ic_id_card"
             android:layout_width="wrap_content"
@@ -40,7 +41,8 @@
       <LinearLayout
           android:orientation="horizontal"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+          android:layout_height="wrap_content"
+          android:id="@+id/view_currency">
         <ImageView
             android:src="@drawable/ic_currency"
             android:layout_width="wrap_content"

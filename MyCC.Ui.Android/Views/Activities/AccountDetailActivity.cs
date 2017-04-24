@@ -70,9 +70,18 @@ namespace MyCC.Ui.Android.Views.Activities
         {
             if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Edit)))
             {
-                var intent = new Intent(this, typeof(EditAccountActivity));
-                intent.PutExtra(EditAccountActivity.ExtraAccountId, _account.Id);
-                StartActivity(intent);
+                if (_account is LocalAccount)
+                {
+                    var intent = new Intent(this, typeof(EditAccountActivity));
+                    intent.PutExtra(EditAccountActivity.ExtraAccountId, _account.Id);
+                    StartActivity(intent);
+                }
+                else
+                {
+                    var intent = new Intent(this, typeof(EditSourceActivity));
+                    intent.PutExtra(EditSourceActivity.ExtraRepositoryId, AccountStorage.RepositoryOf(_account).Id);
+                    StartActivity(intent);
+                }
             }
             else
             {
@@ -83,11 +92,10 @@ namespace MyCC.Ui.Android.Views.Activities
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            if (_account is LocalAccount)
-            {
-                menu.Add(0, 0, 0, Resources.GetString(Resource.String.Edit))
-               .SetIcon(Resource.Drawable.ic_edit).SetShowAsAction(ShowAsAction.Always);
-            }
+
+            menu.Add(0, 0, 0, Resources.GetString(Resource.String.Edit))
+           .SetIcon(Resource.Drawable.ic_edit).SetShowAsAction(ShowAsAction.Always);
+
 
             return true;
         }
@@ -110,7 +118,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
 
             FindViewById<TextView>(Resource.Id.text_source).Text = ViewData.AccountDetail.AccountSource(_account);
-            FindViewById<TextView>(Resource.Id.text_address).Text = ViewData.AccountDetail.AccountAddress(_account);
+            FindViewById<TextView>(Resource.Id.text_address).Text = ViewData.AccountDetail.AccountAddressString(_account);
 
             FindViewById(Resource.Id.label_source).Visibility = show(ViewData.AccountDetail.ShowAccountSource(_account));
             FindViewById(Resource.Id.text_source).Visibility = show(ViewData.AccountDetail.ShowAccountSource(_account));

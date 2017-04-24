@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using MyCC.Core.Account.Database;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
@@ -15,15 +14,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
     public class BlockExpertsAccountRepository : AddressAndCoinAccountRepository
     {
         public override string DescriptionName => I18N.BlockExperts;
-        public override IEnumerable<Currency.Model.Currency> SupportedCurrencies
-        {
-            get
-            {
-                var id = CurrencyStorage.Instance.RepositoryOfType<BlockExpertsCurrencyRepository>().Id;
-                var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == id).Select(e => e.Code);
-                return CurrencyStorage.Instance.AllElements.Where(c => codes.Any(x => x.Equals(c?.Code)));
-            }
-        }
+        public override IEnumerable<Currency.Model.Currency> SupportedCurrencies => CurrencyStorage.CurrenciesOf<BlockExpertsCurrencyRepository>();
 
         protected override Func<string, decimal> Balance => httpContent => decimal.Parse(httpContent, CultureInfo.InvariantCulture);
         protected override Uri Url => new Uri($"https://www.blockexperts.com/api?coin={Currency.Code.ToLower()}&action=getbalance&address={Address}");

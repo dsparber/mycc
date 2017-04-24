@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Database;
@@ -17,15 +16,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
     public class CryptoIdAccountRepository : AddressAndCoinAccountRepository
     {
         public override string DescriptionName => I18N.CryptoId;
-        public override IEnumerable<Currency.Model.Currency> SupportedCurrencies
-        {
-            get
-            {
-                var id = CurrencyStorage.Instance.RepositoryOfType<CryptoIdCurrencyRepository>().Id;
-                var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == id).Select(e => e.Code);
-                return CurrencyStorage.Instance.AllElements.Where(c => codes.Any(x => x.Equals(c?.Code)));
-            }
-        }
+        public override IEnumerable<Currency.Model.Currency> SupportedCurrencies => CurrencyStorage.CurrenciesOf<CryptoIdCurrencyRepository>();
 
         public override async Task<bool> Test()
         {

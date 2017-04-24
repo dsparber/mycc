@@ -14,8 +14,8 @@ namespace MyCC.Core.Currency.Repositories
         {
             get
             {
-                var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == Id).Select(e => e.Code);
-                return CurrencyStorage.Instance.AllElements.Where(c => codes.Any(x => x.Equals(c?.Code))).ToList();
+                var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e?.ParentId == Id).Select(e => e.Code);
+                return CurrencyStorage.Instance.AllElements.Where(c => codes.Any(x => string.Equals(x, c?.Code))).ToList();
             }
         }
     }

@@ -201,11 +201,13 @@
     <Compile Include="Data\Get\ViewData.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\SQLiteConnectionAndroid.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\TextEditHelper.cs" />
     <Compile Include="Helpers\UiHelper.cs" />
     <Compile Include="Views\Activities\AccountDetailActivity.cs" />
     <Compile Include="Views\Activities\CoinInfoActivity.cs" />
     <Compile Include="Views\Activities\CurrencyPickerActivity.cs" />
+    <Compile Include="Views\Activities\EditSourceActivity.cs" />
     <Compile Include="Views\Activities\EditAccountActivity.cs" />
     <Compile Include="Views\Activities\MainActivity.cs" />
     <Compile Include="Messages\MessageTools.cs" />

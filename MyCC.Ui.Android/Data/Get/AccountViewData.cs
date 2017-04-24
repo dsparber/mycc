@@ -44,7 +44,7 @@ namespace MyCC.Ui.Android.Data.Get
 
         public bool ShowAccountSource(FunctionalAccount account) => AccountStorage.RepositoryOf(account) is AddressAccountRepository;
 
-        public string AccountAddress(FunctionalAccount account) => (AccountStorage.RepositoryOf(account) as AddressAccountRepository)?.Address;
+        public string AccountAddressString(FunctionalAccount account) => account is BlockchainXpubAccount ? "xpub" : (AccountStorage.RepositoryOf(account) as AddressAccountRepository)?.Address.MiddleTruncate();
 
         public bool ShowAccountAddress(FunctionalAccount account) => AccountStorage.RepositoryOf(account) is AddressAccountRepository;
 
