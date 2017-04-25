@@ -40,7 +40,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 TaskHelper.FetchMissingRates();
                 if (ApplicationSettings.AutoRefreshOnStartup && ConnectivityStatus.IsConnected)
                 {
-                    TaskHelper.UpdateAssets();
+                    TaskHelper.UpdateAllAssetsAndRates();
                 }
             });
         }

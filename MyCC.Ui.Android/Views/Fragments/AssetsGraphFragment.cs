@@ -55,7 +55,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             _header.Data = headerData;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
-            refreshView.Refresh += (sender, args) => Messaging.Request.Assets.Send();
+            refreshView.Refresh += (sender, args) => Messaging.Request.AllAssetsAndRates.Send();
 
             Messaging.UiUpdate.AssetsGraph.Subscribe(this, () =>
             {

@@ -5,6 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
   <fragment
+      android:name="MyCC.Ui.Android.Views.Fragments.ProgressFragment"
+      android:id="@+id/progress_fragment"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+  <fragment
       android:name="MyCC.Ui.Android.Views.Fragments.HeaderFragment"
       android:id="@+id/header_fragment"
       android:layout_width="match_parent"

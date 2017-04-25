@@ -13,10 +13,14 @@ namespace MyCC.Ui.Android.Views.Activities
         private static ShakeRecognizer _shakeRecognizer;
         private static DateTime _lastStop;
         protected static bool Locked = ApplicationSettings.IsPinSet;
+        public static MyccActivity CurrentInstance;
 
         protected override void OnStart()
         {
             base.OnStart();
+
+            CurrentInstance = this;
+
             var millis = DateTime.Now.Subtract(_lastStop).TotalMilliseconds;
             System.Diagnostics.Debug.WriteLine(millis);
             if (!(this is PasswordActivity))

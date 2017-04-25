@@ -63,11 +63,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
             _swipeToRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
 
-            _swipeToRefresh.Refresh += (sender, e) =>
-            {
-                Messaging.Request.Accounts.Send(_currency);
-                Messaging.Request.Rates.Send(_currency);
-            };
+            _swipeToRefresh.Refresh += (sender, e) => Messaging.Request.AccountsByCurrency.Send(_currency);
 
             SetData();
         }

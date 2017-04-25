@@ -230,6 +230,7 @@
     <Compile Include="Views\Fragments\AddSource\AddBittrexFragment.cs" />
     <Compile Include="Views\Fragments\AddSource\AddSourceFragment.cs" />
     <Compile Include="Views\Fragments\HeaderFragment.cs" />
+    <Compile Include="Views\Fragments\ProgressFragment.cs" />
     <Compile Include="Views\Fragments\SortButtonFragment.cs" />
     <Compile Include="Views\Fragments\ViewPagerFragment.cs" />
     <Compile Include="Views\Fragments\RatesFragment.cs" />
@@ -313,6 +314,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\activity_password.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_progress.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

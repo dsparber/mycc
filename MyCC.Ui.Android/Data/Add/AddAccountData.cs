@@ -27,9 +27,7 @@ namespace MyCC.Ui.Android.Data.Add
 
             await AccountStorage.Instance.Add(repository);
             await repository.FetchOnline();
-            Messaging.Request.MissingRates.Send();
-            Messaging.Update.Assets.Send();
-            Messaging.Update.Rates.Send(); // Because the rates view shows the currency of every account
+            Messaging.Request.DataForNewAccount.Send();
 
             return true;
         }
@@ -37,9 +35,7 @@ namespace MyCC.Ui.Android.Data.Add
         public static async Task Add(LocalAccount account)
         {
             await AccountStorage.Instance.LocalRepository.Add(account);
-            Messaging.Request.MissingRates.Send();
-            Messaging.Update.Assets.Send();
-            Messaging.Update.Rates.Send(); // Because the rates view shows the currency of every account
+            Messaging.Request.DataForNewAccount.Send();
         }
     }
 }

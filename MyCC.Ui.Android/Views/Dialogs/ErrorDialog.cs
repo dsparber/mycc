@@ -3,6 +3,7 @@ using System.Net;
 using Android.App;
 using MyCC.Core.Helpers;
 using MyCC.Ui.Android.Helpers;
+using MyCC.Ui.Android.Views.Activities;
 
 namespace MyCC.Ui.Android.Views.Dialogs
 {
@@ -24,7 +25,7 @@ namespace MyCC.Ui.Android.Views.Dialogs
             }
             e.LogError();
 
-            ((Activity)context).RunOnUiThread(() =>
+            MyccActivity.CurrentInstance.RunOnUiThread(() =>
             {
                 context.ShowInfoDialog(Resource.String.Error, messageId);
             });

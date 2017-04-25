@@ -50,7 +50,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             _header.Data = headerData;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
-            refreshView.Refresh += (sender, args) => Messaging.Request.Rates.Send();
+            refreshView.Refresh += (sender, args) => Messaging.Request.AllRates.Send();
 
             _items = ViewData.Rates.Items?[_referenceCurrency] ?? new List<RateItem>();
             var adapter = new RatesListAdapter(Context, _items);

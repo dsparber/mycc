@@ -55,11 +55,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
             _swipeToRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
 
-            _swipeToRefresh.Refresh += (sender, e) =>
-            {
-                Messaging.Request.CoinInfo.Send(_currency);
-                Messaging.Request.Rates.Send(_currency);
-            };
+            _swipeToRefresh.Refresh += (sender, e) => Messaging.Request.RateAndInfo.Send(_currency);
 
             LoadData();
         }
@@ -75,7 +71,7 @@ namespace MyCC.Ui.Android.Views.Activities
             var info = ViewData.CoinInfo.CoinInfo(_currency);
             if (info == null && ViewData.CoinInfo.CoinInfoFetchable(_currency) && ConnectivityStatus.IsConnected)
             {
-                Messaging.Request.CoinInfo.Send(_currency);
+                Messaging.Request.InfoForCurrency.Send(_currency);
             }
 
             SetCoinInfo(info);

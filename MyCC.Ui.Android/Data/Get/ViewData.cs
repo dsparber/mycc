@@ -41,16 +41,16 @@ namespace MyCC.Ui.Android.Data.Get
             });
 
 
-            Messaging.Request.Rates.Subscribe(this, TaskHelper.UpdateRates);
-            Messaging.Request.Rates.Subscribe(this, TaskHelper.UpdateRatesForAccount);
-            Messaging.Request.Rates.Subscribe(this, TaskHelper.UpdateRatesForCurrency);
+            Messaging.Request.AllRates.Subscribe(this, TaskHelper.UpdateAllRates);
+            Messaging.Request.AllAssetsAndRates.Subscribe(this, TaskHelper.UpdateAllAssetsAndRates);
 
-            Messaging.Request.Assets.Subscribe(this, TaskHelper.UpdateAssets);
-            Messaging.Request.MissingRates.Subscribe(this, () => TaskHelper.FetchMissingRates());
+            Messaging.Request.DataForNewAccount.Subscribe(this, TaskHelper.UpdateDataForNewAccount);
 
-            Messaging.Request.CoinInfo.Subscribe(this, TaskHelper.FetchCoinInfo);
-            Messaging.Request.Account.Subscribe(this, TaskHelper.UpdateAccount);
-            Messaging.Request.Accounts.Subscribe(this, TaskHelper.UpdateAccounts);
+            Messaging.Request.SingleAccount.Subscribe(this, TaskHelper.UpdateBalanceAndRatesForAccount);
+            Messaging.Request.AccountsByCurrency.Subscribe(this, TaskHelper.UpdateBalancesAndRatesForCurrency);
+
+            Messaging.Request.InfoForCurrency.Subscribe(this, TaskHelper.FetchCoinInfo);
+            Messaging.Request.RateAndInfo.Subscribe(this, TaskHelper.FetchCoinInfoAndRates);
         }
 
 

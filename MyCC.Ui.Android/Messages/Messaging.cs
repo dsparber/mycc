@@ -5,13 +5,15 @@
         // Request Data
         public static class Request
         {
-            public const string Rates = "RequestRates";
-            public const string MissingRates = "RequestMissingRates";
-            public const string Assets = "RequestAssets";
+            public const string AllRates = "RequestAllRates";
+            public const string AllAssetsAndRates = "RequestAllAssets";
 
-            public const string CoinInfo = "RequestCoinInfo";
-            public const string Account = "RequestAccount";
-            public const string Accounts = "RequestAccounts";
+            public const string DataForNewAccount = "RequestDataForNewAccount";
+
+            public const string AccountsByCurrency = "RequestAccountsByCurrency";
+            public const string RateAndInfo = "RequestCurrencyAndInfo";
+            public const string InfoForCurrency = "RequestInfoForCurrency";
+            public const string SingleAccount = "RequestSingleAccount";
         }
 
         // Update Data
@@ -20,6 +22,11 @@
             public static readonly string[] AllItems = { Rates, Assets };
             public const string Rates = "UpdateRateItems";
             public const string Assets = "UpdateAssets";
+        }
+
+        public static class Status
+        {
+            public const string Progress = "StatusProgress";
         }
 
 
