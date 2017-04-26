@@ -48,10 +48,10 @@ namespace MyCC.Forms.View.Components
         {
 
             var items = AccountStorage.AccountsGroupedByCurrency
-                        .Select(e => new Data(e, ApplicationSettings.BaseCurrency)).Where(d => d.value > 0)
+                        .Select(e => new Data(e, ApplicationSettings.SelectedAssetsCurrency)).Where(d => d.value > 0)
                         .OrderByDescending(d => d.value).ToArray();
 
-            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new[] { I18N.OneAccount, I18N.Accounts }, new[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, ApplicationSettings.BaseCurrency.Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString()));
+            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new[] { I18N.OneAccount, I18N.Accounts }, new[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, ApplicationSettings.SelectedAssetsCurrency.Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString()));
         }
 
         [DataContract]

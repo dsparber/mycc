@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
@@ -28,7 +28,7 @@ namespace MyCC.Forms.View.Components.Header
 
         public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false) : this()
         {
-            _currency = currency ?? ApplicationSettings.BaseCurrency;
+            _currency = currency ?? ApplicationSettings.SelectedAssetsCurrency;
             _useOnlyThisCurrency = useOnlyThisCurrency;
 
             UpdateView();

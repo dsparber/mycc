@@ -62,7 +62,7 @@ namespace MyCC.Core.Account.Storage
         public static int CurrenciesForGraph => AccountsGroupedByCurrency
             .Select(e => e.Select(a =>
             {
-                var rate = new ExchangeRate(e.Key, ApplicationSettings.BaseCurrency);
+                var rate = new ExchangeRate(e.Key, ApplicationSettings.SelectedAssetsCurrency);
                 rate = ExchangeRateHelper.GetRate(rate) ?? rate;
 
                 return a.IsEnabled ? a.Money.Amount * rate.Rate ?? 0 : 0;

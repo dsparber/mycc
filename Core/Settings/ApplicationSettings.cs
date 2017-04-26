@@ -47,7 +47,7 @@ namespace MyCC.Core.Settings
 
 		public static bool DataLoaded;
 
-		public static Currency.Model.Currency BaseCurrency
+		public static Currency.Model.Currency SelectedAssetsCurrency
 		{
 			get
 			{
@@ -61,7 +61,7 @@ namespace MyCC.Core.Settings
 				catch
 				{
 					currency = Currency.Model.Currency.Btc;
-					BaseCurrency = currency;
+					SelectedAssetsCurrency = currency;
 				}
 				return currency;
 			}
