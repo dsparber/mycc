@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -22,6 +23,8 @@ namespace MyCC.Ui.Android.Views.Fragments
         private Currency _referenceCurrency;
         private List<RateItem> _items;
         private HeaderFragment _header;
+        private FooterFragment _footerFragment;
+
 
         private const int RequestCodeCurrency = 1;
 
@@ -48,6 +51,9 @@ namespace MyCC.Ui.Android.Views.Fragments
             var headerData = ViewData.Rates.Headers?[_referenceCurrency];
             _header = (HeaderFragment)ChildFragmentManager.FindFragmentById(Resource.Id.header_fragment);
             _header.Data = headerData;
+
+            _footerFragment = (FooterFragment)ChildFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
+            _footerFragment.LastUpdate = ViewData.Rates.LastUpdate?[_referenceCurrency] ?? DateTime.MinValue;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             refreshView.Refresh += (sender, args) => Messaging.Request.AllRates.Send();
@@ -80,6 +86,7 @@ namespace MyCC.Ui.Android.Views.Fragments
                     if (!ViewData.Rates.IsDataAvailable) return;
 
                     _header.Data = headerData;
+                    _footerFragment.LastUpdate = ViewData.Rates.LastUpdate[_referenceCurrency];
                     _items = ViewData.Rates.Items[_referenceCurrency];
                     SetSortButtons(ViewData.Rates.SortButtons?[_referenceCurrency], sortCurrency, sortValue);
                     adapter.Clear();

@@ -27,6 +27,7 @@
 		public static class Status
 		{
 			public const string Progress = "StatusProgress";
+			public const string Network = "StatusNetwork";
 		}
 
 		// Settings changed
@@ -56,4 +57,3 @@
 
 	}
 }
-

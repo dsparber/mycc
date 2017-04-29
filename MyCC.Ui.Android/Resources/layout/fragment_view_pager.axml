@@ -17,6 +17,6 @@
       app:tabBackground="@drawable/tab_selector"
       android:layout_below="@id/pager"
       app:tabGravity="center"
-      android:layout_marginTop="-40dp"
+      android:layout_marginTop="-25dp"
       app:tabIndicatorHeight="0dp" />
 </RelativeLayout>

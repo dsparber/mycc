@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Android.Content;
@@ -14,11 +15,11 @@ using MyCC.Ui.Android.Messages;
 
 namespace MyCC.Ui.Android.Data.Get
 {
-    public class AccountViewData
+    public class AccountDetailViewData
     {
         private readonly Context _context;
 
-        public AccountViewData(Context context)
+        public AccountDetailViewData(Context context)
         {
             _context = context;
         }
@@ -48,7 +49,13 @@ namespace MyCC.Ui.Android.Data.Get
 
         public bool ShowAccountAddress(FunctionalAccount account) => AccountStorage.RepositoryOf(account) is AddressAccountRepository;
 
+        public static DateTime LastUpdate(FunctionalAccount account)
+        {
+            var accountTime = account.LastUpdate;
+            var ratesTime = AccountStorage.NeededRatesFor(account).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
 
+            return account is LocalAccount ? ratesTime : ratesTime < accountTime ? ratesTime : accountTime;
+        }
 
         public static IEnumerable<ReferenceValueItem> Items(Account account)
         {

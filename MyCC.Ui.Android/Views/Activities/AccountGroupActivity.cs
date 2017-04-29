@@ -11,6 +11,7 @@ using MyCC.Core.Currency.Model;
 using MyCC.Core.Currency.Storage;
 using System.Linq;
 using Android.Content;
+using Android.Support.Design.Widget;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -22,11 +23,10 @@ namespace MyCC.Ui.Android.Views.Activities
         private Currency _currency;
 
         private HeaderFragment _header;
-
         private SortButtonFragment _sortReferenceAmount, _sortReferenceCurrency,
         _sortAccountsName, _sortAccountsAmount, _sortDisabledName, _sortDisabledAmount;
-
         private SwipeRefreshLayout _swipeToRefresh;
+        private FooterFragment _footerFragment;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -46,7 +46,7 @@ namespace MyCC.Ui.Android.Views.Activities
             SupportActionBar.Title = $"\u2211 {_currency.Code}";
 
             _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
-            _header.Data = AccountsGroupViewData.HeaderData(_currency);
+            _footerFragment = (FooterFragment)SupportFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
 
 
             _sortReferenceAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
@@ -64,6 +64,8 @@ namespace MyCC.Ui.Android.Views.Activities
             _swipeToRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
 
             _swipeToRefresh.Refresh += (sender, e) => Messaging.Request.AccountsByCurrency.Send(_currency);
+
+            FindViewById<FloatingActionButton>(Resource.Id.button_add).Click += (sender, args) => StartActivity(new Intent(Application.Context, typeof(AddSourceActivity)));
 
             SetData();
         }
@@ -84,6 +86,7 @@ namespace MyCC.Ui.Android.Views.Activities
             }
 
             _header.Data = AccountsGroupViewData.HeaderData(_currency);
+            _footerFragment.LastUpdate = AccountsGroupViewData.LastUpdate(_currency);
 
             var money = AccountsGroupViewData.GetEnabledSum(_currency);
             FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(money.Amount == 1 ? Resource.String.IsEqualTo : Resource.String.AreEqualTo), money.ToStringTwoDigits(ApplicationSettings.RoundMoney));

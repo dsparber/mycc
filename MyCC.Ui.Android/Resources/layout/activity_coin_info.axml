@@ -11,12 +11,15 @@
   <fragment
       android:name="MyCC.Ui.Android.Views.Fragments.HeaderFragment"
       android:id="@+id/header_fragment"
+      android:layout_below="@id/progress_fragment"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
   <android.support.v4.widget.SwipeRefreshLayout
       android:id="@+id/swiperefresh"
       android:layout_width="fill_parent"
-      android:layout_height="fill_parent">
+      android:layout_below="@id/header_fragment"
+      android:layout_height="0dp"
+      android:layout_weight="1">
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -307,4 +310,9 @@
       </LinearLayout>
     </ScrollView>
   </android.support.v4.widget.SwipeRefreshLayout>
+  <fragment
+      android:name="MyCC.Ui.Android.Views.Fragments.FooterFragment"
+      android:id="@+id/footer_fragment"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
 </LinearLayout>

@@ -19,6 +19,8 @@ namespace MyCC.Ui.Android.Data.Get
         public Dictionary<Currency, List<RateItem>> Items { get; private set; }
         public Dictionary<Currency, CoinHeaderData> Headers { get; private set; }
         public Dictionary<Currency, List<SortButtonItem>> SortButtons { get; private set; }
+        public Dictionary<Currency, DateTime> LastUpdate { get; private set; }
+
 
         public bool IsDataAvailable => Items != null && Items.Count > 0 && Items.Min(i => i.Value.Count) > 0;
 
@@ -34,10 +36,23 @@ namespace MyCC.Ui.Android.Data.Get
             Items = LoadRateItems();
             Headers = LoadRateHeaders();
             SortButtons = LoadSortButtons();
+            LastUpdate = GetLastUpdate();
 
             Messaging.UiUpdate.RatesOverview.Send();
         }
 
+        private static Dictionary<Currency, DateTime> GetLastUpdate() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        {
+            return ApplicationSettings.WatchedCurrencies
+                .Concat(ApplicationSettings.AllReferenceCurrencies)
+                .Concat(AccountStorage.UsedCurrencies)
+                .Select(e => new ExchangeRate(c, e))
+                .SelectMany(ExchangeRateHelper.GetNeededRates)
+                .Distinct()
+                .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now)
+                .DefaultIfEmpty(DateTime.Now)
+                .Min();
+        });
 
 
         private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>

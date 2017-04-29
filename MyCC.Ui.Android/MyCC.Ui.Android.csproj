@@ -180,10 +180,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Get\CoinInfoItem.cs" />
-    <Compile Include="Data\Get\AccountViewData.cs" />
+    <Compile Include="Data\Get\AccountDetailViewData.cs" />
     <Compile Include="Data\Get\ReferenceValueItem.cs" />
     <Compile Include="Data\Get\AssetsGraphItem.cs" />
-    <Compile Include="Data\Get\AssetsGraphViewData.cs" />
     <Compile Include="Data\Get\CoinInfoViewData.cs" />
     <Compile Include="Data\Get\CoinHeaderData.cs" />
     <Compile Include="Data\Get\AssetItem.cs" />
@@ -193,6 +192,7 @@
     <Compile Include="Data\Get\SortButtonItem.cs" />
     <Compile Include="Data\Add\AddAccountData.cs" />
     <Compile Include="Helpers\AlertDialogHelper.cs" />
+    <Compile Include="Helpers\ConnectivityBroadcastReceiver.cs" />
     <Compile Include="Helpers\ConnectivityStatus.cs" />
     <Compile Include="Helpers\LinqOrderHelper.cs" />
     <Compile Include="Helpers\ShakeRecognizer.cs" />
@@ -229,6 +229,7 @@
     <Compile Include="Views\Fragments\AddSource\AddAddressFragment.cs" />
     <Compile Include="Views\Fragments\AddSource\AddBittrexFragment.cs" />
     <Compile Include="Views\Fragments\AddSource\AddSourceFragment.cs" />
+    <Compile Include="Views\Fragments\FooterFragment.cs" />
     <Compile Include="Views\Fragments\HeaderFragment.cs" />
     <Compile Include="Views\Fragments\ProgressFragment.cs" />
     <Compile Include="Views\Fragments\SortButtonFragment.cs" />
@@ -317,6 +318,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_progress.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_footer.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -733,6 +737,51 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\fingerprint_dialog_container.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_update_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_update_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_update_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_update_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_update_white.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

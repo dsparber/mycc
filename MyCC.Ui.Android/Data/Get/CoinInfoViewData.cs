@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Android.Content;
@@ -22,7 +23,7 @@ namespace MyCC.Ui.Android.Data.Get
             _context = context;
         }
 
-        public HeaderDataItem HeaderData(Currency currency)
+        public static HeaderDataItem HeaderData(Currency currency)
         {
             return new HeaderDataItem(currency.Name, new Money(ExchangeRateHelper.GetRate(currency, Currency.Btc)?.Rate ?? 0, Currency.Btc).ToString8Digits());
         }
@@ -47,6 +48,21 @@ namespace MyCC.Ui.Android.Data.Get
                 .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirection == SortDirection.Ascending)
                 .ToList();
         }
+
+        public static DateTime LastUpdate(Currency currency)
+        {
+            var ratesTime = ApplicationSettings.AllReferenceCurrencies
+                                  .Select(e => new ExchangeRate(currency, e))
+                                  .SelectMany(ExchangeRateHelper.GetNeededRates)
+                                  .Distinct()
+                                  .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty().Min();
+
+            var infoTime = CoinInfoStorage.Instance.Get(currency)?.LastUpdate ?? DateTime.Now;
+
+            return ratesTime < infoTime ? ratesTime : infoTime;
+        }
+
+
 
         public List<SortButtonItem> SortButtons => new List<SortButtonItem>
         {

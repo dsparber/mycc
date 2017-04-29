@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Android.Content;
@@ -41,6 +42,15 @@ namespace MyCC.Ui.Android.Data.Get
             return ApplicationSettings.AllReferenceCurrencies.Except(new[] { money.Currency })
                 .Select(c => new ReferenceValueItem(money.Amount, ExchangeRateHelper.GetRate(money.Currency, c)))
                 .OrderByWithDirection(c => SortOrderReference == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirectionReference == SortDirection.Ascending);
+        }
+
+        public static DateTime LastUpdate(Currency currency)
+        {
+            var online = AccountStorage.AccountsWithCurrency(currency).Where(a => a is OnlineFunctionalAccount).ToList();
+            var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.AccountsWithCurrency(currency).Select(a => a.LastUpdate).DefaultIfEmpty(DateTime.Now).Max();
+            var ratesTime = AccountStorage.NeededRatesFor(currency).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+
+            return online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
         }
 
         public static IEnumerable<Account> EnabledAccountsItems(Currency currency)

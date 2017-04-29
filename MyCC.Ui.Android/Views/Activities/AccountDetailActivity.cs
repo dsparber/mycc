@@ -24,10 +24,9 @@ namespace MyCC.Ui.Android.Views.Activities
         private FunctionalAccount _account;
 
         private SortButtonFragment _sortAmount, _sortCurrency;
-
         private SwipeRefreshLayout _swipeToRefresh;
-
         private HeaderFragment _header;
+        private FooterFragment _footerFragment;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -46,8 +45,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
             SupportActionBar.Title = _account.Money.Currency.Code;
             _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
-
-            _header.Data = AccountViewData.HeaderData(_account);
+            _footerFragment = (FooterFragment)SupportFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
 
             _sortAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
             _sortCurrency = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
@@ -105,31 +103,32 @@ namespace MyCC.Ui.Android.Views.Activities
                 return;
             }
 
-            _header.Data = AccountViewData.HeaderData(_account);
+            _header.Data = AccountDetailViewData.HeaderData(_account);
+            _footerFragment.LastUpdate = AccountDetailViewData.LastUpdate(_account);
 
             Func<bool, ViewStates> show = b => b ? ViewStates.Visible : ViewStates.Gone;
 
-            FindViewById<TextView>(Resource.Id.text_name).Text = ViewData.AccountDetail.AccountName(_account);
-            FindViewById<TextView>(Resource.Id.text_type).Text = ViewData.AccountDetail.AccountType(_account);
+            FindViewById<TextView>(Resource.Id.text_name).Text = ViewData.AccountDetailDetail.AccountName(_account);
+            FindViewById<TextView>(Resource.Id.text_type).Text = ViewData.AccountDetailDetail.AccountType(_account);
 
 
-            FindViewById<TextView>(Resource.Id.text_source).Text = ViewData.AccountDetail.AccountSource(_account);
-            FindViewById<TextView>(Resource.Id.text_address).Text = ViewData.AccountDetail.AccountAddressString(_account);
+            FindViewById<TextView>(Resource.Id.text_source).Text = ViewData.AccountDetailDetail.AccountSource(_account);
+            FindViewById<TextView>(Resource.Id.text_address).Text = ViewData.AccountDetailDetail.AccountAddressString(_account);
 
-            FindViewById(Resource.Id.label_source).Visibility = show(ViewData.AccountDetail.ShowAccountSource(_account));
-            FindViewById(Resource.Id.text_source).Visibility = show(ViewData.AccountDetail.ShowAccountSource(_account));
-            FindViewById(Resource.Id.label_address).Visibility = show(ViewData.AccountDetail.ShowAccountAddress(_account));
-            FindViewById(Resource.Id.text_address).Visibility = show(ViewData.AccountDetail.ShowAccountAddress(_account));
+            FindViewById(Resource.Id.label_source).Visibility = show(ViewData.AccountDetailDetail.ShowAccountSource(_account));
+            FindViewById(Resource.Id.text_source).Visibility = show(ViewData.AccountDetailDetail.ShowAccountSource(_account));
+            FindViewById(Resource.Id.label_address).Visibility = show(ViewData.AccountDetailDetail.ShowAccountAddress(_account));
+            FindViewById(Resource.Id.text_address).Visibility = show(ViewData.AccountDetailDetail.ShowAccountAddress(_account));
 
             FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(_account.Money.Amount == 1 ? Resource.String.IsEqualTo : Resource.String.AreEqualTo), _account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney));
 
 
-            var items = AccountViewData.Items(_account);
+            var items = AccountDetailViewData.Items(_account);
             var view = FindViewById<LinearLayout>(Resource.Id.view_reference);
 
-            _sortAmount.Data = ViewData.AccountDetail.SortButtons[0];
+            _sortAmount.Data = ViewData.AccountDetailDetail.SortButtons[0];
             _sortAmount.First = true;
-            _sortCurrency.Data = ViewData.AccountDetail.SortButtons[1];
+            _sortCurrency.Data = ViewData.AccountDetailDetail.SortButtons[1];
             _sortCurrency.Last = true;
 
             view.RemoveAllViews();

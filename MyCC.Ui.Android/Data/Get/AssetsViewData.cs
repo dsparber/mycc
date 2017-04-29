@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Android.Content;
 using Android.Views;
@@ -11,17 +12,21 @@ using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Messages;
+using Newtonsoft.Json;
 
 namespace MyCC.Ui.Android.Data.Get
 {
     public class AssetsViewData
     {
+        private Dictionary<Currency, AssetsGraphItem.Data[]> _graphItems;
         public Dictionary<Currency, List<AssetItem>> Items { get; private set; }
         public Dictionary<Currency, CoinHeaderData> Headers { get; private set; }
         public Dictionary<Currency, List<SortButtonItem>> SortButtons { get; private set; }
+        public Dictionary<Currency, DateTime> LastUpdate { get; private set; }
 
         private readonly Context _context;
         public bool IsDataAvailable => Items != null && Items.Count > 0 && Items.Min(i => i.Value.Count) > 0;
+        public bool IsGraphDataAvailable => _graphItems != null && _graphItems.Count > 0 && _graphItems.Min(i => i.Value.Length) > 0;
 
 
         public AssetsViewData(Context context)
@@ -29,14 +34,39 @@ namespace MyCC.Ui.Android.Data.Get
             _context = context;
         }
 
+        public string JsDataString(Currency currency)
+        {
+            var data = JsonConvert.SerializeObject(_graphItems[currency]);
+            var accountStrings = JsonConvert.SerializeObject(new[] { _context.Resources.GetString(Resource.String.OneAccount), _context.Resources.GetString(Resource.String.Accounts) });
+            var currenciesStrings = JsonConvert.SerializeObject(new[] { _context.Resources.GetString(Resource.String.OneCurrency), _context.Resources.GetString(Resource.String.Currencies) });
+            var furtherString = _context.Resources.GetString(Resource.String.Further);
+            var noDataString = _context.Resources.GetString(Resource.String.NoDataToDisplay);
+            var roundMoney = ApplicationSettings.RoundMoney.ToString();
+            var baseCurrency = currency.Code;
+            var culture = CultureInfo.CurrentCulture.ToString();
+
+            return $"showChart({data}, {accountStrings}, {currenciesStrings}, \"{furtherString}\", \"{noDataString}\", \"{baseCurrency}\", \"{roundMoney}\", \"{culture}\");";
+        }
+
         public void UpdateRateItems()
         {
-            Items = LoadRateItems();
-            Headers = LoadRateHeaders();
+            Items = LoadItems();
+            _graphItems = LoadGraphItems();
+            Headers = LoadHeaders();
             SortButtons = LoadSortButtons();
+            LastUpdate = GetLastUpdate();
 
             Messaging.UiUpdate.AssetsTable.Send();
         }
+
+        private static Dictionary<Currency, DateTime> GetLastUpdate() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        {
+            var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
+            var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
+            var ratesTime = AccountStorage.NeededRates.Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+
+            return online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
+        });
 
         private static SortOrder SortOrder
         {
@@ -49,7 +79,7 @@ namespace MyCC.Ui.Android.Data.Get
             set { ApplicationSettings.SortDirectionAccounts = value; }
         }
 
-        private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, CoinHeaderData> LoadHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
         {
             var amount = AccountStorage.EnabledAccounts.Sum(a => a.Money.Amount * ExchangeRateHelper.GetRate(a.Money.Currency, c)?.Rate ?? 0);
             var referenceMoney = new Money(amount, c);
@@ -62,7 +92,14 @@ namespace MyCC.Ui.Android.Data.Get
             return new CoinHeaderData(referenceMoney, additionalRefs);
         });
 
-        private static Dictionary<Currency, List<AssetItem>> LoadRateItems() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, AssetsGraphItem.Data[]> LoadGraphItems() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+             AccountStorage.AccountsGroupedByCurrency
+                        .Select(e => new AssetsGraphItem.Data(e, c))
+                        .Where(d => d.Value > 0)
+                        .OrderByDescending(d => d.Value)
+                        .ToArray());
+
+        private static Dictionary<Currency, List<AssetItem>> LoadItems() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
         {
             Func<Money, Money> getReference = m => new Money(m.Amount * (ExchangeRateHelper.GetRate(m.Currency, c)?.Rate ?? 0), c);
 

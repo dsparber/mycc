@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using Android.App;
+using Android.Content;
 using Android.Net;
 
 namespace MyCC.Ui.Android.Helpers
@@ -10,6 +11,7 @@ namespace MyCC.Ui.Android.Helpers
         private ConnectivityStatus(Context context)
         {
             _connectivityManager = (ConnectivityManager)context.GetSystemService(Context.ConnectivityService);
+            Application.Context.RegisterReceiver(new ConnectivityBroadcastReceiver(), new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
         }
 
         private static ConnectivityStatus _instance;
@@ -21,4 +23,6 @@ namespace MyCC.Ui.Android.Helpers
 
         public static bool IsConnected => _instance._connectivityManager?.ActiveNetworkInfo?.IsConnected ?? false;
     }
+
+
 }

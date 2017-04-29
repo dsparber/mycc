@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:p1="http://schemas.android.com/apk/res/android"
+    p1:orientation="horizontal"
+    p1:layout_width="match_parent"
+    p1:layout_height="wrap_content"
+    p1:id="@+id/linearLayout1"
+    p1:elevation="3dp"
+    p1:background="@color/colorDivider">
+    <LinearLayout
+        p1:orientation="horizontal"
+        p1:id="@+id/view_root"
+        p1:paddingRight="8dp"
+        p1:paddingLeft="8dp"
+        p1:paddingBottom="4dp"
+        p1:paddingTop="4dp"
+        p1:layout_width="match_parent"
+        p1:layout_height="match_parent"
+        p1:layout_marginTop="1dp"
+        p1:background="@color/colorBackground">
+        <LinearLayout
+            p1:orientation="horizontal"
+            p1:layout_width="wrap_content"
+            p1:layout_height="match_parent"
+            p1:id="@+id/view_offline_info"
+            p1:paddingRight="8dp">
+            <ImageView
+                p1:src="@drawable/ic_warning"
+                p1:layout_width="wrap_content"
+                p1:layout_height="wrap_content"
+                p1:layout_gravity="center_vertical"
+                p1:layout_marginRight="3dp" />
+            <TextView
+                p1:text="@string/Offline"
+                p1:layout_width="wrap_content"
+                p1:layout_height="wrap_content"
+                p1:textColor="#fff"
+                p1:textSize="12sp" />
+        </LinearLayout>
+        <LinearLayout
+            p1:orientation="horizontal"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:gravity="right">
+            <ImageView
+                p1:id="@+id/icon_update"
+                p1:src="@drawable/ic_update"
+                p1:layout_width="wrap_content"
+                p1:layout_height="wrap_content"
+                p1:layout_marginRight="3dp"
+                p1:layout_gravity="center_vertical" />
+            <TextView
+                p1:text="@string/LastUpdate"
+                p1:layout_width="wrap_content"
+                p1:layout_height="wrap_content"
+                p1:id="@+id/text_info"
+                p1:gravity="right"
+                p1:textSize="12sp"
+                p1:layout_gravity="center_vertical" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -22,8 +22,10 @@ namespace MyCC.Ui.Android.Views.Activities
         private Currency _currency;
 
         private SortButtonFragment _sortAmount, _sortCurrency;
-
         private SwipeRefreshLayout _swipeToRefresh;
+        private FooterFragment _footerFragment;
+        private HeaderFragment _header;
+
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -41,11 +43,10 @@ namespace MyCC.Ui.Android.Views.Activities
             }
 
             SupportActionBar.Title = _currency.Code;
-            var header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
+            _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
+            _footerFragment = (FooterFragment)SupportFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
 
             FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(Resource.String.IsEqualTo), new Money(1, _currency));
-
-            header.Data = ViewData.CoinInfo.HeaderData(_currency);
 
             _sortAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
             _sortCurrency = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
@@ -84,6 +85,9 @@ namespace MyCC.Ui.Android.Views.Activities
         private void SetCoinInfo(CoinInfoItem data)
         {
             data = data ?? ViewData.CoinInfo.CoinInfo(_currency);
+
+            _header.Data = CoinInfoViewData.HeaderData(_currency);
+            _footerFragment.LastUpdate = CoinInfoViewData.LastUpdate(_currency);
 
             Func<bool?, ViewStates> show = b => b != null && b.Value ? ViewStates.Visible : ViewStates.Gone;
 

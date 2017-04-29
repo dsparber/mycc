@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Android.App;
 using Android.Content;
@@ -23,7 +24,7 @@ namespace MyCC.Ui.Android.Views.Fragments
         private Currency _referenceCurrency;
         private List<AssetItem> _items;
         private HeaderFragment _header;
-
+        private FooterFragment _footerFragment;
 
         public AssetsTableFragment(Currency referenceCurrency)
         {
@@ -47,6 +48,9 @@ namespace MyCC.Ui.Android.Views.Fragments
             var headerData = ViewData.Assets.Headers?[_referenceCurrency];
             _header = (HeaderFragment)ChildFragmentManager.FindFragmentById(Resource.Id.header_fragment);
             _header.Data = headerData;
+
+            _footerFragment = (FooterFragment)ChildFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
+            _footerFragment.LastUpdate = ViewData.Assets.LastUpdate?[_referenceCurrency] ?? DateTime.MinValue;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             refreshView.Refresh += (sender, args) => Messaging.Request.AllAssetsAndRates.Send();
@@ -89,6 +93,7 @@ namespace MyCC.Ui.Android.Views.Fragments
                     if (!ViewData.Assets.IsDataAvailable) return;
 
                     _header.Data = ViewData.Assets.Headers[_referenceCurrency];
+                    _footerFragment.LastUpdate = ViewData.Assets.LastUpdate[_referenceCurrency];
                     _items = ViewData.Assets.Items[_referenceCurrency];
                     SetSortButtons(ViewData.Assets.SortButtons?[_referenceCurrency], sortCurrency, sortAmount, sortValue);
                     adapter.Clear();
