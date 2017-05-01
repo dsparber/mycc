@@ -1,0 +1,35 @@
+﻿using System;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+namespace MyCC.Ui.Helpers
+{
+    public static class TextEditHelper
+    {
+        public static string CheckIfDecimal(string val)
+        {
+            if (string.IsNullOrWhiteSpace(val)) return string.Empty;
+
+            var seperator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
+
+            if (val.StartsWith(seperator.ToString()))
+            {
+                val = $"0{val}";
+            }
+
+            if (char.IsDigit(val[0]) && (val.Count(x => x == seperator) == 0 || val.Count(x => x == seperator) == 1 &&
+                 $"{val}x".Split(new[] { seperator }, StringSplitOptions.RemoveEmptyEntries)[1].Length <= 9) &&
+                 Regex.IsMatch(val.Replace(seperator.ToString(), string.Empty), @"^\d+$"))
+                return val;
+
+
+            return val.Remove(val.Length - 1);
+        }
+
+        public static string TrimAll(this string value)
+        {
+            return string.Join(string.Empty, Regex.Replace(value ?? string.Empty, @"\t|\n|\r", "").Where(c => !char.IsWhiteSpace(c) && c != '\u200B'));
+        }
+    }
+}
