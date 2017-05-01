@@ -36,6 +36,10 @@ namespace MyCC.Ui.Android.Data.Get
 
         public string AccountName(Account account) => account.Name;
 
+        public bool AddressClickable(Account account) => account is OnlineFunctionalAccount && !(account is BittrexAccount) && !(account is BlockchainXpubAccount);
+
+        public string AddressClickUrl(FunctionalAccount account) => (AccountStorage.RepositoryOf(account) as AddressAccountRepository)?.WebUrl;
+
         public string AccountType(Account account)
             => _context.Resources.GetString(account is LocalAccount ? Resource.String.ManuallyAdded :
                     account is BittrexAccount ? Resource.String.BittrexAdded :

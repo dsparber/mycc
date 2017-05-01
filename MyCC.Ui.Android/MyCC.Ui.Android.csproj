@@ -219,6 +219,7 @@
     <Compile Include="Views\Activities\PasswordActivity.cs" />
     <Compile Include="Views\Activities\SplashActivity.cs" />
     <Compile Include="Views\Activities\AddSourceActivity.cs" />
+    <Compile Include="Views\Activities\WebviewActivity.cs" />
     <Compile Include="Views\Adapter\AddSourcePagerAdapter.cs" />
     <Compile Include="Views\Adapter\AssetsListAdapter.cs" />
     <Compile Include="Views\Adapter\CurrencyListAdapter.cs" />
@@ -321,6 +322,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_footer.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\activity_webview.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
