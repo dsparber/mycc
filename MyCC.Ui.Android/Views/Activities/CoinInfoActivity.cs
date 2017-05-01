@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -11,6 +13,7 @@ using MyCC.Ui.Android.Views.Fragments;
 using Newtonsoft.Json;
 using MyCC.Core.Account.Models.Base;
 using Android.Support.V4.Widget;
+using MyCC.Core.Account.Storage;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -18,6 +21,7 @@ namespace MyCC.Ui.Android.Views.Activities
     public class CoinInfoActivity : MyccActivity
     {
         public const string ExtraCurrency = "currency";
+        public const string ExtraShowAccountsButton = "showAccountsButton";
 
         private Currency _currency;
 
@@ -25,7 +29,7 @@ namespace MyCC.Ui.Android.Views.Activities
         private SwipeRefreshLayout _swipeToRefresh;
         private FooterFragment _footerFragment;
         private HeaderFragment _header;
-
+        private bool _showAccountsButton;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -36,6 +40,7 @@ namespace MyCC.Ui.Android.Views.Activities
             SupportActionBar.Elevation = 3;
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
+            _showAccountsButton = Intent?.GetBooleanExtra(ExtraShowAccountsButton, false) ?? false;
             var currencyString = Intent?.GetStringExtra(ExtraCurrency);
             if (!string.IsNullOrWhiteSpace(currencyString))
             {
@@ -61,9 +66,40 @@ namespace MyCC.Ui.Android.Views.Activities
             LoadData();
         }
 
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            if (!_showAccountsButton) return true;
+
+
+            menu.Add(0, 0, 0, Resources.GetString(Resource.String.Assets))
+                .SetIcon(Resource.Drawable.ic_action_table).SetShowAsAction(ShowAsAction.Always);
+
+            return true;
+        }
+
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            Finish();
+            if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Assets)))
+            {
+                var accounts = AccountStorage.AccountsWithCurrency(_currency);
+
+                if (accounts.Count == 1)
+                {
+                    var intent = new Intent(this, typeof(AccountDetailActivity));
+                    intent.PutExtra(AccountDetailActivity.ExtraAccountId, accounts.First().Id);
+                    StartActivity(intent);
+                }
+                else
+                {
+                    var intent = new Intent(this, typeof(AccountGroupActivity));
+                    intent.PutExtra(AccountGroupActivity.ExtraCurrencyId, _currency.Id);
+                    StartActivity(intent);
+                }
+            }
+            else
+            {
+                Finish();
+            }
             return true;
         }
 

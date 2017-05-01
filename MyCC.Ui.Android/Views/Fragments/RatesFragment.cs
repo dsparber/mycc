@@ -69,6 +69,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
                 var intent = new Intent(Activity, typeof(CoinInfoActivity));
                 intent.PutExtra(CoinInfoActivity.ExtraCurrency, JsonConvert.SerializeObject(currency));
+                intent.PutExtra(CoinInfoActivity.ExtraShowAccountsButton, true);
                 StartActivity(intent);
             };
 

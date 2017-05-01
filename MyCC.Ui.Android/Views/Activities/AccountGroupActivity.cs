@@ -12,6 +12,7 @@ using MyCC.Core.Currency.Storage;
 using System.Linq;
 using Android.Content;
 using Android.Support.Design.Widget;
+using Newtonsoft.Json;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -70,9 +71,27 @@ namespace MyCC.Ui.Android.Views.Activities
             SetData();
         }
 
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            menu.Add(0, 0, 0, Resources.GetString(Resource.String.Info))
+           .SetIcon(Resource.Drawable.ic_action_info).SetShowAsAction(ShowAsAction.Always);
+
+
+            return true;
+        }
+
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            Finish();
+            if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Info)))
+            {
+                var intent = new Intent(this, typeof(CoinInfoActivity));
+                intent.PutExtra(CoinInfoActivity.ExtraCurrency, JsonConvert.SerializeObject(_currency));
+                StartActivity(intent);
+            }
+            else
+            {
+                Finish();
+            }
             return true;
         }
 

@@ -13,6 +13,7 @@ using Android.Support.V4.Widget;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Settings;
+using Newtonsoft.Json;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -62,7 +63,13 @@ namespace MyCC.Ui.Android.Views.Activities
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Edit)))
+            if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Info)))
+            {
+                var intent = new Intent(this, typeof(CoinInfoActivity));
+                intent.PutExtra(CoinInfoActivity.ExtraCurrency, JsonConvert.SerializeObject(_account.Money.Currency));
+                StartActivity(intent);
+            }
+            else if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Edit)))
             {
                 if (_account is LocalAccount)
                 {
@@ -86,7 +93,8 @@ namespace MyCC.Ui.Android.Views.Activities
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-
+            menu.Add(0, 0, 0, Resources.GetString(Resource.String.Info))
+           .SetIcon(Resource.Drawable.ic_action_info).SetShowAsAction(ShowAsAction.Always);
             menu.Add(0, 0, 0, Resources.GetString(Resource.String.Edit))
            .SetIcon(Resource.Drawable.ic_edit).SetShowAsAction(ShowAsAction.Always);
 
