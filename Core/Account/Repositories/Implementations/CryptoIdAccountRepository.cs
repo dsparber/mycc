@@ -15,12 +15,14 @@ namespace MyCC.Core.Account.Repositories.Implementations
 {
     public class CryptoIdAccountRepository : AddressAndCoinAccountRepository
     {
+        private const string ApiKey = "e0afbe73ec2d";
+
         public override string DescriptionName => I18N.CryptoId;
         public override IEnumerable<Currency.Model.Currency> SupportedCurrencies => CurrencyStorage.CurrenciesOf<CryptoIdCurrencyRepository>();
 
         public override async Task<bool> Test()
         {
-            var uri = new Uri($"https://chainz.cryptoid.info/{Currency.Code.ToLower()}/api.dws?q=addressfirstseen&a={Address}");
+            var uri = new Uri($"https://chainz.cryptoid.info/{Currency.Code.ToLower()}/api.dws?q=addressfirstseen&a={Address}&key={ApiKey}");
             HttpResponseMessage response;
             if (PostContent == null)
             {
@@ -38,7 +40,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
         }
 
         protected override Func<string, decimal> Balance => httpContent => decimal.Parse(httpContent, CultureInfo.InvariantCulture);
-        protected override Uri Url => new Uri($"https://chainz.cryptoid.info/{Currency.Code.ToLower()}/api.dws?q=getbalance&a={Address}");
+        protected override Uri Url => new Uri($"https://chainz.cryptoid.info/{Currency.Code.ToLower()}/api.dws?q=getbalance&a={Address}&key={ApiKey}");
 
         public CryptoIdAccountRepository(int id, string name, string data) : base(id, name, data) { }
         public CryptoIdAccountRepository(int id, string name, Currency.Model.Currency coin, string address) : base(id, name, coin, address) { }

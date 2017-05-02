@@ -18,7 +18,13 @@ namespace MyCC.Core.Account.Repositories.Implementations
         private const string ResponseKey = "response";
         private const string ConfirmedKey = "confirmed";
 
-        public BlockchainXpubAccountRepository(int id, string name, string address) : base(id, name, address) { }
+        private const string Authorization = "Authorization";
+        private const string AuthorizationKey = "Bearer HzVNqyM0jFVjeLCiMK47w99GDf14SBcy6feDxhKcXyQ";
+
+        public BlockchainXpubAccountRepository(int id, string name, string address) : base(id, name, address)
+        {
+            Client.DefaultRequestHeaders.Add(Authorization, AuthorizationKey);
+        }
 
         public override string Description => I18N.Blockchain;
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeBlockchainXpubRepository;
