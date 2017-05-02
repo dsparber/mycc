@@ -11,6 +11,8 @@ using MyCC.Ui.Android.Views.Fragments;
 using MyCC.Core.Account.Models.Base;
 using Android.Support.V4.Widget;
 using MyCC.Core.Account.Models.Implementations;
+using MyCC.Core.Account.Repositories.Base;
+using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Settings;
 using MyCC.Ui.Messages;
@@ -65,7 +67,13 @@ namespace MyCC.Ui.Android.Views.Activities
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Info)))
+            if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.ShowQrCode)))
+            {
+                var intent = new Intent(this, typeof(ShowQrCodeActivity));
+                intent.PutExtra(ShowQrCodeActivity.ExtraSourceId, AccountStorage.RepositoryOf(_account).Id);
+                StartActivity(intent);
+            }
+            else if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Info)))
             {
                 var intent = new Intent(this, typeof(CoinInfoActivity));
                 intent.PutExtra(CoinInfoActivity.ExtraCurrency, JsonConvert.SerializeObject(_account.Money.Currency));
@@ -97,6 +105,14 @@ namespace MyCC.Ui.Android.Views.Activities
         {
             menu.Add(0, 0, 0, Resources.GetString(Resource.String.Info))
            .SetIcon(Resource.Drawable.ic_action_info).SetShowAsAction(ShowAsAction.Always);
+
+            var repo = AccountStorage.RepositoryOf(_account);
+            if (repo is AddressAccountRepository && !(repo is BlockchainXpubAccountRepository))
+            {
+                menu.Add(0, 0, 0, Resources.GetString(Resource.String.ShowQrCode))
+                .SetIcon(Resource.Drawable.ic_action_qr).SetShowAsAction(ShowAsAction.Always);
+            }
+
             menu.Add(0, 0, 0, Resources.GetString(Resource.String.Edit))
            .SetIcon(Resource.Drawable.ic_edit).SetShowAsAction(ShowAsAction.Always);
 

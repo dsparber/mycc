@@ -3,65 +3,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-  <LinearLayout
-      android:orientation="vertical"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:layout_marginTop="16dp"
-      android:padding="@dimen/abc_action_bar_content_inset_material">
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-      <ImageView
-          android:src="@drawable/ic_id_card"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:padding="8dp" />
-      <EditText
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:id="@+id/text_address"
-          android:maxLines="1"
-          android:inputType="text"
-          android:hint="@string/Address" />
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="16dp"
+        android:padding="@dimen/abc_action_bar_content_inset_material">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_id_card"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="8dp" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/text_address"
+                android:maxLines="1"
+                android:inputType="text"
+                android:hint="@string/Address" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="8dp" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textNoSuggestions"
+                android:focusableInTouchMode="false"
+                android:maxLines="1"
+                android:drawableRight="@drawable/ic_arrow_right"
+                android:id="@+id/text_currency"
+                android:hint="@string/Currency"
+                android:password="false" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_label"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="8dp" />
+            <AutoCompleteTextView
+                android:id="@+id/text_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:inputType="text"
+                android:hint="@string/Name" />
+        </LinearLayout>
+        <Button
+            android:text="@string/ScanQrCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_scan_qr"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="16dp" />
     </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-      <ImageView
-          android:src="@drawable/ic_currency"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:padding="8dp" />
-      <EditText
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:inputType="textNoSuggestions"
-          android:focusableInTouchMode="false"
-          android:maxLines="1"
-          android:drawableRight="@drawable/ic_arrow_right"
-          android:id="@+id/text_currency"
-          android:hint="@string/Currency"
-          android:password="false" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-      <ImageView
-          android:src="@drawable/ic_label"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:padding="8dp" />
-      <AutoCompleteTextView
-          android:id="@+id/text_name"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:maxLines="1"
-          android:inputType="text"
-          android:hint="@string/Name" />
-    </LinearLayout>
-  </LinearLayout>
 </ScrollView>

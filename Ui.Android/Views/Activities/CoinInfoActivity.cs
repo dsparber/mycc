@@ -69,7 +69,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            if (!_showAccountsButton) return true;
+            if (!_showAccountsButton || !AccountStorage.AccountsWithCurrency(_currency).Any()) return true;
 
 
             menu.Add(0, 0, 0, Resources.GetString(Resource.String.Assets))

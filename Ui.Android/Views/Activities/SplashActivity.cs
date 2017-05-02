@@ -9,6 +9,7 @@ using MyCC.Core.Tasks;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Messages;
 using Xamarin.Forms;
+using ZXing.Mobile;
 using Application = Android.App.Application;
 
 namespace MyCC.Ui.Android.Views.Activities
@@ -21,6 +22,7 @@ namespace MyCC.Ui.Android.Views.Activities
             base.OnCreate(savedInstanceState);
 
             Forms.Init(this, savedInstanceState);
+            MobileBarcodeScanner.Initialize(Application);
             CrashManager.Register(this, "7792ee5321a64433ace4955a1693cca5");
             MetricsManager.Register(Application, "7792ee5321a64433ace4955a1693cca5");
 
