@@ -17,13 +17,16 @@ namespace MyCC.Core.Account.Storage
     {
         private AccountStorage() : base(new AccountRepositoryDatabase()) { }
 
-        protected override async Task OnFirstLaunch()
+        protected override async Task AfterLoadingRepositories()
         {
-            var localRepository = new LocalAccountRepository(default(int), I18N.LocalStorage);
-            await Add(localRepository);
+            if (LocalRepository == null)
+            {
+                var localRepository = new LocalAccountRepository(default(int), I18N.LocalStorage);
+                await Add(localRepository);
+            }
         }
 
-        public override AccountRepository LocalRepository => Repositories.OfType<LocalAccountRepository>().FirstOrDefault() ?? new LocalAccountRepository(default(int), I18N.LocalStorage);
+        public override AccountRepository LocalRepository => Repositories.OfType<LocalAccountRepository>().FirstOrDefault();
 
         public static readonly AccountStorage Instance = new AccountStorage();
 

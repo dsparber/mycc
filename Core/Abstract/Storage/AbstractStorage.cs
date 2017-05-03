@@ -4,13 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Database;
 using MyCC.Core.Abstract.Repositories;
-using MyCC.Core.Settings;
 
 namespace MyCC.Core.Abstract.Storage
 {
     public abstract class AbstractStorage<T, TV> where TV : AbstractRepository where T : IEntityDbm<TV, int>
     {
-        public List<TV> Repositories { get; private set; }
+        public List<TV> Repositories { get; }
 
         private readonly Task _onCreationTask;
 
@@ -26,12 +25,10 @@ namespace MyCC.Core.Abstract.Storage
         private async Task OnCreation()
         {
             Repositories.AddRange(await Database.GetAll());
-            if (ApplicationSettings.FirstLaunch)
-            {
-                await OnFirstLaunch();
-            }
+
+            await AfterLoadingRepositories();
         }
-        protected virtual Task OnFirstLaunch() { return Task.Factory.StartNew(() => { }); }
+        protected virtual Task AfterLoadingRepositories() { return Task.Factory.StartNew(() => { }); }
 
 
         public async Task Add(TV repository)
