@@ -23,7 +23,7 @@ namespace MyCC.Core.Account.Storage
             await Add(localRepository);
         }
 
-        public override AccountRepository LocalRepository => Repositories.OfType<LocalAccountRepository>().FirstOrDefault();
+        public override AccountRepository LocalRepository => Repositories.OfType<LocalAccountRepository>().FirstOrDefault() ?? new LocalAccountRepository(default(int), I18N.LocalStorage);
 
         public static readonly AccountStorage Instance = new AccountStorage();
 
