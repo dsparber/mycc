@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <PreferenceCategory
+        android:title="@string/Data"
+        android:key="pref_category_data">
+    <!-- Sources? -->
+    <!-- Reference currencies -->
+    <!-- Additional rates -->
+    <!-- Preferred bitcoin exchange -->
+  </PreferenceCategory>
+  <PreferenceCategory
+        android:title="@string/General"
+        android:key="pref_category_general">
+    <!-- Security -->
+    <!-- Startup view-->
+    <SwitchPreference
+      android:key="auto-refresh-on-startup"
+      android:title="@string/RefreshOnStartup"
+      android:summary="@string/LoadRatesAndBalancesOnStartup"
+      android:defaultValue="true" />
+  </PreferenceCategory>
+  <PreferenceCategory
+        android:title="@string/Info"
+        android:key="pref_category_info">
+    <!-- About -->
+    <Preference
+      android:key="pref_about"
+      android:title="@string/About" >
+    </Preference>
+    <Preference
+      android:key="pref_privacy"
+      android:title="@string/Privacy" >
+    </Preference>
+    <!-- Privacy -->
+  </PreferenceCategory>
+</PreferenceScreen>

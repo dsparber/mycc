@@ -54,9 +54,15 @@ namespace MyCC.Core.Settings
 
             var value = AppSettings.GetValueOrDefault(key, defaultValue);
 
-            if (!Cache.ContainsKey(key))
+            if (Cache.ContainsKey(key)) return value;
+
+            try
             {
                 Cache.Add(key, value);
+            }
+            catch
+            {
+                /* Was added by another thread */
             }
             return value;
         }

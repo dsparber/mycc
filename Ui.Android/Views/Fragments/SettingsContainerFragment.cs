@@ -8,7 +8,11 @@ namespace MyCC.Ui.Android.Views.Fragments
     {
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            return inflater.Inflate(Resource.Layout.fragment_settings_container, container, false);
+            var view = inflater.Inflate(Resource.Layout.fragment_settings_container, container, false);
+
+            ChildFragmentManager.BeginTransaction().Replace(Resource.Id.content_frame, new SettingsFragment()).Commit();
+
+            return view;
         }
     }
 }

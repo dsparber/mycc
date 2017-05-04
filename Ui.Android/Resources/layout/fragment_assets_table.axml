@@ -41,13 +41,13 @@
           p1:id="@+id/button_currency_sort"
           p1:layout_width="0dp"
           p1:layout_height="wrap_content"
-          p1:layout_weight="0.4" />
+          p1:layout_weight="0.5" />
       <fragment
           p1:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
           p1:id="@+id/button_amount_sort"
           p1:layout_width="0dp"
           p1:layout_height="wrap_content"
-          p1:layout_weight="0.8" />
+          p1:layout_weight="0.7" />
       <fragment
           p1:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
           p1:id="@+id/button_value_sort"
