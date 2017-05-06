@@ -1,7 +1,9 @@
 ﻿using System;
 using Android.Content;
 using Android.Hardware;
+using Android.OS;
 using Android.Support.V7.App;
+using Android.Views;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 
@@ -15,6 +17,27 @@ namespace MyCC.Ui.Android.Views.Activities
         protected static bool Locked = ApplicationSettings.IsPinSet;
         public static MyccActivity CurrentInstance;
 
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            Window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
+
+            if (SupportActionBar == null) return;
+
+            SupportActionBar.Elevation = 3;
+            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if (string.IsNullOrWhiteSpace(item?.TitleFormatted?.ToString()))
+            {
+                Finish();
+            }
+            return true;
+        }
+
         protected override void OnStart()
         {
             base.OnStart();
@@ -23,12 +46,12 @@ namespace MyCC.Ui.Android.Views.Activities
 
             var millis = DateTime.Now.Subtract(_lastStop).TotalMilliseconds;
             System.Diagnostics.Debug.WriteLine(millis);
-            if (!(this is PasswordActivity))
+            if (!(this is LockscreenActivity))
             {
                 if (Locked || _runningActivities == 0 && millis > 2500 && ApplicationSettings.IsPinSet)
                 {
                     Locked = true;
-                    var intent = new Intent(this, typeof(PasswordActivity));
+                    var intent = new Intent(this, typeof(LockscreenActivity));
                     intent.SetFlags(ActivityFlags.NoAnimation);
                     StartActivity(intent);
                 }
@@ -49,7 +72,7 @@ namespace MyCC.Ui.Android.Views.Activities
                     if (!ApplicationSettings.IsPinSet) return;
 
                     Locked = true;
-                    var intent = new Intent(this, typeof(PasswordActivity));
+                    var intent = new Intent(this, typeof(LockscreenActivity));
                     intent.SetFlags(ActivityFlags.NoAnimation);
                     StartActivity(intent);
                 }

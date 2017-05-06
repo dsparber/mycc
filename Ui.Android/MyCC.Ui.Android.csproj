@@ -200,6 +200,7 @@
     <Compile Include="Helpers\AlertDialogHelper.cs" />
     <Compile Include="Helpers\ConnectivityBroadcastReceiver.cs" />
     <Compile Include="Helpers\ConnectivityStatus.cs" />
+    <Compile Include="Helpers\FingerprintHelper.cs" />
     <Compile Include="Helpers\ShakeRecognizer.cs" />
     <Compile Include="Helpers\SQLiteConnectionAndroid.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
@@ -215,7 +216,9 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Activities\MyccActivity.cs" />
-    <Compile Include="Views\Activities\PasswordActivity.cs" />
+    <Compile Include="Views\Activities\LockscreenActivity.cs" />
+    <Compile Include="Views\Activities\SecurityActivity.cs" />
+    <Compile Include="Views\Activities\PinActivity.cs" />
     <Compile Include="Views\Activities\ScanQrCodeActivity.cs" />
     <Compile Include="Views\Activities\ShowQrCodeActivity.cs" />
     <Compile Include="Views\Activities\SplashActivity.cs" />
@@ -337,6 +340,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\overlay_scan_qr_code.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\activity_security_actions.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\activity_pin.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

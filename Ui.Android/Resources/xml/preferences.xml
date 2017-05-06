@@ -13,7 +13,10 @@
   <PreferenceCategory
         android:title="@string/General"
         android:key="pref_category_general">
-    <!-- Security -->
+    <Preference
+      android:key="pref_security"
+      android:title="@string/Security" >
+    </Preference>
     <!-- Startup view-->
     <SwitchPreference
       android:key="auto-refresh-on-startup"

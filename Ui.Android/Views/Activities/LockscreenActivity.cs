@@ -8,6 +8,7 @@ using Android.Views.Animations;
 using Android.Widget;
 using Java.Lang;
 using MyCC.Core.Settings;
+using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Dialogs;
 using CancellationSignal = Android.Support.V4.OS.CancellationSignal;
 
@@ -15,7 +16,7 @@ using CancellationSignal = Android.Support.V4.OS.CancellationSignal;
 namespace MyCC.Ui.Android.Views.Activities
 {
     [Activity(Theme = "@style/LockscreenTheme", NoHistory = true)]
-    public class PasswordActivity : MyccActivity
+    public class LockscreenActivity : MyccActivity
     {
         private TextView _editPin;
         private ImageView _fingerprintIcon;
@@ -30,15 +31,9 @@ namespace MyCC.Ui.Android.Views.Activities
             _editPin = FindViewById<TextView>(Resource.Id.edit_pin);
             _fingerprintIcon = FindViewById<ImageView>(Resource.Id.image_fingerprint);
 
-            var fingerprintManager = FingerprintManagerCompat.From(this);
-            var keyguardManager = (KeyguardManager)GetSystemService(KeyguardService);
-
             _fingerprintIcon.Click += (sender, args) => AuthenticateWithFingerprint();
 
-            if (fingerprintManager.IsHardwareDetected &&
-                fingerprintManager.HasEnrolledFingerprints &&
-                keyguardManager.IsKeyguardSecure && // User has enabled lockscreen -> requirement for fingerprint
-                ApplicationSettings.IsFingerprintEnabled)
+            if (FingerprintHelper.IsFingerprintAvailable && ApplicationSettings.IsFingerprintEnabled)
             {
                 AuthenticateWithFingerprint();
             }

@@ -35,7 +35,6 @@ namespace MyCC.Ui.Android.Views.Activities
             _position = bundle?.GetInt("position");
 
             SetContentView(Resource.Layout.Main);
-            SupportActionBar.Elevation = 3;
 
             CreateDrawerLayout();
 
