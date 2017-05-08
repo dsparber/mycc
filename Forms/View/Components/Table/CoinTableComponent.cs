@@ -110,7 +110,7 @@ namespace MyCC.Forms.View.Components.Table
 					_webView.CallJsFunction("setHeader", new[]{
 					  new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
 					  new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
-					  new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.SelectedAssetsCurrency.Code), SortOrder.ByValue.ToString())
+					  new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.StartupCurrencyAssets.Code), SortOrder.ByValue.ToString())
 				  }, string.Empty);
 					_webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
 
@@ -147,7 +147,7 @@ namespace MyCC.Forms.View.Components.Table
 			public Data(Currency currency)
 			{
 				var sum = AccountStorage.AccountsWithCurrency(currency).Sum(a => a.IsEnabled ? a.Money.Amount : 0);
-				var neededRate = new ExchangeRate(currency, ApplicationSettings.SelectedAssetsCurrency);
+				var neededRate = new ExchangeRate(currency, ApplicationSettings.StartupCurrencyAssets);
 				var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
 
 				Code = currency.Code;

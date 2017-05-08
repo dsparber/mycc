@@ -12,7 +12,7 @@ namespace MyCC.Core.Settings
 	public static class ApplicationSettings
 	{
 		private static Version _lastVersion;
-		public static Version VersionLastLaunch
+		public static Version LastCoreVersion
 		{
 			get
 			{
@@ -47,7 +47,7 @@ namespace MyCC.Core.Settings
 
 		public static bool DataLoaded;
 
-		public static Currency.Model.Currency SelectedAssetsCurrency
+		public static Currency.Model.Currency StartupCurrencyAssets
 		{
 			get
 			{
@@ -61,7 +61,7 @@ namespace MyCC.Core.Settings
 				catch
 				{
 					currency = Currency.Model.Currency.Btc;
-					SelectedAssetsCurrency = currency;
+					StartupCurrencyAssets = currency;
 				}
 				return currency;
 			}
@@ -71,7 +71,7 @@ namespace MyCC.Core.Settings
 			}
 		}
 
-		public static Currency.Model.Currency SelectedRatePageCurrency
+		public static Currency.Model.Currency StartupCurrencyRates
 		{
 			get
 			{
@@ -86,7 +86,7 @@ namespace MyCC.Core.Settings
 				catch
 				{
 					currency = Currency.Model.Currency.Btc;
-					SelectedRatePageCurrency = currency;
+					StartupCurrencyRates = currency;
 				}
 				return currency;
 			}
@@ -362,15 +362,16 @@ namespace MyCC.Core.Settings
 			}
 		}
 
-		public static StartupPage DefaultPage
+		public static StartupPage DefaultStartupPage
 		{
 			get
 			{
-				return Settings.Get(Settings.DefaultPage, StartupPage.TableView);
+				var success = Enum.TryParse(Settings.Get(Settings.DefaultPage, StartupPage.TableView.ToString()), out StartupPage page);
+			    return success ? page : StartupPage.TableView;
 			}
 			set
 			{
-				Settings.Set(Settings.DefaultPage, value);
+				Settings.Set(Settings.DefaultPage, value.ToString());
 			}
 		}
 

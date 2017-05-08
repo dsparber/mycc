@@ -22,7 +22,7 @@ namespace MyCC.Core.Currency.Database
 			if (_executeAdditionalCommands) return;
 			_executeAdditionalCommands = true;
 
-			if (ApplicationSettings.VersionLastLaunch < new Version("0.5.49"))
+			if (ApplicationSettings.LastCoreVersion < new Version("0.5.49"))
 			{
 				await connection.ExecuteAsync("DELETE FROM Currencies;");
 				await connection.ExecuteAsync("DELETE FROM CurrencyMap;");

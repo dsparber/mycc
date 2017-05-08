@@ -28,7 +28,7 @@ namespace MyCC.Forms.View.Container
             _settingsPage = new NavigationPage(new SettingsView()) { Title = I18N.Settings, Icon = "settings.png", BarTextColor = Color.White };
 
             Master = new MasterPage(this);
-            Detail = ApplicationSettings.DefaultPage == StartupPage.GraphView ? _coinGraphPage : ApplicationSettings.DefaultPage == StartupPage.TableView ? _coinTablePage : _ratesPage;
+            Detail = ApplicationSettings.DefaultStartupPage == StartupPage.GraphView ? _coinGraphPage : ApplicationSettings.DefaultStartupPage == StartupPage.TableView ? _coinTablePage : _ratesPage;
         }
 
         private class MasterPage : ContentPage

@@ -103,14 +103,14 @@ namespace MyCC.Forms.View.Pages
         {
             var currencies = ApplicationSettings.MainCurrencies;
 
-            ApplicationSettings.SelectedRatePageCurrency = currencies[HeaderCarousel.Position];
+            ApplicationSettings.StartupCurrencyRates = currencies[HeaderCarousel.Position];
             Messaging.RatesPageCurrency.SendValueChanged();
         }
 
         private void SetHeaderCarousel()
         {
             HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
-            HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.SelectedRatePageCurrency);
+            HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.StartupCurrencyRates);
             HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
             HeaderCarousel.PageIndicatorTintColor = Color.FromHex("#5FFF");
 
@@ -163,7 +163,7 @@ namespace MyCC.Forms.View.Pages
             var text = ApplicationSettings.WatchedCurrencies
                             .Concat(ApplicationSettings.AllReferenceCurrencies)
                             .Concat(AccountStorage.UsedCurrencies)
-                            .Select(e => new ExchangeRate(ApplicationSettings.SelectedRatePageCurrency, e))
+                            .Select(e => new ExchangeRate(ApplicationSettings.StartupCurrencyRates, e))
                             .SelectMany(ExchangeRateHelper.GetNeededRates)
                             .Distinct()
                             .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min().LastUpdateString();
@@ -177,7 +177,7 @@ namespace MyCC.Forms.View.Pages
                 .Concat(ApplicationSettings.AllReferenceCurrencies)
                 .Concat(AccountStorage.UsedCurrencies)
                 .Distinct()
-                .Any(c => !c.Equals(ApplicationSettings.SelectedRatePageCurrency));
+                .Any(c => !c.Equals(ApplicationSettings.StartupCurrencyRates));
 
             Device.BeginInvokeOnMainThread(() =>
             {

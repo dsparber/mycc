@@ -80,7 +80,7 @@ namespace MyCC.Forms.View.Components.Table
                 .Concat(ApplicationSettings.AllReferenceCurrencies)
                 .Concat(AccountStorage.UsedCurrencies)
                 .Distinct()
-                .Where(c => !c.Equals(ApplicationSettings.SelectedRatePageCurrency))
+                .Where(c => !c.Equals(ApplicationSettings.StartupCurrencyRates))
                 .Select(c => new Data(c)).ToList();
 
             var itemsExisting = items.Count > 0;
@@ -103,7 +103,7 @@ namespace MyCC.Forms.View.Components.Table
             {
                 _webView.CallJsFunction("setHeader", new[]{
                     new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
-                    new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.SelectedRatePageCurrency), SortOrder.ByValue.ToString())
+                    new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.StartupCurrencyRates), SortOrder.ByValue.ToString())
                 }, string.Empty);
                 _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
 
@@ -128,11 +128,11 @@ namespace MyCC.Forms.View.Components.Table
 
             public Data(Currency currency)
             {
-                var neededRate = new ExchangeRate(currency, ApplicationSettings.SelectedRatePageCurrency);
+                var neededRate = new ExchangeRate(currency, ApplicationSettings.StartupCurrencyRates);
                 var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
 
                 Code = currency.Code;
-                Reference = new Money(rate.Rate ?? 0, ApplicationSettings.SelectedRatePageCurrency).ToString8Digits(false);
+                Reference = new Money(rate.Rate ?? 0, ApplicationSettings.StartupCurrencyRates).ToString8Digits(false);
                 CallbackString = currency.Code + "," + currency.IsCryptoCurrency;
             }
 

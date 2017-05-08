@@ -7,7 +7,7 @@
         android:key="pref_category_data">
     <!-- Sources? -->
     <!-- Reference currencies -->
-    <!-- Additional rates -->
+    <!-- Additional rates? -->
     <!-- Preferred bitcoin exchange -->
   </PreferenceCategory>
   <PreferenceCategory
@@ -15,9 +15,11 @@
         android:key="pref_category_general">
     <Preference
       android:key="pref_security"
-      android:title="@string/Security" >
-    </Preference>
-    <!-- Startup view-->
+      android:title="@string/Security" />
+    <ListPreference
+      android:key="default-page"
+      android:title="@string/DefaultView"
+      android:dialogTitle="@string/DefaultView" />
     <SwitchPreference
       android:key="auto-refresh-on-startup"
       android:title="@string/RefreshOnStartup"
@@ -27,15 +29,11 @@
   <PreferenceCategory
         android:title="@string/Info"
         android:key="pref_category_info">
-    <!-- About -->
     <Preference
       android:key="pref_about"
-      android:title="@string/About" >
-    </Preference>
+      android:title="@string/About" />
     <Preference
       android:key="pref_privacy"
-      android:title="@string/Privacy" >
-    </Preference>
-    <!-- Privacy -->
+      android:title="@string/Privacy" />
   </PreferenceCategory>
 </PreferenceScreen>

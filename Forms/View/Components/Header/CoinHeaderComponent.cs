@@ -28,7 +28,7 @@ namespace MyCC.Forms.View.Components.Header
 
         public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false) : this()
         {
-            _currency = currency ?? ApplicationSettings.SelectedAssetsCurrency;
+            _currency = currency ?? ApplicationSettings.StartupCurrencyAssets;
             _useOnlyThisCurrency = useOnlyThisCurrency;
 
             UpdateView();

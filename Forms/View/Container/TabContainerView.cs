@@ -25,7 +25,7 @@ namespace MyCC.Forms.View.Container
             Children.Add(coinGraphPage);
             Children.Add(settingsPage);
 
-            CurrentPage = ApplicationSettings.DefaultPage == StartupPage.GraphView ? coinGraphPage : ApplicationSettings.DefaultPage == StartupPage.TableView ? coinTablePage : ratesPage;
+            CurrentPage = ApplicationSettings.DefaultStartupPage == StartupPage.GraphView ? coinGraphPage : ApplicationSettings.DefaultStartupPage == StartupPage.TableView ? coinTablePage : ratesPage;
         }
     }
 }

@@ -79,7 +79,7 @@ namespace MyCC.Ui.Android.Views.Activities
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetHomeButtonEnabled(true);
 
-            var startPage = ApplicationSettings.DefaultPage;
+            var startPage = ApplicationSettings.DefaultStartupPage;
 
             _position = _position ?? (startPage == StartupPage.RatesView ? 0 : startPage == StartupPage.TableView ? 1 : 2);
             SetFragment();
@@ -94,33 +94,33 @@ namespace MyCC.Ui.Android.Views.Activities
             {
                 case 0:
                     var ratefragments = ApplicationSettings.MainCurrencies.Select(c => new RatesFragment(c) as Fragment).ToList();
-                    fragment = new ViewPagerFragment(ratefragments, ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.SelectedRatePageCurrency));
+                    fragment = new ViewPagerFragment(ratefragments, ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.StartupCurrencyRates));
                     ((ViewPagerFragment)fragment).PositionChanged = pos =>
                     {
                         if (pos >= ApplicationSettings.MainCurrencies.Count) return;
-                        ApplicationSettings.SelectedRatePageCurrency = ApplicationSettings.MainCurrencies[pos];
+                        ApplicationSettings.StartupCurrencyRates = ApplicationSettings.MainCurrencies[pos];
                     };
                     break;
                 case 1:
                     var assetsfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsTableFragment(c) as Fragment).ToList();
-                    _assetsTableFragment = new ViewPagerFragment(assetsfragments, ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.SelectedAssetsCurrency));
+                    _assetsTableFragment = new ViewPagerFragment(assetsfragments, ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.StartupCurrencyAssets));
                     _assetsTableFragment.PositionChanged = pos =>
                     {
                         if (pos >= ApplicationSettings.MainCurrencies.Count) return;
 
-                        ApplicationSettings.SelectedAssetsCurrency = ApplicationSettings.MainCurrencies[pos];
+                        ApplicationSettings.StartupCurrencyAssets = ApplicationSettings.MainCurrencies[pos];
                         if (_assetsGraphFragment != null) _assetsGraphFragment.Position = pos;
                     };
                     fragment = _assetsTableFragment;
                     break;
                 case 2:
                     var graphfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsGraphFragment(c) as Fragment).ToList();
-                    _assetsGraphFragment = new ViewPagerFragment(graphfragments, ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.SelectedAssetsCurrency));
+                    _assetsGraphFragment = new ViewPagerFragment(graphfragments, ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.StartupCurrencyAssets));
                     _assetsGraphFragment.PositionChanged = pos =>
                     {
                         if (pos >= ApplicationSettings.MainCurrencies.Count) return;
 
-                        ApplicationSettings.SelectedAssetsCurrency = ApplicationSettings.MainCurrencies[pos];
+                        ApplicationSettings.StartupCurrencyAssets = ApplicationSettings.MainCurrencies[pos];
                         if (_assetsTableFragment != null) _assetsTableFragment.Position = pos;
                     };
                     fragment = _assetsGraphFragment;

@@ -21,15 +21,15 @@ namespace MyCC.Forms.View.Pages.Settings.General
         {
             if (sender.Equals(GraphOptionCell))
             {
-                ApplicationSettings.DefaultPage = StartupPage.GraphView;
+                ApplicationSettings.DefaultStartupPage = StartupPage.GraphView;
             }
             else if (sender.Equals(TableOptionCell))
             {
-                ApplicationSettings.DefaultPage = StartupPage.TableView;
+                ApplicationSettings.DefaultStartupPage = StartupPage.TableView;
             }
             else if (sender.Equals(RatesOptionCell))
             {
-                ApplicationSettings.DefaultPage = StartupPage.RatesView;
+                ApplicationSettings.DefaultStartupPage = StartupPage.RatesView;
             }
             UpdateCheckmarks();
             Messaging.DefaultView.SendValueChanged();
@@ -37,10 +37,10 @@ namespace MyCC.Forms.View.Pages.Settings.General
 
         private void UpdateCheckmarks()
         {
-            GraphOptionCell.ShowIcon = ApplicationSettings.DefaultPage.Equals(StartupPage.GraphView);
-            TableOptionCell.ShowIcon = ApplicationSettings.DefaultPage.Equals(StartupPage.TableView);
-            RatesOptionCell.ShowIcon = ApplicationSettings.DefaultPage.Equals(StartupPage.RatesView);
-            Header.InfoText = ApplicationSettings.DefaultPage.Equals(StartupPage.GraphView) ? $"{I18N.Assets} ({I18N.Graph})" : ApplicationSettings.DefaultPage.Equals(StartupPage.TableView) ? $"{I18N.Assets} ({I18N.Table})" : I18N.Rates;
+            GraphOptionCell.ShowIcon = ApplicationSettings.DefaultStartupPage.Equals(StartupPage.GraphView);
+            TableOptionCell.ShowIcon = ApplicationSettings.DefaultStartupPage.Equals(StartupPage.TableView);
+            RatesOptionCell.ShowIcon = ApplicationSettings.DefaultStartupPage.Equals(StartupPage.RatesView);
+            Header.InfoText = ApplicationSettings.DefaultStartupPage.Equals(StartupPage.GraphView) ? $"{I18N.Assets} ({I18N.Graph})" : ApplicationSettings.DefaultStartupPage.Equals(StartupPage.TableView) ? $"{I18N.Assets} ({I18N.Table})" : I18N.Rates;
         }
     }
 }

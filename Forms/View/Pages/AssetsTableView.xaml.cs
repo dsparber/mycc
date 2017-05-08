@@ -95,14 +95,14 @@ namespace MyCC.Forms.View.Pages
         {
             var currencies = ApplicationSettings.MainCurrencies;
 
-            ApplicationSettings.SelectedAssetsCurrency = currencies[HeaderCarousel.Position];
+            ApplicationSettings.StartupCurrencyAssets = currencies[HeaderCarousel.Position];
             MessagingCenter.Send(MessageInfo.ValueChanged, Messaging.ReferenceCurrency);
         }
 
         private void SetHeaderCarousel()
         {
             HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
-            HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.SelectedAssetsCurrency);
+            HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.StartupCurrencyAssets);
             HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
 
 
@@ -127,7 +127,7 @@ namespace MyCC.Forms.View.Pages
 
         private void AddSubscriber()
         {
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.SelectedAssetsCurrency));
+            Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.StartupCurrencyAssets));
             Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
 
             Messaging.Loading.SubscribeFinished(this, SetNoSourcesView);

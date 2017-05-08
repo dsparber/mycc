@@ -48,7 +48,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetDefaultPageCellText()
         {
-            DefaultViewCell.Detail = ApplicationSettings.DefaultPage == StartupPage.TableView ? $"{I18N.Assets} ({I18N.Table})" : ApplicationSettings.DefaultPage == StartupPage.GraphView ? $"{I18N.Assets} ({I18N.Graph})" : I18N.Rates;
+            DefaultViewCell.Detail = ApplicationSettings.DefaultStartupPage == StartupPage.TableView ? $"{I18N.Assets} ({I18N.Table})" : ApplicationSettings.DefaultStartupPage == StartupPage.GraphView ? $"{I18N.Assets} ({I18N.Graph})" : I18N.Rates;
         }
 
         private void OpenDefaultViewPage(object sender, EventArgs e)
