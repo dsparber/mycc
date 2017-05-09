@@ -51,6 +51,8 @@ namespace MyCC.Ui.Android.Views.Activities
             _header.InfoText = PackageManager.GetPackageInfo(PackageName, 0).VersionName;
             SupportFragmentManager.SetFragmentVisibility(_header, _showVersionHeader);
 
+            _webView.Settings.JavaScriptEnabled = true;
+            _webView.Settings.DomStorageEnabled = true;
             _webView.SetWebViewClient(new CustomWebViewClient(_progressBar, _openLinksInNewActivity));
             _webView.LoadUrl(url);
         }
