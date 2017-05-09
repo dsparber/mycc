@@ -53,6 +53,9 @@ namespace MyCC.Core.Rates
         private static IRateRepository GetRepository(RatesRepositories repository)
             => Instance.Repositories.FirstOrDefault(r => r.TypeId == (int)repository);
 
+        public static List<IRateRepository> BitcoinRepositories => Instance.Repositories
+            .Where(r => r.RatesType == RateRepositoryType.CryptoToFiat).ToList();
+
         public static IMultipleRatesRepository FixerIo => (IMultipleRatesRepository)GetRepository(RatesRepositories.FixerIo);
         public static IMultipleRatesRepository Btce => (IMultipleRatesRepository)GetRepository(RatesRepositories.Btce);
 

@@ -22,11 +22,9 @@ namespace MyCC.Forms.View.Components.Table
 	public class CoinTableComponent : ContentView
 	{
 		private readonly HybridWebView _webView;
-		//public INavigation Navigation { set; private get; }
 
-		public CoinTableComponent(INavigation navigation)
+		public CoinTableComponent()
 		{
-			//Navigation = navigation;
 			_webView = new HybridWebView("Html/coinTable.html") { LoadFinished = UpdateView };
 
 			_webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
@@ -76,11 +74,6 @@ namespace MyCC.Forms.View.Components.Table
 			Messaging.RoundNumbers.SubscribeValueChanged(this, UpdateView);
 			Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
 			Messaging.Loading.SubscribeFinished(this, UpdateView);
-		}
-
-		public void OnAppearing()
-		{
-			UpdateView();
 		}
 
 		private void UpdateView()

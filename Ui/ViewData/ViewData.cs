@@ -47,6 +47,8 @@ namespace MyCC.Ui.ViewData
 
             Messaging.Request.InfoForCurrency.Subscribe(this, TaskHelper.FetchCoinInfo);
             Messaging.Request.RateAndInfo.Subscribe(this, TaskHelper.FetchCoinInfoAndRates);
+
+            Messaging.Request.BitcoinExchangeSources.Subscribe(this, TaskHelper.UpdateBitcoinExchangeSources);
         }
 
 

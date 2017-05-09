@@ -8,7 +8,9 @@
     <!-- Sources? -->
     <!-- Reference currencies -->
     <!-- Additional rates? -->
-    <!-- Preferred bitcoin exchange -->
+    <Preference
+      android:key="pref_preferred_bitcoin"
+      android:title="@string/PreferredBitcoinRate" />
   </PreferenceCategory>
   <PreferenceCategory
         android:title="@string/General"

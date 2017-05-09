@@ -104,6 +104,15 @@ namespace MyCC.Ui.Tasks
             Messaging.Status.Progress.Send(1);
         }
 
+        public static async void UpdateBitcoinExchangeSources()
+        {
+            Messaging.Status.Progress.Send(0.2);
+            await ApplicationTasks.FetchBitcoinDollarRates(onError: ErrorDialog.Display, progressCallback: d => Messaging.Status.Progress.Send(0.2 + 0.8 * d));
+
+            Messaging.UiUpdate.BitcoinExchangeSources.Send();
+            Messaging.Status.Progress.Send(1);
+        }
+
         private static async Task FetchMissingRates(IReadOnlyCollection<ExchangeRate> neededRates, Action<double> progessCallback = null)
         {
             if (neededRates.Count > 0)

@@ -14,6 +14,8 @@
             public const string RateAndInfo = "RequestCurrencyAndInfo";
             public const string InfoForCurrency = "RequestInfoForCurrency";
             public const string SingleAccount = "RequestSingleAccount";
+
+            public const string BitcoinExchangeSources = "RequestBitcoinExchangeSources";
         }
 
         // Update Data
@@ -47,6 +49,8 @@
             public const string CoinInfo = "UiUpdateCoinInfo";
             public const string AccountDetail = "UiUpdateAccountDetail";
             public const string AccountGroup = "UiUpdateAccountGroup";
+
+            public const string BitcoinExchangeSources = "UiUpdateBitcoinExchangeSources";
 
             public static readonly string[] ReferenceTables = { CoinInfo, AccountDetail, AccountGroup };
 

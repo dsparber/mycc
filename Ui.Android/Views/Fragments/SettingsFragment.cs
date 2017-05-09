@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.OS;
 using Android.Support.V7.Preferences;
+using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.Android.Views.Activities;
@@ -11,6 +12,7 @@ namespace MyCC.Ui.Android.Views.Fragments
     public class SettingsFragment : PreferenceFragmentCompat
     {
         private Preference _securityPreference;
+        private Preference _preferredBitcoinPreference;
 
         public override void OnCreatePreferences(Bundle savedInstanceState, string rootKey)
         {
@@ -18,6 +20,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             
             var startupViewPreference = (ListPreference)FindPreference("default-page");
             _securityPreference = FindPreference("pref_security");
+            _preferredBitcoinPreference = FindPreference("pref_preferred_bitcoin");
 
             var startupEntries = new[]
             {
@@ -49,6 +52,11 @@ namespace MyCC.Ui.Android.Views.Fragments
             };
 
 
+            _preferredBitcoinPreference.PreferenceClick += (sender, args) =>
+            {
+                StartActivity(new Intent(Context, typeof(PreferredBitcoinExchangeActivity)));
+            };
+
             FindPreference("pref_about").PreferenceClick += (sender, args) =>
             {
                 var intent = new Intent(Context, typeof(WebviewActivity));
@@ -75,6 +83,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             base.OnResume();
 
             _securityPreference.Summary = Resources.GetString(ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled ? Resource.String.FingerprintActive : ApplicationSettings.IsPinSet ? Resource.String.PinActive : Resource.String.NotConfigured);
+            _preferredBitcoinPreference.Summary = ExchangeRatesStorage.PreferredBtcRepository.Name;
         }
     }
 }

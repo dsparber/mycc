@@ -50,7 +50,7 @@ namespace MyCC.Forms.View.Pages
 
         private void InitPullToRefresh()
         {
-            _tableView = new CoinTableComponent(Navigation);
+            _tableView = new CoinTableComponent();
 
             var stack = new StackLayout { Spacing = 0, VerticalOptions = LayoutOptions.FillAndExpand };
             stack.Children.Add(_tableView);

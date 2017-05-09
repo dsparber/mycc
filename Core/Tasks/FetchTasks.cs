@@ -184,20 +184,20 @@ namespace MyCC.Core.Tasks
 			}
 		}
 
-		public static async Task FetchBitcoinDollarRates(Action onStarted, Action onFinished, Action<Exception> onError, Action<double> progressCallback)
+		public static async Task FetchBitcoinDollarRates(Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
 		{
 			try
 			{
-				onStarted();
+				onStarted?.Invoke();
 				await ExchangeRateHelper.FetchDollarBitcoinRates(progressCallback);
 			}
 			catch (Exception e)
 			{
-				onError(e);
+				onError?.Invoke(e);
 			}
 			finally
 			{
-				onFinished();
+				onFinished?.Invoke();
 			}
 		}
 
