@@ -10,6 +10,7 @@ using Android.Views;
 using Android.Widget;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
+using MyCC.Core.Settings;
 using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Android.Views.Adapter;
 using MyCC.Ui.DataItems;
@@ -91,8 +92,10 @@ namespace MyCC.Ui.Android.Views.Fragments
                 Activity.RunOnUiThread(() =>
                 {
                     if (!ViewData.ViewData.Assets.IsDataAvailable) return;
+                    if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency)) return;
+                    if (!ViewData.ViewData.Assets.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
 
-                    _header.Data = ViewData.ViewData.Assets.Headers[_referenceCurrency];
+                    _header.Data = headerData;
                     _footerFragment.LastUpdate = ViewData.ViewData.Assets.LastUpdate[_referenceCurrency];
                     _items = ViewData.ViewData.Assets.Items[_referenceCurrency];
                     SetSortButtons(ViewData.ViewData.Assets.SortButtons?[_referenceCurrency], sortCurrency, sortAmount, sortValue);

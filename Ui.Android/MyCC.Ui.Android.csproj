@@ -217,6 +217,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Activities\MyccActivity.cs" />
     <Compile Include="Views\Activities\LockscreenActivity.cs" />
+    <Compile Include="Views\Activities\ReferenceCurrenciesActivity.cs" />
     <Compile Include="Views\Activities\PreferredBitcoinExchangeActivity.cs" />
     <Compile Include="Views\Activities\SecurityActivity.cs" />
     <Compile Include="Views\Activities\PinActivity.cs" />
@@ -347,6 +348,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\activity_pin.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\activity_reference_currencies.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -911,7 +915,9 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_preferred_bitcoin_exchange.axml" />
+    <AndroidResource Include="Resources\layout\activity_preferred_bitcoin_exchange.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\item_bitcoin_exchange.axml" />
@@ -948,6 +954,21 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_star_filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_remove.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

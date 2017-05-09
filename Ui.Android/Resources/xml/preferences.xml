@@ -6,7 +6,9 @@
         android:title="@string/Data"
         android:key="pref_category_data">
     <!-- Sources? -->
-    <!-- Reference currencies -->
+    <Preference
+      android:key="pref_reference_currencies"
+      android:title="@string/ReferenceCurrencies" />
     <!-- Additional rates? -->
     <Preference
       android:key="pref_preferred_bitcoin"

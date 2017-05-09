@@ -13,14 +13,16 @@ namespace MyCC.Ui.Android.Views.Fragments
     {
         private Preference _securityPreference;
         private Preference _preferredBitcoinPreference;
+        private Preference _referenceCurrenciesPreference;
 
         public override void OnCreatePreferences(Bundle savedInstanceState, string rootKey)
         {
             SetPreferencesFromResource(Resource.Xml.preferences, rootKey);
-            
+
             var startupViewPreference = (ListPreference)FindPreference("default-page");
             _securityPreference = FindPreference("pref_security");
             _preferredBitcoinPreference = FindPreference("pref_preferred_bitcoin");
+            _referenceCurrenciesPreference = FindPreference("pref_reference_currencies");
 
             var startupEntries = new[]
             {
@@ -51,11 +53,9 @@ namespace MyCC.Ui.Android.Views.Fragments
                 StartActivity(new Intent(Context, typeof(SecurityActivity)));
             };
 
+            _referenceCurrenciesPreference.PreferenceClick += (sender, args) => StartActivity(new Intent(Context, typeof(ReferenceCurrencyActivity)));
+            _preferredBitcoinPreference.PreferenceClick += (sender, args) => StartActivity(new Intent(Context, typeof(PreferredBitcoinExchangeActivity)));
 
-            _preferredBitcoinPreference.PreferenceClick += (sender, args) =>
-            {
-                StartActivity(new Intent(Context, typeof(PreferredBitcoinExchangeActivity)));
-            };
 
             FindPreference("pref_about").PreferenceClick += (sender, args) =>
             {
@@ -78,12 +78,13 @@ namespace MyCC.Ui.Android.Views.Fragments
             };
         }
 
-       public override void OnResume()
+        public override void OnResume()
         {
             base.OnResume();
 
             _securityPreference.Summary = Resources.GetString(ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled ? Resource.String.FingerprintActive : ApplicationSettings.IsPinSet ? Resource.String.PinActive : Resource.String.NotConfigured);
             _preferredBitcoinPreference.Summary = ExchangeRatesStorage.PreferredBtcRepository.Name;
+            _referenceCurrenciesPreference.Summary = string.Join(", ", ApplicationSettings.AllReferenceCurrencies.Select(c => c.Code));
         }
     }
 }

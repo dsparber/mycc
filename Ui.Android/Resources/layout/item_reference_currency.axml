@@ -39,6 +39,16 @@
         p1:id="@+id/image_star"
         p1:paddingLeft="8dp"
         p1:paddingRight="8dp"
-        p1:clickable="true" />
+        p1:clickable="true"
+        p1:background="?attr/selectableItemBackground"/>
+    <ImageView
+        p1:src="@drawable/ic_remove"
+        p1:layout_width="wrap_content"
+        p1:layout_height="match_parent"
+        p1:id="@+id/image_remove"
+        p1:paddingRight="8dp"
+        p1:paddingLeft="8dp"
+        p1:clickable="true"
+        p1:background="?attr/selectableItemBackground"/>
   </LinearLayout>
 </LinearLayout>

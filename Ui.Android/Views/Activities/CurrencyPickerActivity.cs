@@ -22,6 +22,7 @@ namespace MyCC.Ui.Android.Views.Activities
         public const string ExtraOnlyAddressCurrencies = "onlyAddressCurrencies";
         public const string ExtraCurrency = "currency";
         public const string ExtraWithoutAlreadyAddedCurrencies = "withoutAlreadyAddedCurrencies";
+        public const string ExtraWithoutReferenceCurrencies = "withoutReferenceCurrencies";
 
         private ListView _listView;
         private SearchView _searchView;
@@ -33,6 +34,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private bool _onlyAddressCurrencies;
         private bool _withoutAlreadyAddedCurrencies;
+        private bool _withoutReferenceCurrencies;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -45,6 +47,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
             _onlyAddressCurrencies = Intent?.GetBooleanExtra(ExtraOnlyAddressCurrencies, false) ?? false;
             _withoutAlreadyAddedCurrencies = Intent?.GetBooleanExtra(ExtraWithoutAlreadyAddedCurrencies, false) ?? false;
+            _withoutReferenceCurrencies = Intent?.GetBooleanExtra(ExtraWithoutReferenceCurrencies, false) ?? false;
 
             _listView = FindViewById<ListView>(Resource.Id.list_currencies);
             _searchView = FindViewById<SearchView>(Resource.Id.search);
@@ -68,6 +71,11 @@ namespace MyCC.Ui.Android.Views.Activities
         {
             Finish();
             return true;
+        }
+
+        public override void OnBackPressed()
+        {
+            Finish();
         }
 
         private void FilterCurrencies(object sender, SearchView.QueryTextChangeEventArgs queryTextChangeEventArgs)
@@ -113,6 +121,7 @@ namespace MyCC.Ui.Android.Views.Activities
         private void FillListView()
         {
             var exceptions = _withoutAlreadyAddedCurrencies ? ApplicationSettings.WatchedCurrencies.Concat(ApplicationSettings.AllReferenceCurrencies).Concat(AccountStorage.UsedCurrencies) : new List<Currency>();
+            exceptions = exceptions.Concat(_withoutReferenceCurrencies ? ApplicationSettings.AllReferenceCurrencies : new List<Currency>());
             _currencies = (_onlyAddressCurrencies ? AddressAccountRepository.AllSupportedCurrencies : CurrencyStorage.Instance.AllElements).Except(exceptions).OrderBy(c => $"{c.Code} {c.Name}").ToList();
 
             RunOnUiThread(() =>

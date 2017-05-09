@@ -26,7 +26,7 @@ namespace MyCC.Ui.ViewData
                 OrderBy(m => m.Currency.Code);
 
             return new HeaderDataItem(account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
-                string.Join(" / ", additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney))));
+                additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney))) : account.Money.Currency.Name);
         }
 
         public string AccountName(Account account) => account.Name;
@@ -57,7 +57,7 @@ namespace MyCC.Ui.ViewData
         public static IEnumerable<ReferenceValueItem> Items(Account account)
         {
             return ApplicationSettings.AllReferenceCurrencies.Except(new[] { account.Money.Currency })
-                .Select(c => new ReferenceValueItem(account.Money.Amount, ExchangeRateHelper.GetRate(account.Money.Currency, c)))
+                .Select(c => new ReferenceValueItem(account.Money.Amount, ExchangeRateHelper.GetRate(account.Money.Currency, c) ?? new ExchangeRate(account.Money.Currency, c)))
                 .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirection == SortDirection.Ascending);
         }
 

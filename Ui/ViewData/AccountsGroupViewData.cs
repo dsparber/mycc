@@ -23,7 +23,8 @@ namespace MyCC.Ui.ViewData
                 .Select(x => new Money(money.Amount * ExchangeRateHelper.GetRate(currency, x)?.Rate ?? 0, x)).
                 OrderBy(m => m.Currency.Code);
 
-            return new HeaderDataItem(money.ToStringTwoDigits(ApplicationSettings.RoundMoney), string.Join(" / ", additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney))));
+            return new HeaderDataItem(money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
+                additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney))) : currency.Name);
         }
 
 
@@ -32,7 +33,7 @@ namespace MyCC.Ui.ViewData
             var money = new Money(EnabledAccountsItems(currency).Sum(a => a.Money.Amount), currency);
 
             return ApplicationSettings.AllReferenceCurrencies.Except(new[] { money.Currency })
-                .Select(c => new ReferenceValueItem(money.Amount, ExchangeRateHelper.GetRate(money.Currency, c)))
+                .Select(c => new ReferenceValueItem(money.Amount, ExchangeRateHelper.GetRate(money.Currency, c) ?? new ExchangeRate(money.Currency, c)))
                 .OrderByWithDirection(c => SortOrderReference == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirectionReference == SortDirection.Ascending);
         }
 

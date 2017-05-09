@@ -9,7 +9,7 @@ namespace MyCC.Ui.ViewData
     public class CoinHeaderData : HeaderDataItem
     {
         public override string MainText => _referenceMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
-        public override string InfoText => string.Join(" / ", _additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney)));
+        public override string InfoText => _additionalReferences.Any() ? string.Join(" / ", _additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney))) : _referenceMoney.Currency.Name;
 
         private readonly Money _referenceMoney;
         private readonly List<Money> _additionalReferences;

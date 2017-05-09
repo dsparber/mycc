@@ -8,6 +8,7 @@ using Android.Views;
 using Android.Webkit;
 using Java.Interop;
 using MyCC.Core.Currency.Model;
+using MyCC.Core.Settings;
 using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Messages;
 using Newtonsoft.Json;
@@ -68,8 +69,10 @@ namespace MyCC.Ui.Android.Views.Fragments
                 Activity.RunOnUiThread(() =>
                 {
                     if (!ViewData.ViewData.Assets.IsGraphDataAvailable) return;
+                    if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency)) return;
+                    if (!ViewData.ViewData.Assets.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
 
-                    _header.Data = ViewData.ViewData.Assets.Headers[_referenceCurrency];
+                    _header.Data = headerData;
                     _footerFragment.LastUpdate = ViewData.ViewData.Assets.LastUpdate[_referenceCurrency];
                     var js = ViewData.ViewData.Assets.JsDataString(_referenceCurrency);
                     webView.LoadUrl($"javascript:{js}", null);

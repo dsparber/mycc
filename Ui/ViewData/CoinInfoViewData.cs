@@ -36,7 +36,7 @@ namespace MyCC.Ui.ViewData
         public List<ReferenceValueItem> Items(Currency currency)
         {
             return ApplicationSettings.AllReferenceCurrencies.Except(new[] { currency })
-                .Select(c => new ReferenceValueItem(1, ExchangeRateHelper.GetRate(currency, c)))
+                .Select(c => new ReferenceValueItem(1, ExchangeRateHelper.GetRate(currency, c) ?? new ExchangeRate(currency, c)))
                 .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirection == SortDirection.Ascending)
                 .ToList();
         }
