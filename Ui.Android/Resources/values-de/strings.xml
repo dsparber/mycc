@@ -155,4 +155,5 @@
   <string name="PinWrong">PIN nicht korrekt</string>
   <string name="AuthenticationFailed">Authentifizierung fehlgeschlagen</string>
   <string name="fingerprint_hint">Berühren Sie den Sensor</string>
+  <string name="UseShakeGesture">MyCC durch Schütteln des Geräts sperren</string>
 </resources>

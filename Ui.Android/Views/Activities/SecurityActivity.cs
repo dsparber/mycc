@@ -18,6 +18,7 @@ namespace MyCC.Ui.Android.Views.Activities
         private View _buttonChangePin;
         private View _fingerprintView;
         private Switch _fingerprintSwitch;
+        private Switch _useShakeSwitch;
         private HeaderFragment _header;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -34,6 +35,7 @@ namespace MyCC.Ui.Android.Views.Activities
             _buttonChangePin = FindViewById(Resource.Id.button_change_pin);
             _fingerprintView = FindViewById(Resource.Id.layout_use_fingerprint);
             _fingerprintSwitch = FindViewById<Switch>(Resource.Id.switch_use_fingerprint);
+            _useShakeSwitch = FindViewById<Switch>(Resource.Id.switch_use_shake_gesture);
             _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
 
             _fingerprintSwitch.CheckedChange += (sender, args) =>
@@ -41,6 +43,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 ApplicationSettings.IsFingerprintEnabled = args.IsChecked;
                 SetHeaderText();
             };
+            _useShakeSwitch.CheckedChange += (sender, args) => ApplicationSettings.LockByShaking = args.IsChecked;
 
             _buttonEnablePin.Click += (sender, args) => OpenPinActivity(true, false);
             _buttonDisablePin.Click += (sender, args) => OpenPinActivity(false, true);
@@ -56,6 +59,7 @@ namespace MyCC.Ui.Android.Views.Activities
             _buttonChangePin.Visibility = ApplicationSettings.IsPinSet ? ViewStates.Visible : ViewStates.Gone;
             _fingerprintView.Visibility = FingerprintHelper.IsFingerprintAvailable && ApplicationSettings.IsPinSet ? ViewStates.Visible : ViewStates.Gone;
             _fingerprintSwitch.Checked = ApplicationSettings.IsFingerprintEnabled;
+            _useShakeSwitch.Checked = ApplicationSettings.LockByShaking;
 
             SetHeaderText();
         }

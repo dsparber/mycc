@@ -69,7 +69,7 @@ namespace MyCC.Ui.Android.Views.Activities
             {
                 OnShake = () =>
                 {
-                    if (!ApplicationSettings.IsPinSet) return;
+                    if (!ApplicationSettings.IsPinSet || !ApplicationSettings.LockByShaking) return;
 
                     Locked = true;
                     var intent = new Intent(this, typeof(LockscreenActivity));

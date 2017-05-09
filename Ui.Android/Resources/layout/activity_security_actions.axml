@@ -44,13 +44,32 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp">
                 <TextView
+                    android:text="@string/UseShakeGesture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/primary_text_default_material_light"
+                    android:gravity="center_vertical" />
+                <Switch
+                    android:id="@+id/switch_use_shake_gesture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_use_fingerprint"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
+                <TextView
                     android:text="@string/UseFingerprint"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:textColor="@color/primary_text_default_material_light"
-                    android:gravity="center_vertical"
-                    android:id="@+id/textView1" />
+                    android:gravity="center_vertical" />
                 <Switch
                     android:id="@+id/switch_use_fingerprint"
                     android:layout_width="wrap_content"

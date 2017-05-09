@@ -38,6 +38,8 @@ namespace MyCC.Core.Settings
 
         public const string KeyFingerprintSet = "fingerprint-set";
 
+        public const string KeyLockByShaking = "lock_by_shaking";
+
         public const string DefaultPage = "default-page";
 
         public const string RoundMoney = "round-money";

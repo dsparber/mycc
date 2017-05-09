@@ -155,4 +155,5 @@
   <string name="PinWrong">Wrong PIN entered</string>
   <string name="fingerprint_hint">Touch sensor</string>
   <string name="AuthenticationFailed">Authentication failed</string>
+  <string name="UseShakeGesture">Lock MyCC by shaking the device</string>
 </resources>
