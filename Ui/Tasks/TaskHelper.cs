@@ -10,6 +10,7 @@ using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
 using MyCC.Ui.Helpers;
 using MyCC.Ui.Messages;
+using MyCC.Ui.ViewData;
 using Xamarin.Forms;
 
 namespace MyCC.Ui.Tasks
@@ -51,8 +52,7 @@ namespace MyCC.Ui.Tasks
 
         public static async void FetchMissingRates(bool sendMessage = true, Action<double> progessCallback = null) // TODO Remove with new API --> FetchRates() should get all needed rates
         {
-            var neededRates = ApplicationSettings.WatchedCurrencies
-                .Concat(ApplicationSettings.AllReferenceCurrencies)
+            var neededRates = CurrencySettingsData.EnabledCurrencies
                 .SelectMany(c => ApplicationSettings.AllReferenceCurrencies.Select(r => new ExchangeRate(r, c)))
                 .Distinct()
                 .Select(r => ExchangeRateHelper.GetRate(r) ?? r)

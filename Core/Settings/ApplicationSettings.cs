@@ -127,6 +127,18 @@ namespace MyCC.Core.Settings
             }
         }
 
+        public static IEnumerable<string> DisabledCurrencyIds
+        {
+            get
+            {
+                return Settings.Get(Settings.KeyDisabledCurrencies, string.Empty).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct();
+            }
+            set
+            {
+                Settings.Set(Settings.KeyDisabledCurrencies, string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct()));
+            }
+        }
+
 
         public static string Pin
         {

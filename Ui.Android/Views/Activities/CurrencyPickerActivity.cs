@@ -7,12 +7,12 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Account.Repositories.Base;
-using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Currency.Storage;
 using MyCC.Ui.Android.Views.Adapter;
 using Newtonsoft.Json;
 using MyCC.Core.Settings;
+using MyCC.Ui.ViewData;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -120,7 +120,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void FillListView()
         {
-            var exceptions = _withoutAlreadyAddedCurrencies ? ApplicationSettings.WatchedCurrencies.Concat(ApplicationSettings.AllReferenceCurrencies).Concat(AccountStorage.UsedCurrencies) : new List<Currency>();
+            var exceptions = _withoutAlreadyAddedCurrencies ? CurrencySettingsData.EnabledCurrencies : new List<Currency>();
             exceptions = exceptions.Concat(_withoutReferenceCurrencies ? ApplicationSettings.AllReferenceCurrencies : new List<Currency>());
             _currencies = (_onlyAddressCurrencies ? AddressAccountRepository.AllSupportedCurrencies : CurrencyStorage.Instance.AllElements).Except(exceptions).OrderBy(c => $"{c.Code} {c.Name}").ToList();
 

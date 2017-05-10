@@ -53,6 +53,7 @@
     <Compile Include="ViewData\CoinInfoViewData.cs" />
     <Compile Include="DataItems\HeaderDataItem.cs" />
     <Compile Include="DataItems\RateItem.cs" />
+    <Compile Include="ViewData\CurrencySettingsData.cs" />
     <Compile Include="ViewData\RatesViewData.cs" />
     <Compile Include="DataItems\ReferenceValueItem.cs" />
     <Compile Include="DataItems\SortButtonItem.cs" />

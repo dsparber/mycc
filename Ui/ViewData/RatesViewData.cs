@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Account.Storage;
 using MyCC.Core.Currency.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
@@ -15,7 +14,7 @@ namespace MyCC.Ui.ViewData
 {
     public class RatesViewData
     {
-        public Dictionary<Currency, List<RateItem>> Items { get; private set; }
+        public static Dictionary<Currency, List<RateItem>> Items => LoadRateItems();
         public Dictionary<Currency, CoinHeaderData> Headers { get; private set; }
         public Dictionary<Currency, List<SortButtonItem>> SortButtons { get; private set; }
         public Dictionary<Currency, DateTime> LastUpdate { get; private set; }
@@ -25,7 +24,6 @@ namespace MyCC.Ui.ViewData
 
         public void UpdateRateItems()
         {
-            Items = LoadRateItems();
             Headers = LoadRateHeaders();
             SortButtons = LoadSortButtons();
             LastUpdate = GetLastUpdate();
@@ -35,9 +33,7 @@ namespace MyCC.Ui.ViewData
 
         private static Dictionary<Currency, DateTime> GetLastUpdate() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
         {
-            return ApplicationSettings.WatchedCurrencies
-                .Concat(ApplicationSettings.AllReferenceCurrencies)
-                .Concat(AccountStorage.UsedCurrencies)
+            return CurrencySettingsData.EnabledCurrencies
                 .Select(e => new ExchangeRate(c, e))
                 .SelectMany(ExchangeRateHelper.GetNeededRates)
                 .Distinct()
@@ -63,11 +59,7 @@ namespace MyCC.Ui.ViewData
         {
             Func<Currency, Money> getReference = currency => new Money(ExchangeRateHelper.GetRate(currency, c)?.Rate ?? 0, currency);
 
-            var items = ApplicationSettings.WatchedCurrencies
-                 .Concat(ApplicationSettings.AllReferenceCurrencies)
-                 .Concat(AccountStorage.UsedCurrencies)
-                 .Distinct().Except(new[] { c })
-                 .Select(x => new RateItem(x, getReference(x)));
+            var items = CurrencySettingsData.EnabledCurrencies.Except(new[] { c }).Select(x => new RateItem(x, getReference(x)));
 
             return ApplySort(items);
         });
@@ -112,7 +104,6 @@ namespace MyCC.Ui.ViewData
 
         private void SortAndNotify()
         {
-            Items = ApplicationSettings.MainCurrencies.ToDictionary(c => c, c => ApplySort(Items[c]));
             SortButtons = LoadSortButtons();
             Messaging.UiUpdate.RatesOverview.Send();
         }

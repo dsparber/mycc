@@ -13,6 +13,7 @@ using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Android.Views.Adapter;
 using MyCC.Ui.DataItems;
 using MyCC.Ui.Messages;
+using MyCC.Ui.ViewData;
 using Newtonsoft.Json;
 using Fragment = Android.Support.V4.App.Fragment;
 
@@ -28,6 +29,8 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         private const int RequestCodeCurrency = 1;
 
+        private RatesListAdapter _adapter;
+
 
         public RatesFragment(Currency referenceCurrency)
         {
@@ -35,6 +38,20 @@ namespace MyCC.Ui.Android.Views.Fragments
         }
 
         public RatesFragment() { }
+
+        private bool _editingEnabled;
+
+        public bool EditingEnabled
+        {
+            get { return _editingEnabled; }
+            set
+            {
+                if (_adapter == null) return;
+                _editingEnabled = value;
+                _adapter.EditingEnabled = value;
+            }
+        }
+
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -58,14 +75,24 @@ namespace MyCC.Ui.Android.Views.Fragments
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             refreshView.Refresh += (sender, args) => Messaging.Request.AllRates.Send();
 
-            _items = ViewData.ViewData.Rates.Items?[_referenceCurrency] ?? new List<RateItem>();
-            var adapter = new RatesListAdapter(Context, _items);
+            _items = RatesViewData.Items?[_referenceCurrency] ?? new List<RateItem>();
+            _adapter = new RatesListAdapter(Context, _items)
+            {
+                CurrencyRemoved = () => Activity?.RunOnUiThread(() =>
+                {
+                    _items = RatesViewData.Items[_referenceCurrency];
+                    _adapter.Clear();
+                    _adapter.AddAll(_items);
+                })
+            };
 
             var list = view.FindViewById<ListView>(Resource.Id.list_rates);
-            list.Adapter = adapter;
+            list.Adapter = _adapter;
             list.ItemClick += (sender, args) =>
             {
-                var currency = adapter.GetItem(args.Position).Currency;
+                if (_editingEnabled) return;
+
+                var currency = _adapter.GetItem(args.Position).Currency;
 
                 var intent = new Intent(Activity, typeof(CoinInfoActivity));
                 intent.PutExtra(CoinInfoActivity.ExtraCurrency, JsonConvert.SerializeObject(currency));
@@ -90,10 +117,10 @@ namespace MyCC.Ui.Android.Views.Fragments
 
                     _header.Data = headerData;
                     _footerFragment.LastUpdate = ViewData.ViewData.Rates.LastUpdate[_referenceCurrency];
-                    _items = ViewData.ViewData.Rates.Items[_referenceCurrency];
+                    _items = RatesViewData.Items[_referenceCurrency];
                     SetSortButtons(ViewData.ViewData.Rates.SortButtons?[_referenceCurrency], sortCurrency, sortValue);
-                    adapter.Clear();
-                    adapter.AddAll(_items);
+                    _adapter.Clear();
+                    _adapter.AddAll(_items);
                     SetVisibleElements(view);
                     refreshView.Refreshing = false;
                 });
@@ -115,7 +142,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             if (requestCode == RequestCodeCurrency && resultCode == (int)Result.Ok)
             {
                 var currency = JsonConvert.DeserializeObject<Currency>(data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency));
-                ApplicationSettings.WatchedCurrencies = new List<Currency>(ApplicationSettings.WatchedCurrencies) { currency };
+                CurrencySettingsData.Add(currency);
                 Messaging.Update.Rates.Send();
             }
         }

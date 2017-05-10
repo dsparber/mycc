@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content.Res;
@@ -28,6 +29,11 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private ViewPagerFragment _assetsTableFragment;
         private ViewPagerFragment _assetsGraphFragment;
+
+        private List<RatesFragment> _ratesFragments;
+
+        private IMenuItem _editItem;
+        private IMenuItem _doneItem;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -69,6 +75,8 @@ namespace MyCC.Ui.Android.Views.Activities
 
                 _drawerLayout.CloseDrawer(drawerPanel);
                 _drawerList.SetItemChecked(args.Position, true);
+                _editItem?.SetVisible(_position == 0);
+                _doneItem?.SetVisible(false);
             };
 
             _drawerToggle = new ActionBarDrawerToggle(this, _drawerLayout,
@@ -82,9 +90,23 @@ namespace MyCC.Ui.Android.Views.Activities
             var startPage = ApplicationSettings.DefaultStartupPage;
 
             _position = _position ?? (startPage == StartupPage.RatesView ? 0 : startPage == StartupPage.TableView ? 1 : 2);
+            _editItem?.SetVisible(_position == 0);
             SetFragment();
 
             Messaging.SettingChange.MainCurrencies.Subscribe(this, SetFragment);
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            _editItem = menu.Add(0, 0, 0, Resources.GetString(Resource.String.Edit));
+            _editItem.SetIcon(Resource.Drawable.ic_edit).SetShowAsAction(ShowAsAction.Always);
+            _editItem?.SetVisible(_position == 0);
+
+            _doneItem = menu.Add(0, 0, 0, Resources.GetString(Resource.String.Done));
+            _doneItem.SetIcon(Resource.Drawable.ic_action_done).SetShowAsAction(ShowAsAction.Always);
+            _doneItem?.SetVisible(false);
+
+            return true;
         }
 
         private void SetFragment()
@@ -93,8 +115,9 @@ namespace MyCC.Ui.Android.Views.Activities
             switch (_position)
             {
                 case 0:
-                    var ratefragments = ApplicationSettings.MainCurrencies.Select(c => new RatesFragment(c) as Fragment).ToList();
-                    fragment = new ViewPagerFragment(ratefragments, ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.StartupCurrencyRates));
+                    _ratesFragments = ApplicationSettings.MainCurrencies.Select(c => new RatesFragment(c)).ToList();
+                    foreach (var f in _ratesFragments) f.EditingEnabled = false;
+                    fragment = new ViewPagerFragment(_ratesFragments.OfType<Fragment>().ToList(), ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.StartupCurrencyRates));
                     ((ViewPagerFragment)fragment).PositionChanged = pos =>
                     {
                         if (pos >= ApplicationSettings.MainCurrencies.Count) return;
@@ -153,6 +176,20 @@ namespace MyCC.Ui.Android.Views.Activities
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
+            if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Edit)))
+            {
+                foreach (var f in _ratesFragments ?? new List<RatesFragment>()) f.EditingEnabled = true;
+                _editItem?.SetVisible(false);
+                _doneItem?.SetVisible(true);
+                return true;
+            }
+            if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Done)))
+            {
+                foreach (var f in _ratesFragments ?? new List<RatesFragment>()) f.EditingEnabled = false;
+                _editItem?.SetVisible(true);
+                _doneItem?.SetVisible(false);
+                return true;
+            }
             return _drawerToggle.OnOptionsItemSelected(item) || base.OnOptionsItemSelected(item);
         }
     }

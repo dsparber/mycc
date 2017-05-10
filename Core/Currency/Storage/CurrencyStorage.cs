@@ -38,6 +38,8 @@ namespace MyCC.Core.Currency.Storage
             }
         }
 
+        public static Model.Currency Find(string id) => Instance.AllElements.Find(c => string.Equals(c.Id, id));
+
         protected override async Task BeforeFastFetching()
         {
             await LocalRepository.FetchOnline();

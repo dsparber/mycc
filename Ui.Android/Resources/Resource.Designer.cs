@@ -3582,11 +3582,11 @@ namespace MyCC.Ui.Android
 			// aapt resource value: 0x7f0900b6
 			public const int image_fingerprint = 2131296438;
 			
-			// aapt resource value: 0x7f09010f
-			public const int image_remove = 2131296527;
-			
 			// aapt resource value: 0x7f09010e
-			public const int image_star = 2131296526;
+			public const int image_remove = 2131296526;
+			
+			// aapt resource value: 0x7f09010f
+			public const int image_star = 2131296527;
 			
 			// aapt resource value: 0x7f09013b
 			public const int info = 2131296571;

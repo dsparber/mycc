@@ -29,6 +29,7 @@ namespace MyCC.Core.Settings
         public const string KeyAutoRefreshOnStartup = "auto-refresh-on-startup";
 
         public const string KeyWatchedCurrencies = "watched-currencies";
+        public const string KeyDisabledCurrencies = "disabled-currencies";
         public const string KeyMainCurrencies = "main-currencies";
         public const string KeyFurtherCurrencies = "further-currencies";
 
