@@ -94,6 +94,7 @@ namespace MyCC.Ui.Android
 			global::HockeyApp.Resource.String.hockeyapp_feedback_attachment_error = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_attachment_error;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_attachment_loading = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_attachment_loading;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_email_hint = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_email_hint;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_email_hint_required = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_email_hint_required;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_failed_text = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_failed_text;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_failed_title = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_failed_title;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_fetching_feedback_text = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_fetching_feedback_text;
@@ -101,7 +102,9 @@ namespace MyCC.Ui.Android
 			global::HockeyApp.Resource.String.hockeyapp_feedback_last_updated_text = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_last_updated_text;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_max_attachments_allowed = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_max_attachments_allowed;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_message_hint = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_message_hint;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_message_hint_required = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_message_hint_required;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_name_hint = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_name_hint;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_name_hint_required = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_name_hint_required;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_refresh_button_text = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_refresh_button_text;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_response_button_text = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_response_button_text;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_select_file = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_select_file;
@@ -111,6 +114,7 @@ namespace MyCC.Ui.Android
 			global::HockeyApp.Resource.String.hockeyapp_feedback_send_network_error = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_send_network_error;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_sending_feedback_text = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_sending_feedback_text;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_subject_hint = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_subject_hint;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_subject_hint_required = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_subject_hint_required;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_title = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_title;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_email_empty = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_validate_email_empty;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_email_error = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_validate_email_error;
@@ -118,11 +122,13 @@ namespace MyCC.Ui.Android
 			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_subject_error = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_validate_subject_error;
 			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_text_error = global::MyCC.Ui.Android.Resource.String.hockeyapp_feedback_validate_text_error;
 			global::HockeyApp.Resource.String.hockeyapp_login_email_hint = global::MyCC.Ui.Android.Resource.String.hockeyapp_login_email_hint;
+			global::HockeyApp.Resource.String.hockeyapp_login_email_hint_required = global::MyCC.Ui.Android.Resource.String.hockeyapp_login_email_hint_required;
 			global::HockeyApp.Resource.String.hockeyapp_login_headline_text = global::MyCC.Ui.Android.Resource.String.hockeyapp_login_headline_text;
 			global::HockeyApp.Resource.String.hockeyapp_login_headline_text_email_only = global::MyCC.Ui.Android.Resource.String.hockeyapp_login_headline_text_email_only;
 			global::HockeyApp.Resource.String.hockeyapp_login_login_button_text = global::MyCC.Ui.Android.Resource.String.hockeyapp_login_login_button_text;
 			global::HockeyApp.Resource.String.hockeyapp_login_missing_credentials_toast = global::MyCC.Ui.Android.Resource.String.hockeyapp_login_missing_credentials_toast;
 			global::HockeyApp.Resource.String.hockeyapp_login_password_hint = global::MyCC.Ui.Android.Resource.String.hockeyapp_login_password_hint;
+			global::HockeyApp.Resource.String.hockeyapp_login_password_hint_required = global::MyCC.Ui.Android.Resource.String.hockeyapp_login_password_hint_required;
 			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_message = global::MyCC.Ui.Android.Resource.String.hockeyapp_paint_dialog_message;
 			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_negative_button = global::MyCC.Ui.Android.Resource.String.hockeyapp_paint_dialog_negative_button;
 			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_neutral_button = global::MyCC.Ui.Android.Resource.String.hockeyapp_paint_dialog_neutral_button;
@@ -4735,476 +4741,476 @@ namespace MyCC.Ui.Android
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f0b008a
-			public const int About = 2131427466;
-			
-			// aapt resource value: 0x7f0b008b
-			public const int AccountInformation = 2131427467;
-			
-			// aapt resource value: 0x7f0b008c
-			public const int Accounts = 2131427468;
-			
-			// aapt resource value: 0x7f0b008d
-			public const int Add = 2131427469;
-			
 			// aapt resource value: 0x7f0b0090
-			public const int AddRate = 2131427472;
+			public const int About = 2131427472;
 			
 			// aapt resource value: 0x7f0b0091
-			public const int AddReferenceCurrency = 2131427473;
-			
-			// aapt resource value: 0x7f0b0094
-			public const int AddSource = 2131427476;
-			
-			// aapt resource value: 0x7f0b008e
-			public const int AdditionalCurrencies = 2131427470;
-			
-			// aapt resource value: 0x7f0b008f
-			public const int AdditionalRates = 2131427471;
+			public const int AccountInformation = 2131427473;
 			
 			// aapt resource value: 0x7f0b0092
-			public const int Address = 2131427474;
+			public const int Accounts = 2131427474;
 			
 			// aapt resource value: 0x7f0b0093
-			public const int AddressAdded = 2131427475;
-			
-			// aapt resource value: 0x7f0b0095
-			public const int AllCurrencies = 2131427477;
+			public const int Add = 2131427475;
 			
 			// aapt resource value: 0x7f0b0096
-			public const int AllCurrenciesFromAccounts = 2131427478;
+			public const int AddRate = 2131427478;
 			
 			// aapt resource value: 0x7f0b0097
-			public const int Amount = 2131427479;
+			public const int AddReferenceCurrency = 2131427479;
+			
+			// aapt resource value: 0x7f0b009a
+			public const int AddSource = 2131427482;
+			
+			// aapt resource value: 0x7f0b0094
+			public const int AdditionalCurrencies = 2131427476;
+			
+			// aapt resource value: 0x7f0b0095
+			public const int AdditionalRates = 2131427477;
 			
 			// aapt resource value: 0x7f0b0098
-			public const int AppName = 2131427480;
+			public const int Address = 2131427480;
 			
 			// aapt resource value: 0x7f0b0099
-			public const int AppNameLong = 2131427481;
+			public const int AddressAdded = 2131427481;
+			
+			// aapt resource value: 0x7f0b009b
+			public const int AllCurrencies = 2131427483;
+			
+			// aapt resource value: 0x7f0b009c
+			public const int AllCurrenciesFromAccounts = 2131427484;
+			
+			// aapt resource value: 0x7f0b009d
+			public const int Amount = 2131427485;
+			
+			// aapt resource value: 0x7f0b009e
+			public const int AppName = 2131427486;
+			
+			// aapt resource value: 0x7f0b009f
+			public const int AppNameLong = 2131427487;
 			
 			// aapt resource value: 0x7f0b0041
 			public const int ApplicationName = 2131427393;
 			
-			// aapt resource value: 0x7f0b009a
-			public const int AreEqualTo = 2131427482;
-			
-			// aapt resource value: 0x7f0b009b
-			public const int AsCurrency = 2131427483;
-			
-			// aapt resource value: 0x7f0b009c
-			public const int Assets = 2131427484;
-			
-			// aapt resource value: 0x7f0b0124
-			public const int AuthenticationFailed = 2131427620;
-			
-			// aapt resource value: 0x7f0b009d
-			public const int AvailableCurrencies = 2131427485;
-			
-			// aapt resource value: 0x7f0b009e
-			public const int AvailableRates = 2131427486;
-			
-			// aapt resource value: 0x7f0b009f
-			public const int Balance = 2131427487;
-			
 			// aapt resource value: 0x7f0b00a0
-			public const int BalanceAvailable = 2131427488;
+			public const int AreEqualTo = 2131427488;
 			
 			// aapt resource value: 0x7f0b00a1
-			public const int BalanceAvailableAddress = 2131427489;
+			public const int AsCurrency = 2131427489;
 			
 			// aapt resource value: 0x7f0b00a2
-			public const int BalanceAvailableBittrex = 2131427490;
+			public const int Assets = 2131427490;
+			
+			// aapt resource value: 0x7f0b012a
+			public const int AuthenticationFailed = 2131427626;
 			
 			// aapt resource value: 0x7f0b00a3
-			public const int BitcoinCanNotBeRemoved = 2131427491;
+			public const int AvailableCurrencies = 2131427491;
 			
 			// aapt resource value: 0x7f0b00a4
-			public const int Bittrex = 2131427492;
+			public const int AvailableRates = 2131427492;
 			
 			// aapt resource value: 0x7f0b00a5
-			public const int BittrexAdded = 2131427493;
+			public const int Balance = 2131427493;
 			
 			// aapt resource value: 0x7f0b00a6
-			public const int BittrexKey = 2131427494;
+			public const int BalanceAvailable = 2131427494;
 			
 			// aapt resource value: 0x7f0b00a7
-			public const int BittrexSecret = 2131427495;
+			public const int BalanceAvailableAddress = 2131427495;
 			
 			// aapt resource value: 0x7f0b00a8
-			public const int Cancel = 2131427496;
+			public const int BalanceAvailableBittrex = 2131427496;
 			
 			// aapt resource value: 0x7f0b00a9
-			public const int ChangePin = 2131427497;
-			
-			// aapt resource value: 0x7f0b00ab
-			public const int CoinAlgorithm = 2131427499;
-			
-			// aapt resource value: 0x7f0b00ac
-			public const int CoinBlockHeight = 2131427500;
-			
-			// aapt resource value: 0x7f0b00ad
-			public const int CoinBlockReward = 2131427501;
-			
-			// aapt resource value: 0x7f0b00ae
-			public const int CoinBlocktime = 2131427502;
-			
-			// aapt resource value: 0x7f0b00af
-			public const int CoinDifficulty = 2131427503;
-			
-			// aapt resource value: 0x7f0b00b0
-			public const int CoinExplorer = 2131427504;
-			
-			// aapt resource value: 0x7f0b00b1
-			public const int CoinHashrate = 2131427505;
-			
-			// aapt resource value: 0x7f0b00b2
-			public const int CoinMarketCap = 2131427506;
+			public const int BitcoinCanNotBeRemoved = 2131427497;
 			
 			// aapt resource value: 0x7f0b00aa
-			public const int CoinName = 2131427498;
+			public const int Bittrex = 2131427498;
+			
+			// aapt resource value: 0x7f0b00ab
+			public const int BittrexAdded = 2131427499;
+			
+			// aapt resource value: 0x7f0b00ac
+			public const int BittrexKey = 2131427500;
+			
+			// aapt resource value: 0x7f0b00ad
+			public const int BittrexSecret = 2131427501;
+			
+			// aapt resource value: 0x7f0b00ae
+			public const int Cancel = 2131427502;
+			
+			// aapt resource value: 0x7f0b00af
+			public const int ChangePin = 2131427503;
+			
+			// aapt resource value: 0x7f0b00b1
+			public const int CoinAlgorithm = 2131427505;
+			
+			// aapt resource value: 0x7f0b00b2
+			public const int CoinBlockHeight = 2131427506;
 			
 			// aapt resource value: 0x7f0b00b3
-			public const int CoinProofOfStake = 2131427507;
+			public const int CoinBlockReward = 2131427507;
 			
 			// aapt resource value: 0x7f0b00b4
-			public const int CoinProofOfWork = 2131427508;
+			public const int CoinBlocktime = 2131427508;
 			
 			// aapt resource value: 0x7f0b00b5
-			public const int CoinSupply = 2131427509;
+			public const int CoinDifficulty = 2131427509;
 			
 			// aapt resource value: 0x7f0b00b6
-			public const int CoinSupplyMax = 2131427510;
+			public const int CoinExplorer = 2131427510;
 			
 			// aapt resource value: 0x7f0b00b7
-			public const int CoinType = 2131427511;
+			public const int CoinHashrate = 2131427511;
 			
 			// aapt resource value: 0x7f0b00b8
-			public const int Copyright = 2131427512;
+			public const int CoinMarketCap = 2131427512;
+			
+			// aapt resource value: 0x7f0b00b0
+			public const int CoinName = 2131427504;
 			
 			// aapt resource value: 0x7f0b00b9
-			public const int Cryptocurrencies = 2131427513;
+			public const int CoinProofOfStake = 2131427513;
 			
 			// aapt resource value: 0x7f0b00ba
-			public const int Currencies = 2131427514;
+			public const int CoinProofOfWork = 2131427514;
 			
 			// aapt resource value: 0x7f0b00bb
-			public const int CurrenciesForRateView = 2131427515;
+			public const int CoinSupply = 2131427515;
 			
 			// aapt resource value: 0x7f0b00bc
-			public const int Currency = 2131427516;
+			public const int CoinSupplyMax = 2131427516;
 			
 			// aapt resource value: 0x7f0b00bd
-			public const int CurrencyCode = 2131427517;
+			public const int CoinType = 2131427517;
 			
 			// aapt resource value: 0x7f0b00be
-			public const int Data = 2131427518;
+			public const int Copyright = 2131427518;
 			
 			// aapt resource value: 0x7f0b00bf
-			public const int DefaultPageInfo = 2131427519;
+			public const int Cryptocurrencies = 2131427519;
 			
 			// aapt resource value: 0x7f0b00c0
-			public const int DefaultView = 2131427520;
+			public const int Currencies = 2131427520;
 			
 			// aapt resource value: 0x7f0b00c1
-			public const int Delete = 2131427521;
+			public const int CurrenciesForRateView = 2131427521;
 			
 			// aapt resource value: 0x7f0b00c2
-			public const int Deleting = 2131427522;
+			public const int Currency = 2131427522;
 			
 			// aapt resource value: 0x7f0b00c3
-			public const int Details = 2131427523;
+			public const int CurrencyCode = 2131427523;
 			
 			// aapt resource value: 0x7f0b00c4
-			public const int DevelopedBy = 2131427524;
-			
-			// aapt resource value: 0x7f0b00c6
-			public const int DisablePin = 2131427526;
+			public const int Data = 2131427524;
 			
 			// aapt resource value: 0x7f0b00c5
-			public const int DisabledAccounts = 2131427525;
+			public const int DefaultPageInfo = 2131427525;
+			
+			// aapt resource value: 0x7f0b00c6
+			public const int DefaultView = 2131427526;
 			
 			// aapt resource value: 0x7f0b00c7
-			public const int Done = 2131427527;
+			public const int Delete = 2131427527;
 			
 			// aapt resource value: 0x7f0b00c8
-			public const int Edit = 2131427528;
+			public const int Deleting = 2131427528;
 			
 			// aapt resource value: 0x7f0b00c9
-			public const int Editing = 2131427529;
+			public const int Details = 2131427529;
 			
 			// aapt resource value: 0x7f0b00ca
-			public const int EnableAccount = 2131427530;
-			
-			// aapt resource value: 0x7f0b00cd
-			public const int EnablePin = 2131427533;
-			
-			// aapt resource value: 0x7f0b00cb
-			public const int Enabled = 2131427531;
+			public const int DevelopedBy = 2131427530;
 			
 			// aapt resource value: 0x7f0b00cc
-			public const int EnabledInOverview = 2131427532;
+			public const int DisablePin = 2131427532;
+			
+			// aapt resource value: 0x7f0b00cb
+			public const int DisabledAccounts = 2131427531;
+			
+			// aapt resource value: 0x7f0b00cd
+			public const int Done = 2131427533;
 			
 			// aapt resource value: 0x7f0b00ce
-			public const int EqualTo = 2131427534;
+			public const int Edit = 2131427534;
 			
 			// aapt resource value: 0x7f0b00cf
-			public const int Error = 2131427535;
+			public const int Editing = 2131427535;
 			
 			// aapt resource value: 0x7f0b00d0
-			public const int ErrorRefreshingNotPossibleWithoutInternet = 2131427536;
-			
-			// aapt resource value: 0x7f0b00d1
-			public const int Fetching = 2131427537;
-			
-			// aapt resource value: 0x7f0b00d2
-			public const int FetchingNoSuccessText = 2131427538;
+			public const int EnableAccount = 2131427536;
 			
 			// aapt resource value: 0x7f0b00d3
-			public const int FiatCurrencies = 2131427539;
+			public const int EnablePin = 2131427539;
+			
+			// aapt resource value: 0x7f0b00d1
+			public const int Enabled = 2131427537;
+			
+			// aapt resource value: 0x7f0b00d2
+			public const int EnabledInOverview = 2131427538;
 			
 			// aapt resource value: 0x7f0b00d4
-			public const int FingerprintActive = 2131427540;
+			public const int EqualTo = 2131427540;
 			
 			// aapt resource value: 0x7f0b00d5
-			public const int Further = 2131427541;
-			
-			// aapt resource value: 0x7f0b00d8
-			public const int GHps = 2131427544;
+			public const int Error = 2131427541;
 			
 			// aapt resource value: 0x7f0b00d6
-			public const int General = 2131427542;
+			public const int ErrorRefreshingNotPossibleWithoutInternet = 2131427542;
 			
 			// aapt resource value: 0x7f0b00d7
-			public const int GeneralError = 2131427543;
+			public const int Fetching = 2131427543;
+			
+			// aapt resource value: 0x7f0b00d8
+			public const int FetchingNoSuccessText = 2131427544;
 			
 			// aapt resource value: 0x7f0b00d9
-			public const int GoToSourcesToAddAccount = 2131427545;
+			public const int FiatCurrencies = 2131427545;
 			
 			// aapt resource value: 0x7f0b00da
-			public const int Graph = 2131427546;
+			public const int FingerprintActive = 2131427546;
+			
+			// aapt resource value: 0x7f0b00db
+			public const int Further = 2131427547;
+			
+			// aapt resource value: 0x7f0b00de
+			public const int GHps = 2131427550;
+			
+			// aapt resource value: 0x7f0b00dc
+			public const int General = 2131427548;
+			
+			// aapt resource value: 0x7f0b00dd
+			public const int GeneralError = 2131427549;
+			
+			// aapt resource value: 0x7f0b00df
+			public const int GoToSourcesToAddAccount = 2131427551;
+			
+			// aapt resource value: 0x7f0b00e0
+			public const int Graph = 2131427552;
 			
 			// aapt resource value: 0x7f0b0040
 			public const int Hello = 2131427392;
 			
-			// aapt resource value: 0x7f0b00db
-			public const int Info = 2131427547;
-			
-			// aapt resource value: 0x7f0b00dc
-			public const int InfoNoDirectRate = 2131427548;
-			
-			// aapt resource value: 0x7f0b00dd
-			public const int IsEqualTo = 2131427549;
-			
-			// aapt resource value: 0x7f0b00de
-			public const int Label = 2131427550;
-			
-			// aapt resource value: 0x7f0b00df
-			public const int LastChange = 2131427551;
-			
-			// aapt resource value: 0x7f0b00e0
-			public const int LastUpdate = 2131427552;
+			// aapt resource value: 0x7f0b00e1
+			public const int Info = 2131427553;
 			
 			// aapt resource value: 0x7f0b00e2
-			public const int LoadRatesAndBalancesOnStartup = 2131427554;
-			
-			// aapt resource value: 0x7f0b00e1
-			public const int LoadingCurrencies = 2131427553;
+			public const int InfoNoDirectRate = 2131427554;
 			
 			// aapt resource value: 0x7f0b00e3
-			public const int Local = 2131427555;
+			public const int IsEqualTo = 2131427555;
 			
 			// aapt resource value: 0x7f0b00e4
-			public const int Manually = 2131427556;
+			public const int Label = 2131427556;
 			
 			// aapt resource value: 0x7f0b00e5
-			public const int ManuallyAdded = 2131427557;
+			public const int LastChange = 2131427557;
 			
 			// aapt resource value: 0x7f0b00e6
-			public const int Name = 2131427558;
-			
-			// aapt resource value: 0x7f0b00e7
-			public const int NetworkError = 2131427559;
+			public const int LastUpdate = 2131427558;
 			
 			// aapt resource value: 0x7f0b00e8
-			public const int Never = 2131427560;
+			public const int LoadRatesAndBalancesOnStartup = 2131427560;
+			
+			// aapt resource value: 0x7f0b00e7
+			public const int LoadingCurrencies = 2131427559;
 			
 			// aapt resource value: 0x7f0b00e9
-			public const int NewPin = 2131427561;
+			public const int Local = 2131427561;
 			
 			// aapt resource value: 0x7f0b00ea
-			public const int NewPinsDontMatch = 2131427562;
+			public const int Manually = 2131427562;
 			
 			// aapt resource value: 0x7f0b00eb
-			public const int NewSource = 2131427563;
+			public const int ManuallyAdded = 2131427563;
 			
 			// aapt resource value: 0x7f0b00ec
-			public const int NoAccounts = 2131427564;
+			public const int Name = 2131427564;
 			
 			// aapt resource value: 0x7f0b00ed
-			public const int NoCurrencies = 2131427565;
+			public const int NetworkError = 2131427565;
 			
 			// aapt resource value: 0x7f0b00ee
-			public const int NoDataToDisplay = 2131427566;
+			public const int Never = 2131427566;
 			
 			// aapt resource value: 0x7f0b00ef
-			public const int NoInternetAccess = 2131427567;
-			
-			// aapt resource value: 0x7f0b00f1
-			public const int NoSources = 2131427569;
-			
-			// aapt resource value: 0x7f0b00f2
-			public const int NoSourcesDescriptionAdd = 2131427570;
+			public const int NewPin = 2131427567;
 			
 			// aapt resource value: 0x7f0b00f0
-			public const int None = 2131427568;
+			public const int NewPinsDontMatch = 2131427568;
+			
+			// aapt resource value: 0x7f0b00f1
+			public const int NewSource = 2131427569;
+			
+			// aapt resource value: 0x7f0b00f2
+			public const int NoAccounts = 2131427570;
 			
 			// aapt resource value: 0x7f0b00f3
-			public const int NotConfigured = 2131427571;
+			public const int NoCurrencies = 2131427571;
 			
 			// aapt resource value: 0x7f0b00f4
-			public const int Offline = 2131427572;
+			public const int NoDataToDisplay = 2131427572;
 			
 			// aapt resource value: 0x7f0b00f5
-			public const int Ok = 2131427573;
-			
-			// aapt resource value: 0x7f0b00f6
-			public const int OldPin = 2131427574;
+			public const int NoInternetAccess = 2131427573;
 			
 			// aapt resource value: 0x7f0b00f7
-			public const int OldPinWrong = 2131427575;
+			public const int NoSources = 2131427575;
 			
 			// aapt resource value: 0x7f0b00f8
-			public const int OneAccount = 2131427576;
+			public const int NoSourcesDescriptionAdd = 2131427576;
+			
+			// aapt resource value: 0x7f0b00f6
+			public const int None = 2131427574;
 			
 			// aapt resource value: 0x7f0b00f9
-			public const int OneCurrency = 2131427577;
+			public const int NotConfigured = 2131427577;
 			
 			// aapt resource value: 0x7f0b00fa
-			public const int OneSource = 2131427578;
+			public const int Offline = 2131427578;
 			
 			// aapt resource value: 0x7f0b00fb
-			public const int Online = 2131427579;
+			public const int Ok = 2131427579;
 			
 			// aapt resource value: 0x7f0b00fc
-			public const int OnlyThreeCurrenciesCanBeStared = 2131427580;
+			public const int OldPin = 2131427580;
 			
 			// aapt resource value: 0x7f0b00fd
-			public const int OtherwiseTruncate = 2131427581;
+			public const int OldPinWrong = 2131427581;
 			
 			// aapt resource value: 0x7f0b00fe
-			public const int Pin = 2131427582;
+			public const int OneAccount = 2131427582;
 			
 			// aapt resource value: 0x7f0b00ff
-			public const int PinActive = 2131427583;
+			public const int OneCurrency = 2131427583;
 			
 			// aapt resource value: 0x7f0b0100
-			public const int PinToShort = 2131427584;
-			
-			// aapt resource value: 0x7f0b0122
-			public const int PinWrong = 2131427618;
+			public const int OneSource = 2131427584;
 			
 			// aapt resource value: 0x7f0b0101
-			public const int PreferredBitcoinRate = 2131427585;
+			public const int Online = 2131427585;
 			
 			// aapt resource value: 0x7f0b0102
-			public const int Privacy = 2131427586;
+			public const int OnlyThreeCurrenciesCanBeStared = 2131427586;
 			
 			// aapt resource value: 0x7f0b0103
-			public const int PrivacyLinkId = 2131427587;
+			public const int OtherwiseTruncate = 2131427587;
 			
 			// aapt resource value: 0x7f0b0104
-			public const int QrCode = 2131427588;
+			public const int Pin = 2131427588;
 			
 			// aapt resource value: 0x7f0b0105
-			public const int Rates = 2131427589;
+			public const int PinActive = 2131427589;
 			
 			// aapt resource value: 0x7f0b0106
-			public const int RatesCurrenciesInfo = 2131427590;
+			public const int PinToShort = 2131427590;
+			
+			// aapt resource value: 0x7f0b0128
+			public const int PinWrong = 2131427624;
 			
 			// aapt resource value: 0x7f0b0107
-			public const int ReferenceCurrencies = 2131427591;
+			public const int PreferredBitcoinRate = 2131427591;
 			
 			// aapt resource value: 0x7f0b0108
-			public const int ReferenceCurrencyInfoP1 = 2131427592;
+			public const int Privacy = 2131427592;
 			
 			// aapt resource value: 0x7f0b0109
-			public const int ReferenceCurrencyInfoP2 = 2131427593;
-			
-			// aapt resource value: 0x7f0b010b
-			public const int RefreshOnStartup = 2131427595;
+			public const int PrivacyLinkId = 2131427593;
 			
 			// aapt resource value: 0x7f0b010a
-			public const int RefreshingDots = 2131427594;
+			public const int QrCode = 2131427594;
+			
+			// aapt resource value: 0x7f0b010b
+			public const int Rates = 2131427595;
 			
 			// aapt resource value: 0x7f0b010c
-			public const int RepeatNewPin = 2131427596;
+			public const int RatesCurrenciesInfo = 2131427596;
 			
 			// aapt resource value: 0x7f0b010d
-			public const int RepositoryAlreadyAdded = 2131427597;
+			public const int ReferenceCurrencies = 2131427597;
 			
 			// aapt resource value: 0x7f0b010e
-			public const int RoundNumbers = 2131427598;
+			public const int ReferenceCurrencyInfoP1 = 2131427598;
 			
 			// aapt resource value: 0x7f0b010f
-			public const int Save = 2131427599;
-			
-			// aapt resource value: 0x7f0b0110
-			public const int ScanQrCode = 2131427600;
+			public const int ReferenceCurrencyInfoP2 = 2131427599;
 			
 			// aapt resource value: 0x7f0b0111
-			public const int SearchCurrencies = 2131427601;
+			public const int RefreshOnStartup = 2131427601;
+			
+			// aapt resource value: 0x7f0b0110
+			public const int RefreshingDots = 2131427600;
 			
 			// aapt resource value: 0x7f0b0112
-			public const int Security = 2131427602;
+			public const int RepeatNewPin = 2131427602;
 			
 			// aapt resource value: 0x7f0b0113
-			public const int SelectCurrency = 2131427603;
+			public const int RepositoryAlreadyAdded = 2131427603;
 			
 			// aapt resource value: 0x7f0b0114
-			public const int Settings = 2131427604;
+			public const int RoundNumbers = 2131427604;
 			
 			// aapt resource value: 0x7f0b0115
-			public const int ShowQrCode = 2131427605;
+			public const int Save = 2131427605;
 			
 			// aapt resource value: 0x7f0b0116
-			public const int Source = 2131427606;
+			public const int ScanQrCode = 2131427606;
 			
 			// aapt resource value: 0x7f0b0117
-			public const int Sources = 2131427607;
+			public const int SearchCurrencies = 2131427607;
 			
 			// aapt resource value: 0x7f0b0118
-			public const int Table = 2131427608;
+			public const int Security = 2131427608;
 			
 			// aapt resource value: 0x7f0b0119
-			public const int Testing = 2131427609;
+			public const int SelectCurrency = 2131427609;
 			
 			// aapt resource value: 0x7f0b011a
-			public const int Type = 2131427610;
+			public const int Settings = 2131427610;
 			
 			// aapt resource value: 0x7f0b011b
-			public const int UnitSecond = 2131427611;
+			public const int ShowQrCode = 2131427611;
 			
 			// aapt resource value: 0x7f0b011c
-			public const int UnlockApplication = 2131427612;
+			public const int Source = 2131427612;
 			
 			// aapt resource value: 0x7f0b011d
-			public const int Unnamed = 2131427613;
+			public const int Sources = 2131427613;
 			
 			// aapt resource value: 0x7f0b011e
-			public const int UseFingerprint = 2131427614;
-			
-			// aapt resource value: 0x7f0b0125
-			public const int UseShakeGesture = 2131427621;
+			public const int Table = 2131427614;
 			
 			// aapt resource value: 0x7f0b011f
-			public const int Value = 2131427615;
+			public const int Testing = 2131427615;
 			
 			// aapt resource value: 0x7f0b0120
-			public const int VerifyInput = 2131427616;
+			public const int Type = 2131427616;
 			
 			// aapt resource value: 0x7f0b0121
-			public const int Version = 2131427617;
+			public const int UnitSecond = 2131427617;
+			
+			// aapt resource value: 0x7f0b0122
+			public const int UnlockApplication = 2131427618;
+			
+			// aapt resource value: 0x7f0b0123
+			public const int Unnamed = 2131427619;
+			
+			// aapt resource value: 0x7f0b0124
+			public const int UseFingerprint = 2131427620;
+			
+			// aapt resource value: 0x7f0b012b
+			public const int UseShakeGesture = 2131427627;
+			
+			// aapt resource value: 0x7f0b0125
+			public const int Value = 2131427621;
+			
+			// aapt resource value: 0x7f0b0126
+			public const int VerifyInput = 2131427622;
+			
+			// aapt resource value: 0x7f0b0127
+			public const int Version = 2131427623;
 			
 			// aapt resource value: 0x7f0b0017
 			public const int abc_action_bar_home_description = 2131427351;
@@ -5308,8 +5314,8 @@ namespace MyCC.Ui.Android
 			// aapt resource value: 0x7f0b003a
 			public const int character_counter_pattern = 2131427386;
 			
-			// aapt resource value: 0x7f0b0123
-			public const int fingerprint_hint = 2131427619;
+			// aapt resource value: 0x7f0b0129
+			public const int fingerprint_hint = 2131427625;
 			
 			// aapt resource value: 0x7f0b0043
 			public const int hockeyapp_crash_dialog_app_name_fallback = 2131427395;
@@ -5381,148 +5387,166 @@ namespace MyCC.Ui.Android
 			public const int hockeyapp_feedback_email_hint = 2131427417;
 			
 			// aapt resource value: 0x7f0b005a
-			public const int hockeyapp_feedback_failed_text = 2131427418;
+			public const int hockeyapp_feedback_email_hint_required = 2131427418;
 			
 			// aapt resource value: 0x7f0b005b
-			public const int hockeyapp_feedback_failed_title = 2131427419;
+			public const int hockeyapp_feedback_failed_text = 2131427419;
 			
 			// aapt resource value: 0x7f0b005c
-			public const int hockeyapp_feedback_fetching_feedback_text = 2131427420;
+			public const int hockeyapp_feedback_failed_title = 2131427420;
 			
 			// aapt resource value: 0x7f0b005d
-			public const int hockeyapp_feedback_generic_error = 2131427421;
+			public const int hockeyapp_feedback_fetching_feedback_text = 2131427421;
 			
 			// aapt resource value: 0x7f0b005e
-			public const int hockeyapp_feedback_last_updated_text = 2131427422;
+			public const int hockeyapp_feedback_generic_error = 2131427422;
 			
 			// aapt resource value: 0x7f0b005f
-			public const int hockeyapp_feedback_max_attachments_allowed = 2131427423;
+			public const int hockeyapp_feedback_last_updated_text = 2131427423;
 			
 			// aapt resource value: 0x7f0b0060
-			public const int hockeyapp_feedback_message_hint = 2131427424;
+			public const int hockeyapp_feedback_max_attachments_allowed = 2131427424;
 			
 			// aapt resource value: 0x7f0b0061
-			public const int hockeyapp_feedback_name_hint = 2131427425;
+			public const int hockeyapp_feedback_message_hint = 2131427425;
 			
 			// aapt resource value: 0x7f0b0062
-			public const int hockeyapp_feedback_refresh_button_text = 2131427426;
+			public const int hockeyapp_feedback_message_hint_required = 2131427426;
 			
 			// aapt resource value: 0x7f0b0063
-			public const int hockeyapp_feedback_response_button_text = 2131427427;
+			public const int hockeyapp_feedback_name_hint = 2131427427;
 			
 			// aapt resource value: 0x7f0b0064
-			public const int hockeyapp_feedback_select_file = 2131427428;
+			public const int hockeyapp_feedback_name_hint_required = 2131427428;
 			
 			// aapt resource value: 0x7f0b0065
-			public const int hockeyapp_feedback_select_picture = 2131427429;
+			public const int hockeyapp_feedback_refresh_button_text = 2131427429;
 			
 			// aapt resource value: 0x7f0b0066
-			public const int hockeyapp_feedback_send_button_text = 2131427430;
+			public const int hockeyapp_feedback_response_button_text = 2131427430;
 			
 			// aapt resource value: 0x7f0b0067
-			public const int hockeyapp_feedback_send_generic_error = 2131427431;
+			public const int hockeyapp_feedback_select_file = 2131427431;
 			
 			// aapt resource value: 0x7f0b0068
-			public const int hockeyapp_feedback_send_network_error = 2131427432;
+			public const int hockeyapp_feedback_select_picture = 2131427432;
 			
 			// aapt resource value: 0x7f0b0069
-			public const int hockeyapp_feedback_sending_feedback_text = 2131427433;
+			public const int hockeyapp_feedback_send_button_text = 2131427433;
 			
 			// aapt resource value: 0x7f0b006a
-			public const int hockeyapp_feedback_subject_hint = 2131427434;
+			public const int hockeyapp_feedback_send_generic_error = 2131427434;
 			
 			// aapt resource value: 0x7f0b006b
-			public const int hockeyapp_feedback_title = 2131427435;
+			public const int hockeyapp_feedback_send_network_error = 2131427435;
 			
 			// aapt resource value: 0x7f0b006c
-			public const int hockeyapp_feedback_validate_email_empty = 2131427436;
+			public const int hockeyapp_feedback_sending_feedback_text = 2131427436;
 			
 			// aapt resource value: 0x7f0b006d
-			public const int hockeyapp_feedback_validate_email_error = 2131427437;
+			public const int hockeyapp_feedback_subject_hint = 2131427437;
 			
 			// aapt resource value: 0x7f0b006e
-			public const int hockeyapp_feedback_validate_name_error = 2131427438;
+			public const int hockeyapp_feedback_subject_hint_required = 2131427438;
 			
 			// aapt resource value: 0x7f0b006f
-			public const int hockeyapp_feedback_validate_subject_error = 2131427439;
+			public const int hockeyapp_feedback_title = 2131427439;
 			
 			// aapt resource value: 0x7f0b0070
-			public const int hockeyapp_feedback_validate_text_error = 2131427440;
+			public const int hockeyapp_feedback_validate_email_empty = 2131427440;
 			
 			// aapt resource value: 0x7f0b0071
-			public const int hockeyapp_login_email_hint = 2131427441;
+			public const int hockeyapp_feedback_validate_email_error = 2131427441;
 			
 			// aapt resource value: 0x7f0b0072
-			public const int hockeyapp_login_headline_text = 2131427442;
+			public const int hockeyapp_feedback_validate_name_error = 2131427442;
 			
 			// aapt resource value: 0x7f0b0073
-			public const int hockeyapp_login_headline_text_email_only = 2131427443;
+			public const int hockeyapp_feedback_validate_subject_error = 2131427443;
 			
 			// aapt resource value: 0x7f0b0074
-			public const int hockeyapp_login_login_button_text = 2131427444;
+			public const int hockeyapp_feedback_validate_text_error = 2131427444;
 			
 			// aapt resource value: 0x7f0b0075
-			public const int hockeyapp_login_missing_credentials_toast = 2131427445;
+			public const int hockeyapp_login_email_hint = 2131427445;
 			
 			// aapt resource value: 0x7f0b0076
-			public const int hockeyapp_login_password_hint = 2131427446;
+			public const int hockeyapp_login_email_hint_required = 2131427446;
 			
 			// aapt resource value: 0x7f0b0077
-			public const int hockeyapp_paint_dialog_message = 2131427447;
+			public const int hockeyapp_login_headline_text = 2131427447;
 			
 			// aapt resource value: 0x7f0b0078
-			public const int hockeyapp_paint_dialog_negative_button = 2131427448;
+			public const int hockeyapp_login_headline_text_email_only = 2131427448;
 			
 			// aapt resource value: 0x7f0b0079
-			public const int hockeyapp_paint_dialog_neutral_button = 2131427449;
+			public const int hockeyapp_login_login_button_text = 2131427449;
 			
 			// aapt resource value: 0x7f0b007a
-			public const int hockeyapp_paint_dialog_positive_button = 2131427450;
+			public const int hockeyapp_login_missing_credentials_toast = 2131427450;
 			
 			// aapt resource value: 0x7f0b007b
-			public const int hockeyapp_paint_indicator_toast = 2131427451;
+			public const int hockeyapp_login_password_hint = 2131427451;
 			
 			// aapt resource value: 0x7f0b007c
-			public const int hockeyapp_paint_menu_clear = 2131427452;
+			public const int hockeyapp_login_password_hint_required = 2131427452;
 			
 			// aapt resource value: 0x7f0b007d
-			public const int hockeyapp_paint_menu_save = 2131427453;
+			public const int hockeyapp_paint_dialog_message = 2131427453;
 			
 			// aapt resource value: 0x7f0b007e
-			public const int hockeyapp_paint_menu_undo = 2131427454;
+			public const int hockeyapp_paint_dialog_negative_button = 2131427454;
 			
 			// aapt resource value: 0x7f0b007f
-			public const int hockeyapp_permission_dialog_negative_button = 2131427455;
+			public const int hockeyapp_paint_dialog_neutral_button = 2131427455;
 			
 			// aapt resource value: 0x7f0b0080
-			public const int hockeyapp_permission_dialog_positive_button = 2131427456;
+			public const int hockeyapp_paint_dialog_positive_button = 2131427456;
 			
 			// aapt resource value: 0x7f0b0081
-			public const int hockeyapp_permission_update_message = 2131427457;
+			public const int hockeyapp_paint_indicator_toast = 2131427457;
 			
 			// aapt resource value: 0x7f0b0082
-			public const int hockeyapp_permission_update_title = 2131427458;
+			public const int hockeyapp_paint_menu_clear = 2131427458;
 			
 			// aapt resource value: 0x7f0b0083
-			public const int hockeyapp_update_button = 2131427459;
+			public const int hockeyapp_paint_menu_save = 2131427459;
 			
 			// aapt resource value: 0x7f0b0084
-			public const int hockeyapp_update_dialog_message = 2131427460;
+			public const int hockeyapp_paint_menu_undo = 2131427460;
 			
 			// aapt resource value: 0x7f0b0085
-			public const int hockeyapp_update_dialog_negative_button = 2131427461;
+			public const int hockeyapp_permission_dialog_negative_button = 2131427461;
 			
 			// aapt resource value: 0x7f0b0086
-			public const int hockeyapp_update_dialog_positive_button = 2131427462;
+			public const int hockeyapp_permission_dialog_positive_button = 2131427462;
 			
 			// aapt resource value: 0x7f0b0087
-			public const int hockeyapp_update_dialog_title = 2131427463;
+			public const int hockeyapp_permission_update_message = 2131427463;
 			
 			// aapt resource value: 0x7f0b0088
-			public const int hockeyapp_update_mandatory_toast = 2131427464;
+			public const int hockeyapp_permission_update_title = 2131427464;
 			
 			// aapt resource value: 0x7f0b0089
-			public const int hockeyapp_update_version_details_label = 2131427465;
+			public const int hockeyapp_update_button = 2131427465;
+			
+			// aapt resource value: 0x7f0b008a
+			public const int hockeyapp_update_dialog_message = 2131427466;
+			
+			// aapt resource value: 0x7f0b008b
+			public const int hockeyapp_update_dialog_negative_button = 2131427467;
+			
+			// aapt resource value: 0x7f0b008c
+			public const int hockeyapp_update_dialog_positive_button = 2131427468;
+			
+			// aapt resource value: 0x7f0b008d
+			public const int hockeyapp_update_dialog_title = 2131427469;
+			
+			// aapt resource value: 0x7f0b008e
+			public const int hockeyapp_update_mandatory_toast = 2131427470;
+			
+			// aapt resource value: 0x7f0b008f
+			public const int hockeyapp_update_version_details_label = 2131427471;
 			
 			// aapt resource value: 0x7f0b0042
 			public const int library_name = 2131427394;

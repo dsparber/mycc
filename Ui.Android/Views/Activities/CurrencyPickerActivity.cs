@@ -54,6 +54,7 @@ namespace MyCC.Ui.Android.Views.Activities
             _progressBar = FindViewById<ProgressBar>(Resource.Id.progress_bar);
             _loadingTextView = FindViewById<TextView>(Resource.Id.text_loading_currencies);
 
+            _currencies = new List<Currency>();
             _currenciesForAdapter = new List<Currency>();
             _adapter = new CurrencyListAdapter(this, _currenciesForAdapter);
 
@@ -99,7 +100,7 @@ namespace MyCC.Ui.Android.Views.Activities
             if (!string.IsNullOrWhiteSpace(text))
             {
                 var lower = text.ToLower();
-                currencies = _currencies.Where(c => $"{c.Code}_{c.Name}".ToLower().Contains(lower)).ToList();
+                currencies = _currencies?.Where(c => c != null && $"{c.Code}_{c.Name}".ToLower().Contains(lower)).ToList();
             }
             else
             {

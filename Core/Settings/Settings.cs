@@ -55,7 +55,15 @@ namespace MyCC.Core.Settings
                 return (T)Cache[key];
             }
 
-            var value = AppSettings.GetValueOrDefault(key, defaultValue);
+            T value;
+            try
+            {
+                value = AppSettings.GetValueOrDefault(key, defaultValue);
+            }
+            catch
+            {
+                value = defaultValue;
+            }
 
             if (Cache.ContainsKey(key)) return value;
 
