@@ -11,6 +11,14 @@ namespace MyCC.Core.Settings
 {
     public static class ApplicationSettings
     {
+        public static void Migrate()
+        {
+            if (LastCoreVersion < new Version(1, 0, 2))
+            {
+                DefaultStartupPage = StartupPage.TableView;
+            }
+        }
+
         private static Version _lastVersion;
         public static Version LastCoreVersion
         {

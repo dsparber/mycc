@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Support.V7.App;
 using HockeyApp.Android;
 using HockeyApp.Android.Metrics;
+using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Messages;
@@ -25,6 +26,7 @@ namespace MyCC.Ui.Android.Views.Activities
             MobileBarcodeScanner.Initialize(Application);
             CrashManager.Register(this, "7792ee5321a64433ace4955a1693cca5");
             MetricsManager.Register(Application, "7792ee5321a64433ace4955a1693cca5");
+            ApplicationSettings.Migrate();
 
             var startupWork = new Task(Startup);
             startupWork.Start();
