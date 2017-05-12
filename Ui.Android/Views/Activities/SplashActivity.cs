@@ -28,8 +28,15 @@ namespace MyCC.Ui.Android.Views.Activities
             MetricsManager.Register(Application, "7792ee5321a64433ace4955a1693cca5");
             ApplicationSettings.Migrate();
 
-            var startupWork = new Task(Startup);
-            startupWork.Start();
+            if (!ApplicationSettings.AppInitialised)
+            {
+                StartActivity(new Intent(this, typeof(PreparingAppActivity)));
+            }
+            else
+            {
+                var startupWork = new Task(Startup);
+                startupWork.Start();
+            }
         }
 
         private async void Startup()

@@ -34,7 +34,7 @@ namespace MyCC.Core.Rates.Repositories
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
             Rates = new List<ExchangeRate>();
-            _supportedCurrencies = new List<string>();
+            _supportedCurrencies = CurrencyStorage.CurrenciesOf<CryptonatorCurrencyRepository>().Select(c => c.Code).ToList();
             _connection = connection;
         }
 
@@ -86,11 +86,7 @@ namespace MyCC.Core.Rates.Repositories
 
         public Task FetchAvailableRates()
         {
-            var id = CurrencyStorage.Instance.RepositoryOfType<CryptonatorCurrencyRepository>().Id;
-            var codes = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == id).Select(e => e.Code);
-            _supportedCurrencies = CurrencyStorage.Instance.AllElements.Where(c => codes.Any(x => x.Equals(c?.Code))).Select(c => c.Code).ToList();
-
-            return new Task(() => { });
+            return null;
         }
 
         public bool IsAvailable(ExchangeRate rate)

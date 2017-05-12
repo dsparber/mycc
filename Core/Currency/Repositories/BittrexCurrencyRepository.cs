@@ -14,6 +14,9 @@ namespace MyCC.Core.Currency.Repositories
     {
         private const string UrlCurrencyList = "https://bittrex.com/api/v1.1/public/getcurrencies";
 
+        public override string Description => "Bittrex";
+
+
         private const string CurrencyListResult = "result";
         private const string CurrencyListResultName = "CurrencyLong";
         private const string CurrencyListResultCurrency = "Currency";

@@ -71,7 +71,7 @@ namespace MyCC.Core.Rates
         }
         public async Task FetchAvailableRates()
         {
-            await Task.WhenAll(Repositories.Select(r => r.FetchAvailableRates()));
+            await Task.WhenAll(Repositories.Select(r => r.FetchAvailableRates()).Where(t => t != null));
         }
 
         public static IRateRepository PreferredBtcRepository

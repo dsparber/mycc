@@ -156,4 +156,8 @@
   <string name="AuthenticationFailed">Authentifizierung fehlgeschlagen</string>
   <string name="fingerprint_hint">Berühren Sie den Sensor</string>
   <string name="UseShakeGesture">MyCC durch Schütteln des Geräts sperren</string>
+  <string name="InternetIsNeededForInitialisation">Bevor sie MyCC das erste Mal nutzen können, müssen die verfügbaren Währungen und Kurse abgerufen werden. Bitte schalten Sie hierfür Ihr Internet ein.</string>
+  <string name="LoadingCurrenciesFrom">Währungen werden von {0} geladen</string>
+  <string name="LoadingAvailableRatesFrom">Verfügbare Kurse werden von {0} abgerufen</string>
+  <string name="LoadingRates">Benötigte Kurse herunterladen</string>
 </resources>

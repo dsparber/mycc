@@ -9,6 +9,9 @@ namespace MyCC.Core.Currency.Repositories
         public BtceCurrencyRepository(int id) : base(id) { }
         public override int RepositoryTypeId => CurrencyRepositoryDbm.DbTypeBtceRepository;
 
+        public override string Description => "BTC-e";
+
+
         protected override Task<IEnumerable<Model.Currency>> GetCurrencies()
         {
             return Task.Factory.StartNew<IEnumerable<Model.Currency>>(() => new List<Model.Currency> { Model.Currency.Eur, Model.Currency.Usd });

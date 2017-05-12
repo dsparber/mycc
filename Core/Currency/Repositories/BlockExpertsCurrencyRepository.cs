@@ -9,6 +9,9 @@ namespace MyCC.Core.Currency.Repositories
         public BlockExpertsCurrencyRepository(int id) : base(id) { }
         public override int RepositoryTypeId => CurrencyRepositoryDbm.DbTypeBlockExpertsRepository;
 
+        public override string Description => "BlockExperts";
+
+
         protected override async Task<IEnumerable<Model.Currency>> GetCurrencies()
         {
             var list = await Task.Factory.StartNew(() =>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1">
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+      <ImageView
+          android:src="@drawable/ic_mycc_logo"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="16dp" />
+      <TextView
+          android:text="@string/AppName"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_horizontal"
+          android:textSize="36sp"
+          android:textColor="@color/primary_text_default_material_light" />
+      <TextView
+          android:text="@string/AppNameLong"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_horizontal"
+          android:textSize="24sp"
+          android:textColor="@color/primary_text_default_material_light" />
+      <LinearLayout
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/layout_progress"
+          android:paddingTop="24dp"
+          android:paddingBottom="24dp">
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress_bar"
+            android:progress="0" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_progress"
+            android:gravity="center_horizontal"
+            android:textColor="@color/primary_text_default_material_light" />
+      </LinearLayout>
+      <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/layout_no_network"
+          android:paddingTop="24dp"
+          android:paddingLeft="16dp"
+          android:paddingRight="16dp"
+          tools:visibility="gone">
+        <ImageView
+            android:src="@drawable/ic_no_network"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView1" />
+        <TextView
+            android:text="@string/NoInternetAccess"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView1"
+            android:textColor="@color/warning_color"
+            android:gravity="center_horizontal" />
+        <TextView
+            android:text="@string/InternetIsNeededForInitialisation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView1"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/primary_text_default_material_light" />
+      </LinearLayout>
+    </LinearLayout>
+  </RelativeLayout>
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/linearLayout1"
+      android:paddingBottom="16dp">
+    <TextView
+        android:text="@string/Copyright"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@color/primary_text_default_material_light" />
+    <TextView
+        android:text="@string/DevelopedBy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@color/primary_text_default_material_light" />
+  </LinearLayout>
+</LinearLayout>

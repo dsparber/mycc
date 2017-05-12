@@ -10,8 +10,16 @@ namespace MyCC.Core.Helpers
         {
             Debug.WriteLine(e);
             HockeyApp.MetricsManager.TrackEvent($"{e.GetType().Name}: {e.Message}",
-                        new Dictionary<string, string> { { "error", e.ToString() } },
-                        new Dictionary<string, double> { { "time", DateTime.Now.Ticks } });
+                new Dictionary<string, string> { { "error", e.ToString() } },
+                new Dictionary<string, double> { { "time", DateTime.Now.Ticks } });
+        }
+
+        public static void LogInfo(this string message)
+        {
+            Debug.WriteLine(message);
+            HockeyApp.MetricsManager.TrackEvent("First Setup",
+                        new Dictionary<string, string> { { "text", message } },
+                        new Dictionary<string, double> { { "timestamp", DateTime.Now.Ticks } });
         }
     }
 }

@@ -156,4 +156,8 @@
   <string name="fingerprint_hint">Touch sensor</string>
   <string name="AuthenticationFailed">Authentication failed</string>
   <string name="UseShakeGesture">Lock MyCC by shaking the device</string>
+  <string name="InternetIsNeededForInitialisation">Before using the MyCC for the first time, currencies and available rates need to be loaded. Please enable your internet.</string>
+  <string name="LoadingCurrenciesFrom">Loading currencies from {0}</string>
+  <string name="LoadingAvailableRatesFrom">Loading available rates from {0}</string>
+  <string name="LoadingRates">Loading needed exchange rates</string>
 </resources>

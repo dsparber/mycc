@@ -41,7 +41,7 @@ namespace MyCC.Ui.DataItems
 
         public string Supply => new Money(_data.CoinSupply ?? 0, _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
         public string MaxSupply => new Money(_data.MaxCoinSupply ?? 0, _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-        public string MarketCap => new Money(_data.CoinSupply ?? 0 * ExchangeRateHelper.GetRate(_currency, Currency.Btc)?.Rate ?? 0, Currency.Btc).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+        public string MarketCap => new Money((_data.CoinSupply ?? 0) * (ExchangeRateHelper.GetRate(_currency, Currency.Btc)?.Rate ?? 0), Currency.Btc).ToStringTwoDigits(ApplicationSettings.RoundMoney);
 
 
         public bool HasExplorer => !string.IsNullOrWhiteSpace(Explorer);

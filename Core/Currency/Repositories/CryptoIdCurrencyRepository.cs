@@ -14,6 +14,9 @@ namespace MyCC.Core.Currency.Repositories
     {
         private const string UrlCurrencyList = "https://chainz.cryptoid.info/explorer/api.dws?q=summary";
 
+        public override string Description => "CryptoId";
+
+
         private const string JsonKeyName = "name";
 
         private const int BufferSize = 256000;

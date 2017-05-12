@@ -14,6 +14,9 @@ namespace MyCC.Core.Currency.Repositories
     {
         private const string UrlCurrencyList = "https://api.cryptonator.com/api/currencies";
 
+        public override string Description => "Cryptonator";
+
+
         private const string CurrencyListResult = "rows";
         private const string CurrencyListResultName = "name";
         private const string CurrencyListResultCurrency = "code";

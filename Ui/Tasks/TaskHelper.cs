@@ -50,7 +50,7 @@ namespace MyCC.Ui.Tasks
             Messaging.Status.Progress.Send(1);
         }
 
-        public static async void FetchMissingRates(bool sendMessage = true, Action<double> progessCallback = null) // TODO Remove with new API --> FetchRates() should get all needed rates
+        public static async void FetchMissingRates(bool sendMessage = true, Action<double> progessCallback = null, Action onFinish = null) // TODO Remove with new API --> FetchRates() should get all needed rates
         {
             var neededRates = CurrencySettingsData.EnabledCurrencies
                 .SelectMany(c => ApplicationSettings.AllReferenceCurrencies.Select(r => new ExchangeRate(r, c)))
@@ -60,6 +60,7 @@ namespace MyCC.Ui.Tasks
                 .Concat(AccountStorage.NeededRates).Distinct().ToList();
 
             await FetchMissingRates(neededRates, progessCallback);
+            onFinish?.Invoke();
 
             if (!sendMessage) return;
             Messaging.Update.Assets.Send();

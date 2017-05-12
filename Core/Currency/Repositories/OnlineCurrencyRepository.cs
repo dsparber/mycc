@@ -7,53 +7,55 @@ using MyCC.Core.Currency.Storage;
 
 namespace MyCC.Core.Currency.Repositories
 {
-	public abstract class OnlineCurrencyRepository : CurrencyRepository
-	{
-		protected OnlineCurrencyRepository(int id) : base(id) { }
+    public abstract class OnlineCurrencyRepository : CurrencyRepository
+    {
+        protected OnlineCurrencyRepository(int id) : base(id) { }
 
-		public override async Task<bool> LoadFromDatabase()
-		{
-			LastFastFetch = DateTime.Now;
-			return await FetchFromDatabase();
-		}
+        public override async Task<bool> LoadFromDatabase()
+        {
+            LastFastFetch = DateTime.Now;
+            return await FetchFromDatabase();
+        }
 
-		protected abstract Task<IEnumerable<Model.Currency>> GetCurrencies();
+        public abstract string Description { get; }
 
-		public override async Task<bool> FetchOnline()
-		{
-			var currentElements = await GetCurrencies();
-			var mapElements = new List<CurrencyMapDbm>();
+        protected abstract Task<IEnumerable<Model.Currency>> GetCurrencies();
 
-			if (currentElements == null) return false;
-			foreach (var c in currentElements)
-			{
-				var existing = CurrencyStorage.Instance.LocalRepository.Elements.ToList().Find(c.Equals);
+        public override async Task<bool> FetchOnline()
+        {
+            var currentElements = await GetCurrencies();
+            var mapElements = new List<CurrencyMapDbm>();
 
-				if (existing != null)
-				{
-					c.Name = c.Name.ToLower().Equals(c.Code.ToLower()) ? existing.Name : c.Name;
-				}
-				await CurrencyStorage.Instance.LocalRepository.AddOrUpdate(c);
+            if (currentElements == null) return false;
+            foreach (var c in currentElements)
+            {
+                var existing = CurrencyStorage.Instance.LocalRepository.Elements.ToList().Find(c.Equals);
 
-				var mapEntry = new CurrencyMapDbm { Code = c.Code, ParentId = Id };
-				var all = CurrencyRepositoryMapStorage.Instance.AllElements;
-				var existingMapEntry = all.Find(e => e.Code.Equals(c.Code) && e.ParentId == Id);
+                if (existing != null)
+                {
+                    c.Name = c.Name.ToLower().Equals(c.Code.ToLower()) ? existing.Name : c.Name;
+                }
+                await CurrencyStorage.Instance.LocalRepository.AddOrUpdate(c);
 
-				mapElements.Add(existingMapEntry ?? mapEntry);
+                var mapEntry = new CurrencyMapDbm { Code = c.Code, ParentId = Id };
+                var all = CurrencyRepositoryMapStorage.Instance.AllElements;
+                var existingMapEntry = all.Find(e => e.Code.Equals(c.Code) && e.ParentId == Id);
 
-				if (existingMapEntry == null)
-				{
-					await CurrencyRepositoryMapStorage.Instance.LocalRepository.AddOrUpdate(mapEntry);
-				}
-			}
+                mapElements.Add(existingMapEntry ?? mapEntry);
 
-			var toDelete = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == Id).Where(e => !mapElements.Contains(e)).ToList();
-			await Task.WhenAll(toDelete.Select(e => CurrencyRepositoryMapStorage.Instance.LocalRepository.Remove(e)));
-			await Task.WhenAll(Elements.Where(e => toDelete.Contains(new CurrencyMapDbm { Code = e.Code, ParentId = Id })).Select(Remove));
+                if (existingMapEntry == null)
+                {
+                    await CurrencyRepositoryMapStorage.Instance.LocalRepository.AddOrUpdate(mapEntry);
+                }
+            }
 
-			LastFetch = DateTime.Now;
-			return true;
-		}
-	}
+            var toDelete = CurrencyRepositoryMapStorage.Instance.AllElements.Where(e => e.ParentId == Id).Where(e => !mapElements.Contains(e)).ToList();
+            await Task.WhenAll(toDelete.Select(e => CurrencyRepositoryMapStorage.Instance.LocalRepository.Remove(e)));
+            await Task.WhenAll(Elements.Where(e => toDelete.Contains(new CurrencyMapDbm { Code = e.Code, ParentId = Id })).Select(Remove));
+
+            LastFetch = DateTime.Now;
+            return true;
+        }
+    }
 }
 

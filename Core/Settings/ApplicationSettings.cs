@@ -357,6 +357,18 @@ namespace MyCC.Core.Settings
             }
         }
 
+        public static bool AppInitialised
+        {
+            get
+            {
+                return Settings.Get(Settings.KeyAppInitialised, false);
+            }
+            set
+            {
+                Settings.Set(Settings.KeyAppInitialised, value);
+            }
+        }
+
         public static bool RoundMoney
         {
             get

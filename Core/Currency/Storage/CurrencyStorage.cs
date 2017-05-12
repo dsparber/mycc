@@ -42,6 +42,7 @@ namespace MyCC.Core.Currency.Storage
 
         protected override async Task BeforeFastFetching()
         {
+            await CurrencyRepositoryMapStorage.Instance.LoadFromDatabase();
             await LocalRepository.FetchOnline();
         }
 

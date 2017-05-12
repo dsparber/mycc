@@ -15,6 +15,8 @@ namespace MyCC.Core.Settings
         public const string KeyRatePageCurrency = "rate-page-currency";
 
         public const string KeyFirstLaunch = "first-launch";
+        public const string KeyAppInitialised = "app-initialised";
+
 
         public const string KeySortOrderTable = "sort-order-table";
         public const string KeySortOrderRates = "sort-order-rates";

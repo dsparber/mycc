@@ -60,5 +60,7 @@ namespace MyCC.Core.Currency.Repositories
                 return new List<Model.Currency>();
             }
         }
+
+        public override string Description => "Open Exchange Rates";
     }
 }
