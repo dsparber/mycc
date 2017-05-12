@@ -169,8 +169,8 @@ namespace MyCC.Ui.Android.Views.Activities
             FindViewById<TextView>(Resource.Id.text_maxsupply).Text = data?.MaxSupply;
             FindViewById(Resource.Id.view_maxsupply).Visibility = show(data?.HasMaxSupply);
 
-            FindViewById<TextView>(Resource.Id.text_marketcap).Text = data?.Difficulty;
-            FindViewById(Resource.Id.view_marketcap).Visibility = show(data?.HasDifficulty);
+            FindViewById<TextView>(Resource.Id.text_marketcap).Text = data?.MarketCap;
+            FindViewById(Resource.Id.view_marketcap).Visibility = show(data?.HasMarketCap);
 
             SetReferenceTable();
 

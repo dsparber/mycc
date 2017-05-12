@@ -113,7 +113,7 @@ namespace MyCC.Ui.Android.Views.Fragments
                 {
                     if (!ViewData.ViewData.Rates.IsDataAvailable) return;
                     if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency)) return;
-                    if (!ViewData.ViewData.Assets.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
+                    if (!ViewData.ViewData.Rates.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
 
                     _header.Data = headerData;
                     _footerFragment.LastUpdate = ViewData.ViewData.Rates.LastUpdate[_referenceCurrency];
