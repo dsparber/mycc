@@ -21,6 +21,8 @@ namespace MyCC.Ui.Android.Views.Activities
     [Activity(Label = "@string/AppName", Icon = "@drawable/ic_launcher", Theme = "@style/MyCC")]
     public class MainActivity : MyccActivity
     {
+        public const string ExtraInitialisedBefore = "initialisedBefore";
+
         private string[] _items;
         private DrawerLayout _drawerLayout;
         private ListView _drawerList;
@@ -44,14 +46,17 @@ namespace MyCC.Ui.Android.Views.Activities
 
             CreateDrawerLayout();
 
-            Task.Run(() =>
+            var initBefore = Intent.GetBooleanExtra(ExtraInitialisedBefore, false);
+            if (!initBefore && ApplicationSettings.AutoRefreshOnStartup && ConnectivityStatus.IsConnected)
             {
-                TaskHelper.FetchMissingRates();
-                if (ApplicationSettings.AutoRefreshOnStartup && ConnectivityStatus.IsConnected && !ApplicationSettings.FirstLaunch)
+                Task.Run(() =>
                 {
+                    TaskHelper.FetchMissingRates();
+
                     TaskHelper.UpdateAllAssetsAndRates();
-                }
-            });
+
+                });
+            }
         }
 
         private void CreateDrawerLayout()

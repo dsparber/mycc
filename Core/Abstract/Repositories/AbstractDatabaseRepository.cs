@@ -12,12 +12,9 @@ namespace MyCC.Core.Abstract.Repositories
     {
         private List<TModel> _elements;
 
-        public IEnumerable<TModel> Elements
-        {
-            get { return _elements.FindAll(e => true); }
-        }
+        public IEnumerable<TModel> Elements => _elements;
 
-        public int ElementsCount => Elements.ToList().Count;
+        public void ClearElements() => _elements.Clear();
 
         public DateTime LastFastFetch { get; protected set; }
         public DateTime LastFetch { get; protected set; }
@@ -51,8 +48,8 @@ namespace MyCC.Core.Abstract.Repositories
 
         public async Task RemoveAll()
         {
-            await Task.WhenAll(Elements.Select(e => _database.Delete(e)));
-            _elements.RemoveAll(e => true);
+            await _database.DeleteAll();
+            _elements.Clear();
         }
 
         public async Task Remove(TModel element)

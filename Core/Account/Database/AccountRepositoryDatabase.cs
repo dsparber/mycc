@@ -24,6 +24,11 @@ namespace MyCC.Core.Account.Database
 
         }
 
+        protected override Task Drop(SQLiteAsyncConnection connection)
+        {
+            return connection.DropTableAsync<AccountRepositoryDbm>();
+        }
+
         protected override AccountRepositoryDbm Resolve(AccountRepository element)
         {
             return new AccountRepositoryDbm(element);

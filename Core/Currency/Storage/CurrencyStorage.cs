@@ -19,6 +19,8 @@ namespace MyCC.Core.Currency.Storage
             Repositories.Add(new BlockExpertsCurrencyRepository(CurrencyRepositoryDbm.DbTypeBlockExpertsRepository));
             Repositories.Add(new CryptoIdCurrencyRepository(CurrencyRepositoryDbm.DbTypeCryptoidRepository));
             Repositories.Add(new OpenexchangeCurrencyRepository(CurrencyRepositoryDbm.DbTypeOpenExchangeRepository));
+
+            BeforeOnlineFetching = ClearElements();
         }
 
         private static CurrencyStorage _instance;
@@ -44,6 +46,15 @@ namespace MyCC.Core.Currency.Storage
         {
             await CurrencyRepositoryMapStorage.Instance.LoadFromDatabase();
             await LocalRepository.FetchOnline();
+        }
+
+        public async Task ClearElements()
+        {
+            await CurrencyRepositoryMapStorage.Instance.LocalRepository.RemoveAll();
+            foreach (var repository in Repositories)
+            {
+                await repository.RemoveAll();
+            }
         }
 
         public static IEnumerable<Model.Currency> CurrenciesOf<T>() where T : CurrencyRepository

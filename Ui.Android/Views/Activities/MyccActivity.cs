@@ -21,7 +21,10 @@ namespace MyCC.Ui.Android.Views.Activities
         {
             base.OnCreate(savedInstanceState);
 
-            Window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+            {
+                Window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
+            }
 
             if (SupportActionBar == null) return;
 

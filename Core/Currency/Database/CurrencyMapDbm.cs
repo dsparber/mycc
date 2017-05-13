@@ -31,7 +31,7 @@ namespace MyCC.Core.Currency.Database
             if (!(obj is CurrencyMapDbm)) return false;
 
             var e = (CurrencyMapDbm)obj;
-            return Code.Equals(e.Code) && e.Id == Id;
+            return string.Equals(Code, e.Code) && ParentId == e.ParentId;
         }
 
         public override int GetHashCode()

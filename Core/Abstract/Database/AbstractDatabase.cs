@@ -36,6 +36,8 @@ namespace MyCC.Core.Abstract.Database
 
         protected abstract Task Create(SQLiteAsyncConnection connection);
 
+        protected abstract Task Drop(SQLiteAsyncConnection connection);
+
         protected AbstractDatabase()
         {
             _connection = DependencyService.Get<ISqLiteConnection>().GetConnection();
@@ -69,6 +71,11 @@ namespace MyCC.Core.Abstract.Database
         {
             return await Update(element, element);
         }
+        public async Task DeleteAll()
+        {
+            await Drop(_connection);
+            await Create(_connection);
+        }
 
         public async Task<TV> Update(TV oldElement, TV newElement)
         {
@@ -84,9 +91,8 @@ namespace MyCC.Core.Abstract.Database
 
         public async Task<IEnumerable<TV>> Update(IEnumerable<TV> elemets)
         {
-            var enumerable = elemets as IList<TV> ?? elemets.ToList();
-            var dbElements = enumerable.Select(Resolve).ToList();
-            await (await Connection).UpdateAllAsync(enumerable);
+            var dbElements = elemets.Select(Resolve).ToList();
+            await (await Connection).UpdateAllAsync(dbElements);
             return await Task.WhenAll(dbElements.Select(e => e.Resolve()));
         }
 

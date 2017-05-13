@@ -6,39 +6,44 @@ using SQLite;
 
 namespace MyCC.Core.Currency.Database
 {
-	public class CurrencyDatabase : AbstractDatabase<CurrencyDbm, Model.Currency, string>
-	{
-		private static bool _executeAdditionalCommands;
+    public class CurrencyDatabase : AbstractDatabase<CurrencyDbm, Model.Currency, string>
+    {
+        private static bool _executeAdditionalCommands;
 
-		protected override async Task<IEnumerable<CurrencyDbm>> GetAllDbObjects()
-		{
-			return await (await Connection).Table<CurrencyDbm>().ToListAsync();
-		}
+        protected override async Task<IEnumerable<CurrencyDbm>> GetAllDbObjects()
+        {
+            return await (await Connection).Table<CurrencyDbm>().ToListAsync();
+        }
 
-		protected override async Task Create(SQLiteAsyncConnection connection)
-		{
-			await connection.CreateTableAsync<CurrencyDbm>();
+        protected override async Task Create(SQLiteAsyncConnection connection)
+        {
+            await connection.CreateTableAsync<CurrencyDbm>();
 
-			if (_executeAdditionalCommands) return;
-			_executeAdditionalCommands = true;
+            if (_executeAdditionalCommands) return;
+            _executeAdditionalCommands = true;
 
-			if (ApplicationSettings.LastCoreVersion < new Version("0.5.49"))
-			{
-				await connection.ExecuteAsync("DELETE FROM Currencies;");
-				await connection.ExecuteAsync("DELETE FROM CurrencyMap;");
-				await connection.ExecuteAsync("DELETE FROM CurrencyRepositories;");
-				await connection.ExecuteAsync("DELETE FROM CurrencyRepositoryMap;");
-			}
-		}
+            if (ApplicationSettings.LastCoreVersion < new Version("0.5.49"))
+            {
+                await connection.ExecuteAsync("DELETE FROM Currencies;");
+                await connection.ExecuteAsync("DELETE FROM CurrencyMap;");
+                await connection.ExecuteAsync("DELETE FROM CurrencyRepositories;");
+                await connection.ExecuteAsync("DELETE FROM CurrencyRepositoryMap;");
+            }
+        }
 
-		public override async Task<CurrencyDbm> GetDbObject(string id)
-		{
-			return await (await Connection).FindAsync<CurrencyDbm>(p => p.Id.Equals(id));
-		}
+        protected override async Task Drop(SQLiteAsyncConnection connection)
+        {
+            await connection.DropTableAsync<CurrencyDbm>();
+        }
 
-		protected override CurrencyDbm Resolve(Model.Currency element)
-		{
-			return new CurrencyDbm(element);
-		}
-	}
+        public override async Task<CurrencyDbm> GetDbObject(string id)
+        {
+            return await (await Connection).FindAsync<CurrencyDbm>(p => p.Id.Equals(id));
+        }
+
+        protected override CurrencyDbm Resolve(Model.Currency element)
+        {
+            return new CurrencyDbm(element);
+        }
+    }
 }

@@ -18,6 +18,11 @@ namespace MyCC.Core.Currency.Database
             await connection.CreateTableAsync<CurrencyMapDbm>();
         }
 
+        protected override async Task Drop(SQLiteAsyncConnection connection)
+        {
+            await connection.DropTableAsync<CurrencyMapDbm>();
+        }
+
         public override async Task<CurrencyMapDbm> GetDbObject(string id)
         {
             return await (await Connection).FindAsync<CurrencyMapDbm>(p => p.Id.Equals(id));

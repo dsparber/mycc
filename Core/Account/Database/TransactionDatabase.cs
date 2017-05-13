@@ -18,6 +18,11 @@ namespace MyCC.Core.Account.Database
             await connection.CreateTableAsync<TransactionDbm>();
         }
 
+        protected override async Task Drop(SQLiteAsyncConnection connection)
+        {
+            await connection.DropTableAsync<TransactionDbm>();
+        }
+
         public override async Task<TransactionDbm> GetDbObject(string id)
         {
             return await (await Connection).FindAsync<TransactionDbm>(p => p.Id.Equals(id));

@@ -79,13 +79,16 @@ namespace MyCC.Core.Abstract.Storage
         {
             await _onCreationTask;
             var i = .0;
-            await Task.WhenAll(Repositories.Select(async x =>
+            if (BeforeOnlineFetching != null) await BeforeOnlineFetching;
+            foreach (var x in Repositories)
             {
                 await x.FetchOnline();
                 i += 1;
                 progressCallback?.Invoke(i / Repositories.Count);
-            }));
+            }
         }
+
+        protected Task BeforeOnlineFetching { private get; set; } = null;
 
         public async Task LoadFromDatabase()
         {
