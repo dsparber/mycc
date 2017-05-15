@@ -38,7 +38,7 @@ namespace MyCC.Ui.ViewData
 
 
             Messaging.Request.AllRates.Subscribe(this, TaskHelper.UpdateAllRates);
-            Messaging.Request.AllAssetsAndRates.Subscribe(this, TaskHelper.UpdateAllAssetsAndRates);
+            Messaging.Request.AllAssetsAndRates.Subscribe(this, async () => await TaskHelper.UpdateAllAssetsAndRates());
 
             Messaging.Request.DataForNewAccount.Subscribe(this, TaskHelper.UpdateDataForNewAccount);
 

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Messages;
@@ -24,7 +24,7 @@ namespace MyCC.Forms.View.Components.Header
         {
             var text = string.Join(" / ", ApplicationSettings.MainCurrencies
                             .Where(c => !c.Equals(_currency))
-                            .Select(c => new Money(ExchangeRateHelper.GetRate(Currency.Btc, c)?.Rate ?? 0, c)
+                            .Select(c => new Money(ExchangeRateHelper.GetRate(Core.Currencies.CurrencyConstants.Btc, c)?.Rate ?? 0, c)
                             .ToStringTwoDigits(ApplicationSettings.RoundMoney)));
 
             text = string.IsNullOrWhiteSpace(text) ? _currency.Name : text;
@@ -36,7 +36,7 @@ namespace MyCC.Forms.View.Components.Header
             });
         }
 
-        private Money Sum => new Money(ExchangeRateHelper.GetRate(Currency.Btc, _currency)?.Rate ?? 0, _currency);
+        private Money Sum => new Money(ExchangeRateHelper.GetRate(Core.Currencies.CurrencyConstants.Btc, _currency)?.Rate ?? 0, _currency);
 
         private void AddSubscriber()
         {

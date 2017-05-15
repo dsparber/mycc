@@ -7,7 +7,7 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Android.Views.Adapter;
@@ -78,12 +78,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             _items = RatesViewData.Items?[_referenceCurrency] ?? new List<RateItem>();
             _adapter = new RatesListAdapter(Context, _items)
             {
-                CurrencyRemoved = () => Activity?.RunOnUiThread(() =>
-                {
-                    _items = RatesViewData.Items[_referenceCurrency];
-                    _adapter.Clear();
-                    _adapter.AddAll(_items);
-                })
+                CurrencyRemoved = () => Activity?.RunOnUiThread(() => Messaging.UiUpdate.RatesOverview.Send())
             };
 
             var list = view.FindViewById<ListView>(Resource.Id.list_rates);
@@ -105,6 +100,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             var sortValue = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
             if (sortData != null) SetSortButtons(sortData, sortCurrency, sortValue);
 
+            EditingEnabled = savedInstanceState?.GetBoolean("editing_enabled") ?? false;
 
             Messaging.UiUpdate.RatesOverview.Subscribe(this, () =>
             {
@@ -166,6 +162,7 @@ namespace MyCC.Ui.Android.Views.Fragments
         {
             base.OnSaveInstanceState(outState);
             outState.PutString("currency", JsonConvert.SerializeObject(_referenceCurrency));
+            outState.PutBoolean("editing_enabled", EditingEnabled);
         }
     }
 }

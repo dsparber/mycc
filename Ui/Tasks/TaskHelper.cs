@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies.Model;
+using MyCC.Core.Helpers;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
@@ -23,14 +24,14 @@ namespace MyCC.Ui.Tasks
         public static async void UpdateAllRates()
         {
             Messaging.Status.Progress.Send(0.2);
-            FetchMissingRates(false, d => Messaging.Status.Progress.Send(0.2 + d * 0.2));
+            await FetchMissingRates(false, d => Messaging.Status.Progress.Send(0.2 + d * 0.2));
             await ApplicationTasks.FetchRates(onError: ErrorDialog.Display, progressCallback: d => Messaging.Status.Progress.Send(0.4 + d * 0.6));
             Messaging.Update.Rates.Send();
             Messaging.Update.Assets.Send();
             Messaging.Status.Progress.Send(1);
         }
 
-        public static async void UpdateAllAssetsAndRates()
+        public static async Task UpdateAllAssetsAndRates()
         {
             Messaging.Status.Progress.Send(0.1);
             await FetchMissingRates(AccountStorage.NeededRates.ToList(), d => Messaging.Status.Progress.Send(0.1 + d * 0.2));
@@ -50,21 +51,28 @@ namespace MyCC.Ui.Tasks
             Messaging.Status.Progress.Send(1);
         }
 
-        public static async void FetchMissingRates(bool sendMessage = true, Action<double> progessCallback = null, Action onFinish = null) // TODO Remove with new API --> FetchRates() should get all needed rates
+        public static async Task FetchMissingRates(bool sendMessage = true, Action<double> progessCallback = null, Action onFinish = null) // TODO Remove with new API --> FetchRates() should get all needed rates
         {
-            var neededRates = CurrencySettingsData.EnabledCurrencies
-                .SelectMany(c => ApplicationSettings.AllReferenceCurrencies.Select(r => new ExchangeRate(r, c)))
-                .Distinct()
-                .Select(r => ExchangeRateHelper.GetRate(r) ?? r)
-                .Where(r => r.Rate == null)
-                .Concat(AccountStorage.NeededRates).Distinct().ToList();
+            try
+            {
+                var neededRates = CurrencySettingsData.EnabledCurrencies
+                    .SelectMany(c => ApplicationSettings.AllReferenceCurrencies.Select(r => new ExchangeRate(r, c)))
+                    .Distinct()
+                    .Select(r => ExchangeRateHelper.GetRate(r) ?? r)
+                    .Where(r => r.Rate == null)
+                    .Concat(AccountStorage.NeededRates).Distinct().ToList();
 
-            await FetchMissingRates(neededRates, progessCallback);
-            onFinish?.Invoke();
+                await FetchMissingRates(neededRates, progessCallback);
+                onFinish?.Invoke();
 
-            if (!sendMessage) return;
-            Messaging.Update.Assets.Send();
-            Messaging.Update.Rates.Send();
+                if (!sendMessage) return;
+                Messaging.Update.Assets.Send();
+                Messaging.Update.Rates.Send();
+            }
+            catch (Exception e)
+            {
+                e.LogError();
+            }
         }
 
         public static async void UpdateBalancesAndRatesForCurrency(Currency currency)

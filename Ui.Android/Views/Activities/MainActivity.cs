@@ -49,11 +49,11 @@ namespace MyCC.Ui.Android.Views.Activities
             var initBefore = Intent.GetBooleanExtra(ExtraInitialisedBefore, false);
             if (!initBefore && ApplicationSettings.AutoRefreshOnStartup && ConnectivityStatus.IsConnected)
             {
-                Task.Run(() =>
+                Task.Run(async () =>
                 {
-                    TaskHelper.FetchMissingRates();
+                    await TaskHelper.FetchMissingRates();
 
-                    TaskHelper.UpdateAllAssetsAndRates();
+                    await TaskHelper.UpdateAllAssetsAndRates();
 
                 });
             }

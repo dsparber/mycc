@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currency.Model;
-using MyCC.Core.Currency.Storage;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Settings;
 
 namespace MyCC.Ui.ViewData

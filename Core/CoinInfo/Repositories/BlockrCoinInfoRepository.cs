@@ -13,7 +13,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class BlockrCoinInfoRepository : ICoinInfoRepository
     {
-        private static Uri GetUri(Currency.Model.Currency coin) => new Uri($"https://{coin.Code.ToLower()}.blockr.io/api/v1/coin/info");
+        private static Uri GetUri(Currencies.Model.Currency coin) => new Uri($"https://{coin.Code.ToLower()}.blockr.io/api/v1/coin/info");
 
         private const string JsonKeyData = "data";
 
@@ -29,10 +29,10 @@ namespace MyCC.Core.CoinInfo.Repositories
 
         public string Name => I18N.Blockr;
 
-        public List<Currency.Model.Currency> SupportedCoins => new List<string> { "btc", "ltc", "ppc", "mec", "qrk", "dgc", "tbtc" }
-            .Select(s => new Currency.Model.Currency(s, true)).ToList();
+        public List<Currencies.Model.Currency> SupportedCoins => new List<string> { "btc", "ltc", "ppc", "mec", "qrk", "dgc", "tbtc" }
+            .Select(s => new Currencies.Model.Currency(s, true)).ToList();
 
-        public async Task<CoinInfoData> GetInfo(Currency.Model.Currency currency)
+        public async Task<CoinInfoData> GetInfo(Currencies.Model.Currency currency)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 

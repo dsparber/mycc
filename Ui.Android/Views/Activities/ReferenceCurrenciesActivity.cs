@@ -5,7 +5,8 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
@@ -75,7 +76,7 @@ namespace MyCC.Ui.Android.Views.Activities
                     {
                         this.ShowInfoDialog(Resource.String.Error, Resource.String.OnlyThreeCurrenciesCanBeStared);
                     }
-                    else if (!willBecomeMainCurrency && c.Equals(Currency.Btc))
+                    else if (!willBecomeMainCurrency && c.Equals(CurrencyConstants.Btc))
                     {
                         this.ShowInfoDialog(Resource.String.Error, Resource.String.BitcoinCanNotBeRemoved);
                     }
@@ -94,7 +95,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
                 v.FindViewById<ImageView>(Resource.Id.image_remove).Click += (sender, args) =>
                 {
-                    if (c.Equals(Currency.Btc))
+                    if (c.Equals(CurrencyConstants.Btc))
                     {
                         this.ShowInfoDialog(Resource.String.Error, Resource.String.BitcoinCanNotBeRemoved);
                     }

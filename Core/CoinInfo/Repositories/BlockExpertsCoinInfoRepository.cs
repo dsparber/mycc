@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
-using MyCC.Core.Currency.Repositories;
-using MyCC.Core.Currency.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 
@@ -13,17 +13,17 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class BlockExpertsCoinInfoRepository : ICoinInfoRepository
     {
-        private Uri GetUri(Currency.Model.Currency coin, string action) => new Uri($"https://www.blockexperts.com/api?coin={coin.Code.ToLower()}&action={action}");
+        private Uri GetUri(Currencies.Model.Currency coin, string action) => new Uri($"https://www.blockexperts.com/api?coin={coin.Code.ToLower()}&action={action}");
         private const string KeyHeight = "getheight";
         private const string KeyDifficulty = "getdifficulty";
         private const string KeyHashrate = "getnetworkghps";
         private const string KeySupply = "getmoneysupply";
 
-        public List<Currency.Model.Currency> SupportedCoins => CurrencyStorage.Instance.RepositoryOfType<BlockExpertsCurrencyRepository>().Currencies;
+        public List<Currencies.Model.Currency> SupportedCoins => CurrencyStorage.CurrenciesOf(CurrencyConstants.FlagBlockExperts).ToList();
 
         public string Name => I18N.BlockExperts;
 
-        public async Task<CoinInfoData> GetInfo(Currency.Model.Currency currency)
+        public async Task<CoinInfoData> GetInfo(Currencies.Model.Currency currency)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 

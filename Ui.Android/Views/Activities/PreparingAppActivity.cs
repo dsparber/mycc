@@ -10,11 +10,10 @@ using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
 using Android.Content;
-using MyCC.Core.Currency.Repositories;
-using MyCC.Core.Currency.Storage;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Sources;
 using MyCC.Core.Helpers;
-using MyCC.Core.Rates;
-using MyCC.Core.Rates.Repositories.Interfaces;
+using MyCC.Core.Preperation;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Messages;
@@ -54,7 +53,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 });
 
                 _startedLoading = true;
-                Task.Run(() => LoadInitalData());
+                Task.Run(LoadInitalData).ConfigureAwait(false);
             };
 
             if (!ConnectivityStatus.IsConnected)
@@ -67,7 +66,7 @@ namespace MyCC.Ui.Android.Views.Activities
             Messaging.Status.Network.Subscribe(this, startLoading);
         }
 
-        private async void LoadInitalData()
+        private async Task LoadInitalData()
         {
             try
             {
@@ -75,55 +74,42 @@ namespace MyCC.Ui.Android.Views.Activities
                 watch.Start();
                 var timeString = "Started setup\n";
 
-                await CurrencyStorage.Instance.ClearElements();
-                var onlineCurrencySources =
-                    CurrencyStorage.Instance.Repositories.OfType<OnlineCurrencyRepository>().ToList();
-                var exchangeRateSources =
-                    ExchangeRatesStorage.Instance.Repositories.Where(r => r.RatesType != RateRepositoryType.CryptoToFiat)
-                        .ToList();
-
-                var totalCount = onlineCurrencySources.Count + exchangeRateSources.Count;
-                var count = .0;
+                if (Prepare.PreparingNeeded) await Prepare.ExecutePreperations();
+                if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
 
                 // STEP 1: Fetch available currencies
-                foreach (var source in onlineCurrencySources)
+                var totalCount = CurrencyStorage.Instance.CurrencySources.Count() * 2;
+                var count = 0;
+
+                Action<ICurrencySource> setProgress = source =>
                 {
                     count += 1;
-                    SetStatus(0.8 * count / totalCount,
-                        string.Format(Resources.GetString(Resource.String.LoadingCurrenciesFrom), source.Description));
-                    await source.FetchOnline();
-                    timeString +=
-                        $"{watch.ElapsedMilliseconds / 1000.0:#,0.00}s:\tFetched currencies from {source.Description}\n";
-                }
+                    SetStatus(0.8 * count / totalCount, string.Format(Resources.GetString(Resource.String.LoadingCurrenciesFrom), source.Name));
 
-                // SETP 2: Fetch available crypto and fiat rates
-                foreach (var source in exchangeRateSources)
+                    timeString += $"{watch.ElapsedMilliseconds / 1000.0:#,0.00}s:\tFetching currencies from {source.Name} {(count % 2 == 1 ? "started" : "finished")}\n";
+                };
+
+                Action dataOpsFinished = () => timeString += $"{watch.ElapsedMilliseconds / 1000.0:#,0.00}s:\tCurrency: Data operations finished.\n";
+
+                await CurrencyStorage.Instance.LoadOnline(setProgress, setProgress, dataOpsFinished);
+
+
+                // STEP 2: Fetch needed Rates
+                await TaskHelper.FetchMissingRates(false, progress => SetStatus(0.8 + progress * 0.2, Resources.GetString(Resource.String.LoadingRates)));
+
+                Messaging.Update.AllItems.Send();
+
+                ApplicationSettings.AppInitialised = true;
+                timeString += $"{watch.ElapsedMilliseconds / 1000.0:#,0.00}s:\tDone";
+                timeString.LogInfo();
+                watch.Stop();
+
+                RunOnUiThread(() =>
                 {
-                    count += 1;
-                    SetStatus(0.8 * count / totalCount,
-                        string.Format(Resources.GetString(Resource.String.LoadingAvailableRatesFrom), source.Name));
-                    var t = source.FetchAvailableRates();
-                    if (t != null) await t;
-                    timeString +=
-                        $"{watch.ElapsedMilliseconds / 1000.0:#,0.00}s:\tFetched available rates from {source.Name}\n";
-                }
-                // STEP 3: Fetch needed Rates
-                TaskHelper.FetchMissingRates(false,
-                    progress => SetStatus(0.8 + progress * 0.2, Resources.GetString(Resource.String.LoadingRates)),
-                    () =>
-                    {
-                        ApplicationSettings.AppInitialised = true;
-                        timeString += $"{watch.ElapsedMilliseconds / 1000.0:#,0.00}s:\tDone";
-                        timeString.LogInfo();
-                        watch.Stop();
-
-                        RunOnUiThread(() =>
-                        {
-                            var intent = new Intent(this, typeof(MainActivity));
-                            intent.PutExtra(MainActivity.ExtraInitialisedBefore, true);
-                            StartActivity(intent);
-                        });
-                    });
+                    var intent = new Intent(this, typeof(MainActivity));
+                    intent.PutExtra(MainActivity.ExtraInitialisedBefore, true);
+                    StartActivity(intent);
+                });
             }
             catch (Exception e)
             {

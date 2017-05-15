@@ -55,20 +55,20 @@ namespace MyCC.Core.Settings
 
         public static bool DataLoaded;
 
-        public static Currency.Model.Currency StartupCurrencyAssets
+        public static Currencies.Model.Currency StartupCurrencyAssets
         {
             get
             {
-                var json = Settings.Get(Settings.KeyBaseCurrency, JsonConvert.SerializeObject(Currency.Model.Currency.Btc));
-                Currency.Model.Currency currency;
+                var json = Settings.Get(Settings.KeyBaseCurrency, JsonConvert.SerializeObject(Currencies.CurrencyConstants.Btc));
+                Currencies.Model.Currency currency;
 
                 try
                 {
-                    currency = JsonConvert.DeserializeObject<Currency.Model.Currency>(json);
+                    currency = JsonConvert.DeserializeObject<Currencies.Model.Currency>(json);
                 }
                 catch
                 {
-                    currency = Currency.Model.Currency.Btc;
+                    currency = Currencies.CurrencyConstants.Btc;
                     StartupCurrencyAssets = currency;
                 }
                 return currency;
@@ -79,21 +79,21 @@ namespace MyCC.Core.Settings
             }
         }
 
-        public static Currency.Model.Currency StartupCurrencyRates
+        public static Currencies.Model.Currency StartupCurrencyRates
         {
             get
             {
-                var json = Settings.Get(Settings.KeyRatePageCurrency, JsonConvert.SerializeObject(Currency.Model.Currency.Btc));
+                var json = Settings.Get(Settings.KeyRatePageCurrency, JsonConvert.SerializeObject(Currencies.CurrencyConstants.Btc));
 
-                Currency.Model.Currency currency;
+                Currencies.Model.Currency currency;
 
                 try
                 {
-                    currency = JsonConvert.DeserializeObject<Currency.Model.Currency>(json);
+                    currency = JsonConvert.DeserializeObject<Currencies.Model.Currency>(json);
                 }
                 catch
                 {
-                    currency = Currency.Model.Currency.Btc;
+                    currency = Currencies.CurrencyConstants.Btc;
                     StartupCurrencyRates = currency;
                 }
                 return currency;
@@ -104,21 +104,21 @@ namespace MyCC.Core.Settings
             }
         }
 
-        public static List<Currency.Model.Currency> WatchedCurrencies
+        public static List<Currencies.Model.Currency> WatchedCurrencies
         {
             get
             {
-                var currencies = new List<Currency.Model.Currency>();
+                var currencies = new List<Currencies.Model.Currency>();
 
                 var defaultValue = JsonConvert.SerializeObject(currencies);
 
                 var json = Settings.Get(Settings.KeyWatchedCurrencies, defaultValue);
 
-                List<Currency.Model.Currency> data;
+                List<Currencies.Model.Currency> data;
 
                 try
                 {
-                    data = JsonConvert.DeserializeObject<List<Currency.Model.Currency>>(json);
+                    data = JsonConvert.DeserializeObject<List<Currencies.Model.Currency>>(json);
                 }
                 catch
                 {
@@ -126,7 +126,7 @@ namespace MyCC.Core.Settings
                     WatchedCurrencies = data;
                 }
 
-                data.RemoveAll(c => c.IsCryptoCurrency && CurrencyBlacklist.Contains(c.Code));
+                data.RemoveAll(c => c.CryptoCurrency && CurrencyBlacklist.Contains(c.Code));
                 return data.Contains(null) ? currencies : data.OrderBy(c => c.Code).ToList();
             }
             set
@@ -163,19 +163,19 @@ namespace MyCC.Core.Settings
             return hash.Equals(Hash(pin));
         }
 
-        public static List<Currency.Model.Currency> MainCurrencies
+        public static List<Currencies.Model.Currency> MainCurrencies
         {
             get
             {
-                var currencies = new List<Currency.Model.Currency> { Currency.Model.Currency.Btc, Currency.Model.Currency.Eur, Currency.Model.Currency.Usd };
+                var currencies = new List<Currencies.Model.Currency> { Currencies.CurrencyConstants.Btc, Currencies.CurrencyConstants.Eur, Currencies.CurrencyConstants.Usd };
                 var defaultValue = JsonConvert.SerializeObject(currencies);
 
                 var json = Settings.Get(Settings.KeyMainCurrencies, defaultValue);
-                List<Currency.Model.Currency> data;
+                List<Currencies.Model.Currency> data;
 
                 try
                 {
-                    data = JsonConvert.DeserializeObject<List<Currency.Model.Currency>>(json);
+                    data = JsonConvert.DeserializeObject<List<Currencies.Model.Currency>>(json);
                 }
                 catch
                 {
@@ -183,8 +183,8 @@ namespace MyCC.Core.Settings
                     MainCurrencies = data;
                 }
 
-                if (!data.Contains(Currency.Model.Currency.Btc)) data.Add(Currency.Model.Currency.Btc);
-                data.RemoveAll(c => c.IsCryptoCurrency && CurrencyBlacklist.Contains(c.Code));
+                if (!data.Contains(Currencies.CurrencyConstants.Btc)) data.Add(Currencies.CurrencyConstants.Btc);
+                data.RemoveAll(c => c.CryptoCurrency && CurrencyBlacklist.Contains(c.Code));
 
                 return data.Count > 0 ? data.OrderBy(c => c.Code).ToList() : currencies;
             }
@@ -194,21 +194,21 @@ namespace MyCC.Core.Settings
             }
         }
 
-        public static List<Currency.Model.Currency> FurtherCurrencies
+        public static List<Currencies.Model.Currency> FurtherCurrencies
         {
             get
             {
-                var currencies = new List<Currency.Model.Currency>();
+                var currencies = new List<Currencies.Model.Currency>();
 
                 var defaultValue = JsonConvert.SerializeObject(currencies);
 
                 var json = Settings.Get(Settings.KeyFurtherCurrencies, defaultValue);
 
-                List<Currency.Model.Currency> data;
+                List<Currencies.Model.Currency> data;
 
                 try
                 {
-                    data = JsonConvert.DeserializeObject<List<Currency.Model.Currency>>(json);
+                    data = JsonConvert.DeserializeObject<List<Currencies.Model.Currency>>(json);
                 }
                 catch
                 {
@@ -217,7 +217,7 @@ namespace MyCC.Core.Settings
                 }
 
                 data.RemoveAll(MainCurrencies.Contains);
-                data.RemoveAll(c => c.IsCryptoCurrency && CurrencyBlacklist.Contains(c.Code));
+                data.RemoveAll(c => c.CryptoCurrency && CurrencyBlacklist.Contains(c.Code));
                 return data.OrderBy(c => c.Code).ToList();
             }
             set
@@ -227,7 +227,7 @@ namespace MyCC.Core.Settings
             }
         }
 
-        public static List<Currency.Model.Currency> AllReferenceCurrencies => MainCurrencies.Concat(FurtherCurrencies).Distinct().ToList();
+        public static List<Currencies.Model.Currency> AllReferenceCurrencies => MainCurrencies.Concat(FurtherCurrencies).Distinct().ToList();
 
         public static SortOrder SortOrderTable
         {

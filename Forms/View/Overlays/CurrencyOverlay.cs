@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyCC.Core.Currency.Model;
-using MyCC.Core.Currency.Storage;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
@@ -91,7 +91,7 @@ namespace MyCC.Forms.View.Overlays
 
             Task.Run(() =>
             {
-                var currencies = (_currenciesToSelect != null ? _currenciesToSelect() : CurrencyStorage.Instance.AllElements);
+                var currencies = _currenciesToSelect != null ? _currenciesToSelect() : CurrencyStorage.Instance.Currencies;
                 var selectableCurrencies = currencies.Distinct().Where(c => c != null).OrderBy(c => c.Code).ToList();
 
                 SetTableContent(section, selectableCurrencies);
@@ -141,7 +141,7 @@ namespace MyCC.Forms.View.Overlays
             var task = new Func<IEnumerable<Currency>>(() =>
             {
                 var allReferenceCurrencies = ApplicationSettings.WatchedCurrencies.ToArray();
-                return CurrencyStorage.Instance.AllElements.Where(c => !allReferenceCurrencies.Contains(c));
+                return CurrencyStorage.Instance.Currencies.Where(c => !allReferenceCurrencies.Contains(c));
             });
 
             var overlay = new CurrencyOverlay(task, I18N.AddRate, true)

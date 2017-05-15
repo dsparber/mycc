@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using Newtonsoft.Json;

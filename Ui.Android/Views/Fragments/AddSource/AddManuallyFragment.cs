@@ -7,7 +7,7 @@ using Android.Widget;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies.Model;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;
 using Newtonsoft.Json;

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
-using MyCC.Core.Currency.Repositories;
-using MyCC.Core.Currency.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
@@ -14,7 +14,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class CryptoIdCoinInfoRepository : ICoinInfoRepository
     {
-        private Uri GetUri(Currency.Model.Currency coin, string action)
+        private Uri GetUri(Currencies.Model.Currency coin, string action)
             => new Uri($"https://chainz.cryptoid.info/{coin.Code.ToLower()}/api.dws?q={action}");
 
         private const string KeySummary = "summary";
@@ -28,10 +28,10 @@ namespace MyCC.Core.CoinInfo.Repositories
 
         public string Name => I18N.CryptoId;
 
-        public List<Currency.Model.Currency> SupportedCoins
-            => CurrencyStorage.Instance.RepositoryOfType<CryptoIdCurrencyRepository>().Currencies;
+        public List<Currencies.Model.Currency> SupportedCoins
+            => CurrencyStorage.CurrenciesOf(CurrencyConstants.FlagCryptoId).ToList();
 
-        public async Task<CoinInfoData> GetInfo(Currency.Model.Currency currency)
+        public async Task<CoinInfoData> GetInfo(Currencies.Model.Currency currency)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 

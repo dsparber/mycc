@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currency.Model;
-using MyCC.Core.Currency.Storage;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.BaseComponents;
@@ -197,7 +197,7 @@ namespace MyCC.Forms.View.Components.Cells
             {
                 if (IsEditable)
                 {
-                    var allCurrencies = new Func<IEnumerable<Currency>>(() => CurrencyStorage.Instance.AllElements);
+                    var allCurrencies = new Func<IEnumerable<Currency>>(() => CurrencyStorage.Instance.Currencies);
 
                     _navigation.PushAsync(new CurrencyOverlay(CurrenciesToSelect ?? allCurrencies, I18N.Currency)
                     {

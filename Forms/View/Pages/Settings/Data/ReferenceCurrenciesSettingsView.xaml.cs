@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currency.Model;
-using MyCC.Core.Currency.Storage;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Settings;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
@@ -34,7 +34,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
 
         private void Add(object sender, EventArgs args)
         {
-            var currenciesTask = new Func<IEnumerable<Currency>>(() => CurrencyStorage.Instance.AllElements.Where(c => !ApplicationSettings.AllReferenceCurrencies.Contains(c)));
+            var currenciesTask = new Func<IEnumerable<Currency>>(() => CurrencyStorage.Instance.Currencies.Where(c => !ApplicationSettings.AllReferenceCurrencies.Contains(c)));
 
             var overlay = new CurrencyOverlay(currenciesTask, I18N.AddReferenceCurrency)
             {
@@ -113,7 +113,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
                 }
             };
 
-            if (currency.Equals(Currency.Btc))
+            if (currency.Equals(CurrencyConstants.Btc))
             {
                 star.Action = (sender, e) => DisplayAlert(I18N.Error, I18N.BitcoinCanNotBeRemoved, I18N.Ok);
                 delete.Action = (sender, e) => DisplayAlert(I18N.Error, I18N.BitcoinCanNotBeRemoved, I18N.Ok);

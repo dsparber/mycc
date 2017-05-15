@@ -6,10 +6,10 @@ using Android.Widget;
 using MyCC.Ui.Android.Views.Fragments;
 using Android.Support.V4.Widget;
 using MyCC.Core.Settings;
-using MyCC.Core.Currency.Model;
-using MyCC.Core.Currency.Storage;
 using Android.Content;
 using Android.Support.Design.Widget;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
 using MyCC.Ui.Messages;
 using MyCC.Ui.ViewData;
 using Newtonsoft.Json;
@@ -41,7 +41,7 @@ namespace MyCC.Ui.Android.Views.Activities
             var currencyId = Intent?.GetStringExtra(ExtraCurrencyId);
             if (!string.IsNullOrWhiteSpace(currencyId))
             {
-                _currency = CurrencyStorage.Instance.AllElements.Find(c => currencyId.Equals(c?.Id));
+                _currency = CurrencyStorage.Find(currencyId);
             }
 
             SupportActionBar.Title = $"\u2211 {_currency.Code}";

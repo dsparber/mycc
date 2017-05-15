@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyCC.Core.Abstract.Database;
+using MyCC.Core.Helpers;
 using MyCC.Core.Rates.Repositories;
 using MyCC.Core.Rates.Repositories.Interfaces;
 using MyCC.Core.Settings;
@@ -19,7 +19,7 @@ namespace MyCC.Core.Rates
 
         private ExchangeRatesStorage()
         {
-            _connection = DependencyService.Get<ISqLiteConnection>().GetConnection();
+            _connection = DependencyService.Get<ISqLiteConnection>().GetOldConnection();
             _connection.CreateTableAsync<ExchangeRate>();
 
             Repositories = new List<IRateRepository> {

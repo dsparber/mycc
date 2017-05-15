@@ -49,7 +49,7 @@ namespace MyCC.Core.Abstract.Repositories
         public async Task RemoveAll()
         {
             await _database.DeleteAll();
-            _elements.Clear();
+            _elements = new List<TModel>();
         }
 
         public async Task Remove(TModel element)

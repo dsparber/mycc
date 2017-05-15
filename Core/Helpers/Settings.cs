@@ -19,7 +19,7 @@ namespace MyCC.Core.Helpers
       }
     }
 
-    #region Setting Constants
+    #region Setting CurrencyConstants
 
     private const string SettingsKey = "settings_key";
     private static readonly string SettingsDefault = string.Empty;

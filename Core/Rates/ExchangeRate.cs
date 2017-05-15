@@ -44,7 +44,7 @@ namespace MyCC.Core.Rates
         /// <param name="secondaryCurrency">Secondary currency.</param>
         /// <param name="lastUpdate">Last update of this exchange rate</param>
         /// <param name="rate">Exchange rate.</param>
-        public ExchangeRate(Currency.Model.Currency referenceCurrency, Currency.Model.Currency secondaryCurrency, DateTime? lastUpdate = null, decimal? rate = null) : this(referenceCurrency.Code, referenceCurrency.IsCryptoCurrency, secondaryCurrency.Code, secondaryCurrency.IsCryptoCurrency, lastUpdate, rate) { }
+        public ExchangeRate(Currencies.Model.Currency referenceCurrency, Currencies.Model.Currency secondaryCurrency, DateTime? lastUpdate = null, decimal? rate = null) : this(referenceCurrency.Code, referenceCurrency.CryptoCurrency, secondaryCurrency.Code, secondaryCurrency.CryptoCurrency, lastUpdate, rate) { }
 
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedMember.Global
@@ -118,7 +118,7 @@ namespace MyCC.Core.Rates
         }
 
         [Ignore]
-        public Money AsMoney => new Money(Rate ?? 0, new Currency.Model.Currency(SecondaryCurrencyCode, SecondaryCurrencyIsCryptoCurrency));
+        public Money AsMoney => new Money(Rate ?? 0, new Currencies.Model.Currency(SecondaryCurrencyCode, SecondaryCurrencyIsCryptoCurrency));
 
         private decimal? _rate;
         /// <summary>

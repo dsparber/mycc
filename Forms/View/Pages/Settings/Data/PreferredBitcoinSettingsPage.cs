@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
 using MyCC.Core.Rates.Repositories.Interfaces;
 using MyCC.Core.Settings;
@@ -116,11 +116,11 @@ namespace MyCC.Forms.View.Pages.Settings.Data
 
         private static Tuple<string, DateTime> GetDetailText(int i)
         {
-            var usd = ExchangeRateHelper.GetStoredRate(Currency.Btc, Currency.Usd, i);
-            var eur = ExchangeRateHelper.GetStoredRate(Currency.Btc, Currency.Eur, i);
+            var usd = ExchangeRateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Usd, i);
+            var eur = ExchangeRateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Eur, i);
 
-            var usdString = (usd?.AsMoney ?? new Money(0, Currency.Usd)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            var eurString = (eur?.AsMoney ?? ExchangeRateHelper.GetRate(Currency.Btc, Currency.Eur, i)?.AsMoney ?? new Money(0, Currency.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+            var usdString = (usd?.AsMoney ?? new Money(0, CurrencyConstants.Usd)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+            var eurString = (eur?.AsMoney ?? ExchangeRateHelper.GetRate(CurrencyConstants.Btc, CurrencyConstants.Eur, i)?.AsMoney ?? new Money(0, CurrencyConstants.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
             var note = eur == null && usd != null ? "*" : string.Empty;
 
             return Tuple.Create($"{eurString}{note} / {usdString}", usd?.LastUpdate ?? eur?.LastUpdate ?? DateTime.MinValue);

@@ -5,8 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
-using MyCC.Core.Currency.Repositories;
-using MyCC.Core.Currency.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates.Repositories.Interfaces;
 using Newtonsoft.Json.Linq;
@@ -34,7 +33,7 @@ namespace MyCC.Core.Rates.Repositories
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
             Rates = new List<ExchangeRate>();
-            _supportedCurrencies = CurrencyStorage.CurrenciesOf<CryptonatorCurrencyRepository>().Select(c => c.Code).ToList();
+            _supportedCurrencies = CurrencyStorage.CurrenciesOf(CurrencyConstants.FlagCryptonator).Select(c => c.Code).ToList();
             _connection = connection;
         }
 

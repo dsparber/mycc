@@ -4,8 +4,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currency.Model;
-using MyCC.Core.Currency.Storage;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
@@ -31,7 +31,7 @@ namespace MyCC.Forms.View.Components.Table
             _webView.RegisterCallback("Callback", code =>
             {
                 var currency = new Currency(code.Split(',')[0], bool.Parse(code.Split(',')[1]));
-                currency = CurrencyStorage.Instance.Find(currency) ?? currency;
+                currency = CurrencyStorage.Find(currency.Id) ?? currency;
 
                 Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinInfoView(currency, true)));
             });
@@ -133,7 +133,7 @@ namespace MyCC.Forms.View.Components.Table
 
                 Code = currency.Code;
                 Reference = new Money(rate.Rate ?? 0, ApplicationSettings.StartupCurrencyRates).ToString8Digits(false);
-                CallbackString = currency.Code + "," + currency.IsCryptoCurrency;
+                CallbackString = currency.Code + "," + currency.CryptoCurrency;
             }
 
             public override string ToString()

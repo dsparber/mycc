@@ -1,5 +1,5 @@
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies.Model;
 
 namespace MyCC.Ui.DataItems
 {

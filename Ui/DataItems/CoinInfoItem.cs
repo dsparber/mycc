@@ -1,6 +1,7 @@
 ﻿using MyCC.Core.Account.Models.Base;
 using MyCC.Core.CoinInfo;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Ui.Helpers;
@@ -41,7 +42,7 @@ namespace MyCC.Ui.DataItems
 
         public string Supply => new Money(_data.CoinSupply ?? 0, _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
         public string MaxSupply => new Money(_data.MaxCoinSupply ?? 0, _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-        public string MarketCap => new Money((_data.CoinSupply ?? 0) * (ExchangeRateHelper.GetRate(_currency, Currency.Btc)?.Rate ?? 0), Currency.Btc).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+        public string MarketCap => new Money((_data.CoinSupply ?? 0) * (ExchangeRateHelper.GetRate(_currency, CurrencyConstants.Btc)?.Rate ?? 0), CurrencyConstants.Btc).ToStringTwoDigits(ApplicationSettings.RoundMoney);
 
 
         public bool HasExplorer => !string.IsNullOrWhiteSpace(Explorer);
@@ -57,6 +58,6 @@ namespace MyCC.Ui.DataItems
 
         public bool HasSupply => _data.CoinSupply != null;
         public bool HasMaxSupply => _data.MaxCoinSupply != null;
-        public bool HasMarketCap => HasSupply && ExchangeRateHelper.GetRate(_currency, Currency.Btc)?.Rate != null;
+        public bool HasMarketCap => HasSupply && ExchangeRateHelper.GetRate(_currency, CurrencyConstants.Btc)?.Rate != null;
     }
 }

@@ -5,7 +5,7 @@ using MyCC.Core.Account.Database;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
-using MyCC.Core.Currency.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
@@ -18,8 +18,8 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
         public override string Description => I18N.Etherchain;
 
-        public override Currency.Model.Currency Currency => CurrencyStorage.Instance.AllElements.Find(c => c?.Code.Equals("ETH") ?? false);
-        public override IEnumerable<Currency.Model.Currency> SupportedCurrencies => new List<Currency.Model.Currency> { Currency };
+        public override Currencies.Model.Currency Currency => CurrencyStorage.Find("ETH", true);
+        public override IEnumerable<Currencies.Model.Currency> SupportedCurrencies => new List<Currencies.Model.Currency> { Currency };
 
         protected override decimal BalanceFactor => 1e18M;
         protected override Func<string, decimal> Balance => httpContent => decimal.Parse((string)JObject.Parse(httpContent)[JsonKeyData][0][JsonKeyBalance], CultureInfo.InvariantCulture);

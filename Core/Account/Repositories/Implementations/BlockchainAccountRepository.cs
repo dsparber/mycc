@@ -16,8 +16,8 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
         public override string Description => I18N.Blockchain;
 
-        public override Currency.Model.Currency Currency => Core.Currency.Model.Currency.Btc;
-        public override IEnumerable<Currency.Model.Currency> SupportedCurrencies => new List<Currency.Model.Currency> { Currency };
+        public override Currencies.Model.Currency Currency => Currencies.CurrencyConstants.Btc;
+        public override IEnumerable<Currencies.Model.Currency> SupportedCurrencies => new List<Currencies.Model.Currency> { Currency };
 
         protected override decimal BalanceFactor => 1e8M;
         protected override Func<string, decimal> Balance => httpContent => decimal.Parse((string)JObject.Parse(httpContent)[JsonKeyBalance], CultureInfo.InvariantCulture);

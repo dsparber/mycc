@@ -14,7 +14,7 @@ namespace MyCC.Core.Account.Models.Base
         /// </summary>
         /// <param name="amount">Units of the currency for initialisation</param>
         /// <param name="currency">Desired currency</param>
-        public Money(decimal amount, Currency.Model.Currency currency)
+        public Money(decimal amount, Currencies.Model.Currency currency)
         {
             if (currency == null)
             {
@@ -37,13 +37,13 @@ namespace MyCC.Core.Account.Models.Base
         /// Initializes a new instance of the <see cref="T:Money"/> class. The amount will be 0
         /// </summary>
         /// <param name="currency">Desired currency</param>
-        public Money(Currency.Model.Currency currency) : this(0, currency) { }
+        public Money(Currencies.Model.Currency currency) : this(0, currency) { }
 
         /// <summary>
         /// Holds the currency of the account
         /// </summary>
         /// <value>The currency to be set</value>
-        public Currency.Model.Currency Currency { get; private set; }
+        public Currencies.Model.Currency Currency { get; private set; }
 
         /// <summary>
         /// The current amount

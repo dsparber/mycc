@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.CoinInfo;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
@@ -17,7 +18,7 @@ namespace MyCC.Ui.ViewData
     {
         public static HeaderDataItem HeaderData(Currency currency)
         {
-            return new HeaderDataItem(currency.Name, new Money(ExchangeRateHelper.GetRate(currency, Currency.Btc)?.Rate ?? 0, Currency.Btc).ToString8Digits());
+            return new HeaderDataItem(currency.Name, new Money(ExchangeRateHelper.GetRate(currency, CurrencyConstants.Btc)?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits());
         }
 
         public CoinInfoItem CoinInfo(Currency currency)

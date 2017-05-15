@@ -2,7 +2,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
@@ -47,7 +48,7 @@ namespace MyCC.Forms.View.Pages
             {
                 Task.Run(async () => await AppTaskHelper.FetchMissingRates(ApplicationSettings.WatchedCurrencies
                                        .Concat(ApplicationSettings.AllReferenceCurrencies)
-                                       .Select(c => new ExchangeRate(Currency.Btc, c))
+                                       .Select(c => new ExchangeRate(CurrencyConstants.Btc, c))
                                        .Select(r => ExchangeRateHelper.GetRate(r) ?? r)
                                        .Where(r => r.Rate == null)
                                        .Concat(AccountStorage.NeededRates).ToList()));

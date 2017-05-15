@@ -101,7 +101,6 @@
     <Compile Include="View\Pages\AssetsGraphView.xaml.cs">
       <DependentUpon>AssetsGraphView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Pages\Settings\Info\CurrencyGroupedInfoView.cs" />
     <Compile Include="View\Overlays\PasswordOverlay.xaml.cs">
       <DependentUpon>PasswordOverlay.xaml</DependentUpon>
     </Compile>

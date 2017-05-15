@@ -19,11 +19,11 @@ namespace MyCC.Core.CoinInfo.Repositories
         private const string KeySupply = "totalbc";
         private const string KeyHashrate = "hashrate";
 
-        public List<Currency.Model.Currency> SupportedCoins => new List<Currency.Model.Currency> { Currency.Model.Currency.Btc };
+        public List<Currencies.Model.Currency> SupportedCoins => new List<Currencies.Model.Currency> { Currencies.CurrencyConstants.Btc };
 
         public string Name => I18N.Blockchain;
 
-        public async Task<CoinInfoData> GetInfo(Currency.Model.Currency currency)
+        public async Task<CoinInfoData> GetInfo(Currencies.Model.Currency currency)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 

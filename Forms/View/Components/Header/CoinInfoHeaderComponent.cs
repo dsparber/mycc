@@ -1,5 +1,5 @@
 ﻿using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Rates;
 using MyCC.Forms.Messages;
 using Xamarin.Forms;
@@ -19,7 +19,7 @@ namespace MyCC.Forms.View.Components.Header
 
         private void UpdateView()
         {
-            var text = new Money(ExchangeRateHelper.GetRate(_currency, Currency.Btc)?.Rate ?? 0, Currency.Btc).ToString8Digits();
+            var text = new Money(ExchangeRateHelper.GetRate(_currency, Core.Currencies.CurrencyConstants.Btc)?.Rate ?? 0, Core.Currencies.CurrencyConstants.Btc).ToString8Digits();
 
             Device.BeginInvokeOnMainThread(() =>
             {

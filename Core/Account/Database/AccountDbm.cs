@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Database;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currency.Database;
-using MyCC.Core.Currency.Storage;
+using MyCC.Core.Currencies;
 using SQLite;
 
 namespace MyCC.Core.Account.Database
@@ -46,39 +43,16 @@ namespace MyCC.Core.Account.Database
         [Column("LastUpdate")]
         public long LastUpdateTicks { get; set; }
 
-        private static readonly IEnumerable<string> CurrencyBlacklist = new[] { "CAD", "CNY", "EUR", "GBP", "JPY", "UAH", "USD" };
 
         public async Task<FunctionalAccount> Resolve()
         {
-            var currency = CurrencyStorage.Instance.AllElements.Find(c => c?.Id.Equals(CurrencyId) ?? false) ?? CurrencyStorage.Instance.AllElements.Find(c => c?.Code.Equals(CurrencyId) ?? false);
-            if (currency == null)
-            {
-                var db = new CurrencyDatabase();
-                currency = await db.Get(CurrencyId);
-                if (currency == null)
-                {
-                    var code = CurrencyId.EndsWith("0") || CurrencyId.EndsWith("1") ? CurrencyId.Substring(0, CurrencyId.Length - 1) : CurrencyId;
-                    if (code.Equals(CurrencyId))
-                    {
-                        currency = await db.Get(code + "1") ?? await db.Get(code + "0") ?? new Currency.Model.Currency(code, false);
-                    }
-                    else
-                    {
-                        currency = new Currency.Model.Currency(code, CurrencyId[code.Length] == '1');
-                    }
-                }
-            }
+            var currency = CurrencyStorage.Find(CurrencyId);
 
             var repository = AccountStorage.Instance.Repositories.Find(r => r.Id == ParentId);
             if (repository == null)
             {
                 var db = new AccountRepositoryDatabase();
                 repository = await db.Get(ParentId);
-            }
-
-            if (repository is LocalAccountRepository && CurrencyBlacklist.Contains(currency.Code) && currency.IsCryptoCurrency)
-            {
-                currency.IsCryptoCurrency = false;
             }
 
             var money = new Money(MoneyAmount, currency);

@@ -3,7 +3,7 @@ using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.View;
 using Android.Views;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies.Model;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Adapter;
 using MyCC.Ui.Android.Views.Fragments;

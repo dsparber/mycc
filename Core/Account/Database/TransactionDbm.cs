@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Database;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currency.Database;
-using MyCC.Core.Currency.Storage;
+using MyCC.Core.Currencies;
 using SQLite;
 
 namespace MyCC.Core.Account.Database
@@ -23,19 +22,17 @@ namespace MyCC.Core.Account.Database
         private decimal MoneyAmount { get; set; }
 
         [Column("Code")]
-        private string CurrencyCode { get; set; }
+        private string CurrencyId { get; set; }
 
         public int ParentId { get; set; }
 
-        public async Task<Transaction> Resolve()
+        public Task<Transaction> Resolve()
         {
-            var currency = CurrencyStorage.Instance.AllElements.Find(c => c.Code.Equals(CurrencyCode));
-            if (currency != null) return new Transaction(Id, Timestamp, new Money(MoneyAmount, currency), ParentId);
-
-            var db = new CurrencyDatabase();
-            currency = await db.Get(CurrencyCode);
-
-            return new Transaction(Id, Timestamp, new Money(MoneyAmount, currency), ParentId);
+            return new Task<Transaction>(() =>
+            {
+                var currency = CurrencyStorage.Find(CurrencyId);
+                return new Transaction(Id, Timestamp, new Money(MoneyAmount, currency), ParentId);
+            });
         }
 
         public TransactionDbm(Transaction transaction)
@@ -45,7 +42,7 @@ namespace MyCC.Core.Account.Database
 
             Timestamp = transaction.Timestamp;
             MoneyAmount = transaction.Money.Amount;
-            CurrencyCode = transaction.Money.Currency.Code;
+            CurrencyId = transaction.Money.Currency.Id;
         }
     }
 }

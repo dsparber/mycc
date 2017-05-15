@@ -5,6 +5,8 @@ using Android.OS;
 using Android.Support.V7.App;
 using HockeyApp.Android;
 using HockeyApp.Android.Metrics;
+using MyCC.Core.Currencies;
+using MyCC.Core.Preperation;
 using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
 using MyCC.Ui.Android.Helpers;
@@ -18,7 +20,7 @@ namespace MyCC.Ui.Android.Views.Activities
     [Activity(Theme = "@style/SplashTheme.Splash", MainLauncher = true, Icon = "@drawable/ic_launcher", NoHistory = true)]
     public class SplashActivity : AppCompatActivity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
@@ -28,29 +30,30 @@ namespace MyCC.Ui.Android.Views.Activities
             MetricsManager.Register(Application, "7792ee5321a64433ace4955a1693cca5");
             ApplicationSettings.Migrate();
 
-            if (!ApplicationSettings.AppInitialised)
+            if (!ApplicationSettings.AppInitialised || Prepare.PreparingNeeded)
             {
                 StartActivity(new Intent(this, typeof(PreparingAppActivity)));
             }
             else
             {
-                var startupWork = new Task(Startup);
-                startupWork.Start();
+                await Startup();
             }
         }
 
-        private async void Startup()
+        private async Task Startup()
         {
-            if (ViewData.ViewData.Assets.Items == null)
-            {
-                await ApplicationTasks.LoadEverything(() => { Messaging.Update.AllItems.Send(); });
-            }
+            await CurrencyStorage.Instance.LoadFromDatabase();
+            await ApplicationTasks.LoadEverything();
+            Messaging.Update.AllItems.Send();
 
-            StartActivity(new Intent(Application.Context, typeof(MainActivity)));
+            RunOnUiThread(() =>
+            {
+                StartActivity(new Intent(Application.Context, typeof(MainActivity)));
+                Finish();
+            });
 
             if (ConnectivityStatus.IsConnected) await ApplicationTasks.FetchCurrenciesAndAvailableRates();
 
-            Finish();
         }
     }
 }

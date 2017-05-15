@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using MyCC.Core.Account.Helper;
 using MyCC.Core.Account.Repositories.Base;
+using MyCC.Core.Currencies.Model;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 using ZXing;
 using ZXing.Mobile;
 using ZXing.Net.Mobile.Forms;
-using MyCC.Core.Currency.Model;
 
 namespace MyCC.Forms.View.Addsource
 {

@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
@@ -45,11 +46,11 @@ namespace MyCC.Ui.ViewData
 
         private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
         {
-            var referenceMoney = new Money(ExchangeRateHelper.GetRate(Currency.Btc, c)?.Rate ?? 0, c);
+            var referenceMoney = new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc, c)?.Rate ?? 0, c);
 
             var additionalRefs = ApplicationSettings.MainCurrencies
                 .Except(new[] { c })
-                .Select(x => new Money(ExchangeRateHelper.GetRate(Currency.Btc, x)?.Rate ?? 0, x))
+                .Select(x => new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc, x)?.Rate ?? 0, x))
                 .ToList();
 
             return new CoinHeaderData(referenceMoney, additionalRefs);

@@ -30,9 +30,9 @@ namespace MyCC.Core.Account.Storage
 
         public static readonly AccountStorage Instance = new AccountStorage();
 
-        public static IEnumerable<Currency.Model.Currency> UsedCurrencies => Instance.AllElements.Select(a => a?.Money?.Currency).Distinct().Where(e => e != null).ToList();
-        public static IEnumerable<IGrouping<Currency.Model.Currency, Models.Base.Account>> AccountsGroupedByCurrency => Instance.AllElements.GroupBy(a => a?.Money?.Currency).Where(g => g.Key != null);
-        public static List<FunctionalAccount> AccountsWithCurrency(Currency.Model.Currency currency) => Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).ToList();
+        public static IEnumerable<Currencies.Model.Currency> UsedCurrencies => Instance.AllElements.Select(a => a?.Money?.Currency).Distinct().Where(e => e != null).ToList();
+        public static IEnumerable<IGrouping<Currencies.Model.Currency, Models.Base.Account>> AccountsGroupedByCurrency => Instance.AllElements.GroupBy(a => a?.Money?.Currency).Where(g => g.Key != null);
+        public static List<FunctionalAccount> AccountsWithCurrency(Currencies.Model.Currency currency) => Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).ToList();
 
 
         public static List<ExchangeRate> NeededRates => UsedCurrencies.Distinct()
@@ -41,7 +41,7 @@ namespace MyCC.Core.Account.Storage
                                        .Where(r => r?.Rate == null)
                                        .ToList();
 
-        public static List<ExchangeRate> NeededRatesFor(Currency.Model.Currency accountCurrency) => ApplicationSettings.AllReferenceCurrencies
+        public static List<ExchangeRate> NeededRatesFor(Currencies.Model.Currency accountCurrency) => ApplicationSettings.AllReferenceCurrencies
                                        .Select(c => new ExchangeRate(accountCurrency, c))
                                        .Select(e => ExchangeRateHelper.GetRate(e) ?? e)
                                        .Where(r => r.Rate == null)

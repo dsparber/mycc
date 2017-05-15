@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Models;
+using MyCC.Core.Helpers;
 using SQLite;
 using Xamarin.Forms;
 
@@ -40,7 +41,7 @@ namespace MyCC.Core.Abstract.Database
 
         protected AbstractDatabase()
         {
-            _connection = DependencyService.Get<ISqLiteConnection>().GetConnection();
+            _connection = DependencyService.Get<ISqLiteConnection>().GetOldConnection();
         }
 
 

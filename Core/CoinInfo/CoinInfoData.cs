@@ -94,7 +94,7 @@ namespace MyCC.Core.CoinInfo
         }
 
 
-        public CoinInfoData(Currency.Model.Currency currency) : this(currency.Code) { }
+        public CoinInfoData(Currencies.Model.Currency currency) : this(currency.Code) { }
 
         private CoinInfoData(string currency)
         {

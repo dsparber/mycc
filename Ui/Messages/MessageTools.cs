@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currency.Model;
+using MyCC.Core.Currencies.Model;
 using Xamarin.Forms;
 
 namespace MyCC.Ui.Messages

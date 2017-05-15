@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using MyCC.Core.Abstract.Database;
+using MyCC.Core.Helpers;
 using MyCC.Ui.Android.Helpers;
 using SQLite;
 using Xamarin.Forms;
@@ -9,15 +9,17 @@ namespace MyCC.Ui.Android.Helpers
 {
     public class SqLiteConnectionAndroid : ISqLiteConnection
     {
-        public SQLiteAsyncConnection GetConnection()
+        public SQLiteAsyncConnection GetConnection(string sqliteFilename)
         {
-            const string sqliteFilename = "MyCryptos.db";
-
             var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal); // Documents folder
             var path = Path.Combine(documentsPath, sqliteFilename);
 
             return new SQLiteAsyncConnection(path);
         }
+
+        public SQLiteAsyncConnection GetOldConnection() => GetConnection("MyCryptos.db");
+
+        public SQLiteAsyncConnection Connection => GetConnection("MyCC.db");
     }
 }
 
