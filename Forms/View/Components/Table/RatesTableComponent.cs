@@ -81,7 +81,7 @@ namespace MyCC.Forms.View.Components.Table
                 .Concat(AccountStorage.UsedCurrencies)
                 .Distinct()
                 .Where(c => !c.Equals(ApplicationSettings.StartupCurrencyRates))
-                .Select(c => new Data(c)).ToList();
+                .Select(c => new Data(new Currency(c))).ToList();
 
             var itemsExisting = items.Count > 0;
 
@@ -128,11 +128,11 @@ namespace MyCC.Forms.View.Components.Table
 
             public Data(Currency currency)
             {
-                var neededRate = new ExchangeRate(currency, ApplicationSettings.StartupCurrencyRates);
+                var neededRate = new ExchangeRate(currency.Id, ApplicationSettings.StartupCurrencyRates);
                 var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
 
                 Code = currency.Code;
-                Reference = new Money(rate.Rate ?? 0, ApplicationSettings.StartupCurrencyRates).ToString8Digits(false);
+                Reference = new Money(rate.Rate ?? 0, new Currency(ApplicationSettings.StartupCurrencyRates)).ToString8Digits(false);
                 CallbackString = currency.Code + "," + currency.CryptoCurrency;
             }
 

@@ -141,7 +141,7 @@ namespace MyCC.Forms.View.Overlays
             var task = new Func<IEnumerable<Currency>>(() =>
             {
                 var allReferenceCurrencies = ApplicationSettings.WatchedCurrencies.ToArray();
-                return CurrencyStorage.Instance.Currencies.Where(c => !allReferenceCurrencies.Contains(c));
+                return CurrencyStorage.Instance.Currencies.Where(c => !allReferenceCurrencies.Contains(c.Id));
             });
 
             var overlay = new CurrencyOverlay(task, I18N.AddRate, true)
@@ -149,7 +149,7 @@ namespace MyCC.Forms.View.Overlays
                 CurrencySelected = c =>
                 {
                     onComplete?.Invoke();
-                    ApplicationSettings.WatchedCurrencies = new List<Currency>(ApplicationSettings.WatchedCurrencies) { c };
+                    ApplicationSettings.WatchedCurrencies = new List<string>(ApplicationSettings.WatchedCurrencies) { c.Id };
                     Messaging.ReferenceCurrencies.SendValueChanged();
                     Messaging.UpdatingRates.SendFinished();
                 }

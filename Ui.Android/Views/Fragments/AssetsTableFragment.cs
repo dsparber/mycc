@@ -92,7 +92,7 @@ namespace MyCC.Ui.Android.Views.Fragments
                 Activity.RunOnUiThread(() =>
                 {
                     if (!ViewData.ViewData.Assets.IsDataAvailable) return;
-                    if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency)) return;
+                    if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency.Id)) return;
                     if (!ViewData.ViewData.Assets.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
 
                     _header.Data = headerData;

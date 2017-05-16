@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
@@ -95,7 +96,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetRatesCellDetail()
         {
-            RatesCell.Detail = ApplicationSettings.WatchedCurrencies.Count == 0 ? I18N.None : string.Join(", ", ApplicationSettings.WatchedCurrencies);
+            RatesCell.Detail = !ApplicationSettings.WatchedCurrencies.Any() ? I18N.None : string.Join(", ", ApplicationSettings.WatchedCurrencies);
         }
 
         private void SetPreferredRateCellDetail()

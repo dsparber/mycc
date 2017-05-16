@@ -1,5 +1,6 @@
 using System;
 using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Currencies.Model;
 using SQLite;
 
 namespace MyCC.Core.Rates
@@ -17,34 +18,23 @@ namespace MyCC.Core.Rates
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Models.ExchangeRate"/> class.
         /// </summary>
-        /// <param name="referenceCurrencyCode">Reference currency code.</param>
-        /// <param name="referenceIsCrypto">Wether the reference currency is a crypto currency</param>
-        /// <param name="secondaryCurrencyCode">Secondary currency code.</param>
-        /// <param name="secondaryIsCrypto">Wether the secondary currency is a crypto currency</param>
+        /// <param name="referenceCurrencyId">Reference currency id.</param>
+        /// <param name="secondaryCurrencyId">Secondary currency id.</param>
         /// <param name="lastUpdate">Last update of this exchange rate</param>
         /// <param name="rate">Exchange rate.</param>
-        public ExchangeRate(string referenceCurrencyCode, bool referenceIsCrypto, string secondaryCurrencyCode, bool secondaryIsCrypto, DateTime? lastUpdate = null, decimal? rate = null)
+        public ExchangeRate(string referenceCurrencyId, string secondaryCurrencyId, DateTime? lastUpdate = null, decimal? rate = null)
         {
-            if (string.IsNullOrWhiteSpace(referenceCurrencyCode) || string.IsNullOrWhiteSpace(secondaryCurrencyCode))
+            if (string.IsNullOrWhiteSpace(referenceCurrencyId) || string.IsNullOrWhiteSpace(secondaryCurrencyId))
             {
                 throw new ArgumentNullException();
             }
-            ReferenceCurrencyCode = referenceCurrencyCode.ToUpper();
-            SecondaryCurrencyCode = secondaryCurrencyCode.ToUpper();
-            ReferenceCurrencyIsCryptoCurrency = referenceIsCrypto;
-            SecondaryCurrencyIsCryptoCurrency = secondaryIsCrypto;
+            ReferenceCurrencyCode = referenceCurrencyId.Substring(0, referenceCurrencyId.Length - 1);
+            SecondaryCurrencyCode = secondaryCurrencyId.Substring(0, secondaryCurrencyId.Length - 1);
+            ReferenceCurrencyIsCryptoCurrency = referenceCurrencyId[referenceCurrencyId.Length - 1] == '1';
+            SecondaryCurrencyIsCryptoCurrency = secondaryCurrencyId[secondaryCurrencyId.Length - 1] == '1';
             Rate = rate;
             LastUpdate = lastUpdate ?? DateTime.MinValue;
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:Models.ExchangeRate"/> class.
-        /// </summary>
-        /// <param name="referenceCurrency">Reference currency.</param>
-        /// <param name="secondaryCurrency">Secondary currency.</param>
-        /// <param name="lastUpdate">Last update of this exchange rate</param>
-        /// <param name="rate">Exchange rate.</param>
-        public ExchangeRate(Currencies.Model.Currency referenceCurrency, Currencies.Model.Currency secondaryCurrency, DateTime? lastUpdate = null, decimal? rate = null) : this(referenceCurrency.Code, referenceCurrency.CryptoCurrency, secondaryCurrency.Code, secondaryCurrency.CryptoCurrency, lastUpdate, rate) { }
 
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedMember.Global
@@ -118,7 +108,7 @@ namespace MyCC.Core.Rates
         }
 
         [Ignore]
-        public Money AsMoney => new Money(Rate ?? 0, new Currencies.Model.Currency(SecondaryCurrencyCode, SecondaryCurrencyIsCryptoCurrency));
+        public Money AsMoney => new Money(Rate ?? 0, new Currency(SecondaryCurrencyCode, SecondaryCurrencyIsCryptoCurrency));
 
         private decimal? _rate;
         /// <summary>
@@ -156,7 +146,7 @@ namespace MyCC.Core.Rates
         {
             get
             {
-                var exchangeRate = new ExchangeRate(SecondaryCurrencyCode, SecondaryCurrencyIsCryptoCurrency, ReferenceCurrencyCode, ReferenceCurrencyIsCryptoCurrency, LastUpdate) { RepositoryId = RepositoryId };
+                var exchangeRate = new ExchangeRate($"{SecondaryCurrencyCode}{(SecondaryCurrencyIsCryptoCurrency ? "1" : "0")}", $"{ReferenceCurrencyCode}{(ReferenceCurrencyIsCryptoCurrency ? "1" : "0")}", LastUpdate) { RepositoryId = RepositoryId };
                 if (Rate != null && Rate != 0)
                 {
                     exchangeRate.Rate = 1 / Rate;

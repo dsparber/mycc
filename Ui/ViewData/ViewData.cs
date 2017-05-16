@@ -5,11 +5,11 @@ namespace MyCC.Ui.ViewData
 {
     public class ViewData
     {
-        public static RatesViewData Rates => Instance._ratesViewData;
-        public static AssetsViewData Assets => Instance._assetsViewData;
-        public static CoinInfoViewData CoinInfo => Instance._coinInfoViewData;
-        public static AccountDetailViewData AccountDetail => Instance._accountDetailViewData;
-        public static AccountsGroupViewData AccountGroup => Instance._accountsGroupViewData;
+        public static RatesViewData Rates => _instance._ratesViewData;
+        public static AssetsViewData Assets => _instance._assetsViewData;
+        public static CoinInfoViewData CoinInfo => _instance._coinInfoViewData;
+        public static AccountDetailViewData AccountDetail => _instance._accountDetailViewData;
+        public static AccountsGroupViewData AccountGroup => _instance._accountsGroupViewData;
 
         private readonly RatesViewData _ratesViewData;
         private readonly AssetsViewData _assetsViewData;
@@ -51,8 +51,11 @@ namespace MyCC.Ui.ViewData
             Messaging.Request.BitcoinExchangeSources.Subscribe(this, TaskHelper.UpdateBitcoinExchangeSources);
         }
 
+        public static void Init()
+        {
+            _instance = new ViewData();
+        }
 
-        private static readonly ViewData Instance = new ViewData();
-
+        private static ViewData _instance;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
@@ -19,8 +20,8 @@ namespace MyCC.Ui.ViewData
         {
             var money = new Money(EnabledAccountsItems(currency).Sum(a => a.Money.Amount), currency);
 
-            var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { currency })
-                .Select(x => new Money(money.Amount * ExchangeRateHelper.GetRate(currency, x)?.Rate ?? 0, x)).
+            var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { currency.Id })
+                .Select(x => new Money(money.Amount * ExchangeRateHelper.GetRate(currency.Id, x)?.Rate ?? 0, CurrencyStorage.Find(x))).
                 OrderBy(m => m.Currency.Code);
 
             return new HeaderDataItem(money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
@@ -32,8 +33,8 @@ namespace MyCC.Ui.ViewData
         {
             var money = new Money(EnabledAccountsItems(currency).Sum(a => a.Money.Amount), currency);
 
-            return ApplicationSettings.AllReferenceCurrencies.Except(new[] { money.Currency })
-                .Select(c => new ReferenceValueItem(money.Amount, ExchangeRateHelper.GetRate(money.Currency, c) ?? new ExchangeRate(money.Currency, c)))
+            return ApplicationSettings.AllReferenceCurrencies.Except(new[] { money.Currency.Id })
+                .Select(c => new ReferenceValueItem(money.Amount, ExchangeRateHelper.GetRate(money.Currency.Id, c) ?? new ExchangeRate(money.Currency.Id, c)))
                 .OrderByWithDirection(c => SortOrderReference == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirectionReference == SortDirection.Ascending);
         }
 

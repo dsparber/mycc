@@ -2,24 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
+using MyCC.Core.Helpers;
 using MyCC.Core.Rates.Repositories;
 using MyCC.Core.Types;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PCLCrypto;
 
 namespace MyCC.Core.Settings
 {
     public static class ApplicationSettings
     {
-        public static void Migrate()
-        {
-            if (LastCoreVersion < new Version(1, 0, 2))
-            {
-                DefaultStartupPage = StartupPage.TableView;
-            }
-        }
-
         private static Version _lastVersion;
+
         public static Version LastCoreVersion
         {
             get
@@ -37,6 +33,7 @@ namespace MyCC.Core.Settings
         }
 
         private static bool? _firstLaunch;
+
         public static bool FirstLaunch
         {
             get
@@ -55,83 +52,32 @@ namespace MyCC.Core.Settings
 
         public static bool DataLoaded;
 
-        public static Currencies.Model.Currency StartupCurrencyAssets
+        public static string StartupCurrencyAssets
         {
-            get
-            {
-                var json = Settings.Get(Settings.KeyBaseCurrency, JsonConvert.SerializeObject(Currencies.CurrencyConstants.Btc));
-                Currencies.Model.Currency currency;
-
-                try
-                {
-                    currency = JsonConvert.DeserializeObject<Currencies.Model.Currency>(json);
-                }
-                catch
-                {
-                    currency = Currencies.CurrencyConstants.Btc;
-                    StartupCurrencyAssets = currency;
-                }
-                return currency;
-            }
-            set
-            {
-                Settings.Set(Settings.KeyBaseCurrency, JsonConvert.SerializeObject(value));
-            }
+            get { return Settings.Get(Settings.KeyBaseCurrency, CurrencyConstants.Btc.Id); }
+            set { Settings.Set(Settings.KeyBaseCurrency, value); }
         }
 
-        public static Currencies.Model.Currency StartupCurrencyRates
+        public static string StartupCurrencyRates
         {
-            get
-            {
-                var json = Settings.Get(Settings.KeyRatePageCurrency, JsonConvert.SerializeObject(Currencies.CurrencyConstants.Btc));
-
-                Currencies.Model.Currency currency;
-
-                try
-                {
-                    currency = JsonConvert.DeserializeObject<Currencies.Model.Currency>(json);
-                }
-                catch
-                {
-                    currency = Currencies.CurrencyConstants.Btc;
-                    StartupCurrencyRates = currency;
-                }
-                return currency;
-            }
-            set
-            {
-                Settings.Set(Settings.KeyRatePageCurrency, JsonConvert.SerializeObject(value));
-            }
+            get { return Settings.Get(Settings.KeyRatePageCurrency, CurrencyConstants.Btc.Id); }
+            set { Settings.Set(Settings.KeyRatePageCurrency, value); }
         }
 
-        public static List<Currencies.Model.Currency> WatchedCurrencies
+        public static IEnumerable<string> WatchedCurrencies
         {
             get
             {
-                var currencies = new List<Currencies.Model.Currency>();
-
-                var defaultValue = JsonConvert.SerializeObject(currencies);
-
-                var json = Settings.Get(Settings.KeyWatchedCurrencies, defaultValue);
-
-                List<Currencies.Model.Currency> data;
-
-                try
-                {
-                    data = JsonConvert.DeserializeObject<List<Currencies.Model.Currency>>(json);
-                }
-                catch
-                {
-                    data = currencies;
-                    WatchedCurrencies = data;
-                }
-
-                data.RemoveAll(c => c.CryptoCurrency && CurrencyBlacklist.Contains(c.Code));
-                return data.Contains(null) ? currencies : data.OrderBy(c => c.Code).ToList();
+                return
+                    Settings.Get(Settings.KeyWatchedCurrencies, string.Empty)
+                        .Split(',')
+                        .Where(s => !string.IsNullOrWhiteSpace(s))
+                        .Distinct();
             }
             set
             {
-                Settings.Set(Settings.KeyWatchedCurrencies, JsonConvert.SerializeObject(value));
+                Settings.Set(Settings.KeyWatchedCurrencies,
+                    string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct()));
             }
         }
 
@@ -139,11 +85,39 @@ namespace MyCC.Core.Settings
         {
             get
             {
-                return Settings.Get(Settings.KeyDisabledCurrencies, string.Empty).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct();
+                return
+                    Settings.Get(Settings.KeyDisabledCurrencies, string.Empty)
+                        .Split(',')
+                        .Where(s => !string.IsNullOrWhiteSpace(s))
+                        .Distinct();
             }
             set
             {
-                Settings.Set(Settings.KeyDisabledCurrencies, string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct()));
+                Settings.Set(Settings.KeyDisabledCurrencies,
+                    string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct()));
+            }
+        }
+
+        public static IEnumerable<string> TryToLoadOldCurrencies(string key)
+        {
+            try
+            {
+                var json = Settings.Get(key, string.Empty);
+                if (string.IsNullOrEmpty(json)) return null;
+
+                var currencies = JObject.Parse(json);
+                var ids = new List<string>();
+                foreach (var c in currencies)
+                {
+                    var id = (string)c.Value["Id"];
+                    ids.Add(id);
+                }
+                return ids;
+            }
+            catch (Exception e)
+            {
+                e.LogError();
+                return null;
             }
         }
 
@@ -157,105 +131,36 @@ namespace MyCC.Core.Settings
             }
         }
 
-        public static bool IsPinValid(string pin)
-        {
-            var hash = Settings.Get(Settings.KeyPin, string.Empty);
-            return hash.Equals(Hash(pin));
-        }
+        public static bool IsPinValid(string pin) => Settings.Get(Settings.KeyPin, string.Empty).Equals(Hash(pin));
 
-        public static List<Currencies.Model.Currency> MainCurrencies
+        public static IEnumerable<string> MainCurrencies
         {
             get
             {
-                var currencies = new List<Currencies.Model.Currency> { Currencies.CurrencyConstants.Btc, Currencies.CurrencyConstants.Eur, Currencies.CurrencyConstants.Usd };
-                var defaultValue = JsonConvert.SerializeObject(currencies);
-
-                var json = Settings.Get(Settings.KeyMainCurrencies, defaultValue);
-                List<Currencies.Model.Currency> data;
-
-                try
-                {
-                    data = JsonConvert.DeserializeObject<List<Currencies.Model.Currency>>(json);
-                }
-                catch
-                {
-                    data = currencies;
-                    MainCurrencies = data;
-                }
-
-                if (!data.Contains(Currencies.CurrencyConstants.Btc)) data.Add(Currencies.CurrencyConstants.Btc);
-                data.RemoveAll(c => c.CryptoCurrency && CurrencyBlacklist.Contains(c.Code));
-
-                return data.Count > 0 ? data.OrderBy(c => c.Code).ToList() : currencies;
+                var defaultValue = string.Join(",", new List<Currency> { CurrencyConstants.Btc, CurrencyConstants.Eur, CurrencyConstants.Usd }.Select(c => c.Id));
+                return Settings.Get(Settings.KeyMainCurrencies, defaultValue).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct();
             }
-            set
-            {
-                Settings.Set(Settings.KeyMainCurrencies, JsonConvert.SerializeObject(value));
-            }
+            set { Settings.Set(Settings.KeyMainCurrencies, string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct())); }
         }
 
-        public static List<Currencies.Model.Currency> FurtherCurrencies
+        public static IEnumerable<string> FurtherCurrencies
         {
-            get
-            {
-                var currencies = new List<Currencies.Model.Currency>();
-
-                var defaultValue = JsonConvert.SerializeObject(currencies);
-
-                var json = Settings.Get(Settings.KeyFurtherCurrencies, defaultValue);
-
-                List<Currencies.Model.Currency> data;
-
-                try
-                {
-                    data = JsonConvert.DeserializeObject<List<Currencies.Model.Currency>>(json);
-                }
-                catch
-                {
-                    data = currencies;
-                    FurtherCurrencies = data;
-                }
-
-                data.RemoveAll(MainCurrencies.Contains);
-                data.RemoveAll(c => c.CryptoCurrency && CurrencyBlacklist.Contains(c.Code));
-                return data.OrderBy(c => c.Code).ToList();
-            }
-            set
-            {
-                value.RemoveAll(MainCurrencies.Contains);
-                Settings.Set(Settings.KeyFurtherCurrencies, JsonConvert.SerializeObject(value));
-            }
+            get { return Settings.Get(Settings.KeyFurtherCurrencies, string.Empty).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct(); }
+            set { Settings.Set(Settings.KeyFurtherCurrencies, string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct())); }
         }
 
-        public static List<Currencies.Model.Currency> AllReferenceCurrencies => MainCurrencies.Concat(FurtherCurrencies).Distinct().ToList();
+        public static IEnumerable<string> AllReferenceCurrencies => MainCurrencies.Concat(FurtherCurrencies).Distinct().ToList();
 
-        public static SortOrder SortOrderTable
+        public static SortOrder SortOrderAssets
         {
-            get
-            {
-                const SortOrder defaultValue = SortOrder.Alphabetical;
-                var stringValue = Settings.Get(Settings.KeySortOrderTable, defaultValue.ToString());
-                var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
-                return enumValue;
-            }
-            set
-            {
-                Settings.Set(Settings.KeySortOrderTable, value.ToString());
-            }
+            get { return (SortOrder)Enum.Parse(typeof(SortOrder), Settings.Get(Settings.KeySortOrderTable, SortOrder.Alphabetical.ToString())); }
+            set { Settings.Set(Settings.KeySortOrderTable, value.ToString()); }
         }
 
-        public static SortDirection SortDirectionTable
+        public static SortDirection SortDirectionAssets
         {
-            get
-            {
-                var defaultValue = SortDirection.Ascending.ToString();
-                var stringValue = Settings.Get(Settings.KeySortDirectionTable, defaultValue);
-                return (SortDirection)Enum.Parse(typeof(SortDirection), stringValue);
-            }
-            set
-            {
-                Settings.Set(Settings.KeySortDirectionTable, value.ToString());
-            }
+            get { return (SortDirection)Enum.Parse(typeof(SortOrder), Settings.Get(Settings.KeySortDirectionTable, SortDirection.Ascending.ToString())); }
+            set { Settings.Set(Settings.KeySortDirectionTable, value.ToString()); }
         }
 
         public static SortOrder SortOrderRates
@@ -347,101 +252,51 @@ namespace MyCC.Core.Settings
 
         public static bool AutoRefreshOnStartup
         {
-            get
-            {
-                return Settings.Get(Settings.KeyAutoRefreshOnStartup, true);
-            }
-            set
-            {
-                Settings.Set(Settings.KeyAutoRefreshOnStartup, value);
-            }
+            get { return Settings.Get(Settings.KeyAutoRefreshOnStartup, true); }
+            set { Settings.Set(Settings.KeyAutoRefreshOnStartup, value); }
         }
 
         public static bool AppInitialised
         {
-            get
-            {
-                return Settings.Get(Settings.KeyAppInitialised, false);
-            }
-            set
-            {
-                Settings.Set(Settings.KeyAppInitialised, value);
-            }
+            get { return Settings.Get(Settings.KeyAppInitialised, false); }
+            set { Settings.Set(Settings.KeyAppInitialised, value); }
         }
 
         public static bool RoundMoney
         {
-            get
-            {
-                return false;
-                // return Settings.Get(Settings.RoundMoney, false);
-            }
-            set
-            {
-                Settings.Set(Settings.RoundMoney, value);
-            }
+            get { return false;/* return Settings.Get(Settings.RoundMoney, false);*/}
+            set { Settings.Set(Settings.RoundMoney, value); }
         }
 
         public static int PreferredBitcoinRepository
         {
-            get
-            {
-                return Settings.Get(Settings.PreferredBitcoinRepository, (int)RatesRepositories.Kraken);
-            }
-            set
-            {
-                Settings.Set(Settings.PreferredBitcoinRepository, value);
-            }
+            get { return Settings.Get(Settings.PreferredBitcoinRepository, (int)RatesRepositories.Kraken); }
+            set { Settings.Set(Settings.PreferredBitcoinRepository, value); }
         }
 
         public static StartupPage DefaultStartupPage
         {
-            get
-            {
-                var success = Enum.TryParse(Settings.Get(Settings.DefaultPage, StartupPage.TableView.ToString()), out StartupPage page);
-                return success ? page : StartupPage.TableView;
-            }
-            set
-            {
-                Settings.Set(Settings.DefaultPage, value.ToString());
-            }
+            get { return (StartupPage)Enum.Parse(typeof(StartupPage), Settings.Get(Settings.DefaultPage, StartupPage.RatesView.ToString())); }
+            set { Settings.Set(Settings.DefaultPage, value.ToString()); }
         }
 
         public static int PinLength
         {
-            get
-            {
-                return Settings.Get(Settings.KeyPinLength, -1);
-            }
-            private set
-            {
-                Settings.Set(Settings.KeyPinLength, value);
-            }
+            get { return Settings.Get(Settings.KeyPinLength, -1); }
+            private set { Settings.Set(Settings.KeyPinLength, value); }
         }
 
         public static bool IsPinSet => PinLength != -1;
 
         public static bool IsFingerprintEnabled
         {
-            get
-            {
-                return Settings.Get(Settings.KeyFingerprintSet, false);
-            }
-            set
-            {
-                Settings.Set(Settings.KeyFingerprintSet, value);
-            }
+            get { return Settings.Get(Settings.KeyFingerprintSet, false); }
+            set { Settings.Set(Settings.KeyFingerprintSet, value); }
         }
         public static bool LockByShaking
         {
-            get
-            {
-                return Settings.Get(Settings.KeyLockByShaking, false);
-            }
-            set
-            {
-                Settings.Set(Settings.KeyLockByShaking, value);
-            }
+            get { return Settings.Get(Settings.KeyLockByShaking, false); }
+            set { Settings.Set(Settings.KeyLockByShaking, value); }
         }
 
         private static string ByteToString(IEnumerable<byte> buff)
@@ -462,7 +317,5 @@ namespace MyCC.Core.Settings
             var hasher = algorithm.CreateHash(keyBytes);
             return ByteToString(hasher.GetValueAndReset());
         }
-
-        private static readonly IEnumerable<string> CurrencyBlacklist = new[] { "CAD", "CNY", "EUR", "GBP", "JPY", "UAH", "USD" };
     }
 }

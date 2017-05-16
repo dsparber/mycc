@@ -32,10 +32,10 @@ namespace MyCC.Ui.ViewData
             Messaging.UiUpdate.RatesOverview.Send();
         }
 
-        private static Dictionary<Currency, DateTime> GetLastUpdate() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, DateTime> GetLastUpdate() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyStorage.Find, c =>
         {
             return CurrencySettingsData.EnabledCurrencies
-                .Select(e => new ExchangeRate(c, e))
+                .Select(e => new ExchangeRate(c, e.Id))
                 .SelectMany(ExchangeRateHelper.GetNeededRates)
                 .Distinct()
                 .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now)
@@ -44,23 +44,23 @@ namespace MyCC.Ui.ViewData
         });
 
 
-        private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyStorage.Find, c =>
         {
-            var referenceMoney = new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc, c)?.Rate ?? 0, c);
+            var referenceMoney = new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc.Id, c)?.Rate ?? 0, CurrencyStorage.Find(c));
 
             var additionalRefs = ApplicationSettings.MainCurrencies
                 .Except(new[] { c })
-                .Select(x => new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc, x)?.Rate ?? 0, x))
+                .Select(x => new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc.Id, x)?.Rate ?? 0, CurrencyStorage.Find(x)))
                 .ToList();
 
             return new CoinHeaderData(referenceMoney, additionalRefs);
         });
 
-        private static Dictionary<Currency, List<RateItem>> LoadRateItems() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, List<RateItem>> LoadRateItems() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyStorage.Find, c =>
         {
-            Func<Currency, Money> getReference = currency => new Money(ExchangeRateHelper.GetRate(currency, c)?.Rate ?? 0, currency);
+            Func<Currency, Money> getReference = currency => new Money(ExchangeRateHelper.GetRate(currency.Id, c)?.Rate ?? 0, currency);
 
-            var items = CurrencySettingsData.EnabledCurrencies.Except(new[] { c }).Select(x => new RateItem(x, getReference(x)));
+            var items = CurrencySettingsData.EnabledCurrencies.Except(new[] { new Currency(c) }).Select(x => new RateItem(x, getReference(x)));
 
             return ApplySort(items);
         });
@@ -73,7 +73,7 @@ namespace MyCC.Ui.ViewData
                     ApplicationSettings.SortDirectionRates == SortDirection.Ascending).ToList();
         }
 
-        private Dictionary<Currency, List<SortButtonItem>> LoadSortButtons() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c => new List<SortButtonItem>
+        private Dictionary<Currency, List<SortButtonItem>> LoadSortButtons() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyStorage.Find, c => new List<SortButtonItem>
         {
             new SortButtonItem
             {
@@ -90,7 +90,7 @@ namespace MyCC.Ui.ViewData
             },
             new SortButtonItem
             {
-                Text = string.Format(StringHelper.TextResolver.AsCurrency, c.Code),
+                Text = string.Format(StringHelper.TextResolver.AsCurrency, new Currency(c).Code),
                 SortDirection = SortDirectionHelper.GetSortDirection(ApplicationSettings.SortOrderRates, ApplicationSettings.SortDirectionRates, SortOrder.ByValue),
                 RightAligned = true,
                 OnClick = () =>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
+using MyCC.Core.Currencies;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates.Repositories.Interfaces;
 using MyCC.Core.Resources;
@@ -49,8 +50,8 @@ namespace MyCC.Core.Rates.Repositories
 
                 var itemsCount = Rates.Count;
                 Rates.Clear();
-                Rates.Add(new ExchangeRate("BTC", true, "EUR", false, DateTime.Now, rateEur) { RepositoryId = TypeId });
-                Rates.Add(new ExchangeRate("BTC", true, "USD", false, DateTime.Now, rateUsd) { RepositoryId = TypeId });
+                Rates.Add(new ExchangeRate(CurrencyConstants.Btc.Id, CurrencyConstants.Eur.Id, DateTime.Now, rateEur) { RepositoryId = TypeId });
+                Rates.Add(new ExchangeRate(CurrencyConstants.Btc.Id, CurrencyConstants.Usd.Id, DateTime.Now, rateUsd) { RepositoryId = TypeId });
 
                 if (itemsCount == 0) await _connection.InsertAllAsync(Rates);
                 else await _connection.UpdateAllAsync(Rates.ToArray());

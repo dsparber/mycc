@@ -36,8 +36,8 @@ namespace MyCC.Ui.ViewData
 
         public List<ReferenceValueItem> Items(Currency currency)
         {
-            return ApplicationSettings.AllReferenceCurrencies.Except(new[] { currency })
-                .Select(c => new ReferenceValueItem(1, ExchangeRateHelper.GetRate(currency, c) ?? new ExchangeRate(currency, c)))
+            return ApplicationSettings.AllReferenceCurrencies.Except(new[] { currency.Id })
+                .Select(c => new ReferenceValueItem(1, ExchangeRateHelper.GetRate(currency.Id, c) ?? new ExchangeRate(currency.Id, c)))
                 .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirection == SortDirection.Ascending)
                 .ToList();
         }
@@ -45,7 +45,7 @@ namespace MyCC.Ui.ViewData
         public static DateTime LastUpdate(Currency currency)
         {
             var ratesTime = ApplicationSettings.AllReferenceCurrencies
-                                  .Select(e => new ExchangeRate(currency, e))
+                                  .Select(e => new ExchangeRate(currency.Id, e))
                                   .SelectMany(ExchangeRateHelper.GetNeededRates)
                                   .Distinct()
                                   .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty().Min();

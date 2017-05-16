@@ -95,7 +95,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted?.Invoke();
-                var ratesToUpdate = ApplicationSettings.AllReferenceCurrencies.Select(c => new ExchangeRate(currency, c));
+                var ratesToUpdate = ApplicationSettings.AllReferenceCurrencies.Select(c => new ExchangeRate(currency.Id, c));
                 await ExchangeRateHelper.UpdateRates(ratesToUpdate, progressCallback);
             }
             catch (Exception e)

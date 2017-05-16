@@ -28,7 +28,7 @@ namespace MyCC.Forms.View.Components.Header
 
         public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false) : this()
         {
-            _currency = currency ?? ApplicationSettings.StartupCurrencyAssets;
+            _currency = currency ?? new Currency(ApplicationSettings.StartupCurrencyAssets);
             _useOnlyThisCurrency = useOnlyThisCurrency;
 
             UpdateView();
@@ -56,8 +56,8 @@ namespace MyCC.Forms.View.Components.Header
 
                 infoTextFallback = PluralHelper.GetTextCurrencies(amountDifferentCurrencies);
             }
-            var infoText = string.Join(" / ", ApplicationSettings.MainCurrencies.Where(c => !c.Equals(_currency))
-                                       .Select(c => ((_useOnlyThisCurrency ? CoinSumAs(c) : MoneySumOf(c)) ?? new Money(0, c))
+            var infoText = string.Join(" / ", ApplicationSettings.MainCurrencies.Where(c => !c.Equals(_currency.Id))
+                                       .Select(c => ((_useOnlyThisCurrency ? CoinSumAs(new Currency(c)) : MoneySumOf(new Currency(c))) ?? new Money(0, new Currency(c)))
                                        .ToStringTwoDigits(ApplicationSettings.RoundMoney)));
 
             infoText = string.IsNullOrWhiteSpace(infoText) ? infoTextFallback : infoText;
@@ -88,7 +88,7 @@ namespace MyCC.Forms.View.Components.Header
         {
             var amount = AccountStorage.EnabledAccounts.Sum(a =>
             {
-                var rate = new ExchangeRate(a.Money.Currency, currency);
+                var rate = new ExchangeRate(a.Money.Currency.Id, currency.Id);
                 rate = ExchangeRateHelper.GetRate(rate) ?? rate;
 
                 return a.Money.Amount * rate.Rate ?? 0;

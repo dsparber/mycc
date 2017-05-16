@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.Animation;
@@ -13,7 +12,6 @@ using Android.Content;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Sources;
 using MyCC.Core.Helpers;
-using MyCC.Core.Preperation;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Messages;
@@ -70,12 +68,7 @@ namespace MyCC.Ui.Android.Views.Activities
         {
             try
             {
-                var watch = new Stopwatch();
-                watch.Start();
-                var timeString = "Started setup\n";
 
-                if (Prepare.PreparingNeeded) await Prepare.ExecutePreperations();
-                if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
 
                 // STEP 1: Fetch available currencies
                 var totalCount = CurrencyStorage.Instance.CurrencySources.Count() * 2;
@@ -85,13 +78,9 @@ namespace MyCC.Ui.Android.Views.Activities
                 {
                     count += 1;
                     SetStatus(0.8 * count / totalCount, string.Format(Resources.GetString(Resource.String.LoadingCurrenciesFrom), source.Name));
-
-                    timeString += $"{watch.ElapsedMilliseconds / 1000.0:#,0.00}s:\tFetching currencies from {source.Name} {(count % 2 == 1 ? "started" : "finished")}\n";
                 };
 
-                Action dataOpsFinished = () => timeString += $"{watch.ElapsedMilliseconds / 1000.0:#,0.00}s:\tCurrency: Data operations finished.\n";
-
-                await CurrencyStorage.Instance.LoadOnline(setProgress, setProgress, dataOpsFinished);
+                await CurrencyStorage.Instance.LoadOnline(setProgress, setProgress);
 
 
                 // STEP 2: Fetch needed Rates
@@ -100,9 +89,6 @@ namespace MyCC.Ui.Android.Views.Activities
                 Messaging.Update.AllItems.Send();
 
                 ApplicationSettings.AppInitialised = true;
-                timeString += $"{watch.ElapsedMilliseconds / 1000.0:#,0.00}s:\tDone";
-                timeString.LogInfo();
-                watch.Stop();
 
                 RunOnUiThread(() =>
                 {

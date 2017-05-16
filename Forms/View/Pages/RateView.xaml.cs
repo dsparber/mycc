@@ -48,7 +48,7 @@ namespace MyCC.Forms.View.Pages
             {
                 Task.Run(async () => await AppTaskHelper.FetchMissingRates(ApplicationSettings.WatchedCurrencies
                                        .Concat(ApplicationSettings.AllReferenceCurrencies)
-                                       .Select(c => new ExchangeRate(CurrencyConstants.Btc, c))
+                                       .Select(c => new ExchangeRate(CurrencyConstants.Btc.Id, c))
                                        .Select(r => ExchangeRateHelper.GetRate(r) ?? r)
                                        .Where(r => r.Rate == null)
                                        .Concat(AccountStorage.NeededRates).ToList()));
@@ -102,7 +102,7 @@ namespace MyCC.Forms.View.Pages
 
         private void PositionSelected(object sender, EventArgs e)
         {
-            var currencies = ApplicationSettings.MainCurrencies;
+            var currencies = ApplicationSettings.MainCurrencies.ToList();
 
             ApplicationSettings.StartupCurrencyRates = currencies[HeaderCarousel.Position];
             Messaging.RatesPageCurrency.SendValueChanged();
@@ -111,7 +111,7 @@ namespace MyCC.Forms.View.Pages
         private void SetHeaderCarousel()
         {
             HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
-            HeaderCarousel.Position = ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.StartupCurrencyRates);
+            HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyRates);
             HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
             HeaderCarousel.PageIndicatorTintColor = Color.FromHex("#5FFF");
 

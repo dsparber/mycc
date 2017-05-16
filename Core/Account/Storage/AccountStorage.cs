@@ -30,9 +30,10 @@ namespace MyCC.Core.Account.Storage
 
         public static readonly AccountStorage Instance = new AccountStorage();
 
-        public static IEnumerable<Currencies.Model.Currency> UsedCurrencies => Instance.AllElements.Select(a => a?.Money?.Currency).Distinct().Where(e => e != null).ToList();
+        public static IEnumerable<string> UsedCurrencies => Instance.AllElements.Select(a => a?.Money?.Currency.Id).Distinct().Where(e => e != null).ToList();
         public static IEnumerable<IGrouping<Currencies.Model.Currency, Models.Base.Account>> AccountsGroupedByCurrency => Instance.AllElements.GroupBy(a => a?.Money?.Currency).Where(g => g.Key != null);
         public static List<FunctionalAccount> AccountsWithCurrency(Currencies.Model.Currency currency) => Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).ToList();
+        public static List<FunctionalAccount> AccountsWithCurrency(string currencyId) => Instance.AllElements.Where(a => a.Money.Currency.Id.Equals(currencyId)).ToList();
 
 
         public static List<ExchangeRate> NeededRates => UsedCurrencies.Distinct()
@@ -42,7 +43,7 @@ namespace MyCC.Core.Account.Storage
                                        .ToList();
 
         public static List<ExchangeRate> NeededRatesFor(Currencies.Model.Currency accountCurrency) => ApplicationSettings.AllReferenceCurrencies
-                                       .Select(c => new ExchangeRate(accountCurrency, c))
+                                       .Select(c => new ExchangeRate(accountCurrency.Id, c))
                                        .Select(e => ExchangeRateHelper.GetRate(e) ?? e)
                                        .Where(r => r.Rate == null)
                                        .ToList();
@@ -65,7 +66,7 @@ namespace MyCC.Core.Account.Storage
         public static int CurrenciesForGraph => AccountsGroupedByCurrency
             .Select(e => e.Select(a =>
             {
-                var rate = new ExchangeRate(e.Key, ApplicationSettings.StartupCurrencyAssets);
+                var rate = new ExchangeRate(e.Key.Id, ApplicationSettings.StartupCurrencyAssets);
                 rate = ExchangeRateHelper.GetRate(rate) ?? rate;
 
                 return a.IsEnabled ? a.Money.Amount * rate.Rate ?? 0 : 0;

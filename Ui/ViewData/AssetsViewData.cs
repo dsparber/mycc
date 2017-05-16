@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
@@ -51,7 +52,7 @@ namespace MyCC.Ui.ViewData
             Messaging.UiUpdate.AssetsTable.Send();
         }
 
-        private static Dictionary<Currency, DateTime> GetLastUpdate() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, DateTime> GetLastUpdate() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyStorage.Find, c =>
         {
             var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
             var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
@@ -71,29 +72,29 @@ namespace MyCC.Ui.ViewData
             set { ApplicationSettings.SortDirectionAccounts = value; }
         }
 
-        private static Dictionary<Currency, CoinHeaderData> LoadHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, CoinHeaderData> LoadHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyStorage.Find, c =>
         {
-            var amount = AccountStorage.EnabledAccounts.Sum(a => a.Money.Amount * ExchangeRateHelper.GetRate(a.Money.Currency, c)?.Rate ?? 0);
-            var referenceMoney = new Money(amount, c);
+            var amount = AccountStorage.EnabledAccounts.Sum(a => a.Money.Amount * ExchangeRateHelper.GetRate(a.Money.Currency.Id, c)?.Rate ?? 0);
+            var referenceMoney = new Money(amount, CurrencyStorage.Find(c));
 
             var additionalRefs = ApplicationSettings.MainCurrencies
                 .Except(new[] { c })
-                .Select(x => new Money(amount * ExchangeRateHelper.GetRate(c, x)?.Rate ?? 0, x))
+                .Select(x => new Money(amount * ExchangeRateHelper.GetRate(c, x)?.Rate ?? 0, CurrencyStorage.Find(x)))
                 .ToList();
 
             return new CoinHeaderData(referenceMoney, additionalRefs);
         });
 
-        private static Dictionary<Currency, AssetsGraphItem.Data[]> LoadGraphItems() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, AssetsGraphItem.Data[]> LoadGraphItems() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyStorage.Find, c =>
              AccountStorage.AccountsGroupedByCurrency
-                        .Select(e => new AssetsGraphItem.Data(e, c))
+                        .Select(e => new AssetsGraphItem.Data(e, CurrencyStorage.Find(c)))
                         .Where(d => d.Value > 0)
                         .OrderByDescending(d => d.Value)
                         .ToArray());
 
-        private static Dictionary<Currency, List<AssetItem>> LoadItems() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c =>
+        private static Dictionary<Currency, List<AssetItem>> LoadItems() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyStorage.Find, c =>
         {
-            Func<Money, Money> getReference = m => new Money(m.Amount * (ExchangeRateHelper.GetRate(m.Currency, c)?.Rate ?? 0), c);
+            Func<Money, Money> getReference = m => new Money(m.Amount * (ExchangeRateHelper.GetRate(m.Currency.Id, c)?.Rate ?? 0), CurrencyStorage.Find(c));
 
             var items = AccountStorage.AccountsGroupedByCurrency.ToList();
             var enabled = items.Select(group =>
@@ -123,7 +124,7 @@ namespace MyCC.Ui.ViewData
                 .ToList();
         }
 
-        private Dictionary<Currency, List<SortButtonItem>> LoadSortButtons() => ApplicationSettings.MainCurrencies.ToDictionary(c => c, c => new List<SortButtonItem>
+        private Dictionary<Currency, List<SortButtonItem>> LoadSortButtons() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyStorage.Find, c => new List<SortButtonItem>
         {
             new SortButtonItem
             {
@@ -141,7 +142,7 @@ namespace MyCC.Ui.ViewData
             },
             new SortButtonItem
             {
-                Text = string.Format(StringHelper.TextResolver.AsCurrency, c.Code),
+                Text = string.Format(StringHelper.TextResolver.AsCurrency, new Currency(c).Code),
                 SortDirection = SortDirectionHelper.GetSortDirection(SortOrder, SortDirection, SortOrder.ByValue),
                 RightAligned = true,
                 OnClick = () => OnSort(SortOrder.ByValue)
@@ -157,7 +158,7 @@ namespace MyCC.Ui.ViewData
 
         private void SortAndNotify()
         {
-            Items = ApplicationSettings.MainCurrencies.ToDictionary(c => c, c => ApplySort(Items[c].Where(i => i.Enabled), Items[c].Where(i => !i.Enabled)));
+            Items = ApplicationSettings.MainCurrencies.Select(CurrencyStorage.Find).ToDictionary(c => c, c => ApplySort(Items[c].Where(i => i.Enabled), Items[c].Where(i => !i.Enabled)));
             SortButtons = LoadSortButtons();
             Messaging.UiUpdate.AssetsTable.Send();
         }

@@ -28,7 +28,14 @@ namespace MyCC.Ui.Android.Views.Activities
             MobileBarcodeScanner.Initialize(Application);
             CrashManager.Register(this, "7792ee5321a64433ace4955a1693cca5");
             MetricsManager.Register(Application, "7792ee5321a64433ace4955a1693cca5");
-            ApplicationSettings.Migrate();
+            ViewData.ViewData.Init();
+
+            if (Prepare.PreparingNeeded)
+            {
+                Prepare.ExecutePreperations();
+                if (Prepare.AsyncExecutePreperations != null) await Prepare.AsyncExecutePreperations;
+            }
+            if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
 
             if (!ApplicationSettings.AppInitialised || Prepare.PreparingNeeded)
             {

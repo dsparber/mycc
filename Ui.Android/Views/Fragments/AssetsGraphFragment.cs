@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -69,7 +70,7 @@ namespace MyCC.Ui.Android.Views.Fragments
                 Activity.RunOnUiThread(() =>
                 {
                     if (!ViewData.ViewData.Assets.IsGraphDataAvailable) return;
-                    if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency)) return;
+                    if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency.Id)) return;
                     if (!ViewData.ViewData.Assets.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
 
                     _header.Data = headerData;

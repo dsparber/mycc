@@ -23,9 +23,9 @@ namespace MyCC.Forms.View.Pages.Settings.Data
         {
             InitializeComponent();
 
-            Header.InfoText = PluralHelper.GetTextCurrencies(ApplicationSettings.AllReferenceCurrencies.Count);
+            Header.InfoText = PluralHelper.GetTextCurrencies(ApplicationSettings.AllReferenceCurrencies.Count());
 
-            foreach (var currency in ApplicationSettings.AllReferenceCurrencies.OrderBy(c => c.Code))
+            foreach (var currency in ApplicationSettings.AllReferenceCurrencies.OrderBy(id => id))
             {
                 var cell = GetCell(currency);
                 CurrenciesSection.Add(cell);
@@ -34,15 +34,15 @@ namespace MyCC.Forms.View.Pages.Settings.Data
 
         private void Add(object sender, EventArgs args)
         {
-            var currenciesTask = new Func<IEnumerable<Currency>>(() => CurrencyStorage.Instance.Currencies.Where(c => !ApplicationSettings.AllReferenceCurrencies.Contains(c)));
+            var currenciesTask = new Func<IEnumerable<Currency>>(() => CurrencyStorage.Instance.Currencies.Where(c => !ApplicationSettings.AllReferenceCurrencies.Contains(c.Id)));
 
             var overlay = new CurrencyOverlay(currenciesTask, I18N.AddReferenceCurrency)
             {
                 CurrencySelected = c =>
                 {
-                    ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Concat(new List<Currency> { c }).ToList();
-                    var index = Math.Min(ApplicationSettings.AllReferenceCurrencies.OrderBy(x => x.Code).ToList().IndexOf(c), 0);
-                    CurrenciesSection.Insert(index, GetCell(c));
+                    ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Concat(new List<string> { c.Id }).ToList();
+                    var index = Math.Min(ApplicationSettings.AllReferenceCurrencies.OrderBy(x => x).ToList().IndexOf(c.Id), 0);
+                    CurrenciesSection.Insert(index, GetCell(c.Id));
                     Messaging.ReferenceCurrencies.SendValueChanged();
                     Task.Run(() => AppTaskHelper.FetchMissingRates(AccountStorage.NeededRates));
                 }
@@ -50,25 +50,27 @@ namespace MyCC.Forms.View.Pages.Settings.Data
             Navigation.PushAsync(overlay);
         }
 
-        private CustomViewCell GetCell(Currency currency)
+        private CustomViewCell GetCell(string currencyId)
         {
+            var currency = CurrencyStorage.Find(currencyId);
+
             var cell = new CustomViewCell { Text = currency.Code, Detail = currency.Name };
 
             var delete = new CustomCellViewActionItem { Icon = "delete.png", Data = cell };
-            var star = new CustomCellViewActionItem { Icon = ApplicationSettings.MainCurrencies.Contains(currency) ? "starFilled.png" : "star.png", Data = cell };
+            var star = new CustomCellViewActionItem { Icon = ApplicationSettings.MainCurrencies.Contains(currencyId) ? "starFilled.png" : "star.png", Data = cell };
             var items = new List<CustomCellViewActionItem> { star, delete };
 
             delete.Action = (sender, e) =>
             {
                 var c = (e as TappedEventArgs)?.Parameter as CustomViewCell;
                 CurrenciesSection.Remove(c);
-                if (ApplicationSettings.MainCurrencies.Any(x => x.Code.Equals(c?.Text)))
+                if (ApplicationSettings.MainCurrencies.Any(x => new Currency(x).Code.Equals(c?.Text)))
                 {
-                    ApplicationSettings.MainCurrencies = ApplicationSettings.MainCurrencies.Where(x => !x.Code.Equals(c?.Text)).ToList();
+                    ApplicationSettings.MainCurrencies = ApplicationSettings.MainCurrencies.Where(x => !new Currency(x).Code.Equals(c?.Text)).ToList();
                 }
                 else
                 {
-                    ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Where(x => !x.Code.Equals(c?.Text)).ToList();
+                    ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Where(x => !new Currency(x).Code.Equals(c?.Text)).ToList();
                 }
                 Messaging.ReferenceCurrencies.SendValueChanged();
             };
@@ -76,10 +78,10 @@ namespace MyCC.Forms.View.Pages.Settings.Data
             star.Action = (sender, e) =>
             {
                 var c = (e as TappedEventArgs)?.Parameter as CustomViewCell;
-                var cu = ApplicationSettings.AllReferenceCurrencies.Find(x => x.Code.Equals(c?.Text));
+                var cu = ApplicationSettings.AllReferenceCurrencies.FirstOrDefault(x => new Currency(x).Code.Equals(c?.Text));
                 var isMain = ApplicationSettings.MainCurrencies.Contains(cu);
 
-                if (!isMain && ApplicationSettings.MainCurrencies.Count >= 3)
+                if (!isMain && ApplicationSettings.MainCurrencies.Count() >= 3)
                 {
                     DisplayAlert(I18N.Error, I18N.OnlyThreeCurrenciesCanBeStared, I18N.Ok);
                 }
@@ -93,8 +95,8 @@ namespace MyCC.Forms.View.Pages.Settings.Data
                         c.ActionItems = c.ActionItems;
                     }
 
-                    var mainCurrencies = ApplicationSettings.MainCurrencies;
-                    var furtherCurrencies = ApplicationSettings.FurtherCurrencies;
+                    var mainCurrencies = ApplicationSettings.MainCurrencies.ToList();
+                    var furtherCurrencies = ApplicationSettings.FurtherCurrencies.ToList();
 
                     if (isMain)
                     {

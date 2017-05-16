@@ -95,7 +95,7 @@ namespace MyCC.Forms.View.Pages
 
         private void UpdateView(bool calledFromBackground = false)
         {
-            var rate = new ExchangeRate(_currency, CurrencyConstants.Btc);
+            var rate = new ExchangeRate(_currency.Id, CurrencyConstants.Btc.Id);
             rate = ExchangeRateHelper.GetRate(rate) ?? rate;
 
             var explorer = CoinInfoStorage.Instance.GetExplorer(_currency).Select(e => e.Name).ToList();
@@ -209,7 +209,7 @@ namespace MyCC.Forms.View.Pages
         private void SetFooter()
         {
             var ratesTime = ApplicationSettings.AllReferenceCurrencies
-                                    .Select(e => new ExchangeRate(_currency, e))
+                                    .Select(e => new ExchangeRate(_currency.Id, e))
                                     .SelectMany(ExchangeRateHelper.GetNeededRates)
                                     .Distinct()
                                     .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty().Min();

@@ -7,6 +7,7 @@ using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
+using MyCC.Core.Currencies;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.Android.Helpers;
@@ -120,35 +121,35 @@ namespace MyCC.Ui.Android.Views.Activities
             switch (_position)
             {
                 case 0:
-                    _ratesFragments = ApplicationSettings.MainCurrencies.Select(c => new RatesFragment(c)).ToList();
+                    _ratesFragments = ApplicationSettings.MainCurrencies.Select(c => new RatesFragment(CurrencyStorage.Find(c))).ToList();
                     foreach (var f in _ratesFragments) f.EditingEnabled = false;
-                    fragment = new ViewPagerFragment(_ratesFragments.OfType<Fragment>().ToList(), ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.StartupCurrencyRates));
+                    fragment = new ViewPagerFragment(_ratesFragments.OfType<Fragment>().ToList(), ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyRates));
                     ((ViewPagerFragment)fragment).PositionChanged = pos =>
                     {
-                        if (pos >= ApplicationSettings.MainCurrencies.Count) return;
-                        ApplicationSettings.StartupCurrencyRates = ApplicationSettings.MainCurrencies[pos];
+                        if (pos >= ApplicationSettings.MainCurrencies.Count()) return;
+                        ApplicationSettings.StartupCurrencyRates = ApplicationSettings.MainCurrencies.ToList()[pos];
                     };
                     break;
                 case 1:
-                    var assetsfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsTableFragment(c) as Fragment).ToList();
-                    _assetsTableFragment = new ViewPagerFragment(assetsfragments, ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.StartupCurrencyAssets));
+                    var assetsfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsTableFragment(CurrencyStorage.Find(c)) as Fragment).ToList();
+                    _assetsTableFragment = new ViewPagerFragment(assetsfragments, ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
                     _assetsTableFragment.PositionChanged = pos =>
                     {
-                        if (pos >= ApplicationSettings.MainCurrencies.Count) return;
+                        if (pos >= ApplicationSettings.MainCurrencies.Count()) return;
 
-                        ApplicationSettings.StartupCurrencyAssets = ApplicationSettings.MainCurrencies[pos];
+                        ApplicationSettings.StartupCurrencyAssets = ApplicationSettings.MainCurrencies.ToList()[pos];
                         if (_assetsGraphFragment != null) _assetsGraphFragment.Position = pos;
                     };
                     fragment = _assetsTableFragment;
                     break;
                 case 2:
-                    var graphfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsGraphFragment(c) as Fragment).ToList();
-                    _assetsGraphFragment = new ViewPagerFragment(graphfragments, ApplicationSettings.MainCurrencies.IndexOf(ApplicationSettings.StartupCurrencyAssets));
+                    var graphfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsGraphFragment(CurrencyStorage.Find(c)) as Fragment).ToList();
+                    _assetsGraphFragment = new ViewPagerFragment(graphfragments, ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
                     _assetsGraphFragment.PositionChanged = pos =>
                     {
-                        if (pos >= ApplicationSettings.MainCurrencies.Count) return;
+                        if (pos >= ApplicationSettings.MainCurrencies.Count()) return;
 
-                        ApplicationSettings.StartupCurrencyAssets = ApplicationSettings.MainCurrencies[pos];
+                        ApplicationSettings.StartupCurrencyAssets = ApplicationSettings.MainCurrencies.ToList()[pos];
                         if (_assetsTableFragment != null) _assetsTableFragment.Position = pos;
                     };
                     fragment = _assetsGraphFragment;

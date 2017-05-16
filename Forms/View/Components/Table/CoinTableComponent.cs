@@ -52,13 +52,13 @@ namespace MyCC.Forms.View.Components.Table
             {
                 SortOrder value;
                 var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
-                if (clickedSortOrder == ApplicationSettings.SortOrderTable)
+                if (clickedSortOrder == ApplicationSettings.SortOrderAssets)
                 {
-                    ApplicationSettings.SortDirectionTable = ApplicationSettings.SortDirectionTable == SortDirection.Ascending
+                    ApplicationSettings.SortDirectionAssets = ApplicationSettings.SortDirectionAssets == SortDirection.Ascending
                         ? SortDirection.Descending
                         : SortDirection.Ascending;
                 }
-                ApplicationSettings.SortOrderTable = clickedSortOrder;
+                ApplicationSettings.SortOrderAssets = clickedSortOrder;
 
                 UpdateView();
             });
@@ -86,7 +86,7 @@ namespace MyCC.Forms.View.Components.Table
                 if (!itemsExisting) return;
 
                 Func<Data, object> sortLambda;
-                switch (ApplicationSettings.SortOrderTable)
+                switch (ApplicationSettings.SortOrderAssets)
                 {
                     case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
                     case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("<", string.Empty)); break;
@@ -95,15 +95,15 @@ namespace MyCC.Forms.View.Components.Table
                     default: sortLambda = d => 1; break;
                 }
 
-                items = (ApplicationSettings.SortDirectionTable == SortDirection.Ascending ? items.Where(d => !d.Disabled).OrderBy(sortLambda) : items.Where(d => !d.Disabled).OrderByDescending(sortLambda)).Concat
-                        (ApplicationSettings.SortDirectionTable == SortDirection.Ascending ? items.Where(d => d.Disabled).OrderBy(sortLambda) : items.Where(d => d.Disabled).OrderByDescending(sortLambda)).ToList();
+                items = (ApplicationSettings.SortDirectionAssets == SortDirection.Ascending ? items.Where(d => !d.Disabled).OrderBy(sortLambda) : items.Where(d => !d.Disabled).OrderByDescending(sortLambda)).Concat
+                        (ApplicationSettings.SortDirectionAssets == SortDirection.Ascending ? items.Where(d => d.Disabled).OrderBy(sortLambda) : items.Where(d => d.Disabled).OrderByDescending(sortLambda)).ToList();
 
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     _webView.CallJsFunction("setHeader", new[]{
                       new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
                       new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
-                      new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.StartupCurrencyAssets.Code), SortOrder.ByValue.ToString())
+                      new HeaderData(string.Format(I18N.AsCurrency, new Currency(ApplicationSettings.StartupCurrencyAssets).Code), SortOrder.ByValue.ToString())
                   }, string.Empty);
                     _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
 
@@ -137,12 +137,13 @@ namespace MyCC.Forms.View.Components.Table
             [DataMember]
             public readonly bool Disabled;
 
-            public Data(Currency currency)
+            public Data(string currencyId)
             {
-                var sum = AccountStorage.AccountsWithCurrency(currency).Sum(a => a.IsEnabled ? a.Money.Amount : 0);
-                var neededRate = new ExchangeRate(currency, ApplicationSettings.StartupCurrencyAssets);
+                var sum = AccountStorage.AccountsWithCurrency(currencyId).Sum(a => a.IsEnabled ? a.Money.Amount : 0);
+                var neededRate = new ExchangeRate(currencyId, ApplicationSettings.StartupCurrencyAssets);
                 var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
 
+                var currency = new Currency(currencyId);
                 Code = currency.Code;
                 Amount = new Money(sum, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
                 Reference = new Money(sum * rate.Rate ?? 0, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
@@ -169,8 +170,8 @@ namespace MyCC.Forms.View.Components.Table
 
             public SortData()
             {
-                Direction = ApplicationSettings.SortDirectionTable.ToString();
-                Type = ApplicationSettings.SortOrderTable.ToString();
+                Direction = ApplicationSettings.SortDirectionAssets.ToString();
+                Type = ApplicationSettings.SortOrderAssets.ToString();
             }
 
         }

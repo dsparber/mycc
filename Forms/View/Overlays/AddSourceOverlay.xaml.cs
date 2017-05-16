@@ -133,7 +133,7 @@ namespace MyCC.Forms.View.Overlays
                         Messaging.UpdatingAccounts.SendFinished();
 
                         var referenceCurrencies = ApplicationSettings.AllReferenceCurrencies.ToList();
-                        var neededRates = referenceCurrencies.Select(c => new ExchangeRate(account.Money.Currency, c)).ToList();
+                        var neededRates = referenceCurrencies.Select(c => new ExchangeRate(account.Money.Currency.Id, c)).ToList();
 
                         if (neededRates.Count > 0)
                         {

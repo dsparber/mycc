@@ -56,7 +56,7 @@ namespace MyCC.Ui.Tasks
             try
             {
                 var neededRates = CurrencySettingsData.EnabledCurrencies
-                    .SelectMany(c => ApplicationSettings.AllReferenceCurrencies.Select(r => new ExchangeRate(r, c)))
+                    .SelectMany(c => ApplicationSettings.AllReferenceCurrencies.Select(r => new ExchangeRate(r, c.Id)))
                     .Distinct()
                     .Select(r => ExchangeRateHelper.GetRate(r) ?? r)
                     .Where(r => r.Rate == null)

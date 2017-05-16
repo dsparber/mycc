@@ -11,32 +11,33 @@ namespace MyCC.Ui.ViewData
     {
         public static void Disable(Currency currency)
         {
-            if (ApplicationSettings.MainCurrencies.Contains(currency) || AccountStorage.UsedCurrencies.Contains(currency))
+            if (ApplicationSettings.MainCurrencies.Contains(currency.Id) || AccountStorage.UsedCurrencies.Contains(currency.Id))
             {
                 ApplicationSettings.DisabledCurrencyIds = ApplicationSettings.DisabledCurrencyIds.Concat(new[] { currency.Id });
             }
-            else if (ApplicationSettings.WatchedCurrencies.Contains(currency))
+            else if (ApplicationSettings.WatchedCurrencies.Contains(currency.Id))
             {
-                ApplicationSettings.WatchedCurrencies = ApplicationSettings.WatchedCurrencies.Except(new[] { currency }).ToList();
+                ApplicationSettings.WatchedCurrencies = ApplicationSettings.WatchedCurrencies.Except(new[] { currency.Id }).ToList();
             }
-            else if (ApplicationSettings.FurtherCurrencies.Contains(currency))
+            else if (ApplicationSettings.FurtherCurrencies.Contains(currency.Id))
             {
-                ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Except(new[] { currency }).ToList();
+                ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Except(new[] { currency.Id }).ToList();
             }
         }
 
         public static IEnumerable<Currency> EnabledCurrencies => AccountStorage.UsedCurrencies
             .Concat(ApplicationSettings.AllReferenceCurrencies)
             .Concat(ApplicationSettings.WatchedCurrencies)
-            .Except(ApplicationSettings.DisabledCurrencyIds.Select(CurrencyStorage.Find))
-            .Distinct();
+            .Except(ApplicationSettings.DisabledCurrencyIds)
+            .Distinct()
+            .Select(CurrencyStorage.Find);
 
         public static void Add(Currency currency)
         {
             ApplicationSettings.DisabledCurrencyIds = ApplicationSettings.DisabledCurrencyIds.Except(new[] { currency.Id });
             if (!EnabledCurrencies.Contains(currency))
             {
-                ApplicationSettings.WatchedCurrencies = new List<Currency>(ApplicationSettings.WatchedCurrencies) { currency };
+                ApplicationSettings.WatchedCurrencies = new List<string>(ApplicationSettings.WatchedCurrencies) { currency.Id };
             }
         }
     }

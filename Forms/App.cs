@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using MyCC.Core.Preperation;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
@@ -22,7 +23,7 @@ namespace MyCC.Forms
         public App()
         {
             var startPage = Device.RuntimePlatform.Equals(Device.Android) ? new MasterDetailContainer() as Page : new TabContainerView();
-            ApplicationSettings.Migrate();
+            if (Prepare.PreparingNeeded) Prepare.ExecutePreperations();
 
             if (ApplicationSettings.IsPinSet)
             {

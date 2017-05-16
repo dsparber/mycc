@@ -26,7 +26,7 @@ namespace MyCC.Forms.View.Components.Table
         private readonly HybridWebView _webView;
 
         private string TableHeaderLabel => string.Format(ReferenceMoney.Amount == 1 ? I18N.IsEqualTo : I18N.AreEqualTo, ReferenceMoney);
-        private IEnumerable<Currency> ReferenceCurrencies => ApplicationSettings.AllReferenceCurrencies.Except(new List<Currency> { ReferenceMoney?.Currency });
+        private IEnumerable<Currency> ReferenceCurrencies => ApplicationSettings.AllReferenceCurrencies.Except(new List<string> { ReferenceMoney?.Currency.Id }).Select(id => new Currency(id));
 
         public ReferenceCurrenciesView(Money reference)
         {
@@ -135,7 +135,7 @@ namespace MyCC.Forms.View.Components.Table
 
             public Data(Money reference, Currency currency)
             {
-                var neededRate = new ExchangeRate(reference.Currency, currency);
+                var neededRate = new ExchangeRate(reference.Currency.Id, currency.Id);
                 var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
 
                 Code = currency.Code;

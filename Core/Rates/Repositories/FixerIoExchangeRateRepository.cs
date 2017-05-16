@@ -8,6 +8,8 @@ using Newtonsoft.Json.Linq;
 using SQLite;
 using System.Linq;
 using ModernHttpClient;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Model;
 using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 
@@ -57,7 +59,7 @@ namespace MyCC.Core.Rates.Repositories
 
                 foreach (var r in ratesJson)
                 {
-                    var rate = new ExchangeRate(Currencies.CurrencyConstants.Eur, new Currencies.Model.Currency(r.Key, false),
+                    var rate = new ExchangeRate(CurrencyConstants.Eur.Id, new Currency(r.Key, false).Id,
                         DateTime.Now, decimal.Parse((string)r.Value, CultureInfo.InvariantCulture))
                     {
                         RepositoryId = TypeId

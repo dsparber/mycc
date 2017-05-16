@@ -48,10 +48,10 @@ namespace MyCC.Forms.View.Components
         {
 
             var items = AccountStorage.AccountsGroupedByCurrency
-                        .Select(e => new Data(e, ApplicationSettings.StartupCurrencyAssets)).Where(d => d.value > 0)
+                        .Select(e => new Data(e, new Currency(ApplicationSettings.StartupCurrencyAssets))).Where(d => d.value > 0)
                         .OrderByDescending(d => d.value).ToArray();
 
-            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new[] { I18N.OneAccount, I18N.Accounts }, new[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, ApplicationSettings.StartupCurrencyAssets.Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString()));
+            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new[] { I18N.OneAccount, I18N.Accounts }, new[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, new Currency(ApplicationSettings.StartupCurrencyAssets).Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString()));
         }
 
         [DataContract]
@@ -81,7 +81,7 @@ namespace MyCC.Forms.View.Components
 
             public Data(IGrouping<Currency, Account> group, Currency referenceCurrency)
             {
-                var rate = new ExchangeRate(group.Key, referenceCurrency);
+                var rate = new ExchangeRate(group.Key.Id, referenceCurrency.Id);
                 rate = ExchangeRateHelper.GetRate(rate) ?? rate;
 
                 var totalMoney = new Money(group.Sum(a => a.IsEnabled ? a.Money.Amount : 0), group.Key);
