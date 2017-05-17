@@ -136,7 +136,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             activityRootView.ViewTreeObserver.GlobalLayout += (sender, args) =>
             {
                 if (IsDetached || !IsAdded) return;
-                ChildFragmentManager.SetFragmentVisibility(_header, activityRootView.Height > 400.DpToPx());
+                ChildFragmentManager.SetFragmentVisibility(_header, activityRootView.Height > 360.DpToPx());
             };
 
             return view;

@@ -105,11 +105,11 @@ namespace MyCC.Core.Settings
                 var json = Settings.Get(key, string.Empty);
                 if (string.IsNullOrEmpty(json)) return null;
 
-                var currencies = JObject.Parse(json);
+                var currencies = JArray.Parse(json);
                 var ids = new List<string>();
                 foreach (var c in currencies)
                 {
-                    var id = (string)c.Value["Id"];
+                    var id = (string)c["Id"];
                     ids.Add(id);
                 }
                 return ids;

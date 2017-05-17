@@ -123,7 +123,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             _fragmentRootView.ViewTreeObserver.GlobalLayout += (sender, args) =>
             {
                 if (IsDetached || !IsAdded) return;
-                ChildFragmentManager.SetFragmentVisibility(_header, _fragmentRootView.Height > 400.DpToPx());
+                ChildFragmentManager.SetFragmentVisibility(_header, _fragmentRootView.Height > 360.DpToPx());
                 ChildFragmentManager.SetFragmentVisibility(_sortValue, !(ApplicationSettings.AssetsColumToHideIfSmall == ColumnToHide.Value && _fragmentRootView.Width < 480.DpToPx()));
                 ChildFragmentManager.SetFragmentVisibility(_sortAmount, !(ApplicationSettings.AssetsColumToHideIfSmall == ColumnToHide.Amount && _fragmentRootView.Width < 480.DpToPx()));
             };
