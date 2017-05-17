@@ -37,6 +37,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private IMenuItem _editItem;
         private IMenuItem _doneItem;
+        private bool _dataLoaded = ApplicationSettings.AutoRefreshOnStartup;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -48,8 +49,9 @@ namespace MyCC.Ui.Android.Views.Activities
             CreateDrawerLayout();
 
             var initBefore = Intent.GetBooleanExtra(ExtraInitialisedBefore, false);
-            if (!initBefore && ApplicationSettings.AutoRefreshOnStartup && ConnectivityStatus.IsConnected)
+            if (!initBefore && _dataLoaded && ConnectivityStatus.IsConnected)
             {
+                _dataLoaded = false;
                 Task.Run(async () =>
                 {
                     await TaskHelper.FetchMissingRates();
