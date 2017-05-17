@@ -24,6 +24,8 @@
       android:paddingBottom="8dp"
       android:layout_width="0dp"
       android:layout_weight="0.7"
+      android:ellipsize="middle"
+      android:maxLines="1"
       android:layout_height="wrap_content"
       android:typeface="monospace"
       android:textColor="@color/primary_text_default_material_light" />
@@ -33,6 +35,8 @@
       android:padding="8dp"
       android:layout_width="0dp"
       android:layout_weight="1.1"
+      android:ellipsize="middle"
+      android:maxLines="1"
       android:layout_height="wrap_content"
       android:typeface="monospace"
       android:textColor="@color/primary_text_default_material_light" />

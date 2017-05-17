@@ -10,6 +10,7 @@ using Android.Views;
 using Android.Widget;
 using MyCC.Core.Currencies.Model;
 using MyCC.Core.Settings;
+using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Android.Views.Adapter;
 using MyCC.Ui.DataItems;
@@ -130,6 +131,13 @@ namespace MyCC.Ui.Android.Views.Fragments
                 StartActivityForResult(intent, RequestCodeCurrency);
             };
 
+            var activityRootView = view.FindViewById(Resource.Id.fragment_root);
+
+            activityRootView.ViewTreeObserver.GlobalLayout += (sender, args) =>
+            {
+                if (IsDetached || !IsAdded) return;
+                ChildFragmentManager.SetFragmentVisibility(_header, activityRootView.Height > 400.DpToPx());
+            };
 
             return view;
         }

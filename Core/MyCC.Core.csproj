@@ -69,7 +69,6 @@
       <DependentUpon>I18N.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\ILocalise.cs" />
-    <Compile Include="Types\FetchSpeed.cs" />
     <Compile Include="Types\SortOrder.cs" />
     <Compile Include="Types\SortDirection.cs" />
     <Compile Include="Types\PinAction.cs" />
@@ -129,6 +128,7 @@
     <Compile Include="Account\Models\Base\OnlineFunctionalAccount.cs" />
     <Compile Include="Account\Database\TransactionDbm.cs" />
     <Compile Include="Account\Database\TransactionDatabase.cs" />
+    <Compile Include="Types\ColumnToHide.cs" />
     <Compile Include="Types\StartupPage.cs" />
     <Compile Include="Account\Repositories\Implementations\BlockchainXpubAccountRepository.cs" />
     <Compile Include="Account\Models\Implementations\BlockchainXpubAccount.cs" />

@@ -160,4 +160,9 @@
   <string name="LoadingCurrenciesFrom">Loading currencies from {0}</string>
   <string name="LoadingAvailableRatesFrom">Loading available rates from {0}</string>
   <string name="LoadingRates">Loading needed exchange rates</string>
+  <string name="SavingSource">Saving source</string>
+  <string name="AssetsColumnToHide">Hide assets column</string>
+  <string name="AssetsColumnToHideDescription">Hide a column of the assets table when there is not enough space</string>
+  <string name="ReferenceValue">Reference value</string>
+  <string name="InitialiseApp">Initialising pp</string>
 </resources>

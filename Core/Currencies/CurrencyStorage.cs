@@ -88,7 +88,7 @@ namespace MyCC.Core.Currencies
         public static Currency Find(string id)
         {
             var success = Instance.CurrencyDictionary.TryGetValue(id, out var currency);
-            return success ? currency : null;
+            return success ? currency : new Currency(id);
         }
 
         public static Currency Find(string code, bool isCrypto) => Find($"{code}{(isCrypto ? 1 : 0)}");

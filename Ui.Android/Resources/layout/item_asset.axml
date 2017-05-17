@@ -5,7 +5,9 @@
     android:background="#fff">
   <TextView
       android:id="@+id/text_currency"
-       android:paddingLeft="24dp"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:paddingLeft="24dp"
       android:paddingRight="8dp"
       android:paddingTop="8dp"
       android:paddingBottom="8dp"
@@ -21,6 +23,8 @@
       android:layout_weight="0.7"
       android:layout_height="wrap_content"
       android:typeface="monospace"
+      android:ellipsize="middle"
+      android:maxLines="1"
       android:textColor="@color/primary_text_default_material_light" />
   <TextView
       android:id="@+id/text_reference"
@@ -30,6 +34,8 @@
       android:layout_weight="0.6"
       android:layout_height="wrap_content"
       android:typeface="monospace"
+      android:ellipsize="middle"
+      android:maxLines="1"
       android:textColor="@color/primary_text_default_material_light" />
   <LinearLayout
       android:layout_width="0dp"

@@ -3,20 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
   <PreferenceCategory
-        android:title="@string/Data"
-        android:key="pref_category_data">
-    <!-- Sources? -->
-    <Preference
-      android:key="pref_reference_currencies"
-      android:title="@string/ReferenceCurrencies" />
-    <!-- Additional rates? -->
-    <Preference
-      android:key="pref_preferred_bitcoin"
-      android:title="@string/PreferredBitcoinRate" />
-  </PreferenceCategory>
-  <PreferenceCategory
-        android:title="@string/General"
-        android:key="pref_category_general">
+       android:title="@string/General"
+       android:key="pref_category_general">
     <Preference
       android:key="pref_security"
       android:title="@string/Security" />
@@ -24,12 +12,29 @@
       android:key="default-page"
       android:title="@string/DefaultView"
       android:dialogTitle="@string/DefaultView" />
+    <ListPreference
+      android:key="pref_assets_column_to_hide_if_small"
+      android:title="@string/AssetsColumnToHide"
+      android:summary="@string/AssetsColumnToHideDescription"
+      android:dialogTitle="@string/AssetsColumnToHide"/>
+  </PreferenceCategory>
+
+  <PreferenceCategory
+        android:title="@string/Data"
+        android:key="pref_category_data">
+    <Preference
+      android:key="pref_reference_currencies"
+      android:title="@string/ReferenceCurrencies" />
+    <Preference
+      android:key="pref_preferred_bitcoin"
+      android:title="@string/PreferredBitcoinRate" />
     <SwitchPreference
       android:key="auto-refresh-on-startup"
       android:title="@string/RefreshOnStartup"
       android:summary="@string/LoadRatesAndBalancesOnStartup"
       android:defaultValue="true" />
   </PreferenceCategory>
+
   <PreferenceCategory
         android:title="@string/Info"
         android:key="pref_category_info">

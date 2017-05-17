@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Model;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates;
@@ -116,6 +117,7 @@ namespace MyCC.Ui.Tasks
         public static async void UpdateBitcoinExchangeSources()
         {
             Messaging.Status.Progress.Send(0.2);
+            await FetchMissingRates(new[] { new ExchangeRate(CurrencyConstants.Usd.Id, CurrencyConstants.Eur.Id) });
             await ApplicationTasks.FetchBitcoinDollarRates(onError: ErrorDialog.Display, progressCallback: d => Messaging.Status.Progress.Send(0.2 + 0.8 * d));
 
             Messaging.UiUpdate.BitcoinExchangeSources.Send();

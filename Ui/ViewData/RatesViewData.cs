@@ -38,6 +38,7 @@ namespace MyCC.Ui.ViewData
                 .Select(e => new ExchangeRate(c, e.Id))
                 .SelectMany(ExchangeRateHelper.GetNeededRates)
                 .Distinct()
+                .Where(e => e != null)
                 .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now)
                 .DefaultIfEmpty(DateTime.Now)
                 .Min();

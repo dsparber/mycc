@@ -37,7 +37,7 @@ namespace MyCC.Ui.Android.Views.Activities
             }
             if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
 
-            if (!ApplicationSettings.AppInitialised || Prepare.PreparingNeeded)
+            if (!ApplicationSettings.AppInitialised)
             {
                 StartActivity(new Intent(this, typeof(PreparingAppActivity)));
             }

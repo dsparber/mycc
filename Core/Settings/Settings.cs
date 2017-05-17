@@ -44,6 +44,7 @@ namespace MyCC.Core.Settings
         public const string KeyLockByShaking = "lock_by_shaking";
 
         public const string DefaultPage = "default-page";
+        public const string KeyAssetsColumnHideWhenSmall = "pref_assets_column_to_hide_if_small";
 
         public const string RoundMoney = "round-money";
 
@@ -78,6 +79,11 @@ namespace MyCC.Core.Settings
                 /* Was added by another thread */
             }
             return value;
+        }
+
+        public static void ClearCache()
+        {
+            Cache.Clear();
         }
 
         public static void Set<T>(string key, T value)

@@ -238,16 +238,8 @@ namespace MyCC.Core.Settings
 
         public static SortDirection SortDirectionReferenceValues
         {
-            get
-            {
-                var defaultValue = SortDirection.Ascending.ToString();
-                var stringValue = Settings.Get(Settings.KeySortDirectionReferenceValues, defaultValue);
-                return (SortDirection)Enum.Parse(typeof(SortDirection), stringValue);
-            }
-            set
-            {
-                Settings.Set(Settings.KeySortDirectionReferenceValues, value.ToString());
-            }
+            get { return Settings.KeySortDirectionReferenceValues.GetEnum(SortDirection.Ascending); }
+            set { Settings.KeySortDirectionReferenceValues.SetEnum(value); }
         }
 
         public static bool AutoRefreshOnStartup
@@ -262,11 +254,11 @@ namespace MyCC.Core.Settings
             set { Settings.Set(Settings.KeyAppInitialised, value); }
         }
 
-        public static bool RoundMoney
-        {
-            get { return false;/* return Settings.Get(Settings.RoundMoney, false);*/}
+        public static bool RoundMoney => false;
+        /*{
+            get { return Settings.Get(Settings.RoundMoney, false);}
             set { Settings.Set(Settings.RoundMoney, value); }
-        }
+        }*/
 
         public static int PreferredBitcoinRepository
         {
@@ -276,9 +268,18 @@ namespace MyCC.Core.Settings
 
         public static StartupPage DefaultStartupPage
         {
-            get { return (StartupPage)Enum.Parse(typeof(StartupPage), Settings.Get(Settings.DefaultPage, StartupPage.RatesView.ToString())); }
-            set { Settings.Set(Settings.DefaultPage, value.ToString()); }
+            get { return Settings.DefaultPage.GetEnum(StartupPage.RatesView); }
+            set { Settings.DefaultPage.SetEnum(value); }
         }
+
+        public static ColumnToHide AssetsColumToHideIfSmall
+        {
+            get { return Settings.KeyAssetsColumnHideWhenSmall.GetEnum(ColumnToHide.None); }
+            set { Settings.KeyAssetsColumnHideWhenSmall.SetEnum(value); }
+        }
+
+        private static void SetEnum<T>(this string key, T value) => Settings.Set(key, value.ToString());
+        private static T GetEnum<T>(this string key, T defaultValue) => (T)Enum.Parse(typeof(T), Settings.Get(key, defaultValue.ToString()));
 
         public static int PinLength
         {

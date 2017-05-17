@@ -30,6 +30,7 @@ namespace MyCC.Ui.ViewData
             .Concat(ApplicationSettings.WatchedCurrencies)
             .Except(ApplicationSettings.DisabledCurrencyIds)
             .Distinct()
+            .Where(c => c != null)
             .Select(CurrencyStorage.Find);
 
         public static void Add(Currency currency)

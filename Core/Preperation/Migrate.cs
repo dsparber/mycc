@@ -19,11 +19,18 @@ namespace MyCC.Core.Preperation
 
         private static async Task MigrateTo_1_1()
         {
-            var connection = DependencyService.Get<ISqLiteConnection>().GetOldConnection();
-            await connection.ExecuteAsync("DROP TABLE Currencies;");
-            await connection.ExecuteAsync("DROP TABLE CurrencyMap;");
-            await connection.ExecuteAsync("DROP TABLE CurrencyRepositories;");
-            await connection.ExecuteAsync("DROP TABLE CurrencyRepositoryMap;");
+            try
+            {
+                var connection = DependencyService.Get<ISqLiteConnection>().GetOldConnection();
+                await connection.ExecuteAsync("DROP TABLE Currencies;");
+                await connection.ExecuteAsync("DROP TABLE CurrencyMap;");
+                await connection.ExecuteAsync("DROP TABLE CurrencyRepositories;");
+                await connection.ExecuteAsync("DROP TABLE CurrencyRepositoryMap;");
+            }
+            catch
+            {
+                // Do nothing -> Table was already deleted
+            }
 
         }
     }

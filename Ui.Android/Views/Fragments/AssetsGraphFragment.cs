@@ -10,6 +10,7 @@ using Android.Webkit;
 using Java.Interop;
 using MyCC.Core.Currencies.Model;
 using MyCC.Core.Settings;
+using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Messages;
 using Newtonsoft.Json;
@@ -85,6 +86,13 @@ namespace MyCC.Ui.Android.Views.Fragments
             view.FindViewById<FloatingActionButton>(Resource.Id.button_add).Click += (sender, args) =>
             {
                 StartActivity(new Intent(Application.Context, typeof(AddSourceActivity)));
+            };
+
+            var activityRootView = view.FindViewById(Resource.Id.fragment_root);
+            activityRootView.ViewTreeObserver.GlobalLayout += (sender, args) =>
+            {
+                if (IsDetached || !IsAdded) return;
+                ChildFragmentManager.SetFragmentVisibility(_header, activityRootView.Height > 400.DpToPx());
             };
 
             return view;

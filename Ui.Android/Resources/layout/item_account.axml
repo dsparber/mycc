@@ -12,6 +12,7 @@
       android:layout_width="0dp"
       android:layout_weight="0.8"
       android:ellipsize="end"
+      android:maxLines="1"
       android:layout_height="wrap_content"
       android:textColor="@color/primary_text_default_material_light"
       android:background="#fff" />
@@ -21,6 +22,8 @@
       android:gravity="end"
       android:layout_width="0dp"
       android:layout_weight="1"
+      android:ellipsize="middle"
+      android:maxLines="1"
       android:layout_height="wrap_content"
       android:typeface="monospace"
       android:textColor="@color/primary_text_default_material_light"

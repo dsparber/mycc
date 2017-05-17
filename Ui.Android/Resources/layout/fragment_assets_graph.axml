@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:id="@+id/fragment_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
   <RelativeLayout
@@ -21,39 +21,34 @@
         android:id="@+id/header_fragment"
         android:layout_below="@id/progress_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
     <TextView
-      android:id="@+id/no_data_text"
-      android:layout_below="@id/header_fragment"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:gravity="center"
-      android:visibility="gone"
-      android:text="@string/NoDataToDisplay"/>
-
+        android:id="@+id/no_data_text"
+        android:layout_below="@id/header_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/NoDataToDisplay" />
     <LinearLayout
-      android:id="@+id/data_container"
-      android:layout_below="@id/header_fragment"
-      android:orientation="horizontal"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent">
-      <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swiperefresh"
+        android:id="@+id/data_container"
+        android:layout_below="@id/header_fragment"
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-
+      <android.support.v4.widget.SwipeRefreshLayout
+          android:id="@+id/swiperefresh"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent">
         <ScrollView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:fillViewport="true">
-
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
           <WebView
-             android:id="@+id/web_view"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"/>
-
+              android:id="@+id/web_view"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" />
         </ScrollView>
-
       </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
@@ -69,8 +64,8 @@
         app:layout_anchorGravity="bottom|end" />
   </RelativeLayout>
   <fragment
-    android:name="MyCC.Ui.Android.Views.Fragments.FooterFragment"
-    android:id="@+id/footer_fragment"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+      android:name="MyCC.Ui.Android.Views.Fragments.FooterFragment"
+      android:id="@+id/footer_fragment"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
 </LinearLayout>

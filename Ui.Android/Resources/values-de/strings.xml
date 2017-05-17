@@ -160,4 +160,9 @@
   <string name="LoadingCurrenciesFrom">Währungen werden von {0} geladen</string>
   <string name="LoadingAvailableRatesFrom">Verfügbare Kurse werden von {0} abgerufen</string>
   <string name="LoadingRates">Benötigte Kurse herunterladen</string>
+  <string name="SavingSource">Datenquelle speichern</string>
+  <string name="AssetsColumnToHide">Spalte in Vermögenstabelle ausblenden</string>
+  <string name="AssetsColumnToHideDescription">Spalte in Vermögenstabelle ausblenden wenn wenig Platz vorhanden ist.</string>
+  <string name="ReferenceValue">Referenzwert</string>
+  <string name="InitialiseApp">App initialisieren</string>
 </resources>

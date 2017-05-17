@@ -9,7 +9,7 @@ namespace MyCC.Core.Preperation
 {
     public static class Prepare
     {
-        public static bool PreparingNeeded => ApplicationSettings.FirstLaunch || ApplicationSettings.LastCoreVersion < new Version(1, 1, 1);
+        public static bool PreparingNeeded => ApplicationSettings.FirstLaunch || ApplicationSettings.LastCoreVersion < new Version(1, 1, 2);
 
         public static void ExecutePreperations()
         {
@@ -34,6 +34,10 @@ namespace MyCC.Core.Preperation
                 ApplicationSettings.SortOrderAccounts = SortOrder.Alphabetical;
                 ApplicationSettings.SortOrderAssets = SortOrder.Alphabetical;
                 ApplicationSettings.SortOrderReferenceValues = SortOrder.Alphabetical;
+            }
+            if (ApplicationSettings.LastCoreVersion < new Version(1, 1, 2))
+            {
+                ApplicationSettings.AssetsColumToHideIfSmall = ColumnToHide.None;
             }
         }
 

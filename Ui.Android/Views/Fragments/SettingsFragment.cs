@@ -21,6 +21,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             SetPreferencesFromResource(Resource.Xml.preferences, rootKey);
 
             var startupViewPreference = (ListPreference)FindPreference("default-page");
+            var assetsToHideColumnPreference = (ListPreference)FindPreference("pref_assets_column_to_hide_if_small");
             _securityPreference = FindPreference("pref_security");
             _preferredBitcoinPreference = FindPreference("pref_preferred_bitcoin");
             _referenceCurrenciesPreference = FindPreference("pref_reference_currencies");
@@ -47,6 +48,26 @@ namespace MyCC.Ui.Android.Views.Fragments
             {
                 startupDefault = args.NewValue.ToString();
                 startupViewPreference.Summary = startupEntries[startupValues.ToList().IndexOf(startupDefault)];
+            };
+
+            var assetsToHideEntries = new[]
+            {
+                Resources.GetString(Resource.String.None),
+                Resources.GetString(Resource.String.Amount),
+                Resources.GetString(Resource.String.ReferenceValue),
+            };
+            var assetsToHideValues = new[]
+            {
+                ColumnToHide.None.ToString(),
+                ColumnToHide.Amount.ToString(),
+                ColumnToHide.Value.ToString(),
+            };
+
+            assetsToHideColumnPreference.SetEntries(assetsToHideEntries);
+            assetsToHideColumnPreference.SetEntryValues(assetsToHideValues);
+            assetsToHideColumnPreference.PreferenceChange += (sender, args) =>
+            {
+                Settings.ClearCache();
             };
 
             _securityPreference.PreferenceClick += (sender, args) =>

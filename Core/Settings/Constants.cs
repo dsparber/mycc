@@ -2,6 +2,6 @@
 {
     public static class Constants
     {
-        public static readonly Version CoreVersion = new Version(1, 1, 1);
+        public static readonly Version CoreVersion = new Version(1, 1, 2);
     }
 }

@@ -63,8 +63,8 @@ namespace MyCC.Ui.Android.Views.Activities
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            menu.Add(0, 0, 0, Resources.GetString(Resource.String.Save))
-                .SetIcon(Resource.Drawable.ic_action_done).SetShowAsAction(ShowAsAction.Always);
+            var item = menu.Add(0, 0, 0, Resources.GetString(Resource.String.Save));
+            item.SetIcon(Resource.Drawable.ic_action_done).SetShowAsAction(ShowAsAction.Always);
 
             return true;
         }
@@ -76,37 +76,38 @@ namespace MyCC.Ui.Android.Views.Activities
             {
                 Finish();
             }
-            else if (!_savingInProgress)
+            else
             {
-                Save();
+                var savingDialog = this.GetLoadingDialog(null, Resource.String.SavingSource);
+                Save(savingDialog);
             }
             return true;
         }
 
-        private async void Save()
+
+        private async void Save(ProgressDialog progressDialog)
         {
-            _savingInProgress = true;
 
             var fragment = _pagerAdapter.GetFragment(_viewPager.CurrentItem);
 
             if (!fragment.EntryComplete)
             {
+                progressDialog.Dismiss();
                 this.ShowInfoDialog(Resource.String.Error, Resource.String.VerifyInput);
-                _savingInProgress = false;
                 return;
             }
 
             if (fragment is AddSourceFragment.Repository)
             {
-                var dialog = this.GetLoadingDialog(null, Resource.String.Testing);
+
 
                 var result = await AddAccountData.Add(((AddSourceFragment.Repository)fragment).GetRepository(),
                     alreadyAdded:
                     () => this.ShowInfoDialog(Resource.String.Error, Resource.String.RepositoryAlreadyAdded),
-                    testingStarted: () => dialog.Show(),
+                    testingStarted: () => progressDialog.SetMessage(Resources.GetString(Resource.String.Testing)),
                     testingFailed: () => this.ShowInfoDialog(Resource.String.Error, Resource.String.FetchingNoSuccessText));
 
-                dialog.Dismiss();
+                progressDialog.Dismiss();
                 if (result) Finish();
             }
             else
@@ -115,7 +116,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 await AddAccountData.Add(account);
                 Finish();
             }
-            _savingInProgress = false;
+            progressDialog.Dismiss();
         }
     }
 }

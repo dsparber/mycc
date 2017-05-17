@@ -68,8 +68,6 @@ namespace MyCC.Ui.Android.Views.Activities
         {
             try
             {
-
-
                 // STEP 1: Fetch available currencies
                 var totalCount = CurrencyStorage.Instance.CurrencySources.Count() * 2;
                 var count = 0;
@@ -87,7 +85,6 @@ namespace MyCC.Ui.Android.Views.Activities
                 await TaskHelper.FetchMissingRates(false, progress => SetStatus(0.8 + progress * 0.2, Resources.GetString(Resource.String.LoadingRates)));
 
                 Messaging.Update.AllItems.Send();
-
                 ApplicationSettings.AppInitialised = true;
 
                 RunOnUiThread(() =>

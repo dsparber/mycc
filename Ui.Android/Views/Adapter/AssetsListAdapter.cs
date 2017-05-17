@@ -4,6 +4,9 @@ using Android.Graphics;
 using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
+using MyCC.Core.Settings;
+using MyCC.Core.Types;
+using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.DataItems;
 
 namespace MyCC.Ui.Android.Views.Adapter
@@ -32,9 +35,12 @@ namespace MyCC.Ui.Android.Views.Adapter
 
             var amount = convertView.FindViewById<TextView>(Resource.Id.text_amount);
             amount.Text = item.FormattedValue;
+            amount.Visibility = convertView.Width < 480.DpToPx() && ApplicationSettings.AssetsColumToHideIfSmall == ColumnToHide.Amount ? ViewStates.Gone : ViewStates.Visible;
+
 
             var reference = convertView.FindViewById<TextView>(Resource.Id.text_reference);
             reference.Text = item.FormattedReferenceValue;
+            reference.Visibility = convertView.Width < 480.DpToPx() && ApplicationSettings.AssetsColumToHideIfSmall == ColumnToHide.Value ? ViewStates.Gone : ViewStates.Visible;
 
             if (!item.Enabled)
             {
@@ -44,6 +50,12 @@ namespace MyCC.Ui.Android.Views.Adapter
                 currency.SetTextColor(disabledColor);
                 amount.SetTextColor(disabledColor);
             }
+
+            convertView.ViewTreeObserver.GlobalLayout += (sender, args) =>
+            {
+                amount.Visibility = convertView.Width < 480.DpToPx() && ApplicationSettings.AssetsColumToHideIfSmall == ColumnToHide.Amount ? ViewStates.Gone : ViewStates.Visible;
+                reference.Visibility = convertView.Width < 480.DpToPx() && ApplicationSettings.AssetsColumToHideIfSmall == ColumnToHide.Value ? ViewStates.Gone : ViewStates.Visible;
+            };
 
 
             return convertView;
