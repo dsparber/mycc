@@ -85,15 +85,16 @@ namespace MyCC.Ui.Android.Views.Activities
             {
                 AutoRotate = true,
                 TryHarder = true,
-                PossibleFormats = new List<BarcodeFormat> { BarcodeFormat.QR_CODE },
-
+                PossibleFormats = new List<BarcodeFormat> { BarcodeFormat.QR_CODE }
             };
 
-            _scanFragment.StartScanning(result => RunOnUiThread(() =>
+            _scanFragment.StartScanning(result =>
+            RunOnUiThread(() =>
             {
                 if (string.IsNullOrEmpty(result?.Text)) return;
 
                 var resultData = new Intent();
+                _scanFragment.StopScanning();
                 resultData.PutExtra(ExtraQrText, result.Text);
                 SetResult(Result.Ok, resultData);
                 Finish();

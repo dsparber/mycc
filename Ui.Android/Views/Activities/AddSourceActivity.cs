@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using System.Threading;
+using Android.App;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.View;
@@ -9,6 +10,7 @@ using MyCC.Ui.Android.Views.Adapter;
 using MyCC.Ui.Android.Views.Fragments;
 using MyCC.Ui.Android.Views.Fragments.AddSource;
 using MyCC.Ui.ViewData;
+using Debug = System.Diagnostics.Debug;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -19,9 +21,10 @@ namespace MyCC.Ui.Android.Views.Activities
         private ViewPager _viewPager;
         private HeaderFragment _header;
 
-        private bool _savingInProgress;
-
         private string _name;
+
+        private int _savingClickedCount;
+        private bool _willFinish;
 
         public string Name
         {
@@ -78,6 +81,9 @@ namespace MyCC.Ui.Android.Views.Activities
             }
             else
             {
+                Interlocked.Increment(ref _savingClickedCount);
+                if (_savingClickedCount > 1 || _willFinish) return true;
+                Debug.WriteLine(_savingClickedCount);
                 var savingDialog = this.GetLoadingDialog(null, Resource.String.SavingSource);
                 Save(savingDialog);
             }
@@ -94,28 +100,31 @@ namespace MyCC.Ui.Android.Views.Activities
             {
                 progressDialog.Dismiss();
                 this.ShowInfoDialog(Resource.String.Error, Resource.String.VerifyInput);
+                _savingClickedCount = 0;
                 return;
             }
 
             if (fragment is AddSourceFragment.Repository)
             {
 
-
+                if (_savingClickedCount > 1) return;
                 var result = await AddAccountData.Add(((AddSourceFragment.Repository)fragment).GetRepository(),
                     alreadyAdded:
                     () => this.ShowInfoDialog(Resource.String.Error, Resource.String.RepositoryAlreadyAdded),
                     testingStarted: () => progressDialog.SetMessage(Resources.GetString(Resource.String.Testing)),
                     testingFailed: () => this.ShowInfoDialog(Resource.String.Error, Resource.String.FetchingNoSuccessText));
-
-                progressDialog.Dismiss();
+                _willFinish = result;
                 if (result) Finish();
             }
             else
             {
                 var account = ((AddSourceFragment.Account)fragment).GetAccount();
+                if (_savingClickedCount > 1) return;
                 await AddAccountData.Add(account);
+                _willFinish = true;
                 Finish();
             }
+            _savingClickedCount = 0;
             progressDialog.Dismiss();
         }
     }

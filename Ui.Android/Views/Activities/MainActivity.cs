@@ -39,6 +39,8 @@ namespace MyCC.Ui.Android.Views.Activities
         private IMenuItem _doneItem;
         private bool _dataLoaded = ApplicationSettings.AutoRefreshOnStartup;
 
+        public static bool RatesEditingEnabled { private set; get; }
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -125,6 +127,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 case 0:
                     _ratesFragments = ApplicationSettings.MainCurrencies.OrderBy(id => id).Select(c => new RatesFragment(CurrencyStorage.Find(c))).ToList();
                     foreach (var f in _ratesFragments) f.EditingEnabled = false;
+                    RatesEditingEnabled = false;
                     fragment = new ViewPagerFragment(_ratesFragments.OfType<Fragment>().ToList(), ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyRates));
                     ((ViewPagerFragment)fragment).PositionChanged = pos =>
                     {
@@ -187,6 +190,7 @@ namespace MyCC.Ui.Android.Views.Activities
             if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Edit)))
             {
                 foreach (var f in _ratesFragments ?? new List<RatesFragment>()) f.EditingEnabled = true;
+                RatesEditingEnabled = true;
                 _editItem?.SetVisible(false);
                 _doneItem?.SetVisible(true);
                 return true;
@@ -194,6 +198,7 @@ namespace MyCC.Ui.Android.Views.Activities
             if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Done)))
             {
                 foreach (var f in _ratesFragments ?? new List<RatesFragment>()) f.EditingEnabled = false;
+                RatesEditingEnabled = false;
                 _editItem?.SetVisible(true);
                 _doneItem?.SetVisible(false);
                 return true;

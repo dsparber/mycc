@@ -17,6 +17,7 @@ using MyCC.Ui.DataItems;
 using MyCC.Ui.Messages;
 using MyCC.Ui.ViewData;
 using Newtonsoft.Json;
+using Debug = System.Diagnostics.Debug;
 using Fragment = Android.Support.V4.App.Fragment;
 
 namespace MyCC.Ui.Android.Views.Fragments
@@ -37,9 +38,13 @@ namespace MyCC.Ui.Android.Views.Fragments
         public RatesFragment(Currency referenceCurrency)
         {
             _referenceCurrency = referenceCurrency;
+            Debug.WriteLine($"Constructor referenceCurrency{referenceCurrency}");
         }
 
-        public RatesFragment() { }
+        public RatesFragment()
+        {
+            Debug.WriteLine("Constructor default");
+        }
 
         private bool _editingEnabled;
 
@@ -77,10 +82,21 @@ namespace MyCC.Ui.Android.Views.Fragments
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             refreshView.Refresh += (sender, args) => Messaging.Request.AllRates.Send();
 
-            _items = RatesViewData.Items?[_referenceCurrency] ?? new List<RateItem>();
+            _items = RatesViewData.Items[_referenceCurrency];
             _adapter = new RatesListAdapter(Context, _items)
             {
-                CurrencyRemoved = () => Activity?.RunOnUiThread(() => Messaging.UiUpdate.RatesOverview.Send())
+
+                CurrencyRemoved = () =>
+                {
+                    if (Activity == null) return;
+                    Activity?.RunOnUiThread(() =>
+                    {
+                        if (!RatesViewData.Items.TryGetValue(_referenceCurrency, out _items) || _adapter == null) return;
+                        _adapter.Clear();
+                        _adapter.AddAll(_items);
+                        Messaging.UiUpdate.RatesOverview.Send();
+                    });
+                }
             };
 
             var list = view.FindViewById<ListView>(Resource.Id.list_rates);
@@ -102,26 +118,29 @@ namespace MyCC.Ui.Android.Views.Fragments
             var sortValue = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
             if (sortData != null) SetSortButtons(sortData, sortCurrency, sortValue);
 
-            EditingEnabled = savedInstanceState?.GetBoolean("editing_enabled") ?? false;
+            EditingEnabled = MainActivity.RatesEditingEnabled;
 
             Messaging.UiUpdate.RatesOverview.Subscribe(this, () =>
             {
                 if (Activity == null) return;
                 Activity.RunOnUiThread(() =>
-                {
-                    if (!ViewData.ViewData.Rates.IsDataAvailable) return;
-                    if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency.Id)) return;
-                    if (!ViewData.ViewData.Rates.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
+                            {
+                                // ReSharper disable once RedundantAssignment
+                                var lastUpdate = DateTime.Now;
+                                if (!ViewData.ViewData.Rates.IsDataAvailable) return;
+                                if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency.Id)) return;
+                                if (!ViewData.ViewData.Rates.Headers?.TryGetValue(_referenceCurrency, out headerData) ?? false) return;
+                                if (!ViewData.ViewData.Rates.LastUpdate?.TryGetValue(_referenceCurrency, out lastUpdate) ?? false) return;
 
-                    _header.Data = headerData;
-                    _footerFragment.LastUpdate = ViewData.ViewData.Rates.LastUpdate[_referenceCurrency];
-                    _items = RatesViewData.Items[_referenceCurrency];
-                    SetSortButtons(ViewData.ViewData.Rates.SortButtons?[_referenceCurrency], sortCurrency, sortValue);
-                    _adapter.Clear();
-                    _adapter.AddAll(_items);
-                    SetVisibleElements(view);
-                    refreshView.Refreshing = false;
-                });
+                                _header.Data = headerData;
+                                _footerFragment.LastUpdate = lastUpdate;
+                                _items = RatesViewData.Items[_referenceCurrency];
+                                SetSortButtons(ViewData.ViewData.Rates.SortButtons?[_referenceCurrency], sortCurrency, sortValue);
+                                _adapter.Clear();
+                                _adapter.AddAll(_items);
+                                SetVisibleElements(view);
+                                refreshView.Refreshing = false;
+                            });
             });
 
             view.FindViewById<FloatingActionButton>(Resource.Id.button_add).Click += (sender, args) =>
@@ -134,12 +153,25 @@ namespace MyCC.Ui.Android.Views.Fragments
             var activityRootView = view.FindViewById(Resource.Id.fragment_root);
 
             activityRootView.ViewTreeObserver.GlobalLayout += (sender, args) =>
-            {
-                if (IsDetached || !IsAdded) return;
-                ChildFragmentManager.SetFragmentVisibility(_header, activityRootView.Height > 360.DpToPx());
-            };
+                        {
+                            if (IsDetached || !IsAdded) return;
+                            ChildFragmentManager.SetFragmentVisibility(_header, activityRootView.Height > 360.DpToPx());
+                        };
 
             return view;
+        }
+
+        public override void OnHiddenChanged(bool hidden)
+        {
+            base.OnHiddenChanged(hidden);
+
+            Debug.WriteLine($"OnHiddenChanged: {_referenceCurrency}");
+            if (_adapter == null) return;
+
+            _items = RatesViewData.Items[_referenceCurrency];
+            _adapter.Clear();
+            _adapter.AddAll(_items);
+            EditingEnabled = MainActivity.RatesEditingEnabled;
         }
 
         public override void OnActivityResult(int requestCode, int resultCode, Intent data)
@@ -162,6 +194,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         private static void SetSortButtons(IReadOnlyList<SortButtonItem> sortData, SortButtonFragment sortCurrency, SortButtonFragment sortValue)
         {
+            if (sortData == null) return;
             sortCurrency.Data = sortData[0];
             sortCurrency.First = true;
             sortValue.Data = sortData[1];
@@ -171,7 +204,6 @@ namespace MyCC.Ui.Android.Views.Fragments
         {
             base.OnSaveInstanceState(outState);
             outState.PutString("currency", JsonConvert.SerializeObject(_referenceCurrency));
-            outState.PutBoolean("editing_enabled", EditingEnabled);
         }
     }
 }

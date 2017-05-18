@@ -15,7 +15,7 @@ namespace MyCC.Core.Preperation
         {
             if (ApplicationSettings.FirstLaunch || ApplicationSettings.LastCoreVersion < new Version(1, 0, 2))
             {
-                ApplicationSettings.DefaultStartupPage = StartupPage.TableView;
+                ApplicationSettings.DefaultStartupPage = StartupPage.RatesView;
             }
             if (ApplicationSettings.LastCoreVersion < new Version(1, 1, 1))
             {

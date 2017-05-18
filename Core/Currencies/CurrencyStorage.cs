@@ -87,14 +87,13 @@ namespace MyCC.Core.Currencies
 
         public static Currency Find(string id)
         {
-            var success = Instance.CurrencyDictionary.TryGetValue(id, out var currency);
-            return success ? currency : new Currency(id);
+            Instance.CurrencyDictionary.TryGetValue(id, out var currency);
+            return currency ?? Instance.Currencies.FirstOrDefault(c => c.Id.Equals(id)) ?? new Currency(id);
         }
 
         public static Currency Find(string code, bool isCrypto) => Find($"{code}{(isCrypto ? 1 : 0)}");
 
-        public static IEnumerable<Currency> CurrenciesOf(int flags) =>
-            Instance.Currencies.Where(c => c.BalanceSourceFlags.IsSet(flags));
+        public static IEnumerable<Currency> CurrenciesOf(int flags) => Instance.Currencies.Where(c => c.BalanceSourceFlags.IsSet(flags));
 
     }
 }

@@ -35,9 +35,6 @@ namespace MyCC.Ui.Android.Views.Activities
 
             SetContentView(Resource.Layout.activity_account_group);
 
-            SupportActionBar.Elevation = 3;
-            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-
             var currencyId = Intent?.GetStringExtra(ExtraCurrencyId);
             if (!string.IsNullOrWhiteSpace(currencyId))
             {

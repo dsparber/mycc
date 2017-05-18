@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -178,7 +177,10 @@ namespace MyCC.Ui.Android.Views.Activities
 
             // Save changes
             await AccountStorage.Instance.Update(_repository);
-            await Task.WhenAll(_repository.Elements.Select(AccountStorage.Update));
+            foreach (var a in _repository.Elements.ToList())
+            {
+                await AccountStorage.Update(a);
+            }
 
             Messaging.Update.Assets.Send();
             dialog.Dismiss();
