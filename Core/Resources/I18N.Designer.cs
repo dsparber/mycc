@@ -179,6 +179,15 @@ namespace MyCC.Core.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die EtcChain ähnelt.
+        /// </summary>
+        internal static string EtcChain {
+            get {
+                return ResourceManager.GetString("EtcChain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Etherchain ähnelt.
         /// </summary>
         internal static string Etherchain {

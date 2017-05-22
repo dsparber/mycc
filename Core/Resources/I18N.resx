@@ -177,4 +177,7 @@
   <data name="ItBit" xml:space="preserve">
     <value>ItBit</value>
   </data>
+  <data name="EtcChain" xml:space="preserve">
+    <value>EtcChain</value>
+  </data>
 </root>
