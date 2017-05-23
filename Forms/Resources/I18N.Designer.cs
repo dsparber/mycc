@@ -233,6 +233,24 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hide assets column ähnelt.
+        /// </summary>
+        public static string AssetsColumnToHide {
+            get {
+                return ResourceManager.GetString("AssetsColumnToHide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hide a column of the assets table when there is not enough space ähnelt.
+        /// </summary>
+        public static string AssetsColumnToHideDescription {
+            get {
+                return ResourceManager.GetString("AssetsColumnToHideDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Available currencies ähnelt.
         /// </summary>
         public static string AvailableCurrencies {
@@ -791,6 +809,24 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Initialising App ähnelt.
+        /// </summary>
+        public static string InitialiseApp {
+            get {
+                return ResourceManager.GetString("InitialiseApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Before using the MyCC for the first time, currencies and available rates need to be loaded. Please enable your internet. ähnelt.
+        /// </summary>
+        public static string InternetIsNeededForInitialisation {
+            get {
+                return ResourceManager.GetString("InternetIsNeededForInitialisation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {0} is equal to ähnelt.
         /// </summary>
         public static string IsEqualTo {
@@ -827,11 +863,38 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Loading available rates from {0} ähnelt.
+        /// </summary>
+        public static string LoadingAvailableRatesFrom {
+            get {
+                return ResourceManager.GetString("LoadingAvailableRatesFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Loading currencies ähnelt.
         /// </summary>
         public static string LoadingCurrencies {
             get {
                 return ResourceManager.GetString("LoadingCurrencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Loading currencies from {0} ähnelt.
+        /// </summary>
+        public static string LoadingCurrenciesFrom {
+            get {
+                return ResourceManager.GetString("LoadingCurrenciesFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Loading needed exchange rates ähnelt.
+        /// </summary>
+        public static string LoadingRates {
+            get {
+                return ResourceManager.GetString("LoadingRates", resourceCulture);
             }
         }
         
@@ -1196,6 +1259,15 @@ namespace MyCC.Forms.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reference value ähnelt.
+        /// </summary>
+        public static string ReferenceValue {
+            get {
+                return ResourceManager.GetString("ReferenceValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Refreshing ... ähnelt.
         /// </summary>
         public static string RefreshingDots {
@@ -1246,6 +1318,15 @@ namespace MyCC.Forms.Resources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Saving source ähnelt.
+        /// </summary>
+        public static string SavingSource {
+            get {
+                return ResourceManager.GetString("SavingSource", resourceCulture);
             }
         }
         

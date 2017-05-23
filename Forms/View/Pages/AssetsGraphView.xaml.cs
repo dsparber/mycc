@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Model;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
@@ -89,7 +90,7 @@ namespace MyCC.Forms.View.Pages
 
         private void SetHeaderCarousel()
         {
-            HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
+            HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.Select(CurrencyStorage.Find).ToList();
             HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets);
             HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
 

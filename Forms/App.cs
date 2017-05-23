@@ -8,6 +8,7 @@ using MyCC.Forms.Messages;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Container;
 using MyCC.Forms.View.Overlays;
+using MyCC.Forms.View.Pages;
 using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -24,18 +25,28 @@ namespace MyCC.Forms
         {
             var startPage = Device.RuntimePlatform.Equals(Device.Android) ? new MasterDetailContainer() as Page : new TabContainerView();
 
-            if (Prepare.PreparingNeeded) Prepare.ExecutePreperations();
-
-            // TODO Migrations and asyc prepare
-
             if (ApplicationSettings.IsPinSet)
             {
                 startPage = new PasswordOverlay(true);
             }
 
-            MainPage = startPage;
+            MainPage = ApplicationSettings.AppInitialised ? startPage : new PreparationView(startPage);
 
             DependencyService.Get<ILocalise>().SetLocale();
+        }
+
+        protected override async void OnStart()
+        {
+            base.OnStart();
+
+            if (Prepare.PreparingNeeded)
+            {
+                Prepare.ExecutePreperations();
+                if (Prepare.AsyncExecutePreperations != null) await Prepare.AsyncExecutePreperations;
+            }
+            if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
+
+            if (!ApplicationSettings.AppInitialised) return;
 
             // Subscribe to finished loading
             Messaging.Loading.SubscribeFinished(this, async () =>
@@ -50,10 +61,10 @@ namespace MyCC.Forms
             });
 
             // Load data from Database
-            Task.Run(async () => await ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished));
+            await Task.Run(async () => await ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished));
 
             // Updating available currencies and rates
-            Task.Run(async () =>
+            await Task.Run(async () =>
             {
                 if (CrossConnectivity.Current.IsConnected)
                     await ApplicationTasks.FetchCurrenciesAndAvailableRates(

@@ -104,6 +104,9 @@
     <Compile Include="View\Overlays\PasswordOverlay.xaml.cs">
       <DependentUpon>PasswordOverlay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\PreparationView.xaml.cs">
+      <DependentUpon>PreparationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\Settings\General\PinSettingsView.xaml.cs">
       <DependentUpon>PinSettingsView.xaml</DependentUpon>
     </Compile>
@@ -339,6 +342,16 @@
       <Project>{92708D96-5841-4408-A7EE-B2D02C716F89}</Project>
       <Name>MyCC.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ui\MyCC.Ui.csproj">
+      <Project>{3E0EF6BA-2246-4270-A40A-55A99DDFC4DA}</Project>
+      <Name>MyCC.Ui</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\Pages\PreparationView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.184-pre1\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.184-pre1\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

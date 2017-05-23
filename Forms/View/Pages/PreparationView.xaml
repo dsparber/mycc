@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+             x:Class="MyCC.Forms.View.Pages.PreparationView">
+    <StackLayout
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand"
+        Padding="20">
+
+        <Image 
+            Source="StartupIcon"
+            HorizontalOptions="CenterAndExpand"
+            Margin="20"/>
+        <Label 
+            Text="{resources:Translate AppName}"
+            FontSize="36"
+            FontAttributes="Bold"
+            HorizontalTextAlignment="Center"
+            HorizontalOptions="CenterAndExpand"/>
+        <Label 
+            Text="{resources:Translate AppNameLong}"
+            FontSize="24"
+            HorizontalTextAlignment="Center"
+            HorizontalOptions="CenterAndExpand"/>
+        <StackLayout
+            x:Name="ProgressView">
+            <ProgressBar 
+                Margin="10"
+                x:Name="ProgressBar"/>
+            <Label 
+                Text="{resources:Translate InitialiseApp}"
+                x:Name="ProgressLabel"
+                HorizontalTextAlignment="Center"
+                HorizontalOptions="CenterAndExpand"/>
+        </StackLayout>
+        <StackLayout
+            IsVisible="False"
+            x:Name="NoConnectionView">
+            <Label 
+                HorizontalTextAlignment="Center"
+                TextColor="OrangeRed"
+                Text="{resources:Translate InternetIsNeededForInitialisation}"
+                HorizontalOptions="CenterAndExpand"/>
+        </StackLayout>
+
+
+        <StackLayout 
+            VerticalOptions="FillAndExpand"/>
+        <Label 
+            Text="{resources:Translate Copyright}"
+            HorizontalTextAlignment="Center"
+            HorizontalOptions="CenterAndExpand"/>
+        <Label 
+            Text="{resources:Translate DevelopedBy}"
+            HorizontalTextAlignment="Center"
+            HorizontalOptions="CenterAndExpand"/>
+    </StackLayout>
+</ContentPage>

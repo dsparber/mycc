@@ -103,12 +103,14 @@ namespace MyCC.Core.Settings
             try
             {
                 var json = Settings.Get(key, string.Empty);
+                json.LogInfo();
                 if (string.IsNullOrEmpty(json)) return null;
 
                 var currencies = JArray.Parse(json);
                 var ids = new List<string>();
                 foreach (var c in currencies)
                 {
+                    c.ToString().LogInfo();
                     var id = (string)c["Id"];
                     ids.Add(id);
                 }
@@ -159,8 +161,8 @@ namespace MyCC.Core.Settings
 
         public static SortDirection SortDirectionAssets
         {
-            get { return (SortDirection)Enum.Parse(typeof(SortOrder), Settings.Get(Settings.KeySortDirectionTable, SortDirection.Ascending.ToString())); }
-            set { Settings.Set(Settings.KeySortDirectionTable, value.ToString()); }
+            get { return Settings.KeySortDirectionTable.Get(SortDirection.Ascending); }
+            set { Settings.KeySortDirectionTable.Set(value); }
         }
 
         public static SortOrder SortOrderRates
@@ -238,8 +240,8 @@ namespace MyCC.Core.Settings
 
         public static SortDirection SortDirectionReferenceValues
         {
-            get { return Settings.KeySortDirectionReferenceValues.GetEnum(SortDirection.Ascending); }
-            set { Settings.KeySortDirectionReferenceValues.SetEnum(value); }
+            get { return Settings.KeySortDirectionReferenceValues.Get(SortDirection.Ascending); }
+            set { Settings.KeySortDirectionReferenceValues.Set(value); }
         }
 
         public static bool AutoRefreshOnStartup
@@ -268,18 +270,18 @@ namespace MyCC.Core.Settings
 
         public static StartupPage DefaultStartupPage
         {
-            get { return Settings.DefaultPage.GetEnum(StartupPage.RatesView); }
-            set { Settings.DefaultPage.SetEnum(value); }
+            get { return Settings.DefaultPage.Get(StartupPage.RatesView); }
+            set { Settings.DefaultPage.Set(value); }
         }
 
         public static ColumnToHide AssetsColumToHideIfSmall
         {
-            get { return Settings.KeyAssetsColumnHideWhenSmall.GetEnum(ColumnToHide.None); }
-            set { Settings.KeyAssetsColumnHideWhenSmall.SetEnum(value); }
+            get { return Settings.KeyAssetsColumnHideWhenSmall.Get(ColumnToHide.None); }
+            set { Settings.KeyAssetsColumnHideWhenSmall.Set(value); }
         }
 
-        private static void SetEnum<T>(this string key, T value) => Settings.Set(key, value.ToString());
-        private static T GetEnum<T>(this string key, T defaultValue) => (T)Enum.Parse(typeof(T), Settings.Get(key, defaultValue.ToString()));
+        private static void Set<T>(this string key, T value) => Settings.Set(key, value.ToString());
+        private static T Get<T>(this string key, T defaultValue) => (T)Enum.Parse(typeof(T), Settings.Get(key, defaultValue.ToString()));
 
         public static int PinLength
         {

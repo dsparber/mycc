@@ -32,6 +32,9 @@ namespace MyCC.Core.Currencies
                 new OpenexchangeCurrencySource()
             };
             _connection = DependencyService.Get<ISqLiteConnection>().Connection;
+
+            CurrencyDictionary = new Dictionary<string, Currency>();
+            Currencies = new Currency[] { };
         }
 
         private static CurrencyStorage _instance;

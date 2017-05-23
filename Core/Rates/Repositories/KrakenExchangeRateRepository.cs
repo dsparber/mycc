@@ -47,13 +47,14 @@ namespace MyCC.Core.Rates.Repositories
                 var rateUsd = decimal.Parse((string)result[KeyUsd][KeyLastPrice][0], CultureInfo.InvariantCulture);
                 var rateEur = decimal.Parse((string)result[KeyEur][KeyLastPrice][0], CultureInfo.InvariantCulture);
 
-                var itemsCount = Rates.Count;
                 Rates.Clear();
                 Rates.Add(new ExchangeRate(CurrencyConstants.Btc.Id, CurrencyConstants.Eur.Id, DateTime.Now, rateEur) { RepositoryId = TypeId });
                 Rates.Add(new ExchangeRate(CurrencyConstants.Btc.Id, CurrencyConstants.Usd.Id, DateTime.Now, rateUsd) { RepositoryId = TypeId });
 
-                if (itemsCount == 0) await _connection.InsertAllAsync(Rates);
-                else await _connection.UpdateAllAsync(Rates.ToArray());
+                foreach (var r in Rates)
+                {
+                    await _connection.InsertOrReplaceAsync(r);
+                }
 
                 return Rates;
             }

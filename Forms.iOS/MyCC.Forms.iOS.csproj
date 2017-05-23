@@ -534,6 +534,10 @@
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>MyCC.Forms</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ui\MyCC.Ui.csproj">
+      <Project>{3e0ef6ba-2246-4270-a40a-55a99ddfc4da}</Project>
+      <Name>MyCC.Ui</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

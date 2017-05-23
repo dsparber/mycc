@@ -110,7 +110,7 @@ namespace MyCC.Forms.View.Pages
 
         private void SetHeaderCarousel()
         {
-            HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.ToList();
+            HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.Select(CurrencyStorage.Find).ToList();
             HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyRates);
             HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
             HeaderCarousel.PageIndicatorTintColor = Color.FromHex("#5FFF");
