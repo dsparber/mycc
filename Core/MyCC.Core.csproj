@@ -34,6 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Account\Helper\AccountStringHelper.cs" />
+    <Compile Include="Account\Models\Implementations\ReddCoinAccount.cs" />
+    <Compile Include="Account\Models\Implementations\EthereumClassicAccount.cs" />
+    <Compile Include="Account\Repositories\Implementations\EthereumClassicAccountRepository.cs" />
+    <Compile Include="Account\Repositories\Implementations\ReddCoinAccountRepository.cs" />
     <Compile Include="Currencies\CurrencyConstants.cs" />
     <Compile Include="Currencies\CurrencyTools.cs" />
     <Compile Include="Helpers\FlagHelper.cs" />
@@ -58,6 +62,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rates\Repositories\BitstampExchangeRateRepository.cs" />
     <Compile Include="Rates\Repositories\RatesRepositories.cs" />
+    <Compile Include="Resources\ConstantNames.cs" />
     <Compile Include="Resources\I18N.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

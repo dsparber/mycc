@@ -21,10 +21,6 @@ namespace MyCC.Core.Account.Repositories.Implementations
 {
     public class BittrexAccountRepository : OnlineAccountRepository
     {
-        // Test Data
-        // const string API_KEY = "51bb7379ae6645af87a8005f74fd272c";
-        // const string API_KEY_SECRET = "8eea5afc2a7340079143b8dae4e9b46f";
-
         private readonly string _apiKey;
         private readonly string _privateApiKey;
 

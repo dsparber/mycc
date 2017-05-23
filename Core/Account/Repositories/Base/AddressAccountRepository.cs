@@ -111,6 +111,7 @@ namespace MyCC.Core.Account.Repositories.Base
             new BlockchainAccountRepository(default(int), name, address),
             new EthereumAccountRepository(default(int), name, address),
             new EthereumClassicAccountRepository(default(int), name, address),
+            new ReddCoinAccountRepository(default(int), name, address),
             new CryptoIdAccountRepository(default(int), name, currency, address),
             new BlockExpertsAccountRepository(default(int), name, currency, address)
         };

@@ -18,6 +18,7 @@ namespace MyCC.Core.Account.Database
         public const int DbTypeCryptoidRepository = 6;
         public const int DbTypeBlockchainXpubRepository = 7;
         public const int DbTypeEthereumClassicRepository = 8;
+        public const int DbTypeReddCoinRepository = 9;
 
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
@@ -66,6 +67,7 @@ namespace MyCC.Core.Account.Database
                     case DbTypeCryptoidRepository: return new CryptoIdAccountRepository(Id, Name, Data);
                     case DbTypeBlockchainXpubRepository: return new BlockchainXpubAccountRepository(Id, Name, Data);
                     case DbTypeEthereumClassicRepository: return new EthereumClassicAccountRepository(Id, Name, Data);
+                    case DbTypeReddCoinRepository: return new ReddCoinAccountRepository(Id, Name, Data);
                     default: throw new NotSupportedException();
                 }
             });
