@@ -76,7 +76,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
             }
         }
 
-        public override bool EntryComplete => (_currency ?? AddSourceActivity.Currency) != null && _amount != 0;
+        public override bool EntryComplete => (_currency ?? AddSourceActivity.Currency) != null && _amount >= 0;
 
         public override LocalAccount GetAccount()
         {

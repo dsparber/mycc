@@ -86,7 +86,7 @@ namespace MyCC.Ui.Android.Views.Activities
             _newPin = _newPinEntry.Text;
             _repeatPin = _repeatPinEntry.Text;
 
-            if (string.IsNullOrWhiteSpace(_newPin) || string.IsNullOrWhiteSpace(_repeatPin) || _newPin.Length < 4 || _repeatPin.Length < 4) return;
+            if (string.IsNullOrWhiteSpace(_newPin) || string.IsNullOrWhiteSpace(_repeatPin) || _newPin.Length < 4 || _repeatPin.Length < 4 || _repeatPin.Length < _newPin.Length) return;
 
             if (_newPin.Equals(_repeatPin))
             {

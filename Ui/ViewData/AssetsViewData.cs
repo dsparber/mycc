@@ -101,13 +101,13 @@ namespace MyCC.Ui.ViewData
             {
                 var money = new Money(group.Sum(a => a.IsEnabled ? a.Money.Amount : 0), group.Key);
                 return new AssetItem(money, getReference(money), true);
-            }).Where(i => i.Value.Amount > 0).ToList();
+            }).ToList();
 
             var disabled = items.Select(group =>
             {
                 var money = new Money(group.Sum(a => a.IsEnabled ? 0 : a.Money.Amount), group.Key);
                 return new AssetItem(money, getReference(money), false);
-            }).Where(i => i.Value.Amount > 0 && !enabled.Any(x => x.Value.Currency.Equals(i.Value.Currency))).ToList();
+            }).Where(i => !enabled.Any(x => x.Value.Currency.Equals(i.Value.Currency))).ToList();
 
             return ApplySort(enabled, disabled);
         });

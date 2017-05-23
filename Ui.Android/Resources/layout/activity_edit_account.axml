@@ -36,7 +36,7 @@
             android:hint="@string/Amount"
             android:digits=".,0123456789"
             android:maxLines="1"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:numeric="decimal" />
       </LinearLayout>
       <LinearLayout
