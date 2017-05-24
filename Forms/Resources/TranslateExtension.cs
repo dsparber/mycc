@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
-using MyCC.Core.Resources;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

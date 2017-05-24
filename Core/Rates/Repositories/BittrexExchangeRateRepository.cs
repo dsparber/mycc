@@ -80,7 +80,7 @@ namespace MyCC.Core.Rates.Repositories
 
         public RateRepositoryType RatesType => RateRepositoryType.CryptoRates;
 
-        public string Name => I18N.Bittrex;
+        public string Name => ConstantNames.Bittrex;
 
     }
 }

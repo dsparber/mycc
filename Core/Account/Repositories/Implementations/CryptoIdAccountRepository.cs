@@ -16,7 +16,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
     {
         private const string ApiKey = "e0afbe73ec2d";
 
-        public override string DescriptionName => I18N.CryptoId;
+        public override string DescriptionName => ConstantNames.CryptoId;
         public override IEnumerable<Currencies.Model.Currency> SupportedCurrencies => CurrencyStorage.CurrenciesOf(CurrencyConstants.FlagCryptoId);
 
         public override async Task<bool> Test()

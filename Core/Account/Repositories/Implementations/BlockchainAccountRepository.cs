@@ -14,7 +14,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
     {
         private const string JsonKeyBalance = "final_balance";
 
-        public override string Description => I18N.Blockchain;
+        public override string Description => ConstantNames.Blockchain;
 
         public override Currencies.Model.Currency Currency => Currencies.CurrencyConstants.Btc;
         public override IEnumerable<Currencies.Model.Currency> SupportedCurrencies => new List<Currencies.Model.Currency> { Currency };

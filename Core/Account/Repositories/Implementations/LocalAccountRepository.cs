@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Database;
 using MyCC.Core.Account.Repositories.Base;
-using MyCC.Core.Resources;
 
 namespace MyCC.Core.Account.Repositories.Implementations
 {
@@ -25,7 +24,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
         public override string Data => string.Empty;
 
-        public override string Description => I18N.ManuallyAdded;
+        public override string Description => string.Empty;
     }
 }
 

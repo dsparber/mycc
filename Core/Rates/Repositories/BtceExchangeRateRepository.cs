@@ -77,7 +77,7 @@ namespace MyCC.Core.Rates.Repositories
 
         public RateRepositoryType RatesType => RateRepositoryType.CryptoToFiat;
 
-        public string Name => I18N.Btce;
+        public string Name => ConstantNames.Btce;
     }
 }
 

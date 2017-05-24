@@ -27,7 +27,7 @@ namespace MyCC.Core.CoinInfo.Repositories
         private const string JsonKeyNextDiff = "next_difficulty";
         private const string JsonKeyDiff = "difficulty";
 
-        public string Name => I18N.Blockr;
+        public string Name => ConstantNames.Blockr;
 
         public List<Currencies.Model.Currency> SupportedCoins => new List<string> { "btc", "ltc", "ppc", "mec", "qrk", "dgc", "tbtc" }
             .Select(s => new Currencies.Model.Currency(s, true)).ToList();

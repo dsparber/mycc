@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Sources;
 using MyCC.Core.Helpers;
 using MyCC.Core.Settings;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCC.Forms.View.Container;
 using MyCC.Ui.Tasks;
 using Plugin.Connectivity;
 using Xamarin.Forms;
@@ -18,10 +14,11 @@ using Xamarin.Forms.Xaml;
 namespace MyCC.Forms.View.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PreparationView : ContentPage
+    public partial class PreparationView
     {
+
         private bool _startedLoading;
-        private Page _nextPage;
+        private readonly Page _nextPage;
 
         public PreparationView(Page nextPage)
         {

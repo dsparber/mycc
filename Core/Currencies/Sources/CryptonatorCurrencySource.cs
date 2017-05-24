@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies.Model;
 using MyCC.Core.Helpers;
+using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Currencies.Sources
@@ -12,7 +13,7 @@ namespace MyCC.Core.Currencies.Sources
     {
         private const string UrlCurrencyList = "https://api.cryptonator.com/api/currencies";
 
-        public string Name => "Cryptonator";
+        public string Name => ConstantNames.Cryptonator;
 
 
         private const string CurrencyListResult = "rows";

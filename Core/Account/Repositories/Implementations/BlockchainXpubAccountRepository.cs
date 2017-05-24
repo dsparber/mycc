@@ -26,7 +26,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
             Client.DefaultRequestHeaders.Add(Authorization, AuthorizationKey);
         }
 
-        public override string Description => I18N.Blockchain;
+        public override string Description => ConstantNames.Blockchain;
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeBlockchainXpubRepository;
 
         public override Currencies.Model.Currency Currency => Currencies.CurrencyConstants.Btc;

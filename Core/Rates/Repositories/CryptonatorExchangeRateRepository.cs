@@ -98,7 +98,7 @@ namespace MyCC.Core.Rates.Repositories
 
         public RateRepositoryType RatesType => RateRepositoryType.CryptoRates;
 
-        public string Name => I18N.Cryptonator;
+        public string Name => ConstantNames.Cryptonator;
 
         public Task UpdateRates() => Task.WhenAll(Rates.Where(r => r != null).Select(FetchRate));
 

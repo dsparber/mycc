@@ -25,7 +25,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 
         public List<Currencies.Model.Currency> SupportedCoins => new List<Currencies.Model.Currency> { new Currencies.Model.Currency("ETH", "Ethereum", true) };
 
-        public string Name => I18N.Etherchain;
+        public string Name => ConstantNames.Etherchain;
 
         public async Task<CoinInfoData> GetInfo(Currencies.Model.Currency currency)
         {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies.Model;
 using MyCC.Core.Helpers;
+using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Currencies.Sources
@@ -12,7 +13,7 @@ namespace MyCC.Core.Currencies.Sources
     {
         private const string UrlCurrencyList = "https://bittrex.com/api/v1.1/public/getcurrencies";
 
-        public string Name => "Bittrex";
+        public string Name => ConstantNames.Bittrex;
 
         private const string CurrencyListResult = "result";
         private const string CurrencyListResultName = "CurrencyLong";

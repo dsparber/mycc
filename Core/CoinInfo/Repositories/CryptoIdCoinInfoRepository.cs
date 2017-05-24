@@ -26,7 +26,7 @@ namespace MyCC.Core.CoinInfo.Repositories
         private const string JsonKeyDifficulty = "diff";
         private const string JsonKeySupply = "supply";
 
-        public string Name => I18N.CryptoId;
+        public string Name => ConstantNames.CryptoId;
 
         public List<Currencies.Model.Currency> SupportedCoins
             => CurrencyStorage.CurrenciesOf(CurrencyConstants.FlagCryptoId).ToList();

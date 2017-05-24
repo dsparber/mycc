@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies.Model;
+using MyCC.Core.Resources;
 
 namespace MyCC.Core.Currencies.Sources
 {
     public class BlockExpertsCurrencySource : ICurrencySource
     {
 
-        public string Name => "BlockExperts";
+        public string Name => ConstantNames.BlockExperts;
 
 
         public async Task<IEnumerable<Currency>> GetCurrencies()

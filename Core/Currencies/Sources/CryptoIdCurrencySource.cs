@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies.Model;
 using MyCC.Core.Helpers;
+using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Currencies.Sources
@@ -12,7 +13,7 @@ namespace MyCC.Core.Currencies.Sources
     {
         private const string UrlCurrencyList = "https://chainz.cryptoid.info/explorer/api.dws?q=summary";
 
-        public string Name => "CryptoId";
+        public string Name => ConstantNames.CryptoId;
 
 
         private const string JsonKeyName = "name";

@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
 using System.Threading;
 using Foundation;
-using MyCC.Core.Resources;
 using MyCC.Forms.iOS;
+using MyCC.Forms.Resources;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(Localise))]

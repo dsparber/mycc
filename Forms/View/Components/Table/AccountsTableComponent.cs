@@ -6,7 +6,6 @@ using System.Runtime.Serialization;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies.Model;
-using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Constants;

@@ -21,7 +21,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 
         public List<Currencies.Model.Currency> SupportedCoins => new List<Currencies.Model.Currency> { Currencies.CurrencyConstants.Btc };
 
-        public string Name => I18N.Blockchain;
+        public string Name => ConstantNames.Blockchain;
 
         public async Task<CoinInfoData> GetInfo(Currencies.Model.Currency currency)
         {

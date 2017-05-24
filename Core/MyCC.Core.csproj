@@ -63,17 +63,6 @@
     <Compile Include="Rates\Repositories\BitstampExchangeRateRepository.cs" />
     <Compile Include="Rates\Repositories\RatesRepositories.cs" />
     <Compile Include="Resources\ConstantNames.cs" />
-    <Compile Include="Resources\I18N.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>I18N.de.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\I18N.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>I18N.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\ILocalise.cs" />
     <Compile Include="Types\SortOrder.cs" />
     <Compile Include="Types\SortDirection.cs" />
     <Compile Include="Types\PinAction.cs" />
@@ -223,18 +212,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\I18N.de.resx">
-      <LastGenOutput>I18N.de.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\I18N.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>I18N.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />

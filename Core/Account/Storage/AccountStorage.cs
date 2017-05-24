@@ -8,7 +8,6 @@ using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Rates;
-using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 
 namespace MyCC.Core.Account.Storage
@@ -21,7 +20,7 @@ namespace MyCC.Core.Account.Storage
         {
             if (LocalRepository == null)
             {
-                var localRepository = new LocalAccountRepository(default(int), I18N.LocalStorage);
+                var localRepository = new LocalAccountRepository(default(int), string.Empty);
                 await Add(localRepository);
             }
         }

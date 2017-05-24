@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Preperation;
-using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
 using MyCC.Forms.Messages;
+using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Container;
 using MyCC.Forms.View.Overlays;

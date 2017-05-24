@@ -47,7 +47,7 @@ namespace MyCC.Core.Rates.Repositories
 
         public RateRepositoryType RatesType => RateRepositoryType.CryptoToFiat;
 
-        public string Name => I18N.Bitstamp;
+        public string Name => ConstantNames.Bitstamp;
 
         public async Task<ExchangeRate> FetchRate(ExchangeRate rate)
         {

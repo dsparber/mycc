@@ -81,7 +81,7 @@ namespace MyCC.Core.Rates.Repositories
 
         public RateRepositoryType RatesType => RateRepositoryType.CryptoToFiat;
 
-        public string Name => I18N.Kraken;
+        public string Name => ConstantNames.Kraken;
     }
 }
 

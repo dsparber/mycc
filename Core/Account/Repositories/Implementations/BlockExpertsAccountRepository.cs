@@ -12,7 +12,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
 {
     public class BlockExpertsAccountRepository : AddressAndCoinAccountRepository
     {
-        public override string DescriptionName => I18N.BlockExperts;
+        public override string DescriptionName => ConstantNames.BlockExperts;
         public override IEnumerable<Currencies.Model.Currency> SupportedCurrencies => CurrencyStorage.CurrenciesOf(CurrencyConstants.FlagBlockExperts);
 
         protected override Func<string, decimal> Balance => httpContent => decimal.Parse(httpContent, CultureInfo.InvariantCulture);

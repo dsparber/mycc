@@ -16,7 +16,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
         private const string JsonKeyBalance = "balance";
         private const string JsonKeyData = "data";
 
-        public override string Description => I18N.Etherchain;
+        public override string Description => ConstantNames.Etherchain;
 
         public override Currencies.Model.Currency Currency => CurrencyStorage.Find("ETH", true);
         public override IEnumerable<Currencies.Model.Currency> SupportedCurrencies => new List<Currencies.Model.Currency> { Currency };

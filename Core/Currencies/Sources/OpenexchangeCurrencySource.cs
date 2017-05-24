@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies.Model;
 using MyCC.Core.Helpers;
+using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Currencies.Sources
@@ -44,6 +45,6 @@ namespace MyCC.Core.Currencies.Sources
             }
         }
 
-        public string Name => "Open Exchange Rates";
+        public string Name => ConstantNames.OpenExchangeRates;
     }
 }

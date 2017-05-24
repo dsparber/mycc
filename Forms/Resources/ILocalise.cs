@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace MyCC.Core.Resources
+namespace MyCC.Forms.Resources
 {
     public interface ILocalise
     {

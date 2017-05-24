@@ -88,7 +88,7 @@ namespace MyCC.Core.Rates.Repositories
 
         public Task UpdateRates() => FetchRates();
 
-        public string Name => I18N.FixerIo;
+        public string Name => ConstantNames.FixerIo;
 
         public List<ExchangeRate> Rates { get; }
     }
