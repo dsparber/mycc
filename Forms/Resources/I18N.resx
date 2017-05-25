@@ -331,7 +331,7 @@
     <value>No sources</value>
   </data>
   <data name="NoSourcesDescriptionAdd" xml:space="preserve">
-    <value>You can simply add a source by pressing the add button (+) in the top right corner.</value>
+    <value>You can simply add a source by pressing the add button (+).</value>
   </data>
   <data name="NotConfigured" xml:space="preserve">
     <value>Not configured</value>

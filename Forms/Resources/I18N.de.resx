@@ -328,7 +328,7 @@
     <value>Es wurden noch keine Datenquellen erfasst</value>
   </data>
   <data name="NoSourcesDescriptionAdd" xml:space="preserve">
-    <value>Sie können neue Datenquellen durch Drücken des Hinzufügen-Buttons (+) in der rechten oberen Ecke erfassen.</value>
+    <value>Sie können neue Datenquellen durch Drücken des Hinzufügen-Buttons (+) erfassen.</value>
   </data>
   <data name="NotConfigured" xml:space="preserve">
     <value>Nicht konfiguriert</value>

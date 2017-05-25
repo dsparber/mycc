@@ -104,7 +104,7 @@
   <string name="NoInternetAccess">No internet access</string>
   <string name="None">None</string>
   <string name="NoSources">No sources</string>
-  <string name="NoSourcesDescriptionAdd">You can simply add a source by pressing the add button (+) in the top right corner.</string>
+  <string name="NoSourcesDescriptionAdd">You can simply add a source by pressing the add button (+).</string>
   <string name="NotConfigured">Not configured</string>
   <string name="Offline">Offline</string>
   <string name="Ok">OK</string>

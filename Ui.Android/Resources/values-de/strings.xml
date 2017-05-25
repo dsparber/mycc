@@ -53,7 +53,7 @@
   <string name="Currency">Währung</string>
   <string name="CurrencyCode">Währungscode:</string>
   <string name="Data">Daten</string>
-  <string name="KeyDefaultPageInfo">Die ausgewählte Ansicht wird beim Starten der Applikation angezeigt.</string>
+  <string name="DefaultPageInfo">Die ausgewählte Ansicht wird beim Starten der Applikation angezeigt.</string>
   <string name="DefaultView">Standardansicht</string>
   <string name="Delete">Löschen</string>
   <string name="Deleting">Löschen</string>
@@ -104,7 +104,7 @@
   <string name="NoInternetAccess">Kein Internetzugriff</string>
   <string name="None">Keine</string>
   <string name="NoSources">Es wurden noch keine Datenquellen erfasst</string>
-  <string name="NoSourcesDescriptionAdd">Sie können neue Datenquellen durch Drücken des Hinzufügen-Buttons (+) in der rechten oberen Ecke erfassen.</string>
+  <string name="NoSourcesDescriptionAdd">Sie können neue Datenquellen durch Drücken des Hinzufügen-Buttons (+) erfassen.</string>
   <string name="NotConfigured">Nicht konfiguriert</string>
   <string name="Offline">Offline</string>
   <string name="Ok">Ok</string>
