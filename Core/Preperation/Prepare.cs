@@ -12,27 +12,19 @@ namespace MyCC.Core.Preperation
 
         public static void ExecutePreperations()
         {
-            if (ApplicationSettings.FirstLaunch || ApplicationSettings.LastCoreVersion < new CoreVersion(1, 0, 2))
+            if (ApplicationSettings.FirstLaunch)
             {
+                ApplicationSettings.AssetsColumToHideIfSmall = ColumnToHide.None;
                 ApplicationSettings.DefaultStartupPage = StartupPage.RatesView;
             }
             if (ApplicationSettings.LastCoreVersion < new CoreVersion(1, 1, 1))
             {
-                // Reset values
                 ApplicationSettings.MainCurrencies = SettingKeys.KeyMainCurrencies.TryToLoadOldCurrencies() ?? new[] { CurrencyConstants.Eur, CurrencyConstants.Btc, CurrencyConstants.Usd }.Select(c => c.Id);
                 ApplicationSettings.FurtherCurrencies = SettingKeys.KeyFurtherCurrencies.TryToLoadOldCurrencies() ?? new string[] { };
                 ApplicationSettings.WatchedCurrencies = SettingKeys.KeyWatchedCurrencies.TryToLoadOldCurrencies() ?? new string[] { };
-                ApplicationSettings.StartupCurrencyAssets = CurrencyConstants.Btc.Id;
-                ApplicationSettings.StartupCurrencyRates = CurrencyConstants.Btc.Id;
-                ApplicationSettings.DefaultStartupPage = StartupPage.RatesView;
-                ApplicationSettings.SortDirectionAccounts = SortDirection.Ascending;
-                ApplicationSettings.SortDirectionRates = SortDirection.Ascending;
-                ApplicationSettings.SortDirectionAssets = SortDirection.Ascending;
-                ApplicationSettings.SortDirectionReferenceValues = SortDirection.Ascending;
-                ApplicationSettings.SortOrderRates = SortOrder.Alphabetical;
-                ApplicationSettings.SortOrderAccounts = SortOrder.Alphabetical;
-                ApplicationSettings.SortOrderAssets = SortOrder.Alphabetical;
-                ApplicationSettings.SortOrderReferenceValues = SortOrder.Alphabetical;
+                ApplicationSettings.StartupCurrencyAssets = SettingKeys.KeyAssetsPageCurrency.TryToLoadOldCurrency() ?? CurrencyConstants.Btc.Id;
+                ApplicationSettings.StartupCurrencyRates = SettingKeys.KeyRatePageCurrency.TryToLoadOldCurrency() ?? CurrencyConstants.Btc.Id;
+                ApplicationSettings.DefaultStartupPage = SettingKeys.KeyDefaultPage.TryToLoadOldStartupPage();
             }
             if (ApplicationSettings.LastCoreVersion < new CoreVersion(1, 1, 2))
             {

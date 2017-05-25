@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyCC.Core.Helpers;
+using MyCC.Core.Types;
 using Newtonsoft.Json.Linq;
 using PCLCrypto;
 using Plugin.Settings;
@@ -101,6 +102,38 @@ namespace MyCC.Core.Settings
                 data.LogInfo();
                 e.LogError();
                 return null;
+            }
+        }
+
+        public static string TryToLoadOldCurrency(this string key)
+        {
+            var data = key.Get(string.Empty);
+            if (string.IsNullOrEmpty(data)) return null;
+
+            try
+            {
+                return (string)JObject.Parse(data)["Id"];
+            }
+            catch (Exception e)
+            {
+                data.LogInfo();
+                e.LogError();
+                return null;
+            }
+        }
+
+        public static StartupPage TryToLoadOldStartupPage(this string key)
+        {
+            var data = key.Get(string.Empty);
+            if (string.IsNullOrEmpty(data)) return StartupPage.RatesView;
+
+            if (!int.TryParse(data, out int value)) return Enum.TryParse(data, out StartupPage page) ? page : StartupPage.RatesView;
+
+            switch (value)
+            {
+                case 1: return StartupPage.GraphView;
+                case 2: return StartupPage.TableView;
+                default: return StartupPage.RatesView;
             }
         }
 
