@@ -165,4 +165,6 @@
   <string name="AssetsColumnToHideDescription">Hide a column of the assets table when there is not enough space</string>
   <string name="ReferenceValue">Reference value</string>
   <string name="InitialiseApp">Initialising app</string>
+  <string name="AllInfos">All infos</string>
+  <string name="AddressOnly">Address only</string>
 </resources>

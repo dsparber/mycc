@@ -165,4 +165,6 @@
   <string name="AssetsColumnToHideDescription">Spalte in Vermögenstabelle ausblenden wenn wenig Platz vorhanden ist.</string>
   <string name="ReferenceValue">Referenzwert</string>
   <string name="InitialiseApp">App initialisieren</string>
+  <string name="AllInfos">Alle Infos</string>
+  <string name="AddressOnly">Nur Address</string>
 </resources>

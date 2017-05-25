@@ -41,11 +41,8 @@ namespace MyCC.Ui.Android.Views.Activities
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
             SetContentView(Resource.Layout.activity_add_source);
-            SupportActionBar.Elevation = 3;
 
-            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
             _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
 

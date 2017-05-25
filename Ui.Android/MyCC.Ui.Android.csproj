@@ -228,6 +228,7 @@
     <Compile Include="Views\Activities\SplashActivity.cs" />
     <Compile Include="Views\Activities\AddSourceActivity.cs" />
     <Compile Include="Views\Activities\WebviewActivity.cs" />
+    <Compile Include="Views\Adapter\ShowQrCodePagerAdapter.cs" />
     <Compile Include="Views\Adapter\AddSourcePagerAdapter.cs" />
     <Compile Include="Views\Adapter\AssetsListAdapter.cs" />
     <Compile Include="Views\Adapter\CurrencyListAdapter.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="Views\Fragments\HeaderFragment.cs" />
     <Compile Include="Views\Fragments\ProgressFragment.cs" />
     <Compile Include="Views\Fragments\SettingsFragment.cs" />
+    <Compile Include="Views\Fragments\ShowQrCodeFragment.cs" />
     <Compile Include="Views\Fragments\SortButtonFragment.cs" />
     <Compile Include="Views\Fragments\ViewPagerFragment.cs" />
     <Compile Include="Views\Fragments\RatesFragment.cs" />
@@ -356,6 +358,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\activity_preparing.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_show_qr_code.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

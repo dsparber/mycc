@@ -39,3 +39,4 @@ Thumbs.db
 #dotCover
 *.dotCover
 Resource.Designer.cs
+.vs/.gitlab
