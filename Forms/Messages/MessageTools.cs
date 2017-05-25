@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 
-//using System.Diagnostics;
 
 namespace MyCC.Forms.Messages
 {
@@ -12,14 +10,11 @@ namespace MyCC.Forms.Messages
     {
         private static void Subscribe(this string message, object subscriber, List<Tuple<MessageInfo, Action>> actions = null)
         {
-            // MessagingCenter.Unsubscribe<MessageInfo>(subscriber, message);
             MessagingCenter.Subscribe<MessageInfo>(subscriber, message, i =>
             {
-                //Debug.WriteLine($"{subscriber}: {message} ({i})");
                 var action = actions.FirstOrDefault(a => a.Item1.Equals(i));
 
                 action?.Item2();
-                //Debug.WriteLine($"{subscriber}: {message} ({i}) - done");
             });
         }
 
@@ -45,13 +40,11 @@ namespace MyCC.Forms.Messages
 
         public static void Send(this string message, double value)
         {
-            //Debug.WriteLine($"Sent: {message} {value}");
             MessagingCenter.Send(value.ToString(), message);
         }
 
         public static void Send(this string message, bool value)
         {
-            //Debug.WriteLine($"Sent: {message} {value}");
             MessagingCenter.Send(value.ToString(), message);
         }
 
@@ -70,19 +63,16 @@ namespace MyCC.Forms.Messages
 
         public static void SendValueChanged(this string message)
         {
-            //Debug.WriteLine($"Sent: {message} {MessageInfo.ValueChanged}");
             MessagingCenter.Send(MessageInfo.ValueChanged, message);
 
         }
         public static void SendStarted(this string message)
         {
-            //Debug.WriteLine($"Sent: {message} {MessageInfo.Started}");
             MessagingCenter.Send(MessageInfo.Started, message);
         }
 
         public static void SendFinished(this string message)
         {
-            //Debug.WriteLine($"Sent: {message} {MessageInfo.Finished}");
             MessagingCenter.Send(MessageInfo.Finished, message);
         }
     }

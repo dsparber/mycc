@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Helpers;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
@@ -154,7 +155,7 @@ namespace MyCC.Forms.View.Overlays
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                ex.LogError();
             }
         }
 

@@ -38,13 +38,9 @@ namespace MyCC.Ui.Android.Views.Fragments
         public RatesFragment(Currency referenceCurrency)
         {
             _referenceCurrency = referenceCurrency;
-            Debug.WriteLine($"Constructor referenceCurrency{referenceCurrency}");
         }
 
-        public RatesFragment()
-        {
-            Debug.WriteLine("Constructor default");
-        }
+        public RatesFragment() { }
 
         private bool _editingEnabled;
 
@@ -165,7 +161,6 @@ namespace MyCC.Ui.Android.Views.Fragments
         {
             base.OnHiddenChanged(hidden);
 
-            Debug.WriteLine($"OnHiddenChanged: {_referenceCurrency}");
             if (_adapter == null) return;
 
             _items = RatesViewData.Items[_referenceCurrency];

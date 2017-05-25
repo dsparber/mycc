@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MyCC.Core.Account.Helper;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Currencies.Model;
+using MyCC.Core.Helpers;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
@@ -95,7 +96,7 @@ namespace MyCC.Forms.View.Addsource
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine(ex);
+                    ex.LogError();
                 }
             };
         }

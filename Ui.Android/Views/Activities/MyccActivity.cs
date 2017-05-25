@@ -48,7 +48,6 @@ namespace MyCC.Ui.Android.Views.Activities
             CurrentInstance = this;
 
             var millis = DateTime.Now.Subtract(_lastStop).TotalMilliseconds;
-            System.Diagnostics.Debug.WriteLine(millis);
             if (!(this is LockscreenActivity))
             {
                 if (Locked || _runningActivities == 0 && millis > 2500 && ApplicationSettings.IsPinSet)

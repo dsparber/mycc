@@ -40,3 +40,4 @@ Thumbs.db
 *.dotCover
 Resource.Designer.cs
 .vs/.gitlab
+**/Resources/I18N*Designer.cs

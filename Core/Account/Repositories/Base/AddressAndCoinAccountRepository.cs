@@ -1,4 +1,7 @@
+using System.Diagnostics;
+using MyCC.Core.Currencies.Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Account.Repositories.Base
 {
@@ -9,12 +12,10 @@ namespace MyCC.Core.Account.Repositories.Base
 
         public override string Data => JsonConvert.SerializeObject(new KeyData(_coin, Address));
 
-        protected AddressAndCoinAccountRepository(int id, string name, string data) : this(id, name, null, null)
+        protected AddressAndCoinAccountRepository(int id, string name, string data) : base(id, name, null)
         {
-            var keyData = JsonConvert.DeserializeObject<KeyData>(data);
-
-            _coin = keyData.Coin;
-            Address = keyData.address;
+            _coin = new Currency((string)(JObject.Parse(data)["Coin"] ?? JObject.Parse(data)["coin"])["Id"]);
+            Address = (string)JObject.Parse(data)["address"];
         }
 
         protected AddressAndCoinAccountRepository(int id, string name, Currencies.Model.Currency coin, string address) : base(id, name, address)

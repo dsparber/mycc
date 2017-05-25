@@ -4,8 +4,13 @@ using System.Threading.Tasks;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Sources;
 using MyCC.Core.Helpers;
+using MyCC.Core.Preperation;
 using MyCC.Core.Settings;
+using MyCC.Core.Tasks;
+using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
+using MyCC.Forms.View.Container;
+using MyCC.Forms.View.Overlays;
 using MyCC.Ui.Tasks;
 using Plugin.Connectivity;
 using Xamarin.Forms;
@@ -18,12 +23,10 @@ namespace MyCC.Forms.View.Pages
     {
 
         private bool _startedLoading;
-        private readonly Page _nextPage;
 
-        public PreparationView(Page nextPage)
+        public PreparationView()
         {
             InitializeComponent();
-            _nextPage = nextPage;
 
             Action<bool> startLoading = b =>
             {
@@ -53,6 +56,12 @@ namespace MyCC.Forms.View.Pages
         {
             try
             {
+                if (Prepare.PreparingNeeded)
+                {
+                    if (Prepare.AsyncExecutePreperations != null) await Prepare.AsyncExecutePreperations;
+                }
+                if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
+
                 // STEP 1: Fetch available currencies
                 var totalCount = CurrencyStorage.Instance.CurrencySources.Count() * 2;
                 var count = 0;
@@ -65,6 +74,7 @@ namespace MyCC.Forms.View.Pages
 
                 await CurrencyStorage.Instance.LoadOnline(setProgress, setProgress);
 
+                await ApplicationTasks.LoadEverything();
 
                 // STEP 2: Fetch needed Rates
                 await TaskHelper.FetchMissingRates(false, progress => SetStatus(0.8 + progress * 0.2, I18N.LoadingRates));
@@ -73,7 +83,7 @@ namespace MyCC.Forms.View.Pages
 
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    Navigation.PushModalAsync(_nextPage);
+                    Navigation.PushModalAsync(ApplicationSettings.IsPinSet ? new PasswordOverlay(true) as Page : new TabContainerView());
                 });
             }
             catch (Exception e)

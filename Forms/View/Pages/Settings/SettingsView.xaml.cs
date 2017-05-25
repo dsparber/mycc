@@ -66,12 +66,6 @@ namespace MyCC.Forms.View.Pages.Settings
             }
         }
 
-        /* private void RoundNumbersChanged(object sender, EventArgs e)
-         {
-             ApplicationSettings.RoundMoney = RoundNumbers.On;
-             Messaging.RoundNumbers.SendValueChanged();
-         }*/
-
         private void PinCellTapped(object sender, EventArgs e)
         {
             Navigation.PushAsync(new General.PinSettingsView());
@@ -97,7 +91,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetRatesCellDetail()
         {
-            RatesCell.Detail = !ApplicationSettings.WatchedCurrencies.Any() ? I18N.None : string.Join(", ", ApplicationSettings.WatchedCurrencies);
+            RatesCell.Detail = !ApplicationSettings.WatchedCurrencies.Any() ? I18N.None : string.Join(", ", ApplicationSettings.WatchedCurrencies.Select(id => new Currency(id).Code));
         }
 
         private void SetPreferredRateCellDetail()

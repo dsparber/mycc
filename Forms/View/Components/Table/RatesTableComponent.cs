@@ -102,7 +102,7 @@ namespace MyCC.Forms.View.Components.Table
             {
                 _webView.CallJsFunction("setHeader", new[]{
                     new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
-                    new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.StartupCurrencyRates), SortOrder.ByValue.ToString())
+                    new HeaderData(string.Format(I18N.AsCurrency, new Currency(ApplicationSettings.StartupCurrencyRates).Code), SortOrder.ByValue.ToString())
                 }, string.Empty);
                 _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
 

@@ -105,6 +105,20 @@ namespace MyCC.Core.Abstract.Database
         protected abstract Task<IEnumerable<T>> GetAllDbObjects();
         public async Task<IEnumerable<TV>> GetAll()
         {
+            // Easier to Debug
+            /*var elements = new List<TV>();
+
+            foreach (var o in await GetAllDbObjects())
+            {
+                var x = await o.Resolve();
+                if (x != null)
+                {
+                    elements.Add(x);
+                }
+            }
+           return elements;*/
+
+            // Efficient
             return (await Task.WhenAll((await GetAllDbObjects()).Select(o => o.Resolve()))).Where(o => o != null);
         }
 

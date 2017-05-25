@@ -80,7 +80,6 @@ namespace MyCC.Ui.Android.Views.Activities
             {
                 Interlocked.Increment(ref _savingClickedCount);
                 if (_savingClickedCount > 1 || _willFinish) return true;
-                Debug.WriteLine(_savingClickedCount);
                 var savingDialog = this.GetLoadingDialog(null, Resource.String.SavingSource);
                 Save(savingDialog);
             }

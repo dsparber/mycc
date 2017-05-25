@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using MyCC.Core.Helpers;
 using MyCC.Core.Preperation;
 using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
@@ -23,14 +25,19 @@ namespace MyCC.Forms
 
         public App()
         {
-            var startPage = Device.RuntimePlatform.Equals(Device.Android) ? new MasterDetailContainer() as Page : new TabContainerView();
+            if (Prepare.PreparingNeeded)
+            {
+                Prepare.ExecutePreperations();
+            }
+
+            var startPage = new TabContainerView() as Page;
 
             if (ApplicationSettings.IsPinSet)
             {
                 startPage = new PasswordOverlay(true);
             }
 
-            MainPage = ApplicationSettings.AppInitialised ? startPage : new PreparationView(startPage);
+            MainPage = ApplicationSettings.AppInitialised ? startPage : new PreparationView();
 
             DependencyService.Get<ILocalise>().SetLocale();
         }
@@ -38,38 +45,54 @@ namespace MyCC.Forms
         protected override async void OnStart()
         {
             base.OnStart();
-
-            if (Prepare.PreparingNeeded)
-            {
-                Prepare.ExecutePreperations();
-                if (Prepare.AsyncExecutePreperations != null) await Prepare.AsyncExecutePreperations;
-            }
-            if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
-
             if (!ApplicationSettings.AppInitialised) return;
 
             // Subscribe to finished loading
             Messaging.Loading.SubscribeFinished(this, async () =>
             {
-                ApplicationSettings.DataLoaded = true;
-
-                // Update only if auto refresh is enabled
-                if (ApplicationSettings.AutoRefreshOnStartup && CrossConnectivity.Current.IsConnected)
+                try
                 {
-                    await AppTaskHelper.FetchBalancesAndRates();
+                    ApplicationSettings.DataLoaded = true;
+
+                    // Update only if auto refresh is enabled
+                    if (ApplicationSettings.AutoRefreshOnStartup && CrossConnectivity.Current.IsConnected)
+                    {
+                        await AppTaskHelper.FetchBalancesAndRates();
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.LogError();
                 }
             });
 
             // Load data from Database
-            await Task.Run(async () => await ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished));
+            await Task.Run(async () =>
+            {
+                try
+                {
+                    await ApplicationTasks.LoadEverything(Messaging.Loading.SendFinished);
+                }
+                catch (Exception e)
+                {
+                    e.LogError();
+                }
+            });
 
             // Updating available currencies and rates
             await Task.Run(async () =>
             {
-                if (CrossConnectivity.Current.IsConnected)
-                    await ApplicationTasks.FetchCurrenciesAndAvailableRates(
-                        Messaging.UpdatingCurrenciesAndAvailableRates.SendStarted,
-                        Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display);
+                try
+                {
+                    if (CrossConnectivity.Current.IsConnected)
+                        await ApplicationTasks.FetchCurrenciesAndAvailableRates(
+                            Messaging.UpdatingCurrenciesAndAvailableRates.SendStarted,
+                            Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display);
+                }
+                catch (Exception e)
+                {
+                    e.LogError();
+                }
             });
         }
 

@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies.Model;
+using MyCC.Core.Helpers;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Constants;
@@ -109,7 +110,7 @@ namespace MyCC.Forms.View.Components.Table
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                e.LogError();
             }
         }
 

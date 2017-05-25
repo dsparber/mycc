@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Database;
 using MyCC.Core.Abstract.Models;
+using MyCC.Core.Helpers;
 
 namespace MyCC.Core.Abstract.Repositories
 {
@@ -41,7 +42,7 @@ namespace MyCC.Core.Abstract.Repositories
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"Error Message:\n{e.Message}\nData:\n{e.Data}\nStack trace:\n{e.StackTrace}");
+                e.LogError();
                 return false;
             }
         }
