@@ -47,12 +47,12 @@ namespace MyCC.Ui.ViewData
 
         private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyStorage.Find, c =>
         {
+
             var referenceMoney = new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc.Id, c)?.Rate ?? 0, CurrencyStorage.Find(c));
 
             var additionalRefs = ApplicationSettings.MainCurrencies
                 .Except(new[] { c })
-                .Select(x => new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc.Id, x)?.Rate ?? 0, CurrencyStorage.Find(x)))
-                .ToList();
+                .Select(x => new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc.Id, x)?.Rate ?? 0, CurrencyStorage.Find(x)));
 
             return new CoinHeaderData(referenceMoney, additionalRefs);
         });

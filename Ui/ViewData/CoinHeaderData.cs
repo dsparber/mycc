@@ -14,7 +14,7 @@ namespace MyCC.Ui.ViewData
         private readonly Money _referenceMoney;
         private readonly List<Money> _additionalReferences;
 
-        public CoinHeaderData(Money referenceMoney, List<Money> additionalReferences) : base(null, null)
+        public CoinHeaderData(Money referenceMoney, IEnumerable<Money> additionalReferences) : base(null, null)
         {
             _referenceMoney = referenceMoney;
             _additionalReferences = additionalReferences.OrderBy(m => m.Currency.Code).ToList();

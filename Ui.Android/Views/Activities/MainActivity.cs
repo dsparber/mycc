@@ -37,7 +37,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private IMenuItem _editItem;
         private IMenuItem _doneItem;
-        private bool _dataLoaded = ApplicationSettings.AutoRefreshOnStartup;
+        private static bool _autoRefreshNeeded = ApplicationSettings.AutoRefreshOnStartup;
 
         public static bool RatesEditingEnabled { private set; get; }
 
@@ -51,9 +51,9 @@ namespace MyCC.Ui.Android.Views.Activities
             CreateDrawerLayout();
 
             var initBefore = Intent.GetBooleanExtra(ExtraInitialisedBefore, false);
-            if (!initBefore && _dataLoaded && ConnectivityStatus.IsConnected)
+            if (!initBefore && _autoRefreshNeeded && ConnectivityStatus.IsConnected)
             {
-                _dataLoaded = false;
+                _autoRefreshNeeded = false;
                 Task.Run(async () =>
                 {
                     await TaskHelper.FetchMissingRates();

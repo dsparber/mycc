@@ -74,13 +74,18 @@ namespace MyCC.Ui.ViewData
 
         private static Dictionary<Currency, CoinHeaderData> LoadHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyStorage.Find, c =>
         {
-            var amount = AccountStorage.EnabledAccounts.Sum(a => a.Money.Amount * ExchangeRateHelper.GetRate(a.Money.Currency.Id, c)?.Rate ?? 0);
-            var referenceMoney = new Money(amount, CurrencyStorage.Find(c));
+            var enabledAccounts = AccountStorage.EnabledAccounts.ToList();
+            Func<string, Money> getReferenceValue = currencyId =>
+            {
+                var amount = enabledAccounts.Sum(a => a.Money.Amount * ExchangeRateHelper.GetRate(a.Money.Currency.Id, currencyId)?.Rate ?? 0);
+                return new Money(amount, CurrencyStorage.Find(currencyId));
+            };
+
+            var referenceMoney = getReferenceValue(c);
 
             var additionalRefs = ApplicationSettings.MainCurrencies
                 .Except(new[] { c })
-                .Select(x => new Money(amount * ExchangeRateHelper.GetRate(c, x)?.Rate ?? 0, CurrencyStorage.Find(x)))
-                .ToList();
+                .Select(currencyId => getReferenceValue(currencyId));
 
             return new CoinHeaderData(referenceMoney, additionalRefs);
         });
