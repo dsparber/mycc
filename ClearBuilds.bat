@@ -1,0 +1,11 @@
+RD /S /Q "Core\bin"
+RD /S /Q "Core\obj"
+RD /S /Q "Forms\bin"
+RD /S /Q "Forms\obj"
+RD /S /Q "Forms.iOS\obj"
+RD /S /Q "Forms.iOS\bin"
+RD /S /Q "Ui\obj"
+RD /S /Q "Ui\bin"
+RD /S /Q "Ui.Android\obj"
+RD /S /Q "Ui.Android\bin"
+pause

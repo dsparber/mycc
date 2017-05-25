@@ -14,14 +14,14 @@ namespace MyCC.Ui.Android.Views.Adapter
         {
             _tabTitles = new[]
             {
-                context.Resources.GetString(Resource.String.AllInfos),
-                context.Resources.GetString(Resource.String.AddressOnly)
+                context.Resources.GetString(Resource.String.AddressOnly),
+                context.Resources.GetString(Resource.String.AllInfos)
             };
 
             _fragments = new[]
             {
-                ShowQrCodeFragment.Create(sourceId, false),
-                ShowQrCodeFragment.Create(sourceId, true)
+                ShowQrCodeFragment.Create(sourceId, true),
+                ShowQrCodeFragment.Create(sourceId, false)
             };
         }
 
