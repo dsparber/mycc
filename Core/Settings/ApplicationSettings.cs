@@ -12,332 +12,327 @@ using PCLCrypto;
 
 namespace MyCC.Core.Settings
 {
-    public static class ApplicationSettings
-    {
-        private static Version _lastVersion;
+	public static class ApplicationSettings
+	{
+		private static Version _lastVersion;
 
-        public static Version LastCoreVersion
-        {
-            get
-            {
-                if (_lastVersion != null) return _lastVersion;
+		public static Version LastCoreVersion
+		{
+			get
+			{
+				if (_lastVersion != null) return _lastVersion;
 
-                if (FirstLaunch) return Constants.CoreVersion;
+				if (FirstLaunch)
+				{
+					Settings.Set(Settings.KeyAppVersion, Constants.CoreVersion.ToString());
+					_lastVersion = Constants.CoreVersion;
+					return _lastVersion;
+				}
 
-                var persitedValue = new Version(Settings.Get(Settings.KeyAppVersion, "0.0.0"));
-                Settings.Set(Settings.KeyAppVersion, Constants.CoreVersion.ToString());
+				var persitedValue = new Version(Settings.Get(Settings.KeyAppVersion, "0.0.0"));
+				Settings.Set(Settings.KeyAppVersion, Constants.CoreVersion.ToString());
 
-                _lastVersion = persitedValue;
-                return _lastVersion;
-            }
-        }
+				_lastVersion = persitedValue;
+				return _lastVersion;
+			}
+		}
 
-        private static bool? _firstLaunch;
+		private static bool? _firstLaunch;
 
-        public static bool FirstLaunch
-        {
-            get
-            {
-                if (_firstLaunch.HasValue) return _firstLaunch.Value;
+		public static bool FirstLaunch
+		{
+			get
+			{
+				if (_firstLaunch.HasValue) return _firstLaunch.Value;
 
-                var persitedValue = Settings.Get(Settings.KeyFirstLaunch, true);
-                if (persitedValue)
-                {
-                    Settings.Set(Settings.KeyFirstLaunch, false);
-                }
-                _firstLaunch = persitedValue;
-                return _firstLaunch.Value;
-            }
-        }
+				var persitedValue = Settings.Get(Settings.KeyFirstLaunch, true);
+				if (persitedValue)
+				{
+					Settings.Set(Settings.KeyFirstLaunch, false);
+				}
+				_firstLaunch = persitedValue;
+				return _firstLaunch.Value;
+			}
+		}
 
-        public static bool DataLoaded;
+		public static bool DataLoaded;
 
-        public static string StartupCurrencyAssets
-        {
-            get { return Settings.Get(Settings.KeyBaseCurrency, CurrencyConstants.Btc.Id); }
-            set { Settings.Set(Settings.KeyBaseCurrency, value); }
-        }
+		public static string StartupCurrencyAssets
+		{
+			get { return Settings.Get(Settings.KeyBaseCurrency, CurrencyConstants.Btc.Id); }
+			set { Settings.Set(Settings.KeyBaseCurrency, value); }
+		}
 
-        public static string StartupCurrencyRates
-        {
-            get { return Settings.Get(Settings.KeyRatePageCurrency, CurrencyConstants.Btc.Id); }
-            set { Settings.Set(Settings.KeyRatePageCurrency, value); }
-        }
+		public static string StartupCurrencyRates
+		{
+			get { return Settings.Get(Settings.KeyRatePageCurrency, CurrencyConstants.Btc.Id); }
+			set { Settings.Set(Settings.KeyRatePageCurrency, value); }
+		}
 
-        public static IEnumerable<string> WatchedCurrencies
-        {
-            get
-            {
-                return
-                    Settings.Get(Settings.KeyWatchedCurrencies, string.Empty)
-                        .Split(',')
-                        .Where(s => !string.IsNullOrWhiteSpace(s))
-                        .Distinct();
-            }
-            set
-            {
-                Settings.Set(Settings.KeyWatchedCurrencies,
-                    string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct()));
-            }
-        }
+		public static IEnumerable<string> WatchedCurrencies
+		{
+			get
+			{
+				return
+					Settings.Get(Settings.KeyWatchedCurrencies, string.Empty)
+						.Split(',')
+						.Where(s => !string.IsNullOrWhiteSpace(s))
+						.Distinct();
+			}
+			set
+			{
+				Settings.Set(Settings.KeyWatchedCurrencies,
+					string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct()));
+			}
+		}
 
-        public static IEnumerable<string> DisabledCurrencyIds
-        {
-            get
-            {
-                return
-                    Settings.Get(Settings.KeyDisabledCurrencies, string.Empty)
-                        .Split(',')
-                        .Where(s => !string.IsNullOrWhiteSpace(s))
-                        .Distinct();
-            }
-            set
-            {
-                Settings.Set(Settings.KeyDisabledCurrencies,
-                    string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct()));
-            }
-        }
+		public static IEnumerable<string> DisabledCurrencyIds
+		{
+			get
+			{
+				return
+					Settings.Get(Settings.KeyDisabledCurrencies, string.Empty)
+						.Split(',')
+						.Where(s => !string.IsNullOrWhiteSpace(s))
+						.Distinct();
+			}
+			set
+			{
+				Settings.Set(Settings.KeyDisabledCurrencies,
+					string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct()));
+			}
+		}
 
-        public static IEnumerable<string> TryToLoadOldCurrencies(string key)
-        {
-            var data = Settings.Get(key, string.Empty);
-            if (string.IsNullOrEmpty(data)) return null;
+		public static IEnumerable<string> TryToLoadOldCurrencies(string key)
+		{
+			var data = Settings.Get(key, string.Empty);
+			if (string.IsNullOrEmpty(data)) return null;
 
-            try
-            {
-                var values = Get(key, null).ToList();
-                if (values.Any()) return values;
-            }
-            catch (Exception)
-            {
-                /* Nothing */
-            }
-
-            try
-            {
-                var currencies = JArray.Parse(data);
-                var ids = new List<string>();
-                foreach (var c in currencies)
-                {
-                    c.ToString().LogInfo();
-                    var id = (string)c["Id"];
-                    ids.Add(id);
-                }
-                return ids;
-            }
-            catch (Exception e)
-            {
-                data.LogInfo();
-                e.LogError();
-                return null;
-            }
-        }
+			try
+			{
+				var currencies = JArray.Parse(data);
+				var ids = new List<string>();
+				foreach (var c in currencies)
+				{
+					c.ToString().LogInfo();
+					var id = (string)c["Id"];
+					ids.Add(id);
+				}
+				return ids;
+			}
+			catch (Exception e)
+			{
+				data.LogInfo();
+				e.LogError();
+				return null;
+			}
+		}
 
 
-        public static string Pin
-        {
-            set
-            {
-                PinLength = string.IsNullOrEmpty(value) ? -1 : value.Length;
-                Settings.Set(Settings.KeyPin, string.IsNullOrWhiteSpace(value) ? string.Empty : Hash(value));
-            }
-        }
+		public static string Pin
+		{
+			set
+			{
+				PinLength = string.IsNullOrEmpty(value) ? -1 : value.Length;
+				Settings.Set(Settings.KeyPin, string.IsNullOrWhiteSpace(value) ? string.Empty : Hash(value));
+			}
+		}
 
-        public static bool IsPinValid(string pin) => Settings.Get(Settings.KeyPin, string.Empty).Equals(Hash(pin));
+		public static bool IsPinValid(string pin) => Settings.Get(Settings.KeyPin, string.Empty).Equals(Hash(pin));
 
-        public static IEnumerable<string> MainCurrencies
-        {
-            get
-            {
-                var defaultValue = string.Join(",", new List<Currency> { CurrencyConstants.Btc, CurrencyConstants.Eur, CurrencyConstants.Usd }.Select(c => c.Id));
-                return Settings.Get(Settings.KeyMainCurrencies, defaultValue).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct();
-            }
-            set { Settings.Set(Settings.KeyMainCurrencies, string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct())); }
-        }
+		public static IEnumerable<string> MainCurrencies
+		{
+			get
+			{
+				var defaultValue = string.Join(",", new List<Currency> { CurrencyConstants.Btc, CurrencyConstants.Eur, CurrencyConstants.Usd }.Select(c => c.Id));
+				return Settings.Get(Settings.KeyMainCurrencies, defaultValue).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct();
+			}
+			set { Settings.Set(Settings.KeyMainCurrencies, string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct())); }
+		}
 
-        public static IEnumerable<string> FurtherCurrencies
-        {
-            get { return Settings.Get(Settings.KeyFurtherCurrencies, string.Empty).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct(); }
-            set { Settings.Set(Settings.KeyFurtherCurrencies, string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct())); }
-        }
+		public static IEnumerable<string> FurtherCurrencies
+		{
+			get { return Settings.Get(Settings.KeyFurtherCurrencies, string.Empty).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct(); }
+			set { Settings.Set(Settings.KeyFurtherCurrencies, string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct())); }
+		}
 
-        public static IEnumerable<string> AllReferenceCurrencies => MainCurrencies.Concat(FurtherCurrencies).Distinct().ToList();
+		public static IEnumerable<string> AllReferenceCurrencies => MainCurrencies.Concat(FurtherCurrencies).Distinct().ToList();
 
-        public static SortOrder SortOrderAssets
-        {
-            get { return (SortOrder)Enum.Parse(typeof(SortOrder), Settings.Get(Settings.KeySortOrderTable, SortOrder.Alphabetical.ToString())); }
-            set { Settings.Set(Settings.KeySortOrderTable, value.ToString()); }
-        }
+		public static SortOrder SortOrderAssets
+		{
+			get { return (SortOrder)Enum.Parse(typeof(SortOrder), Settings.Get(Settings.KeySortOrderTable, SortOrder.Alphabetical.ToString())); }
+			set { Settings.Set(Settings.KeySortOrderTable, value.ToString()); }
+		}
 
-        public static SortDirection SortDirectionAssets
-        {
-            get { return Settings.KeySortDirectionTable.GetEnum(SortDirection.Ascending); }
-            set { Settings.KeySortDirectionTable.SetEnum(value); }
-        }
+		public static SortDirection SortDirectionAssets
+		{
+			get { return Settings.KeySortDirectionTable.GetEnum(SortDirection.Ascending); }
+			set { Settings.KeySortDirectionTable.SetEnum(value); }
+		}
 
-        public static SortOrder SortOrderRates
-        {
-            get
-            {
-                const SortOrder defaultValue = SortOrder.Alphabetical;
-                var stringValue = Settings.Get(Settings.KeySortOrderRates, defaultValue.ToString());
-                var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
-                return enumValue;
-            }
-            set
-            {
-                Settings.Set(Settings.KeySortOrderRates, value.ToString());
-            }
-        }
+		public static SortOrder SortOrderRates
+		{
+			get
+			{
+				const SortOrder defaultValue = SortOrder.Alphabetical;
+				var stringValue = Settings.Get(Settings.KeySortOrderRates, defaultValue.ToString());
+				var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
+				return enumValue;
+			}
+			set
+			{
+				Settings.Set(Settings.KeySortOrderRates, value.ToString());
+			}
+		}
 
-        public static SortDirection SortDirectionRates
-        {
-            get
-            {
-                var defaultValue = SortDirection.Ascending.ToString();
-                var stringValue = Settings.Get(Settings.KeySortDirectionRates, defaultValue);
-                return (SortDirection)Enum.Parse(typeof(SortDirection), stringValue);
-            }
-            set
-            {
-                Settings.Set(Settings.KeySortDirectionRates, value.ToString());
-            }
-        }
+		public static SortDirection SortDirectionRates
+		{
+			get
+			{
+				var defaultValue = SortDirection.Ascending.ToString();
+				var stringValue = Settings.Get(Settings.KeySortDirectionRates, defaultValue);
+				return (SortDirection)Enum.Parse(typeof(SortDirection), stringValue);
+			}
+			set
+			{
+				Settings.Set(Settings.KeySortDirectionRates, value.ToString());
+			}
+		}
 
-        public static SortOrder SortOrderAccounts
-        {
-            get
-            {
-                const SortOrder defaultValue = SortOrder.Alphabetical;
-                var stringValue = Settings.Get(Settings.KeySortOrderAccounts, defaultValue.ToString());
-                var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
-                return enumValue;
-            }
-            set
-            {
-                Settings.Set(Settings.KeySortOrderAccounts, value.ToString());
-            }
-        }
+		public static SortOrder SortOrderAccounts
+		{
+			get
+			{
+				const SortOrder defaultValue = SortOrder.Alphabetical;
+				var stringValue = Settings.Get(Settings.KeySortOrderAccounts, defaultValue.ToString());
+				var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
+				return enumValue;
+			}
+			set
+			{
+				Settings.Set(Settings.KeySortOrderAccounts, value.ToString());
+			}
+		}
 
-        public static SortDirection SortDirectionAccounts
-        {
-            get
-            {
-                var defaultValue = SortDirection.Ascending.ToString();
-                var stringValue = Settings.Get(Settings.KeySortDirectionAccounts, defaultValue);
-                return (SortDirection)Enum.Parse(typeof(SortDirection), stringValue);
-            }
-            set
-            {
-                Settings.Set(Settings.KeySortDirectionAccounts, value.ToString());
-            }
-        }
+		public static SortDirection SortDirectionAccounts
+		{
+			get
+			{
+				var defaultValue = SortDirection.Ascending.ToString();
+				var stringValue = Settings.Get(Settings.KeySortDirectionAccounts, defaultValue);
+				return (SortDirection)Enum.Parse(typeof(SortDirection), stringValue);
+			}
+			set
+			{
+				Settings.Set(Settings.KeySortDirectionAccounts, value.ToString());
+			}
+		}
 
-        public static SortOrder SortOrderReferenceValues
-        {
-            get
-            {
-                const SortOrder defaultValue = SortOrder.ByUnits;
-                var stringValue = Settings.Get(Settings.KeySortOrderReferenceValues, defaultValue.ToString());
-                var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
-                return enumValue;
-            }
-            set
-            {
-                Settings.Set(Settings.KeySortOrderReferenceValues, value.ToString());
-            }
-        }
+		public static SortOrder SortOrderReferenceValues
+		{
+			get
+			{
+				const SortOrder defaultValue = SortOrder.ByUnits;
+				var stringValue = Settings.Get(Settings.KeySortOrderReferenceValues, defaultValue.ToString());
+				var enumValue = (SortOrder)Enum.Parse(typeof(SortOrder), stringValue);
+				return enumValue;
+			}
+			set
+			{
+				Settings.Set(Settings.KeySortOrderReferenceValues, value.ToString());
+			}
+		}
 
-        public static SortDirection SortDirectionReferenceValues
-        {
-            get { return Settings.KeySortDirectionReferenceValues.GetEnum(SortDirection.Ascending); }
-            set { Settings.KeySortDirectionReferenceValues.SetEnum(value); }
-        }
+		public static SortDirection SortDirectionReferenceValues
+		{
+			get { return Settings.KeySortDirectionReferenceValues.GetEnum(SortDirection.Ascending); }
+			set { Settings.KeySortDirectionReferenceValues.SetEnum(value); }
+		}
 
-        public static bool AutoRefreshOnStartup
-        {
-            get { return Settings.Get(Settings.KeyAutoRefreshOnStartup, true); }
-            set { Settings.Set(Settings.KeyAutoRefreshOnStartup, value); }
-        }
+		public static bool AutoRefreshOnStartup
+		{
+			get { return Settings.Get(Settings.KeyAutoRefreshOnStartup, true); }
+			set { Settings.Set(Settings.KeyAutoRefreshOnStartup, value); }
+		}
 
-        public static bool AppInitialised
-        {
-            get { return Settings.Get(Settings.KeyAppInitialised, false); }
-            set { Settings.Set(Settings.KeyAppInitialised, value); }
-        }
+		public static bool AppInitialised
+		{
+			get { return Settings.Get(Settings.KeyAppInitialised, false); }
+			set { Settings.Set(Settings.KeyAppInitialised, value); }
+		}
 
-        public static bool RoundMoney => false;
-        /*{
+		public static bool RoundMoney => false;
+		/*{
             get { return Settings.GetEnum(Settings.RoundMoney, false);}
             set { Settings.SetEnum(Settings.RoundMoney, value); }
         }*/
 
-        public static int PreferredBitcoinRepository
-        {
-            get { return Settings.Get(Settings.PreferredBitcoinRepository, (int)RatesRepositories.Kraken); }
-            set { Settings.Set(Settings.PreferredBitcoinRepository, value); }
-        }
+		public static int PreferredBitcoinRepository
+		{
+			get { return Settings.Get(Settings.PreferredBitcoinRepository, (int)RatesRepositories.Kraken); }
+			set { Settings.Set(Settings.PreferredBitcoinRepository, value); }
+		}
 
-        public static StartupPage DefaultStartupPage
-        {
-            get { return Settings.DefaultPage.GetEnum(StartupPage.RatesView); }
-            set { Settings.DefaultPage.SetEnum(value); }
-        }
+		public static StartupPage DefaultStartupPage
+		{
+			get { return Settings.DefaultPage.GetEnum(StartupPage.RatesView); }
+			set { Settings.DefaultPage.SetEnum(value); }
+		}
 
-        public static ColumnToHide AssetsColumToHideIfSmall
-        {
-            get { return Settings.KeyAssetsColumnHideWhenSmall.GetEnum(ColumnToHide.None); }
-            set { Settings.KeyAssetsColumnHideWhenSmall.SetEnum(value); }
-        }
+		public static ColumnToHide AssetsColumToHideIfSmall
+		{
+			get { return Settings.KeyAssetsColumnHideWhenSmall.GetEnum(ColumnToHide.None); }
+			set { Settings.KeyAssetsColumnHideWhenSmall.SetEnum(value); }
+		}
 
 
-        /**
+		/**
          * get { return Settings.GetEnum(Settings.KeyFurtherCurrencies, string.Empty).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct(); }
             set { Settings.SetEnum(Settings.KeyFurtherCurrencies, string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct())); }
          * */
 
-        private static void SetEnum<T>(this string key, T value) => Settings.Set(key, value.ToString());
-        private static void Set(this string key, IEnumerable<string> values) => Settings.Set(key, string.Join(",", values.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct()));
+		private static void SetEnum<T>(this string key, T value) => Settings.Set(key, value.ToString());
+		private static void Set(this string key, IEnumerable<string> values) => Settings.Set(key, string.Join(",", values.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct()));
 
-        private static T GetEnum<T>(this string key, T defaultValue) => (T)Enum.Parse(typeof(T), Settings.Get(key, defaultValue.ToString()));
-        private static IEnumerable<string> Get(this string key, IEnumerable<string> defaultValues) => Settings.Get(key, string.Join(",", defaultValues ?? new string[] { })).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct();
+		private static T GetEnum<T>(this string key, T defaultValue) => (T)Enum.Parse(typeof(T), Settings.Get(key, defaultValue.ToString()));
+		private static IEnumerable<string> Get(this string key, IEnumerable<string> defaultValues) => Settings.Get(key, string.Join(",", defaultValues ?? new string[] { })).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct();
 
-        public static int PinLength
-        {
-            get { return Settings.Get(Settings.KeyPinLength, -1); }
-            private set { Settings.Set(Settings.KeyPinLength, value); }
-        }
+		public static int PinLength
+		{
+			get { return Settings.Get(Settings.KeyPinLength, -1); }
+			private set { Settings.Set(Settings.KeyPinLength, value); }
+		}
 
-        public static bool IsPinSet => PinLength != -1;
+		public static bool IsPinSet => PinLength != -1;
 
-        public static bool IsFingerprintEnabled
-        {
-            get { return Settings.Get(Settings.KeyFingerprintSet, false); }
-            set { Settings.Set(Settings.KeyFingerprintSet, value); }
-        }
-        public static bool LockByShaking
-        {
-            get { return Settings.Get(Settings.KeyLockByShaking, false); }
-            set { Settings.Set(Settings.KeyLockByShaking, value); }
-        }
+		public static bool IsFingerprintEnabled
+		{
+			get { return Settings.Get(Settings.KeyFingerprintSet, false); }
+			set { Settings.Set(Settings.KeyFingerprintSet, value); }
+		}
+		public static bool LockByShaking
+		{
+			get { return Settings.Get(Settings.KeyLockByShaking, false); }
+			set { Settings.Set(Settings.KeyLockByShaking, value); }
+		}
 
-        private static string ByteToString(IEnumerable<byte> buff)
-        {
-            var sBuilder = new StringBuilder();
-            foreach (var t in buff)
-            {
-                sBuilder.Append(t.ToString("X2"));
-            }
-            return sBuilder.ToString().ToLower();
-        }
+		private static string ByteToString(IEnumerable<byte> buff)
+		{
+			var sBuilder = new StringBuilder();
+			foreach (var t in buff)
+			{
+				sBuilder.Append(t.ToString("X2"));
+			}
+			return sBuilder.ToString().ToLower();
+		}
 
-        private static string Hash(string text)
-        {
-            var keyBytes = Encoding.UTF8.GetBytes(text);
+		private static string Hash(string text)
+		{
+			var keyBytes = Encoding.UTF8.GetBytes(text);
 
-            var algorithm = WinRTCrypto.MacAlgorithmProvider.OpenAlgorithm(MacAlgorithm.HmacSha512);
-            var hasher = algorithm.CreateHash(keyBytes);
-            return ByteToString(hasher.GetValueAndReset());
-        }
-    }
+			var algorithm = WinRTCrypto.MacAlgorithmProvider.OpenAlgorithm(MacAlgorithm.HmacSha512);
+			var hasher = algorithm.CreateHash(keyBytes);
+			return ByteToString(hasher.GetValueAndReset());
+		}
+	}
 }
