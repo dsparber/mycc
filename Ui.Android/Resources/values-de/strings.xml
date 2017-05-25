@@ -152,19 +152,18 @@
   <string name="Value">Betrag</string>
   <string name="VerifyInput">Bitte überprüfen Sie Ihre Eingabe!</string>
   <string name="Version">Version</string>
-  <string name="PinWrong">PIN nicht korrekt</string>
+  <string name="PinWrong">Falscher PIN</string>
   <string name="AuthenticationFailed">Authentifizierung fehlgeschlagen</string>
   <string name="fingerprint_hint">Berühren Sie den Sensor</string>
-  <string name="UseShakeGesture">MyCC durch Schütteln des Geräts sperren</string>
-  <string name="InternetIsNeededForInitialisation">Bevor sie MyCC das erste Mal nutzen können, müssen die verfügbaren Währungen und Kurse abgerufen werden. Bitte schalten Sie hierfür Ihr Internet ein.</string>
+  <string name="UseShakeGesture">Bildschirmsperre auch beim Schütteln des Geräts aktivieren</string>
+  <string name="InternetIsNeededForInitialisation">Bevor Sie die App das erste Mal nutzen können, müssen die verfügbaren Währungen und Kurse abgerufen werden. Bitte aktivieren Sie die Verbindung zum Internet.</string>
   <string name="LoadingCurrenciesFrom">Währungen werden von {0} geladen</string>
-  <string name="LoadingAvailableRatesFrom">Verfügbare Kurse werden von {0} abgerufen</string>
-  <string name="LoadingRates">Benötigte Kurse herunterladen</string>
-  <string name="SavingSource">Datenquelle speichern</string>
+  <string name="LoadingRates">Kurse werden geladen</string>
+  <string name="SavingSource">Datenquelle wird gespeichert</string>
   <string name="AssetsColumnToHide">Spalte in Vermögenstabelle ausblenden</string>
-  <string name="AssetsColumnToHideDescription">Spalte in Vermögenstabelle ausblenden wenn wenig Platz vorhanden ist.</string>
-  <string name="ReferenceValue">Referenzwert</string>
+  <string name="AssetsColumnToHideDescription">Auswahl der ausgeblendeten Spalte in Vermögenstabelle bei wenig Platz</string>
+  <string name="ReferenceValue">Wert in Referenzwährung</string>
   <string name="InitialiseApp">App initialisieren</string>
   <string name="AllInfos">Alle Infos</string>
-  <string name="AddressOnly">Nur Address</string>
+  <string name="AddressOnly">Nur Adresse</string>
 </resources>
