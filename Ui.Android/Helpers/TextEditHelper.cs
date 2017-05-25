@@ -29,7 +29,7 @@ namespace MyCC.Ui.Android.Helpers
 
         public static string TrimAll(this string value)
         {
-            return string.Join(string.Empty, Regex.Replace(value ?? string.Empty, @"\t|\n|\r", "").Where(c => !char.IsWhiteSpace(c) && c != '\u200B'));
+            return string.Join(string.Empty, Regex.Replace(value ?? string.Empty, @"\t|\n|\r", "").Where(c => c != '\u200B')).Trim();
         }
     }
 }
