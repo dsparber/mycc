@@ -262,7 +262,7 @@
     <value>General</value>
   </data>
   <data name="GeneralError" xml:space="preserve">
-    <value>An unexpected error occured</value>
+    <value>An unexpected error occurred</value>
   </data>
   <data name="GHps" xml:space="preserve">
     <value>GH/s</value>
