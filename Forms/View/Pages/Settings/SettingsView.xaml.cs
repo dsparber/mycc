@@ -107,7 +107,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetAboutCell()
         {
-            AboutCell.Detail = $"{I18N.AppName} - {I18N.Version} {AppConstants.AppVersion}";
+            AboutCell.Detail = $"{I18N.AppName} - {I18N.Version} {AppConstants.AppCoreVersion}";
             AboutCell.Tapped += (sender, e) => Navigation.PushAsync(new WebContentView("Html/about.html", true));
         }
 

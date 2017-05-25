@@ -53,7 +53,7 @@
   <string name="Currency">Währung</string>
   <string name="CurrencyCode">Währungscode:</string>
   <string name="Data">Daten</string>
-  <string name="DefaultPageInfo">Die ausgewählte Ansicht wird beim Starten der Applikation angezeigt.</string>
+  <string name="KeyDefaultPageInfo">Die ausgewählte Ansicht wird beim Starten der Applikation angezeigt.</string>
   <string name="DefaultView">Standardansicht</string>
   <string name="Delete">Löschen</string>
   <string name="Deleting">Löschen</string>

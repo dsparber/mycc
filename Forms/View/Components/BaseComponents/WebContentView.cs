@@ -36,7 +36,7 @@ namespace MyCC.Forms.View.Components.BaseComponents
 			stack.Children.Add(new HeaderView
 			{
 				TitleText = I18N.AppName,
-				InfoText = $"{I18N.Version} {AppConstants.AppVersion}"
+				InfoText = $"{I18N.Version} {AppConstants.AppCoreVersion}"
 			});
 			stack.Children.Add(webView);
 			stack.Children.Add(indicator);

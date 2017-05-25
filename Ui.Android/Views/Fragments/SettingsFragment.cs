@@ -67,7 +67,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             assetsToHideColumnPreference.SetEntryValues(assetsToHideValues);
             assetsToHideColumnPreference.PreferenceChange += (sender, args) =>
             {
-                Settings.ClearCache();
+                SettingUtils.ClearCache();
             };
 
             _securityPreference.PreferenceClick += (sender, args) =>

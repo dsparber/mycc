@@ -63,11 +63,12 @@
     <Compile Include="Rates\Repositories\BitstampExchangeRateRepository.cs" />
     <Compile Include="Rates\Repositories\RatesRepositories.cs" />
     <Compile Include="Resources\ConstantNames.cs" />
+    <Compile Include="Settings\SettingUtils.cs" />
     <Compile Include="Types\SortOrder.cs" />
     <Compile Include="Types\SortDirection.cs" />
     <Compile Include="Types\PinAction.cs" />
     <Compile Include="Settings\ApplicationSettings.cs" />
-    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\SettingKeys.cs" />
     <Compile Include="Tasks\LoadTasks.cs" />
     <Compile Include="Tasks\FetchTasks.cs" />
     <Compile Include="Account\Repositories\Base\AccountRepository.cs" />
@@ -133,7 +134,7 @@
     <Compile Include="CoinInfo\ICoinInfoRepository.cs" />
     <Compile Include="CoinInfo\Repositories\BlockrCoinInfoRepository.cs" />
     <Compile Include="CoinInfo\Repositories\BlockchainCoinInfoRepository.cs" />
-    <Compile Include="Settings\Version.cs" />
+    <Compile Include="Settings\CoreVersion.cs" />
     <Compile Include="Settings\Constants.cs" />
     <Compile Include="Rates\Repositories\KrakenExchangeRateRepository.cs" />
     <Compile Include="Helpers\Settings.cs" />

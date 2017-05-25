@@ -7,11 +7,11 @@ namespace MyCC.Core.Preperation
 {
     public static class Migrate
     {
-        public static bool MigrationsNeeded => ApplicationSettings.LastCoreVersion < new Version(1, 1);
+        public static bool MigrationsNeeded => ApplicationSettings.LastCoreVersion < new CoreVersion(1, 1);
 
         public static async Task ExecuteMigratations()
         {
-            if (ApplicationSettings.LastCoreVersion < new Version(1, 1))
+            if (ApplicationSettings.LastCoreVersion < new CoreVersion(1, 1))
             {
                 await MigrateTo_1_1();
             }
