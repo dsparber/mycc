@@ -29,6 +29,7 @@ namespace MyCC.Ui.Android.Views.Activities
             CrashManager.Register(this, "7792ee5321a64433ace4955a1693cca5");
             MetricsManager.Register(Application, "7792ee5321a64433ace4955a1693cca5");
             ViewData.ViewData.Init();
+            MobileBarcodeScanner.Initialize(Application);
 
             if (Prepare.PreparingNeeded)
             {
