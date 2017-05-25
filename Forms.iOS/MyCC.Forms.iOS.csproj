@@ -354,6 +354,8 @@
     <Compile Include="renderer\FrameRenderer.cs" />
     <Compile Include="Helpers\TextSizeHelper.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="renderer\CustomProgressBarRenderer.cs" />
+    <Compile Include="renderer\ThemeColorProgressBarRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

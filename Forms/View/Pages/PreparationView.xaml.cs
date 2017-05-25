@@ -87,8 +87,7 @@ namespace MyCC.Forms.View.Pages
             Device.BeginInvokeOnMainThread(() =>
             {
                 ProgressLabel.Text = text;
-                var progress = (int)Math.Round(percentage * 100, 0);
-                ProgressBar.Progress = progress;
+                ProgressBar.Progress = percentage;
             });
         }
     }

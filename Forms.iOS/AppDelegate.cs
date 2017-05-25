@@ -40,17 +40,12 @@ namespace MyCC.Forms.iOS
                 TextColor = UIColor.White
             });
 
-            UIProgressView.Appearance.ProgressTintColor = Color.White.ToUIColor();
-            UIProgressView.Appearance.TrackTintColor = Color.Transparent.ToUIColor();
-
             UITabBar.Appearance.TintColor = AppConstants.ThemeColor.ToUIColor();
 
             var manager = BITHockeyManager.SharedHockeyManager;
             manager.Configure("3e42251c3ae84c498abf08fbdd56a818");
             manager.DisableUpdateManager = true;
             manager.StartManager();
-
-
 
             return result;
         }

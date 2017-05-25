@@ -100,13 +100,22 @@ namespace MyCC.Core.Settings
 
         public static IEnumerable<string> TryToLoadOldCurrencies(string key)
         {
+            var data = Settings.Get(key, string.Empty);
+            if (string.IsNullOrEmpty(data)) return null;
+
             try
             {
-                var json = Settings.Get(key, string.Empty);
-                json.LogInfo();
-                if (string.IsNullOrEmpty(json)) return null;
+                var values = Get(key, null).ToList();
+                if (values.Any()) return values;
+            }
+            catch (Exception)
+            {
+                /* Nothing */
+            }
 
-                var currencies = JArray.Parse(json);
+            try
+            {
+                var currencies = JArray.Parse(data);
                 var ids = new List<string>();
                 foreach (var c in currencies)
                 {
@@ -118,6 +127,7 @@ namespace MyCC.Core.Settings
             }
             catch (Exception e)
             {
+                data.LogInfo();
                 e.LogError();
                 return null;
             }
@@ -161,8 +171,8 @@ namespace MyCC.Core.Settings
 
         public static SortDirection SortDirectionAssets
         {
-            get { return Settings.KeySortDirectionTable.Get(SortDirection.Ascending); }
-            set { Settings.KeySortDirectionTable.Set(value); }
+            get { return Settings.KeySortDirectionTable.GetEnum(SortDirection.Ascending); }
+            set { Settings.KeySortDirectionTable.SetEnum(value); }
         }
 
         public static SortOrder SortOrderRates
@@ -240,8 +250,8 @@ namespace MyCC.Core.Settings
 
         public static SortDirection SortDirectionReferenceValues
         {
-            get { return Settings.KeySortDirectionReferenceValues.Get(SortDirection.Ascending); }
-            set { Settings.KeySortDirectionReferenceValues.Set(value); }
+            get { return Settings.KeySortDirectionReferenceValues.GetEnum(SortDirection.Ascending); }
+            set { Settings.KeySortDirectionReferenceValues.SetEnum(value); }
         }
 
         public static bool AutoRefreshOnStartup
@@ -258,8 +268,8 @@ namespace MyCC.Core.Settings
 
         public static bool RoundMoney => false;
         /*{
-            get { return Settings.Get(Settings.RoundMoney, false);}
-            set { Settings.Set(Settings.RoundMoney, value); }
+            get { return Settings.GetEnum(Settings.RoundMoney, false);}
+            set { Settings.SetEnum(Settings.RoundMoney, value); }
         }*/
 
         public static int PreferredBitcoinRepository
@@ -270,18 +280,27 @@ namespace MyCC.Core.Settings
 
         public static StartupPage DefaultStartupPage
         {
-            get { return Settings.DefaultPage.Get(StartupPage.RatesView); }
-            set { Settings.DefaultPage.Set(value); }
+            get { return Settings.DefaultPage.GetEnum(StartupPage.RatesView); }
+            set { Settings.DefaultPage.SetEnum(value); }
         }
 
         public static ColumnToHide AssetsColumToHideIfSmall
         {
-            get { return Settings.KeyAssetsColumnHideWhenSmall.Get(ColumnToHide.None); }
-            set { Settings.KeyAssetsColumnHideWhenSmall.Set(value); }
+            get { return Settings.KeyAssetsColumnHideWhenSmall.GetEnum(ColumnToHide.None); }
+            set { Settings.KeyAssetsColumnHideWhenSmall.SetEnum(value); }
         }
 
-        private static void Set<T>(this string key, T value) => Settings.Set(key, value.ToString());
-        private static T Get<T>(this string key, T defaultValue) => (T)Enum.Parse(typeof(T), Settings.Get(key, defaultValue.ToString()));
+
+        /**
+         * get { return Settings.GetEnum(Settings.KeyFurtherCurrencies, string.Empty).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct(); }
+            set { Settings.SetEnum(Settings.KeyFurtherCurrencies, string.Join(",", value.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct())); }
+         * */
+
+        private static void SetEnum<T>(this string key, T value) => Settings.Set(key, value.ToString());
+        private static void Set(this string key, IEnumerable<string> values) => Settings.Set(key, string.Join(",", values.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct()));
+
+        private static T GetEnum<T>(this string key, T defaultValue) => (T)Enum.Parse(typeof(T), Settings.Get(key, defaultValue.ToString()));
+        private static IEnumerable<string> Get(this string key, IEnumerable<string> defaultValues) => Settings.Get(key, string.Join(",", defaultValues ?? new string[] { })).Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).Distinct();
 
         public static int PinLength
         {

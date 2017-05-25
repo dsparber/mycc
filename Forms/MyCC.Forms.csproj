@@ -64,6 +64,7 @@
     <Compile Include="View\Addsource\AddLocalAccountSubview.cs" />
     <Compile Include="View\Addsource\AddRepositorySubview.cs" />
     <Compile Include="View\Addsource\AddSourceSubview.cs" />
+    <Compile Include="View\Components\BaseComponents\ThemeColorProgressBar.cs" />
     <Compile Include="View\Components\BaseComponents\HybridWebView.cs" />
     <Compile Include="View\Components\BaseComponents\NumericEntry.cs" />
     <Compile Include="View\Components\Cells\CurrencyEntryCell.cs" />

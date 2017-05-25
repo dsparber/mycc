@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+             xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
+             xmlns:components="clr-namespace:MyCC.Forms.View.Components.BaseComponents;assembly=MyCC.Forms"
+             xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
+             BackgroundColor="{x:Static constants:AppConstants.LaunchscreenBackground}"
              x:Class="MyCC.Forms.View.Pages.PreparationView">
     <StackLayout
         VerticalOptions="FillAndExpand"
@@ -17,21 +20,24 @@
             FontSize="36"
             FontAttributes="Bold"
             HorizontalTextAlignment="Center"
+            TextColor="{x:Static constants:AppConstants.LaunchscreenTextColor}"
             HorizontalOptions="CenterAndExpand"/>
         <Label 
             Text="{resources:Translate AppNameLong}"
-            FontSize="24"
+            FontSize="18"
+            TextColor="{x:Static constants:AppConstants.LaunchscreenTextColor}"
             HorizontalTextAlignment="Center"
             HorizontalOptions="CenterAndExpand"/>
         <StackLayout
             x:Name="ProgressView">
-            <ProgressBar 
+            <components:ThemeColorProgressBar 
                 Margin="10"
                 x:Name="ProgressBar"/>
             <Label 
                 Text="{resources:Translate InitialiseApp}"
                 x:Name="ProgressLabel"
                 HorizontalTextAlignment="Center"
+                TextColor="{x:Static constants:AppConstants.LaunchscreenTextColor}"
                 HorizontalOptions="CenterAndExpand"/>
         </StackLayout>
         <StackLayout
@@ -50,10 +56,14 @@
         <Label 
             Text="{resources:Translate Copyright}"
             HorizontalTextAlignment="Center"
+            FontSize="14"
+            TextColor="{x:Static constants:AppConstants.LaunchscreenTextColor}"
             HorizontalOptions="CenterAndExpand"/>
         <Label 
             Text="{resources:Translate DevelopedBy}"
             HorizontalTextAlignment="Center"
+            FontSize="14"
+            TextColor="{x:Static constants:AppConstants.LaunchscreenTextColor}"
             HorizontalOptions="CenterAndExpand"/>
     </StackLayout>
 </ContentPage>
