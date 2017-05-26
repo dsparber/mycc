@@ -1,14 +1,15 @@
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using MyCC.Core.Currencies.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Account.Repositories.Base
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public abstract class AddressAndCoinAccountRepository : AddressAccountRepository
     {
-        private readonly Currencies.Model.Currency _coin;
-        public sealed override Currencies.Model.Currency Currency => _coin;
+        private readonly Currency _coin;
+        public sealed override Currency Currency => _coin;
 
         public override string Data => JsonConvert.SerializeObject(new KeyData(_coin, Address));
 
@@ -18,7 +19,7 @@ namespace MyCC.Core.Account.Repositories.Base
             Address = (string)JObject.Parse(data)["address"];
         }
 
-        protected AddressAndCoinAccountRepository(int id, string name, Currencies.Model.Currency coin, string address) : base(id, name, address)
+        protected AddressAndCoinAccountRepository(int id, string name, Currency coin, string address) : base(id, name, address)
         {
             if (coin == null) return;
             _coin = coin;
@@ -27,10 +28,12 @@ namespace MyCC.Core.Account.Repositories.Base
         private class KeyData
         {
 
+            // ReSharper disable once NotAccessedField.Local
             public string address;
-            public Currencies.Model.Currency Coin;
+            // ReSharper disable once NotAccessedField.Local
+            public Currency Coin;
 
-            public KeyData(Currencies.Model.Currency coin, string address)
+            public KeyData(Currency coin, string address)
             {
                 Coin = coin;
                 this.address = address;

@@ -14,6 +14,7 @@ namespace MyCC.Forms.View.Components.BaseComponents
         public int SelectedIndex
         {
             set { _selectedIndex = value; UpdateView(); }
+            get { return _selectedIndex; }
         }
 
         private readonly StackLayout _stack;

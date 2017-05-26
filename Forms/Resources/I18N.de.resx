@@ -594,4 +594,10 @@
   <data name="SavingSource" xml:space="preserve">
     <value>Datenquelle speichern</value>
   </data>
+  <data name="AddressOnly" xml:space="preserve">
+    <value>Nur Adresse</value>
+  </data>
+  <data name="AllInfos" xml:space="preserve">
+    <value>Alle Infos</value>
+  </data>
 </root>

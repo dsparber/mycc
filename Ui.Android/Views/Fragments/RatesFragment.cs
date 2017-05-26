@@ -17,7 +17,6 @@ using MyCC.Ui.DataItems;
 using MyCC.Ui.Messages;
 using MyCC.Ui.ViewData;
 using Newtonsoft.Json;
-using Debug = System.Diagnostics.Debug;
 using Fragment = Android.Support.V4.App.Fragment;
 
 namespace MyCC.Ui.Android.Views.Fragments

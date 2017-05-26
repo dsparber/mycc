@@ -10,7 +10,6 @@ using MyCC.Ui.Android.Views.Adapter;
 using MyCC.Ui.Android.Views.Fragments;
 using MyCC.Ui.Android.Views.Fragments.AddSource;
 using MyCC.Ui.ViewData;
-using Debug = System.Diagnostics.Debug;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
