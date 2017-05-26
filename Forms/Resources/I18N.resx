@@ -597,4 +597,7 @@
   <data name="AllInfos" xml:space="preserve">
     <value>All infos</value>
   </data>
+  <data name="UpdatingBalancesAndRates" xml:space="preserve">
+    <value>Updating balances and rates</value>
+  </data>
 </root>

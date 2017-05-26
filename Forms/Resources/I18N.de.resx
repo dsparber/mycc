@@ -597,4 +597,7 @@
   <data name="AllInfos" xml:space="preserve">
     <value>Alle Infos</value>
   </data>
+  <data name="UpdatingBalancesAndRates" xml:space="preserve">
+    <value>Kontostände und Kurse werden aktualisiert</value>
+  </data>
 </root>

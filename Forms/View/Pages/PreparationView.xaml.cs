@@ -8,6 +8,7 @@ using MyCC.Core.Preperation;
 using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
 using MyCC.Forms.Resources;
+using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Container;
 using MyCC.Forms.View.Overlays;
 using MyCC.Ui.Tasks;
@@ -76,9 +77,18 @@ namespace MyCC.Forms.View.Pages
                 await ApplicationTasks.LoadEverything();
 
                 // STEP 2: Fetch needed Rates
-                await TaskHelper.FetchMissingRates(false, progress => SetStatus(0.8 + progress * 0.2, I18N.LoadingRates));
+                await TaskHelper.FetchMissingRates(false, progress => SetStatus(0.8 + progress * 0.1, I18N.LoadingRates));
 
                 ApplicationSettings.AppInitialised = true;
+
+                // STEP 3: Refresh data if needed
+                if (ApplicationSettings.AutoRefreshOnStartup)
+                {
+                    SetStatus(0.95, I18N.UpdatingBalancesAndRates);
+                    await AppTaskHelper.FetchBalancesAndRates();
+                }
+                await TaskHelper.FetchMissingRates(false, progress => SetStatus(1, I18N.InitialiseApp));
+
 
                 Device.BeginInvokeOnMainThread(() =>
                 {

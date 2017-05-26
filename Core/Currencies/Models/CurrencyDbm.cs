@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using SQLite;
 
-// ReSharper disable once MemberCanBePrivate.Global
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace MyCC.Core.Currencies.Models
