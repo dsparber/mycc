@@ -29,6 +29,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 
                 return new CoinInfoData(currency)
                 {
+                    LastUpdate = DateTime.Now,
                     Difficulty = json[KeyInfo][KeyDifficulty].ToDecimal(),
                     BlockHeight = json[KeyInfo][KeyBlocks].ToInt(),
                     CoinSupply = json[KeyInfo][KeySupply].ToDecimal()

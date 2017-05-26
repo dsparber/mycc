@@ -105,7 +105,7 @@ namespace MyCC.Forms.View.Pages
             {
                 _infos[I18N.Name].Item1.IsVisible = true;
                 _infos[I18N.Name].Item2.IsVisible = true;
-                _infos[I18N.Name].Item2.Text = _currency.Name;
+                _infos[I18N.Name].Item2.Text = _currency.Name ?? _currency.FindName();
 
                 _infos[I18N.CurrencyCode].Item1.IsVisible = true;
                 _infos[I18N.CurrencyCode].Item2.IsVisible = true;

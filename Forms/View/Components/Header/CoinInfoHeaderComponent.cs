@@ -1,4 +1,5 @@
 ﻿using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Forms.Messages;
@@ -24,7 +25,7 @@ namespace MyCC.Forms.View.Components.Header
             Device.BeginInvokeOnMainThread(() =>
             {
                 InfoText = text;
-                TitleText = _currency.Name;
+                TitleText = _currency.Name ?? _currency.FindName();
             });
         }
 

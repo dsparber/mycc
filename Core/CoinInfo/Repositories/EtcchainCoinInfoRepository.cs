@@ -37,6 +37,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 
                 return new CoinInfoData(currency)
                 {
+                    LastUpdate = DateTime.Now,
                     Difficulty = decimal.TryParse((string)json[KeyEtc][KeyDifficulty], NumberStyles.Float, CultureInfo.InvariantCulture, out var d) ? d as decimal? : null,
                     Hashrate = decimal.TryParse((string)json[KeyEtc][KeyHashrate], NumberStyles.Float, CultureInfo.InvariantCulture, out d) ? d as decimal? : null,
                     CoinSupply = decimal.TryParse((string)json[KeyEtc][KeySupply], NumberStyles.Float, CultureInfo.InvariantCulture, out d) ? d as decimal? : null,
