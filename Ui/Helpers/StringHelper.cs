@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
 namespace MyCC.Ui.Helpers
@@ -35,6 +37,32 @@ namespace MyCC.Ui.Helpers
 
             return $"{firstPart}...{lastPart}";
         }
+
+        public static string CheckIfDecimal(this string val)
+        {
+            if (string.IsNullOrWhiteSpace(val)) return string.Empty;
+
+            var seperator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
+
+            if (val.StartsWith(seperator.ToString()))
+            {
+                val = $"0{val}";
+            }
+
+            if (char.IsDigit(val[0]) && (val.Count(x => x == seperator) == 0 || val.Count(x => x == seperator) == 1 &&
+                                         $"{val}x".Split(new[] { seperator }, StringSplitOptions.RemoveEmptyEntries)[1].Length <= 9) &&
+                Regex.IsMatch(val.Replace(seperator.ToString(), string.Empty), @"^\d+$"))
+                return val;
+
+
+            return val.Remove(val.Length - 1);
+        }
+
+        public static string TrimAll(this string value)
+        {
+            return string.Join(string.Empty, Regex.Replace(value ?? string.Empty, @"\t|\n|\r", "").Where(c => c != '\u200B')).Trim();
+        }
+
 
         public static ITextResolver TextResolver => DependencyService.Get<ITextResolver>();
     }

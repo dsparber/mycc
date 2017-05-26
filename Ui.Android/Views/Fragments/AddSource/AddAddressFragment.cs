@@ -5,10 +5,10 @@ using Android.Widget;
 using MyCC.Core.Account.Helper;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Currencies.Models;
-using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;
 using Newtonsoft.Json;
 using Result = Android.App.Result;
+using StringHelper = MyCC.Ui.Helpers.StringHelper;
 
 namespace MyCC.Ui.Android.Views.Fragments.AddSource
 {
@@ -31,7 +31,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
             var view = inflater.Inflate(Resource.Layout.fragment_add_address, container, false);
 
             _addressEntry = view.FindViewById<EditText>(Resource.Id.text_address);
-            _addressEntry.TextChanged += (sender, args) => _address = string.Join(string.Empty, args.Text).TrimAll();
+            _addressEntry.TextChanged += (sender, args) => _address = StringHelper.TrimAll(string.Join(string.Empty, args.Text));
 
             _nameEntry = view.FindViewById<EditText>(Resource.Id.text_name);
             _nameEntry.Text = AddSourceActivity?.Name;
@@ -40,7 +40,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
                 if (!_nameEntry.HasFocus) return;
 
                 var name = _nameEntry.Text;
-                if (AddSourceActivity != null) AddSourceActivity.Name = name.TrimAll();
+                if (AddSourceActivity != null) AddSourceActivity.Name = StringHelper.TrimAll(name);
             };
 
             _currencyEntry = view.FindViewById<EditText>(Resource.Id.text_currency);
@@ -72,9 +72,9 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
                 var text = data.GetStringExtra(ScanQrCodeActivity.ExtraQrText);
 
                 var tuple = text.Parse(AddressAccountRepository.AllSupportedCurrencies);
-                _address = tuple.Item1.TrimAll();
+                _address = StringHelper.TrimAll(tuple.Item1);
                 _currency = tuple.Item2;
-                var name = tuple.Item3.TrimAll();
+                var name = StringHelper.TrimAll(tuple.Item3);
 
                 _nameEntry.Text = name;
                 _addressEntry.Text = _address;

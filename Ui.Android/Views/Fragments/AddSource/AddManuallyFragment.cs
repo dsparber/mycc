@@ -8,8 +8,8 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies.Models;
-using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;
+using MyCC.Ui.Helpers;
 using Newtonsoft.Json;
 
 namespace MyCC.Ui.Android.Views.Fragments.AddSource
@@ -35,7 +35,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
             amountText.TextChanged += (sender, args) =>
             {
                 var newText = string.Join(string.Empty, args.Text);
-                var text = TextEditHelper.CheckIfDecimal(newText);
+                var text = newText.CheckIfDecimal();
                 if (!string.Equals(text, newText))
                 {
                     amountText.Text = string.Empty;

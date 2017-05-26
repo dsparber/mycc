@@ -9,7 +9,7 @@ namespace MyCC.Ui.Android.Helpers
 {
     public class SqLiteConnectionAndroid : ISqLiteConnection
     {
-        public SQLiteAsyncConnection GetConnection(string sqliteFilename)
+        private SQLiteAsyncConnection GetConnection(string sqliteFilename)
         {
             var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal); // Documents folder
             var path = Path.Combine(documentsPath, sqliteFilename);

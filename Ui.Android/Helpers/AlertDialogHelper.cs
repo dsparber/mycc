@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Java.Lang;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace MyCC.Ui.Android.Helpers
@@ -15,7 +16,14 @@ namespace MyCC.Ui.Android.Helpers
 
             alertDialog.SetButton((int)DialogButtonType.Neutral, context.Resources.GetString(Resource.String.Ok), (sender, args) => alertDialog.Dismiss());
 
-            alertDialog.Show();
+            try
+            {
+                alertDialog.Show();
+            }
+            catch (RuntimeException)
+            {
+                /* App not open - called from background */
+            }
         }
 
         public static ProgressDialog GetLoadingDialog(this Context context, int? idTitle, int idMessage)

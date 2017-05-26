@@ -12,6 +12,7 @@ using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Messages;
 using MyCC.Ui.Android.Views.Fragments;
 using Newtonsoft.Json;
+using StringHelper = MyCC.Ui.Helpers.StringHelper;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -66,7 +67,7 @@ namespace MyCC.Ui.Android.Views.Activities
             editAmount.TextChanged += (sender, args) =>
             {
                 var newText = string.Join(string.Empty, args.Text);
-                var text = TextEditHelper.CheckIfDecimal(newText);
+                var text = StringHelper.CheckIfDecimal(newText);
                 if (!string.Equals(text, newText))
                 {
                     editAmount.Text = string.Empty;

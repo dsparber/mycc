@@ -13,7 +13,7 @@ namespace MyCC.Core.Rates
 {
     public class ExchangeRatesStorage
     {
-        public IEnumerable<ExchangeRate> StoredRates => Repositories.SelectMany(r => r.Rates.ToList()).ToList();
+        public IEnumerable<ExchangeRate> StoredRates => Repositories.SelectMany(r => r.Rates).ToList();
         private readonly SQLiteAsyncConnection _connection;
         public readonly IEnumerable<IRateRepository> Repositories;
 

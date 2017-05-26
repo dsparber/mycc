@@ -1,8 +1,9 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Util;
+using Java.Lang;
 using Fragment = Android.Support.V4.App.Fragment;
 using FragmentManager = Android.Support.V4.App.FragmentManager;
+using Math = System.Math;
 
 namespace MyCC.Ui.Android.Helpers
 {
@@ -16,18 +17,24 @@ namespace MyCC.Ui.Android.Helpers
 
         public static void SetFragmentVisibility(this FragmentManager fm, Fragment fragment, bool visible)
         {
-
-            var ft = fm.BeginTransaction();
-
-            if (visible && fragment.IsHidden)
+            try
             {
-                ft.Show(fragment);
-                ft.Commit();
+                var ft = fm.BeginTransaction();
+
+                if (visible && fragment.IsHidden)
+                {
+                    ft.Show(fragment);
+                    ft.Commit();
+                }
+                if (!visible && !fragment.IsHidden)
+                {
+                    ft.Hide(fragment);
+                    ft.Commit();
+                }
             }
-            if (!visible && !fragment.IsHidden)
+            catch (RuntimeException)
             {
-                ft.Hide(fragment);
-                ft.Commit();
+                /* Thrown when this methode is called after onSaveInstanceState */
             }
         }
 
