@@ -33,7 +33,7 @@ namespace MyCC.Core.Rates.Repositories
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
             Rates = new List<ExchangeRate>();
-            _supportedCurrencies = CurrencyStorage.CurrenciesOf(CurrencyConstants.FlagCryptonator).Select(c => c.Code).ToList();
+            _supportedCurrencies = CurrencyConstants.FlagCryptonator.Currencies().Select(c => c.Code).ToList();
             _connection = connection;
         }
 

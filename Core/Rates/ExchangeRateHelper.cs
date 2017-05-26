@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates.Repositories.Interfaces;
 using MyCC.Core.Settings;
 
@@ -14,7 +14,7 @@ namespace MyCC.Core.Rates
 
         public static ExchangeRate GetRate(ExchangeRate rate, int? repository = null) => GetRate(new Currency(rate.ReferenceCurrencyCode, rate.ReferenceCurrencyIsCryptoCurrency), new Currency(rate.SecondaryCurrencyCode, rate.SecondaryCurrencyIsCryptoCurrency), repository);
 
-        public static ExchangeRate GetRate(string currency1Id, string currency2Id, int? repository = null) => GetRate(new Currency(currency1Id), new Currency(currency2Id), repository);
+        public static ExchangeRate GetRate(string currency1Id, string currency2Id, int? repository = null) => GetRate(currency1Id.ToCurrency(), currency2Id.ToCurrency(), repository);
 
         public static ExchangeRate GetRate(Currency currency1, Currency currency2, int? repository = null)
         {

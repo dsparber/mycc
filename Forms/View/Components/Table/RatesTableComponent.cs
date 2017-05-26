@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
@@ -30,7 +30,7 @@ namespace MyCC.Forms.View.Components.Table
             _webView.RegisterCallback("Callback", code =>
             {
                 var currency = new Currency(code.Split(',')[0], bool.Parse(code.Split(',')[1]));
-                currency = CurrencyStorage.Find(currency.Id) ?? currency;
+                currency = currency.Find();
 
                 Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinInfoView(currency, true)));
             });
@@ -80,7 +80,7 @@ namespace MyCC.Forms.View.Components.Table
                 .Concat(AccountStorage.UsedCurrencies)
                 .Distinct()
                 .Where(c => !c.Equals(ApplicationSettings.StartupCurrencyRates))
-                .Select(c => new Data(new Currency(c))).ToList();
+                .Select(c => new Data(c.ToCurrency())).ToList();
 
             var itemsExisting = items.Count > 0;
 
@@ -102,7 +102,7 @@ namespace MyCC.Forms.View.Components.Table
             {
                 _webView.CallJsFunction("setHeader", new[]{
                     new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
-                    new HeaderData(string.Format(I18N.AsCurrency, new Currency(ApplicationSettings.StartupCurrencyRates).Code), SortOrder.ByValue.ToString())
+                    new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.StartupCurrencyRates.ToCurrency().Code), SortOrder.ByValue.ToString())
                 }, string.Empty);
                 _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
 
@@ -131,7 +131,7 @@ namespace MyCC.Forms.View.Components.Table
                 var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
 
                 Code = currency.Code;
-                Reference = new Money(rate.Rate ?? 0, new Currency(ApplicationSettings.StartupCurrencyRates)).ToString8Digits(false);
+                Reference = new Money(rate.Rate ?? 0, ApplicationSettings.StartupCurrencyRates.ToCurrency()).ToString8Digits(false);
                 CallbackString = currency.Code + "," + currency.CryptoCurrency;
             }
 

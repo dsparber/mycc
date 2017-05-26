@@ -9,7 +9,7 @@ using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.Android.Helpers;

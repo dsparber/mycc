@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -15,7 +16,17 @@ namespace MyCC.Core.Account.Repositories.Base
 
         protected AddressAndCoinAccountRepository(int id, string name, string data) : base(id, name, null)
         {
-            _coin = new Currency((string)(JObject.Parse(data)["Coin"] ?? JObject.Parse(data)["coin"])["Id"]);
+            var idFromJson = (string)(JObject.Parse(data)["Coin"] ?? JObject.Parse(data)["coin"])["Id"];
+            if (idFromJson[idFromJson.Length - 1] != '0' && idFromJson[idFromJson.Length - 1] != '1')
+            {
+                idFromJson += "1";
+            }
+            if (idFromJson[idFromJson.Length - 1] == '0')
+            {
+                idFromJson = idFromJson.Substring(0, idFromJson.Length - 1) + "1";
+            }
+
+            _coin = idFromJson.ToCurrency();
             Address = (string)JObject.Parse(data)["address"];
         }
 

@@ -6,6 +6,7 @@ using ModernHttpClient;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 
 namespace MyCC.Core.CoinInfo.Repositories
@@ -23,11 +24,11 @@ namespace MyCC.Core.CoinInfo.Repositories
         private const string KeyResult = "result";
         private const string KeyCount = "count";
 
-        public List<Currencies.Model.Currency> SupportedCoins => new List<Currencies.Model.Currency> { new Currencies.Model.Currency("ETH", "Ethereum", true) };
+        public List<Currency> SupportedCoins => new List<Currency> { new Currency("ETH", "Ethereum", true) };
 
         public string Name => ConstantNames.Etherchain;
 
-        public async Task<CoinInfoData> GetInfo(Currencies.Model.Currency currency)
+        public async Task<CoinInfoData> GetInfo(Currency currency)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 

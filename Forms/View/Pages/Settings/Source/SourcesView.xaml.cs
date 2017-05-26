@@ -4,6 +4,7 @@ using System.Linq;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
@@ -52,7 +53,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 
             var manualCells = _repositories.OfType<LocalAccountRepository>().SelectMany(r => r.Elements).Select(a =>
             {
-                var c = new CustomViewCell { Image = "more.png", Text = $"{a.Money.Currency.Code} - {a.Name}", Detail = $"{a.Money.ToString(false)} {a.Money.Currency.Name}" };
+                var c = new CustomViewCell { Image = "more.png", Text = $"{a.Money.Currency.Code} - {a.Name}", Detail = $"{a.Money.ToString(false)} {a.Money.Currency.FindName()}" };
                 c.Tapped += (sender, e) => Navigation.PushAsync(new AccountEditView(a));
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
@@ -67,7 +68,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             {
                 var c = getCell(r);
                 c.Text = $"{r.Currency.Code} - {r.Name}";
-                c.Detail = $"{r.Currency.Name} ({(r is BlockchainXpubAccountRepository ? r.Address.Substring(0, 4) : r.Address.MiddleTruncate())})";
+                c.Detail = $"{r.Currency.FindName()} ({(r is BlockchainXpubAccountRepository ? r.Address.Substring(0, 4) : r.Address.MiddleTruncate())})";
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
 

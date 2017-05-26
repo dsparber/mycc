@@ -6,6 +6,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
@@ -17,8 +18,8 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
         public override string Description => ConstantNames.EtcChain;
 
-        public override Currencies.Model.Currency Currency => CurrencyStorage.Find("ETC", true);
-        public override IEnumerable<Currencies.Model.Currency> SupportedCurrencies => new[] { Currency };
+        public override Currency Currency => CurrencyHelper.Find("ETC", true);
+        public override IEnumerable<Currency> SupportedCurrencies => new[] { Currency };
 
         protected override Func<string, decimal> Balance => httpContent => decimal.Parse((string)JObject.Parse(httpContent)[JsonKeyBalance], CultureInfo.InvariantCulture);
         protected override Uri Url => new Uri($"https://etcchain.com/api/v1/getAddressBalance?address={Address}");

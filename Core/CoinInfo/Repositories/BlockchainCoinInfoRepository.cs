@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 
@@ -19,11 +20,11 @@ namespace MyCC.Core.CoinInfo.Repositories
         private const string KeySupply = "totalbc";
         private const string KeyHashrate = "hashrate";
 
-        public List<Currencies.Model.Currency> SupportedCoins => new List<Currencies.Model.Currency> { Currencies.CurrencyConstants.Btc };
+        public List<Currency> SupportedCoins => new List<Currency> { Currencies.CurrencyConstants.Btc };
 
         public string Name => ConstantNames.Blockchain;
 
-        public async Task<CoinInfoData> GetInfo(Currencies.Model.Currency currency)
+        public async Task<CoinInfoData> GetInfo(Currency currency)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 

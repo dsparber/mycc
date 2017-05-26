@@ -6,7 +6,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
@@ -184,68 +184,84 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 
         private async void SaveClicked(object sender, EventArgs e)
         {
-            UnfocusAll();
-
-            // Disable Editing
-            Header.LoadingText = I18N.Testing;
-            SaveItem.Clicked -= SaveClicked; Header.IsLoading = true; IsEditable = false;
-
-            // Test if data is valid
-            var addressRepo = _repository as AddressAccountRepository;
-            if (addressRepo != null && (!addressRepo.Address.Equals((AddressEntryCell.Text ?? string.Empty).Contains("...") ? addressRepo.Address : AddressEntryCell.Text ?? string.Empty) || !addressRepo.Currency.Equals(_currencyEntryCell.SelectedCurrency)))
+            try
             {
-                var address = AddressEntryCell.Text ?? string.Empty;
-                var testRepo = AddressAccountRepository.CreateAddressAccountRepository(addressRepo.Name, _currencyEntryCell.SelectedCurrency, address.Contains("...") ? addressRepo.Address : address);
+                UnfocusAll();
 
-                if (testRepo == null || !await testRepo.Test())
+                // Disable Editing
+                Header.LoadingText = I18N.Testing;
+                SaveItem.Clicked -= SaveClicked;
+                Header.IsLoading = true;
+                IsEditable = false;
+
+                // Test if data is valid
+                var addressRepo = _repository as AddressAccountRepository;
+                if (addressRepo != null &&
+                    (!addressRepo.Address.Equals((AddressEntryCell.Text ?? string.Empty).Contains("...")
+                         ? addressRepo.Address
+                         : AddressEntryCell.Text ?? string.Empty) ||
+                     !addressRepo.Currency.Equals(_currencyEntryCell.SelectedCurrency)))
                 {
-                    SaveItem.Clicked += SaveClicked; Header.IsLoading = false; IsEditable = true;
-                    await DisplayAlert(I18N.Error, I18N.FetchingNoSuccessText, I18N.Ok);
+                    var address = AddressEntryCell.Text ?? string.Empty;
+                    var testRepo = AddressAccountRepository.CreateAddressAccountRepository(addressRepo.Name,
+                        _currencyEntryCell.SelectedCurrency, address.Contains("...") ? addressRepo.Address : address);
+
+                    if (testRepo == null || !await testRepo.Test())
+                    {
+                        SaveItem.Clicked += SaveClicked;
+                        Header.IsLoading = false;
+                        IsEditable = true;
+                        await DisplayAlert(I18N.Error, I18N.FetchingNoSuccessText, I18N.Ok);
+                        return;
+                    }
+                    if (!addressRepo.Currency.Equals(_currencyEntryCell.SelectedCurrency))
+                    {
+                        await AccountStorage.Instance.Remove(_repository);
+                        await testRepo.FetchOnline();
+                        await AccountStorage.Instance.Add(testRepo);
+                    }
+                    var enabled = EnableAccountsSection.Any(a => ((CustomSwitchCell)a).On);
+                    testRepo.Id = _repository.Id;
+                    _repository = testRepo;
+                    await _repository.FetchOnline();
+                    // Set (en-/dis-)abled
+                    foreach (var a in _repository.Elements) a.IsEnabled = enabled;
+                }
+
+                // Apply name and enabled status
+                _repository.Name = RepositoryNameEntryCell.Text ?? I18N.Unnamed;
+                foreach (var a in _repository.Elements) a.Name = _repository.Name;
+                foreach (var a in _changedAccounts) a.Item1.IsEnabled = a.Item2;
+
+                // Save changes
+                await AccountStorage.Instance.Update(_repository);
+                await Task.WhenAll(_repository.Elements.ToList().Select(AccountStorage.Update));
+
+                Messaging.UpdatingAccounts.SendFinished();
+
+                if (_isEditModal)
+                {
+                    await Navigation.PopOrPopModal();
                     return;
                 }
-                if (!addressRepo.Currency.Equals(_currencyEntryCell.SelectedCurrency))
-                {
-                    await AccountStorage.Instance.Remove(_repository);
-                    await testRepo.FetchOnline();
-                    await AccountStorage.Instance.Add(testRepo);
-                }
-                var enabled = EnableAccountsSection.Any(a => ((CustomSwitchCell)a).On);
-                testRepo.Id = _repository.Id;
-                _repository = testRepo;
-                await _repository.FetchOnline();
-                // Set (en-/dis-)abled
-                foreach (var a in _repository.Elements) a.IsEnabled = enabled;
+
+                TableView.Root.Remove(DeleteSection);
+
+                ToolbarItems.Remove(SaveItem);
+                ToolbarItems.Add(EditItem);
+
+                Title = I18N.Details;
+                Header.InfoText = $"{I18N.Source}: {_repository.Description}";
+
+                SaveItem.Clicked += SaveClicked;
+                Header.IsLoading = false;
+
+                SetView();
             }
-
-            // Apply name and enabled status
-            _repository.Name = RepositoryNameEntryCell.Text ?? I18N.Unnamed;
-            foreach (var a in _repository.Elements) a.Name = _repository.Name;
-            foreach (var a in _changedAccounts) a.Item1.IsEnabled = a.Item2;
-
-            // Save changes
-            await AccountStorage.Instance.Update(_repository);
-            await Task.WhenAll(_repository.Elements.Select(AccountStorage.Update));
-
-            Messaging.UpdatingAccounts.SendFinished();
-
-            if (_isEditModal)
+            catch (Exception ex)
             {
-                await Navigation.PopOrPopModal();
-                return;
+                ex.LogError();
             }
-
-            TableView.Root.Remove(DeleteSection);
-
-            ToolbarItems.Remove(SaveItem);
-            ToolbarItems.Add(EditItem);
-
-            Title = I18N.Details;
-            Header.InfoText = $"{I18N.Source}: {_repository.Description}";
-
-            SaveItem.Clicked += SaveClicked;
-            Header.IsLoading = false;
-
-            SetView();
         }
 
         private void UnfocusAll()

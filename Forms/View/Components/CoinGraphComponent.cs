@@ -5,7 +5,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Messages;
@@ -48,10 +49,10 @@ namespace MyCC.Forms.View.Components
         {
 
             var items = AccountStorage.AccountsGroupedByCurrency
-                        .Select(e => new Data(e, new Currency(ApplicationSettings.StartupCurrencyAssets))).Where(d => d.value > 0)
+                        .Select(e => new Data(e, ApplicationSettings.StartupCurrencyAssets.ToCurrency())).Where(d => d.value > 0)
                         .OrderByDescending(d => d.value).ToArray();
 
-            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new[] { I18N.OneAccount, I18N.Accounts }, new[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, new Currency(ApplicationSettings.StartupCurrencyAssets).Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString()));
+            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new[] { I18N.OneAccount, I18N.Accounts }, new[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, ApplicationSettings.StartupCurrencyAssets.ToCurrency().Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString()));
         }
 
         [DataContract]

@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace MyCC.Core.Currencies.Model
+namespace MyCC.Core.Currencies.Models
 {
     public class Currency
     {
@@ -54,13 +54,6 @@ namespace MyCC.Core.Currencies.Model
         /// <param name="code">The abbriviation code of the currency (e.g. USD, BTC, EUR)</param>
         /// <param name="isCryptoCurrency">Wether this instance is a crypto currency or not</param>
         public Currency(string code, bool isCryptoCurrency) : this(code, null, isCryptoCurrency) { }
-
-        /// <summary>
-        /// Should only be used for quick lookups. Name is not supported.
-        /// </summary>
-        /// <param name="id">The id of the currency (e.g. USD0, BTC1, EUR0)</param>
-        public Currency(string id) : this(id.Substring(0, id.Length - 1), null, id[id.Length - 1] == '1') { }
-
 
         /// <summary>
         /// Get a database object for this instance

@@ -125,7 +125,7 @@ namespace MyCC.Ui.Android.Views.Activities
             switch (_position)
             {
                 case 0:
-                    _ratesFragments = ApplicationSettings.MainCurrencies.OrderBy(id => id).Select(c => new RatesFragment(CurrencyStorage.Find(c))).ToList();
+                    _ratesFragments = ApplicationSettings.MainCurrencies.OrderBy(id => id).Select(c => new RatesFragment(c.Find())).ToList();
                     foreach (var f in _ratesFragments) f.EditingEnabled = false;
                     RatesEditingEnabled = false;
                     fragment = new ViewPagerFragment(_ratesFragments.OfType<Fragment>().ToList(), ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyRates));
@@ -136,7 +136,7 @@ namespace MyCC.Ui.Android.Views.Activities
                     };
                     break;
                 case 1:
-                    var assetsfragments = ApplicationSettings.MainCurrencies.OrderBy(id => id).Select(c => new AssetsTableFragment(CurrencyStorage.Find(c)) as Fragment).ToList();
+                    var assetsfragments = ApplicationSettings.MainCurrencies.OrderBy(id => id).Select(c => new AssetsTableFragment(c.Find()) as Fragment).ToList();
                     _assetsTableFragment = new ViewPagerFragment(assetsfragments, ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
                     _assetsTableFragment.PositionChanged = pos =>
                     {
@@ -148,7 +148,7 @@ namespace MyCC.Ui.Android.Views.Activities
                     fragment = _assetsTableFragment;
                     break;
                 case 2:
-                    var graphfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsGraphFragment(CurrencyStorage.Find(c)) as Fragment).ToList();
+                    var graphfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsGraphFragment(c.Find()) as Fragment).ToList();
                     _assetsGraphFragment = new ViewPagerFragment(graphfragments, ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
                     _assetsGraphFragment.PositionChanged = pos =>
                     {

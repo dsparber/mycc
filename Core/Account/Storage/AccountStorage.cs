@@ -7,6 +7,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 
@@ -30,8 +31,8 @@ namespace MyCC.Core.Account.Storage
         public static readonly AccountStorage Instance = new AccountStorage();
 
         public static IEnumerable<string> UsedCurrencies => Instance.AllElements.Select(a => a?.Money?.Currency.Id).Distinct().Where(e => e != null).ToList();
-        public static IEnumerable<IGrouping<Currencies.Model.Currency, Models.Base.Account>> AccountsGroupedByCurrency => Instance.AllElements.GroupBy(a => a?.Money?.Currency).Where(g => g.Key != null);
-        public static List<FunctionalAccount> AccountsWithCurrency(Currencies.Model.Currency currency) => Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).ToList();
+        public static IEnumerable<IGrouping<Currency, Models.Base.Account>> AccountsGroupedByCurrency => Instance.AllElements.GroupBy(a => a?.Money?.Currency).Where(g => g.Key != null);
+        public static List<FunctionalAccount> AccountsWithCurrency(Currency currency) => Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).ToList();
         public static List<FunctionalAccount> AccountsWithCurrency(string currencyId) => Instance.AllElements.Where(a => a.Money.Currency.Id.Equals(currencyId)).ToList();
 
 
@@ -41,7 +42,7 @@ namespace MyCC.Core.Account.Storage
                                        .Where(r => r?.Rate == null)
                                        .ToList();
 
-        public static List<ExchangeRate> NeededRatesFor(Currencies.Model.Currency accountCurrency) => ApplicationSettings.AllReferenceCurrencies
+        public static List<ExchangeRate> NeededRatesFor(Currency accountCurrency) => ApplicationSettings.AllReferenceCurrencies
                                        .Select(c => new ExchangeRate(accountCurrency.Id, c))
                                        .Select(e => ExchangeRateHelper.GetRate(e) ?? e)
                                        .Where(r => r.Rate == null)

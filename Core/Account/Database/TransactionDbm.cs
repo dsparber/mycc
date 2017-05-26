@@ -30,7 +30,7 @@ namespace MyCC.Core.Account.Database
         {
             return new Task<Transaction>(() =>
             {
-                var currency = CurrencyStorage.Find(CurrencyId);
+                var currency = CurrencyId.Find();
                 return new Transaction(Id, Timestamp, new Money(MoneyAmount, currency), ParentId);
             });
         }

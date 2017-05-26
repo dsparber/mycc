@@ -46,7 +46,7 @@ namespace MyCC.Core.Account.Database
 
         public async Task<FunctionalAccount> Resolve()
         {
-            var currency = CurrencyStorage.Find(CurrencyId);
+            var currency = CurrencyId.Find();
 
             var repository = AccountStorage.Instance.Repositories.Find(r => r.Id == ParentId);
             if (repository == null)
@@ -54,10 +54,16 @@ namespace MyCC.Core.Account.Database
                 var db = new AccountRepositoryDatabase();
                 repository = await db.Get(ParentId);
             }
+            var lastUpdate = new DateTime(LastUpdateTicks);
+
+
+            if (repository != null)
+            {
+                repository.LastFetch = lastUpdate;
+            }
 
             var money = new Money(MoneyAmount, currency);
 
-            var lastUpdate = new DateTime(LastUpdateTicks);
 
             if (repository is BittrexAccountRepository) return new BittrexAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (BittrexAccountRepository)repository);
             if (repository is BlockchainAccountRepository) return new BlockchainAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (BlockchainAccountRepository)repository);

@@ -49,7 +49,7 @@ namespace MyCC.Core.Settings
             }
         }
 
-        public static bool DataLoaded;
+        public static bool DataLoaded { get; set; }
 
         public static string StartupCurrencyAssets
         {

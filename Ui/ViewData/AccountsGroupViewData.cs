@@ -4,7 +4,7 @@ using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
@@ -21,7 +21,7 @@ namespace MyCC.Ui.ViewData
             var money = new Money(EnabledAccountsItems(currency).Sum(a => a.Money.Amount), currency);
 
             var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { currency.Id })
-                .Select(x => new Money(money.Amount * ExchangeRateHelper.GetRate(currency.Id, x)?.Rate ?? 0, CurrencyStorage.Find(x))).
+                .Select(x => new Money(money.Amount * ExchangeRateHelper.GetRate(currency.Id, x)?.Rate ?? 0, x.Find())).
                 OrderBy(m => m.Currency.Code);
 
             return new HeaderDataItem(money.ToStringTwoDigits(ApplicationSettings.RoundMoney),

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using MyCC.Core.Currencies.Models;
 
 namespace MyCC.Core.Account.Helper
 {
     public static class AccountStringHelper
     {
-        public static Tuple<string, Currencies.Model.Currency, string> Parse(this string qrCodeText, IEnumerable<Currencies.Model.Currency> supportedCurrencies)
+        public static Tuple<string, Currency, string> Parse(this string qrCodeText, IEnumerable<Currency> supportedCurrencies)
         {
             var i1 = Math.Max(0, qrCodeText.IndexOf(':') + 1);
             var i2 = qrCodeText.IndexOf('?');

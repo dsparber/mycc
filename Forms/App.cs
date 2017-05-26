@@ -52,8 +52,6 @@ namespace MyCC.Forms
             {
                 try
                 {
-                    ApplicationSettings.DataLoaded = true;
-
                     // Update only if auto refresh is enabled
                     if (ApplicationSettings.AutoRefreshOnStartup && CrossConnectivity.Current.IsConnected)
                     {

@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
@@ -34,7 +34,7 @@ namespace MyCC.Forms.View.Components.Table
             _webView.RegisterCallback("Callback", code =>
             {
                 var currency = new Currency(code.Split(',')[0], bool.Parse(code.Split(',')[1]));
-                currency = CurrencyStorage.Find(currency.Id) ?? currency;
+                currency = currency.Find();
 
                 var accounts = AccountStorage.AccountsWithCurrency(currency);
 
@@ -102,7 +102,7 @@ namespace MyCC.Forms.View.Components.Table
                     _webView.CallJsFunction("setHeader", new[]{
                       new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
                       new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString()),
-                      new HeaderData(string.Format(I18N.AsCurrency, new Currency(ApplicationSettings.StartupCurrencyAssets).Code), SortOrder.ByValue.ToString())
+                      new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.StartupCurrencyAssets.ToCurrency().Code), SortOrder.ByValue.ToString())
                   }, string.Empty);
                     _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
 
@@ -142,7 +142,7 @@ namespace MyCC.Forms.View.Components.Table
                 var neededRate = new ExchangeRate(currencyId, ApplicationSettings.StartupCurrencyAssets);
                 var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
 
-                var currency = new Currency(currencyId);
+                var currency = currencyId.ToCurrency();
                 Code = currency.Code;
                 Amount = new Money(sum, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
                 Reference = new Money(sum * rate.Rate ?? 0, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);

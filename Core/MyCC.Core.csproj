@@ -39,7 +39,7 @@
     <Compile Include="Account\Repositories\Implementations\EthereumClassicAccountRepository.cs" />
     <Compile Include="Account\Repositories\Implementations\ReddCoinAccountRepository.cs" />
     <Compile Include="Currencies\CurrencyConstants.cs" />
-    <Compile Include="Currencies\CurrencyTools.cs" />
+    <Compile Include="Currencies\CurrencyHelper.cs" />
     <Compile Include="Helpers\FlagHelper.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\LogHelper.cs" />
@@ -86,8 +86,8 @@
     <Compile Include="Account\Database\AccountRepositoryDatabase.cs" />
     <Compile Include="Account\Database\AccountDbm.cs" />
     <Compile Include="Account\Database\AccountRepositoryDbm.cs" />
-    <Compile Include="Currencies\Model\Currency.cs" />
-    <Compile Include="Currencies\Model\CurrencyDbm.cs" />
+    <Compile Include="Currencies\Models\Currency.cs" />
+    <Compile Include="Currencies\Models\CurrencyDbm.cs" />
     <Compile Include="Currencies\CurrencyStorage.cs" />
     <Compile Include="Currencies\Sources\BittrexCurrencySource.cs" />
     <Compile Include="Currencies\Sources\BlockExpertsCurrencySource.cs" />

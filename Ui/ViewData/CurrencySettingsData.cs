@@ -2,7 +2,7 @@
 using System.Linq;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 
 namespace MyCC.Ui.ViewData
@@ -31,7 +31,7 @@ namespace MyCC.Ui.ViewData
             .Except(ApplicationSettings.DisabledCurrencyIds)
             .Distinct()
             .Where(c => c != null)
-            .Select(CurrencyStorage.Find);
+            .Select(CurrencyHelper.Find);
 
         public static void Add(Currency currency)
         {

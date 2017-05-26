@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 
@@ -13,17 +14,17 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class BlockExpertsCoinInfoRepository : ICoinInfoRepository
     {
-        private Uri GetUri(Currencies.Model.Currency coin, string action) => new Uri($"https://www.blockexperts.com/api?coin={coin.Code.ToLower()}&action={action}");
+        private Uri GetUri(Currency coin, string action) => new Uri($"https://www.blockexperts.com/api?coin={coin.Code.ToLower()}&action={action}");
         private const string KeyHeight = "getheight";
         private const string KeyDifficulty = "getdifficulty";
         private const string KeyHashrate = "getnetworkghps";
         private const string KeySupply = "getmoneysupply";
 
-        public List<Currencies.Model.Currency> SupportedCoins => CurrencyStorage.CurrenciesOf(CurrencyConstants.FlagBlockExperts).ToList();
+        public List<Currency> SupportedCoins => CurrencyConstants.FlagBlockExperts.Currencies().ToList();
 
         public string Name => ConstantNames.BlockExperts;
 
-        public async Task<CoinInfoData> GetInfo(Currencies.Model.Currency currency)
+        public async Task<CoinInfoData> GetInfo(Currency currency)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 

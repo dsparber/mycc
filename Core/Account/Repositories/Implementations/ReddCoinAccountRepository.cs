@@ -6,7 +6,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
@@ -24,7 +24,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
         protected override Func<string, decimal> Balance => httpContent => decimal.Parse((string)JObject.Parse(httpContent)["balance"], CultureInfo.InvariantCulture);
 
-        public override Currency Currency => CurrencyStorage.Find("RDD", true);
+        public override Currency Currency => CurrencyHelper.Find("RDD", true);
 
         public override IEnumerable<Currency> SupportedCurrencies => new[] { Currency };
 

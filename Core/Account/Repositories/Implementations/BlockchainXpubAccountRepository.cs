@@ -7,6 +7,7 @@ using MyCC.Core.Account.Database;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
@@ -29,8 +30,8 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public override string Description => ConstantNames.Blockchain;
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeBlockchainXpubRepository;
 
-        public override Currencies.Model.Currency Currency => Currencies.CurrencyConstants.Btc;
-        public override IEnumerable<Currencies.Model.Currency> SupportedCurrencies => new List<Currencies.Model.Currency> { Currency };
+        public override Currency Currency => Currencies.CurrencyConstants.Btc;
+        public override IEnumerable<Currency> SupportedCurrencies => new List<Currency> { Currency };
 
         protected override Func<string, decimal> Balance => httpContent => JObject.Parse(httpContent)[ResponseKey].Select(d => decimal.Parse((string)d[ConfirmedKey], CultureInfo.InvariantCulture)).Sum();
         protected override decimal BalanceFactor => 1e8M;

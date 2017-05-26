@@ -1,6 +1,6 @@
 using System;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using SQLite;
 
 namespace MyCC.Core.Rates

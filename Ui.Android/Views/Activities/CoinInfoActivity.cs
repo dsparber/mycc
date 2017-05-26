@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 using MyCC.Core.Account.Models.Base;
 using Android.Support.V4.Widget;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Ui.DataItems;
 using MyCC.Ui.Messages;
 using MyCC.Ui.ViewData;

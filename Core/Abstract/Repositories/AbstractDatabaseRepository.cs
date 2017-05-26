@@ -17,7 +17,7 @@ namespace MyCC.Core.Abstract.Repositories
         public void ClearElements() => _elements.Clear();
 
         public DateTime LastFastFetch { get; protected set; }
-        public DateTime LastFetch { get; protected set; }
+        public DateTime LastFetch { get; set; }
 
         private readonly AbstractDatabase<TDatabaseModel, TModel, TId> _database;
 

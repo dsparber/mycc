@@ -11,6 +11,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 using Newtonsoft.Json;
@@ -52,7 +53,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypeBittrexRepository;
 
-        public async Task<JToken> GetResult(Currencies.Model.Currency currency = null)
+        public async Task<JToken> GetResult(Currency currency = null)
         {
             try
             {
@@ -119,7 +120,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
                 if (balance == 0) continue;
 
-                var curr = CurrencyStorage.Find(currencyCode, true);
+                var curr = CurrencyHelper.Find(currencyCode, true);
 
                 var money = new Money(balance, curr);
                 var existing = Elements.ToList().Find(a => a.Money.Currency.Equals(money.Currency));

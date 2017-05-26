@@ -8,7 +8,7 @@ using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Webkit;
 using Java.Interop;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;

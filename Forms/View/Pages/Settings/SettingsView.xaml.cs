@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
@@ -31,7 +31,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             AutoRefresh.Switch.Toggled += AutoRefreshChanged;
             ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new ReferenceCurrenciesSettingsView());
-            ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies.Select(id => new Currency(id).Code));
+            ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies.Select(id => id.ToCurrency().Code));
             SourcesCell.Tapped += (sender, e) => Navigation.PushAsync(new SourcesView());
             SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
             RatesCell.Tapped += (sender, e) => Navigation.PushAsync(new WatchedCurrenciesSettingsView());
@@ -82,7 +82,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
             SetRatesCellDetail();
-            ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies.Select(id => new Currency(id).Code));
+            ReferenceCurrenciesCell.Detail = string.Join(", ", ApplicationSettings.AllReferenceCurrencies.Select(id => id.ToCurrency().Code));
             SetDefaultPageCellText();
             SetPinCellText();
             SetPreferredRateCellDetail();
@@ -91,7 +91,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetRatesCellDetail()
         {
-            RatesCell.Detail = !ApplicationSettings.WatchedCurrencies.Any() ? I18N.None : string.Join(", ", ApplicationSettings.WatchedCurrencies.Select(id => new Currency(id).Code));
+            RatesCell.Detail = !ApplicationSettings.WatchedCurrencies.Any() ? I18N.None : string.Join(", ", ApplicationSettings.WatchedCurrencies.Select(id => id.ToCurrency().Code));
         }
 
         private void SetPreferredRateCellDetail()

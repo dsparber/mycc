@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Currencies.Sources;
 using MyCC.Core.Helpers;
 using SQLite;
@@ -86,17 +86,5 @@ namespace MyCC.Core.Currencies
             CurrencyDictionary = currencies.ToDictionary(c => c.Id, c => c);
             _loadedFromDatabase = true;
         }
-
-
-        public static Currency Find(string id)
-        {
-            Instance.CurrencyDictionary.TryGetValue(id, out var currency);
-            return currency ?? Instance.Currencies.FirstOrDefault(c => c.Id.Equals(id)) ?? new Currency(id);
-        }
-
-        public static Currency Find(string code, bool isCrypto) => Find($"{code}{(isCrypto ? 1 : 0)}");
-
-        public static IEnumerable<Currency> CurrenciesOf(int flags) => Instance.Currencies.Where(c => c.BalanceSourceFlags.IsSet(flags));
-
     }
 }

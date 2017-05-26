@@ -8,7 +8,7 @@ using Android.Widget;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Messages;
 using MyCC.Ui.Android.Views.Fragments;

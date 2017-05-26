@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.CoinInfo.Repositories;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using SQLite;
 using Xamarin.Forms;
@@ -32,7 +33,7 @@ namespace MyCC.Core.CoinInfo
             };
         }
 
-        public async Task<CoinInfoData> FetchInfo(Currencies.Model.Currency currency)
+        public async Task<CoinInfoData> FetchInfo(Currency currency)
         {
             var info = new CoinInfoData(currency);
 
@@ -55,13 +56,13 @@ namespace MyCC.Core.CoinInfo
             return info;
         }
 
-        public IEnumerable<ICoinInfoRepository> GetExplorer(Currencies.Model.Currency currency) => _repositories.Where(r => r.SupportedCoins.Contains(currency));
+        public IEnumerable<ICoinInfoRepository> GetExplorer(Currency currency) => _repositories.Where(r => r.SupportedCoins.Contains(currency));
 
-        public CoinInfoData Get(Currencies.Model.Currency currency) => _elements.Find(e => string.Equals(e.CurrencyCode, currency.Code));
+        public CoinInfoData Get(Currency currency) => _elements.Find(e => string.Equals(e.CurrencyCode, currency.Code));
 
         public static readonly CoinInfoStorage Instance = new CoinInfoStorage();
 
-        public static IEnumerable<Currencies.Model.Currency> SupportetCurrencies
+        public static IEnumerable<Currency> SupportetCurrencies
             => Instance._repositories.SelectMany(r => r.SupportedCoins).Distinct();
     }
 }

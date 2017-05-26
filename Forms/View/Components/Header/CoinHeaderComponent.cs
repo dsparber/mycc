@@ -1,7 +1,8 @@
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Helpers;
@@ -28,7 +29,7 @@ namespace MyCC.Forms.View.Components.Header
 
         public CoinHeaderComponent(Currency currency = null, bool useOnlyThisCurrency = false) : this()
         {
-            _currency = currency ?? new Currency(ApplicationSettings.StartupCurrencyAssets);
+            _currency = currency ?? ApplicationSettings.StartupCurrencyAssets.ToCurrency();
             _useOnlyThisCurrency = useOnlyThisCurrency;
 
             UpdateView();
@@ -57,7 +58,7 @@ namespace MyCC.Forms.View.Components.Header
                 infoTextFallback = PluralHelper.GetTextCurrencies(amountDifferentCurrencies);
             }
             var infoText = string.Join(" / ", ApplicationSettings.MainCurrencies.Where(c => !c.Equals(_currency.Id))
-                                       .Select(c => ((_useOnlyThisCurrency ? CoinSumAs(new Currency(c)) : MoneySumOf(new Currency(c))) ?? new Money(0, new Currency(c)))
+                                       .Select(c => ((_useOnlyThisCurrency ? CoinSumAs(c.ToCurrency()) : MoneySumOf(c.ToCurrency())) ?? new Money(0, c.ToCurrency()))
                                        .ToStringTwoDigits(ApplicationSettings.RoundMoney)));
 
             infoText = string.IsNullOrWhiteSpace(infoText) ? infoTextFallback : infoText;

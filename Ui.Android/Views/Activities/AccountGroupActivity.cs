@@ -9,7 +9,7 @@ using MyCC.Core.Settings;
 using Android.Content;
 using Android.Support.Design.Widget;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Ui.Messages;
 using MyCC.Ui.ViewData;
 using Newtonsoft.Json;
@@ -38,7 +38,7 @@ namespace MyCC.Ui.Android.Views.Activities
             var currencyId = Intent?.GetStringExtra(ExtraCurrencyId);
             if (!string.IsNullOrWhiteSpace(currencyId))
             {
-                _currency = CurrencyStorage.Find(currencyId);
+                _currency = currencyId.Find();
             }
 
             SupportActionBar.Title = $"\u2211 {_currency.Code}";

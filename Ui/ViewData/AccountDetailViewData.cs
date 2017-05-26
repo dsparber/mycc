@@ -23,7 +23,7 @@ namespace MyCC.Ui.ViewData
         public static HeaderDataItem HeaderData(Account account)
         {
             var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { account.Money.Currency.Id })
-                .Select(x => new Money(account.Money.Amount * ExchangeRateHelper.GetRate(account.Money.Currency.Id, x)?.Rate ?? 0, CurrencyStorage.Find(x))).
+                .Select(x => new Money(account.Money.Amount * ExchangeRateHelper.GetRate(account.Money.Currency.Id, x)?.Rate ?? 0, x.Find())).
                 OrderBy(m => m.Currency.Code);
 
             return new HeaderDataItem(account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney),

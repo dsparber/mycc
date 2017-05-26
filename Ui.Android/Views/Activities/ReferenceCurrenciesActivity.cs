@@ -6,7 +6,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
@@ -60,7 +60,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
             _container.RemoveAllViews();
 
-            foreach (var c in ApplicationSettings.AllReferenceCurrencies.Select(CurrencyStorage.Find).OrderBy(c => c.Code))
+            foreach (var c in ApplicationSettings.AllReferenceCurrencies.Select(CurrencyHelper.Find).OrderBy(c => c.Code))
             {
                 var v = LayoutInflater.Inflate(Resource.Layout.item_reference_currency, null);
                 v.FindViewById<TextView>(Resource.Id.text_name).Text = c.Code;

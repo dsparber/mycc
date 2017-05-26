@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using MyCC.Core.Account.Helper;
 using MyCC.Core.Account.Repositories.Base;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;

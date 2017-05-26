@@ -9,7 +9,7 @@ using SQLite;
 using System.Linq;
 using ModernHttpClient;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 

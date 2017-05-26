@@ -2,7 +2,7 @@
 using Android.Content;
 using Android.OS;
 using Android.Support.V7.Preferences;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
@@ -106,7 +106,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             _securityPreference.Summary = Resources.GetString(ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled ? Resource.String.FingerprintActive : ApplicationSettings.IsPinSet ? Resource.String.PinActive : Resource.String.NotConfigured);
             _preferredBitcoinPreference.Summary = ExchangeRatesStorage.PreferredBtcRepository.Name;
-            _referenceCurrenciesPreference.Summary = string.Join(", ", ApplicationSettings.AllReferenceCurrencies.Select(c => new Currency(c).Code));
+            _referenceCurrenciesPreference.Summary = string.Join(", ", ApplicationSettings.AllReferenceCurrencies.Select(c => c.ToCurrency().Code));
         }
     }
 }

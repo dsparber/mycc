@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Implementations;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 
 namespace MyCC.Core.Account.Repositories.Base
@@ -22,8 +23,8 @@ namespace MyCC.Core.Account.Repositories.Base
 
         protected abstract Func<string, decimal> Balance { get; }
 
-        public abstract Currencies.Model.Currency Currency { get; }
-        public abstract IEnumerable<Currencies.Model.Currency> SupportedCurrencies { get; }
+        public abstract Currency Currency { get; }
+        public abstract IEnumerable<Currency> SupportedCurrencies { get; }
 
         private const int BufferSize = 256000;
         protected readonly HttpClient Client;
@@ -106,7 +107,7 @@ namespace MyCC.Core.Account.Repositories.Base
 
         protected abstract FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled);
 
-        private static IEnumerable<AddressAccountRepository> Repositories(string name, Currencies.Model.Currency currency, string address) => new AddressAccountRepository[]
+        private static IEnumerable<AddressAccountRepository> Repositories(string name, Currency currency, string address) => new AddressAccountRepository[]
         {
             new BlockchainAccountRepository(default(int), name, address),
             new EthereumAccountRepository(default(int), name, address),
@@ -116,7 +117,7 @@ namespace MyCC.Core.Account.Repositories.Base
             new BlockExpertsAccountRepository(default(int), name, currency, address)
         };
 
-        public static AddressAccountRepository CreateAddressAccountRepository(string name, Currencies.Model.Currency currency, string address)
+        public static AddressAccountRepository CreateAddressAccountRepository(string name, Currency currency, string address)
         {
             if (currency == null || string.IsNullOrWhiteSpace(address)) return null;
 
@@ -127,7 +128,7 @@ namespace MyCC.Core.Account.Repositories.Base
             return Repositories(name, currency, address).FirstOrDefault(r => r.SupportedCurrencies.Contains(currency));
         }
 
-        public static IEnumerable<Currencies.Model.Currency> AllSupportedCurrencies
+        public static IEnumerable<Currency> AllSupportedCurrencies
             => Repositories(null, null, null).SelectMany(r => r.SupportedCurrencies).Distinct();
     }
 }

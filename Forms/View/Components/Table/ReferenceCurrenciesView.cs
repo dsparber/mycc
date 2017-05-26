@@ -4,7 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
@@ -26,7 +27,7 @@ namespace MyCC.Forms.View.Components.Table
         private readonly HybridWebView _webView;
 
         private string TableHeaderLabel => string.Format(ReferenceMoney.Amount == 1 ? I18N.IsEqualTo : I18N.AreEqualTo, ReferenceMoney);
-        private IEnumerable<Currency> ReferenceCurrencies => ApplicationSettings.AllReferenceCurrencies.Except(new List<string> { ReferenceMoney?.Currency.Id }).Select(id => new Currency(id));
+        private IEnumerable<Currency> ReferenceCurrencies => ApplicationSettings.AllReferenceCurrencies.Except(new List<string> { ReferenceMoney?.Currency.Id }).Select(id => id.ToCurrency());
 
         public ReferenceCurrenciesView(Money reference)
         {

@@ -6,6 +6,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.CoinInfo;
 using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 
@@ -90,7 +91,7 @@ namespace MyCC.Core.Tasks
             => FetchRates(account.Money.Currency, onStarted, onFinished, onError, progressCallback);
 
 
-        public static async Task FetchRates(Currencies.Model.Currency currency, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
+        public static async Task FetchRates(Currency currency, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
         {
             try
             {
@@ -108,7 +109,7 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchBalance(Currencies.Model.Currency currency, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
+        public static async Task FetchBalance(Currency currency, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
         {
             try
             {
@@ -200,7 +201,7 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchCoinInfo(Currencies.Model.Currency coin, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null)
+        public static async Task FetchCoinInfo(Currency coin, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null)
         {
             try
             {

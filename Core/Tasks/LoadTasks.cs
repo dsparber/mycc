@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
+using MyCC.Core.Settings;
 
 namespace MyCC.Core.Tasks
 {
@@ -14,6 +15,7 @@ namespace MyCC.Core.Tasks
             await AccountStorage.Instance.LoadFromDatabase();
             await ExchangeRatesStorage.Instance.LoadRates();
             whenFinished?.Invoke();
+            ApplicationSettings.DataLoaded = true;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace MyCC.Ui.Android.Views.Adapter
             _tabTitles = new[]
             {
                 context.Resources.GetString(Resource.String.Address),
-                context.Resources.GetString(ConstantNames.Bittrex),
+                ConstantNames.Bittrex,
                 context.Resources.GetString(Resource.String.Manually),
             };
 

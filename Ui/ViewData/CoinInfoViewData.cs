@@ -4,7 +4,7 @@ using System.Linq;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.CoinInfo;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;

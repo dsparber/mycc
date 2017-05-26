@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Model;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
@@ -52,7 +52,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
 
         private CustomViewCell GetCell(string currencyId)
         {
-            var currency = CurrencyStorage.Find(currencyId);
+            var currency = currencyId.Find();
 
             var cell = new CustomViewCell { Text = currency.Code, Detail = currency.Name };
 
@@ -64,13 +64,13 @@ namespace MyCC.Forms.View.Pages.Settings.Data
             {
                 var c = (e as TappedEventArgs)?.Parameter as CustomViewCell;
                 CurrenciesSection.Remove(c);
-                if (ApplicationSettings.MainCurrencies.Any(x => new Currency(x).Code.Equals(c?.Text)))
+                if (ApplicationSettings.MainCurrencies.Any(x => x.ToCurrency().Code.Equals(c?.Text)))
                 {
-                    ApplicationSettings.MainCurrencies = ApplicationSettings.MainCurrencies.Where(x => !new Currency(x).Code.Equals(c?.Text)).ToList();
+                    ApplicationSettings.MainCurrencies = ApplicationSettings.MainCurrencies.Where(x => !x.ToCurrency().Code.Equals(c?.Text)).ToList();
                 }
                 else
                 {
-                    ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Where(x => !new Currency(x).Code.Equals(c?.Text)).ToList();
+                    ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Where(x => !x.ToCurrency().Code.Equals(c?.Text)).ToList();
                 }
                 Messaging.ReferenceCurrencies.SendValueChanged();
             };
@@ -78,7 +78,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
             star.Action = (sender, e) =>
             {
                 var c = (e as TappedEventArgs)?.Parameter as CustomViewCell;
-                var cu = ApplicationSettings.AllReferenceCurrencies.FirstOrDefault(x => new Currency(x).Code.Equals(c?.Text));
+                var cu = ApplicationSettings.AllReferenceCurrencies.FirstOrDefault(x => x.ToCurrency().Code.Equals(c?.Text));
                 var isMain = ApplicationSettings.MainCurrencies.Contains(cu);
 
                 if (!isMain && ApplicationSettings.MainCurrencies.Count() >= 3)
