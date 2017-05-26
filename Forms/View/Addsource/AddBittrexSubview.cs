@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
+using MyCC.Core.Resources;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
@@ -41,7 +42,7 @@ namespace MyCC.Forms.View.Addsource
             }
         }
 
-        public override string Description => I18N.Bittrex;
+        public override string Description => ConstantNames.Bittrex;
 
         public override List<TableSection> InputSections => new List<TableSection> { _section };
 

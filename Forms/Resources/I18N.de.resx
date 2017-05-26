@@ -165,20 +165,17 @@
   <data name="BitcoinCanNotBeRemoved" xml:space="preserve">
     <value>Bitcoin kann nicht entfernt werden.</value>
   </data>
-  <data name="Bittrex" xml:space="preserve">
-    <value>Bittrex</value>
-  </data>
   <data name="BittrexAdded" xml:space="preserve">
     <value>Über Bittrex hinzugefügt</value>
   </data>
   <data name="CoinExplorer" xml:space="preserve">
-    <value>Coin explorer</value>
+    <value>Explorer (Blockchain)</value>
   </data>
   <data name="CoinBlockHeight" xml:space="preserve">
     <value>Blockhöhe</value>
   </data>
   <data name="CoinBlockReward" xml:space="preserve">
-    <value>Blockbelohnung</value>
+    <value>Belohnung pro Block</value>
   </data>
   <data name="CoinBlocktime" xml:space="preserve">
     <value>Blockzeit</value>
@@ -190,7 +187,7 @@
     <value>PIN ändern</value>
   </data>
   <data name="CoinSupply" xml:space="preserve">
-    <value>Coin supply</value>
+    <value>generierte Coins</value>
   </data>
   <data name="Copyright" xml:space="preserve">
     <value>© Ing. Georg Sparber</value>
@@ -298,7 +295,7 @@
     <value>Marktkapitalisierung</value>
   </data>
   <data name="CoinSupplyMax" xml:space="preserve">
-    <value>Max. coin supply</value>
+    <value>Max. generierte Coins</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>

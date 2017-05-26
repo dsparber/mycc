@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Support.V4.App;
 using Java.Lang;
+using MyCC.Core.Resources;
 using MyCC.Ui.Android.Views.Fragments.AddSource;
 
 namespace MyCC.Ui.Android.Views.Adapter
@@ -15,7 +16,7 @@ namespace MyCC.Ui.Android.Views.Adapter
             _tabTitles = new[]
             {
                 context.Resources.GetString(Resource.String.Address),
-                context.Resources.GetString(Resource.String.Bittrex),
+                context.Resources.GetString(ConstantNames.Bittrex),
                 context.Resources.GetString(Resource.String.Manually),
             };
 
