@@ -10,7 +10,7 @@
         public const string Blockchain = "Blockchain";
         public const string BlockExperts = "BlockExperts";
         public const string Blockr = "Blockr";
-        public const string Btce = "Btce";
+        public const string Btce = "BTC-e";
         public const string Coinapult = "Coinapult";
         public const string Coinbase = "Coinbase";
         public const string CryptoId = "CryptoID";

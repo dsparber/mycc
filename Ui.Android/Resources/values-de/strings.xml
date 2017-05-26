@@ -26,7 +26,6 @@
   <string name="BalanceAvailableAddress">Kontostand über Adresse</string>
   <string name="BalanceAvailableBittrex">Kontostand über Bittrex</string>
   <string name="BitcoinCanNotBeRemoved">Bitcoin kann nicht entfernt werden.</string>
-  <string name="Bittrex">Bittrex</string>
   <string name="BittrexAdded">Über Bittrex hinzugefügt</string>
   <string name="BittrexKey">Key</string>
   <string name="BittrexSecret">Secret</string>
