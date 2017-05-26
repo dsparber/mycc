@@ -72,6 +72,8 @@ namespace MyCC.Core.Account.Database
             if (repository is EthereumAccountRepository) return new EthereumAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (EthereumAccountRepository)repository);
             if (repository is LocalAccountRepository) return new LocalAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, repository.Id);
             if (repository is BlockchainXpubAccountRepository) return new BlockchainXpubAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (BlockchainXpubAccountRepository)repository);
+            if (repository is ReddCoinAccountRepository) return new ReddCoinAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (ReddCoinAccountRepository)repository);
+            if (repository is EthereumClassicAccountRepository) return new EthereumClassicAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (EthereumClassicAccountRepository)repository);
             return null;
         }
 
