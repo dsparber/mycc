@@ -28,7 +28,7 @@ namespace MyCC.Core.Currencies.Sources
 
             try
             {
-                var response = await HttpHelper.GetAsync(uri);
+                var response = await HttpHelper.GetResponse(uri);
                 if (!response.IsSuccessStatusCode) return null;
 
                 var content = await response.Content.ReadAsStringAsync();

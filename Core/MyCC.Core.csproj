@@ -38,10 +38,13 @@
     <Compile Include="Account\Models\Implementations\EthereumClassicAccount.cs" />
     <Compile Include="Account\Repositories\Implementations\EthereumClassicAccountRepository.cs" />
     <Compile Include="Account\Repositories\Implementations\ReddCoinAccountRepository.cs" />
+    <Compile Include="CoinInfo\Repositories\EtcchainCoinInfoRepository.cs" />
+    <Compile Include="CoinInfo\Repositories\ReddCoinInfoRepository.cs" />
     <Compile Include="Currencies\CurrencyConstants.cs" />
     <Compile Include="Currencies\CurrencyHelper.cs" />
     <Compile Include="Helpers\FlagHelper.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
+    <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="CoinInfo\Repositories\EtherchainCoinInfoRepository.cs" />
     <Compile Include="Currencies\Sources\OpenexchangeCurrencySource.cs" />

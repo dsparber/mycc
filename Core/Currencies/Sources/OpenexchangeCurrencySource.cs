@@ -17,7 +17,7 @@ namespace MyCC.Core.Currencies.Sources
             var uri = new Uri(UrlCurrencyList);
             try
             {
-                var response = await HttpHelper.GetAsync(uri);
+                var response = await HttpHelper.GetResponse(uri);
 
                 if (!response.IsSuccessStatusCode) return null;
 

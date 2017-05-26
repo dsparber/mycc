@@ -201,11 +201,9 @@
     <Compile Include="Helpers\ConnectivityBroadcastReceiver.cs" />
     <Compile Include="Helpers\ConnectivityStatus.cs" />
     <Compile Include="Helpers\FingerprintHelper.cs" />
-    <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\ShakeRecognizer.cs" />
     <Compile Include="Helpers\SQLiteConnectionAndroid.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="Helpers\TextEditHelper.cs" />
     <Compile Include="Helpers\TextResolver.cs" />
     <Compile Include="Helpers\UiHelper.cs" />
     <Compile Include="Views\Activities\AccountDetailActivity.cs" />

@@ -29,7 +29,9 @@ namespace MyCC.Core.CoinInfo
                 new BlockExpertsCoinInfoRepository(),
                 new BlockchainCoinInfoRepository(),
                 new BlockrCoinInfoRepository(),
-                new EtherchainCoinInfoRepository()
+                new EtherchainCoinInfoRepository(),
+                new EtcchainCoinInfoRepository(),
+                new ReddCoinInfoRepository()
             };
         }
 

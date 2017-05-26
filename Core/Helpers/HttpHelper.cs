@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
+using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Helpers
 {
@@ -14,6 +15,18 @@ namespace MyCC.Core.Helpers
             return new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = ClientDefaultBufferSize };
         }
 
-        public static Task<HttpResponseMessage> GetAsync(Uri uri) => CreateClient().GetAsync(uri);
+        public static Task<HttpResponseMessage> GetResponse(this Uri uri) => CreateClient().GetAsync(uri);
+
+        public static async Task<string> GetContent(this Uri uri)
+        {
+            var response = await uri.GetResponse();
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        public static async Task<JObject> GetJson(this Uri uri)
+        {
+            var content = await uri.GetContent();
+            return JObject.Parse(content);
+        }
     }
 }

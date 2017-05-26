@@ -61,10 +61,8 @@
     <Compile Include="ViewData\ViewData.cs" />
     <Compile Include="Helpers\IErrorDialog.cs" />
     <Compile Include="Helpers\ITextResolver.cs" />
-    <Compile Include="Helpers\LinqOrderHelper.cs" />
     <Compile Include="Helpers\SortDirectionHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="Helpers\TextEditHelper.cs" />
     <Compile Include="Messages\MessageTools.cs" />
     <Compile Include="Messages\Messaging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
