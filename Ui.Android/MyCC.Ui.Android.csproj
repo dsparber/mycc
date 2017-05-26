@@ -219,9 +219,9 @@
     <Compile Include="Views\Activities\PreparingAppActivity.cs" />
     <Compile Include="Views\Activities\ReferenceCurrenciesActivity.cs" />
     <Compile Include="Views\Activities\PreferredBitcoinExchangeActivity.cs" />
+    <Compile Include="Views\Activities\ScanQrCodeActivity.cs" />
     <Compile Include="Views\Activities\SecurityActivity.cs" />
     <Compile Include="Views\Activities\PinActivity.cs" />
-    <Compile Include="Views\Activities\ScanQrCodeActivity.cs" />
     <Compile Include="Views\Activities\ShowQrCodeActivity.cs" />
     <Compile Include="Views\Activities\SplashActivity.cs" />
     <Compile Include="Views\Activities\AddSourceActivity.cs" />
