@@ -3,7 +3,7 @@
     public interface ITextResolver
     {
         string ManuallyAdded { get; }
-        string BittrexAdded { get; }
+        string AddedWith { get; }
         string AddressAdded { get; }
         string Amount { get; }
         string Currency { get; }

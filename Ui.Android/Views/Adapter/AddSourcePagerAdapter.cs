@@ -17,6 +17,7 @@ namespace MyCC.Ui.Android.Views.Adapter
             {
                 context.Resources.GetString(Resource.String.Address),
                 ConstantNames.Bittrex,
+                ConstantNames.Poloniex,
                 context.Resources.GetString(Resource.String.Manually),
             };
 
@@ -24,11 +25,12 @@ namespace MyCC.Ui.Android.Views.Adapter
             {
                 new AddAddressFragment(),
                 new AddBittrexFragment(),
+                new AddPoloniexFragment(),
                 new AddManuallyFragment()
             };
         }
 
-        public override int Count => 3;
+        public override int Count => _fragments.Length;
 
         public override Fragment GetItem(int position)
         {

@@ -28,6 +28,7 @@ namespace MyCC.Forms.View.Overlays
             {
                 new AddAddressSubview(Navigation, NameEntryCell.Entry),
                 new AddBittrexSubview(),
+                new AddPoloniexSubview(),
                 new AddLocalAccountSubview(Navigation)
             };
 

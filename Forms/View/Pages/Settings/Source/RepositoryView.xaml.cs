@@ -57,7 +57,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
                 GeneralSection.Remove(AddressEntryCell);
             }
 
-            if (repository is BittrexAccountRepository)
+            if (repository is BittrexAccountRepository || repository is PoloniexAccountRepository)
             {
                 EnableAccountsSection.Title = I18N.Accounts;
             }

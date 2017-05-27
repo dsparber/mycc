@@ -26,9 +26,9 @@
   <string name="BalanceAvailableAddress">Balance via Address</string>
   <string name="BalanceAvailableBittrex">Balance via Bittrex</string>
   <string name="BitcoinCanNotBeRemoved">Bitcoin can not be removed.</string>
-  <string name="BittrexAdded">Added with Bittrex</string>
-  <string name="BittrexKey">Key</string>
-  <string name="BittrexSecret">Secret</string>
+  <string name="AddedWith">Added with {0}</string>
+  <string name="Key">Key</string>
+  <string name="Secret">Secret</string>
   <string name="Cancel">Cancel</string>
   <string name="ChangePin">Change PIN</string>
   <string name="CoinName">Name:</string>

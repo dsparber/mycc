@@ -8,7 +8,7 @@ using StringHelper = MyCC.Ui.Helpers.StringHelper;
 
 namespace MyCC.Ui.Android.Views.Fragments.AddSource
 {
-    public class AddBittrexFragment : AddSourceFragment.Repository
+    public class AddPoloniexFragment : AddSourceFragment.Repository
     {
         private string _key;
         private string _secret;
@@ -44,7 +44,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
 
         public override OnlineAccountRepository GetRepository()
         {
-            return EntryComplete ? new BittrexAccountRepository(default(int), NameOrDefault, _key, _secret) : null;
+            return EntryComplete ? new PoloniexAccountRepository(default(int), NameOrDefault, _key, _secret) : null;
         }
 
         public override void OnResume()

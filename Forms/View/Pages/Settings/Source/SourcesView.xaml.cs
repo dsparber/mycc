@@ -5,6 +5,7 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
+using MyCC.Core.Resources;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
@@ -25,7 +26,8 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             SetView();
 
             ManualSection.Title = I18N.ManuallyAdded;
-            BittrexSection.Title = I18N.BittrexAdded;
+            BittrexSection.Title = string.Format(I18N.AddedWith, ConstantNames.Bittrex);
+            PoloniexSection.Title = string.Format(I18N.AddedWith, ConstantNames.Poloniex);
             AddressSection.Title = I18N.AddressAdded;
 
             Messaging.Loading.SubscribeFinished(this, SetView);
@@ -64,6 +66,13 @@ namespace MyCC.Forms.View.Pages.Settings.Source
                 c.Detail = PluralHelper.GetTextAccounts(r.Elements.ToList().Count);
                 return c;
             }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
+            var poloniexCells = _repositories.OfType<PoloniexAccountRepository>().Select(r =>
+            {
+                var c = getCell(r);
+                c.Text = r.Name;
+                c.Detail = PluralHelper.GetTextAccounts(r.Elements.ToList().Count);
+                return c;
+            }).OrderBy(c => $"{c.Text}{c.Detail}").ToList();
             var addressCells = _repositories.OfType<AddressAccountRepository>().Select(r =>
             {
                 var c = getCell(r);
@@ -83,14 +92,17 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 
                     ManualSection.Clear();
                     BittrexSection.Clear();
+                    PoloniexSection.Clear();
                     AddressSection.Clear();
 
                     AddressSection.Add(addressCells);
                     BittrexSection.Add(bittrexCells);
+                    PoloniexSection.Add(poloniexCells);
                     ManualSection.Add(manualCells);
 
                     AddressSection.Title = $"{I18N.AddressAdded}: {AccountStorage.AddressRepositories.Count()}";
-                    BittrexSection.Title = $"{I18N.BittrexAdded}: {AccountStorage.BittrexRepositories.SelectMany(r => r.Elements).Count()}";
+                    BittrexSection.Title = $"{string.Format(I18N.AddedWith, ConstantNames.Bittrex)}: {AccountStorage.BittrexRepositories.SelectMany(r => r.Elements).Count()}";
+                    PoloniexSection.Title = $"{string.Format(I18N.AddedWith, ConstantNames.Poloniex)}: {AccountStorage.PoloniexRepositories.SelectMany(r => r.Elements).Count()}";
                     ManualSection.Title = $"{I18N.ManuallyAdded}: {AccountStorage.ManuallyAddedAccounts.Count()}";
 
                     if (addressCells.Count == 0)
@@ -116,6 +128,18 @@ namespace MyCC.Forms.View.Pages.Settings.Source
                             Table.Root.Add(BittrexSection);
                         }
                     }
+                    if (poloniexCells.Count == 0)
+                    {
+                        Table.Root.Remove(PoloniexSection);
+                    }
+                    else
+                    {
+                        if (!Table.Root.Contains(PoloniexSection))
+                        {
+                            Table.Root.Add(PoloniexSection);
+                        }
+                    }
+
 
                     if (manualCells.Count == 0)
                     {

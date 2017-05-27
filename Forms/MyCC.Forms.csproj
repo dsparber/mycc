@@ -60,6 +60,7 @@
     <Compile Include="Resources\TranslateExtension.cs" />
     <Compile Include="View\Addsource\AddAccountSubview.cs" />
     <Compile Include="View\Addsource\AddAddressSubview.cs" />
+    <Compile Include="View\Addsource\AddPoloniexSubview.cs" />
     <Compile Include="View\Addsource\AddBittrexSubview.cs" />
     <Compile Include="View\Addsource\AddLocalAccountSubview.cs" />
     <Compile Include="View\Addsource\AddRepositorySubview.cs" />

@@ -11,7 +11,7 @@ namespace MyCC.Ui.Android.Helpers
         private static string GetText(int id) => Application.Context.Resources.GetText(id);
 
         public string ManuallyAdded => GetText(Resource.String.ManuallyAdded);
-        public string BittrexAdded => GetText(Resource.String.BittrexAdded);
+        public string AddedWith => GetText(Resource.String.AddedWith);
         public string AddressAdded => GetText(Resource.String.AddressAdded);
         public string Amount => GetText(Resource.String.Amount);
         public string Currency => GetText(Resource.String.Currency);

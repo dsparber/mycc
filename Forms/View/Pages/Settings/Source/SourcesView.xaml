@@ -31,6 +31,8 @@
                     <TableSection
 						x:Name="BittrexSection" />
                     <TableSection
+						x:Name="PoloniexSection" />
+                    <TableSection
 						x:Name="ManualSection" />
                 </TableView>
                 <ContentView

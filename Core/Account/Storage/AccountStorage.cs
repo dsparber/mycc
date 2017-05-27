@@ -58,6 +58,7 @@ namespace MyCC.Core.Account.Storage
 
         public static IEnumerable<AddressAccountRepository> AddressRepositories => Instance.Repositories.OfType<AddressAccountRepository>();
         public static IEnumerable<BittrexAccountRepository> BittrexRepositories => Instance.Repositories.OfType<BittrexAccountRepository>();
+        public static IEnumerable<PoloniexAccountRepository> PoloniexRepositories => Instance.Repositories.OfType<PoloniexAccountRepository>();
         public static IEnumerable<LocalAccount> ManuallyAddedAccounts => Instance.AllElements.OfType<LocalAccount>();
 
         public static bool AlreadyExists(AccountRepository repository)

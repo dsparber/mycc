@@ -7,6 +7,7 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
+using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.DataItems;
@@ -32,11 +33,15 @@ namespace MyCC.Ui.ViewData
 
         public string AccountName(Account account) => account.Name;
 
-        public bool AddressClickable(Account account) => account is OnlineFunctionalAccount && !(account is BittrexAccount) && !(account is BlockchainXpubAccount);
+        public bool AddressClickable(Account account) => account is OnlineFunctionalAccount && !(account is BittrexAccount) && !(account is PoloniexAccount) && !(account is BlockchainXpubAccount);
 
         public string AddressClickUrl(FunctionalAccount account) => (AccountStorage.RepositoryOf(account) as AddressAccountRepository)?.WebUrl;
 
-        public string AccountType(Account account) => account is LocalAccount ? TextResolver.ManuallyAdded : account is BittrexAccount ? TextResolver.BittrexAdded : TextResolver.AddressAdded;
+        public string AccountType(Account account) =>
+            account is LocalAccount ? TextResolver.ManuallyAdded :
+            account is BittrexAccount ? string.Format(TextResolver.AddedWith, ConstantNames.Bittrex) :
+            account is PoloniexAccount ? string.Format(TextResolver.AddedWith, ConstantNames.Poloniex) :
+            TextResolver.AddressAdded;
 
 
         public string AccountSource(FunctionalAccount account) => AccountStorage.RepositoryOf(account)?.Description;

@@ -150,7 +150,7 @@
   <data name="Amount" xml:space="preserve">
     <value>Amount</value>
   </data>
-  <data name="BittrexKey" xml:space="preserve">
+  <data name="Key" xml:space="preserve">
     <value>Key</value>
   </data>
   <data name="AppName" xml:space="preserve">
@@ -168,8 +168,8 @@
   <data name="BitcoinCanNotBeRemoved" xml:space="preserve">
     <value>Bitcoin can not be removed.</value>
   </data>
-  <data name="BittrexAdded" xml:space="preserve">
-    <value>Added with Bittrex</value>
+  <data name="AddedWith" xml:space="preserve">
+    <value>Added with {0}</value>
   </data>
   <data name="CoinExplorer" xml:space="preserve">
     <value>Coin explorer</value>
@@ -411,7 +411,7 @@
   <data name="SearchCurrencies" xml:space="preserve">
     <value>Search currencies</value>
   </data>
-  <data name="BittrexSecret" xml:space="preserve">
+  <data name="Secret" xml:space="preserve">
     <value>Secret</value>
   </data>
   <data name="Security" xml:space="preserve">

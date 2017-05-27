@@ -22,5 +22,6 @@
         public const string Kraken = "Kraken";
         public const string QuadrigaCx = "QuadrigaCX";
         public const string OpenExchangeRates = "Open Exchange Rates";
+        public const string Poloniex = "Poloniex";
     }
 }

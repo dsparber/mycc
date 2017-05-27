@@ -35,6 +35,8 @@
         public const string PreferredBitcoinRepository = "preferred-bitcoin-repository";
         public const string KeyAssetsColumnHideWhenSmall = "pref_assets_column_to_hide_if_small";
 
+        public const string KeyPoloniexRequestNonce = "poloniex-request-nonce";
+
     }
 }
 

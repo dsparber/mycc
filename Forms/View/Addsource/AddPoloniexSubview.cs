@@ -8,16 +8,16 @@ using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Addsource
 {
-    public sealed class AddBittrexSubview : AddRepositorySubview
+    public sealed class AddPoloniexSubview : AddRepositorySubview
     {
 
         private readonly TableSection _section;
         private readonly CustomEntryCell _apiKeyEntryCell, _apiPrivateKeyEntryCell;
 
-        public AddBittrexSubview()
+        public AddPoloniexSubview()
         {
             _apiKeyEntryCell = new CustomEntryCell { Title = I18N.Key, Placeholder = I18N.Key };
-            _apiPrivateKeyEntryCell = new CustomEntryCell { Title = I18N.Secret, Placeholder = I18N.Secret };
+            _apiPrivateKeyEntryCell = new CustomEntryCell { Title = I18N.Secret, Placeholder = I18N.Settings };
 
             _section = new TableSection { Title = I18N.Details };
             _section.Add(_apiKeyEntryCell);
@@ -29,7 +29,7 @@ namespace MyCC.Forms.View.Addsource
             var key = _apiKeyEntryCell.Text ?? string.Empty;
             var secretKey = _apiPrivateKeyEntryCell.Text ?? string.Empty;
 
-            var repository = new BittrexAccountRepository(default(int), name, key, secretKey);
+            var repository = new PoloniexAccountRepository(default(int), name, key, secretKey);
             return repository;
         }
 
@@ -42,7 +42,7 @@ namespace MyCC.Forms.View.Addsource
             }
         }
 
-        public override string Description => ConstantNames.Bittrex;
+        public override string Description => ConstantNames.Poloniex;
 
         public override List<TableSection> InputSections => new List<TableSection> { _section };
 

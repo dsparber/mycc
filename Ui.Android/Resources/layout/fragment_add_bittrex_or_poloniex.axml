@@ -24,7 +24,7 @@
           android:maxLines="1"
           android:inputType="text"
           android:id="@+id/text_key"
-          android:hint="@string/BittrexKey" />
+          android:hint="@string/Key" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -41,7 +41,7 @@
           android:maxLines="1"
           android:inputType="text"
           android:id="@+id/text_secret"
-          android:hint="@string/BittrexSecret"
+          android:hint="@string/Secret"
           android:password="false" />
     </LinearLayout>
     <LinearLayout

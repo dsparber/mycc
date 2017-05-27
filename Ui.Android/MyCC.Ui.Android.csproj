@@ -233,6 +233,7 @@
     <Compile Include="Views\Animation\ZoomOutPageTransformer.cs" />
     <Compile Include="Views\Dialogs\ErrorDialog.cs" />
     <Compile Include="Views\Dialogs\FingerprintDialog.cs" />
+    <Compile Include="Views\Fragments\AddSource\AddPoloniexFragment.cs" />
     <Compile Include="Views\Fragments\AddSource\AddManuallyFragment.cs" />
     <Compile Include="Views\Fragments\AddSource\AddAddressFragment.cs" />
     <Compile Include="Views\Fragments\AddSource\AddBittrexFragment.cs" />
@@ -286,7 +287,7 @@
     <AndroidResource Include="Resources\layout\activity_add_source.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\fragment_add_bittrex.axml">
+    <AndroidResource Include="Resources\layout\fragment_add_bittrex_or_poloniex.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_add_address.axml">

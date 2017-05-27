@@ -6,6 +6,7 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Rates;
+using MyCC.Core.Resources;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
@@ -22,258 +23,255 @@ using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages
 {
-	public partial class AccountView
-	{
-		private FunctionalAccount _account;
-		private readonly PullToRefreshLayout _pullToRefresh;
+    public partial class AccountView
+    {
+        private FunctionalAccount _account;
+        private readonly PullToRefreshLayout _pullToRefresh;
 
 
-		public AccountView(FunctionalAccount account)
-		{
-			InitializeComponent();
+        public AccountView(FunctionalAccount account)
+        {
+            InitializeComponent();
 
-			_account = account;
+            _account = account;
 
-			var header = new CoinHeaderComponent(account);
-			ChangingStack.Children.Insert(0, header);
+            var header = new CoinHeaderComponent(account);
+            ChangingStack.Children.Insert(0, header);
 
-			var referenceView = new ReferenceCurrenciesView(account.Money);
+            var referenceView = new ReferenceCurrenciesView(account.Money);
 
-			var stack = new StackLayout { Spacing = 0, Margin = new Thickness(0, 0, 0, 40) };
-			var repo = AccountStorage.RepositoryOf(_account);
+            var stack = new StackLayout { Spacing = 0, Margin = new Thickness(0, 0, 0, 40) };
+            var repo = AccountStorage.RepositoryOf(_account);
 
-			if (repo is AddressAccountRepository && !(repo is BlockchainXpubAccountRepository))
-			{
-				var qrButton = new ToolbarItem { Icon = "qr.png" };
-				qrButton.Clicked +=
-					(sender, e) => Navigation.PushOrPushModal(new AccountQrCodeOverlay((AddressAccountRepository)repo));
-				ToolbarItems.Add(qrButton);
-			}
+            if (repo is AddressAccountRepository && !(repo is BlockchainXpubAccountRepository))
+            {
+                var qrButton = new ToolbarItem { Icon = "qr.png" };
+                qrButton.Clicked +=
+                    (sender, e) => Navigation.PushOrPushModal(new AccountQrCodeOverlay((AddressAccountRepository)repo));
+                ToolbarItems.Add(qrButton);
+            }
 
-			var infoStackContainer = new StackLayout
-			{
-				Spacing = 30,
-				Orientation = StackOrientation.Horizontal,
-				Margin = new Thickness(15, 0)
-			};
-			var headerStack = new StackLayout();
-			var dataStack = new StackLayout { HorizontalOptions = LayoutOptions.FillAndExpand };
+            var infoStackContainer = new StackLayout
+            {
+                Spacing = 30,
+                Orientation = StackOrientation.Horizontal,
+                Margin = new Thickness(15, 0)
+            };
+            var headerStack = new StackLayout();
+            var dataStack = new StackLayout { HorizontalOptions = LayoutOptions.FillAndExpand };
 
-			headerStack.Children.Add(new Label
-			{
-				Text = $"{I18N.Name}:",
-				FontSize = AppConstants.TableSectionFontSize,
-				TextColor = AppConstants.FontColorLight,
-				LineBreakMode = LineBreakMode.NoWrap
-			});
+            headerStack.Children.Add(new Label
+            {
+                Text = $"{I18N.Name}:",
+                FontSize = AppConstants.TableSectionFontSize,
+                TextColor = AppConstants.FontColorLight,
+                LineBreakMode = LineBreakMode.NoWrap
+            });
 
-			var nameLabel = new Label
-			{
-				Text = _account.Name,
-				FontSize = AppConstants.TableSectionFontSize,
-				TextColor = AppConstants.FontColorLight,
-				LineBreakMode = LineBreakMode.MiddleTruncation
-			};
-			dataStack.Children.Add(nameLabel);
+            var nameLabel = new Label
+            {
+                Text = _account.Name,
+                FontSize = AppConstants.TableSectionFontSize,
+                TextColor = AppConstants.FontColorLight,
+                LineBreakMode = LineBreakMode.MiddleTruncation
+            };
+            dataStack.Children.Add(nameLabel);
 
-			headerStack.Children.Add(new Label
-			{
-				LineBreakMode = LineBreakMode.NoWrap,
-				Text = $"{I18N.Type}:",
-				FontSize = AppConstants.TableSectionFontSize,
-				TextColor = AppConstants.FontColorLight
-			});
-			dataStack.Children.Add(new Label
-			{
-				Text =
-					repo is LocalAccountRepository
-						? I18N.ManuallyAdded
-						: repo is AddressAccountRepository ? I18N.AddressAdded : I18N.BittrexAdded,
-				FontSize = AppConstants.TableSectionFontSize,
-				TextColor = AppConstants.FontColorLight,
-				LineBreakMode = LineBreakMode.MiddleTruncation
-			});
+            headerStack.Children.Add(new Label
+            {
+                LineBreakMode = LineBreakMode.NoWrap,
+                Text = $"{I18N.Type}:",
+                FontSize = AppConstants.TableSectionFontSize,
+                TextColor = AppConstants.FontColorLight
+            });
+            dataStack.Children.Add(new Label
+            {
+                Text = repo is LocalAccountRepository ? I18N.ManuallyAdded : repo is AddressAccountRepository ? I18N.AddressAdded : string.Format(I18N.AddedWith, repo is BittrexAccountRepository ? ConstantNames.Bittrex : ConstantNames.Poloniex),
+                FontSize = AppConstants.TableSectionFontSize,
+                TextColor = AppConstants.FontColorLight,
+                LineBreakMode = LineBreakMode.MiddleTruncation
+            });
 
-			Action updateLabelAction = () => nameLabel.Text = _account.Name;
+            Action updateLabelAction = () => nameLabel.Text = _account.Name;
 
-			if (repo is AddressAccountRepository)
-			{
-				headerStack.Children.Add(new Label
-				{
-					LineBreakMode = LineBreakMode.NoWrap,
-					Text = $"{I18N.Source}:",
-					FontSize = AppConstants.TableSectionFontSize,
-					TextColor = AppConstants.FontColorLight
-				});
-				var sourceLabel = new Label
-				{
-					Text = repo.Description,
-					FontSize = AppConstants.TableSectionFontSize,
-					TextColor = AppConstants.FontColorLight,
-					LineBreakMode = LineBreakMode.MiddleTruncation
-				};
-				dataStack.Children.Add(sourceLabel);
+            if (repo is AddressAccountRepository)
+            {
+                headerStack.Children.Add(new Label
+                {
+                    LineBreakMode = LineBreakMode.NoWrap,
+                    Text = $"{I18N.Source}:",
+                    FontSize = AppConstants.TableSectionFontSize,
+                    TextColor = AppConstants.FontColorLight
+                });
+                var sourceLabel = new Label
+                {
+                    Text = repo.Description,
+                    FontSize = AppConstants.TableSectionFontSize,
+                    TextColor = AppConstants.FontColorLight,
+                    LineBreakMode = LineBreakMode.MiddleTruncation
+                };
+                dataStack.Children.Add(sourceLabel);
 
-				headerStack.Children.Add(new Label
-				{
-					LineBreakMode = LineBreakMode.NoWrap,
-					Text = $"{I18N.Address}:",
-					FontSize = AppConstants.TableSectionFontSize,
-					TextColor = AppConstants.FontColorLight
-				});
-				var addressLabel = new Label
-				{
-					Text = repo is BlockchainXpubAccountRepository ? "xpub" : (repo as AddressAccountRepository).Address.MiddleTruncate(),
-					FontSize = AppConstants.TableSectionFontSize,
-					TextColor = repo is BlockchainXpubAccountRepository ? AppConstants.FontColorLight : AppConstants.ThemeColor,
-					LineBreakMode = LineBreakMode.MiddleTruncation,
-				};
+                headerStack.Children.Add(new Label
+                {
+                    LineBreakMode = LineBreakMode.NoWrap,
+                    Text = $"{I18N.Address}:",
+                    FontSize = AppConstants.TableSectionFontSize,
+                    TextColor = AppConstants.FontColorLight
+                });
+                var addressLabel = new Label
+                {
+                    Text = repo is BlockchainXpubAccountRepository ? "xpub" : (repo as AddressAccountRepository).Address.MiddleTruncate(),
+                    FontSize = AppConstants.TableSectionFontSize,
+                    TextColor = repo is BlockchainXpubAccountRepository ? AppConstants.FontColorLight : AppConstants.ThemeColor,
+                    LineBreakMode = LineBreakMode.MiddleTruncation,
+                };
 
-				if (!(repo is BlockchainXpubAccountRepository))
-				{
-					var g = new TapGestureRecognizer();
-					g.Tapped += (sender, args) => Navigation.PushModalAsync(new NavigationPage(new WebOverlay(((AddressAccountRepository)repo).WebUrl)));
-					addressLabel.GestureRecognizers.Add(g);
-				}
+                if (!(repo is BlockchainXpubAccountRepository))
+                {
+                    var g = new TapGestureRecognizer();
+                    g.Tapped += (sender, args) => Navigation.PushModalAsync(new NavigationPage(new WebOverlay(((AddressAccountRepository)repo).WebUrl)));
+                    addressLabel.GestureRecognizers.Add(g);
+                }
 
-				dataStack.Children.Add(addressLabel);
-				updateLabelAction = () =>
-				{
-					nameLabel.Text = _account?.Name ?? repo.Name;
-					addressLabel.Text = repo is BlockchainXpubAccountRepository ? "xpub" : (repo as AddressAccountRepository)?.Address.MiddleTruncate() ?? string.Empty;
-					sourceLabel.Text = repo.Description;
-				};
-			}
-			else if (_account is LocalAccount)
-			{
-				headerStack.Children.Add(new Label
-				{
-					LineBreakMode = LineBreakMode.NoWrap,
-					Text = $"{I18N.LastChange}:",
-					FontSize = AppConstants.TableSectionFontSize,
-					TextColor = AppConstants.FontColorLight
-				});
-				var lastChangeLabel = new Label
-				{
-					Text = _account.LastUpdate.AsString(),
-					FontSize = AppConstants.TableSectionFontSize,
-					TextColor = AppConstants.FontColorLight,
-					LineBreakMode = LineBreakMode.MiddleTruncation
-				};
-				dataStack.Children.Add(lastChangeLabel);
+                dataStack.Children.Add(addressLabel);
+                updateLabelAction = () =>
+                {
+                    nameLabel.Text = _account?.Name ?? repo.Name;
+                    addressLabel.Text = repo is BlockchainXpubAccountRepository ? "xpub" : (repo as AddressAccountRepository)?.Address.MiddleTruncate() ?? string.Empty;
+                    sourceLabel.Text = repo.Description;
+                };
+            }
+            else if (_account is LocalAccount)
+            {
+                headerStack.Children.Add(new Label
+                {
+                    LineBreakMode = LineBreakMode.NoWrap,
+                    Text = $"{I18N.LastChange}:",
+                    FontSize = AppConstants.TableSectionFontSize,
+                    TextColor = AppConstants.FontColorLight
+                });
+                var lastChangeLabel = new Label
+                {
+                    Text = _account.LastUpdate.AsString(),
+                    FontSize = AppConstants.TableSectionFontSize,
+                    TextColor = AppConstants.FontColorLight,
+                    LineBreakMode = LineBreakMode.MiddleTruncation
+                };
+                dataStack.Children.Add(lastChangeLabel);
 
-				updateLabelAction = () =>
-				{
-					nameLabel.Text = _account?.Name ?? repo.Name;
-					lastChangeLabel.Text = _account.LastUpdate.AsString();
-				};
-			}
+                updateLabelAction = () =>
+                {
+                    nameLabel.Text = _account?.Name ?? repo.Name;
+                    lastChangeLabel.Text = _account.LastUpdate.AsString();
+                };
+            }
 
-			infoStackContainer.Children.Add(headerStack);
-			infoStackContainer.Children.Add(dataStack);
-			stack.Children.Add(new SectionHeaderView(false) { Title = I18N.Info });
-			stack.Children.Add(infoStackContainer);
-			stack.Children.Add(referenceView);
+            infoStackContainer.Children.Add(headerStack);
+            infoStackContainer.Children.Add(dataStack);
+            stack.Children.Add(new SectionHeaderView(false) { Title = I18N.Info });
+            stack.Children.Add(infoStackContainer);
+            stack.Children.Add(referenceView);
 
 
-			_pullToRefresh = new PullToRefreshLayout
-			{
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				Content = new ScrollView { Content = stack },
-				BackgroundColor = AppConstants.TableBackgroundColor,
-				RefreshCommand = new Command(Refresh),
-			};
+            _pullToRefresh = new PullToRefreshLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Content = new ScrollView { Content = stack },
+                BackgroundColor = AppConstants.TableBackgroundColor,
+                RefreshCommand = new Command(Refresh),
+            };
 
-			ContentView.Content = _pullToRefresh;
+            ContentView.Content = _pullToRefresh;
 
-			SetView();
-			SetFooter();
+            SetView();
+            SetFooter();
 
-			Action update = () =>
-			{
-				if (_account != null && !(_account is LocalAccount))
-				{
-					_account = AccountStorage.Instance.Repositories.Find(r => r.Id == _account.ParentId)?
-								.Elements.FirstOrDefault(e => e.Money.Currency.Equals(_account.Money.Currency));
-				}
+            Action update = () =>
+            {
+                if (_account != null && !(_account is LocalAccount))
+                {
+                    _account = AccountStorage.Instance.Repositories.Find(r => r.Id == _account.ParentId)?
+                                .Elements.FirstOrDefault(e => e.Money.Currency.Equals(_account.Money.Currency));
+                }
 
-				if (_account == null)
-				{
-					try { Navigation.PopAsync(); }
-					catch { /* ignored */ }
-					return;
-				}
+                if (_account == null)
+                {
+                    try { Navigation.PopAsync(); }
+                    catch { /* ignored */ }
+                    return;
+                }
 
-				updateLabelAction();
-				SetFooter();
+                updateLabelAction();
+                SetFooter();
 
-				referenceView.ReferenceMoney = _account.Money;
-				referenceView.UpdateView();
-			};
+                referenceView.ReferenceMoney = _account.Money;
+                referenceView.UpdateView();
+            };
 
-			Messaging.Progress.SubscribeToComplete(this, update);
-			Messaging.UpdatingAccounts.SubscribeFinished(this, update);
-			Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, update);
+            Messaging.Progress.SubscribeToComplete(this, update);
+            Messaging.UpdatingAccounts.SubscribeFinished(this, update);
+            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, update);
 
-		}
+        }
 
-		private void SetView()
-		{
-			Title = _account.Money.Currency.Code;
-		}
+        private void SetView()
+        {
+            Title = _account.Money.Currency.Code;
+        }
 
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
-			if (!AccountStorage.Instance.AllElements.Contains(_account))
-			{
-				Navigation.PopToRootAsync();
-			}
-		}
+            if (!AccountStorage.Instance.AllElements.Contains(_account))
+            {
+                Navigation.PopToRootAsync();
+            }
+        }
 
-		private async void Refresh()
-		{
-			if (CrossConnectivity.Current.IsConnected)
-			{
-				await AppTaskHelper.FetchBalanceAndRates(_account);
-				_pullToRefresh.IsRefreshing = false;
-			}
-			else
-			{
-				_pullToRefresh.IsRefreshing = false;
-				await DisplayAlert(I18N.NoInternetAccess, I18N.ErrorRefreshingNotPossibleWithoutInternet, I18N.Cancel);
-			}
-		}
+        private async void Refresh()
+        {
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                await AppTaskHelper.FetchBalanceAndRates(_account);
+                _pullToRefresh.IsRefreshing = false;
+            }
+            else
+            {
+                _pullToRefresh.IsRefreshing = false;
+                await DisplayAlert(I18N.NoInternetAccess, I18N.ErrorRefreshingNotPossibleWithoutInternet, I18N.Cancel);
+            }
+        }
 
-		private void ShowInfo(object sender, EventArgs args)
-		{
-			Navigation.PushAsync(new CoinInfoView(_account.Money.Currency));
-		}
+        private void ShowInfo(object sender, EventArgs args)
+        {
+            Navigation.PushAsync(new CoinInfoView(_account.Money.Currency));
+        }
 
-		private void Edit(object sender, EventArgs args)
-		{
-			var repo = AccountStorage.RepositoryOf(_account);
-			if (repo is LocalAccountRepository)
-			{
-				Navigation.PushOrPushModal(new AccountEditView(_account, true));
-			}
-			else
-			{
-				Navigation.PushOrPushModal(new RepositoryView(repo as OnlineAccountRepository, true));
-			}
-		}
+        private void Edit(object sender, EventArgs args)
+        {
+            var repo = AccountStorage.RepositoryOf(_account);
+            if (repo is LocalAccountRepository)
+            {
+                Navigation.PushOrPushModal(new AccountEditView(_account, true));
+            }
+            else
+            {
+                Navigation.PushOrPushModal(new RepositoryView(repo as OnlineAccountRepository, true));
+            }
+        }
 
-		private void SetFooter()
-		{
-			var accountTime = _account.LastUpdate;
-			var ratesTime = AccountStorage.NeededRatesFor(_account).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+        private void SetFooter()
+        {
+            var accountTime = _account.LastUpdate;
+            var ratesTime = AccountStorage.NeededRatesFor(_account).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
 
-			var time = _account is LocalAccount ? ratesTime : ratesTime < accountTime ? ratesTime : accountTime;
+            var time = _account is LocalAccount ? ratesTime : ratesTime < accountTime ? ratesTime : accountTime;
 
-			Device.BeginInvokeOnMainThread(() => Footer.Text = time.LastUpdateString());
-		}
-	}
+            Device.BeginInvokeOnMainThread(() => Footer.Text = time.LastUpdateString());
+        }
+    }
 }
 

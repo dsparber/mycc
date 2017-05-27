@@ -89,7 +89,12 @@ namespace MyCC.Core.Settings
 
         public static IEnumerable<string> MainCurrencies
         {
-            get { return SettingKeys.KeyMainCurrencies.GetStrings(new[] { CurrencyConstants.Btc.Id, CurrencyConstants.Eur.Id, CurrencyConstants.Usd.Id }); }
+            get
+            {
+                return
+                    SettingKeys.KeyMainCurrencies.GetStrings(new[]
+                        {CurrencyConstants.Btc.Id, CurrencyConstants.Eur.Id, CurrencyConstants.Usd.Id});
+            }
             set { SettingKeys.KeyMainCurrencies.SetStrings(value); }
         }
 
@@ -99,7 +104,8 @@ namespace MyCC.Core.Settings
             set { SettingKeys.KeyFurtherCurrencies.SetStrings(value); }
         }
 
-        public static IEnumerable<string> AllReferenceCurrencies => MainCurrencies.Concat(FurtherCurrencies).Distinct().ToList();
+        public static IEnumerable<string> AllReferenceCurrencies
+            => MainCurrencies.Concat(FurtherCurrencies).Distinct().ToList();
 
         public static SortOrder SortOrderAssets
         {
@@ -195,13 +201,23 @@ namespace MyCC.Core.Settings
             get { return SettingKeys.KeyFingerprintSet.Get(false); }
             set { SettingKeys.KeyFingerprintSet.Set(value); }
         }
+
         public static bool LockByShaking
         {
             get { return SettingKeys.KeyLockByShaking.Get(false); }
             set { SettingKeys.KeyLockByShaking.Set(value); }
         }
 
+        public static int PoloniexRequestNonce
+        {
+            get
+            {
+                var nounce = SettingKeys.KeyPoloniexRequestNonce.Get(0);
+                SettingKeys.KeyPoloniexRequestNonce.Set(nounce + 1);
+                return nounce;
+            }
 
-
+        }
     }
+
 }
