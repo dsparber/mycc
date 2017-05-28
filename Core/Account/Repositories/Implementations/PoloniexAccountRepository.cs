@@ -9,7 +9,6 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
@@ -25,7 +24,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
         private readonly string _privateApiKey;
 
         private const string Url = "https://poloniex.com/tradingApi";
-        private const string Command = "returnBalances";
+        private const string Command = "returnCompleteBalances";
         private const string HeaderSign = "Sign";
         private const string HeaderKey = "Key";
 
@@ -47,7 +46,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
         public override int RepositoryTypeId => AccountRepositoryDbm.DbTypePoloniexRepository;
 
-        public async Task<JObject> GetResult(Currency currency = null)
+        private async Task<JObject> GetResult()
         {
             try
             {
@@ -57,6 +56,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
                 {
                     new KeyValuePair<string, string>("nonce", ApplicationSettings.PoloniexRequestNonce.ToString()),
                     new KeyValuePair<string, string>("command", Command),
+                    new KeyValuePair<string, string>("account", "all")
                 });
 
                 var postString = await postData.ReadAsStringAsync();
@@ -74,11 +74,21 @@ namespace MyCC.Core.Account.Repositories.Implementations
                 client.DefaultRequestHeaders.Add(HeaderSign, hash);
 
                 var response = await client.PostAsync(Url, postData);
+
                 var content = await response.Content.ReadAsStringAsync();
-
-                if (!response.IsSuccessStatusCode) return null;
-
                 var json = JObject.Parse(content);
+
+                var error = (string)json["error"];
+                if (error?.StartsWith("Nonce must be greater than ") ?? false)
+                {
+                    var nonceString = error.Substring(27, error.IndexOf('.') - 27);
+                    if (int.TryParse(nonceString, out var nonce))
+                    {
+                        ApplicationSettings.PoloniexRequestNonce = nonce + 1;
+                        return await GetResult();
+                    }
+                }
+                error?.LogInfo();
 
                 return json["error"] == null ? json : null;
             }
@@ -112,7 +122,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
             foreach (var r in results)
             {
                 var currencyCode = r.Key;
-                var balance = r.Value.ToDecimal();
+                var balance = r.Value["available"].ToDecimal() + r.Value["onOrders"].ToDecimal();
 
                 if (balance == null || balance == 0) continue;
 

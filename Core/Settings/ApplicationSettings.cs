@@ -216,7 +216,10 @@ namespace MyCC.Core.Settings
                 SettingKeys.KeyPoloniexRequestNonce.Set(nounce + 1);
                 return nounce;
             }
-
+            set
+            {
+                SettingKeys.KeyPoloniexRequestNonce.Set(value);
+            }
         }
     }
 
