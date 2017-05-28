@@ -60,7 +60,7 @@ namespace MyCC.Forms.View.Pages
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Content = new ScrollView { Content = stack },
                 BackgroundColor = AppConstants.TableBackgroundColor,
-                RefreshCommand = new Command(Refresh),
+                RefreshCommand = new Command(Refresh)
             };
 
             ContentView.Content = _pullToRefresh;

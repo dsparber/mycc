@@ -27,23 +27,23 @@
   <string name="BalanceAvailableBittrex">Kontostand über Bittrex</string>
   <string name="BitcoinCanNotBeRemoved">Bitcoin kann nicht entfernt werden.</string>
   <string name="AddedWith">Über {0} hinzugefügt</string>
-  <string name="Key">Key</string>
-  <string name="Secret">Secret</string>
+  <string name="ApiKey">Key</string>
+  <string name="ApiSecret">Secret</string>
   <string name="Cancel">Abbrechen</string>
   <string name="ChangePin">PIN ändern</string>
   <string name="CoinName">Name:</string>
   <string name="CoinAlgorithm">Algorithmus:</string>
   <string name="CoinBlockHeight">Blockhöhe:</string>
-  <string name="CoinBlockReward">Blockbelohnung:</string>
+  <string name="CoinBlockReward">Belohnung pro Block:</string>
   <string name="CoinBlocktime">Blockzeit:</string>
   <string name="CoinDifficulty">Schwierigkeit:</string>
-  <string name="CoinExplorer">Coin explorer:</string>
+  <string name="CoinExplorer">Explorer (Blockchain):</string>
   <string name="CoinHashrate">Hashrate:</string>
   <string name="CoinMarketCap">Marktkapitalisierung:</string>
   <string name="CoinProofOfStake">PoS</string>
   <string name="CoinProofOfWork">PoW</string>
-  <string name="CoinSupply">Coin supply:</string>
-  <string name="CoinSupplyMax">Max. coin supply:</string>
+  <string name="CoinSupply">generierte Coins:</string>
+  <string name="CoinSupplyMax">Max. generierte Coins:</string>
   <string name="CoinType">Typ:</string>
   <string name="Copyright">© Ing. Georg Sparber</string>
   <string name="Cryptocurrencies">Cryptowährungen</string>
@@ -165,4 +165,5 @@
   <string name="InitialiseApp">App initialisieren</string>
   <string name="AllInfos">Alle Infos</string>
   <string name="AddressOnly">Nur Adresse</string>
+  <string name="UpdatingBalancesAndRates">Kontostände und Kurse werden aktualisiert</string>
 </resources>

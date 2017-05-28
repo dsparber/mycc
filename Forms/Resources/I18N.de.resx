@@ -147,7 +147,7 @@
   <data name="Amount" xml:space="preserve">
     <value>Betrag</value>
   </data>
-  <data name="Key" xml:space="preserve">
+  <data name="ApiKey" xml:space="preserve">
     <value>Key</value>
   </data>
   <data name="AppName" xml:space="preserve">
@@ -408,7 +408,7 @@
   <data name="SearchCurrencies" xml:space="preserve">
     <value>Währungen durchsuchen</value>
   </data>
-  <data name="Secret" xml:space="preserve">
+  <data name="ApiSecret" xml:space="preserve">
     <value>Secret</value>
   </data>
   <data name="Security" xml:space="preserve">
