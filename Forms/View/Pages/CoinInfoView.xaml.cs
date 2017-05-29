@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.CoinInfo;
 using MyCC.Core.Currencies;
@@ -15,8 +16,10 @@ using MyCC.Forms.Resources;
 using MyCC.Forms.Tasks;
 using Xamarin.Forms;
 using MyCC.Forms.Messages;
+using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Components.Header;
 using MyCC.Forms.View.Components.Table;
+using MyCC.Forms.View.Overlays;
 using Plugin.Connectivity;
 
 namespace MyCC.Forms.View.Pages
@@ -45,6 +48,32 @@ namespace MyCC.Forms.View.Pages
             ChangingStack.Children.Insert(0, header);
             InfoHeading.Text = Device.RuntimePlatform.Equals(Device.iOS) ? I18N.Info.ToUpper() : I18N.Info;
             InfoHeading.TextColor = AppConstants.TableSectionColor;
+
+            var allExplorer = CoinInfoStorage.Instance.GetExplorer(_currency).ToList();
+            foreach (var e in allExplorer)
+            {
+                var explorerButton = new CustomCellView(true)
+                {
+                    IsActionCell = true,
+                    Text = allExplorer.Count == 1 ? I18N.OpenInBlockExplorer : $"{I18N.OpenInBlockExplorer} ({e.Name})",
+                    IsCentered = true
+                };
+                var explorerGesture = new TapGestureRecognizer();
+                explorerGesture.Tapped += (sender, args) =>
+                {
+                    if (CrossConnectivity.Current.IsConnected)
+                    {
+                        Navigation.PushModalAsync(new NavigationPage(new WebOverlay(e.WebUrl(_currency))));
+                    }
+                    else
+                    {
+                        DisplayAlert(I18N.Error, I18N.NoInternetAccess, I18N.Ok);
+                    }
+                };
+                explorerButton.GestureRecognizers.Add(explorerGesture);
+
+                ContentView.Children.Add(explorerButton);
+            }
 
             _referenceView = new ReferenceCurrenciesView(new Money(1, _currency));
             ContentView.Children.Add(_referenceView);

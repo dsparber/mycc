@@ -14,6 +14,8 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class BlockExpertsCoinInfoRepository : ICoinInfoRepository
     {
+        public string WebUrl(Currency currency) => $"https://www.blockexperts.com/{currency.Code.ToLower()}";
+
         private Uri GetUri(Currency coin, string action) => new Uri($"https://www.blockexperts.com/api?coin={coin.Code.ToLower()}&action={action}");
         private const string KeyHeight = "getheight";
         private const string KeyDifficulty = "getdifficulty";

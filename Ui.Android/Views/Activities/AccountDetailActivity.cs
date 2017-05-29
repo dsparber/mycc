@@ -2,9 +2,7 @@
 using System.Linq;
 using Android.App;
 using Android.Content;
-using Android.Graphics;
 using Android.OS;
-using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
 using MyCC.Ui.Android.Views.Fragments;
@@ -15,6 +13,7 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Settings;
+using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Messages;
 using MyCC.Ui.ViewData;
 using Newtonsoft.Json;
@@ -141,18 +140,23 @@ namespace MyCC.Ui.Android.Views.Activities
             var addressText = FindViewById<TextView>(Resource.Id.text_address);
             addressText.Text = ViewData.ViewData.AccountDetail.AccountAddressString(_account);
 
-            if (ViewData.ViewData.AccountDetail.AddressClickable(_account))
+            var explorerButton = FindViewById<Button>(Resource.Id.button_open_in_blockexplorer);
+            explorerButton.Visibility = ViewData.ViewData.AccountDetail.AddressClickable(_account) ? ViewStates.Visible : ViewStates.Gone;
+
+            explorerButton.Click += (sender, args) =>
             {
-                addressText.SetTextColor(new Color(ContextCompat.GetColor(this, Resource.Color.colorPrimary)));
-                addressText.Clickable = true;
-                addressText.PaintFlags = PaintFlags.UnderlineText;
-                addressText.Click += (sender, args) =>
+                if (ConnectivityStatus.IsConnected)
                 {
                     var intent = new Intent(this, typeof(WebviewActivity));
                     intent.PutExtra(WebviewActivity.ExtraUrl, ViewData.ViewData.AccountDetail.AddressClickUrl(_account));
                     StartActivity(intent);
-                };
-            }
+                }
+                else
+                {
+                    this.ShowInfoDialog(Resource.String.Error, Resource.String.NoInternetAccess);
+                }
+            };
+
 
             FindViewById(Resource.Id.label_source).Visibility = show(ViewData.ViewData.AccountDetail.ShowAccountSource(_account));
             FindViewById(Resource.Id.text_source).Visibility = show(ViewData.ViewData.AccountDetail.ShowAccountSource(_account));

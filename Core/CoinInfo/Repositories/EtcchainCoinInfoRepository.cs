@@ -16,6 +16,8 @@ namespace MyCC.Core.CoinInfo.Repositories
     {
         private static readonly Uri Url = new Uri("https://etcchain.com/api/v1/getIndex");
 
+        public string WebUrl(Currency currency) => "https://etcchain.com/explorer";
+
         private const string KeyEtc = "etc";
         private const string KeyDifficulty = "difficulty";
         private const string KeyHashrate = "hash_rate";

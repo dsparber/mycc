@@ -39,7 +39,7 @@
                                 Margin="15, 25, 15, 7.5"
                                 FontSize="14" />
                             <StackLayout
-                                Margin="15,0,15,0"
+                                Margin="15,0,15,25"
                                 Orientation="Horizontal">
                                 <StackLayout
                                     x:Name="InfoStackHeadings"

@@ -10,6 +10,8 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class ReddCoinInfoRepository : ICoinInfoRepository
     {
+        public string WebUrl(Currency currency) => "http://live.reddcoin.com/status";
+
         private static readonly Uri InfoUri = new Uri("https://live.reddcoin.com/api/status?q=getInfo");
 
         private const string KeyInfo = "info";

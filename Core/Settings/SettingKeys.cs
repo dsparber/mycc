@@ -31,6 +31,7 @@
         public const string KeyPinLength = "pin-length";
         public const string KeyFingerprintSet = "fingerprint-set";
         public const string KeyLockByShaking = "lock_by_shaking";
+        public const string KeySecureXpub = "secure_xpub";
 
         public const string PreferredBitcoinRepository = "preferred-bitcoin-repository";
         public const string KeyAssetsColumnHideWhenSmall = "pref_assets_column_to_hide_if_small";

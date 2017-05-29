@@ -17,9 +17,11 @@ namespace MyCC.Ui.Android.Views.Activities
         private View _buttonDisablePin;
         private View _buttonChangePin;
         private View _fingerprintView;
+        private View _secureXpubView;
         private View _useShakeView;
         private Switch _fingerprintSwitch;
         private Switch _useShakeSwitch;
+        private Switch _secureXpubSwitch;
         private HeaderFragment _header;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -35,9 +37,11 @@ namespace MyCC.Ui.Android.Views.Activities
             _buttonDisablePin = FindViewById(Resource.Id.button_disable_pin);
             _buttonChangePin = FindViewById(Resource.Id.button_change_pin);
             _fingerprintView = FindViewById(Resource.Id.layout_use_fingerprint);
+            _secureXpubView = FindViewById(Resource.Id.layout_secure_xpub);
             _useShakeView = FindViewById(Resource.Id.layout_use_shake_gesture);
             _fingerprintSwitch = FindViewById<Switch>(Resource.Id.switch_use_fingerprint);
             _useShakeSwitch = FindViewById<Switch>(Resource.Id.switch_use_shake_gesture);
+            _secureXpubSwitch = FindViewById<Switch>(Resource.Id.switch_secure_xpub);
             _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
 
             _fingerprintSwitch.CheckedChange += (sender, args) =>
@@ -46,6 +50,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 SetHeaderText();
             };
             _useShakeSwitch.CheckedChange += (sender, args) => ApplicationSettings.LockByShaking = args.IsChecked;
+            _secureXpubSwitch.CheckedChange += (sender, args) => ApplicationSettings.SecureXpub = args.IsChecked;
 
             _buttonEnablePin.Click += (sender, args) => OpenPinActivity(true, false);
             _buttonDisablePin.Click += (sender, args) => OpenPinActivity(false, true);
@@ -59,10 +64,13 @@ namespace MyCC.Ui.Android.Views.Activities
             _buttonEnablePin.Visibility = !ApplicationSettings.IsPinSet ? ViewStates.Visible : ViewStates.Gone;
             _buttonDisablePin.Visibility = ApplicationSettings.IsPinSet ? ViewStates.Visible : ViewStates.Gone;
             _buttonChangePin.Visibility = ApplicationSettings.IsPinSet ? ViewStates.Visible : ViewStates.Gone;
+
             _fingerprintView.Visibility = FingerprintHelper.IsFingerprintAvailable && ApplicationSettings.IsPinSet ? ViewStates.Visible : ViewStates.Gone;
             _useShakeView.Visibility = ApplicationSettings.IsPinSet ? ViewStates.Visible : ViewStates.Gone;
+            _secureXpubView.Visibility = ApplicationSettings.IsPinSet ? ViewStates.Visible : ViewStates.Gone;
             _fingerprintSwitch.Checked = ApplicationSettings.IsFingerprintEnabled;
             _useShakeSwitch.Checked = ApplicationSettings.LockByShaking;
+            _secureXpubSwitch.Checked = ApplicationSettings.SecureXpub;
 
             SetHeaderText();
         }

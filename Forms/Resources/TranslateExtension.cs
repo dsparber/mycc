@@ -5,6 +5,8 @@ using System.Resources;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+
 namespace MyCC.Forms.Resources
 {
 
@@ -17,30 +19,17 @@ namespace MyCC.Forms.Resources
 
         public TranslateExtension()
         {
-            _ci = DependencyService.Get<ILocalise>().GetCurrentCultureInfo();
+            _ci = CultureInfo.CurrentCulture;
         }
 
         public string Text { get; set; }
 
         public object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (Text == null)
-            {
-                return "";
-            }
+            if (Text == null) return string.Empty;
 
-            var temp = new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-
-            var translation = temp.GetString(Text, _ci);
-            if (translation == null)
-            {
-#if DEBUG
-                throw new ArgumentException($"Key '{Text}' was not found in resources '{ResourceId}' for culture '{_ci.Name}'.");
-#else
-				translation = Text; // HACK: returns the key, which GETS DISPLAYED TO THE USER
-#endif
-            }
-            return translation;
+            var res = new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            return res.GetString(Text, _ci) ?? res.GetString(Text, CultureInfo.InvariantCulture) ?? Text;
         }
     }
 }

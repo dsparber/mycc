@@ -89,18 +89,13 @@ namespace MyCC.Core.Settings
 
         public static IEnumerable<string> MainCurrencies
         {
-            get
-            {
-                return
-                    SettingKeys.KeyMainCurrencies.GetStrings(new[]
-                        {CurrencyConstants.Btc.Id, CurrencyConstants.Eur.Id, CurrencyConstants.Usd.Id});
-            }
+            get { return SettingKeys.KeyMainCurrencies.GetStrings(SettingUtils.DefaultStaredReferenceCurrencies); }
             set { SettingKeys.KeyMainCurrencies.SetStrings(value); }
         }
 
         public static IEnumerable<string> FurtherCurrencies
         {
-            get { return SettingKeys.KeyFurtherCurrencies.GetStrings(); }
+            get { return SettingKeys.KeyFurtherCurrencies.GetStrings(SettingUtils.DefaultFurtherReferenceCurrencies); }
             set { SettingKeys.KeyFurtherCurrencies.SetStrings(value); }
         }
 
@@ -206,6 +201,12 @@ namespace MyCC.Core.Settings
         {
             get { return SettingKeys.KeyLockByShaking.Get(false); }
             set { SettingKeys.KeyLockByShaking.Set(value); }
+        }
+
+        public static bool SecureXpub
+        {
+            get { return !IsPinSet || SettingKeys.KeySecureXpub.Get(true); }
+            set { SettingKeys.KeySecureXpub.Set(value); }
         }
 
         public static int PoloniexRequestNonce

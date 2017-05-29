@@ -53,7 +53,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
             _webView.Settings.JavaScriptEnabled = true;
             _webView.Settings.DomStorageEnabled = true;
-            _webView.SetWebViewClient(new CustomWebViewClient(_progressBar, _openLinksInNewActivity));
+            _webView.SetWebViewClient(new CustomWebViewClient(this, _progressBar, _openLinksInNewActivity));
             _webView.LoadUrl(url);
         }
 
@@ -67,11 +67,13 @@ namespace MyCC.Ui.Android.Views.Activities
         {
             private readonly ProgressBar _progressBar;
             private readonly bool _openLinksInNewActivity;
+            private readonly WebviewActivity _webviewActivity;
 
-            public CustomWebViewClient(ProgressBar progressBar, bool openLinksInNewActivity)
+            public CustomWebViewClient(WebviewActivity webviewActivity, ProgressBar progressBar, bool openLinksInNewActivity)
             {
                 _progressBar = progressBar;
                 _openLinksInNewActivity = openLinksInNewActivity;
+                _webviewActivity = webviewActivity;
             }
 
             public override void OnPageFinished(WebView view, string url)
@@ -90,9 +92,16 @@ namespace MyCC.Ui.Android.Views.Activities
             {
                 if (!_openLinksInNewActivity) return false;
 
-                var intent = new Intent(Application.Context, typeof(WebviewActivity));
-                intent.PutExtra(ExtraUrl, request.Url.ToString());
-                Application.Context.StartActivity(intent);
+                if (ConnectivityStatus.IsConnected)
+                {
+                    var intent = new Intent(Application.Context, typeof(WebviewActivity));
+                    intent.PutExtra(ExtraUrl, request.Url.ToString());
+                    Application.Context.StartActivity(intent);
+                }
+                else
+                {
+                    _webviewActivity.ShowInfoDialog(Resource.String.Error, Resource.String.NoInternetAccess);
+                }
 
                 return true;
             }

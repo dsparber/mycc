@@ -3,78 +3,98 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <fragment
-        android:name="MyCC.Ui.Android.Views.Fragments.HeaderFragment"
-        android:id="@+id/header_fragment"
+  <fragment
+      android:name="MyCC.Ui.Android.Views.Fragments.HeaderFragment"
+      android:id="@+id/header_fragment"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp"
+        android:id="@+id/linearLayout1">
+      <Button
+          android:text="@string/EnablePin"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/button_enable_pin"
+          android:textColor="#fff" />
+      <Button
+          android:text="@string/DisablePin"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/button_disable_pin"
+          android:textColor="#fff" />
+      <Button
+          android:text="@string/ChangePin"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/button_change_pin"
+          android:textColor="#fff" />
+      <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/layout_use_shake_gesture"
+          android:layout_marginTop="24dp"
+          android:layout_marginLeft="8dp"
+          android:layout_marginRight="8dp">
+        <TextView
+            android:text="@string/UseShakeGesture"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="24dp"
-            android:id="@+id/linearLayout1">
-            <Button
-                android:text="@string/EnablePin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_enable_pin"
-                android:textColor="#fff" />
-            <Button
-                android:text="@string/DisablePin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_disable_pin"
-                android:textColor="#fff" />
-            <Button
-                android:text="@string/ChangePin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_change_pin"
-                android:textColor="#fff" />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/layout_use_shake_gesture"
-                android:layout_marginTop="24dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp">
-                <TextView
-                    android:text="@string/UseShakeGesture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textColor="@color/primary_text_default_material_light"
-                    android:gravity="center_vertical" />
-                <Switch
-                    android:id="@+id/switch_use_shake_gesture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/layout_use_fingerprint"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp">
-                <TextView
-                    android:text="@string/UseFingerprint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textColor="@color/primary_text_default_material_light"
-                    android:gravity="center_vertical" />
-                <Switch
-                    android:id="@+id/switch_use_fingerprint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+            android:layout_weight="1"
+            android:textColor="@color/primary_text_default_material_light"
+            android:gravity="center_vertical" />
+        <Switch
+            android:id="@+id/switch_use_shake_gesture"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+      </LinearLayout>
+      <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/layout_secure_xpub"
+           android:layout_marginTop="8dp"
+           android:layout_marginLeft="8dp"
+           android:layout_marginRight="8dp">
+        <TextView
+            android:text="@string/SecureXpub"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/primary_text_default_material_light"
+            android:gravity="center_vertical" />
+        <Switch
+            android:id="@+id/switch_secure_xpub"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+      </LinearLayout>
+      <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/layout_use_fingerprint"
+          android:layout_marginTop="8dp"
+          android:layout_marginLeft="8dp"
+          android:layout_marginRight="8dp">
+        <TextView
+            android:text="@string/UseFingerprint"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/primary_text_default_material_light"
+            android:gravity="center_vertical" />
+        <Switch
+            android:id="@+id/switch_use_fingerprint"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
 </LinearLayout>

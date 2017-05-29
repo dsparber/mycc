@@ -600,4 +600,10 @@
   <data name="UpdatingBalancesAndRates" xml:space="preserve">
     <value>Updating balances and rates</value>
   </data>
+  <data name="SecureXpub" xml:space="preserve">
+    <value>Secure xpub</value>
+  </data>
+  <data name="OpenInBlockExplorer" xml:space="preserve">
+    <value>Open in block explorer</value>
+  </data>
 </root>

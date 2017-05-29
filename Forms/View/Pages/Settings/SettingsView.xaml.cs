@@ -11,6 +11,8 @@ using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Pages.Settings.Data;
 using MyCC.Forms.View.Pages.Settings.Source;
 using MyCC.Forms.Constants;
+using Plugin.Connectivity;
+using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages.Settings
 {
@@ -36,8 +38,19 @@ namespace MyCC.Forms.View.Pages.Settings
             SourcesCell.Detail = PluralHelper.GetTextAccounts(AccountStorage.Instance.AllElements.Count);
             RatesCell.Tapped += (sender, e) => Navigation.PushAsync(new WatchedCurrenciesSettingsView());
             PreferredRateCell.Tapped += (s, e) => Navigation.PushAsync(new PreferredBitcoinSettingsPage());
-            PrivacyCell.Tapped += (sender, e) => Navigation.PushAsync(new WebContentView($"https://www.iubenda.com/privacy-policy/{I18N.PrivacyLinkId}/full-legal"));
-            RatesCell.DetailBreakMode = Xamarin.Forms.LineBreakMode.TailTruncation;
+            PrivacyCell.Tapped += (sender, e) =>
+            {
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    Navigation.PushAsync(new WebContentView($"https://www.iubenda.com/privacy-policy/{I18N.PrivacyLinkId}/full-legal"));
+                }
+                else
+                {
+                    DisplayAlert(I18N.Error, I18N.NoInternetAccess, I18N.Ok);
+                }
+
+            };
+            RatesCell.DetailBreakMode = LineBreakMode.TailTruncation;
             /*
                         AvailableCurrenciesCell.Tapped += (sender, args) => Navigation.PushAsync(new CurrencyGroupedInfoView());
             */
@@ -57,6 +70,7 @@ namespace MyCC.Forms.View.Pages.Settings
         {
             Navigation.PushAsync(new General.DefaultPageSettingsView());
         }
+
 
         private void AutoRefreshChanged(object sender, EventArgs e)
         {

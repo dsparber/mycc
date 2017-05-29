@@ -15,6 +15,8 @@ namespace MyCC.Core.CoinInfo.Repositories
     public class BlockrCoinInfoRepository : ICoinInfoRepository
     {
         private static Uri GetUri(Currency coin) => new Uri($"https://{coin.Code.ToLower()}.blockr.io/api/v1/coin/info");
+        public string WebUrl(Currency currency) => $"http://{currency.Code.ToLower()}.blockr.io/";
+
 
         private const string JsonKeyData = "data";
 

@@ -14,6 +14,8 @@ namespace MyCC.Core.CoinInfo.Repositories
     {
         private static Uri GetUri(string action) => new Uri($"https://blockchain.info/q/{action}");
 
+        public string WebUrl(Currency currency) => "https://blockchain.info/stats";
+
         private const string KeyHeight = "getblockcount";
         private const string KeyDifficulty = "getdifficulty";
         private const string KeyBlockReward = "bcperblock";

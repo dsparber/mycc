@@ -7,6 +7,7 @@ using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Rates;
 using MyCC.Core.Resources;
+using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
@@ -40,7 +41,7 @@ namespace MyCC.Forms.View.Pages
 
             var referenceView = new ReferenceCurrenciesView(account.Money);
 
-            var stack = new StackLayout { Spacing = 0, Margin = new Thickness(0, 0, 0, 40) };
+            var stack = new StackLayout { Spacing = 0, Margin = new Thickness(0, 0, 0, 40), Padding = new Thickness(0, 40, 0, 40) };
             var repo = AccountStorage.RepositoryOf(_account);
 
             if (repo is AddressAccountRepository && !(repo is BlockchainXpubAccountRepository))
@@ -123,16 +124,9 @@ namespace MyCC.Forms.View.Pages
                 {
                     Text = repo is BlockchainXpubAccountRepository ? "xpub" : (repo as AddressAccountRepository).Address.MiddleTruncate(),
                     FontSize = AppConstants.TableSectionFontSize,
-                    TextColor = repo is BlockchainXpubAccountRepository ? AppConstants.FontColorLight : AppConstants.ThemeColor,
+                    TextColor = AppConstants.FontColorLight,
                     LineBreakMode = LineBreakMode.MiddleTruncation,
                 };
-
-                if (!(repo is BlockchainXpubAccountRepository))
-                {
-                    var g = new TapGestureRecognizer();
-                    g.Tapped += (sender, args) => Navigation.PushModalAsync(new NavigationPage(new WebOverlay(((AddressAccountRepository)repo).WebUrl)));
-                    addressLabel.GestureRecognizers.Add(g);
-                }
 
                 dataStack.Children.Add(addressLabel);
                 updateLabelAction = () =>
@@ -169,9 +163,30 @@ namespace MyCC.Forms.View.Pages
 
             infoStackContainer.Children.Add(headerStack);
             infoStackContainer.Children.Add(dataStack);
+
+            if (repo is AddressAccountRepository && (!(repo is BlockchainXpubAccountRepository) || !ApplicationSettings.SecureXpub))
+            {
+                var explorerButton = new CustomCellView(true) { IsActionCell = true, Text = I18N.OpenInBlockExplorer, IsCentered = true };
+                var explorerGesture = new TapGestureRecognizer();
+                explorerGesture.Tapped += (sender, args) =>
+                {
+                    if (CrossConnectivity.Current.IsConnected)
+                    {
+                        Navigation.PushModalAsync(
+                            new NavigationPage(new WebOverlay(((AddressAccountRepository)repo).WebUrl)));
+                    }
+                    else
+                    {
+                        DisplayAlert(I18N.Error, I18N.NoInternetAccess, I18N.Ok);
+                    }
+                };
+                explorerButton.GestureRecognizers.Add(explorerGesture);
+
+                stack.Children.Add(explorerButton);
+            }
+            stack.Children.Add(referenceView);
             stack.Children.Add(new SectionHeaderView(false) { Title = I18N.Info });
             stack.Children.Add(infoStackContainer);
-            stack.Children.Add(referenceView);
 
 
             _pullToRefresh = new PullToRefreshLayout

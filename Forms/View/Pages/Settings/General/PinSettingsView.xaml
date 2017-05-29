@@ -29,10 +29,13 @@
 						x:Name="ChangePinCell" />
                 </TableSection>
                 <TableSection
-					x:Name="FingerprintSection">
+					x:Name="SecurityOptionsSection">
                     <cells:CustomSwitchCell
 						Title="{resources:Translate UseFingerprint}"
 						x:Name="FingerprintCell" />
+                    <cells:CustomSwitchCell
+						Title="{resources:Translate SecureXpub}"
+						x:Name="SecureXpubCell" />
                 </TableSection>
             </TableView>
         </container:ChangingStackLayout>

@@ -18,6 +18,8 @@ namespace MyCC.Core.CoinInfo.Repositories
         private Uri GetUri(Currency coin, string action)
             => new Uri($"https://chainz.cryptoid.info/{coin.Code.ToLower()}/api.dws?q={action}");
 
+        public string WebUrl(Currency currency) => $"https://chainz.cryptoid.info/{currency.Code.ToLower()}/#!crypto";
+
         private const string KeySummary = "summary";
         private const string KeyHashrate = "hashrate";
 

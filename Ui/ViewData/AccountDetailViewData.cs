@@ -33,7 +33,7 @@ namespace MyCC.Ui.ViewData
 
         public string AccountName(Account account) => account.Name;
 
-        public bool AddressClickable(Account account) => account is OnlineFunctionalAccount && !(account is BittrexAccount) && !(account is PoloniexAccount) && !(account is BlockchainXpubAccount);
+        public bool AddressClickable(Account account) => account is OnlineFunctionalAccount && !(account is BittrexAccount) && !(account is PoloniexAccount) && (!(account is BlockchainXpubAccount) || !ApplicationSettings.SecureXpub);
 
         public string AddressClickUrl(FunctionalAccount account) => (AccountStorage.RepositoryOf(account) as AddressAccountRepository)?.WebUrl;
 

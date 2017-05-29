@@ -166,4 +166,6 @@
   <string name="AllInfos">Alle Infos</string>
   <string name="AddressOnly">Nur Adresse</string>
   <string name="UpdatingBalancesAndRates">Kontostände und Kurse werden aktualisiert</string>
+  <string name="SecureXpub">Xpub schützen</string>
+  <string name="OpenInBlockExplorer">Im Blockexplorer öffnen</string>
 </resources>

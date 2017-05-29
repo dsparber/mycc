@@ -18,6 +18,7 @@ namespace MyCC.Forms.View.Pages.Settings.General
             SetPinCells();
 
             FingerprintCell.Switch.Toggled += (sender, e) => { ApplicationSettings.IsFingerprintEnabled = e.Value; Messaging.Pin.SendValueChanged(); };
+            SecureXpubCell.Switch.Toggled += (sender, e) => ApplicationSettings.SecureXpub = e.Value;
 
             if (ApplicationSettings.IsFingerprintEnabled && ApplicationSettings.IsPinSet)
             {
@@ -25,8 +26,9 @@ namespace MyCC.Forms.View.Pages.Settings.General
             }
             else
             {
-                Table.Root.Remove(FingerprintSection);
+                Table.Root.Remove(SecurityOptionsSection);
             }
+            SecureXpubCell.Switch.IsToggled = ApplicationSettings.SecureXpub;
 
             Messaging.Pin.SubscribeValueChanged(this, SetPinCells);
         }
@@ -54,24 +56,40 @@ namespace MyCC.Forms.View.Pages.Settings.General
             }
 
             FingerprintCell.Switch.IsEnabled = ApplicationSettings.IsPinSet;
+            SecureXpubCell.Switch.IsEnabled = ApplicationSettings.IsPinSet;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            if (await CrossFingerprint.Current.IsAvailableAsync() && ApplicationSettings.IsPinSet)
+            if (ApplicationSettings.IsPinSet)
             {
-                if (!Table.Root.Contains(FingerprintSection))
+                if (!Table.Root.Contains(SecurityOptionsSection))
                 {
-                    Table.Root.Add(FingerprintSection);
+                    Table.Root.Add(SecurityOptionsSection);
                 }
             }
             else
             {
-                if (Table.Root.Contains(FingerprintSection))
+                if (Table.Root.Contains(SecurityOptionsSection))
                 {
-                    Table.Root.Remove(FingerprintSection);
+                    Table.Root.Remove(SecurityOptionsSection);
+                }
+            }
+
+            if (await CrossFingerprint.Current.IsAvailableAsync())
+            {
+                if (!SecurityOptionsSection.Contains(FingerprintCell))
+                {
+                    SecurityOptionsSection.Insert(0, FingerprintCell);
+                }
+            }
+            else
+            {
+                if (SecurityOptionsSection.Contains(FingerprintCell))
+                {
+                    SecurityOptionsSection.Remove(FingerprintCell);
                 }
             }
         }

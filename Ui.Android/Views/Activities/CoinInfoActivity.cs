@@ -2,7 +2,9 @@
 using System.Linq;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
+using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
 using MyCC.Ui.Android.Helpers;
@@ -11,6 +13,7 @@ using Newtonsoft.Json;
 using MyCC.Core.Account.Models.Base;
 using Android.Support.V4.Widget;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.CoinInfo;
 using MyCC.Core.Currencies.Models;
 using MyCC.Ui.DataItems;
 using MyCC.Ui.Messages;
@@ -63,6 +66,33 @@ namespace MyCC.Ui.Android.Views.Activities
             _swipeToRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
 
             _swipeToRefresh.Refresh += (sender, e) => Messaging.Request.RateAndInfo.Send(_currency);
+
+            var explorerButtosView = FindViewById<LinearLayout>(Resource.Id.view_open_in_blockexplorer);
+            var explorerList = CoinInfoViewData.ExplorerList(_currency);
+            foreach (var explorer in explorerList)
+            {
+                var button = new Button(this)
+                {
+                    Text = explorerList.Count == 1 ? Resources.GetString(Resource.String.OpenInBlockExplorer)
+                            : $"{Resources.GetString(Resource.String.OpenInBlockExplorer)} ({explorer.Name})"
+                };
+                button.SetTextColor(Color.White);
+                button.Click += (sender, args) =>
+                {
+                    if (ConnectivityStatus.IsConnected)
+                    {
+                        var intent = new Intent(this, typeof(WebviewActivity));
+                        intent.PutExtra(WebviewActivity.ExtraUrl, explorer.WebUrl(_currency));
+                        StartActivity(intent);
+                    }
+                    else
+                    {
+                        this.ShowInfoDialog(Resource.String.Error, Resource.String.NoInternetAccess);
+                    }
+                };
+                explorerButtosView.AddView(button);
+            }
+            explorerButtosView.Visibility = explorerList.Count > 0 ? ViewStates.Visible : ViewStates.Gone;
 
             LoadData();
         }

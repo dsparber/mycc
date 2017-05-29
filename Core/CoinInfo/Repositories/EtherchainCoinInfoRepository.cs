@@ -13,6 +13,8 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class EtherchainCoinInfoRepository : ICoinInfoRepository
     {
+        public string WebUrl(Currency currency) => "https://etherchain.org/";
+
         private static readonly Uri UrlMining = new Uri("https://etherchain.org/api/miningEstimator");
         private static readonly Uri UrlBlockCount = new Uri("https://etherchain.org/api/blocks/count");
         private static readonly Uri UrlSupply = new Uri("https://api.etherscan.io/api?module=stats&action=ethsupply");

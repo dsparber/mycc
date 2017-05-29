@@ -41,6 +41,6 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
         protected override FunctionalAccount GetAccount(int? id, string name, Money money, bool isEnabled) => new BlockchainXpubAccount(id, name, money, isEnabled, DateTime.Now, this);
 
-        public override string WebUrl => string.Empty;
+        public override string WebUrl => $"https://blockchain.info/xpub/{Address}";
     }
 }

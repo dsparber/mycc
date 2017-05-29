@@ -42,6 +42,8 @@ namespace MyCC.Ui.ViewData
                 .ToList();
         }
 
+        public static List<ICoinInfoRepository> ExplorerList(Currency currency) => CoinInfoStorage.Instance.GetExplorer(currency).ToList();
+
         public static DateTime LastUpdate(Currency currency)
         {
             var ratesTime = ApplicationSettings.AllReferenceCurrencies

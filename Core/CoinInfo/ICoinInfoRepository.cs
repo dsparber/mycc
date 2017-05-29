@@ -24,5 +24,7 @@ namespace MyCC.Core.CoinInfo
         /// </summary>
         /// <value>The name.</value>
         string Name { get; }
+
+        string WebUrl(Currency currency);
     }
 }

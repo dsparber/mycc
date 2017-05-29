@@ -6,6 +6,7 @@ using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
+using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;
 
 namespace MyCC.Ui.Android.Views.Fragments
@@ -91,12 +92,20 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             FindPreference("pref_privacy").PreferenceClick += (sender, args) =>
             {
-                var intent = new Intent(Context, typeof(WebviewActivity));
-                intent.PutExtra(WebviewActivity.ExtraUrl, $"https://www.iubenda.com/privacy-policy/{Resources.GetString(Resource.String.PrivacyLinkId)}/full-legal");
-                intent.PutExtra(WebviewActivity.ExtraOpenLinksInNewActivity, true);
-                intent.PutExtra(WebviewActivity.ExtraShowVersionHeader, true);
-                intent.PutExtra(WebviewActivity.ExtraTitle, Resources.GetString(Resource.String.Privacy));
-                StartActivity(intent);
+                if (ConnectivityStatus.IsConnected)
+                {
+                    var intent = new Intent(Context, typeof(WebviewActivity));
+                    intent.PutExtra(WebviewActivity.ExtraUrl, $"https://www.iubenda.com/privacy-policy/{Resources.GetString(Resource.String.PrivacyLinkId)}/full-legal");
+                    intent.PutExtra(WebviewActivity.ExtraOpenLinksInNewActivity, true);
+                    intent.PutExtra(WebviewActivity.ExtraShowVersionHeader, true);
+                    intent.PutExtra(WebviewActivity.ExtraTitle, Resources.GetString(Resource.String.Privacy));
+                    StartActivity(intent);
+                }
+                else
+                {
+                    Activity?.ShowInfoDialog(Resource.String.Error, Resource.String.NoInternetAccess);
+                }
+
             };
         }
 

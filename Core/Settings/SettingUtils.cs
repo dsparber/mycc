@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Types;
 using Newtonsoft.Json.Linq;
@@ -16,6 +19,31 @@ namespace MyCC.Core.Settings
         private static readonly Dictionary<string, object> Cache = new Dictionary<string, object>();
         private static ISettings AppSettings => CrossSettings.Current;
 
+        public static IEnumerable<string> DefaultStaredReferenceCurrencies
+        {
+            get
+            {
+                var localCurrencyCode = RegionInfo.CurrentRegion.ISOCurrencySymbol;
+                var defaultCurrencies = new List<string> { CurrencyConstants.Btc.Id, CurrencyConstants.Usd.Id, new Currency(localCurrencyCode, false).Find().Id };
+                if (defaultCurrencies.Distinct().Count() == 2)
+                {
+                    defaultCurrencies.Add(CurrencyConstants.Eur.Id);
+                }
+                return defaultCurrencies.Distinct();
+            }
+        }
+
+        public static IEnumerable<string> DefaultFurtherReferenceCurrencies
+        {
+            get
+            {
+                if (DefaultStaredReferenceCurrencies.Contains(CurrencyConstants.Eur.Id))
+                {
+                    return new List<string>();
+                }
+                return new[] { CurrencyConstants.Eur.Id };
+            }
+        }
 
         public static T Get<T>(this string key, T defaultValue)
         {

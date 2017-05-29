@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MyCC.Core.Currencies;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
@@ -19,8 +18,8 @@ namespace MyCC.Core.Preperation
             }
             if (ApplicationSettings.LastCoreVersion < new CoreVersion(1, 1, 1))
             {
-                ApplicationSettings.MainCurrencies = SettingKeys.KeyMainCurrencies.TryToLoadOldCurrencies() ?? new[] { CurrencyConstants.Eur, CurrencyConstants.Btc, CurrencyConstants.Usd }.Select(c => c.Id);
-                ApplicationSettings.FurtherCurrencies = SettingKeys.KeyFurtherCurrencies.TryToLoadOldCurrencies() ?? new string[] { };
+                ApplicationSettings.MainCurrencies = SettingKeys.KeyMainCurrencies.TryToLoadOldCurrencies() ?? SettingUtils.DefaultStaredReferenceCurrencies;
+                ApplicationSettings.FurtherCurrencies = SettingKeys.KeyFurtherCurrencies.TryToLoadOldCurrencies() ?? SettingUtils.DefaultFurtherReferenceCurrencies;
                 ApplicationSettings.WatchedCurrencies = SettingKeys.KeyWatchedCurrencies.TryToLoadOldCurrencies() ?? new string[] { };
                 ApplicationSettings.StartupCurrencyAssets = SettingKeys.KeyAssetsPageCurrency.TryToLoadOldCurrency() ?? CurrencyConstants.Btc.Id;
                 ApplicationSettings.StartupCurrencyRates = SettingKeys.KeyRatePageCurrency.TryToLoadOldCurrency() ?? CurrencyConstants.Btc.Id;

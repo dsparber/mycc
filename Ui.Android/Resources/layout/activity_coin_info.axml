@@ -274,6 +274,15 @@
             </LinearLayout>
           </LinearLayout>
         </LinearLayout>
+        <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_marginLeft="24dp"
+           android:layout_marginRight="24dp"
+           android:layout_marginTop="8dp"
+           android:layout_marginBottom="8dp"
+           android:orientation="vertical"
+           android:layout_height="wrap_content"
+           android:id="@+id/view_open_in_blockexplorer"/>
         <TextView xmlns:p2="http://schemas.android.com/apk/res-auto"
             android:text="@string/EqualTo"
             android:layout_width="match_parent"
