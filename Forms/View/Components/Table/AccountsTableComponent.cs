@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies.Models;
@@ -23,13 +24,24 @@ namespace MyCC.Forms.View.Components.Table
         private readonly HybridWebView _webView;
         private readonly Currency _currency;
         private readonly bool _useEnabledAccounts;
+        private static bool _firstCall = true;
 
         public AccountsTableComponent(INavigation navigation, Currency currency, bool useEnabledAccounts)
         {
             _currency = currency;
             _useEnabledAccounts = useEnabledAccounts;
 
-            _webView = new HybridWebView("Html/accountsTable.html") { LoadFinished = UpdateView };
+            _webView = new HybridWebView("Html/accountsTable.html") { LoadFinished = async () =>  
+                {
+	                UpdateView();
+	                if (_firstCall)
+	                {
+	                    await Task.Delay(1000);
+	                    UpdateView();
+	                    _firstCall = false;
+	                }
+                } 
+            };
 
             _webView.RegisterCallback("Callback", idString =>
             {
@@ -100,11 +112,6 @@ namespace MyCC.Forms.View.Components.Table
                     new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
                         }, string.Empty);
                     _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
-
-                    if (Device.RuntimePlatform.Equals(Device.Android))
-                    {
-                        _webView.HeightRequest = 38 * (items.Count + 1) + 1;
-                    }
                 });
             }
             catch (Exception e)
