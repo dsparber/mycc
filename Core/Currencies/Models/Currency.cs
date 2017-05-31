@@ -65,6 +65,6 @@ namespace MyCC.Core.Currencies.Models
 
         public override bool Equals(object obj) => string.Equals(Id, (obj as Currency)?.Id);
         public override int GetHashCode() => Id.GetHashCode();
-        public override string ToString() => Code;
+        public override string ToString() => Id;
     }
 }

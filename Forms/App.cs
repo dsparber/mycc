@@ -46,9 +46,11 @@ namespace MyCC.Forms
         {
             base.OnStart();
             if (!ApplicationSettings.AppInitialised) return;
+			if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
 
-            // Subscribe to finished loading
-            Messaging.Loading.SubscribeFinished(this, async () =>
+
+			// Subscribe to finished loading
+			Messaging.Loading.SubscribeFinished(this, async () =>
             {
                 try
                 {

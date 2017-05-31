@@ -9,14 +9,10 @@ namespace MyCC.Core.Rates.Repositories.Interfaces
 
 		string Name { get; }
 
-		Task FetchAvailableRates();
-
 		bool IsAvailable(ExchangeRate rate);
 
 		List<ExchangeRate> Rates { get; }
 
 		RateRepositoryType RatesType { get; }
-
-		Task UpdateRates();
-	}
+  	}
 }

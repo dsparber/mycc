@@ -34,8 +34,14 @@ namespace MyCC.Core.Rates.Repositories
             Rates = new List<ExchangeRate>();
         }
 
-        public bool IsAvailable(ExchangeRate rate) =>
-            Rates.Contains(rate);
+        public bool IsAvailable(ExchangeRate rate) {
+            if (rate.ReferenceCurrency.Equals(CurrencyConstants.Eur) || rate.SecondaryCurrency.Equals(CurrencyConstants.Eur))
+			{
+                var currency = rate.ReferenceCurrency.Equals(CurrencyConstants.Eur) ? rate.SecondaryCurrency : rate.ReferenceCurrency;
+                return !currency.CryptoCurrency;
+			}
+			return false;
+        }
 
         public RateRepositoryType RatesType => RateRepositoryType.FiatRates;
 
@@ -83,10 +89,6 @@ namespace MyCC.Core.Rates.Repositories
                 return null;
             }
         }
-
-        public Task FetchAvailableRates() => FetchRates();
-
-        public Task UpdateRates() => FetchRates();
 
         public string Name => ConstantNames.FixerIo;
 

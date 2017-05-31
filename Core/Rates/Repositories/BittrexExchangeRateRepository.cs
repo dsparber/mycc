@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Currencies.Models;
+using MyCC.Core.Currencies;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates.Repositories.Interfaces;
 using Newtonsoft.Json.Linq;
@@ -70,11 +71,15 @@ namespace MyCC.Core.Rates.Repositories
 
         public int TypeId => (int)RatesRepositories.Bittrex;
 
-        public Task FetchAvailableRates() => FetchRates();
-
-        public bool IsAvailable(ExchangeRate rate) => Rates.Contains(rate);
-
-        public Task UpdateRates() => FetchRates();
+        public bool IsAvailable(ExchangeRate rate)
+        {
+            if (rate.ReferenceCurrency.Equals(CurrencyConstants.Btc) || rate.SecondaryCurrency.Equals(CurrencyConstants.Btc))
+            {
+                var currency = rate.ReferenceCurrency.Equals(CurrencyConstants.Btc) ? rate.SecondaryCurrency : rate.ReferenceCurrency;
+                return CurrencyConstants.FlagBittrex.Currencies().Any(c => c.Id.Equals(currency.Id));
+            }
+            return false;
+        }
 
         public List<ExchangeRate> Rates { get; }
 

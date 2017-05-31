@@ -33,8 +33,6 @@ namespace MyCC.Core.Rates.Repositories
 
         public int TypeId => (int)RatesRepositories.ItBit;
 
-        public Task FetchAvailableRates() => new Task(() => { });
-
         public bool IsAvailable(ExchangeRate rate)
         {
             return rate.ReferenceCurrencyCode.Equals("BTC") &&
@@ -42,8 +40,6 @@ namespace MyCC.Core.Rates.Repositories
         }
 
         public List<ExchangeRate> Rates { get; }
-
-        public Task UpdateRates() => Task.WhenAll(Rates.Where(r => r != null).Select(FetchRate));
 
         public RateRepositoryType RatesType => RateRepositoryType.CryptoToFiat;
 
@@ -61,8 +57,9 @@ namespace MyCC.Core.Rates.Repositories
                 if (!response.IsSuccessStatusCode) return null;
 
                 var content = await response.Content.ReadAsStringAsync();
-                var rateString = (string)JObject.Parse(content)[KeyLastPrice];
-                var rateValue = decimal.Parse(rateString, CultureInfo.InvariantCulture);
+                var rateValue = JObject.Parse(content)[KeyLastPrice].ToDecimal();
+
+                if (rateValue == null || rateValue.Value == 0) return null;
 
                 rate.Rate = rateValue;
                 rate.LastUpdate = DateTime.Now;

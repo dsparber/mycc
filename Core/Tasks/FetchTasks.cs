@@ -19,7 +19,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted?.Invoke();
-                await ExchangeRatesStorage.Instance.UpdateRates(progressCallback);
+                await ExchangeRateHelper.UpdateRates(progressCallback: progressCallback);
             }
             catch (Exception e)
             {
@@ -37,7 +37,6 @@ namespace MyCC.Core.Tasks
             {
                 onStarted?.Invoke();
                 await CurrencyStorage.Instance.LoadOnline();
-                await ExchangeRatesStorage.Instance.FetchAvailableRates();
             }
             catch (Exception e)
             {
@@ -49,15 +48,12 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchMissingRates(IEnumerable<ExchangeRate> rates, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
+        public static async Task FetchMissingRates(Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
         {
-            var ratesList = rates.ToList();
-            ratesList.RemoveAll(e => e == null);
-            if (ratesList.Count == 0) return;
             try
             {
                 onStarted?.Invoke();
-                await ExchangeRateHelper.FetchMissingRatesFor(ratesList, progressCallback);
+                await ExchangeRateHelper.FetchMissingRates(progressCallback);
             }
             catch (Exception e)
             {
@@ -156,23 +152,6 @@ namespace MyCC.Core.Tasks
             {
                 onStarted();
                 await ExchangeRateHelper.UpdateRates(neededRates);
-            }
-            catch (Exception e)
-            {
-                onError(e);
-            }
-            finally
-            {
-                onFinished();
-            }
-        }
-
-        public static async Task UpdateRates(Action onStarted, Action onFinished, Action<Exception> onError)
-        {
-            try
-            {
-                onStarted();
-                await ExchangeRatesStorage.Instance.UpdateRates(d => { });
             }
             catch (Exception e)
             {

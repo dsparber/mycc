@@ -239,11 +239,13 @@ namespace MyCC.Forms.View.Pages
         {
             var ratesTime = ApplicationSettings.AllReferenceCurrencies
                                     .Select(e => new ExchangeRate(_currency.Id, e))
-                                    .SelectMany(ExchangeRateHelper.GetNeededRates)
                                     .Distinct()
                                     .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty().Min();
 
             var infoTime = CoinInfoStorage.Instance.Get(_currency)?.LastUpdate ?? DateTime.Now;
+            if (infoTime == DateTime.MinValue){
+                infoTime = DateTime.Now;
+            }
 
             var text = (ratesTime < infoTime ? ratesTime : infoTime).LastUpdateString();
 

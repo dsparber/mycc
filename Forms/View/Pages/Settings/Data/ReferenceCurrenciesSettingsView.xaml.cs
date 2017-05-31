@@ -44,7 +44,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
                     var index = Math.Min(ApplicationSettings.AllReferenceCurrencies.OrderBy(x => x).ToList().IndexOf(c.Id), 0);
                     CurrenciesSection.Insert(index, GetCell(c.Id));
                     Messaging.ReferenceCurrencies.SendValueChanged();
-                    Task.Run(() => AppTaskHelper.FetchMissingRates(AccountStorage.NeededRates));
+                    Task.Run(() => AppTaskHelper.FetchMissingRates());
                 }
             };
             Navigation.PushAsync(overlay);

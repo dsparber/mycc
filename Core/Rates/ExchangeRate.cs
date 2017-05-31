@@ -155,6 +155,11 @@ namespace MyCC.Core.Rates
             }
         }
 
+        [Ignore]
+        public Currency ReferenceCurrency => new Currency(ReferenceCurrencyCode, ReferenceCurrencyIsCryptoCurrency);
+		[Ignore]
+        public Currency SecondaryCurrency => new Currency(SecondaryCurrencyCode, SecondaryCurrencyIsCryptoCurrency);
+
         /// <summary>
         /// Returns if the exchange rate contains the specified currency.
         /// </summary>
@@ -194,9 +199,9 @@ namespace MyCC.Core.Rates
         {
             if (Rate != null && Rate.Value > 0)
             {
-                return $"1 {ReferenceCurrencyCode} = {Rate} {SecondaryCurrencyCode}";
+                return $"1 {ReferenceCurrency} = {Rate} {SecondaryCurrency}";
             }
-            return $"{ReferenceCurrencyCode} <-> {SecondaryCurrencyCode}";
+            return $"{ReferenceCurrency}/{SecondaryCurrency}";
         }
     }
 }

@@ -6,6 +6,7 @@ using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates.Repositories.Interfaces;
 using MyCC.Core.Settings;
+using MyCC.Core.Account.Storage;
 
 namespace MyCC.Core.Rates
 {
@@ -60,16 +61,26 @@ namespace MyCC.Core.Rates
                     rates.Find(c => c?.Equals(neededRate.Inverse) ?? false)?.Inverse;
         }
 
-        public static Task FetchMissingRatesFor(IEnumerable<ExchangeRate> rates, Action<double> progressCallback = null)
+        public static Task FetchMissingRates(Action<double> progressCallback = null)
         {
-            var missingRates = rates.SelectMany(GetNeededRates).Distinct();
-            return FetchMissingRates(missingRates, progressCallback);
+            return FetchRates(NeededRates, true, progressCallback);
         }
 
-        private static async Task FetchMissingRates(IEnumerable<ExchangeRate> missingRates, Action<double> progressCallback = null)
+        private static async Task FetchRates(IEnumerable<ExchangeRate> rates, bool excludeStoredRates = false, Action<double> progressCallback = null)
         {
-            var storedRates = ExchangeRatesStorage.Instance.StoredRates.ToList();
-            var neededToFetch = missingRates.Where(r => !(storedRates.Contains(r) || storedRates.Contains(r.Inverse))).ToList();
+            var neededRates = rates.SelectMany(GetNeededRates).Distinct();
+
+            IEnumerable<ExchangeRate> neededToFetch;
+            if (excludeStoredRates){
+                var storedRates = ExchangeRatesStorage.Instance.StoredRates.ToList();
+                neededToFetch = neededRates.Where(r => !(storedRates.Contains(r) || storedRates.Contains(r.Inverse))).ToList();
+            }
+            else{
+                neededToFetch = neededRates;
+            }
+
+            var neededToFetchCount = neededToFetch.Count();
+            if (neededToFetchCount == 0) return;
 
             var fetchedFixerIo = false;
             var fetchedCryptoToFiat = false;
@@ -77,7 +88,7 @@ namespace MyCC.Core.Rates
             var progress = .0;
             foreach (var r in neededToFetch)
             {
-                progressCallback?.Invoke(progress / neededToFetch.Count); progress += 1;
+                progressCallback?.Invoke(progress / neededToFetchCount); progress += 1;
 
                 if (ExchangeRatesStorage.FixerIo.IsAvailable(r) || ExchangeRatesStorage.FixerIo.IsAvailable(r.Inverse))
                 {
@@ -121,36 +132,9 @@ namespace MyCC.Core.Rates
             progressCallback?.Invoke(1);
         }
 
-        public static async Task UpdateRates(IEnumerable<ExchangeRate> rates, Action<double> progressCallback = null)
+        public static Task UpdateRates(IEnumerable<ExchangeRate> rates = null, Action<double> progressCallback = null)
         {
-            var updatedRepositories = new List<int>();
-
-            var ratesToUpdate = rates.SelectMany(GetNeededRates).ToList();
-
-            var progress = .0;
-            foreach (var r in ratesToUpdate)
-            {
-                progressCallback?.Invoke(progress / ratesToUpdate.Count); progress += 1;
-
-                var supportedRepo = ExchangeRatesStorage.PreferredBtcRepository.IsAvailable(r) || ExchangeRatesStorage.PreferredBtcRepository.IsAvailable(r.Inverse) ? ExchangeRatesStorage.PreferredBtcRepository : null;
-                supportedRepo = supportedRepo ?? ExchangeRatesStorage.Instance.Repositories.FirstOrDefault(repo => repo.IsAvailable(r) || repo.IsAvailable(r.Inverse));
-
-                if (supportedRepo == null) continue;
-
-                var multiRepo = supportedRepo as IMultipleRatesRepository;
-                if (multiRepo != null)
-                {
-                    if (updatedRepositories.Contains(multiRepo.TypeId)) continue;
-
-                    updatedRepositories.Add(multiRepo.TypeId);
-                    await multiRepo.FetchRates();
-                }
-                else
-                {
-                    await ((ISingleRateRepository)supportedRepo).FetchRate(supportedRepo.IsAvailable(r) ? r : r.Inverse);
-                }
-            }
-            progressCallback?.Invoke(1);
+            return FetchRates(rates ?? NeededRates, progressCallback: progressCallback);
         }
 
         public static async Task FetchDollarBitcoinRates(Action<double> progressCallback = null)
@@ -190,6 +174,19 @@ namespace MyCC.Core.Rates
             var r2 = GetNeededRatesToBtc(new Currency(rate.SecondaryCurrencyCode, rate.SecondaryCurrencyIsCryptoCurrency));
 
             return r1.Concat(r2);
+        }
+
+        public static IEnumerable<ExchangeRate> NeededRates 
+        {
+            get
+            {
+                var referenceCurrencies = ApplicationSettings.AllReferenceCurrencies.ToList();
+                var usedCurrencies = AccountStorage.UsedCurrencies
+                                                   .Concat(ApplicationSettings.AllReferenceCurrencies)
+                                                   .Concat(ApplicationSettings.WatchedCurrencies);
+                
+                return usedCurrencies.SelectMany(currencyId => referenceCurrencies.Select(referenceCurrencyId => new ExchangeRate(currencyId, referenceCurrencyId))).Distinct();
+            }
         }
 
         private static IEnumerable<ExchangeRate> GetNeededRatesToBtc(Currency currency)

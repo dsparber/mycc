@@ -44,16 +44,6 @@ namespace MyCC.Forms.View.Pages
             button.Clicked += AddRate;
             NoDataStack.Children.Add(button);
 
-            if (ApplicationSettings.FirstLaunch)
-            {
-                Task.Run(async () => await AppTaskHelper.FetchMissingRates(ApplicationSettings.WatchedCurrencies
-                                       .Concat(ApplicationSettings.AllReferenceCurrencies)
-                                       .Select(c => new ExchangeRate(CurrencyConstants.Btc.Id, c))
-                                       .Select(r => ExchangeRateHelper.GetRate(r) ?? r)
-                                       .Where(r => r.Rate == null)
-                                       .Concat(AccountStorage.NeededRates).ToList()));
-            }
-
             if (ApplicationSettings.DataLoaded)
             {
                 SetNoData();
@@ -164,9 +154,8 @@ namespace MyCC.Forms.View.Pages
             var text = ApplicationSettings.WatchedCurrencies
                             .Concat(ApplicationSettings.AllReferenceCurrencies)
                             .Concat(AccountStorage.UsedCurrencies)
-                            .Select(e => new ExchangeRate(ApplicationSettings.StartupCurrencyRates, e))
-                            .SelectMany(ExchangeRateHelper.GetNeededRates)
                             .Distinct()
+                            .Select(e => new ExchangeRate(e, ApplicationSettings.StartupCurrencyRates))
                             .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min().LastUpdateString();
 
             Device.BeginInvokeOnMainThread(() => Footer.Text = text);

@@ -7,7 +7,7 @@ namespace MyCC.Core.Preperation
 {
     public static class Migrate
     {
-        public static bool MigrationsNeeded => ApplicationSettings.LastCoreVersion < new CoreVersion(1, 1);
+        public static bool MigrationsNeeded => ApplicationSettings.LastCoreVersion < new CoreVersion(1, 1, 3);
 
         public static async Task ExecuteMigratations()
         {
@@ -33,5 +33,18 @@ namespace MyCC.Core.Preperation
             }
 
         }
+		private static async Task MigrateTo_1_1_3()
+		{
+			try
+			{
+				var connection = DependencyService.Get<ISqLiteConnection>().GetOldConnection();
+				await connection.ExecuteAsync("DELETE FROM ExchangeRates;");
+			}
+			catch
+			{
+				// Do nothing -> Table was already deleted
+			}
+
+		}
     }
 }

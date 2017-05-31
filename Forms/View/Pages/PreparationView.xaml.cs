@@ -87,8 +87,6 @@ namespace MyCC.Forms.View.Pages
                     SetStatus(0.95, I18N.UpdatingBalancesAndRates);
                     await AppTaskHelper.FetchBalancesAndRates();
                 }
-                await TaskHelper.FetchMissingRates(false, progress => SetStatus(1, I18N.InitialiseApp));
-
 
                 Device.BeginInvokeOnMainThread(() =>
                 {

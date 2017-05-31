@@ -11,6 +11,7 @@ using MyCC.Core.Rates.Repositories.Interfaces;
 using Newtonsoft.Json.Linq;
 using SQLite;
 using MyCC.Core.Resources;
+using MyCC.Core.Currencies.Models;
 
 namespace MyCC.Core.Rates.Repositories
 {
@@ -25,7 +26,7 @@ namespace MyCC.Core.Rates.Repositories
 
         private readonly HttpClient _client;
 
-        private List<string> _supportedCurrencies;
+        private IEnumerable<Currency> _supportedCurrencies => CurrencyConstants.FlagCryptonator.Currencies();
         private readonly SQLiteAsyncConnection _connection;
 
 
@@ -33,7 +34,6 @@ namespace MyCC.Core.Rates.Repositories
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
             Rates = new List<ExchangeRate>();
-            _supportedCurrencies = CurrencyConstants.FlagCryptonator.Currencies().Select(c => c.Code).ToList();
             _connection = connection;
         }
 
@@ -83,15 +83,10 @@ namespace MyCC.Core.Rates.Repositories
 
         public int TypeId => (int)RatesRepositories.Cryptonator;
 
-        public Task FetchAvailableRates()
-        {
-            return null;
-        }
-
         public bool IsAvailable(ExchangeRate rate)
         {
-            return _supportedCurrencies.Contains(rate.ReferenceCurrencyCode) &&
-                   _supportedCurrencies.Contains(rate.SecondaryCurrencyCode);
+            return _supportedCurrencies.Any(c => c.Id.Equals(rate.ReferenceCurrency.Id)) &&
+                   _supportedCurrencies.Any(c => c.Id.Equals(rate.SecondaryCurrency.Id));
         }
 
         public List<ExchangeRate> Rates { get; }
@@ -99,10 +94,6 @@ namespace MyCC.Core.Rates.Repositories
         public RateRepositoryType RatesType => RateRepositoryType.CryptoRates;
 
         public string Name => ConstantNames.Cryptonator;
-
-        public Task UpdateRates() => Task.WhenAll(Rates.Where(r => r != null).Select(FetchRate));
-
-
-    }
+        }
 }
 

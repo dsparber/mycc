@@ -31,16 +31,12 @@ namespace MyCC.Core.Rates.Repositories
 
         public int TypeId => (int)RatesRepositories.Bitfinex;
 
-        public Task FetchAvailableRates() => new Task(() => { });
-
         public bool IsAvailable(ExchangeRate rate)
         {
             return rate.ReferenceCurrencyCode.Equals("BTC") && rate.SecondaryCurrencyCode.Equals("USD");
         }
 
         public List<ExchangeRate> Rates { get; }
-
-        public Task UpdateRates() => Task.WhenAll(Rates.Where(r => r != null).Select(FetchRate));
 
         public RateRepositoryType RatesType => RateRepositoryType.CryptoToFiat;
 

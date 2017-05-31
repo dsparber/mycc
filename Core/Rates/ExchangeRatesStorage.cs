@@ -59,21 +59,6 @@ namespace MyCC.Core.Rates
         public static IMultipleRatesRepository FixerIo => (IMultipleRatesRepository)GetRepository(RatesRepositories.FixerIo);
         public static IMultipleRatesRepository Btce => (IMultipleRatesRepository)GetRepository(RatesRepositories.Btce);
 
-        public async Task UpdateRates(Action<double> progressCallback)
-        {
-            var i = 0;
-            await Task.WhenAll(Repositories.Select(async r =>
-            {
-                await r.UpdateRates();
-                i += 1;
-                progressCallback?.Invoke((double)i / Repositories.Count());
-            }));
-        }
-        public async Task FetchAvailableRates()
-        {
-            await Task.WhenAll(Repositories.Select(r => r.FetchAvailableRates()).Where(t => t != null));
-        }
-
         public static IRateRepository PreferredBtcRepository
             => Instance.Repositories.First(r => r.TypeId == ApplicationSettings.PreferredBitcoinRepository);
     }

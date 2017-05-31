@@ -54,13 +54,7 @@ namespace MyCC.Ui.Android.Views.Activities
             if (!initBefore && _autoRefreshNeeded && ConnectivityStatus.IsConnected)
             {
                 _autoRefreshNeeded = false;
-                Task.Run(async () =>
-                {
-                    await TaskHelper.FetchMissingRates();
-
-                    await TaskHelper.UpdateAllAssetsAndRates();
-
-                });
+                Task.Run(async () => await TaskHelper.UpdateAllAssetsAndRates());
             }
         }
 
