@@ -60,6 +60,7 @@ namespace MyCC.Ui.Helpers
 
         public static string TrimAll(this string value)
         {
+            if (string.IsNullOrWhiteSpace(value)) return null;
             return string.Join(string.Empty, Regex.Replace(value ?? string.Empty, @"\t|\n|\r", "").Where(c => c != '\u200B')).Trim();
         }
 

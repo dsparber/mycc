@@ -163,7 +163,7 @@ namespace MyCC.Ui.Android.Views.Activities
             FindViewById(Resource.Id.label_address).Visibility = show(ViewData.ViewData.AccountDetail.ShowAccountAddress(_account));
             addressText.Visibility = show(ViewData.ViewData.AccountDetail.ShowAccountAddress(_account));
 
-            FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(_account.Money.Amount == 1 ? Resource.String.IsEqualTo : Resource.String.AreEqualTo), _account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney));
+            FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(_account.Money.Amount == 1 ? Resource.String.IsEqualTo : Resource.String.AreEqualTo), _account.Money);
 
 
             var items = AccountDetailViewData.Items(_account);

@@ -105,7 +105,7 @@ namespace MyCC.Ui.Android.Views.Activities
             _footerFragment.LastUpdate = AccountsGroupViewData.LastUpdate(_currency);
 
             var money = AccountsGroupViewData.GetEnabledSum(_currency);
-            FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(money.Amount == 1 ? Resource.String.IsEqualTo : Resource.String.AreEqualTo), money.ToStringTwoDigits(ApplicationSettings.RoundMoney));
+            FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(money.Amount == 1 ? Resource.String.IsEqualTo : Resource.String.AreEqualTo), money);
 
 
             var referenceItems = AccountsGroupViewData.ReferenceItems(_currency);

@@ -6,6 +6,7 @@ using MyCC.Core.Account.Helper;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Currencies.Models;
 using MyCC.Ui.Android.Views.Activities;
+using MyCC.Ui.Helpers;
 using Newtonsoft.Json;
 using Result = Android.App.Result;
 using StringHelper = MyCC.Ui.Helpers.StringHelper;
@@ -72,13 +73,18 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
                 var text = data.GetStringExtra(ScanQrCodeActivity.ExtraQrText);
 
                 var tuple = text.Parse(AddressAccountRepository.AllSupportedCurrencies);
-                _address = StringHelper.TrimAll(tuple.Item1);
-                _currency = tuple.Item2;
-                var name = StringHelper.TrimAll(tuple.Item3);
+
+                _address = tuple.Item1.TrimAll() ?? _address;
+                _currency = tuple.Item2 ?? _currency;
+                var name = tuple.Item3.TrimAll() ?? NameOrDefault;
 
                 _nameEntry.Text = name;
                 _addressEntry.Text = _address;
-                _currencyEntry.Text = $"{_currency.Name} ({_currency.Code})";
+
+                if (_currency != null)
+                {
+                    _currencyEntry.Text = $"{_currency.Name} ({_currency.Code})";
+                }
 
                 if (AddSourceActivity == null) return;
                 AddSourceActivity.Currency = _currency;
