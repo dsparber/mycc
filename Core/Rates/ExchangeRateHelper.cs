@@ -54,11 +54,13 @@ namespace MyCC.Core.Rates
         {
             var neededRate = new ExchangeRate(c1.Id, c2.Id, DateTime.Now);
             var rates = repository == null ?
-                ExchangeRatesStorage.Instance.StoredRates.ToList() :
+                ExchangeRatesStorage.Instance.StoredRates :
                 ExchangeRatesStorage.Instance.Repositories.First(r => r.TypeId == repository).Rates;
 
-            return rates.Find(c => c?.Equals(neededRate) ?? false) ??
-                    rates.Find(c => c?.Equals(neededRate.Inverse) ?? false)?.Inverse;
+            var foundRate = rates.FirstOrDefault(c => c != null && (c.Equals(neededRate) || c.Equals(neededRate.Inverse)));
+            if (foundRate == null) return null;
+
+            return foundRate.Equals(neededRate) ? foundRate : foundRate.Inverse;
         }
 
         public static Task FetchMissingRates(Action<double> progressCallback = null)
@@ -70,13 +72,15 @@ namespace MyCC.Core.Rates
         {
             var neededRates = rates.SelectMany(GetNeededRates).Distinct();
 
-            IEnumerable<ExchangeRate> neededToFetch;
-            if (excludeStoredRates){
-                var storedRates = ExchangeRatesStorage.Instance.StoredRates.ToList();
-                neededToFetch = neededRates.Where(r => !(storedRates.Contains(r) || storedRates.Contains(r.Inverse))).ToList();
+            List<ExchangeRate> neededToFetch;
+            if (excludeStoredRates)
+            {
+                var storedRates = ExchangeRatesStorage.Instance.StoredRates;
+                neededToFetch = neededRates.Except(storedRates).ToList();
             }
-            else{
-                neededToFetch = neededRates;
+            else
+            {
+                neededToFetch = neededRates.ToList();
             }
 
             var neededToFetchCount = neededToFetch.Count();
@@ -176,7 +180,7 @@ namespace MyCC.Core.Rates
             return r1.Concat(r2);
         }
 
-        public static IEnumerable<ExchangeRate> NeededRates 
+        public static IEnumerable<ExchangeRate> NeededRates
         {
             get
             {
@@ -184,7 +188,7 @@ namespace MyCC.Core.Rates
                 var usedCurrencies = AccountStorage.UsedCurrencies
                                                    .Concat(ApplicationSettings.AllReferenceCurrencies)
                                                    .Concat(ApplicationSettings.WatchedCurrencies);
-                
+
                 return usedCurrencies.SelectMany(currencyId => referenceCurrencies.Select(referenceCurrencyId => new ExchangeRate(currencyId, referenceCurrencyId))).Distinct();
             }
         }

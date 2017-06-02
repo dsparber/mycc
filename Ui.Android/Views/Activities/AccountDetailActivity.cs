@@ -12,7 +12,6 @@ using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Messages;
 using MyCC.Ui.ViewData;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Helpers;
@@ -13,7 +12,7 @@ namespace MyCC.Core.Rates
 {
     public class ExchangeRatesStorage
     {
-        public IEnumerable<ExchangeRate> StoredRates => Repositories.SelectMany(r => r.Rates).ToList();
+        public IEnumerable<ExchangeRate> StoredRates => Repositories.SelectMany(r => r.Rates);
         private readonly SQLiteAsyncConnection _connection;
         public readonly IEnumerable<IRateRepository> Repositories;
 

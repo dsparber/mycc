@@ -7,13 +7,17 @@ namespace MyCC.Core.Preperation
 {
     public static class Migrate
     {
-        public static bool MigrationsNeeded => ApplicationSettings.LastCoreVersion < new CoreVersion(1, 1, 3);
+        public static bool MigrationsNeeded => ApplicationSettings.LastCoreVersion < new CoreVersion(1, 1, 4);
 
         public static async Task ExecuteMigratations()
         {
             if (ApplicationSettings.LastCoreVersion < new CoreVersion(1, 1))
             {
                 await MigrateTo_1_1();
+            }
+            if (ApplicationSettings.LastCoreVersion < new CoreVersion(1, 1, 4))
+            {
+                await MigrateTo_1_1_4();
             }
         }
 
@@ -33,18 +37,18 @@ namespace MyCC.Core.Preperation
             }
 
         }
-		private static async Task MigrateTo_1_1_3()
-		{
-			try
-			{
-				var connection = DependencyService.Get<ISqLiteConnection>().GetOldConnection();
-				await connection.ExecuteAsync("DELETE FROM ExchangeRates;");
-			}
-			catch
-			{
-				// Do nothing -> Table was already deleted
-			}
+        private static async Task MigrateTo_1_1_4()
+        {
+            try
+            {
+                var connection = DependencyService.Get<ISqLiteConnection>().GetOldConnection();
+                await connection.ExecuteAsync("DELETE FROM ExchangeRates;");
+            }
+            catch
+            {
+                // Do nothing -> Table was already deleted
+            }
 
-		}
+        }
     }
 }
