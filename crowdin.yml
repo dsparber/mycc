@@ -1,0 +1,6 @@
+files:
+  - source: Ui.Android/Resources/values/strings.xml
+    translation: Ui.Android/Resources/values-%two_letters_code%/%original_file_name%
+    content_segmentation: '0'
+    translatable_elements:
+      - /resources/string
