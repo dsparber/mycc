@@ -147,7 +147,7 @@ namespace MyCC.Forms.View.Components.Table
                 Amount = new Money(sum, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
                 Reference = new Money(sum * rate.Rate ?? 0, currency).ToStringTwoDigits(ApplicationSettings.RoundMoney, false).Replace(" ", string.Empty);
                 Name = currency.Name;
-                CallbackString = currency.Code + "," + currency.CryptoCurrency;
+                CallbackString = currency.Code + "," + currency.IsCrypto;
                 Disabled = sum == 0;
             }
 

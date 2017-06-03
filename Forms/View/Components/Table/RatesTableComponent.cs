@@ -132,7 +132,7 @@ namespace MyCC.Forms.View.Components.Table
 
                 Code = currency.Code;
                 Reference = new Money(rate.Rate ?? 0, ApplicationSettings.StartupCurrencyRates.ToCurrency()).ToString8Digits(false);
-                CallbackString = currency.Code + "," + currency.CryptoCurrency;
+                CallbackString = currency.Code + "," + currency.IsCrypto;
             }
 
             public override string ToString()

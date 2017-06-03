@@ -37,7 +37,7 @@ namespace MyCC.Core.Rates
         {
             if (currency.Code.Equals("BTC")) return new ExchangeRate(CurrencyConstants.Btc.Id, CurrencyConstants.Btc.Id, DateTime.Now, 1);
 
-            if (currency.CryptoCurrency) return GetStoredRate(currency, CurrencyConstants.Btc);
+            if (currency.IsCrypto) return GetStoredRate(currency, CurrencyConstants.Btc);
             if (currency.Code.Equals("USD")) return GetStoredRate(currency, CurrencyConstants.Btc, repository ?? ApplicationSettings.PreferredBitcoinRepository);
 
             var rate = currency.Code.Equals("EUR") ? new ExchangeRate(CurrencyConstants.Eur.Id, CurrencyConstants.Eur.Id, DateTime.Now, 1) : GetStoredRate(currency, CurrencyConstants.Eur);
@@ -173,6 +173,14 @@ namespace MyCC.Core.Rates
 
             if (rate.ReferenceCurrencyCode.Equals(rate.SecondaryCurrencyCode)) return new List<ExchangeRate>();
 
+            if (rate.ReferenceCurrency.IsFiat && rate.SecondaryCurrency.IsFiat)
+            {
+                return new[]
+                {
+                    new ExchangeRate(rate.ReferenceCurrency.Id, CurrencyConstants.Eur.Id),
+                    new ExchangeRate(rate.SecondaryCurrency.Id, CurrencyConstants.Eur.Id)
+                }.Where(exchangeRate => !exchangeRate.ReferenceCurrency.Equals(exchangeRate.SecondaryCurrency));
+            }
 
             var r1 = GetNeededRatesToBtc(new Currency(rate.ReferenceCurrencyCode, rate.ReferenceCurrencyIsCryptoCurrency));
             var r2 = GetNeededRatesToBtc(new Currency(rate.SecondaryCurrencyCode, rate.SecondaryCurrencyIsCryptoCurrency));
@@ -180,7 +188,7 @@ namespace MyCC.Core.Rates
             return r1.Concat(r2);
         }
 
-        public static IEnumerable<ExchangeRate> NeededRates
+        private static IEnumerable<ExchangeRate> NeededRates
         {
             get
             {
@@ -195,9 +203,11 @@ namespace MyCC.Core.Rates
 
         private static IEnumerable<ExchangeRate> GetNeededRatesToBtc(Currency currency)
         {
-            if (currency.Code.Equals("BTC")) return new List<ExchangeRate>();
+            if (currency.Equals(CurrencyConstants.Btc))
+                return new List<ExchangeRate>();
 
-            if (currency.CryptoCurrency) return new List<ExchangeRate> { new ExchangeRate(currency.Id, CurrencyConstants.Btc.Id) };
+            if (currency.IsCrypto)
+                return new[] { new ExchangeRate(currency.Id, CurrencyConstants.Btc.Id) };
 
             return (currency.Equals(CurrencyConstants.Usd) ?
                 new List<ExchangeRate> { new ExchangeRate(CurrencyConstants.Usd.Id, CurrencyConstants.Btc.Id) } :

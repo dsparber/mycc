@@ -38,7 +38,7 @@ namespace MyCC.Core.Rates.Repositories
             if (rate.ReferenceCurrency.Equals(CurrencyConstants.Eur) || rate.SecondaryCurrency.Equals(CurrencyConstants.Eur))
 			{
                 var currency = rate.ReferenceCurrency.Equals(CurrencyConstants.Eur) ? rate.SecondaryCurrency : rate.ReferenceCurrency;
-                return !currency.CryptoCurrency;
+                return !currency.IsCrypto;
 			}
 			return false;
         }
