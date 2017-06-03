@@ -96,11 +96,11 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private static Tuple<string, DateTime> GetDetail(IRateSource source)
         {
-            var usd = ExchangeRateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Usd, source.Id);
-            var eur = ExchangeRateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Eur, source.Id);
+            var usd = RateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Usd, source.Id);
+            var eur = RateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Eur, source.Id);
 
             var usdString = (usd?.AsMoney ?? new Money(0, CurrencyConstants.Usd)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            var eurString = (eur?.AsMoney ?? ExchangeRateHelper.GetRate(CurrencyConstants.Btc, CurrencyConstants.Eur, source.Id)?.AsMoney ?? new Money(0, CurrencyConstants.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+            var eurString = (eur?.AsMoney ?? RateHelper.GetRate(CurrencyConstants.Btc, CurrencyConstants.Eur, source.Id)?.AsMoney ?? new Money(0, CurrencyConstants.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
             var note = eur == null && usd != null ? "*" : string.Empty;
 
             return Tuple.Create($"{eurString}{note} / {usdString}", usd?.LastUpdate ?? eur?.LastUpdate ?? DateTime.MinValue);

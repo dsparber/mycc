@@ -10,7 +10,7 @@ namespace MyCC.Core.Rates.Repositories
 
         string Name { get; }
 
-        bool IsAvailable(RateDescriptor rate);
+        bool IsAvailable(RateDescriptor rateDescriptor);
 
         Task<IEnumerable<ExchangeRate>> FetchRates(IEnumerable<RateDescriptor> rateDescriptors);
 

@@ -281,7 +281,7 @@ namespace MyCC.Forms.View.Pages
         private void SetFooter()
         {
             var accountTime = _account.LastUpdate;
-            var ratesTime = AccountStorage.NeededRatesFor(_account).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+            var ratesTime = AccountStorage.NeededRatesFor(_account).Distinct().Select(e => RateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
 
             var time = _account is LocalAccount ? ratesTime : ratesTime < accountTime ? ratesTime : accountTime;
 

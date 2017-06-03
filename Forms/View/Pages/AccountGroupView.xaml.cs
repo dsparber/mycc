@@ -134,7 +134,7 @@ namespace MyCC.Forms.View.Pages
         {
             var online = AccountStorage.AccountsWithCurrency(_currency).Where(a => a is OnlineFunctionalAccount).ToList();
             var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.AccountsWithCurrency(_currency).Select(a => a.LastUpdate).DefaultIfEmpty(DateTime.Now).Max();
-            var ratesTime = AccountStorage.NeededRatesFor(_currency).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+            var ratesTime = AccountStorage.NeededRatesFor(_currency).Distinct().Select(e => RateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
 
             var time = online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
 

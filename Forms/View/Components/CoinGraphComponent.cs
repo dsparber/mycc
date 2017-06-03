@@ -84,7 +84,7 @@ namespace MyCC.Forms.View.Components
             public Data(IGrouping<Currency, Account> group, Currency referenceCurrency)
             {
                 var rate = new ExchangeRate(group.Key.Id, referenceCurrency.Id);
-                rate = ExchangeRateHelper.GetRate(rate) ?? rate;
+                rate = RateHelper.GetRate(rate) ?? rate;
 
                 var totalMoney = new Money(group.Sum(a => a.IsEnabled ? a.Money.Amount : 0), group.Key);
 

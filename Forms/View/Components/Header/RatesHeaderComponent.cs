@@ -25,7 +25,7 @@ namespace MyCC.Forms.View.Components.Header
         {
             var text = string.Join(" / ", ApplicationSettings.MainCurrencies
                             .Where(c => !c.Equals(_currency.Id))
-                            .Select(c => new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc.Id, c)?.Rate ?? 0, c.ToCurrency())
+                            .Select(c => new Money(RateHelper.GetRate(CurrencyConstants.Btc.Id, c)?.Rate ?? 0, c.ToCurrency())
                             .ToStringTwoDigits(ApplicationSettings.RoundMoney)));
 
             text = string.IsNullOrWhiteSpace(text) ? _currency.Name : text;
@@ -37,7 +37,7 @@ namespace MyCC.Forms.View.Components.Header
             });
         }
 
-        private Money Sum => new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc, _currency)?.Rate ?? 0, _currency);
+        private Money Sum => new Money(RateHelper.GetRate(CurrencyConstants.Btc, _currency)?.Rate ?? 0, _currency);
 
         private void AddSubscriber()
         {

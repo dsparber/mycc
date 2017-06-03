@@ -1,99 +1,40 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using ModernHttpClient;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
+using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
-using SQLite;
 
 namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class FixerIoExchangeRateSource : IRateSource
+    public class FixerIoExchangeRateSource : JsonRateSource
     {
-        private const string Url = "http://api.fixer.io/latest";
+        public override RateSourceType Type => RateSourceType.Fiat;
+        public override RateSourceId Id => RateSourceId.FixerIo;
+        public override string Name => ConstantNames.FixerIo;
+
+        protected override Uri Uri => new Uri("http://api.fixer.io/latest");
 
         private const string JsonKeyRates = "rates";
 
-        private const int BufferSize = 256000;
-
-        private readonly HttpClient _client;
-        private readonly SQLiteAsyncConnection _connection;
-
-
-        public FixerIoExchangeRateSource(SQLiteAsyncConnection connection)
+        public override bool IsAvailable(RateDescriptor rateDescriptor)
         {
-            _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
-            _connection = connection;
-            Rates = new List<ExchangeRate>();
+            return rateDescriptor.ContainsCurrency(CurrencyConstants.Eur.Id) && rateDescriptor.GetCurrencyApartFrom(CurrencyConstants.Eur.Id).IsFiat();
         }
 
-        public bool IsAvailable(ExchangeRate rate)
+        protected override IEnumerable<(RateDescriptor rateDescriptor, decimal? rate)> GetRatesFromJson(JToken json)
         {
-            if (rate.ReferenceCurrency.Equals(CurrencyConstants.Eur) || rate.SecondaryCurrency.Equals(CurrencyConstants.Eur))
+            var result = new List<(RateDescriptor rateDescriptor, decimal? rate)>();
+            foreach (var token in (JObject)json[JsonKeyRates])
             {
-                var currency = rate.ReferenceCurrency.Equals(CurrencyConstants.Eur) ? rate.SecondaryCurrency : rate.ReferenceCurrency;
-                return !currency.IsCrypto;
+                var rate = token.Value.ToDecimal();
+                var rateDescriptor = new RateDescriptor(CurrencyConstants.Eur.Id, new Currency(token.Key, false).Id);
+                result.Add((rateDescriptor, rate));
             }
-            return false;
+            return result;
         }
-
-        public RateSourceType Type => RateSourceType.Fiat;
-
-        public int TypeId => (int)RateSourceId.FixerIo;
-
-
-        public async Task<IEnumerable<ExchangeRate>> FetchRates()
-        {
-            try
-            {
-                var uri = new Uri(Url);
-                var response = await _client.GetAsync(uri);
-
-                if (!response.IsSuccessStatusCode) return null;
-
-                var content = await response.Content.ReadAsStringAsync();
-                var json = JObject.Parse(content);
-                var ratesJson = (JObject)json[JsonKeyRates];
-
-                var fetchedRates = new List<ExchangeRate>();
-
-                foreach (var r in ratesJson)
-                {
-                    var rate = new ExchangeRate(CurrencyConstants.Eur.Id, new Currency(r.Key, false).Id,
-                        DateTime.Now, decimal.Parse((string)r.Value, CultureInfo.InvariantCulture))
-                    {
-                        RepositoryId = TypeId
-                    };
-                    fetchedRates.Add(rate);
-                }
-
-                var old = Rates.Except(fetchedRates).ToList();
-
-                Rates.Clear();
-                Rates.AddRange(fetchedRates);
-
-                await Task.WhenAll(old.Select(_connection.DeleteAsync));
-                await Task.WhenAll(fetchedRates.Select(_connection.InsertOrReplaceAsync));
-
-                return Rates;
-            }
-            catch (Exception e)
-            {
-                e.LogError();
-                return null;
-            }
-        }
-
-        public string Name => ConstantNames.FixerIo;
-
-        public List<ExchangeRate> Rates { get; }
     }
 }
-

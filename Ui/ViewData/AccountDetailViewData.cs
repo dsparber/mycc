@@ -25,7 +25,7 @@ namespace MyCC.Ui.ViewData
         public static HeaderDataItem HeaderData(Account account)
         {
             var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { account.Money.Currency.Id })
-                .Select(x => new Money(account.Money.Amount * ExchangeRateHelper.GetRate(account.Money.Currency.Id, x)?.Rate ?? 0, x.Find())).
+                .Select(x => new Money(account.Money.Amount * RateHelper.GetRate(account.Money.Currency.Id, x)?.Rate ?? 0, x.Find())).
                 OrderBy(m => m.Currency.Code);
 
             return new HeaderDataItem(account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
@@ -56,7 +56,7 @@ namespace MyCC.Ui.ViewData
         public static DateTime LastUpdate(FunctionalAccount account)
         {
             var accountTime = account.LastUpdate;
-            var ratesTime = AccountStorage.NeededRatesFor(account).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+            var ratesTime = AccountStorage.NeededRatesFor(account).Distinct().Select(e => RateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
 
             return account is LocalAccount ? ratesTime : ratesTime < accountTime ? ratesTime : accountTime;
         }
@@ -64,7 +64,7 @@ namespace MyCC.Ui.ViewData
         public static IEnumerable<ReferenceValueItem> Items(Account account)
         {
             return ApplicationSettings.AllReferenceCurrencies.Except(new[] { account.Money.Currency.Id })
-                .Select(c => new ReferenceValueItem(account.Money.Amount, ExchangeRateHelper.GetRate(account.Money.Currency.Id, c) ?? new ExchangeRate(account.Money.Currency.Id, c)))
+                .Select(c => new ReferenceValueItem(account.Money.Amount, RateHelper.GetRate(account.Money.Currency.Id, c) ?? new ExchangeRate(account.Money.Currency.Id, c)))
                 .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirection == SortDirection.Ascending);
         }
 

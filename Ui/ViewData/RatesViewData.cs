@@ -37,10 +37,10 @@ namespace MyCC.Ui.ViewData
         {
             return CurrencySettingsData.EnabledCurrencies
                 .Select(e => new ExchangeRate(c, e.Id))
-                .SelectMany(ExchangeRateHelper.GetNeededRates)
+                .SelectMany(RateHelper.GetNeededRates)
                 .Distinct()
                 .Where(e => e != null)
-                .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now)
+                .Select(e => RateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now)
                 .DefaultIfEmpty(DateTime.Now)
                 .Min();
         });
@@ -49,18 +49,18 @@ namespace MyCC.Ui.ViewData
         private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyHelper.Find, c =>
         {
 
-            var referenceMoney = new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc.Id, c)?.Rate ?? 0, c.Find());
+            var referenceMoney = new Money(RateHelper.GetRate(CurrencyConstants.Btc.Id, c)?.Rate ?? 0, c.Find());
 
             var additionalRefs = ApplicationSettings.MainCurrencies
                 .Except(new[] { c })
-                .Select(x => new Money(ExchangeRateHelper.GetRate(CurrencyConstants.Btc.Id, x)?.Rate ?? 0, x.Find()));
+                .Select(x => new Money(RateHelper.GetRate(CurrencyConstants.Btc.Id, x)?.Rate ?? 0, x.Find()));
 
             return new CoinHeaderData(referenceMoney, additionalRefs);
         });
 
         private static Dictionary<Currency, List<RateItem>> LoadRateItems() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyHelper.Find, c =>
         {
-            Func<Currency, Money> getReference = currency => new Money(ExchangeRateHelper.GetRate(currency.Id, c)?.Rate ?? 0, currency);
+            Func<Currency, Money> getReference = currency => new Money(RateHelper.GetRate(currency.Id, c)?.Rate ?? 0, currency);
 
             var items = CurrencySettingsData.EnabledCurrencies.Except(new[] { c.ToCurrency() }).Select(x => new RateItem(x, getReference(x)));
 

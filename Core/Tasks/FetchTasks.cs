@@ -20,7 +20,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted?.Invoke();
-                await ExchangeRateHelper.UpdateRates(progressCallback: progressCallback);
+                await RateHelper.UpdateRates(progressCallback: progressCallback);
             }
             catch (Exception e)
             {
@@ -54,7 +54,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted?.Invoke();
-                await ExchangeRateHelper.FetchMissingRates(progressCallback);
+                await RateHelper.FetchMissingRates(progressCallback);
             }
             catch (Exception e)
             {
@@ -94,7 +94,7 @@ namespace MyCC.Core.Tasks
             {
                 onStarted?.Invoke();
                 var ratesToUpdate = ApplicationSettings.AllReferenceCurrencies.Select(c => new ExchangeRate(currency.Id, c));
-                await ExchangeRateHelper.UpdateRates(ratesToUpdate, progressCallback);
+                await RateHelper.UpdateRates(ratesToUpdate, progressCallback);
             }
             catch (Exception e)
             {
@@ -152,7 +152,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted();
-                await ExchangeRateHelper.UpdateRates(neededRates);
+                await RateHelper.UpdateRates(neededRates);
             }
             catch (Exception e)
             {
@@ -169,7 +169,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted?.Invoke();
-                await ExchangeRateHelper.FetchDollarBitcoinRates(progressCallback);
+                await RateHelper.FetchDollarBitcoinRates(progressCallback);
             }
             catch (Exception e)
             {

@@ -39,13 +39,13 @@ namespace MyCC.Core.Account.Storage
 
         public static List<ExchangeRate> NeededRates => UsedCurrencies.Distinct()
                                        .SelectMany(c => ApplicationSettings.AllReferenceCurrencies.Select(cref => new RateDescriptor(c, cref)))
-                                       .Select(e => ExchangeRateHelper.GetRate(e) ?? e)
+                                       .Select(e => RateHelper.GetRate(e) ?? e)
                                        .Where(r => r?.Rate == null)
                                        .ToList();
 
         public static List<ExchangeRate> NeededRatesFor(Currency accountCurrency) => ApplicationSettings.AllReferenceCurrencies
                                        .Select(c => new ExchangeRate(accountCurrency.Id, c))
-                                       .Select(e => ExchangeRateHelper.GetRate(e) ?? e)
+                                       .Select(e => RateHelper.GetRate(e) ?? e)
                                        .Where(r => r.Rate == null)
                                        .ToList();
 
@@ -69,7 +69,7 @@ namespace MyCC.Core.Account.Storage
             .Select(e => e.Select(a =>
             {
                 var rate = new ExchangeRate(e.Key.Id, ApplicationSettings.StartupCurrencyAssets);
-                rate = ExchangeRateHelper.GetRate(rate) ?? rate;
+                rate = RateHelper.GetRate(rate) ?? rate;
 
                 return a.IsEnabled ? a.Money.Amount * rate.Rate ?? 0 : 0;
             }).Sum()).Count(v => v > 0);

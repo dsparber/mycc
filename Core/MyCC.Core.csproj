@@ -52,11 +52,12 @@
     <Compile Include="Currencies\Sources\OpenexchangeCurrencySource.cs" />
     <Compile Include="Preperation\Prepare.cs" />
     <Compile Include="Preperation\Migrate.cs" />
-    <Compile Include="Rates\ExchangeConstants.cs" />
+    <Compile Include="Rates\RateConstants.cs" />
     <Compile Include="Rates\ModelExtensions\ExchangeRateExtensionMethodes.cs" />
     <Compile Include="Rates\Models\ExchangeRateDbm.cs" />
     <Compile Include="Rates\Models\RateDescriptor.cs" />
     <Compile Include="Rates\ModelExtensions\RateDescriptorExtensionMethodes.cs" />
+    <Compile Include="Rates\Repositories\MultiUriJsonRateSource.cs" />
     <Compile Include="Rates\Repositories\Implementations\BitPayExchangeRateSource.cs" />
     <Compile Include="Rates\Repositories\Implementations\ItBitExchangeRateSource.cs" />
     <Compile Include="Rates\Repositories\Implementations\CoinapultExchangeRateSource.cs" />
@@ -111,7 +112,7 @@
     <Compile Include="Abstract\Database\IEntityDBM.cs" />
     <Compile Include="Abstract\Database\IEntityRepositoryIdDBM.cs" />
     <Compile Include="Helpers\ISQLiteConnection.cs" />
-    <Compile Include="Rates\ExchangeRateHelper.cs" />
+    <Compile Include="Rates\RateHelper.cs" />
     <Compile Include="Abstract\Models\Persistable.cs" />
     <Compile Include="Abstract\Models\IPersistableWithParent.cs" />
     <Compile Include="Abstract\Repositories\AbstractAvailabilityRepository.cs" />
@@ -198,6 +199,9 @@
     </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\netstandard1.1\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.1\lib\portable-net40+sl4+win8+wp8\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="Validation, Version=2.4.0.0, Culture=neutral, PublicKeyToken=2fc06f0d701809a7, processorArchitecture=MSIL">
       <HintPath>..\packages\Validation.2.4.15\lib\portable-net45+win8+wp8+wpa81\Validation.dll</HintPath>

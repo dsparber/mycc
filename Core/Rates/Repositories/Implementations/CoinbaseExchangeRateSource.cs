@@ -1,89 +1,36 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Net.Http;
-using System.Threading.Tasks;
-using ModernHttpClient;
 using MyCC.Core.Helpers;
+using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
-using SQLite;
 
 namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class CoinbaseExchangeRateSource : IRateSource
+    public class CoinbaseExchangeRateSource : MultiUriJsonRateSource
     {
-        private const string UrlUsd = "https://api.coinbase.com/v2/prices/BTC-USD/spot";
-        private const string UrlEur = "https://api.coinbase.com/v2/prices/BTC-EUR/spot";
-        private const string KeyData = "data";
-        private const string KeyPrice = "amount";
+        public override RateSourceId Id => RateSourceId.Coinbase;
+        public override RateSourceType Type => RateSourceType.CryptoToFiat;
+        public override string Name => ConstantNames.Coinbase;
 
-        private const int BufferSize = 256000;
+        private static readonly Uri UriUsd = new Uri("https://api.coinbase.com/v2/prices/BTC-USD/spot");
+        private static readonly Uri UriEur = new Uri("https://api.coinbase.com/v2/prices/BTC-EUR/spot");
 
-        private readonly HttpClient _client;
-        private readonly SQLiteAsyncConnection _connection;
-
-        public CoinbaseExchangeRateSource(SQLiteAsyncConnection connection)
+        protected override Uri GetUri(RateDescriptor rateDescriptor)
         {
-            _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
-            _client.DefaultRequestHeaders.Add("CB-VERSION", "2016-02-07");
-            _connection = connection;
-            Rates = new List<ExchangeRate>();
+            if (RateConstants.BtcUsdDescriptor.Equals(rateDescriptor)) return UriUsd;
+            return RateConstants.BtcEurDescriptor.Equals(rateDescriptor) ? UriEur : null;
         }
 
-        public int TypeId => (int)RateSourceId.Coinbase;
 
-        public bool IsAvailable(ExchangeRate rate)
+        public CoinbaseExchangeRateSource()
         {
-            return rate.ReferenceCurrencyCode.Equals("BTC") &&
-                (rate.SecondaryCurrencyCode.Equals("EUR") || rate.SecondaryCurrencyCode.Equals("USD"));
+            HttpHeader = ("CB-VERSION", "2016-02-07");
         }
 
-        public List<ExchangeRate> Rates { get; }
 
-        public RateSourceType Type => RateSourceType.CryptoToFiat;
-
-        public string Name => ConstantNames.Coinbase;
-
-        public async Task<ExchangeRate> FetchRate(ExchangeRate rate)
-        {
-            if (!IsAvailable(rate)) return null;
-
-            var uri = new Uri(rate.SecondaryCurrencyCode.Equals("EUR") ? UrlEur : UrlUsd);
-            try
-            {
-                var response = await _client.GetAsync(uri);
-
-                if (!response.IsSuccessStatusCode) return null;
-
-                var content = await response.Content.ReadAsStringAsync();
-                var rateString = (string)JObject.Parse(content)[KeyData][KeyPrice];
-                var rateValue = decimal.Parse(rateString, CultureInfo.InvariantCulture);
-
-                rate.Rate = rateValue;
-                rate.LastUpdate = DateTime.Now;
-                rate.RepositoryId = TypeId;
-
-                if (Rates.Contains(rate))
-                {
-                    Rates.RemoveAll(r => r.Equals(rate));
-                    await _connection.UpdateAsync(rate);
-                }
-                else
-                {
-                    await _connection.InsertOrReplaceAsync(rate);
-                }
-                Rates.Add(rate);
-
-                return rate;
-            }
-            catch (Exception e)
-            {
-                e.LogError();
-                return null;
-            }
-        }
+        public override bool IsAvailable(RateDescriptor rateDescriptor) => rateDescriptor.IsBtcToUsdOrEur();
+        protected override decimal? GetRateFromJson(JToken json) => json["data"]["amount"].ToDecimal();
     }
 }
-

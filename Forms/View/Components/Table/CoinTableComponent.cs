@@ -141,7 +141,7 @@ namespace MyCC.Forms.View.Components.Table
             {
                 var sum = AccountStorage.AccountsWithCurrency(currencyId).Sum(a => a.IsEnabled ? a.Money.Amount : 0);
                 var neededRate = new ExchangeRate(currencyId, ApplicationSettings.StartupCurrencyAssets);
-                var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
+                var rate = RateHelper.GetRate(neededRate) ?? neededRate;
 
                 var currency = currencyId.ToCurrency();
                 Code = currency.Code;

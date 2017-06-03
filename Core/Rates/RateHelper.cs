@@ -7,7 +7,7 @@ using MyCC.Core.Rates.Models;
 
 namespace MyCC.Core.Rates
 {
-    public static class ExchangeRateHelper
+    public static class RateHelper
     {
         public static IEnumerable<RateDescriptor> NeededRates => GetNeededRates();
 
@@ -40,7 +40,7 @@ namespace MyCC.Core.Rates
 
         private static ExchangeRate RateToDefaultCurrency(this string currencyId, bool useCrypto)
         {
-            var defaultCurrencyId = useCrypto ? ExchangeConstants.DefaultCryptoCurrencyId : ExchangeConstants.DefaultFiatCurrencyId;
+            var defaultCurrencyId = useCrypto ? RateConstants.DefaultCryptoCurrencyId : RateConstants.DefaultFiatCurrencyId;
             var rateDescriptor = new RateDescriptor(currencyId, defaultCurrencyId);
             return RateStorage.GetRateOrDefault(rateDescriptor);
         }

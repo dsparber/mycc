@@ -19,12 +19,21 @@ namespace MyCC.Core.Rates.Repositories
 
         public async Task<IEnumerable<ExchangeRate>> FetchRates(IEnumerable<RateDescriptor> rateDescriptors)
         {
-            if (!rateDescriptors.Any(IsAvailable)) return new List<ExchangeRate>();
+            var descriptorList = rateDescriptors.ToList();
+
+            if (!descriptorList.Any(IsAvailable)) return new List<ExchangeRate>();
 
             try
             {
                 var json = await Uri.GetJson();
-                return GetRatesFromJson(json) ?? new List<ExchangeRate>();
+                var jsonRates = GetRatesFromJson(json);
+                if (jsonRates != null)
+                {
+                    return jsonRates.Where(tuple => tuple.rate != null && descriptorList.Contains(tuple.rateDescriptor))
+                        .Select(tuple => new ExchangeRate(tuple.rateDescriptor, tuple.rate.Value, (int)Id, DateTime.Now));
+                }
+
+                return new List<ExchangeRate>();
             }
             catch (Exception e)
             {
@@ -33,6 +42,6 @@ namespace MyCC.Core.Rates.Repositories
             }
         }
 
-        protected abstract IEnumerable<ExchangeRate> GetRatesFromJson(JToken json);
+        protected abstract IEnumerable<(RateDescriptor rateDescriptor, decimal? rate)> GetRatesFromJson(JToken json);
     }
 }

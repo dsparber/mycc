@@ -1,85 +1,26 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Net.Http;
-using System.Threading.Tasks;
-using ModernHttpClient;
 using MyCC.Core.Helpers;
+using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
-using SQLite;
 
 namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class QuadrigaCxExchangeRateSource : IRateSource
+    public class QuadrigaCxExchangeRateSource : JsonRateSource
     {
-        private const string UrlUsd = "https://api.quadrigacx.com/v2/ticker?book=btc_usd";
-        private const string KeyLastPrice = "last";
+        public override RateSourceId Id => RateSourceId.QuadrigaCx;
+        public override RateSourceType Type => RateSourceType.CryptoToFiat;
+        public override string Name => ConstantNames.QuadrigaCx;
 
-        private const int BufferSize = 256000;
+        protected override Uri Uri => new Uri("https://api.quadrigacx.com/v2/ticker?book=btc_usd");
 
-        private readonly HttpClient _client;
-        private readonly SQLiteAsyncConnection _connection;
+        public override bool IsAvailable(RateDescriptor rateDescriptor) => rateDescriptor.IsBtcToUsd();
 
-        public QuadrigaCxExchangeRateSource(SQLiteAsyncConnection connection)
+        protected override IEnumerable<(RateDescriptor rateDescriptor, decimal? rate)> GetRatesFromJson(JToken json) => new[]
         {
-            _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
-            _connection = connection;
-            Rates = new List<ExchangeRate>();
-        }
-
-        public int TypeId => (int)RateSourceId.QuadrigaCx;
-
-        public bool IsAvailable(ExchangeRate rate)
-        {
-            return rate.ReferenceCurrencyCode.Equals("BTC") && rate.SecondaryCurrencyCode.Equals("USD");
-        }
-
-        public List<ExchangeRate> Rates { get; }
-
-        public RateSourceType Type => RateSourceType.CryptoToFiat;
-
-        public string Name => ConstantNames.QuadrigaCx;
-
-        public async Task<ExchangeRate> FetchRate(ExchangeRate rate)
-        {
-            if (!IsAvailable(rate)) return null;
-
-            var uri = new Uri(UrlUsd);
-            try
-            {
-                var response = await _client.GetAsync(uri);
-
-                if (!response.IsSuccessStatusCode) return null;
-
-                var content = await response.Content.ReadAsStringAsync();
-                var rateString = (string)JObject.Parse(content)[KeyLastPrice];
-                var rateValue = decimal.Parse(rateString, CultureInfo.InvariantCulture);
-
-                rate.Rate = rateValue;
-                rate.LastUpdate = DateTime.Now;
-                rate.RepositoryId = TypeId;
-
-                if (Rates.Contains(rate))
-                {
-                    Rates.RemoveAll(r => r.Equals(rate));
-                    await _connection.UpdateAsync(rate);
-                }
-                else
-                {
-                    await _connection.InsertOrReplaceAsync(rate);
-                }
-                Rates.Add(rate);
-
-                return rate;
-            }
-            catch (Exception e)
-            {
-                e.LogError();
-                return null;
-            }
-        }
+            (RateConstants.BtcUsdDescriptor, json["last"].ToDecimal()),
+        };
     }
 }
-

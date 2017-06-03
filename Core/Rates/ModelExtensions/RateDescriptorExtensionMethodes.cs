@@ -44,5 +44,13 @@ namespace MyCC.Core.Rates.ModelExtensions
 
         public static string GetCurrencyApartFrom(this RateDescriptor rateDescriptor, string currencyId)
             => rateDescriptor.ReferenceCurrencyId.Equals(currencyId) ? rateDescriptor.SecondaryCurrencyId : rateDescriptor.ReferenceCurrencyId;
+
+        public static bool IsBtcToUsdOrEur(this RateDescriptor rateDescriptor) =>
+            rateDescriptor.ContainsCurrency(CurrencyConstants.Btc.Id) &&
+            (rateDescriptor.ContainsCurrency(CurrencyConstants.Usd.Id) || rateDescriptor.ContainsCurrency(CurrencyConstants.Eur.Id));
+
+        public static bool IsBtcToUsd(this RateDescriptor rateDescriptor) =>
+            rateDescriptor.ContainsCurrency(CurrencyConstants.Btc.Id) &&
+            rateDescriptor.ContainsCurrency(CurrencyConstants.Usd.Id);
     }
 }

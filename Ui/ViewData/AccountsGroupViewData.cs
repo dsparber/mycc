@@ -22,7 +22,7 @@ namespace MyCC.Ui.ViewData
             var money = new Money(EnabledAccountsItems(currency).Sum(a => a.Money.Amount), currency);
 
             var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { currency.Id })
-                .Select(x => new Money(money.Amount * ExchangeRateHelper.GetRate(currency.Id, x)?.Rate ?? 0, x.Find())).
+                .Select(x => new Money(money.Amount * RateHelper.GetRate(currency.Id, x)?.Rate ?? 0, x.Find())).
                 OrderBy(m => m.Currency.Code);
 
             return new HeaderDataItem(money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
@@ -35,7 +35,7 @@ namespace MyCC.Ui.ViewData
             var money = new Money(EnabledAccountsItems(currency).Sum(a => a.Money.Amount), currency);
 
             return ApplicationSettings.AllReferenceCurrencies.Except(new[] { money.Currency.Id })
-                .Select(c => new ReferenceValueItem(money.Amount, ExchangeRateHelper.GetRate(money.Currency.Id, c) ?? new ExchangeRate(money.Currency.Id, c)))
+                .Select(c => new ReferenceValueItem(money.Amount, RateHelper.GetRate(money.Currency.Id, c) ?? new ExchangeRate(money.Currency.Id, c)))
                 .OrderByWithDirection(c => SortOrderReference == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirectionReference == SortDirection.Ascending);
         }
 
@@ -43,7 +43,7 @@ namespace MyCC.Ui.ViewData
         {
             var online = AccountStorage.AccountsWithCurrency(currency).Where(a => a is OnlineFunctionalAccount).ToList();
             var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.AccountsWithCurrency(currency).Select(a => a.LastUpdate).DefaultIfEmpty(DateTime.Now).Max();
-            var ratesTime = AccountStorage.NeededRatesFor(currency).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+            var ratesTime = AccountStorage.NeededRatesFor(currency).Distinct().Select(e => RateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
 
             return online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
         }

@@ -129,7 +129,7 @@ namespace MyCC.Forms.View.Components.Table
             public Data(Currency currency)
             {
                 var neededRate = new ExchangeRate(currency.Id, ApplicationSettings.StartupCurrencyRates);
-                var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
+                var rate = RateHelper.GetRate(neededRate) ?? neededRate;
 
                 Code = currency.Code;
                 Reference = new Money(rate.Rate ?? 0, ApplicationSettings.StartupCurrencyRates.ToCurrency()).ToString8Digits(false);

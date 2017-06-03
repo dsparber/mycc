@@ -20,7 +20,7 @@ namespace MyCC.Forms.View.Components.Header
 
         private void UpdateView()
         {
-            var text = new Money(ExchangeRateHelper.GetRate(_currency, CurrencyConstants.Btc)?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits();
+            var text = new Money(RateHelper.GetRate(_currency, CurrencyConstants.Btc)?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits();
 
             Device.BeginInvokeOnMainThread(() =>
             {

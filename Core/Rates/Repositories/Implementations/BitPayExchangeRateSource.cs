@@ -18,29 +18,19 @@ namespace MyCC.Core.Rates.Repositories.Implementations
 
         protected override Uri Uri => new Uri("https://bitpay.com/rates/");
 
-        private const string KeyData = "data";
-        private const string KeyCoin = "code";
-        private const string KeyValue = "rate";
+        public override bool IsAvailable(RateDescriptor rateDescriptor) => rateDescriptor.IsBtcToUsdOrEur();
 
 
-        public override bool IsAvailable(RateDescriptor rateDescriptor) =>
-            rateDescriptor.ContainsCurrency(CurrencyConstants.Btc.Id) &&
-            (rateDescriptor.ContainsCurrency(CurrencyConstants.Usd.Id) || rateDescriptor.ContainsCurrency(CurrencyConstants.Eur.Id));
-
-
-        protected override IEnumerable<ExchangeRate> GetRatesFromJson(JToken json)
+        protected override IEnumerable<(RateDescriptor rateDescriptor, decimal? rate)> GetRatesFromJson(JToken json)
         {
-            var data = json[KeyData] as JArray;
-            var rateUsd = data.First(token => token[KeyCoin].ToString().Equals(CurrencyConstants.Usd.Code))[KeyValue].ToDecimal();
-            var rateEur = data.First(token => token[KeyCoin].ToString().Equals(CurrencyConstants.Eur.Code))[KeyValue].ToDecimal();
+            var rateUsd = json["data"].First(token => token["code"].ToString().Equals(CurrencyConstants.Usd.Code))["rate"].ToDecimal();
+            var rateEur = json["data"].First(token => token["code"].ToString().Equals(CurrencyConstants.Eur.Code))["rate"].ToDecimal();
 
-            var rates = new List<ExchangeRate>();
-            if (rateUsd.HasValue)
-                rates.Add(new ExchangeRate(new RateDescriptor(CurrencyConstants.Btc.Id, CurrencyConstants.Usd.Id), rateUsd.Value, (int)Id, DateTime.Now));
-            if (rateEur.HasValue)
-                rates.Add(new ExchangeRate(new RateDescriptor(CurrencyConstants.Btc.Id, CurrencyConstants.Eur.Id), rateEur.Value, (int)Id, DateTime.Now));
-
-            return rates;
+            return new[]
+            {
+                (RateConstants.BtcUsdDescriptor, rateUsd),
+                (RateConstants.BtcEurDescriptor, rateEur)
+            };
         }
     }
 }

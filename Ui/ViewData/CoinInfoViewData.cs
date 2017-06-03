@@ -19,7 +19,7 @@ namespace MyCC.Ui.ViewData
     {
         public static HeaderDataItem HeaderData(Currency currency)
         {
-            return new HeaderDataItem(currency.Name, new Money(ExchangeRateHelper.GetRate(currency, CurrencyConstants.Btc)?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits());
+            return new HeaderDataItem(currency.Name, new Money(RateHelper.GetRate(currency, CurrencyConstants.Btc)?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits());
         }
 
         public CoinInfoItem CoinInfo(Currency currency)
@@ -38,7 +38,7 @@ namespace MyCC.Ui.ViewData
         public List<ReferenceValueItem> Items(Currency currency)
         {
             return ApplicationSettings.AllReferenceCurrencies.Except(new[] { currency.Id })
-                .Select(c => new ReferenceValueItem(1, ExchangeRateHelper.GetRate(currency.Id, c) ?? new ExchangeRate(currency.Id, c)))
+                .Select(c => new ReferenceValueItem(1, RateHelper.GetRate(currency.Id, c) ?? new ExchangeRate(currency.Id, c)))
                 .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirection == SortDirection.Ascending)
                 .ToList();
         }
@@ -49,9 +49,9 @@ namespace MyCC.Ui.ViewData
         {
             var ratesTime = ApplicationSettings.AllReferenceCurrencies
                                   .Select(e => new ExchangeRate(currency.Id, e))
-                                  .SelectMany(ExchangeRateHelper.GetNeededRates)
+                                  .SelectMany(RateHelper.GetNeededRates)
                                   .Distinct()
-                                  .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty().Min();
+                                  .Select(e => RateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty().Min();
 
             var infoTime = CoinInfoStorage.Instance.Get(currency)?.LastUpdate ?? DateTime.Now;
 
