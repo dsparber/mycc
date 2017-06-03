@@ -114,7 +114,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             base.OnResume();
 
             _securityPreference.Summary = Resources.GetString(ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled ? Resource.String.FingerprintActive : ApplicationSettings.IsPinSet ? Resource.String.PinActive : Resource.String.NotConfigured);
-            _preferredBitcoinPreference.Summary = ExchangeRatesStorage.PreferredBtcRepository.Name;
+            _preferredBitcoinPreference.Summary = RateStorage.PreferredBtcSource.Name;
             _referenceCurrenciesPreference.Summary = string.Join(", ", ApplicationSettings.AllReferenceCurrencies.Select(c => c.ToCurrency().Code));
         }
     }

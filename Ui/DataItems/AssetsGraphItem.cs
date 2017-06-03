@@ -2,6 +2,7 @@
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 using Newtonsoft.Json;
 

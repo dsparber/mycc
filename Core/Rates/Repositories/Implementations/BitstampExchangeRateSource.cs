@@ -5,33 +5,32 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Helpers;
-using MyCC.Core.Rates.Repositories.Interfaces;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 using SQLite;
 
-namespace MyCC.Core.Rates.Repositories
+namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class CoinapultExchangeRateRepository : ISingleRateRepository
+    public class BitstampExchangeRateSource : IRateSource
     {
-        private const string UrlUsd = "https://api.coinapult.com/api/ticker?market=USD_BTC";
-        private const string UrlEur = "https://api.coinapult.com/api/ticker?market=EUR_BTC";
-        private const string KeySmall = "small";
-        private const string KeyAsk = "ask";
+        private const string UrlUsd = "https://www.bitstamp.net/api/v2/ticker/btcusd";
+        private const string UrlEur = "https://www.bitstamp.net/api/v2/ticker/btceur";
+        private const string KeyLastPrice = "last";
 
         private const int BufferSize = 256000;
 
         private readonly HttpClient _client;
         private readonly SQLiteAsyncConnection _connection;
 
-        public CoinapultExchangeRateRepository(SQLiteAsyncConnection connection)
+        public BitstampExchangeRateSource(SQLiteAsyncConnection connection)
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
             _connection = connection;
             Rates = new List<ExchangeRate>();
         }
 
-        public int TypeId => (int)RatesRepositories.Coinapult;
+        public int TypeId => (int)RateSourceId.Bitstamp;
 
         public bool IsAvailable(ExchangeRate rate)
         {
@@ -41,9 +40,9 @@ namespace MyCC.Core.Rates.Repositories
 
         public List<ExchangeRate> Rates { get; }
 
-        public RateRepositoryType RatesType => RateRepositoryType.CryptoToFiat;
+        public RateSourceType Type => RateSourceType.CryptoToFiat;
 
-        public string Name => ConstantNames.Coinapult;
+        public string Name => ConstantNames.Bitstamp;
 
         public async Task<ExchangeRate> FetchRate(ExchangeRate rate)
         {
@@ -57,7 +56,7 @@ namespace MyCC.Core.Rates.Repositories
                 if (!response.IsSuccessStatusCode) return null;
 
                 var content = await response.Content.ReadAsStringAsync();
-                var rateString = (string)JObject.Parse(content)[KeySmall][KeyAsk];
+                var rateString = (string)JObject.Parse(content)[KeyLastPrice];
                 var rateValue = decimal.Parse(rateString, CultureInfo.InvariantCulture);
 
                 rate.Rate = rateValue;

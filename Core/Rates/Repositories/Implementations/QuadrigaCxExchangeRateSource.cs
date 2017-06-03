@@ -5,30 +5,31 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Helpers;
-using MyCC.Core.Rates.Repositories.Interfaces;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Resources;
+using Newtonsoft.Json.Linq;
 using SQLite;
 
-namespace MyCC.Core.Rates.Repositories
+namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class BitfinexExchangeRateRepository : ISingleRateRepository
+    public class QuadrigaCxExchangeRateSource : IRateSource
     {
-        private const string UrlUsd = "https://api.bitfinex.com/v2/ticker/tBTCUSD";
-        private const int PositionValue = 6;
+        private const string UrlUsd = "https://api.quadrigacx.com/v2/ticker?book=btc_usd";
+        private const string KeyLastPrice = "last";
 
         private const int BufferSize = 256000;
 
         private readonly HttpClient _client;
         private readonly SQLiteAsyncConnection _connection;
 
-        public BitfinexExchangeRateRepository(SQLiteAsyncConnection connection)
+        public QuadrigaCxExchangeRateSource(SQLiteAsyncConnection connection)
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
             _connection = connection;
             Rates = new List<ExchangeRate>();
         }
 
-        public int TypeId => (int)RatesRepositories.Bitfinex;
+        public int TypeId => (int)RateSourceId.QuadrigaCx;
 
         public bool IsAvailable(ExchangeRate rate)
         {
@@ -37,9 +38,9 @@ namespace MyCC.Core.Rates.Repositories
 
         public List<ExchangeRate> Rates { get; }
 
-        public RateRepositoryType RatesType => RateRepositoryType.CryptoToFiat;
+        public RateSourceType Type => RateSourceType.CryptoToFiat;
 
-        public string Name => ConstantNames.Bitfinex;
+        public string Name => ConstantNames.QuadrigaCx;
 
         public async Task<ExchangeRate> FetchRate(ExchangeRate rate)
         {
@@ -53,7 +54,7 @@ namespace MyCC.Core.Rates.Repositories
                 if (!response.IsSuccessStatusCode) return null;
 
                 var content = await response.Content.ReadAsStringAsync();
-                var rateString = content.Split(',')[PositionValue];
+                var rateString = (string)JObject.Parse(content)[KeyLastPrice];
                 var rateValue = decimal.Parse(rateString, CultureInfo.InvariantCulture);
 
                 rate.Rate = rateValue;

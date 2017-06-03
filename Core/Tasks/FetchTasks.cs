@@ -8,6 +8,7 @@ using MyCC.Core.CoinInfo;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 
 namespace MyCC.Core.Tasks

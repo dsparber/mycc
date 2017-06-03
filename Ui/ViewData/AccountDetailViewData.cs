@@ -7,6 +7,7 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;

@@ -9,6 +9,7 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 
 namespace MyCC.Core.Account.Storage
@@ -37,7 +38,7 @@ namespace MyCC.Core.Account.Storage
 
 
         public static List<ExchangeRate> NeededRates => UsedCurrencies.Distinct()
-                                       .SelectMany(c => ApplicationSettings.AllReferenceCurrencies.Select(cref => new ExchangeRate(c, cref)))
+                                       .SelectMany(c => ApplicationSettings.AllReferenceCurrencies.Select(cref => new RateDescriptor(c, cref)))
                                        .Select(e => ExchangeRateHelper.GetRate(e) ?? e)
                                        .Where(r => r?.Rate == null)
                                        .ToList();

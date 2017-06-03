@@ -63,7 +63,7 @@ namespace MyCC.Forms.View.Pages
                 if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
 
                 // STEP 1: Fetch available currencies
-                var totalCount = CurrencyStorage.Instance.CurrencySources.Count() * 2;
+                var totalCount = CurrencyStorage.Instance.Sources.Count() * 2;
                 var count = 0;
 
                 Action<ICurrencySource> setProgress = source =>

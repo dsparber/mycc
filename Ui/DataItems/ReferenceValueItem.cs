@@ -1,4 +1,5 @@
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Models;
 
 namespace MyCC.Ui.DataItems
 {

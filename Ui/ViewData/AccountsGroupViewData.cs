@@ -6,6 +6,7 @@ using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.DataItems;

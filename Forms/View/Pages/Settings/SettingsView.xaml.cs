@@ -110,7 +110,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetPreferredRateCellDetail()
         {
-            PreferredRateCell.Detail = ExchangeRatesStorage.PreferredBtcRepository.Name;
+            PreferredRateCell.Detail = RateStorage.PreferredBtcSource.Name;
         }
 
         private void SetAboutCell()

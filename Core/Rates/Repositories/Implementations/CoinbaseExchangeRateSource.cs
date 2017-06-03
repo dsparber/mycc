@@ -1,35 +1,38 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Helpers;
-using MyCC.Core.Rates.Repositories.Interfaces;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 using SQLite;
 
-namespace MyCC.Core.Rates.Repositories
+namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class ItBitExchangeRateRepository : ISingleRateRepository
+    public class CoinbaseExchangeRateSource : IRateSource
     {
-        private const string UrlUsd = "https://api.itbit.com/v1/markets/XBTUSD/ticker";
-        private const string UrlEur = "https://api.itbit.com/v1/markets/XBTEUR/ticker";
-        private const string KeyLastPrice = "lastPrice";
+        private const string UrlUsd = "https://api.coinbase.com/v2/prices/BTC-USD/spot";
+        private const string UrlEur = "https://api.coinbase.com/v2/prices/BTC-EUR/spot";
+        private const string KeyData = "data";
+        private const string KeyPrice = "amount";
 
         private const int BufferSize = 256000;
 
         private readonly HttpClient _client;
         private readonly SQLiteAsyncConnection _connection;
 
-        public ItBitExchangeRateRepository(SQLiteAsyncConnection connection)
+        public CoinbaseExchangeRateSource(SQLiteAsyncConnection connection)
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
+            _client.DefaultRequestHeaders.Add("CB-VERSION", "2016-02-07");
             _connection = connection;
             Rates = new List<ExchangeRate>();
         }
 
-        public int TypeId => (int)RatesRepositories.ItBit;
+        public int TypeId => (int)RateSourceId.Coinbase;
 
         public bool IsAvailable(ExchangeRate rate)
         {
@@ -39,9 +42,9 @@ namespace MyCC.Core.Rates.Repositories
 
         public List<ExchangeRate> Rates { get; }
 
-        public RateRepositoryType RatesType => RateRepositoryType.CryptoToFiat;
+        public RateSourceType Type => RateSourceType.CryptoToFiat;
 
-        public string Name => ConstantNames.ItBit;
+        public string Name => ConstantNames.Coinbase;
 
         public async Task<ExchangeRate> FetchRate(ExchangeRate rate)
         {
@@ -55,9 +58,8 @@ namespace MyCC.Core.Rates.Repositories
                 if (!response.IsSuccessStatusCode) return null;
 
                 var content = await response.Content.ReadAsStringAsync();
-                var rateValue = JObject.Parse(content)[KeyLastPrice].ToDecimal();
-
-                if (rateValue == null || rateValue.Value == 0) return null;
+                var rateString = (string)JObject.Parse(content)[KeyData][KeyPrice];
+                var rateValue = decimal.Parse(rateString, CultureInfo.InvariantCulture);
 
                 rate.Rate = rateValue;
                 rate.LastUpdate = DateTime.Now;

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Currencies;
 using MyCC.Core.Helpers;
-using MyCC.Core.Rates.Repositories.Interfaces;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 using SQLite;
 
-namespace MyCC.Core.Rates.Repositories
+namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class BtceExchangeRateRepository : IMultipleRatesRepository
+    public class BtceExchangeRateSource : IRateSource
     {
         private const string Url = "https://btc-e.com/api/3/ticker/btc_usd-btc_eur";
         private const string Key = "last";
@@ -23,7 +23,7 @@ namespace MyCC.Core.Rates.Repositories
         private readonly HttpClient _client;
         private readonly SQLiteAsyncConnection _connection;
 
-        public BtceExchangeRateRepository(SQLiteAsyncConnection connection)
+        public BtceExchangeRateSource(SQLiteAsyncConnection connection)
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
             _connection = connection;
@@ -61,7 +61,7 @@ namespace MyCC.Core.Rates.Repositories
             }
         }
 
-        public int TypeId => (int)RatesRepositories.Btce;
+        public int TypeId => (int)RateSourceId.Btce;
 
         public bool IsAvailable(ExchangeRate rate)
         {
@@ -71,7 +71,7 @@ namespace MyCC.Core.Rates.Repositories
 
         public List<ExchangeRate> Rates { get; }
 
-        public RateRepositoryType RatesType => RateRepositoryType.CryptoToFiat;
+        public RateSourceType Type => RateSourceType.CryptoToFiat;
 
         public string Name => ConstantNames.Btce;
     }

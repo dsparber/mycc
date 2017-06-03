@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Currencies;
 using MyCC.Core.Helpers;
-using MyCC.Core.Rates.Repositories.Interfaces;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 using SQLite;
 
-namespace MyCC.Core.Rates.Repositories
+namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class KrakenExchangeRateRepository : IMultipleRatesRepository
+    public class KrakenExchangeRateSource : IRateSource
     {
         private const string Url = "https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR,XXBTZUSD";
         private const string KeyResult = "result";
@@ -26,7 +26,7 @@ namespace MyCC.Core.Rates.Repositories
         private readonly HttpClient _client;
         private readonly SQLiteAsyncConnection _connection;
 
-        public KrakenExchangeRateRepository(SQLiteAsyncConnection connection)
+        public KrakenExchangeRateSource(SQLiteAsyncConnection connection)
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
             _connection = connection;
@@ -65,7 +65,7 @@ namespace MyCC.Core.Rates.Repositories
             }
         }
 
-        public int TypeId => (int)RatesRepositories.Kraken;
+        public int TypeId => (int)RateSourceId.Kraken;
 
         public bool IsAvailable(ExchangeRate rate)
         {
@@ -75,7 +75,7 @@ namespace MyCC.Core.Rates.Repositories
 
         public List<ExchangeRate> Rates { get; }
 
-        public RateRepositoryType RatesType => RateRepositoryType.CryptoToFiat;
+        public RateSourceType Type => RateSourceType.CryptoToFiat;
 
         public string Name => ConstantNames.Kraken;
     }

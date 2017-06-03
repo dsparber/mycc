@@ -1,21 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MyCC.Core.Rates.Repositories.Interfaces;
-using Newtonsoft.Json.Linq;
-using SQLite;
-using System.Linq;
 using ModernHttpClient;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Resources;
+using Newtonsoft.Json.Linq;
+using SQLite;
 
-namespace MyCC.Core.Rates.Repositories
+namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class FixerIoExchangeRateRepository : IMultipleRatesRepository
+    public class FixerIoExchangeRateSource : IRateSource
     {
         private const string Url = "http://api.fixer.io/latest";
 
@@ -27,25 +27,26 @@ namespace MyCC.Core.Rates.Repositories
         private readonly SQLiteAsyncConnection _connection;
 
 
-        public FixerIoExchangeRateRepository(SQLiteAsyncConnection connection)
+        public FixerIoExchangeRateSource(SQLiteAsyncConnection connection)
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
             _connection = connection;
             Rates = new List<ExchangeRate>();
         }
 
-        public bool IsAvailable(ExchangeRate rate) {
+        public bool IsAvailable(ExchangeRate rate)
+        {
             if (rate.ReferenceCurrency.Equals(CurrencyConstants.Eur) || rate.SecondaryCurrency.Equals(CurrencyConstants.Eur))
-			{
+            {
                 var currency = rate.ReferenceCurrency.Equals(CurrencyConstants.Eur) ? rate.SecondaryCurrency : rate.ReferenceCurrency;
                 return !currency.IsCrypto;
-			}
-			return false;
+            }
+            return false;
         }
 
-        public RateRepositoryType RatesType => RateRepositoryType.FiatRates;
+        public RateSourceType Type => RateSourceType.Fiat;
 
-        public int TypeId => (int)RatesRepositories.FixerIo;
+        public int TypeId => (int)RateSourceId.FixerIo;
 
 
         public async Task<IEnumerable<ExchangeRate>> FetchRates()

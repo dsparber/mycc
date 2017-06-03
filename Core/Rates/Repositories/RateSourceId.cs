@@ -1,6 +1,6 @@
 ﻿namespace MyCC.Core.Rates.Repositories
 {
-    public enum RatesRepositories
+    public enum RateSourceId
     {
         Bittrex = 1,
         Btce = 2,

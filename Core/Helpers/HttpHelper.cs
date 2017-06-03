@@ -23,10 +23,10 @@ namespace MyCC.Core.Helpers
             return await response.Content.ReadAsStringAsync();
         }
 
-        public static async Task<JObject> GetJson(this Uri uri)
+        public static async Task<JToken> GetJson(this Uri uri)
         {
             var content = await uri.GetContent();
-            return JObject.Parse(content);
+            return JToken.Parse(content);
         }
     }
 }

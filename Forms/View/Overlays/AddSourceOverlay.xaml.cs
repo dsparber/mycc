@@ -4,6 +4,7 @@ using System.Linq;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
-using MyCC.Core.Rates.Repositories.Interfaces;
+using MyCC.Core.Rates.Repositories;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
@@ -35,18 +35,18 @@ namespace MyCC.Forms.View.Pages.Settings.Data
             var header = new HeaderView(true)
             {
                 TitleText = I18N.AppName,
-                InfoText = PluralHelper.GetTextSourcs(ExchangeRatesStorage.Instance.Repositories.Count(r => r.RatesType == RateRepositoryType.CryptoToFiat))
+                InfoText = PluralHelper.GetTextSourcs(RateStorage.Instance.Sources.Count(r => r.Type == RateSourceType.CryptoToFiat))
             };
 
             changingStack.Children.Add(header);
 
-            var query = ExchangeRatesStorage.Instance.Repositories
-                    .Where(r => r.RatesType == RateRepositoryType.CryptoToFiat)
+            var query = RateStorage.Instance.Sources
+                    .Where(r => r.Type == RateSourceType.CryptoToFiat)
                     .OrderBy(r => r.Name)
-                    .Select(r => Tuple.Create(r, GetDetailText(r.TypeId))).ToList();
+                    .Select(r => Tuple.Create(r, GetDetailText(r.Id))).ToList();
 
             _items = query
-                .Select(r => Tuple.Create(r.Item1.TypeId, new CustomViewCell()
+                .Select(r => Tuple.Create(r.Item1.Id, new CustomViewCell()
                 {
                     Text = r.Item1.Name,
                     Detail = r.Item2.Item1,

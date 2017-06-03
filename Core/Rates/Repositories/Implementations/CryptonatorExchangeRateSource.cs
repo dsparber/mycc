@@ -6,16 +6,16 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Currencies;
+using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
-using MyCC.Core.Rates.Repositories.Interfaces;
+using MyCC.Core.Rates.Models;
+using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 using SQLite;
-using MyCC.Core.Resources;
-using MyCC.Core.Currencies.Models;
 
-namespace MyCC.Core.Rates.Repositories
+namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class CryptonatorExchangeRateRepository : ISingleRateRepository
+    public class CryptonatorExchangeRateSource : IRateSource
     {
         private const string UrlRate = "https://api.cryptonator.com/api/ticker/{0}";
 
@@ -30,7 +30,7 @@ namespace MyCC.Core.Rates.Repositories
         private readonly SQLiteAsyncConnection _connection;
 
 
-        public CryptonatorExchangeRateRepository(SQLiteAsyncConnection connection)
+        public CryptonatorExchangeRateSource(SQLiteAsyncConnection connection)
         {
             _client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = BufferSize };
             Rates = new List<ExchangeRate>();
@@ -81,7 +81,7 @@ namespace MyCC.Core.Rates.Repositories
             return exchangeRate.ReferenceCurrencyCode?.ToLower() + "-" + exchangeRate.SecondaryCurrencyCode?.ToLower();
         }
 
-        public int TypeId => (int)RatesRepositories.Cryptonator;
+        public int TypeId => (int)RateSourceId.Cryptonator;
 
         public bool IsAvailable(ExchangeRate rate)
         {
@@ -91,9 +91,9 @@ namespace MyCC.Core.Rates.Repositories
 
         public List<ExchangeRate> Rates { get; }
 
-        public RateRepositoryType RatesType => RateRepositoryType.CryptoRates;
+        public RateSourceType Type => RateSourceType.Crypto;
 
         public string Name => ConstantNames.Cryptonator;
-        }
+    }
 }
 

@@ -166,7 +166,7 @@ namespace MyCC.Core.Settings
 
         public static int PreferredBitcoinRepository
         {
-            get { return SettingKeys.PreferredBitcoinRepository.Get((int)RatesRepositories.Kraken); }
+            get { return SettingKeys.PreferredBitcoinRepository.Get((int)RateSourceId.Kraken); }
             set { SettingKeys.PreferredBitcoinRepository.Set(value); }
         }
 

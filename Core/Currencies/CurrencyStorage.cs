@@ -12,9 +12,9 @@ namespace MyCC.Core.Currencies
 {
     public class CurrencyStorage
     {
-        public readonly IEnumerable<ICurrencySource> CurrencySources;
+        private readonly IEnumerable<ICurrencySource> _sources;
+        internal Dictionary<string, Currency> CurrencyDictionary;
 
-        public Dictionary<string, Currency> CurrencyDictionary { get; private set; }
         public IEnumerable<Currency> Currencies { get; private set; }
 
         private readonly SQLiteAsyncConnection _connection;
@@ -23,7 +23,7 @@ namespace MyCC.Core.Currencies
 
         private CurrencyStorage()
         {
-            CurrencySources = new List<ICurrencySource>
+            _sources = new List<ICurrencySource>
             {
                 new BittrexCurrencySource(),
                 new BlockExpertsCurrencySource(),
@@ -49,7 +49,7 @@ namespace MyCC.Core.Currencies
             var fetchedCurrencies = new List<Currency>();
             var updateCurrencies = new List<Currency>();
 
-            foreach (var source in CurrencySources)
+            foreach (var source in _sources)
             {
                 onStartedFetching?.Invoke(source);
                 var result = (await source.GetCurrencies()).ToList();
@@ -84,7 +84,7 @@ namespace MyCC.Core.Currencies
 
             var currencies = (await _connection.Table<CurrencyDbm>().ToListAsync()).Select(c => c.Currency).ToList();
             Currencies = currencies;
-            CurrencyDictionary = currencies.ToDictionary(c => c.Id, c => c);
+            _currencyDictionary = currencies.ToDictionary(c => c.Id, c => c);
             _loadedFromDatabase = true;
         }
     }

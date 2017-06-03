@@ -8,6 +8,7 @@ using MyCC.Core.CoinInfo;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
@@ -242,7 +243,8 @@ namespace MyCC.Forms.View.Pages
                                     .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty().Min();
 
             var infoTime = CoinInfoStorage.Instance.Get(_currency)?.LastUpdate ?? DateTime.Now;
-            if (infoTime == DateTime.MinValue){
+            if (infoTime == DateTime.MinValue)
+            {
                 infoTime = DateTime.Now;
             }
 
