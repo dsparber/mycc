@@ -1,5 +1,6 @@
 files:
-  - source: '**/values/strings.xml'
-    translation: '**/values-%android_code%/%original_file_name%'
+  - source: /**/values/strings.xml
+    translation: /**/values-%android_code%/%original_file_name%
+    content_segmentation: '0'
     translatable_elements:
       - /resources/string
