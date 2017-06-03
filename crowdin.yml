@@ -1,8 +1,10 @@
 files:
   - source: /**/values/strings.xml
     translation: /**/values-%two_letters_code%/%original_file_name%
+    dest: Android
     content_segmentation: '0'
     translatable_elements:
       - /resources/string
   - source: Forms/Resources/I18N.resx
     translation: /Forms/Resources/I18N.%two_letters_code%.resx
+    dest: iOS
