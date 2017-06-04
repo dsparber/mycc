@@ -19,8 +19,8 @@ namespace MyCC.Core.Rates.Repositories.Implementations
 
         protected override Uri GetUri(RateDescriptor rateDescriptor)
         {
-            if (RateConstants.BtcUsdDescriptor.Equals(rateDescriptor)) return UriUsd;
-            return RateConstants.BtcEurDescriptor.Equals(rateDescriptor) ? UriEur : null;
+            if (RateConstants.BtcUsdDescriptor.CurrenciesEqual(rateDescriptor)) return UriUsd;
+            return RateConstants.BtcEurDescriptor.CurrenciesEqual(rateDescriptor) ? UriEur : null;
         }
 
 

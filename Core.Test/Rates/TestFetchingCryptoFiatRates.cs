@@ -3,32 +3,36 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies;
 using MyCC.Core.Database;
+using MyCC.Core.Rates;
 using MyCC.Core.Test.Database;
 using NUnit.Framework;
 
-namespace MyCC.Core.Test.Currencies
+namespace MyCC.Core.Test.Rates
 {
     [TestFixture]
-    public class TestCurrencyStorage
+    public class TestFetchingCryptoFiatRates
     {
-
-        [OneTimeSetUp]
+        [SetUp]
         public async Task Setup()
         {
             DatabaseUtil.SqLiteConnection = new SqLiteConnection();
             await CurrencyStorage.Instance.LoadOnline();
-        }
-
-        [Test]
-        public void DataAvailable()
-        {
-            Assert.Greater(CurrencyStorage.Instance.Currencies.Count(), 1250);
+            await RateStorage.FetchAllFiatToCryptoRates();
         }
 
         [Test]
         public void FiatCurrenciesAvailable()
         {
-            Assert.Greater(CurrencyStorage.Instance.Currencies.Count(c => c.IsFiat), 160);
+            var allRates = RateStorage.AllCryptoToFiateRates.ToList();
+            Assert.AreEqual(16, allRates.Count);
+        }
+
+        [Test]
+        public void PlausibleValues()
+        {
+            var allRates = RateStorage.AllCryptoToFiateRates.ToList();
+            Assert.Greater(allRates.Min(rate => rate.Rate), 500);
+            Assert.Less(allRates.Max(rate => rate.Rate), 5000);
         }
 
         [OneTimeTearDown]

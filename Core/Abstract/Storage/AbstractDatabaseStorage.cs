@@ -16,7 +16,7 @@ namespace MyCC.Core.Abstract.Storage
         {
             get
             {
-                return Repositories.SelectMany(r => r.Elements).ToList();
+                return Repositories.ToList().SelectMany(r => r.Elements).ToList();
             }
         }
 

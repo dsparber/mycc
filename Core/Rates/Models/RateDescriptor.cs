@@ -1,4 +1,6 @@
-﻿namespace MyCC.Core.Rates.Models
+﻿using MyCC.Core.Rates.ModelExtensions;
+
+namespace MyCC.Core.Rates.Models
 {
     public class RateDescriptor
     {
@@ -14,6 +16,9 @@
             Id = $"{ReferenceCurrencyId}/{secondaryCurrencyId}";
         }
 
+        public bool CurrenciesEqual(RateDescriptor rateDescriptor) =>
+            rateDescriptor.ContainsCurrency(ReferenceCurrencyId) &&
+            rateDescriptor.ContainsCurrency(SecondaryCurrencyId);
 
         public override bool Equals(object obj) => Id.Equals((obj as RateDescriptor)?.Id);
         public override int GetHashCode() => Id.GetHashCode();

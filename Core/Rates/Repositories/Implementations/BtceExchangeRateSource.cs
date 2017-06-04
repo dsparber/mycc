@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using MyCC.Core.Currencies;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;

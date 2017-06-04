@@ -24,6 +24,10 @@ namespace MyCC.Core.Rates.ModelExtensions
 
             var referenceDescriptor = referenceRate.RateDescriptor;
             var secondaryDescriptor = secondaryRate.RateDescriptor;
+
+            if (referenceDescriptor.HasEqualCurrencies()) return secondaryRate;
+            if (secondaryDescriptor.HasEqualCurrencies()) return referenceRate;
+
             var combinedRateDescriptor = new RateDescriptor(referenceDescriptor.FindDifferentCurrencyTo(secondaryDescriptor), secondaryDescriptor.FindDifferentCurrencyTo(referenceDescriptor));
 
             var commonCurrencyId = referenceDescriptor.FindCommonCurrencyIdWith(secondaryDescriptor);

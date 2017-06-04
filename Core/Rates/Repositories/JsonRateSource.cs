@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Helpers;
+using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using Newtonsoft.Json.Linq;
 
@@ -20,7 +21,6 @@ namespace MyCC.Core.Rates.Repositories
         public async Task<IEnumerable<ExchangeRate>> FetchRates(IEnumerable<RateDescriptor> rateDescriptors)
         {
             var descriptorList = rateDescriptors.ToList();
-
             if (!descriptorList.Any(IsAvailable)) return new List<ExchangeRate>();
 
             try
@@ -29,8 +29,9 @@ namespace MyCC.Core.Rates.Repositories
                 var jsonRates = GetRatesFromJson(json);
                 if (jsonRates != null)
                 {
-                    return jsonRates.Where(tuple => tuple.rate != null && descriptorList.Contains(tuple.rateDescriptor))
+                    var rates = jsonRates.Where(tuple => tuple.rate != null && (descriptorList.Contains(tuple.rateDescriptor) || descriptorList.Contains(tuple.rateDescriptor.Inverse())))
                         .Select(tuple => new ExchangeRate(tuple.rateDescriptor, tuple.rate.Value, (int)Id, DateTime.Now));
+                    return rates;
                 }
 
                 return new List<ExchangeRate>();

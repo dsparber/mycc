@@ -1,5 +1,6 @@
 using System;
 using MyCC.Core.Currencies.Models;
+using Newtonsoft.Json;
 using SQLite;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -56,6 +57,8 @@ namespace MyCC.Core.Rates.Models
             LastUpdate = exchangeRate.LastUpdate;
         }
 
+        [Ignore]
+        [JsonIgnore]
         public ExchangeRate ExchangeRate
         {
             get

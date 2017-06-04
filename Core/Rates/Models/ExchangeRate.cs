@@ -35,6 +35,8 @@ namespace MyCC.Core.Rates.Models
         private DateTime _lastUpdate;
 
 
+        public ExchangeRate() { }
+
         public ExchangeRate(RateDescriptor rateDescriptor, decimal rate, int sourceId = 0, DateTime? lastUpate = null)
         {
             RateDescriptor = rateDescriptor;

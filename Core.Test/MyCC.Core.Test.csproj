@@ -71,8 +71,10 @@
   <ItemGroup>
     <Compile Include="Currencies\TestCurrencyStorage.cs" />
     <Compile Include="Database\SqLiteConnection.cs" />
+    <Compile Include="Rates\TestFetchingCryptoFiatRates.cs" />
     <Compile Include="Rates\TestRateExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rates\TestRateStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
