@@ -499,7 +499,7 @@
     <value>QR Code</value>
   </data>
   <data name="RefreshingDots" xml:space="preserve">
-    <value>Refreshing ...</value>
+    <value>Refreshing …</value>
   </data>
   <data name="AddRate" xml:space="preserve">
     <value>Add rate</value>
@@ -571,13 +571,10 @@
     <value>Hide a column of the assets table when there is not enough space</value>
   </data>
   <data name="InitialiseApp" xml:space="preserve">
-    <value>Initialising App</value>
+    <value>Initialising app</value>
   </data>
   <data name="InternetIsNeededForInitialisation" xml:space="preserve">
     <value>Before using the MyCC for the first time, currencies and available rates need to be loaded. Please enable your internet.</value>
-  </data>
-  <data name="LoadingAvailableRatesFrom" xml:space="preserve">
-    <value>Loading available rates from {0}</value>
   </data>
   <data name="LoadingCurrenciesFrom" xml:space="preserve">
     <value>Loading currencies from {0}</value>

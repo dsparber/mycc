@@ -576,9 +576,6 @@
   <data name="InternetIsNeededForInitialisation" xml:space="preserve">
     <value>Bevor sie MyCC das erste Mal nutzen können, müssen die verfügbaren Währungen und Kurse abgerufen werden. Bitte schalten Sie hierfür Ihr Internet ein.</value>
   </data>
-  <data name="LoadingAvailableRatesFrom" xml:space="preserve">
-    <value>Verfügbare Kurse werden von {0} abgerufen</value>
-  </data>
   <data name="LoadingCurrenciesFrom" xml:space="preserve">
     <value>Währungen werden von {0} geladen</value>
   </data>
