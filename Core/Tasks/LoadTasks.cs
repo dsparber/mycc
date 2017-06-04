@@ -13,7 +13,7 @@ namespace MyCC.Core.Tasks
         {
             await CurrencyStorage.Instance.LoadFromDatabase();
             await AccountStorage.Instance.LoadFromDatabase();
-            await RateStorage.Instance.LoadRates();
+            await RateStorage.LoadFromDatabase();
             whenFinished?.Invoke();
             ApplicationSettings.DataLoaded = true;
         }

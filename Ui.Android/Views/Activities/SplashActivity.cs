@@ -6,6 +6,7 @@ using Android.Support.V7.App;
 using HockeyApp.Android;
 using HockeyApp.Android.Metrics;
 using MyCC.Core.Currencies;
+using MyCC.Core.Database;
 using MyCC.Core.Preperation;
 using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
@@ -25,6 +26,7 @@ namespace MyCC.Ui.Android.Views.Activities
             base.OnCreate(savedInstanceState);
 
             Forms.Init(this, savedInstanceState);
+            DatabaseUtil.SqLiteConnection = new SqLiteConnectionAndroid();
             MobileBarcodeScanner.Initialize(Application);
             CrashManager.Register(this, "7792ee5321a64433ace4955a1693cca5");
             MetricsManager.Register(Application, "7792ee5321a64433ace4955a1693cca5");

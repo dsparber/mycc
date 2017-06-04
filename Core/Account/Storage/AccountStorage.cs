@@ -36,21 +36,6 @@ namespace MyCC.Core.Account.Storage
         public static List<FunctionalAccount> AccountsWithCurrency(Currency currency) => Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).ToList();
         public static List<FunctionalAccount> AccountsWithCurrency(string currencyId) => Instance.AllElements.Where(a => a.Money.Currency.Id.Equals(currencyId)).ToList();
 
-
-        public static List<ExchangeRate> NeededRates => UsedCurrencies.Distinct()
-                                       .SelectMany(c => ApplicationSettings.AllReferenceCurrencies.Select(cref => new RateDescriptor(c, cref)))
-                                       .Select(e => RateHelper.GetRate(e) ?? e)
-                                       .Where(r => r?.Rate == null)
-                                       .ToList();
-
-        public static List<ExchangeRate> NeededRatesFor(Currency accountCurrency) => ApplicationSettings.AllReferenceCurrencies
-                                       .Select(c => new ExchangeRate(accountCurrency.Id, c))
-                                       .Select(e => RateHelper.GetRate(e) ?? e)
-                                       .Where(r => r.Rate == null)
-                                       .ToList();
-
-        public static List<ExchangeRate> NeededRatesFor(FunctionalAccount account) => NeededRatesFor(account.Money.Currency);
-
         public static AccountRepository RepositoryOf(FunctionalAccount account) => Instance.Repositories.Find(r => r.Id == account.ParentId);
 
         public static Task Update(FunctionalAccount account) => RepositoryOf(account).Update(account);
@@ -64,14 +49,5 @@ namespace MyCC.Core.Account.Storage
 
         public static bool AlreadyExists(AccountRepository repository)
             => Instance.RepositoriesOfType(repository.GetType()).Any(r => r.Data.Equals(repository.Data));
-
-        public static int CurrenciesForGraph => AccountsGroupedByCurrency
-            .Select(e => e.Select(a =>
-            {
-                var rate = new ExchangeRate(e.Key.Id, ApplicationSettings.StartupCurrencyAssets);
-                rate = RateHelper.GetRate(rate) ?? rate;
-
-                return a.IsEnabled ? a.Money.Amount * rate.Rate ?? 0 : 0;
-            }).Sum()).Count(v => v > 0);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
@@ -8,8 +7,6 @@ using MyCC.Core.CoinInfo;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
-using MyCC.Core.Rates.Models;
-using MyCC.Core.Settings;
 
 namespace MyCC.Core.Tasks
 {
@@ -20,7 +17,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted?.Invoke();
-                await RateHelper.UpdateRates(progressCallback: progressCallback);
+                await RateStorage.FetchAllNeededRates(onProgress: progressCallback);
             }
             catch (Exception e)
             {
@@ -54,7 +51,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted?.Invoke();
-                await RateHelper.FetchMissingRates(progressCallback);
+                await RateStorage.FetchNotLoadedNeededRates(onProgress: progressCallback);
             }
             catch (Exception e)
             {
@@ -85,16 +82,15 @@ namespace MyCC.Core.Tasks
         }
 
         public static Task FetchRates(FunctionalAccount account, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
-            => FetchRates(account.Money.Currency, onStarted, onFinished, onError, progressCallback);
+            => FetchRates(account.Money.Currency.Id, onStarted, onFinished, onError, progressCallback);
 
 
-        public static async Task FetchRates(Currency currency, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
+        public static async Task FetchRates(string currencyId, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
         {
             try
             {
                 onStarted?.Invoke();
-                var ratesToUpdate = ApplicationSettings.AllReferenceCurrencies.Select(c => new ExchangeRate(currency.Id, c));
-                await RateHelper.UpdateRates(ratesToUpdate, progressCallback);
+                await RateStorage.FetchAllNeededRateFor(currencyId, onProgress: progressCallback);
             }
             catch (Exception e)
             {
@@ -147,29 +143,12 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchRates(IEnumerable<ExchangeRate> neededRates, Action onStarted, Action onFinished, Action<Exception> onError)
-        {
-            try
-            {
-                onStarted();
-                await RateHelper.UpdateRates(neededRates);
-            }
-            catch (Exception e)
-            {
-                onError(e);
-            }
-            finally
-            {
-                onFinished();
-            }
-        }
-
         public static async Task FetchBitcoinDollarRates(Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
         {
             try
             {
                 onStarted?.Invoke();
-                await RateHelper.FetchDollarBitcoinRates(progressCallback);
+                await RateStorage.FetchAllFiatToCryptoRates(onProgress: progressCallback);
             }
             catch (Exception e)
             {

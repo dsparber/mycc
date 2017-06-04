@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Currencies.Sources;
+using MyCC.Core.Database;
 using MyCC.Core.Helpers;
 using SQLite;
-using Xamarin.Forms;
 
 namespace MyCC.Core.Currencies
 {
@@ -31,7 +31,7 @@ namespace MyCC.Core.Currencies
                 new CryptoIdCurrencySource(),
                 new OpenexchangeCurrencySource()
             };
-            _connection = DependencyService.Get<ISqLiteConnection>().Connection;
+            _connection = DatabaseUtil.Connection;
 
             CurrencyDictionary = new Dictionary<string, Currency>();
             Currencies = new Currency[] { };
@@ -84,7 +84,7 @@ namespace MyCC.Core.Currencies
 
             var currencies = (await _connection.Table<CurrencyDbm>().ToListAsync()).Select(c => c.Currency).ToList();
             Currencies = currencies;
-            _currencyDictionary = currencies.ToDictionary(c => c.Id, c => c);
+            CurrencyDictionary = currencies.ToDictionary(c => c.Id, c => c);
             _loadedFromDatabase = true;
         }
     }

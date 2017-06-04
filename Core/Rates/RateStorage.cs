@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies;
-using MyCC.Core.Helpers;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Rates.Repositories;
 using MyCC.Core.Rates.Repositories.Implementations;
 using MyCC.Core.Settings;
-using Xamarin.Forms;
 
 namespace MyCC.Core.Rates
 {
@@ -33,9 +31,24 @@ namespace MyCC.Core.Rates
         private static readonly IEnumerable<ExchangeRate> ExchangeRates = new ExchangeRate[] { };
 
 
-        public static async Task FetchRates(IEnumerable<RateDescriptor> rateDescriptors)
+        public static async Task FetchRates(IEnumerable<RateDescriptor> rateDescriptors, Action<double> onProgress = null)
         {
             // TODO Implement
+        }
+
+        public static Task FetchAllNeededRates(Action<double> onProgress = null)
+            => FetchRates(RateHelper.NeededRates, onProgress);
+
+        public static Task FetchNotLoadedNeededRates(Action<double> onProgress = null)
+        {
+            var notLoadedNeededRates = RateHelper.NeededRates.Where(rateDescriptor => rateDescriptor.GetRate() == null);
+            return FetchRates(notLoadedNeededRates, onProgress);
+        }
+
+        public static Task FetchAllNeededRateFor(string currencyId, Action<double> onProgress = null)
+        {
+            var neededRates = ApplicationSettings.AllReferenceCurrencies.Select(referenceCurrencyId => new RateDescriptor(currencyId, referenceCurrencyId));
+            return FetchRates(neededRates, onProgress);
         }
 
         public static async Task FetchAllFiatToCryptoRates(Action<double> onProgress = null)
@@ -52,6 +65,7 @@ namespace MyCC.Core.Rates
                 }.Where(rateDescriptor => source.IsAvailable(rateDescriptor));
 
                 var rates = await source.FetchRates(ratesToFetch);
+                // TODO implement add/save
 
                 progress += 1;
                 onProgress?.Invoke(progress / sources.Count);
@@ -63,7 +77,7 @@ namespace MyCC.Core.Rates
             // TODO Implement (thread save)
         }
 
-        private static async Task LoadFromDb()
+        public static async Task LoadFromDatabase()
         {
             // TODO Implement
         }

@@ -15,7 +15,7 @@
         }
 
 
-        public override bool Equals(object obj) => Id.Equals((obj as ExchangeRate)?.Id);
+        public override bool Equals(object obj) => Id.Equals((obj as RateDescriptor)?.Id);
         public override int GetHashCode() => Id.GetHashCode();
         public override string ToString() => Id;
     }

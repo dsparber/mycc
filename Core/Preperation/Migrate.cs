@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
+using MyCC.Core.Database;
 using MyCC.Core.Helpers;
 using MyCC.Core.Settings;
-using Xamarin.Forms;
 
 namespace MyCC.Core.Preperation
 {
@@ -25,7 +25,7 @@ namespace MyCC.Core.Preperation
         {
             try
             {
-                var connection = DependencyService.Get<ISqLiteConnection>().GetOldConnection();
+                var connection = DatabaseUtil.OldConnection;
                 await connection.ExecuteAsync("DROP TABLE Currencies;");
                 await connection.ExecuteAsync("DROP TABLE CurrencyMap;");
                 await connection.ExecuteAsync("DROP TABLE CurrencyRepositories;");
@@ -41,7 +41,7 @@ namespace MyCC.Core.Preperation
         {
             try
             {
-                var connection = DependencyService.Get<ISqLiteConnection>().GetOldConnection();
+                var connection = DatabaseUtil.OldConnection;
                 await connection.ExecuteAsync("DELETE FROM ExchangeRates;");
             }
             catch

@@ -3,9 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.CoinInfo.Repositories;
 using MyCC.Core.Currencies.Models;
-using MyCC.Core.Helpers;
+using MyCC.Core.Database;
 using SQLite;
-using Xamarin.Forms;
 
 namespace MyCC.Core.CoinInfo
 {
@@ -21,7 +20,7 @@ namespace MyCC.Core.CoinInfo
         {
             _elements = new List<CoinInfoData>();
 
-            _dbConnection = DependencyService.Get<ISqLiteConnection>().GetOldConnection();
+            _dbConnection = DatabaseUtil.OldConnection;
             _dbConnection.CreateTableAsync<CoinInfoData>();
 
             _repositories = new List<ICoinInfoRepository> {
