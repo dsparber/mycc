@@ -19,5 +19,7 @@
         string CoinProofOfStake { get; }
         string GHps { get; }
         string UnitSecond { get; }
+        string LoadingCurrenciesFrom { get; }
+        string LoadingRates { get; }
     }
 }

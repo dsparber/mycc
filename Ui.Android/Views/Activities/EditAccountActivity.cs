@@ -138,14 +138,12 @@ namespace MyCC.Ui.Android.Views.Activities
             _account.Name = NameOrDefault;
             _account.IsEnabled = _enabled;
 
-            await AccountStorage.Update(_account);
-            Messaging.Update.Assets.Send();
+            await UiUtils.Edit.Update(_account);
         }
 
         private async void Delete()
         {
-            await AccountStorage.Instance.LocalRepository.Remove(_account);
-            Messaging.Update.Assets.Send();
+            await UiUtils.Edit.Delete(_account);
         }
     }
 }

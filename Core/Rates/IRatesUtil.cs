@@ -9,13 +9,20 @@ namespace MyCC.Core.Rates
     {
         ExchangeRate GetRate(RateDescriptor rateDescriptor);
 
+        bool HasRate(RateDescriptor rateDescriptor);
+
+        DateTime LastUpdate();
+        DateTime LastUpdateFor(string currencyId);
+
+
         Task LoadFromDatabase();
 
-        Task FetchRates(IEnumerable<RateDescriptor> rateDescriptors, Action<double> onProgress = null);
-        Task FetchAllNeededRates(Action<double> onProgress = null);
-        Task FetchNotLoadedNeededRates(Action<double> onProgress = null);
-        Task FetchAllNeededRateFor(string currencyId, Action<double> onProgress = null);
-        Task FetchAllFiatToCryptoRates(Action<double> onProgress = null);
+        Task Fetch(IEnumerable<RateDescriptor> rateDescriptors, Action<double> onProgress = null);
+        Task FetchNeeded(Action<double> onProgress = null);
+        Task FetchNeededButNotLoaded(Action<double> onProgress = null);
+        Task FetchFor(string currencyId, Action<double> onProgress = null);
+        Task FetchAllFiatToCrypto(Action<double> onProgress = null);
+
 
         IEnumerable<(string name, IEnumerable<ExchangeRate> rates)> CryptoToFiatSourcesWithRates { get; }
     }

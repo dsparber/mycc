@@ -11,46 +11,12 @@ namespace MyCC.Core.Tasks
 {
     public static partial class ApplicationTasks
     {
-        public static async Task FetchRates(Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
-        {
-            try
-            {
-                onStarted?.Invoke();
-                await MyccUtil.Rates.FetchAllNeededRates(onProgress: progressCallback);
-            }
-            catch (Exception e)
-            {
-                onError?.Invoke(e);
-            }
-            finally
-            {
-                onFinished?.Invoke();
-            }
-        }
-
-        public static async Task FetchCurrenciesAndAvailableRates(Action onStarted = null, Action onFinished = null, Action<Exception> onError = null)
+        public static async Task FetchCurrencies(Action onStarted = null, Action onFinished = null, Action<Exception> onError = null)
         {
             try
             {
                 onStarted?.Invoke();
                 await CurrencyStorage.Instance.LoadOnline();
-            }
-            catch (Exception e)
-            {
-                onError?.Invoke(e);
-            }
-            finally
-            {
-                onFinished?.Invoke();
-            }
-        }
-
-        public static async Task FetchMissingRates(Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
-        {
-            try
-            {
-                onStarted?.Invoke();
-                await MyccUtil.Rates.FetchNotLoadedNeededRates(onProgress: progressCallback);
             }
             catch (Exception e)
             {
@@ -69,27 +35,6 @@ namespace MyCC.Core.Tasks
                 onStarted?.Invoke();
                 var onlineFunctionalAccount = account as OnlineFunctionalAccount;
                 if (onlineFunctionalAccount != null) await onlineFunctionalAccount.FetchBalanceOnline();
-            }
-            catch (Exception e)
-            {
-                onError?.Invoke(e);
-            }
-            finally
-            {
-                onFinished?.Invoke();
-            }
-        }
-
-        public static Task FetchRates(FunctionalAccount account, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
-            => FetchRates(account.Money.Currency.Id, onStarted, onFinished, onError, progressCallback);
-
-
-        public static async Task FetchRates(string currencyId, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
-        {
-            try
-            {
-                onStarted?.Invoke();
-                await MyccUtil.Rates.FetchAllNeededRateFor(currencyId, onProgress: progressCallback);
             }
             catch (Exception e)
             {
@@ -131,23 +76,6 @@ namespace MyCC.Core.Tasks
             {
                 onStarted?.Invoke();
                 await AccountStorage.Instance.FetchOnline(progressCallback);
-            }
-            catch (Exception e)
-            {
-                onError?.Invoke(e);
-            }
-            finally
-            {
-                onFinished?.Invoke();
-            }
-        }
-
-        public static async Task FetchBitcoinDollarRates(Action onStarted = null, Action onFinished = null, Action<Exception> onError = null, Action<double> progressCallback = null)
-        {
-            try
-            {
-                onStarted?.Invoke();
-                await MyccUtil.Rates.FetchAllFiatToCryptoRates(onProgress: progressCallback);
             }
             catch (Exception e)
             {

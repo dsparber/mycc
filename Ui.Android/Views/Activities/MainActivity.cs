@@ -15,7 +15,6 @@ using MyCC.Ui.Android.Views.Fragments;
 using ActionBarDrawerToggle = Android.Support.V7.App.ActionBarDrawerToggle;
 using Fragment = Android.Support.V4.App.Fragment;
 using MyCC.Ui.Messages;
-using MyCC.Ui.Tasks;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -54,7 +53,7 @@ namespace MyCC.Ui.Android.Views.Activities
             if (!initBefore && _autoRefreshNeeded && ConnectivityStatus.IsConnected)
             {
                 _autoRefreshNeeded = false;
-                Task.Run(async () => await TaskHelper.UpdateAllAssetsAndRates());
+                UiUtils.Update.FetchAllAssetsAndRates();
             }
         }
 

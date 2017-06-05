@@ -90,8 +90,8 @@ namespace MyCC.Core.CoinInfo
         [Ignore]
         public DateTime LastUpdate
         {
-            get { return new DateTime(LastUpdateTicks); }
-            set { LastUpdateTicks = value.Ticks; }
+            get => new DateTime(LastUpdateTicks);
+            set => LastUpdateTicks = value.Ticks;
         }
 
 

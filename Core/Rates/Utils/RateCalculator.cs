@@ -27,7 +27,7 @@ namespace MyCC.Core.Rates.Utils
 
         private static ExchangeRate GetMixedRate(this RateDescriptor rateDescriptor)
         {
-            if (RateDatabase.SelectedCryptoToFiatSource.IsAvailable(rateDescriptor))
+            if (RatesConfig.SelectedCryptoToFiatSource.IsAvailable(rateDescriptor))
                 return RateDatabase.GetRateOrDefault(rateDescriptor);
 
             var rateToDefaultFiatCurrency = rateDescriptor.GetFiatCurrencyId().RateToDefaultCurrency(useCrypto: false);
@@ -66,7 +66,7 @@ namespace MyCC.Core.Rates.Utils
 
         private static IEnumerable<RateDescriptor> GetNeededForMixedRate(this RateDescriptor rateDescriptor)
         {
-            if (RateDatabase.SelectedCryptoToFiatSource.IsAvailable(rateDescriptor)) return new[] { rateDescriptor };
+            if (RatesConfig.SelectedCryptoToFiatSource.IsAvailable(rateDescriptor)) return new[] { rateDescriptor };
 
             return new[]
             {

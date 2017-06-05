@@ -41,7 +41,7 @@ namespace MyCC.Core.Currencies
         public static CurrencyStorage Instance => _instance ?? (_instance = new CurrencyStorage());
 
 
-        public async Task LoadOnline(Action<ICurrencySource> onStartedFetching = null, Action<ICurrencySource> onFinishedFetching = null, Action onDataOperationsFinished = null)
+        public async Task LoadOnline(Action<double, string> onProgress = null, Action onDataOperationsFinished = null)
         {
             if (!_loadedFromDatabase) await LoadFromDatabase();
 
@@ -49,9 +49,9 @@ namespace MyCC.Core.Currencies
             var fetchedCurrencies = new List<Currency>();
             var updateCurrencies = new List<Currency>();
 
+            var progress = .0;
             foreach (var source in _sources)
             {
-                onStartedFetching?.Invoke(source);
                 var result = (await source.GetCurrencies()).ToList();
 
                 var allCurrencies = fetchedCurrencies.Concat(Currencies).Distinct().ToList();
@@ -64,7 +64,8 @@ namespace MyCC.Core.Currencies
                 newCurrencies.AddRange(result.Except(allCurrencies));
                 updateCurrencies = updateCurrencies.Except(update).Concat(update).ToList();
 
-                onFinishedFetching?.Invoke(source);
+                progress += 1;
+                onProgress?.Invoke(progress / _sources.Count(), source.Name);
             }
 
             var oldElemets = Currencies.Except(fetchedCurrencies);

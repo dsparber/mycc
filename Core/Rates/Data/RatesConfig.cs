@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Rates.Repositories;
 using MyCC.Core.Rates.Repositories.Implementations;
+using MyCC.Core.Settings;
 
 namespace MyCC.Core.Rates.Data
 {
@@ -26,6 +28,11 @@ namespace MyCC.Core.Rates.Data
             new CoinapultExchangeRateSource(),
             new ItBitExchangeRateSource()
         };
+
+        public static IRateSource SelectedCryptoToFiatSource =>
+            RatesConfig.Sources.FirstOrDefault(source => (int)source.Id == SelectedCryptoToFiatSourceId);
+
+        public static int SelectedCryptoToFiatSourceId => ApplicationSettings.PreferredBitcoinRepository;
     }
 
 }

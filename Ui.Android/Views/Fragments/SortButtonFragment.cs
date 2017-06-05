@@ -24,16 +24,16 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         private string Text
         {
-            set { _textView.Text = value; }
+            set => _textView.Text = value;
         }
 
         public bool First
         {
-            set { _textView.SetPadding((value ? 24 : 8).DpToPx(), 8.DpToPx(), 4.DpToPx(), 8.DpToPx()); }
+            set => _textView.SetPadding((value ? 24 : 8).DpToPx(), 8.DpToPx(), 4.DpToPx(), 8.DpToPx());
         }
         public bool Last
         {
-            set { _imageView.SetPadding(0, 0, (value ? 24 : 8).DpToPx(), 0); }
+            set => _imageView.SetPadding(0, 0, (value ? 24 : 8).DpToPx(), 0);
         }
 
         private SortDirection? Direction
@@ -51,7 +51,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         private GravityFlags Gravity
         {
-            set { _textView.Gravity = value; }
+            set => _textView.Gravity = value;
         }
 
         private Action OnClick { get; set; }

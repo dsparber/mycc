@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
-using MyCC.Core.Rates;
 using MyCC.Core.Rates.Models;
-using MyCC.Core.Rates.Utils;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
@@ -17,7 +16,7 @@ using MyCC.Ui.Helpers;
 using MyCC.Ui.Messages;
 using Xamarin.Forms;
 
-namespace MyCC.Ui.ViewData
+namespace MyCC.Ui.Get
 {
     public class AccountDetailViewData
     {
@@ -26,7 +25,7 @@ namespace MyCC.Ui.ViewData
         public static HeaderDataItem HeaderData(Account account)
         {
             var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { account.Money.Currency.Id })
-                .Select(x => new Money(account.Money.Amount * RateUtil.GetRate(account.Money.Currency.Id, x)?.Rate ?? 0, x.Find())).
+                .Select(x => new Money(account.Money.Amount * MyccUtil.Rates.GetRate(new RateDescriptor(account.Money.Currency.Id, x))?.Rate ?? 0, x.Find())).
                 OrderBy(m => m.Currency.Code);
 
             return new HeaderDataItem(account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
@@ -57,7 +56,7 @@ namespace MyCC.Ui.ViewData
         public static DateTime LastUpdate(FunctionalAccount account)
         {
             var accountTime = account.LastUpdate;
-            var ratesTime = AccountStorage.NeededRatesFor(account).Distinct().Select(e => RateUtil.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+            var ratesTime = MyccUtil.Rates.LastUpdateFor(account.Money.Currency.Id);
 
             return account is LocalAccount ? ratesTime : ratesTime < accountTime ? ratesTime : accountTime;
         }
@@ -65,8 +64,12 @@ namespace MyCC.Ui.ViewData
         public static IEnumerable<ReferenceValueItem> Items(Account account)
         {
             return ApplicationSettings.AllReferenceCurrencies.Except(new[] { account.Money.Currency.Id })
-                .Select(c => new ReferenceValueItem(account.Money.Amount, RateUtil.GetRate(account.Money.Currency.Id, c) ?? new ExchangeRate(account.Money.Currency.Id, c)))
-                .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirection == SortDirection.Ascending);
+                .Select(c =>
+                {
+                    var rate = MyccUtil.Rates.GetRate(new RateDescriptor(account.Money.Currency.Id, c));
+                    return new ReferenceValueItem(account.Money.Amount, rate?.Rate, c.Code());
+                })
+                .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Rate, SortDirection == SortDirection.Ascending);
         }
 
         public List<SortButtonItem> SortButtons => new List<SortButtonItem>
@@ -96,14 +99,14 @@ namespace MyCC.Ui.ViewData
 
         private static SortOrder SortOrder
         {
-            get { return ApplicationSettings.SortOrderReferenceValues; }
-            set { ApplicationSettings.SortOrderReferenceValues = value; }
+            get => ApplicationSettings.SortOrderReferenceValues;
+            set => ApplicationSettings.SortOrderReferenceValues = value;
         }
 
         private static SortDirection SortDirection
         {
-            get { return ApplicationSettings.SortDirectionReferenceValues; }
-            set { ApplicationSettings.SortDirectionReferenceValues = value; }
+            get => ApplicationSettings.SortDirectionReferenceValues;
+            set => ApplicationSettings.SortDirectionReferenceValues = value;
         }
     }
 }

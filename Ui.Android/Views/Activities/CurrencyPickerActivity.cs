@@ -12,7 +12,7 @@ using MyCC.Core.Currencies.Models;
 using MyCC.Ui.Android.Views.Adapter;
 using Newtonsoft.Json;
 using MyCC.Core.Settings;
-using MyCC.Ui.ViewData;
+using MyCC.Ui.Get;
 
 namespace MyCC.Ui.Android.Views.Activities
 {

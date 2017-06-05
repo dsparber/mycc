@@ -28,55 +28,55 @@ namespace MyCC.Forms.View.Components.Cells
 
         public string Text
         {
-            set { _view.Text = value; }
-            get { return _view.Text; }
+            set => _view.Text = value;
+            get => _view.Text;
         }
 
         public string Detail
         {
-            set { _view.Detail = value; }
-            get { return _view.Detail; }
+            set => _view.Detail = value;
+            get => _view.Detail;
         }
 
         public string Image
         {
-            set { _view.Image = value; }
+            set => _view.Image = value;
         }
 
         public List<CustomCellViewActionItem> ActionItems
         {
-            get { return _view.ActionItems; }
-            set { _view.ActionItems = value; }
+            get => _view.ActionItems;
+            set => _view.ActionItems = value;
         }
 
         public bool IsActionCell
         {
-            set { _view.IsActionCell = value; }
+            set => _view.IsActionCell = value;
         }
 
         public bool IsDeleteActionCell
         {
-            set { _view.IsDeleteActionCell = value; }
+            set => _view.IsDeleteActionCell = value;
         }
 
         public bool ShowIcon
         {
-            set { _view.ShowIcon = value; }
+            set => _view.ShowIcon = value;
         }
 
         public bool IsCentered
         {
-            set { _view.IsCentered = value; }
+            set => _view.IsCentered = value;
         }
 
         public bool IsDisabled
         {
-            set { _view.IsDisaled = value; }
+            set => _view.IsDisaled = value;
         }
 
         public LineBreakMode DetailBreakMode
         {
-            set { _view.DetailBreakMode = value; }
+            set => _view.DetailBreakMode = value;
         }
     }
 }

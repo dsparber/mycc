@@ -5,7 +5,7 @@ using Android.Views;
 using Android.Widget;
 using MyCC.Core.Currencies.Models;
 using MyCC.Ui.DataItems;
-using MyCC.Ui.ViewData;
+using MyCC.Ui.Get;
 
 namespace MyCC.Ui.Android.Views.Adapter
 {

@@ -4,7 +4,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Settings;
 using MyCC.Ui.DataItems;
 
-namespace MyCC.Ui.ViewData
+namespace MyCC.Ui.Get
 {
     public class CoinHeaderData : HeaderDataItem
     {

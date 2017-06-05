@@ -77,7 +77,7 @@ namespace MyCC.Forms.View.Pages
                 await ApplicationTasks.LoadEverything();
 
                 // STEP 2: Fetch needed Rates
-                await TaskHelper.FetchMissingRates(false, progress => SetStatus(0.8 + progress * 0.1, I18N.LoadingRates));
+                await TaskHelper.FetchNeededButNotLoadedRates(false, progress => SetStatus(0.8 + progress * 0.1, I18N.LoadingRates));
 
                 ApplicationSettings.AppInitialised = true;
 

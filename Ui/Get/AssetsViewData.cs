@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
-using MyCC.Core.Rates.Utils;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.DataItems;
@@ -15,7 +15,7 @@ using MyCC.Ui.Helpers;
 using MyCC.Ui.Messages;
 using Newtonsoft.Json;
 
-namespace MyCC.Ui.ViewData
+namespace MyCC.Ui.Get
 {
     public class AssetsViewData
     {
@@ -42,7 +42,7 @@ namespace MyCC.Ui.ViewData
             return $"showChart({data}, {accountStrings}, {currenciesStrings}, \"{furtherString}\", \"{noDataString}\", \"{baseCurrency}\", \"{roundMoney}\", \"{culture}\");";
         }
 
-        public void UpdateRateItems()
+        public void UpdateItems()
         {
             Items = LoadItems();
             _graphItems = LoadGraphItems();
@@ -57,36 +57,37 @@ namespace MyCC.Ui.ViewData
         {
             var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
             var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
-            var ratesTime = AccountStorage.NeededRates.Distinct().Select(e => RateUtil.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+            var ratesTime = MyccUtil.Rates.LastUpdate();
 
             return online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
         });
 
         private static SortOrder SortOrder
         {
-            get { return ApplicationSettings.SortOrderAccounts; }
-            set { ApplicationSettings.SortOrderAccounts = value; }
+            get => ApplicationSettings.SortOrderAccounts;
+            set => ApplicationSettings.SortOrderAccounts = value;
         }
         private static SortDirection SortDirection
         {
-            get { return ApplicationSettings.SortDirectionAccounts; }
-            set { ApplicationSettings.SortDirectionAccounts = value; }
+            get => ApplicationSettings.SortDirectionAccounts;
+            set => ApplicationSettings.SortDirectionAccounts = value;
         }
 
         private static Dictionary<Currency, CoinHeaderData> LoadHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyHelper.Find, c =>
         {
             var enabledAccounts = AccountStorage.EnabledAccounts.ToList();
-            Func<string, Money> getReferenceValue = currencyId =>
-            {
-                var amount = enabledAccounts.Sum(a => a.Money.Amount * RateUtil.GetRate(a.Money.Currency.Id, currencyId)?.Rate ?? 0);
-                return new Money(amount, currencyId.Find());
-            };
 
-            var referenceMoney = getReferenceValue(c);
+            Money GetReferenceValue(string currencyId)
+            {
+                var amount = enabledAccounts.Sum(a => a.Money.Amount * MyccUtil.Rates.GetRate(new RateDescriptor(a.Money.Currency.Id, currencyId))?.Rate ?? 0);
+                return new Money(amount, currencyId.Find());
+            }
+
+            var referenceMoney = GetReferenceValue(c);
 
             var additionalRefs = ApplicationSettings.MainCurrencies
                 .Except(new[] { c })
-                .Select(currencyId => getReferenceValue(currencyId));
+                .Select(GetReferenceValue);
 
             return new CoinHeaderData(referenceMoney, additionalRefs);
         });
@@ -100,19 +101,19 @@ namespace MyCC.Ui.ViewData
 
         private static Dictionary<Currency, List<AssetItem>> LoadItems() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyHelper.Find, c =>
         {
-            Func<Money, Money> getReference = m => new Money(m.Amount * (RateUtil.GetRate(m.Currency.Id, c)?.Rate ?? 0), c.Find());
+            Money GetReference(Money m) => new Money(m.Amount * (MyccUtil.Rates.GetRate(new RateDescriptor(m.Currency.Id, c))?.Rate ?? 0), c.Find());
 
             var items = AccountStorage.AccountsGroupedByCurrency.ToList();
             var enabled = items.Select(group =>
             {
                 var money = new Money(group.Sum(a => a.IsEnabled ? a.Money.Amount : 0), group.Key);
-                return new AssetItem(money, getReference(money), true);
+                return new AssetItem(money, GetReference(money), true);
             }).ToList();
 
             var disabled = items.Select(group =>
             {
                 var money = new Money(group.Sum(a => a.IsEnabled ? 0 : a.Money.Amount), group.Key);
-                return new AssetItem(money, getReference(money), false);
+                return new AssetItem(money, GetReference(money), false);
             }).Where(i => !enabled.Any(x => x.Value.Currency.Equals(i.Value.Currency))).ToList();
 
             return ApplySort(enabled, disabled);

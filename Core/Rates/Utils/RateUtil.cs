@@ -20,25 +20,29 @@ namespace MyCC.Core.Rates.Utils
             });
 
         public ExchangeRate GetRate(RateDescriptor rateDescriptor) => rateDescriptor.GetRate();
+        public bool HasRate(RateDescriptor rateDescriptor) => rateDescriptor.GetRate() != null;
+
+        public DateTime LastUpdate() => GetNeededRates().Select(e => e.GetRate()?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+
+        public DateTime LastUpdateFor(string currencyId)
+            => GetNeededRatesFor(currencyId).Select(e => e.GetRate()?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
 
         public Task LoadFromDatabase() => RateDatabase.LoadFromDatabase();
 
-        public Task FetchRates(IEnumerable<RateDescriptor> rateDescriptors, Action<double> onProgress = null) => RateLoader.FetchRates(rateDescriptors, onProgress: onProgress);
+        public Task Fetch(IEnumerable<RateDescriptor> rateDescriptors, Action<double> onProgress = null) => RateLoader.FetchRates(rateDescriptors, onProgress: onProgress);
 
-        public Task FetchAllNeededRates(Action<double> onProgress = null)
+        public Task FetchNeeded(Action<double> onProgress = null)
             => RateLoader.FetchRates(GetNeededRates(), onProgress: onProgress);
 
-        public Task FetchNotLoadedNeededRates(Action<double> onProgress = null)
+        public Task FetchNeededButNotLoaded(Action<double> onProgress = null)
             => RateLoader.FetchRates(GetNeededRates().Where(rateDescriptor => rateDescriptor.GetRate() == null), onProgress: onProgress);
 
 
-        public Task FetchAllNeededRateFor(string currencyId, Action<double> onProgress = null)
-        {
-            var neededRates = ApplicationSettings.AllReferenceCurrencies.Select(referenceCurrencyId => new RateDescriptor(currencyId, referenceCurrencyId));
-            return RateLoader.FetchRates(neededRates, onProgress: onProgress);
-        }
+        public Task FetchFor(string currencyId, Action<double> onProgress = null)
+            => RateLoader.FetchRates(GetNeededRatesFor(currencyId), onProgress: onProgress);
 
-        public Task FetchAllFiatToCryptoRates(Action<double> onProgress = null) =>
+
+        public Task FetchAllFiatToCrypto(Action<double> onProgress = null) =>
             RateLoader.FetchAllFiatToCryptoRates(onProgress);
 
         private static IEnumerable<RateDescriptor> GetNeededRates()
@@ -51,5 +55,10 @@ namespace MyCC.Core.Rates.Utils
             return usedCurrencies.SelectMany(currencyId => referenceCurrencies.Select(referenceCurrencyId => new RateDescriptor(currencyId, referenceCurrencyId))).Distinct();
         }
 
+        private static IEnumerable<RateDescriptor> GetNeededRatesFor(string currencyId)
+        {
+            return ApplicationSettings.AllReferenceCurrencies
+                .Select(referenceCurrencyId => new RateDescriptor(currencyId, referenceCurrencyId));
+        }
     }
 }

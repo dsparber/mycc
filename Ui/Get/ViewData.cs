@@ -1,7 +1,6 @@
 ﻿using MyCC.Ui.Messages;
-using MyCC.Ui.Tasks;
 
-namespace MyCC.Ui.ViewData
+namespace MyCC.Ui.Get
 {
     public class ViewData
     {
@@ -24,31 +23,6 @@ namespace MyCC.Ui.ViewData
             _coinInfoViewData = new CoinInfoViewData();
             _accountDetailViewData = new AccountDetailViewData();
             _accountsGroupViewData = new AccountsGroupViewData();
-
-            Messaging.Update.Rates.Subscribe(this, () =>
-            {
-                _ratesViewData.UpdateRateItems();
-                Messaging.UiUpdate.ViewsWithRate.Send();
-            });
-            Messaging.Update.Assets.Subscribe(this, () =>
-            {
-                _assetsViewData.UpdateRateItems();
-                Messaging.UiUpdate.Accounts.Send();
-            });
-
-
-            Messaging.Request.AllRates.Subscribe(this, TaskHelper.UpdateAllRates);
-            Messaging.Request.AllAssetsAndRates.Subscribe(this, async () => await TaskHelper.UpdateAllAssetsAndRates());
-
-            Messaging.Request.DataForNewAccount.Subscribe(this, TaskHelper.UpdateDataForNewAccount);
-
-            Messaging.Request.SingleAccount.Subscribe(this, TaskHelper.UpdateBalanceAndRatesForAccount);
-            Messaging.Request.AccountsByCurrency.Subscribe(this, TaskHelper.UpdateBalancesAndRatesForCurrency);
-
-            Messaging.Request.InfoForCurrency.Subscribe(this, TaskHelper.FetchCoinInfo);
-            Messaging.Request.RateAndInfo.Subscribe(this, TaskHelper.FetchCoinInfoAndRates);
-
-            Messaging.Request.BitcoinExchangeSources.Subscribe(this, TaskHelper.UpdateBitcoinExchangeSources);
         }
 
         public static void Init()

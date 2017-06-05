@@ -16,7 +16,7 @@ namespace MyCC.Core.Test.Rates
         {
             DatabaseUtil.SqLiteConnection = new SqLiteConnection();
             await CurrencyStorage.Instance.LoadOnline();
-            await MyccUtil.Rates.FetchAllFiatToCryptoRates();
+            await MyccUtil.Rates.FetchAllFiatToCrypto();
         }
 
         [Test]

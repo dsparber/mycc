@@ -14,8 +14,8 @@ using Android.Support.V4.Widget;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies.Models;
 using MyCC.Ui.DataItems;
+using MyCC.Ui.Get;
 using MyCC.Ui.Messages;
-using MyCC.Ui.ViewData;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -63,7 +63,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
             _swipeToRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
 
-            _swipeToRefresh.Refresh += (sender, e) => Messaging.Request.RateAndInfo.Send(_currency);
+            _swipeToRefresh.Refresh += (sender, e) => UiUtils.Update.FetchCoinInfoAndRatesFor(_currency.Id);
 
             var explorerButtosView = FindViewById<LinearLayout>(Resource.Id.view_open_in_blockexplorer);
             var explorerList = CoinInfoViewData.ExplorerList(_currency);
@@ -134,10 +134,10 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void LoadData()
         {
-            var info = ViewData.ViewData.CoinInfo.CoinInfo(_currency);
-            if (info == null && ViewData.ViewData.CoinInfo.CoinInfoFetchable(_currency) && ConnectivityStatus.IsConnected)
+            var info = ViewData.CoinInfo.CoinInfo(_currency);
+            if (info == null && ViewData.CoinInfo.CoinInfoFetchable(_currency) && ConnectivityStatus.IsConnected)
             {
-                Messaging.Request.InfoForCurrency.Send(_currency);
+                UiUtils.Update.FetchCoinInfoFor(_currency.Id);
             }
 
             SetCoinInfo(info);
@@ -149,7 +149,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void SetCoinInfo(CoinInfoItem data)
         {
-            data = data ?? ViewData.ViewData.CoinInfo.CoinInfo(_currency);
+            data = data ?? ViewData.CoinInfo.CoinInfo(_currency);
 
             _header.Data = CoinInfoViewData.HeaderData(_currency);
             _footerFragment.LastUpdate = CoinInfoViewData.LastUpdate(_currency);
@@ -207,12 +207,12 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void SetReferenceTable()
         {
-            var items = ViewData.ViewData.CoinInfo.Items(_currency);
+            var items = ViewData.CoinInfo.Items(_currency);
             var view = FindViewById<LinearLayout>(Resource.Id.view_reference);
 
-            _sortAmount.Data = ViewData.ViewData.CoinInfo.SortButtons[0];
+            _sortAmount.Data = ViewData.CoinInfo.SortButtons[0];
             _sortAmount.First = true;
-            _sortCurrency.Data = ViewData.ViewData.CoinInfo.SortButtons[1];
+            _sortCurrency.Data = ViewData.CoinInfo.SortButtons[1];
             _sortCurrency.Last = true;
 
             view.RemoveAllViews();

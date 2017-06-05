@@ -182,7 +182,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 await AccountStorage.Update(a);
             }
 
-            Messaging.Update.Assets.Send();
+            UiUtils.Update.CreateAssetsData();
             dialog.Dismiss();
 
             Finish();
@@ -191,7 +191,7 @@ namespace MyCC.Ui.Android.Views.Activities
         private async void Delete()
         {
             await AccountStorage.Instance.Remove(_repository);
-            Messaging.Update.Assets.Send();
+            UiUtils.Update.CreateAssetsData();
         }
     }
 }

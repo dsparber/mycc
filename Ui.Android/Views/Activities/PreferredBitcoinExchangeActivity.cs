@@ -65,7 +65,7 @@ namespace MyCC.Ui.Android.Views.Activities
             var swipeRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             swipeRefresh.Refresh += (sender, args) =>
             {
-                Messaging.Request.BitcoinExchangeSources.Send();
+                UiUtils.Update.FetchCryptoToFiatRates();
             };
 
             Messaging.UiUpdate.BitcoinExchangeSources.Subscribe(this, () => RunOnUiThread(() =>
@@ -82,7 +82,7 @@ namespace MyCC.Ui.Android.Views.Activities
             if (lastUpdate == DateTime.MinValue && !_triedUpdate)
             {
                 _triedUpdate = true;
-                Messaging.Request.BitcoinExchangeSources.Send();
+                UiUtils.Update.FetchCryptoToFiatRates();
             }
             _footer.LastUpdate = lastUpdate;
         }

@@ -6,7 +6,6 @@ using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Rates.Repositories;
 using MyCC.Core.Rates.Repositories.Utils;
-using MyCC.Core.Settings;
 
 namespace MyCC.Core.Rates.Data
 {
@@ -67,7 +66,7 @@ namespace MyCC.Core.Rates.Data
             bool RatesFilter(ExchangeRate rate)
             {
                 if (rateDescriptor.HasCryptoAndFiatCurrency())
-                    return rate.SourceId == SelectedCryptoToFiatSourceId && rate.RateDescriptor.CurrenciesEqual(rateDescriptor);
+                    return rate.SourceId == RatesConfig.SelectedCryptoToFiatSourceId && rate.RateDescriptor.CurrenciesEqual(rateDescriptor);
 
                 return rate.RateDescriptor.CurrenciesEqual(rateDescriptor);
             }
@@ -76,10 +75,5 @@ namespace MyCC.Core.Rates.Data
             if (result == null) return null;
             return result.RateDescriptor.Equals(rateDescriptor) ? result : result.Inverse();
         }
-
-        public static IRateSource SelectedCryptoToFiatSource =>
-            RatesConfig.Sources.FirstOrDefault(source => (int)source.Id == SelectedCryptoToFiatSourceId);
-
-        private static int SelectedCryptoToFiatSourceId => ApplicationSettings.PreferredBitcoinRepository;
     }
 }

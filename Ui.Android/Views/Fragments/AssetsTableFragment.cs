@@ -16,6 +16,7 @@ using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Android.Views.Adapter;
 using MyCC.Ui.DataItems;
+using MyCC.Ui.Get;
 using MyCC.Ui.Messages;
 using Newtonsoft.Json;
 using Fragment = Android.Support.V4.App.Fragment;
@@ -52,17 +53,17 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             SetVisibleElements(view);
 
-            var headerData = ViewData.ViewData.Assets.Headers?[_referenceCurrency];
+            var headerData = ViewData.Assets.Headers?[_referenceCurrency];
             _header = (HeaderFragment)ChildFragmentManager.FindFragmentById(Resource.Id.header_fragment);
             _header.Data = headerData;
 
             _footerFragment = (FooterFragment)ChildFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
-            _footerFragment.LastUpdate = ViewData.ViewData.Assets.LastUpdate?[_referenceCurrency] ?? DateTime.MinValue;
+            _footerFragment.LastUpdate = ViewData.Assets.LastUpdate?[_referenceCurrency] ?? DateTime.MinValue;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             refreshView.Refresh += (sender, args) => Messaging.Request.AllAssetsAndRates.Send();
 
-            _items = ViewData.ViewData.Assets.Items?[_referenceCurrency] ?? new List<AssetItem>();
+            _items = ViewData.Assets.Items?[_referenceCurrency] ?? new List<AssetItem>();
             var adapter = new AssetsListAdapter(Context, _items);
             var list = view.FindViewById<ListView>(Resource.Id.list_assets);
             list.Adapter = adapter;
@@ -86,7 +87,7 @@ namespace MyCC.Ui.Android.Views.Fragments
                 }
             };
 
-            var sortData = ViewData.ViewData.Assets.SortButtons?[_referenceCurrency];
+            var sortData = ViewData.Assets.SortButtons?[_referenceCurrency];
             var sortCurrency = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
             _sortAmount = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_amount_sort);
             _sortValue = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
@@ -100,14 +101,14 @@ namespace MyCC.Ui.Android.Views.Fragments
                 if (Activity == null) return;
                 Activity.RunOnUiThread(() =>
                 {
-                    if (!ViewData.ViewData.Assets.IsDataAvailable) return;
+                    if (!ViewData.Assets.IsDataAvailable) return;
                     if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency.Id)) return;
-                    if (!ViewData.ViewData.Assets.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
+                    if (!ViewData.Assets.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
 
                     _header.Data = headerData;
-                    _footerFragment.LastUpdate = ViewData.ViewData.Assets.LastUpdate[_referenceCurrency];
-                    _items = ViewData.ViewData.Assets.Items[_referenceCurrency];
-                    SetSortButtons(ViewData.ViewData.Assets.SortButtons?[_referenceCurrency], sortCurrency, _sortAmount, _sortValue);
+                    _footerFragment.LastUpdate = ViewData.Assets.LastUpdate[_referenceCurrency];
+                    _items = ViewData.Assets.Items[_referenceCurrency];
+                    SetSortButtons(ViewData.Assets.SortButtons?[_referenceCurrency], sortCurrency, _sortAmount, _sortValue);
                     adapter.Clear();
                     adapter.AddAll(_items);
                     SetVisibleElements(view);
@@ -141,7 +142,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         private static void SetVisibleElements(View view)
         {
-            var data = ViewData.ViewData.Assets.IsDataAvailable;
+            var data = ViewData.Assets.IsDataAvailable;
             view.FindViewById(Resource.Id.sort_buttons).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
             view.FindViewById(Resource.Id.swiperefresh).Visibility = data ? ViewStates.Visible : ViewStates.Invisible;
             view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;

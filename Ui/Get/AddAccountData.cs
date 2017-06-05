@@ -5,7 +5,7 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Ui.Messages;
 
-namespace MyCC.Ui.ViewData
+namespace MyCC.Ui.Get
 {
     public static class AddAccountData
     {

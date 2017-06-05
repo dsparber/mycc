@@ -29,24 +29,24 @@ namespace MyCC.Ui.Messages
             MessagingCenter.Subscribe<string>(subscriber, message, s => action(double.Parse(s, CultureInfo.InvariantCulture)));
 
 
-        public static void Send(this string message) =>
+        internal static void Send(this string message) =>
             MessagingCenter.Send("X", message);
 
-        public static void Send(this string message, Currency currency) =>
+        internal static void Send(this string message, Currency currency) =>
             MessagingCenter.Send(currency, message);
 
-        public static void Send(this string message, FunctionalAccount account) =>
+        internal static void Send(this string message, FunctionalAccount account) =>
             MessagingCenter.Send(account, message);
 
-        public static void Send(this IEnumerable<string> messages)
+        internal static void Send(this IEnumerable<string> messages)
         {
             foreach (var m in messages) m.Send();
         }
 
-        public static void Send(this string message, double value) =>
+        internal static void Send(this string message, double value) =>
             MessagingCenter.Send(value.ToString(CultureInfo.InvariantCulture), message);
 
-        public static void Send(this string message, bool value) =>
+        internal static void Send(this string message, bool value) =>
             MessagingCenter.Send(value.ToString(), message);
 
 

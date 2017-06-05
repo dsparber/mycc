@@ -14,8 +14,8 @@ using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Android.Views.Adapter;
 using MyCC.Ui.DataItems;
+using MyCC.Ui.Get;
 using MyCC.Ui.Messages;
-using MyCC.Ui.ViewData;
 using Newtonsoft.Json;
 using Fragment = Android.Support.V4.App.Fragment;
 
@@ -45,7 +45,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         public bool EditingEnabled
         {
-            get { return _editingEnabled; }
+            get => _editingEnabled;
             set
             {
                 if (_adapter == null) return;
@@ -67,12 +67,12 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             SetVisibleElements(view);
 
-            var headerData = ViewData.ViewData.Rates.Headers?[_referenceCurrency];
+            var headerData = ViewData.Rates.Headers?[_referenceCurrency];
             _header = (HeaderFragment)ChildFragmentManager.FindFragmentById(Resource.Id.header_fragment);
             _header.Data = headerData;
 
             _footerFragment = (FooterFragment)ChildFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
-            _footerFragment.LastUpdate = ViewData.ViewData.Rates.LastUpdate?[_referenceCurrency] ?? DateTime.MinValue;
+            _footerFragment.LastUpdate = ViewData.Rates.LastUpdate?[_referenceCurrency] ?? DateTime.MinValue;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             refreshView.Refresh += (sender, args) => Messaging.Request.AllRates.Send();
@@ -108,7 +108,7 @@ namespace MyCC.Ui.Android.Views.Fragments
                 StartActivity(intent);
             };
 
-            var sortData = ViewData.ViewData.Rates.SortButtons?[_referenceCurrency];
+            var sortData = ViewData.Rates.SortButtons?[_referenceCurrency];
             var sortCurrency = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
             var sortValue = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
             if (sortData != null) SetSortButtons(sortData, sortCurrency, sortValue);
@@ -122,15 +122,15 @@ namespace MyCC.Ui.Android.Views.Fragments
                             {
                                 // ReSharper disable once RedundantAssignment
                                 var lastUpdate = DateTime.Now;
-                                if (!ViewData.ViewData.Rates.IsDataAvailable) return;
+                                if (!ViewData.Rates.IsDataAvailable) return;
                                 if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency.Id)) return;
-                                if (!ViewData.ViewData.Rates.Headers?.TryGetValue(_referenceCurrency, out headerData) ?? false) return;
-                                if (!ViewData.ViewData.Rates.LastUpdate?.TryGetValue(_referenceCurrency, out lastUpdate) ?? false) return;
+                                if (!ViewData.Rates.Headers?.TryGetValue(_referenceCurrency, out headerData) ?? false) return;
+                                if (!ViewData.Rates.LastUpdate?.TryGetValue(_referenceCurrency, out lastUpdate) ?? false) return;
 
                                 _header.Data = headerData;
                                 _footerFragment.LastUpdate = lastUpdate;
                                 _items = RatesViewData.Items[_referenceCurrency];
-                                SetSortButtons(ViewData.ViewData.Rates.SortButtons?[_referenceCurrency], sortCurrency, sortValue);
+                                SetSortButtons(ViewData.Rates.SortButtons?[_referenceCurrency], sortCurrency, sortValue);
                                 _adapter.Clear();
                                 _adapter.AddAll(_items);
                                 SetVisibleElements(view);
@@ -180,7 +180,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         private static void SetVisibleElements(View view)
         {
-            var data = ViewData.ViewData.Rates.IsDataAvailable;
+            var data = ViewData.Rates.IsDataAvailable;
             view.FindViewById(Resource.Id.sort_buttons).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
             view.FindViewById(Resource.Id.swiperefresh).Visibility = data ? ViewStates.Visible : ViewStates.Invisible;
             view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;

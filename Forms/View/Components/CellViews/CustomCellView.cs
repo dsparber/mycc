@@ -24,7 +24,7 @@ namespace MyCC.Forms.View.Components.CellViews
 
         public string Text
         {
-            get { return _text; }
+            get => _text;
             set
             {
                 _text = value;
@@ -37,7 +37,7 @@ namespace MyCC.Forms.View.Components.CellViews
         }
         public string Detail
         {
-            get { return _detail; }
+            get => _detail;
             set
             {
                 _detail = value;
@@ -73,12 +73,12 @@ namespace MyCC.Forms.View.Components.CellViews
         public List<CustomCellViewActionItem> ActionItems
         {
             set { _actions = value; SetActionItems(); }
-            get { return _actions; }
+            get => _actions;
         }
 
         private bool IsLoading
         {
-            get { return _isLoading; }
+            get => _isLoading;
             set
             {
                 _isLoading = value;

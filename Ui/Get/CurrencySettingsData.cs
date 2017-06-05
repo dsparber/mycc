@@ -5,7 +5,7 @@ using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 
-namespace MyCC.Ui.ViewData
+namespace MyCC.Ui.Get
 {
     public static class CurrencySettingsData
     {

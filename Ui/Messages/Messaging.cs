@@ -18,14 +18,6 @@
             public const string BitcoinExchangeSources = "RequestBitcoinExchangeSources";
         }
 
-        // Update Data
-        public static class Update
-        {
-            public static readonly string[] AllItems = { Rates, Assets };
-            public const string Rates = "UpdateRateItems";
-            public const string Assets = "UpdateAssets";
-        }
-
         public static class Status
         {
             public const string Progress = "StatusProgress";

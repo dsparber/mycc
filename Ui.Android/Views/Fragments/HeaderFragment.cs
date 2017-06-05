@@ -22,14 +22,14 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         public string MainText
         {
-            get { return _mainTextView.Text; }
-            set { _mainTextView.Text = value; }
+            get => _mainTextView.Text;
+            set => _mainTextView.Text = value;
         }
 
         public string InfoText
         {
-            get { return _infoTextView.Text; }
-            set { _infoTextView.Text = value; }
+            get => _infoTextView.Text;
+            set => _infoTextView.Text = value;
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

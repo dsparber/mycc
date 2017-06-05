@@ -12,6 +12,7 @@ using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;
+using MyCC.Ui.Get;
 using MyCC.Ui.Messages;
 using Newtonsoft.Json;
 using Fragment = Android.Support.V4.App.Fragment;
@@ -55,12 +56,12 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             webView.LoadUrl("file:///android_asset/pieChart.html");
 
-            var headerData = ViewData.ViewData.Assets.Headers?[_referenceCurrency];
+            var headerData = ViewData.Assets.Headers?[_referenceCurrency];
             _header = (HeaderFragment)ChildFragmentManager.FindFragmentById(Resource.Id.header_fragment);
             _header.Data = headerData;
 
             _footerFragment = (FooterFragment)ChildFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
-            _footerFragment.LastUpdate = ViewData.ViewData.Assets.LastUpdate?[_referenceCurrency] ?? DateTime.MinValue;
+            _footerFragment.LastUpdate = ViewData.Assets.LastUpdate?[_referenceCurrency] ?? DateTime.MinValue;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             refreshView.Refresh += (sender, args) => Messaging.Request.AllAssetsAndRates.Send();
@@ -70,13 +71,13 @@ namespace MyCC.Ui.Android.Views.Fragments
                 if (Activity == null) return;
                 Activity.RunOnUiThread(() =>
                 {
-                    if (!ViewData.ViewData.Assets.IsGraphDataAvailable) return;
+                    if (!ViewData.Assets.IsGraphDataAvailable) return;
                     if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency.Id)) return;
-                    if (!ViewData.ViewData.Assets.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
+                    if (!ViewData.Assets.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
 
                     _header.Data = headerData;
-                    _footerFragment.LastUpdate = ViewData.ViewData.Assets.LastUpdate[_referenceCurrency];
-                    var js = ViewData.ViewData.Assets.JsDataString(_referenceCurrency);
+                    _footerFragment.LastUpdate = ViewData.Assets.LastUpdate[_referenceCurrency];
+                    var js = ViewData.Assets.JsDataString(_referenceCurrency);
                     webView.LoadUrl($"javascript:{js}", null);
                     SetVisibleElements(view);
                     refreshView.Refreshing = false;
@@ -100,7 +101,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         private static void SetVisibleElements(View view)
         {
-            var data = ViewData.ViewData.Assets.IsGraphDataAvailable;
+            var data = ViewData.Assets.IsGraphDataAvailable;
             view.FindViewById(Resource.Id.data_container).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
             view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;
         }
@@ -124,9 +125,9 @@ namespace MyCC.Ui.Android.Views.Fragments
             {
                 base.OnPageFinished(view, url);
 
-                if (!ViewData.ViewData.Assets.IsGraphDataAvailable) return;
+                if (!ViewData.Assets.IsGraphDataAvailable) return;
 
-                var js = ViewData.ViewData.Assets.JsDataString(_referenceCurrency);
+                var js = ViewData.Assets.JsDataString(_referenceCurrency);
                 view.LoadUrl($"javascript:{js}", null);
             }
         }

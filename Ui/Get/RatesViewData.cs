@@ -1,69 +1,56 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
 using MyCC.Core.Rates.Models;
-using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.DataItems;
 using MyCC.Ui.Helpers;
 using MyCC.Ui.Messages;
 
-namespace MyCC.Ui.ViewData
+namespace MyCC.Ui.Get
 {
     public class RatesViewData
     {
         public static Dictionary<Currency, List<RateItem>> Items => LoadRateItems();
         public Dictionary<Currency, CoinHeaderData> Headers { get; private set; }
         public Dictionary<Currency, List<SortButtonItem>> SortButtons { get; private set; }
-        public Dictionary<Currency, DateTime> LastUpdate { get; private set; }
+        public DateTime LastUpdate { get; private set; }
 
 
         public bool IsDataAvailable => Items != null && Items.Count > 0 && Items.Min(i => i.Value.Count) > 0;
 
-        public void UpdateRateItems()
+        public void UpdateItems()
         {
             Headers = LoadRateHeaders();
             SortButtons = LoadSortButtons();
-            LastUpdate = GetLastUpdate();
+            LastUpdate = MyccUtil.Rates.LastUpdate();
 
             Messaging.UiUpdate.RatesOverview.Send();
         }
-
-        private static Dictionary<Currency, DateTime> GetLastUpdate() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyHelper.Find, c =>
-        {
-            return CurrencySettingsData.EnabledCurrencies
-                .Select(e => new ExchangeRate(c, e.Id))
-                .SelectMany(RateUtil.GetNeededRates)
-                .Distinct()
-                .Where(e => e != null)
-                .Select(e => RateUtil.GetRate(e)?.LastUpdate ?? DateTime.Now)
-                .DefaultIfEmpty(DateTime.Now)
-                .Min();
-        });
 
 
         private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyHelper.Find, c =>
         {
 
-            var referenceMoney = new Money(RateUtil.GetRate(CurrencyConstants.Btc.Id, c)?.Rate ?? 0, c.Find());
+            var referenceMoney = new Money(MyccUtil.Rates.GetRate(new RateDescriptor(CurrencyConstants.Btc.Id, c))?.Rate ?? 0, c.Find());
 
             var additionalRefs = ApplicationSettings.MainCurrencies
                 .Except(new[] { c })
-                .Select(x => new Money(RateUtil.GetRate(CurrencyConstants.Btc.Id, x)?.Rate ?? 0, x.Find()));
+                .Select(x => new Money(MyccUtil.Rates.GetRate(new RateDescriptor(CurrencyConstants.Btc.Id, x))?.Rate ?? 0, x.Find()));
 
             return new CoinHeaderData(referenceMoney, additionalRefs);
         });
 
         private static Dictionary<Currency, List<RateItem>> LoadRateItems() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyHelper.Find, c =>
         {
-            Func<Currency, Money> getReference = currency => new Money(RateUtil.GetRate(currency.Id, c)?.Rate ?? 0, currency);
+            Money GetReference(Currency currency) => new Money(MyccUtil.Rates.GetRate(new RateDescriptor(currency.Id, c))?.Rate ?? 0, currency);
 
-            var items = CurrencySettingsData.EnabledCurrencies.Except(new[] { c.ToCurrency() }).Select(x => new RateItem(x, getReference(x)));
+            var items = CurrencySettingsData.EnabledCurrencies.Except(new[] { c.ToCurrency() }).Select(x => new RateItem(x, GetReference(x)));
 
             return ApplySort(items);
         });

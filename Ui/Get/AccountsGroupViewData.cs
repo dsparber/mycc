@@ -1,20 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
 using MyCC.Core.Rates.Models;
-using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.DataItems;
 using MyCC.Ui.Helpers;
 using MyCC.Ui.Messages;
 
-namespace MyCC.Ui.ViewData
+namespace MyCC.Ui.Get
 {
     public class AccountsGroupViewData
     {
@@ -23,7 +22,7 @@ namespace MyCC.Ui.ViewData
             var money = new Money(EnabledAccountsItems(currency).Sum(a => a.Money.Amount), currency);
 
             var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { currency.Id })
-                .Select(x => new Money(money.Amount * RateUtil.GetRate(currency.Id, x)?.Rate ?? 0, x.Find())).
+                .Select(x => new Money(money.Amount * MyccUtil.Rates.GetRate(new RateDescriptor(currency.Id, x))?.Rate ?? 0, x.Find())).
                 OrderBy(m => m.Currency.Code);
 
             return new HeaderDataItem(money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
@@ -36,15 +35,19 @@ namespace MyCC.Ui.ViewData
             var money = new Money(EnabledAccountsItems(currency).Sum(a => a.Money.Amount), currency);
 
             return ApplicationSettings.AllReferenceCurrencies.Except(new[] { money.Currency.Id })
-                .Select(c => new ReferenceValueItem(money.Amount, RateUtil.GetRate(money.Currency.Id, c) ?? new ExchangeRate(money.Currency.Id, c)))
-                .OrderByWithDirection(c => SortOrderReference == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirectionReference == SortDirection.Ascending);
+                .Select(c =>
+                {
+                    var rate = MyccUtil.Rates.GetRate(new RateDescriptor(money.Currency.Id, c));
+                    return new ReferenceValueItem(money.Amount, rate?.Rate, c);
+                })
+                .OrderByWithDirection(c => SortOrderReference == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Rate, SortDirectionReference == SortDirection.Ascending);
         }
 
         public static DateTime LastUpdate(Currency currency)
         {
             var online = AccountStorage.AccountsWithCurrency(currency).Where(a => a is OnlineFunctionalAccount).ToList();
             var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.AccountsWithCurrency(currency).Select(a => a.LastUpdate).DefaultIfEmpty(DateTime.Now).Max();
-            var ratesTime = AccountStorage.NeededRatesFor(currency).Distinct().Select(e => RateUtil.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+            var ratesTime = MyccUtil.Rates.LastUpdateFor(currency.Id);
 
             return online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
         }
@@ -119,26 +122,26 @@ namespace MyCC.Ui.ViewData
 
         private static SortOrder SortOrderReference
         {
-            get { return ApplicationSettings.SortOrderReferenceValues; }
-            set { ApplicationSettings.SortOrderReferenceValues = value; }
+            get => ApplicationSettings.SortOrderReferenceValues;
+            set => ApplicationSettings.SortOrderReferenceValues = value;
         }
 
         private static SortDirection SortDirectionReference
         {
-            get { return ApplicationSettings.SortDirectionReferenceValues; }
-            set { ApplicationSettings.SortDirectionReferenceValues = value; }
+            get => ApplicationSettings.SortDirectionReferenceValues;
+            set => ApplicationSettings.SortDirectionReferenceValues = value;
         }
 
         private static SortOrder SortOrderAccounts
         {
-            get { return ApplicationSettings.SortOrderAccounts; }
-            set { ApplicationSettings.SortOrderAccounts = value; }
+            get => ApplicationSettings.SortOrderAccounts;
+            set => ApplicationSettings.SortOrderAccounts = value;
         }
 
         private static SortDirection SortDirectionAccounts
         {
-            get { return ApplicationSettings.SortDirectionAccounts; }
-            set { ApplicationSettings.SortDirectionAccounts = value; }
+            get => ApplicationSettings.SortDirectionAccounts;
+            set => ApplicationSettings.SortDirectionAccounts = value;
         }
     }
 }

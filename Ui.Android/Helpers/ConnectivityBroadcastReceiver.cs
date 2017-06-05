@@ -9,7 +9,7 @@ namespace MyCC.Ui.Android.Helpers
         {
             if ("android.net.conn.CONNECTIVITY_CHANGE".Equals(intent.Action))
             {
-                Messaging.Status.Network.Send(ConnectivityStatus.IsConnected);
+                UiUtils.Update.ConnectivityChanged(ConnectivityStatus.IsConnected);
             }
         }
     }
