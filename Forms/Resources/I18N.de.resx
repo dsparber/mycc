@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>Währungscode</value>
+  </data>
   <data name="AccountInformation" xml:space="preserve">
     <value>Kontoinformation</value>
   </data>
@@ -489,9 +492,6 @@
   <data name="AreEqualTo" xml:space="preserve">
     <value>{0} entsprechen</value>
   </data>
-  <data name="CurrencyCode" xml:space="preserve">
-    <value>Währungscode</value>
-  </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
@@ -499,7 +499,7 @@
     <value>QR Code</value>
   </data>
   <data name="RefreshingDots" xml:space="preserve">
-    <value>Aktualisieren ...</value>
+    <value>Aktualisieren …</value>
   </data>
   <data name="AddRate" xml:space="preserve">
     <value>Kurs hinzufügen</value>
@@ -568,25 +568,25 @@
     <value>Spalte in Vermögenstabelle ausblenden</value>
   </data>
   <data name="AssetsColumnToHideDescription" xml:space="preserve">
-    <value>Spalte in Vermögenstabelle ausblenden wenn wenig Platz vorhanden ist.</value>
+    <value>Auswahl der ausgeblendeten Spalte in Vermögenstabelle bei wenig Platz</value>
   </data>
   <data name="InitialiseApp" xml:space="preserve">
     <value>App initialisieren</value>
   </data>
   <data name="InternetIsNeededForInitialisation" xml:space="preserve">
-    <value>Bevor sie MyCC das erste Mal nutzen können, müssen die verfügbaren Währungen und Kurse abgerufen werden. Bitte schalten Sie hierfür Ihr Internet ein.</value>
+    <value>Bevor Sie die App das erste Mal nutzen können, müssen die verfügbaren Währungen und Kurse abgerufen werden. Bitte aktivieren Sie die Verbindung zum Internet.</value>
   </data>
   <data name="LoadingCurrenciesFrom" xml:space="preserve">
     <value>Währungen werden von {0} geladen</value>
   </data>
   <data name="LoadingRates" xml:space="preserve">
-    <value>Benötigte Kurse herunterladen</value>
+    <value>Kurse werden geladen</value>
   </data>
   <data name="ReferenceValue" xml:space="preserve">
-    <value>Referenzwert</value>
+    <value>Wert in Referenzwährung</value>
   </data>
   <data name="SavingSource" xml:space="preserve">
-    <value>Datenquelle speichern</value>
+    <value>Datenquelle wird gespeichert</value>
   </data>
   <data name="AddressOnly" xml:space="preserve">
     <value>Nur Adresse</value>
