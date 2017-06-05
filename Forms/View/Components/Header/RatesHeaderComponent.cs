@@ -3,6 +3,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Forms.Messages;
 using Xamarin.Forms;
@@ -25,7 +26,7 @@ namespace MyCC.Forms.View.Components.Header
         {
             var text = string.Join(" / ", ApplicationSettings.MainCurrencies
                             .Where(c => !c.Equals(_currency.Id))
-                            .Select(c => new Money(RateHelper.GetRate(CurrencyConstants.Btc.Id, c)?.Rate ?? 0, c.ToCurrency())
+                            .Select(c => new Money(RateUtil.GetRate(CurrencyConstants.Btc.Id, c)?.Rate ?? 0, c.ToCurrency())
                             .ToStringTwoDigits(ApplicationSettings.RoundMoney)));
 
             text = string.IsNullOrWhiteSpace(text) ? _currency.Name : text;
@@ -37,7 +38,7 @@ namespace MyCC.Forms.View.Components.Header
             });
         }
 
-        private Money Sum => new Money(RateHelper.GetRate(CurrencyConstants.Btc, _currency)?.Rate ?? 0, _currency);
+        private Money Sum => new Money(RateUtil.GetRate(CurrencyConstants.Btc, _currency)?.Rate ?? 0, _currency);
 
         private void AddSubscriber()
         {

@@ -6,14 +6,15 @@ using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Repositories.Utils;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class BittrexExchangeRateSource : JsonRateSource
+    internal class BittrexExchangeRateSource : JsonRateSource
     {
-        public override RateSourceId Id => RateSourceId.Bittrex;
+        public override int Id => (int)RateSourceId.Bittrex;
         public override RateSourceType Type => RateSourceType.Crypto;
         public override string Name => ConstantNames.Bittrex;
 

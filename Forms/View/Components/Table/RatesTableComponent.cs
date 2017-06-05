@@ -8,6 +8,7 @@ using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Messages;
@@ -129,7 +130,7 @@ namespace MyCC.Forms.View.Components.Table
             public Data(Currency currency)
             {
                 var neededRate = new ExchangeRate(currency.Id, ApplicationSettings.StartupCurrencyRates);
-                var rate = RateHelper.GetRate(neededRate) ?? neededRate;
+                var rate = RateUtil.GetRate(neededRate) ?? neededRate;
 
                 Code = currency.Code;
                 Reference = new Money(rate.Rate ?? 0, ApplicationSettings.StartupCurrencyRates.ToCurrency()).ToString8Digits(false);

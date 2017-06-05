@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
 using MyCC.Core.Helpers;
+using MyCC.Core.Rates.Data;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Repositories.Utils;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class BtceExchangeRateSource : JsonRateSource
+    internal class BtceExchangeRateSource : JsonRateSource
     {
-        public override RateSourceId Id => RateSourceId.Btce;
+        public override int Id => (int)RateSourceId.Btce;
         public override RateSourceType Type => RateSourceType.CryptoToFiat;
         public override string Name => ConstantNames.Btce;
 
@@ -23,8 +25,8 @@ namespace MyCC.Core.Rates.Repositories.Implementations
 
         protected override IEnumerable<(RateDescriptor rateDescriptor, decimal? rate)> GetRatesFromJson(JToken json) => new[]
         {
-            (RateConstants.BtcUsdDescriptor, json["btc_usd"][Key].ToDecimal()),
-            (RateConstants.BtcEurDescriptor, json["btc_eur"][Key].ToDecimal())
+            (RateDescriptorConstants.BtcUsdDescriptor, json["btc_usd"][Key].ToDecimal()),
+            (RateDescriptorConstants.BtcEurDescriptor, json["btc_eur"][Key].ToDecimal())
         };
     }
 }

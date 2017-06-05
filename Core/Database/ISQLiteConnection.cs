@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace MyCC.Core.Helpers
+namespace MyCC.Core.Database
 {
     public interface ISqLiteConnection
     {

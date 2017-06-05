@@ -36,21 +36,21 @@ namespace MyCC.Core.Test.Rates
         [Test]
         public async Task DefaultValuesAvailable()
         {
-            await RateStorage.FetchAllNeededRates();
+            await MyccUtil.Rates.FetchAllNeededRates();
 
-            Assert.IsNotNull(RateConstants.BtcUsdDescriptor.GetRate());
-            Assert.IsNotNull(RateConstants.BtcUsdDescriptor.GetRate());
-            Assert.IsNotNull(new RateDescriptor("EUR0", "USD0").GetRate());
+            Assert.IsNotNull(MyccUtil.Rates.GetRate(new RateDescriptor("BTC1", "USD0")));
+            Assert.IsNotNull(MyccUtil.Rates.GetRate(new RateDescriptor("BTC1", "EUR0")));
+            Assert.IsNotNull(MyccUtil.Rates.GetRate(new RateDescriptor("EUR0", "USD0")));
         }
 
         [Test]
         public async Task DataAvailable()
         {
-            await RateStorage.FetchRates(TestDescriptors);
+            await MyccUtil.Rates.FetchRates(TestDescriptors);
 
             foreach (var descriptor in TestDescriptors)
             {
-                Assert.IsNotNull(descriptor.GetRate(), descriptor.ToString());
+                Assert.IsNotNull(MyccUtil.Rates.GetRate(descriptor), descriptor.ToString());
             }
         }
 

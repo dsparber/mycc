@@ -5,15 +5,16 @@ using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Repositories.Utils;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class FixerIoExchangeRateSource : JsonRateSource
+    internal class FixerIoExchangeRateSource : JsonRateSource
     {
         public override RateSourceType Type => RateSourceType.Fiat;
-        public override RateSourceId Id => RateSourceId.FixerIo;
+        public override int Id => (int)RateSourceId.FixerIo;
         public override string Name => ConstantNames.FixerIo;
 
         protected override Uri Uri => new Uri("http://api.fixer.io/latest");

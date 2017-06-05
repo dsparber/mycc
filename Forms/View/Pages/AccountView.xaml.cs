@@ -6,6 +6,7 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Utils;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
@@ -281,7 +282,7 @@ namespace MyCC.Forms.View.Pages
         private void SetFooter()
         {
             var accountTime = _account.LastUpdate;
-            var ratesTime = AccountStorage.NeededRatesFor(_account).Distinct().Select(e => RateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+            var ratesTime = AccountStorage.NeededRatesFor(_account).Distinct().Select(e => RateUtil.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
 
             var time = _account is LocalAccount ? ratesTime : ratesTime < accountTime ? ratesTime : accountTime;
 

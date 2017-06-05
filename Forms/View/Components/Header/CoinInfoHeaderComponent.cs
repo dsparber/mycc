@@ -2,6 +2,7 @@
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Utils;
 using MyCC.Forms.Messages;
 using Xamarin.Forms;
 
@@ -20,7 +21,7 @@ namespace MyCC.Forms.View.Components.Header
 
         private void UpdateView()
         {
-            var text = new Money(RateHelper.GetRate(_currency, CurrencyConstants.Btc)?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits();
+            var text = new Money(RateUtil.GetRate(_currency, CurrencyConstants.Btc)?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits();
 
             Device.BeginInvokeOnMainThread(() =>
             {

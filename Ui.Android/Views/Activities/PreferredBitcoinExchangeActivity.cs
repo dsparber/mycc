@@ -9,6 +9,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
 using MyCC.Core.Rates.Repositories;
+using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
@@ -96,11 +97,11 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private static Tuple<string, DateTime> GetDetail(IRateSource source)
         {
-            var usd = RateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Usd, source.Id);
-            var eur = RateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Eur, source.Id);
+            var usd = RateUtil.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Usd, source.Id);
+            var eur = RateUtil.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Eur, source.Id);
 
             var usdString = (usd?.AsMoney ?? new Money(0, CurrencyConstants.Usd)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            var eurString = (eur?.AsMoney ?? RateHelper.GetRate(CurrencyConstants.Btc, CurrencyConstants.Eur, source.Id)?.AsMoney ?? new Money(0, CurrencyConstants.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+            var eurString = (eur?.AsMoney ?? RateUtil.GetRate(CurrencyConstants.Btc, CurrencyConstants.Eur, source.Id)?.AsMoney ?? new Money(0, CurrencyConstants.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
             var note = eur == null && usd != null ? "*" : string.Empty;
 
             return Tuple.Create($"{eurString}{note} / {usdString}", usd?.LastUpdate ?? eur?.LastUpdate ?? DateTime.MinValue);

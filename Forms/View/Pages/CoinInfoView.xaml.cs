@@ -9,6 +9,7 @@ using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
@@ -125,7 +126,7 @@ namespace MyCC.Forms.View.Pages
         private void UpdateView(bool calledFromBackground = false)
         {
             var rate = new ExchangeRate(_currency.Id, CurrencyConstants.Btc.Id);
-            rate = RateHelper.GetRate(rate) ?? rate;
+            rate = RateUtil.GetRate(rate) ?? rate;
 
             var explorer = CoinInfoStorage.Instance.GetExplorer(_currency).Select(e => e.Name).ToList();
             var info = CoinInfoStorage.Instance.Get(_currency);
@@ -240,7 +241,7 @@ namespace MyCC.Forms.View.Pages
             var ratesTime = ApplicationSettings.AllReferenceCurrencies
                                     .Select(e => new ExchangeRate(_currency.Id, e))
                                     .Distinct()
-                                    .Select(e => RateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty().Min();
+                                    .Select(e => RateUtil.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty().Min();
 
             var infoTime = CoinInfoStorage.Instance.Get(_currency)?.LastUpdate ?? DateTime.Now;
             if (infoTime == DateTime.MinValue)

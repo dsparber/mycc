@@ -6,44 +6,26 @@ namespace MyCC.Core.Rates.Models
 
     public class ExchangeRate
     {
-        /// <summary>
-        /// Generated Id based on currencies and source id
-        /// </summary>
-        public readonly string Id;
+        private readonly decimal _rate;
+        private readonly DateTime _lastUpdate;
 
-        public readonly int SourceId;
+        internal readonly int SourceId;
+        internal readonly string Id;
 
-        public DateTime LastUpdate
-        {
-            get => RateDescriptor.HasEqualCurrencies() ? DateTime.Now : _lastUpdate;
-            set => _lastUpdate = value;
-        }
-
+        public decimal Rate => RateDescriptor.HasEqualCurrencies() ? 1 : _rate;
+        public DateTime LastUpdate => RateDescriptor.HasEqualCurrencies() ? DateTime.Now : _lastUpdate;
         public readonly RateDescriptor RateDescriptor;
-
-        public decimal Rate
-        {
-            get => RateDescriptor.HasEqualCurrencies() ? 1 : _rate;
-            set
-            {
-                if (value <= 0) throw new ArgumentException("The rate needs to be greater than 0!");
-                _rate = Math.Round(value, 8);
-            }
-        }
-
-        private decimal _rate;
-        private DateTime _lastUpdate;
-
-
-        public ExchangeRate() { }
 
         public ExchangeRate(RateDescriptor rateDescriptor, decimal rate, int sourceId = 0, DateTime? lastUpate = null)
         {
-            RateDescriptor = rateDescriptor;
-            Rate = rate;
+            if (rate <= 0) throw new ArgumentException("The rate needs to be greater than 0!");
+
             SourceId = sourceId;
-            Id = $"{rateDescriptor.Id}_{SourceId}";
-            LastUpdate = lastUpate ?? default(DateTime);
+            RateDescriptor = rateDescriptor;
+
+            Id = $"{rateDescriptor.Id}_{sourceId}";
+            _rate = Math.Round(rate, 8);
+            _lastUpdate = lastUpate ?? default(DateTime);
         }
 
 

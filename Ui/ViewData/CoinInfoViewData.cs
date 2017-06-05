@@ -7,6 +7,7 @@ using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.DataItems;
@@ -19,7 +20,7 @@ namespace MyCC.Ui.ViewData
     {
         public static HeaderDataItem HeaderData(Currency currency)
         {
-            return new HeaderDataItem(currency.Name, new Money(RateHelper.GetRate(currency, CurrencyConstants.Btc)?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits());
+            return new HeaderDataItem(currency.Name, new Money(RateUtil.GetRate(currency, CurrencyConstants.Btc)?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits());
         }
 
         public CoinInfoItem CoinInfo(Currency currency)
@@ -38,7 +39,7 @@ namespace MyCC.Ui.ViewData
         public List<ReferenceValueItem> Items(Currency currency)
         {
             return ApplicationSettings.AllReferenceCurrencies.Except(new[] { currency.Id })
-                .Select(c => new ReferenceValueItem(1, RateHelper.GetRate(currency.Id, c) ?? new ExchangeRate(currency.Id, c)))
+                .Select(c => new ReferenceValueItem(1, RateUtil.GetRate(currency.Id, c) ?? new ExchangeRate(currency.Id, c)))
                 .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Value, SortDirection == SortDirection.Ascending)
                 .ToList();
         }
@@ -49,9 +50,9 @@ namespace MyCC.Ui.ViewData
         {
             var ratesTime = ApplicationSettings.AllReferenceCurrencies
                                   .Select(e => new ExchangeRate(currency.Id, e))
-                                  .SelectMany(RateHelper.GetNeededRates)
+                                  .SelectMany(RateUtil.GetNeededRates)
                                   .Distinct()
-                                  .Select(e => RateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty().Min();
+                                  .Select(e => RateUtil.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty().Min();
 
             var infoTime = CoinInfoStorage.Instance.Get(currency)?.LastUpdate ?? DateTime.Now;
 

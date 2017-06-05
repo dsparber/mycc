@@ -6,6 +6,7 @@ using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
@@ -157,7 +158,7 @@ namespace MyCC.Forms.View.Pages
                             .Concat(AccountStorage.UsedCurrencies)
                             .Distinct()
                             .Select(e => new ExchangeRate(e, ApplicationSettings.StartupCurrencyRates))
-                            .Select(e => RateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min().LastUpdateString();
+                            .Select(e => RateUtil.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min().LastUpdateString();
 
             Device.BeginInvokeOnMainThread(() => Footer.Text = text);
         }

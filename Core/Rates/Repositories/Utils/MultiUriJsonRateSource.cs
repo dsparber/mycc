@@ -6,11 +6,11 @@ using MyCC.Core.Helpers;
 using MyCC.Core.Rates.Models;
 using Newtonsoft.Json.Linq;
 
-namespace MyCC.Core.Rates.Repositories
+namespace MyCC.Core.Rates.Repositories.Utils
 {
-    public abstract class MultiUriJsonRateSource : IRateSource
+    internal abstract class MultiUriJsonRateSource : IRateSource
     {
-        public abstract RateSourceId Id { get; }
+        public abstract int Id { get; }
         public abstract string Name { get; }
         public abstract RateSourceType Type { get; }
 

@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Currencies;
 using MyCC.Core.Helpers;
+using MyCC.Core.Rates.Data;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Repositories.Utils;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class BitPayExchangeRateSource : JsonRateSource
+    internal class BitPayExchangeRateSource : JsonRateSource
     {
-        public override RateSourceId Id => RateSourceId.BitPay;
+        public override int Id => (int)RateSourceId.BitPay;
         public override RateSourceType Type => RateSourceType.CryptoToFiat;
         public override string Name => ConstantNames.BitPay;
 
@@ -28,8 +30,8 @@ namespace MyCC.Core.Rates.Repositories.Implementations
 
             return new[]
             {
-                (RateConstants.BtcUsdDescriptor, rateUsd),
-                (RateConstants.BtcEurDescriptor, rateEur)
+                (RateDescriptorConstants.BtcUsdDescriptor, rateUsd),
+                (RateDescriptorConstants.BtcEurDescriptor, rateEur)
             };
         }
     }

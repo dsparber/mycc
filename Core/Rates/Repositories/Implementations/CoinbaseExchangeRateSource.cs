@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
 using MyCC.Core.Helpers;
+using MyCC.Core.Rates.Data;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Repositories.Utils;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class CoinbaseExchangeRateSource : MultiUriJsonRateSource
+    internal class CoinbaseExchangeRateSource : MultiUriJsonRateSource
     {
-        public override RateSourceId Id => RateSourceId.Coinbase;
+        public override int Id => (int)RateSourceId.Coinbase;
         public override RateSourceType Type => RateSourceType.CryptoToFiat;
         public override string Name => ConstantNames.Coinbase;
 
@@ -19,8 +21,8 @@ namespace MyCC.Core.Rates.Repositories.Implementations
 
         protected override Uri GetUri(RateDescriptor rateDescriptor)
         {
-            if (RateConstants.BtcUsdDescriptor.CurrenciesEqual(rateDescriptor)) return UriUsd;
-            return RateConstants.BtcEurDescriptor.CurrenciesEqual(rateDescriptor) ? UriEur : null;
+            if (RateDescriptorConstants.BtcUsdDescriptor.CurrenciesEqual(rateDescriptor)) return UriUsd;
+            return RateDescriptorConstants.BtcEurDescriptor.CurrenciesEqual(rateDescriptor) ? UriEur : null;
         }
 
 

@@ -7,12 +7,12 @@ using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using Newtonsoft.Json.Linq;
 
-namespace MyCC.Core.Rates.Repositories
+namespace MyCC.Core.Rates.Repositories.Utils
 {
-    public abstract class JsonRateSource : IRateSource
+    internal abstract class JsonRateSource : IRateSource
     {
         protected abstract Uri Uri { get; }
-        public abstract RateSourceId Id { get; }
+        public abstract int Id { get; }
         public abstract string Name { get; }
         public abstract RateSourceType Type { get; }
 
@@ -30,7 +30,7 @@ namespace MyCC.Core.Rates.Repositories
                 if (jsonRates != null)
                 {
                     var rates = jsonRates.Where(tuple => tuple.rate != null && (descriptorList.Contains(tuple.rateDescriptor) || descriptorList.Contains(tuple.rateDescriptor.Inverse())))
-                        .Select(tuple => new ExchangeRate(tuple.rateDescriptor, tuple.rate.Value, (int)Id, DateTime.Now));
+                        .Select(tuple => new ExchangeRate(tuple.rateDescriptor, tuple.rate.Value, Id, DateTime.Now));
                     return rates;
                 }
 

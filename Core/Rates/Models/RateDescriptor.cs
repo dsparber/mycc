@@ -4,7 +4,7 @@ namespace MyCC.Core.Rates.Models
 {
     public class RateDescriptor
     {
-        public readonly string Id;
+        internal readonly string Id;
 
         public readonly string ReferenceCurrencyId;
         public readonly string SecondaryCurrencyId;

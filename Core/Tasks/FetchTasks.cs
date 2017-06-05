@@ -6,7 +6,6 @@ using MyCC.Core.Account.Storage;
 using MyCC.Core.CoinInfo;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
 
 namespace MyCC.Core.Tasks
 {
@@ -17,7 +16,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted?.Invoke();
-                await RateStorage.FetchAllNeededRates(onProgress: progressCallback);
+                await MyccUtil.Rates.FetchAllNeededRates(onProgress: progressCallback);
             }
             catch (Exception e)
             {
@@ -51,7 +50,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted?.Invoke();
-                await RateStorage.FetchNotLoadedNeededRates(onProgress: progressCallback);
+                await MyccUtil.Rates.FetchNotLoadedNeededRates(onProgress: progressCallback);
             }
             catch (Exception e)
             {
@@ -90,7 +89,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted?.Invoke();
-                await RateStorage.FetchAllNeededRateFor(currencyId, onProgress: progressCallback);
+                await MyccUtil.Rates.FetchAllNeededRateFor(currencyId, onProgress: progressCallback);
             }
             catch (Exception e)
             {
@@ -148,7 +147,7 @@ namespace MyCC.Core.Tasks
             try
             {
                 onStarted?.Invoke();
-                await RateStorage.FetchAllFiatToCryptoRates(onProgress: progressCallback);
+                await MyccUtil.Rates.FetchAllFiatToCryptoRates(onProgress: progressCallback);
             }
             catch (Exception e)
             {

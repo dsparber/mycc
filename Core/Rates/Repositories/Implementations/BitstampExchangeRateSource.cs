@@ -1,16 +1,18 @@
 using System;
 using MyCC.Core.Helpers;
+using MyCC.Core.Rates.Data;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Repositories.Utils;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class BitstampExchangeRateSource : MultiUriJsonRateSource
+    internal class BitstampExchangeRateSource : MultiUriJsonRateSource
     {
         public override RateSourceType Type => RateSourceType.CryptoToFiat;
-        public override RateSourceId Id => RateSourceId.Bitstamp;
+        public override int Id => (int)RateSourceId.Bitstamp;
         public override string Name => ConstantNames.Bitstamp;
 
         private static readonly Uri UriUsd = new Uri("https://www.bitstamp.net/api/v2/ticker/btcusd");
@@ -18,8 +20,8 @@ namespace MyCC.Core.Rates.Repositories.Implementations
 
         protected override Uri GetUri(RateDescriptor rateDescriptor)
         {
-            if (RateConstants.BtcUsdDescriptor.CurrenciesEqual(rateDescriptor)) return UriUsd;
-            return RateConstants.BtcEurDescriptor.CurrenciesEqual(rateDescriptor) ? UriEur : null;
+            if (RateDescriptorConstants.BtcUsdDescriptor.CurrenciesEqual(rateDescriptor)) return UriUsd;
+            return RateDescriptorConstants.BtcEurDescriptor.CurrenciesEqual(rateDescriptor) ? UriEur : null;
         }
 
         public override bool IsAvailable(RateDescriptor rateDescriptor) => rateDescriptor.IsBtcToUsdOrEur();

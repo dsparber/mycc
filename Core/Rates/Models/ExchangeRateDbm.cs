@@ -59,15 +59,12 @@ namespace MyCC.Core.Rates.Models
 
         [Ignore]
         [JsonIgnore]
-        public ExchangeRate ExchangeRate
+        public ExchangeRate AsExchangeRate
         {
             get
             {
                 var rateDescriptor = new RateDescriptor(ReferenceCurrencyId, SecondaryCurrencyId);
-                return new ExchangeRate(rateDescriptor, Rate, SourceId)
-                {
-                    LastUpdate = LastUpdate
-                };
+                return new ExchangeRate(rateDescriptor, Rate, SourceId, LastUpdate);
             }
         }
 

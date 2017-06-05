@@ -6,6 +6,8 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
 using MyCC.Core.Rates.Repositories;
+using MyCC.Core.Rates.Repositories.Utils;
+using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
@@ -116,11 +118,11 @@ namespace MyCC.Forms.View.Pages.Settings.Data
 
         private static Tuple<string, DateTime> GetDetailText(int i)
         {
-            var usd = RateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Usd, i);
-            var eur = RateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Eur, i);
+            var usd = RateUtil.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Usd, i);
+            var eur = RateUtil.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Eur, i);
 
             var usdString = (usd?.AsMoney ?? new Money(0, CurrencyConstants.Usd)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            var eurString = (eur?.AsMoney ?? RateHelper.GetRate(CurrencyConstants.Btc, CurrencyConstants.Eur, i)?.AsMoney ?? new Money(0, CurrencyConstants.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+            var eurString = (eur?.AsMoney ?? RateUtil.GetRate(CurrencyConstants.Btc, CurrencyConstants.Eur, i)?.AsMoney ?? new Money(0, CurrencyConstants.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
             var note = eur == null && usd != null ? "*" : string.Empty;
 
             return Tuple.Create($"{eurString}{note} / {usdString}", usd?.LastUpdate ?? eur?.LastUpdate ?? DateTime.MinValue);

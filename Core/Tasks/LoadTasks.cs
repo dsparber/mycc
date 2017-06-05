@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
-using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 
 namespace MyCC.Core.Tasks
@@ -13,7 +12,7 @@ namespace MyCC.Core.Tasks
         {
             await CurrencyStorage.Instance.LoadFromDatabase();
             await AccountStorage.Instance.LoadFromDatabase();
-            await RateStorage.LoadFromDatabase();
+            await MyccUtil.Rates.LoadFromDatabase();
             whenFinished?.Invoke();
             ApplicationSettings.DataLoaded = true;
         }

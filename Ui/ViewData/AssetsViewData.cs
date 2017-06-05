@@ -7,6 +7,7 @@ using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.DataItems;
@@ -56,7 +57,7 @@ namespace MyCC.Ui.ViewData
         {
             var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
             var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
-            var ratesTime = AccountStorage.NeededRates.Distinct().Select(e => RateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
+            var ratesTime = AccountStorage.NeededRates.Distinct().Select(e => RateUtil.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
 
             return online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
         });
@@ -77,7 +78,7 @@ namespace MyCC.Ui.ViewData
             var enabledAccounts = AccountStorage.EnabledAccounts.ToList();
             Func<string, Money> getReferenceValue = currencyId =>
             {
-                var amount = enabledAccounts.Sum(a => a.Money.Amount * RateHelper.GetRate(a.Money.Currency.Id, currencyId)?.Rate ?? 0);
+                var amount = enabledAccounts.Sum(a => a.Money.Amount * RateUtil.GetRate(a.Money.Currency.Id, currencyId)?.Rate ?? 0);
                 return new Money(amount, currencyId.Find());
             };
 
@@ -99,7 +100,7 @@ namespace MyCC.Ui.ViewData
 
         private static Dictionary<Currency, List<AssetItem>> LoadItems() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyHelper.Find, c =>
         {
-            Func<Money, Money> getReference = m => new Money(m.Amount * (RateHelper.GetRate(m.Currency.Id, c)?.Rate ?? 0), c.Find());
+            Func<Money, Money> getReference = m => new Money(m.Amount * (RateUtil.GetRate(m.Currency.Id, c)?.Rate ?? 0), c.Find());
 
             var items = AccountStorage.AccountsGroupedByCurrency.ToList();
             var enabled = items.Select(group =>

@@ -9,6 +9,7 @@ using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
@@ -84,7 +85,7 @@ namespace MyCC.Forms.View.Components
             public Data(IGrouping<Currency, Account> group, Currency referenceCurrency)
             {
                 var rate = new ExchangeRate(group.Key.Id, referenceCurrency.Id);
-                rate = RateHelper.GetRate(rate) ?? rate;
+                rate = RateUtil.GetRate(rate) ?? rate;
 
                 var totalMoney = new Money(group.Sum(a => a.IsEnabled ? a.Money.Amount : 0), group.Key);
 

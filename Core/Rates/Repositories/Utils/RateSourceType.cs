@@ -1,4 +1,4 @@
-﻿namespace MyCC.Core.Rates.Repositories
+﻿namespace MyCC.Core.Rates.Repositories.Utils
 {
     public enum RateSourceType
     {

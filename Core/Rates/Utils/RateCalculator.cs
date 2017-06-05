@@ -1,31 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MyCC.Core.Settings;
-using MyCC.Core.Account.Storage;
+using MyCC.Core.Rates.Data;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 
-namespace MyCC.Core.Rates
+namespace MyCC.Core.Rates.Utils
 {
-    public static class RateHelper
+    internal static class RateCalculator
     {
-        internal static IEnumerable<RateDescriptor> NeededRates => GetNeededRates();
-        private static IEnumerable<RateDescriptor> GetNeededRates()
-        {
-            var referenceCurrencies = ApplicationSettings.AllReferenceCurrencies.ToList();
-            var usedCurrencies = AccountStorage.UsedCurrencies
-                .Concat(ApplicationSettings.AllReferenceCurrencies)
-                .Concat(ApplicationSettings.WatchedCurrencies);
-
-            return usedCurrencies.SelectMany(currencyId => referenceCurrencies.Select(referenceCurrencyId => new RateDescriptor(currencyId, referenceCurrencyId))).Distinct();
-        }
-
-
         public static ExchangeRate GetRate(this RateDescriptor rateDescriptor)
         {
             if (rateDescriptor.HasEqualCurrencies()) return new ExchangeRate(rateDescriptor, 1);
-            if (rateDescriptor.HasCryptoAndFiatCurrency()) return rateDescriptor.GetMixedRate();
-            return rateDescriptor.GetPureRate();
+            return rateDescriptor.HasCryptoAndFiatCurrency()
+                ? rateDescriptor.GetMixedRate()
+                : rateDescriptor.GetPureRate();
         }
 
         private static ExchangeRate GetPureRate(this RateDescriptor rateDescriptor)
@@ -39,28 +27,31 @@ namespace MyCC.Core.Rates
 
         private static ExchangeRate GetMixedRate(this RateDescriptor rateDescriptor)
         {
-            if (RateStorage.SelectedCryptoToFiatSource.IsAvailable(rateDescriptor)) return RateStorage.GetRateOrDefault(rateDescriptor);
+            if (RateDatabase.SelectedCryptoToFiatSource.IsAvailable(rateDescriptor))
+                return RateDatabase.GetRateOrDefault(rateDescriptor);
 
             var rateToDefaultFiatCurrency = rateDescriptor.GetFiatCurrencyId().RateToDefaultCurrency(useCrypto: false);
-            var rateToDefaultCryptoCurrency = rateDescriptor.GetCryptoCurrencyId().RateToDefaultCurrency(useCrypto: true);
-            var rateCryptoToFiat = RateStorage.GetRateOrDefault(RateConstants.DefaultCryptoToFiatDescriptor);
+            var rateToDefaultCryptoCurrency = rateDescriptor.GetCryptoCurrencyId()
+                .RateToDefaultCurrency(useCrypto: true);
+            var rateCryptoToFiat = RateDatabase.GetRateOrDefault(RatesConfig.DefaultCryptoToFiatDescriptor);
 
             return rateToDefaultFiatCurrency.CombineWith(rateCryptoToFiat).CombineWith(rateToDefaultCryptoCurrency);
         }
 
         private static ExchangeRate RateToDefaultCurrency(this string currencyId, bool useCrypto)
         {
-            var defaultCurrencyId = useCrypto ? RateConstants.DefaultCryptoCurrencyId : RateConstants.DefaultFiatCurrencyId;
+            var defaultCurrencyId = useCrypto ? RatesConfig.DefaultCryptoCurrencyId : RatesConfig.DefaultFiatCurrencyId;
             var rateDescriptor = new RateDescriptor(currencyId, defaultCurrencyId);
-            return RateStorage.GetRateOrDefault(rateDescriptor);
+            return RateDatabase.GetRateOrDefault(rateDescriptor);
         }
 
 
-        internal static IEnumerable<RateDescriptor> GetNeededRatesForCalculation(RateDescriptor rateDescriptor)
+        public static IEnumerable<RateDescriptor> GetNeededRatesForCalculation(this RateDescriptor rateDescriptor)
         {
             if (rateDescriptor.HasEqualCurrencies()) return new List<RateDescriptor>();
-            if (rateDescriptor.HasCryptoAndFiatCurrency()) return rateDescriptor.GetNeededForMixedRate();
-            return rateDescriptor.GetNeededForPureRate();
+            return rateDescriptor.HasCryptoAndFiatCurrency()
+                ? rateDescriptor.GetNeededForMixedRate()
+                : rateDescriptor.GetNeededForPureRate();
         }
 
         private static IEnumerable<RateDescriptor> GetNeededForPureRate(this RateDescriptor rateDescriptor)
@@ -75,21 +66,20 @@ namespace MyCC.Core.Rates
 
         private static IEnumerable<RateDescriptor> GetNeededForMixedRate(this RateDescriptor rateDescriptor)
         {
-            if (RateStorage.SelectedCryptoToFiatSource.IsAvailable(rateDescriptor)) return new[] { rateDescriptor };
+            if (RateDatabase.SelectedCryptoToFiatSource.IsAvailable(rateDescriptor)) return new[] { rateDescriptor };
 
             return new[]
             {
                 rateDescriptor.GetFiatCurrencyId().GetDescriptorToDefaultCurrency(useCrypto: false),
                 rateDescriptor.GetCryptoCurrencyId().GetDescriptorToDefaultCurrency(useCrypto: true),
-                RateConstants.DefaultCryptoToFiatDescriptor
+                RatesConfig.DefaultCryptoToFiatDescriptor
             }.Distinct().Where(descriptor => !descriptor.HasEqualCurrencies());
         }
 
         private static RateDescriptor GetDescriptorToDefaultCurrency(this string currencyId, bool useCrypto)
         {
-            var defaultCurrencyId = useCrypto ? RateConstants.DefaultCryptoCurrencyId : RateConstants.DefaultFiatCurrencyId;
+            var defaultCurrencyId = useCrypto ? RatesConfig.DefaultCryptoCurrencyId : RatesConfig.DefaultFiatCurrencyId;
             return new RateDescriptor(currencyId, defaultCurrencyId);
         }
-
     }
 }

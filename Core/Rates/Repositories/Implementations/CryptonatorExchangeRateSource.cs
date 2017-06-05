@@ -5,14 +5,15 @@ using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Repositories.Utils;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
 namespace MyCC.Core.Rates.Repositories.Implementations
 {
-    public class CryptonatorExchangeRateSource : MultiUriJsonRateSource
+    internal class CryptonatorExchangeRateSource : MultiUriJsonRateSource
     {
-        public override RateSourceId Id => RateSourceId.Cryptonator;
+        public override int Id => (int)RateSourceId.Cryptonator;
         public override RateSourceType Type => RateSourceType.Crypto;
         public override string Name => ConstantNames.Cryptonator;
 

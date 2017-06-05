@@ -12,10 +12,7 @@ namespace MyCC.Core.Rates.ModelExtensions
             var inverseRate = 1 / exchangeRate.Rate;
             var inverseDescriptor = exchangeRate.RateDescriptor.Inverse();
 
-            return new ExchangeRate(inverseDescriptor, inverseRate, exchangeRate.SourceId)
-            {
-                LastUpdate = exchangeRate.LastUpdate
-            };
+            return new ExchangeRate(inverseDescriptor, inverseRate, exchangeRate.SourceId, exchangeRate.LastUpdate);
         }
 
         public static ExchangeRate CombineWith(this ExchangeRate referenceRate, ExchangeRate secondaryRate)
