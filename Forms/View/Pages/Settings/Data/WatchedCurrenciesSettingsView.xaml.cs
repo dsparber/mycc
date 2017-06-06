@@ -37,8 +37,8 @@ namespace MyCC.Forms.View.Pages.Settings.Data
 
                 delete.Action = (sender, e) =>
                 {
-                    var cu = (e as TappedEventArgs)?.Parameter as Currency;
-                    watchedCurrencies.RemoveAll(x => x.Equals(cu?.Id));
+                    var currencyId = (e as TappedEventArgs)?.Parameter as string;
+                    watchedCurrencies.RemoveAll(x => x.Equals(currencyId));
                     ApplicationSettings.WatchedCurrencies = watchedCurrencies;
                     Messaging.UpdatingRates.SendFinished();
                     SetReferenceCurrencyCells();
