@@ -1,5 +1,4 @@
 ﻿using System;
-using MyCC.Core.Helpers;
 using SQLite;
 
 namespace MyCC.Core.Database

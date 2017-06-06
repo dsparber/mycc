@@ -22,7 +22,9 @@ namespace MyCC.Core.Rates.Utils
             var rateReferenceCurrency = rateDescriptor.ReferenceCurrencyId.RateToDefaultCurrency(useCrypto);
             var rateSecondaryCurrency = rateDescriptor.SecondaryCurrencyId.RateToDefaultCurrency(useCrypto);
 
-            return rateReferenceCurrency.CombineWith(rateSecondaryCurrency);
+            var rate = rateReferenceCurrency.CombineWith(rateSecondaryCurrency);
+            if (rate == null) return null;
+            return rate.Descriptor.Equals(rateDescriptor) ? rate : rate.Inverse();
         }
 
         private static ExchangeRate GetMixedRate(this RateDescriptor rateDescriptor)
@@ -35,7 +37,9 @@ namespace MyCC.Core.Rates.Utils
                 .RateToDefaultCurrency(useCrypto: true);
             var rateCryptoToFiat = RateDatabase.GetRateOrDefault(RatesConfig.DefaultCryptoToFiatDescriptor);
 
-            return rateToDefaultFiatCurrency.CombineWith(rateCryptoToFiat).CombineWith(rateToDefaultCryptoCurrency);
+            var rate = rateToDefaultFiatCurrency.CombineWith(rateCryptoToFiat).CombineWith(rateToDefaultCryptoCurrency);
+            if (rate == null) return null;
+            return rate.Descriptor.Equals(rateDescriptor) ? rate : rate.Inverse();
         }
 
         private static ExchangeRate RateToDefaultCurrency(this string currencyId, bool useCrypto)

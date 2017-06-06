@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using MyCC.Core.Currencies.Models;
+﻿using System.Linq;
 using MyCC.Core.Rates.Models;
 
 namespace MyCC.Core.Rates.ModelExtensions
@@ -10,7 +8,7 @@ namespace MyCC.Core.Rates.ModelExtensions
         public static ExchangeRate Inverse(this ExchangeRate exchangeRate)
         {
             var inverseRate = 1 / exchangeRate.Rate;
-            var inverseDescriptor = exchangeRate.RateDescriptor.Inverse();
+            var inverseDescriptor = exchangeRate.Descriptor.Inverse();
 
             return new ExchangeRate(inverseDescriptor, inverseRate, exchangeRate.SourceId, exchangeRate.LastUpdate);
         }
@@ -19,8 +17,8 @@ namespace MyCC.Core.Rates.ModelExtensions
         {
             if (referenceRate == null || secondaryRate == null) return null;
 
-            var referenceDescriptor = referenceRate.RateDescriptor;
-            var secondaryDescriptor = secondaryRate.RateDescriptor;
+            var referenceDescriptor = referenceRate.Descriptor;
+            var secondaryDescriptor = secondaryRate.Descriptor;
 
             if (referenceDescriptor.HasEqualCurrencies()) return secondaryRate;
             if (secondaryDescriptor.HasEqualCurrencies()) return referenceRate;
@@ -36,7 +34,7 @@ namespace MyCC.Core.Rates.ModelExtensions
 
         private static ExchangeRate InvertIfNeeded(this ExchangeRate rate, string currencyId)
         {
-            return currencyId.Equals(rate.RateDescriptor.ReferenceCurrencyId) ? rate : rate.Inverse();
+            return currencyId.Equals(rate.Descriptor.ReferenceCurrencyId) ? rate : rate.Inverse();
         }
     }
 }

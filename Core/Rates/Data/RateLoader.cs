@@ -13,22 +13,25 @@ namespace MyCC.Core.Rates.Data
     {
         public static async Task FetchRates(IEnumerable<RateDescriptor> rateDescriptors, bool cleanDatabase = false, Action<double> onProgress = null)
         {
-            var descriptorsNeededToFetch = rateDescriptors.SelectMany(RateCalculator.GetNeededRatesForCalculation).Distinct().ToList();
+            var descriptorsNeededToFetch = rateDescriptors.SelectMany(RateCalculator.GetNeededRatesForCalculation).DistinctCurrencyPairs().ToList();
+
+            if (!descriptorsNeededToFetch.Any()) return;
 
             var currentLoop = 0;
-            var fetchedRates = (await Task.WhenAll(RatesConfig.Sources.Select(async source =>
-            {
-                var availableDescriptors = descriptorsNeededToFetch.Where(source.IsAvailable).ToList();
-                descriptorsNeededToFetch = descriptorsNeededToFetch.Except(availableDescriptors).ToList();
+            var fetchedRates = (await Task.WhenAll(RatesConfig.Sources
+                .Where(source => source.Type != RateSourceType.CryptoToFiat || RatesConfig.SelectedCryptoToFiatSourceId == source.Id)
+                .Select(async source =>
+                {
+                    var availableDescriptors = descriptorsNeededToFetch.Where(source.IsAvailable).ToList();
+                    descriptorsNeededToFetch = descriptorsNeededToFetch.Except(availableDescriptors).ToList();
 
-                var rates = await source.FetchRates(availableDescriptors);
+                    var rates = await source.FetchRates(availableDescriptors);
 
-                currentLoop += 1;
-                onProgress?.Invoke((double)currentLoop / RatesConfig.Sources.Count());
+                    currentLoop += 1;
+                    onProgress?.Invoke((double)currentLoop / RatesConfig.Sources.Count());
 
-                return rates;
-            })))
-            .SelectMany(rates => rates);
+                    return rates;
+                }))).SelectMany(rates => rates);
 
             await RateDatabase.SaveRates(fetchedRates.ToList(), cleanDatabase);
         }

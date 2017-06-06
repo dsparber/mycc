@@ -6,18 +6,24 @@ using MyCC.Core.Helpers;
 using MyCC.Core.Settings;
 using MyCC.Ui.Helpers;
 using Xamarin.Forms;
+using MyCC.Core.Preperation;
 
 namespace MyCC.Ui.Prepare
 {
     public class PrepareUtil : IPrepareUtil
     {
-        public bool PreparingNeeded => !ApplicationSettings.AppInitialised;
+        public bool PreparingNeeded => !ApplicationSettings.AppInitialised ||
+                                        Core.Preperation.Prepare.PreparingNeeded ||
+                                        Core.Preperation.Prepare.AsyncExecutePreperations != null ||
+                                        Migrate.MigrationsNeeded;
 
         public async Task Prepare(Action<(double progress, string infoText)> onProgress)
         {
+            await PrepareAndMigrate();
+
+            if (ApplicationSettings.AppInitialised) return;
             await PrepareFirstStart(onProgress);
         }
-
 
         private static async Task PrepareFirstStart(Action<(double progress, string infoText)> onProgress)
         {
@@ -40,6 +46,16 @@ namespace MyCC.Ui.Prepare
                 DependencyService.Get<IErrorDialog>().Display(e);
                 e.LogError();
             }
+        }
+
+        private static async Task PrepareAndMigrate()
+        {
+            if (Core.Preperation.Prepare.PreparingNeeded)
+            {
+                Core.Preperation.Prepare.ExecutePreperations();
+                if (Core.Preperation.Prepare.AsyncExecutePreperations != null) await Core.Preperation.Prepare.AsyncExecutePreperations;
+            }
+            if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
         }
     }
 }

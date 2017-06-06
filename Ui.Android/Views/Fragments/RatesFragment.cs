@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Android.App;
 using Android.Content;
@@ -72,10 +71,10 @@ namespace MyCC.Ui.Android.Views.Fragments
             _header.Data = headerData;
 
             _footerFragment = (FooterFragment)ChildFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
-            _footerFragment.LastUpdate = ViewData.Rates.LastUpdate?[_referenceCurrency] ?? DateTime.MinValue;
+            _footerFragment.LastUpdate = ViewData.Rates.LastUpdate;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
-            refreshView.Refresh += (sender, args) => Messaging.Request.AllRates.Send();
+            refreshView.Refresh += (sender, args) => UiUtils.Update.FetchAllRates();
 
             _items = RatesViewData.Items[_referenceCurrency];
             _adapter = new RatesListAdapter(Context, _items)
@@ -89,7 +88,6 @@ namespace MyCC.Ui.Android.Views.Fragments
                         if (!RatesViewData.Items.TryGetValue(_referenceCurrency, out _items) || _adapter == null) return;
                         _adapter.Clear();
                         _adapter.AddAll(_items);
-                        Messaging.UiUpdate.RatesOverview.Send();
                     });
                 }
             };
@@ -119,23 +117,21 @@ namespace MyCC.Ui.Android.Views.Fragments
             {
                 if (Activity == null) return;
                 Activity.RunOnUiThread(() =>
-                            {
-                                // ReSharper disable once RedundantAssignment
-                                var lastUpdate = DateTime.Now;
-                                if (!ViewData.Rates.IsDataAvailable) return;
-                                if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency.Id)) return;
-                                if (!ViewData.Rates.Headers?.TryGetValue(_referenceCurrency, out headerData) ?? false) return;
-                                if (!ViewData.Rates.LastUpdate?.TryGetValue(_referenceCurrency, out lastUpdate) ?? false) return;
+                {
+                    // ReSharper disable once RedundantAssignment
+                    if (!ViewData.Rates.IsDataAvailable) return;
+                    if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency.Id)) return;
+                    if (!ViewData.Rates.Headers?.TryGetValue(_referenceCurrency, out headerData) ?? false) return;
 
-                                _header.Data = headerData;
-                                _footerFragment.LastUpdate = lastUpdate;
-                                _items = RatesViewData.Items[_referenceCurrency];
-                                SetSortButtons(ViewData.Rates.SortButtons?[_referenceCurrency], sortCurrency, sortValue);
-                                _adapter.Clear();
-                                _adapter.AddAll(_items);
-                                SetVisibleElements(view);
-                                refreshView.Refreshing = false;
-                            });
+                    _header.Data = headerData;
+                    _footerFragment.LastUpdate = ViewData.Rates.LastUpdate;
+                    _items = RatesViewData.Items[_referenceCurrency];
+                    SetSortButtons(ViewData.Rates.SortButtons?[_referenceCurrency], sortCurrency, sortValue);
+                    _adapter.Clear();
+                    _adapter.AddAll(_items);
+                    SetVisibleElements(view);
+                    refreshView.Refreshing = false;
+                });
             });
 
             view.FindViewById<FloatingActionButton>(Resource.Id.button_add).Click += (sender, args) =>
@@ -173,8 +169,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             if (requestCode == RequestCodeCurrency && resultCode == (int)Result.Ok)
             {
                 var currency = JsonConvert.DeserializeObject<Currency>(data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency));
-                CurrencySettingsData.Add(currency);
-                Messaging.Update.Rates.Send();
+                UiUtils.Edit.AddWatchedCurrency(currency.Id);
             }
         }
 

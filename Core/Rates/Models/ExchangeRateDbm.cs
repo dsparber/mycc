@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using MyCC.Core.Currencies.Models;
 using Newtonsoft.Json;
 using SQLite;
@@ -49,9 +50,10 @@ namespace MyCC.Core.Rates.Models
 
         public ExchangeRateDbm(ExchangeRate exchangeRate)
         {
-            Id = exchangeRate.Id;
-            ReferenceCurrencyId = exchangeRate.RateDescriptor.ReferenceCurrencyId;
-            SecondaryCurrencyId = exchangeRate.RateDescriptor.SecondaryCurrencyId;
+            var orderedCurrencyIds = new[] { exchangeRate.Descriptor.ReferenceCurrencyId, exchangeRate.Descriptor.SecondaryCurrencyId }.OrderBy(id => id).ToList();
+            Id = $"{orderedCurrencyIds[0]}_{orderedCurrencyIds[1]}_{exchangeRate.SourceId}";
+            ReferenceCurrencyId = exchangeRate.Descriptor.ReferenceCurrencyId;
+            SecondaryCurrencyId = exchangeRate.Descriptor.SecondaryCurrencyId;
             Rate = exchangeRate.Rate;
             SourceId = exchangeRate.SourceId;
             LastUpdate = exchangeRate.LastUpdate;

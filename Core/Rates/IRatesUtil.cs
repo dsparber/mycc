@@ -13,6 +13,7 @@ namespace MyCC.Core.Rates
 
         DateTime LastUpdate();
         DateTime LastUpdateFor(string currencyId);
+        DateTime LastCryptoToFiatUpdate();
 
 
         Task LoadFromDatabase();
@@ -23,7 +24,8 @@ namespace MyCC.Core.Rates
         Task FetchFor(string currencyId, Action<double> onProgress = null);
         Task FetchAllFiatToCrypto(Action<double> onProgress = null);
 
-
+        int CryptoToFiatSourceCount { get; }
+        string SelectedCryptoToFiatSource { get; set; }
         IEnumerable<(string name, IEnumerable<ExchangeRate> rates)> CryptoToFiatSourcesWithRates { get; }
     }
 }

@@ -12,6 +12,13 @@ namespace MyCC.Ui.Update
 {
     internal class UpdateUtils : IUpdateUtils
     {
+        public async Task LoadNeededDataFromDatabase()
+        {
+            await ApplicationTasks.LoadEverything();
+            CreateAssetsData();
+            CreateRatesData();
+        }
+
         public void FetchAllRates() => ExecuteWithErrorWrapper(async () =>
        {
            await MyccUtil.Rates.FetchNeeded(Messaging.Status.Progress.Send);
@@ -19,6 +26,11 @@ namespace MyCC.Ui.Update
            CreateRatesData();
            Messaging.Status.Progress.Send(1);
        });
+
+        public void FetchCurrencies() => ExecuteWithErrorWrapper(async () =>
+        {
+            await CurrencyStorage.Instance.LoadOnline();
+        });
 
         public void FetchAllAssetsAndRates() => ExecuteWithErrorWrapper(async () =>
        {

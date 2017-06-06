@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Currencies.Sources;
 using MyCC.Core.Database;
-using MyCC.Core.Helpers;
 using SQLite;
 
 namespace MyCC.Core.Currencies

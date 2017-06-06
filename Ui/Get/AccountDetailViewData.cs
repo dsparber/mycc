@@ -67,7 +67,7 @@ namespace MyCC.Ui.Get
                 .Select(c =>
                 {
                     var rate = MyccUtil.Rates.GetRate(new RateDescriptor(account.Money.Currency.Id, c));
-                    return new ReferenceValueItem(account.Money.Amount, rate?.Rate, c.Code());
+                    return new ReferenceValueItem(account.Money.Amount, rate?.Rate, c);
                 })
                 .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Rate, SortDirection == SortDirection.Ascending);
         }

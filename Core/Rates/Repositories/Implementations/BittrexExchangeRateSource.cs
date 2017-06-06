@@ -38,8 +38,8 @@ namespace MyCC.Core.Rates.Repositories.Implementations
             {
                 var market = token[MarketKey].ToString().Split('-');
                 var rate = token[RateKey].ToDecimal();
-                var referenceCurrencyCode = market[0];
-                var secondaryCurrencyCode = market[1];
+                var referenceCurrencyCode = market[1];
+                var secondaryCurrencyCode = market[0];
                 var rateDescriptor = new RateDescriptor(new Currency(referenceCurrencyCode, true).Id, new Currency(secondaryCurrencyCode, true).Id);
 
                 return (rateDescriptor, rate);

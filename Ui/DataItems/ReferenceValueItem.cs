@@ -1,5 +1,4 @@
 using MyCC.Core.Currencies;
-using MyCC.Core.Rates.Models;
 
 namespace MyCC.Ui.DataItems
 {
@@ -14,11 +13,11 @@ namespace MyCC.Ui.DataItems
 
         private readonly decimal _amount;
 
-        public ReferenceValueItem(decimal amount, decimal? rate, string currencyCode)
+        public ReferenceValueItem(decimal amount, decimal? rate, string currencyId)
         {
             _amount = amount;
             Rate = rate ?? 0;
-            CurrencyCode = currencyCode;
+            CurrencyCode = currencyId.Code();
         }
 
     }

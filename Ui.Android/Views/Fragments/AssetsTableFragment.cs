@@ -61,7 +61,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             _footerFragment.LastUpdate = ViewData.Assets.LastUpdate?[_referenceCurrency] ?? DateTime.MinValue;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
-            refreshView.Refresh += (sender, args) => Messaging.Request.AllAssetsAndRates.Send();
+            refreshView.Refresh += (sender, args) => UiUtils.Update.FetchAllAssetsAndRates();
 
             _items = ViewData.Assets.Items?[_referenceCurrency] ?? new List<AssetItem>();
             var adapter = new AssetsListAdapter(Context, _items);

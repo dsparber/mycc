@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies;
 using MyCC.Core.Database;
-using MyCC.Core.Rates;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Test.Database;

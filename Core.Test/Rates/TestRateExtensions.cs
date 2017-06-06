@@ -2,7 +2,6 @@
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace MyCC.Core.Test.Rates
 {
@@ -21,7 +20,7 @@ namespace MyCC.Core.Test.Rates
 
             var combinedRate = referenceRate.CombineWith(secondaryRate);
 
-            Assert.AreEqual(combinedRate.RateDescriptor, new RateDescriptor(EurId, UsdId));
+            Assert.AreEqual(combinedRate.Descriptor, new RateDescriptor(EurId, UsdId));
             Assert.AreEqual(combinedRate.Rate, 1.2m);
         }
     }

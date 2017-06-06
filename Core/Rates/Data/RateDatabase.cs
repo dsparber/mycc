@@ -6,6 +6,7 @@ using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Rates.Repositories;
 using MyCC.Core.Rates.Repositories.Utils;
+using MyCC.Core.Rates.Utils;
 
 namespace MyCC.Core.Rates.Data
 {
@@ -20,7 +21,7 @@ namespace MyCC.Core.Rates.Data
         public static async Task LoadFromDatabase()
         {
             await DatabaseUtil.Connection.CreateTableAsync<ExchangeRateDbm>();
-            var allRates = (await DatabaseUtil.Connection.Table<ExchangeRateDbm>().ToListAsync()).Select(dbm => dbm.AsExchangeRate);
+            var allRates = (await DatabaseUtil.Connection.Table<ExchangeRateDbm>().ToListAsync()).Select(dbm => dbm.AsExchangeRate).DistinctCurrencyPairs().ToList();
             _exchangeRates = allRates;
             _loadedFromDatabase = true;
         }
@@ -37,10 +38,10 @@ namespace MyCC.Core.Rates.Data
                 {
                     var existingRates = _exchangeRates.ToList();
 
-                    var newRates = fetchedRates.Except(existingRates).ToList();
-                    var ratesToUpdate = fetchedRates.Intersect(existingRates).ToList();
+                    var newRates = fetchedRates.Where(rate => !existingRates.Contains(rate.Descriptor)).ToList();
+                    var ratesToUpdate = fetchedRates.Where(rate => existingRates.Contains(rate.Descriptor)).ToList();
 
-                    var rates = existingRates.Except(ratesToUpdate).Concat(ratesToUpdate).Concat(newRates).ToList();
+                    var rates = existingRates.Where(rate => !ratesToUpdate.Contains(rate.Descriptor)).Concat(ratesToUpdate).Concat(newRates).ToList();
                     _exchangeRates = rates;
 
                     sqliteConnection.InsertAll(newRates.Select(rate => new ExchangeRateDbm(rate)));
@@ -66,14 +67,14 @@ namespace MyCC.Core.Rates.Data
             bool RatesFilter(ExchangeRate rate)
             {
                 if (rateDescriptor.HasCryptoAndFiatCurrency())
-                    return rate.SourceId == RatesConfig.SelectedCryptoToFiatSourceId && rate.RateDescriptor.CurrenciesEqual(rateDescriptor);
+                    return rate.SourceId == RatesConfig.SelectedCryptoToFiatSourceId && rate.Descriptor.CurrenciesEqual(rateDescriptor);
 
-                return rate.RateDescriptor.CurrenciesEqual(rateDescriptor);
+                return rate.Descriptor.CurrenciesEqual(rateDescriptor);
             }
 
             var result = _exchangeRates.FirstOrDefault(RatesFilter);
             if (result == null) return null;
-            return result.RateDescriptor.Equals(rateDescriptor) ? result : result.Inverse();
+            return result.Descriptor.Equals(rateDescriptor) ? result : result.Inverse();
         }
     }
 }

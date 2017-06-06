@@ -121,7 +121,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void FillListView()
         {
-            var exceptions = _withoutAlreadyAddedCurrencies ? CurrencySettingsData.EnabledCurrencies : new List<Currency>();
+            var exceptions = _withoutAlreadyAddedCurrencies ? RatesViewData.EnabledCurrencies : new List<Currency>();
             exceptions = exceptions.Concat(_withoutReferenceCurrencies ? ApplicationSettings.AllReferenceCurrencies.Select(id => id.ToCurrency()) : new List<Currency>()).ToList();
             var allCurrencies = (_onlyAddressCurrencies ? AddressAccountRepository.AllSupportedCurrencies : CurrencyStorage.Instance.Currencies).Where(c => c != null).ToList();
             _currencies = allCurrencies.Except(exceptions).OrderBy(c => $"{c.Code} {c.Name}").ToList();

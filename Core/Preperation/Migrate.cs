@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using MyCC.Core.Database;
-using MyCC.Core.Helpers;
 using MyCC.Core.Settings;
 
 namespace MyCC.Core.Preperation

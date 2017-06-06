@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates.Models;
@@ -21,6 +22,13 @@ namespace MyCC.Ui.Get
         public Dictionary<Currency, List<SortButtonItem>> SortButtons { get; private set; }
         public DateTime LastUpdate { get; private set; }
 
+        public static IEnumerable<Currency> EnabledCurrencies => AccountStorage.UsedCurrencies
+            .Concat(ApplicationSettings.AllReferenceCurrencies)
+            .Concat(ApplicationSettings.WatchedCurrencies)
+            .Except(ApplicationSettings.DisabledCurrencyIds)
+            .Distinct()
+            .Where(c => c != null)
+            .Select(CurrencyHelper.Find);
 
         public bool IsDataAvailable => Items != null && Items.Count > 0 && Items.Min(i => i.Value.Count) > 0;
 
@@ -36,8 +44,8 @@ namespace MyCC.Ui.Get
 
         private static Dictionary<Currency, CoinHeaderData> LoadRateHeaders() => ApplicationSettings.MainCurrencies.ToDictionary(CurrencyHelper.Find, c =>
         {
-
-            var referenceMoney = new Money(MyccUtil.Rates.GetRate(new RateDescriptor(CurrencyConstants.Btc.Id, c))?.Rate ?? 0, c.Find());
+            var rate = MyccUtil.Rates.GetRate(new RateDescriptor(CurrencyConstants.Btc.Id, c));
+            var referenceMoney = new Money(rate?.Rate ?? 0, c.Find());
 
             var additionalRefs = ApplicationSettings.MainCurrencies
                 .Except(new[] { c })
@@ -50,7 +58,7 @@ namespace MyCC.Ui.Get
         {
             Money GetReference(Currency currency) => new Money(MyccUtil.Rates.GetRate(new RateDescriptor(currency.Id, c))?.Rate ?? 0, currency);
 
-            var items = CurrencySettingsData.EnabledCurrencies.Except(new[] { c.ToCurrency() }).Select(x => new RateItem(x, GetReference(x)));
+            var items = EnabledCurrencies.Except(new[] { c.ToCurrency() }).Select(x => new RateItem(x, GetReference(x)));
 
             return ApplySort(items);
         });

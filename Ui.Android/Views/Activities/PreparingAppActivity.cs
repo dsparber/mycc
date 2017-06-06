@@ -16,7 +16,6 @@ namespace MyCC.Ui.Android.Views.Activities
     [Activity(Theme = "@style/LockscreenTheme", NoHistory = true)]
     public class PreparingAppActivity : AppCompatActivity
     {
-
         private View _progressView;
         private View _offlineView;
         private ProgressBar _progressBar;
@@ -33,6 +32,7 @@ namespace MyCC.Ui.Android.Views.Activities
             _progressTextView = FindViewById<TextView>(Resource.Id.text_progress);
             _progressView = FindViewById(Resource.Id.layout_progress);
             _offlineView = FindViewById(Resource.Id.layout_no_network);
+            _progressBar.Indeterminate = true;
 
             void StartLoading(bool b)
             {
@@ -78,6 +78,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
                 var progress = (int)Math.Round(percentage * 100, 0);
 
+                _progressBar.Indeterminate = false;
                 var animator = ObjectAnimator.OfInt(_progressBar, "progress", progress);
                 animator.SetDuration(2500);
                 animator.SetInterpolator(new DecelerateInterpolator());

@@ -4,30 +4,12 @@ using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.CoinInfo;
-using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 
 namespace MyCC.Core.Tasks
 {
     public static partial class ApplicationTasks
     {
-        public static async Task FetchCurrencies(Action onStarted = null, Action onFinished = null, Action<Exception> onError = null)
-        {
-            try
-            {
-                onStarted?.Invoke();
-                await CurrencyStorage.Instance.LoadOnline();
-            }
-            catch (Exception e)
-            {
-                onError?.Invoke(e);
-            }
-            finally
-            {
-                onFinished?.Invoke();
-            }
-        }
-
         public static async Task FetchBalance(FunctionalAccount account, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null)
         {
             try

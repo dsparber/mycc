@@ -1,6 +1,4 @@
-﻿using MyCC.Ui.Messages;
-
-namespace MyCC.Ui.Get
+﻿namespace MyCC.Ui.Get
 {
     public class ViewData
     {

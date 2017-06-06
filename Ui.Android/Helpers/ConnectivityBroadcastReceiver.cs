@@ -1,5 +1,4 @@
 ﻿using Android.Content;
-using MyCC.Ui.Messages;
 
 namespace MyCC.Ui.Android.Helpers
 {

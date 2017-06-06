@@ -5,7 +5,6 @@ using Android.Views;
 using Android.Widget;
 using MyCC.Core.Currencies.Models;
 using MyCC.Ui.DataItems;
-using MyCC.Ui.Get;
 
 namespace MyCC.Ui.Android.Views.Adapter
 {
@@ -74,7 +73,7 @@ namespace MyCC.Ui.Android.Views.Adapter
             }
             public void OnClick(View v)
             {
-                CurrencySettingsData.Disable(_currency);
+                UiUtils.Edit.RemoveWatchedCurrency(_currency.Id);
                 _adapter.CurrencyRemoved?.Invoke();
             }
         }

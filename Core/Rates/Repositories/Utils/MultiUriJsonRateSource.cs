@@ -48,7 +48,7 @@ namespace MyCC.Core.Rates.Repositories.Utils
             if (uri == null) return null;
             var json = await uri.GetJson(HttpHeader);
             var rate = GetRateFromJson(json);
-            return rate == null ? null : new ExchangeRate(rateDescriptor, rate.Value, (int)Id, DateTime.Now);
+            return rate == null ? null : new ExchangeRate(rateDescriptor, rate.Value, Id, DateTime.Now);
         }
 
         protected abstract decimal? GetRateFromJson(JToken json);

@@ -27,6 +27,9 @@ namespace MyCC.Core.Rates.Utils
         public DateTime LastUpdateFor(string currencyId)
             => GetNeededRatesFor(currencyId).Select(e => e.GetRate()?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
 
+        public DateTime LastCryptoToFiatUpdate()
+            => CryptoToFiatSourcesWithRates.Min(tuple => tuple.rates.Any() ? tuple.rates.Min(rate => rate.LastUpdate) : DateTime.MinValue);
+
         public Task LoadFromDatabase() => RateDatabase.LoadFromDatabase();
 
         public Task Fetch(IEnumerable<RateDescriptor> rateDescriptors, Action<double> onProgress = null) => RateLoader.FetchRates(rateDescriptors, onProgress: onProgress);
@@ -44,6 +47,14 @@ namespace MyCC.Core.Rates.Utils
 
         public Task FetchAllFiatToCrypto(Action<double> onProgress = null) =>
             RateLoader.FetchAllFiatToCryptoRates(onProgress);
+
+        public int CryptoToFiatSourceCount => RatesConfig.Sources.Count();
+
+        public string SelectedCryptoToFiatSource
+        {
+            get => RatesConfig.SelectedCryptoToFiatSource.Name;
+            set => RatesConfig.SelectedCryptoToFiatSourceName = value;
+        }
 
         private static IEnumerable<RateDescriptor> GetNeededRates()
         {

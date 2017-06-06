@@ -21,5 +21,7 @@
         string UnitSecond { get; }
         string LoadingCurrenciesFrom { get; }
         string LoadingRates { get; }
+        string OnlyThreeCurrenciesCanBeStared { get; }
+        string BitcoinCanNotBeRemoved { get; }
     }
 }

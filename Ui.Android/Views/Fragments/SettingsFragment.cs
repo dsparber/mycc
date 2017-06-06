@@ -2,8 +2,8 @@
 using Android.Content;
 using Android.OS;
 using Android.Support.V7.Preferences;
+using MyCC.Core;
 using MyCC.Core.Currencies;
-using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.Android.Helpers;
@@ -114,7 +114,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             base.OnResume();
 
             _securityPreference.Summary = Resources.GetString(ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled ? Resource.String.FingerprintActive : ApplicationSettings.IsPinSet ? Resource.String.PinActive : Resource.String.NotConfigured);
-            _preferredBitcoinPreference.Summary = RateStorage.PreferredBtcSource.Name;
+            _preferredBitcoinPreference.Summary = MyccUtil.Rates.SelectedCryptoToFiatSource;
             _referenceCurrenciesPreference.Summary = string.Join(", ", ApplicationSettings.AllReferenceCurrencies.Select(c => c.ToCurrency().Code));
         }
     }

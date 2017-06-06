@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using MyCC.Core.Helpers;
-using MyCC.Core.Rates.Data;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Rates.Repositories.Utils;

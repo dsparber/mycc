@@ -9,7 +9,6 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies.Models;
 using MyCC.Ui.Android.Helpers;
-using MyCC.Ui.Messages;
 using MyCC.Ui.Android.Views.Fragments;
 using Newtonsoft.Json;
 using StringHelper = MyCC.Ui.Helpers.StringHelper;

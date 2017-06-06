@@ -29,10 +29,19 @@ namespace MyCC.Core.Rates.Data
             new ItBitExchangeRateSource()
         };
 
-        public static IRateSource SelectedCryptoToFiatSource =>
-            RatesConfig.Sources.FirstOrDefault(source => (int)source.Id == SelectedCryptoToFiatSourceId);
+        public static IRateSource SelectedCryptoToFiatSource => Sources.FirstOrDefault(source => source.Id == SelectedCryptoToFiatSourceId);
 
-        public static int SelectedCryptoToFiatSourceId => ApplicationSettings.PreferredBitcoinRepository;
+        public static string SelectedCryptoToFiatSourceName
+        {
+            set => SelectedCryptoToFiatSourceId = Sources.FirstOrDefault(source => source.Name.Equals(value)).Id;
+        }
+
+
+        public static int SelectedCryptoToFiatSourceId
+        {
+            get => ApplicationSettings.PreferredBitcoinRepository;
+            private set => ApplicationSettings.PreferredBitcoinRepository = value;
+        }
     }
 
 }

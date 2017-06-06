@@ -1,11 +1,15 @@
-﻿using MyCC.Core.Account.Models.Base;
-using MyCC.Ui.Messages;
+﻿using System.Threading.Tasks;
+using MyCC.Core.Account.Models.Base;
 
 namespace MyCC.Ui.Update
 {
     public interface IUpdateUtils
     {
+        Task LoadNeededDataFromDatabase();
+
         void FetchAllRates();
+
+        void FetchCurrencies();
 
         void FetchAllAssetsAndRates();
 

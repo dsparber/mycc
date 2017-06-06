@@ -8,9 +8,6 @@ using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
-using MyCC.Core.Rates.Models;
-using MyCC.Core.Settings;
 
 namespace MyCC.Core.Account.Storage
 {
