@@ -92,7 +92,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
             }
         }
 
-        public override bool EntryComplete => (_currency ?? AddSourceActivity.Currency) != null && !string.IsNullOrWhiteSpace(_address);
+        public override bool EntryComplete => (_currency ?? AddSourceActivity?.Currency) != null && !string.IsNullOrWhiteSpace(_address);
 
 
         public override OnlineAccountRepository GetRepository()

@@ -51,11 +51,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CurrencyCode"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CurrencyCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_currency_code"
                   android:layout_width="0dp"
@@ -67,11 +76,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CoinName"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CoinName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_currency_name"
                   android:layout_width="0dp"
@@ -83,11 +101,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CoinExplorer"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CoinExplorer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_blockexplorer"
                   android:layout_width="0dp"
@@ -105,11 +132,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CoinType"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CoinType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_coin_type"
                   android:layout_width="0dp"
@@ -121,11 +157,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CoinAlgorithm"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CoinAlgorithm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_algorithm"
                   android:layout_width="0dp"
@@ -137,11 +182,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CoinHashrate"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CoinHashrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_hashrate"
                   android:layout_width="0dp"
@@ -153,11 +207,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CoinDifficulty"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CoinDifficulty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_difficulty"
                   android:layout_width="0dp"
@@ -175,11 +238,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CoinBlockHeight"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CoinBlockHeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_blockheight"
                   android:layout_width="0dp"
@@ -191,11 +263,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CoinBlocktime"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CoinBlocktime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_blocktime"
                   android:layout_width="0dp"
@@ -207,11 +288,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CoinBlockReward"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CoinBlockReward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_blockreward"
                   android:layout_width="0dp"
@@ -229,11 +319,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CoinSupplyMax"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CoinSupplyMax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_maxsupply"
                   android:layout_width="0dp"
@@ -245,11 +344,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CoinSupply"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CoinSupply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_supply"
                   android:layout_width="0dp"
@@ -261,11 +369,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-              <TextView
-                  android:text="@string/CoinMarketCap"
+              <LinearLayout
+                  android:orientation="horizontal"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1" />
+                  android:layout_weight="1">
+                <TextView
+                    android:text="@string/CoinMarketCap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=":"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+              </LinearLayout>
               <TextView
                   android:id="@+id/text_marketcap"
                   android:layout_width="0dp"
@@ -275,14 +392,14 @@
           </LinearLayout>
         </LinearLayout>
         <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_marginLeft="24dp"
-           android:layout_marginRight="24dp"
-           android:layout_marginTop="8dp"
-           android:layout_marginBottom="8dp"
-           android:orientation="vertical"
-           android:layout_height="wrap_content"
-           android:id="@+id/view_open_in_blockexplorer"/>
+            android:layout_width="match_parent"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:id="@+id/view_open_in_blockexplorer" />
         <TextView xmlns:p2="http://schemas.android.com/apk/res-auto"
             android:text="@string/EqualTo"
             android:layout_width="match_parent"
