@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;

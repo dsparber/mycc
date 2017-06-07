@@ -69,6 +69,7 @@ namespace MyCC.Forms.View.Components.Table
             Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
             Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
             Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
+            Messaging.UpdatingRates.SubscribeFinished(this, UpdateView);
 
             Messaging.RoundNumbers.SubscribeValueChanged(this, UpdateView);
             Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
