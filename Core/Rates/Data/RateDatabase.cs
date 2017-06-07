@@ -21,7 +21,7 @@ namespace MyCC.Core.Rates.Data
         public static async Task LoadFromDatabase()
         {
             await DatabaseUtil.Connection.CreateTableAsync<ExchangeRateDbm>();
-            var allRates = (await DatabaseUtil.Connection.Table<ExchangeRateDbm>().ToListAsync()).Select(dbm => dbm.AsExchangeRate).DistinctCurrencyPairs().ToList();
+            var allRates = (await DatabaseUtil.Connection.Table<ExchangeRateDbm>().ToListAsync()).Select(dbm => dbm.AsExchangeRate).ToList();
             _exchangeRates = allRates;
             _loadedFromDatabase = true;
         }
@@ -38,10 +38,10 @@ namespace MyCC.Core.Rates.Data
                 {
                     var existingRates = _exchangeRates.ToList();
 
-                    var newRates = fetchedRates.Where(rate => !existingRates.Contains(rate.Descriptor)).ToList();
-                    var ratesToUpdate = fetchedRates.Where(rate => existingRates.Contains(rate.Descriptor)).ToList();
+                    var newRates = fetchedRates.Where(rate => !existingRates.Contains(rate.Descriptor, rate.SourceId)).ToList();
+                    var ratesToUpdate = fetchedRates.Where(rate => existingRates.Contains(rate.Descriptor, rate.SourceId)).ToList();
 
-                    var rates = existingRates.Where(rate => !ratesToUpdate.Contains(rate.Descriptor)).Concat(ratesToUpdate).Concat(newRates).ToList();
+                    var rates = existingRates.Where(rate => !ratesToUpdate.Contains(rate.Descriptor, rate.SourceId)).Concat(ratesToUpdate).Concat(newRates).ToList();
                     _exchangeRates = rates;
 
                     sqliteConnection.InsertAll(newRates.Select(rate => new ExchangeRateDbm(rate)));

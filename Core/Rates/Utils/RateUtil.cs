@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Rates.Data;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Repositories.Utils;
 using MyCC.Core.Settings;
 
 namespace MyCC.Core.Rates.Utils
@@ -12,12 +13,12 @@ namespace MyCC.Core.Rates.Utils
     public class RatesUtil : IRatesUtil
     {
         public IEnumerable<(string name, IEnumerable<ExchangeRate> rates)> CryptoToFiatSourcesWithRates
-            => RateDatabase.CryptoToFiatRates.GroupBy(rate => rate.SourceId).Select(group =>
-            {
-                var sourceName = RatesConfig.Sources.First(source => group.Key == source.Id).Name;
-                var rates = group.ToList() as IEnumerable<ExchangeRate>;
-                return (sourceName, rates);
-            });
+            => RatesConfig.Sources.Where(source => source.Type == RateSourceType.CryptoToFiat).Select(source =>
+             {
+                 var rates = RateDatabase.CryptoToFiatRates.Where(rate => rate.SourceId == source.Id);
+                 return (source.Name, rates);
+             });
+
 
         public ExchangeRate GetRate(RateDescriptor rateDescriptor) => rateDescriptor.GetRate();
         public bool HasRate(RateDescriptor rateDescriptor) => rateDescriptor.GetRate() != null;
@@ -48,7 +49,7 @@ namespace MyCC.Core.Rates.Utils
         public Task FetchAllFiatToCrypto(Action<double> onProgress = null) =>
             RateLoader.FetchAllFiatToCryptoRates(onProgress);
 
-        public int CryptoToFiatSourceCount => RatesConfig.Sources.Count();
+        public int CryptoToFiatSourceCount => RatesConfig.Sources.Count(source => source.Type == RateSourceType.CryptoToFiat);
 
         public string SelectedCryptoToFiatSource
         {

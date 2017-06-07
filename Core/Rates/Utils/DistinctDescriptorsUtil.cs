@@ -32,9 +32,9 @@ namespace MyCC.Core.Rates.Utils
             return result;
         }
 
-        public static bool Contains(this IEnumerable<ExchangeRate> source, RateDescriptor descriptor)
+        public static bool Contains(this IEnumerable<ExchangeRate> source, RateDescriptor descriptor, int sourceId)
         {
-            return source.Any(rate => rate.Descriptor.CurrenciesEqual(descriptor));
+            return source.Any(rate => rate.Descriptor.CurrenciesEqual(descriptor) && sourceId == rate.SourceId);
         }
     }
 }

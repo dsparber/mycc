@@ -8,6 +8,7 @@ using Android.Widget;
 using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currencies;
+using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
@@ -95,11 +96,17 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private static string GetDetail(IReadOnlyCollection<ExchangeRate> rates)
         {
-            var usd = rates.FirstOrDefault(rate => rate.Descriptor.Equals(new RateDescriptor(CurrencyConstants.Btc.Id, CurrencyConstants.Usd.Id)));
-            var eur = rates.FirstOrDefault(rate => rate.Descriptor.Equals(new RateDescriptor(CurrencyConstants.Btc.Id, CurrencyConstants.Usd.Id)));
+            var descriptorBtcUsd = new RateDescriptor(CurrencyConstants.Btc.Id, CurrencyConstants.Usd.Id);
+            var descriptorBtcEur = new RateDescriptor(CurrencyConstants.Btc.Id, CurrencyConstants.Eur.Id);
+
+            var usd = rates.FirstOrDefault(rate => rate.Descriptor.CurrenciesEqual(descriptorBtcUsd));
+            var eur = rates.FirstOrDefault(rate => rate.Descriptor.CurrenciesEqual(descriptorBtcEur));
+
+            usd = usd?.Descriptor.CurrenciesEqual(descriptorBtcUsd) ?? false ? usd : usd?.Inverse();
+            eur = eur?.Descriptor.CurrenciesEqual(descriptorBtcEur) ?? false ? eur : eur?.Inverse();
 
             var usdString = new Money(usd?.Rate ?? 0, CurrencyConstants.Usd).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            var eurString = new Money(usd?.Rate ?? MyccUtil.Rates.GetRate(new RateDescriptor(CurrencyConstants.Btc.Id, CurrencyConstants.Eur.Id))?.Rate ?? 0, CurrencyConstants.Usd).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+            var eurString = new Money(eur?.Rate ?? (usd != null ? MyccUtil.Rates.GetRate(descriptorBtcEur)?.Rate : 0) ?? 0, CurrencyConstants.Eur).ToStringTwoDigits(ApplicationSettings.RoundMoney);
             var note = eur == null && usd != null ? "*" : string.Empty;
 
             return $"{eurString}{note} / {usdString}";
