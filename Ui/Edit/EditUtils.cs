@@ -1,11 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Account.Models.Implementations;
+using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 
 namespace MyCC.Ui.Edit
 {
     internal class EditUtils : IEditUtils
     {
+        public Task<bool> Add(OnlineAccountRepository repository, Action testingStarted = null, Action alreadyAdded = null, Action testingFailed = null)
+            => EditAccounts.Add(repository, testingStarted, alreadyAdded, testingFailed);
+
+        public Task Add(LocalAccount account)
+            => EditAccounts.Add(account);
+
         public async Task Update(FunctionalAccount account)
         {
             await AccountStorage.Update(account);

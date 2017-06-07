@@ -42,7 +42,7 @@ namespace MyCC.Ui.Update
            Messaging.Status.Progress.Send(1);
        });
 
-        public void FetchNeededButNotLoaded() => ExecuteWithErrorWrapper(async () =>
+        public void FetchNeededButNotLoadedRates() => ExecuteWithErrorWrapper(async () =>
        {
            await MyccUtil.Rates.FetchNeededButNotLoaded(Messaging.Status.Progress.Send);
            CreateRatesData();

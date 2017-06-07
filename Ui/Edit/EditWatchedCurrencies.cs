@@ -34,6 +34,7 @@ namespace MyCC.Ui.Edit
             {
                 ApplicationSettings.WatchedCurrencies = new List<string>(ApplicationSettings.WatchedCurrencies) { currencyId };
             }
+            UiUtils.Update.FetchNeededButNotLoadedRates();
             UiUtils.Update.CreateRatesData();
         }
     }

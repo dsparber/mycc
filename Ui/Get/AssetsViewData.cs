@@ -79,7 +79,8 @@ namespace MyCC.Ui.Get
 
             Money GetReferenceValue(string currencyId)
             {
-                var amount = enabledAccounts.Sum(a => a.Money.Amount * MyccUtil.Rates.GetRate(new RateDescriptor(a.Money.Currency.Id, currencyId))?.Rate ?? 0);
+                var amount = enabledAccounts.GroupBy(account => account.Money.Currency)
+                .Sum(group => group.Sum(account => account.Money.Amount) * MyccUtil.Rates.GetRate(new RateDescriptor(group.Key.Id, currencyId))?.Rate ?? 0);
                 return new Money(amount, currencyId.Find());
             }
 

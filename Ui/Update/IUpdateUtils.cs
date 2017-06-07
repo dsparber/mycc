@@ -13,7 +13,7 @@ namespace MyCC.Ui.Update
 
         void FetchAllAssetsAndRates();
 
-        void FetchNeededButNotLoaded();
+        void FetchNeededButNotLoadedRates();
 
         void FetchBalancesAndRatesFor(string currencyId);
 

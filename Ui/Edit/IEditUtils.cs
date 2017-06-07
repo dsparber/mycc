@@ -1,10 +1,17 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Account.Models.Implementations;
+using MyCC.Core.Account.Repositories.Base;
 
 namespace MyCC.Ui.Edit
 {
     public interface IEditUtils
     {
+        Task<bool> Add(OnlineAccountRepository repository, Action testingStarted = null, Action alreadyAdded = null, Action testingFailed = null);
+        Task Add(LocalAccount account);
+
+
         Task Update(FunctionalAccount account);
         Task Delete(FunctionalAccount account);
 

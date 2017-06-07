@@ -9,6 +9,7 @@ using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Adapter;
 using MyCC.Ui.Android.Views.Fragments;
 using MyCC.Ui.Android.Views.Fragments.AddSource;
+using MyCC.Ui.Edit;
 using MyCC.Ui.Get;
 
 namespace MyCC.Ui.Android.Views.Activities
@@ -103,7 +104,7 @@ namespace MyCC.Ui.Android.Views.Activities
             {
 
                 if (_savingClickedCount > 1) return;
-                var result = await AddAccountData.Add(((AddSourceFragment.Repository)fragment).GetRepository(),
+                var result = await UiUtils.Edit.Add(((AddSourceFragment.Repository)fragment).GetRepository(),
                     alreadyAdded:
                     () => this.ShowInfoDialog(Resource.String.Error, Resource.String.RepositoryAlreadyAdded),
                     testingStarted: () => progressDialog.SetMessage(Resources.GetString(Resource.String.Testing)),
@@ -115,7 +116,7 @@ namespace MyCC.Ui.Android.Views.Activities
             {
                 var account = ((AddSourceFragment.Account)fragment).GetAccount();
                 if (_savingClickedCount > 1) return;
-                await AddAccountData.Add(account);
+                await UiUtils.Edit.Add(account);
                 _willFinish = true;
                 Finish();
             }

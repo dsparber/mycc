@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
+using MyCC.Core;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Ui.Messages;
 
-namespace MyCC.Ui.Get
+namespace MyCC.Ui.Edit
 {
-    public static class AddAccountData
+    internal static class EditAccounts
     {
         public static async Task<bool> Add(OnlineAccountRepository repository, Action testingStarted = null, Action alreadyAdded = null, Action testingFailed = null)
         {
@@ -27,7 +28,11 @@ namespace MyCC.Ui.Get
 
             await AccountStorage.Instance.Add(repository);
             await repository.FetchOnline();
-            Messaging.Request.DataForNewAccount.Send();
+            UiUtils.Update.FetchNeededButNotLoadedRates();
+            UiUtils.Update.CreateAssetsData();
+            UiUtils.Update.CreateRatesData();
+            Messaging.UiUpdate.Accounts.Send();
+            Messaging.UiUpdate.RatesOverview.Send();
 
             return true;
         }
@@ -35,7 +40,11 @@ namespace MyCC.Ui.Get
         public static async Task Add(LocalAccount account)
         {
             await AccountStorage.Instance.LocalRepository.Add(account);
-            Messaging.Request.DataForNewAccount.Send();
+            UiUtils.Update.FetchNeededButNotLoadedRates();
+            UiUtils.Update.CreateAssetsData();
+            UiUtils.Update.CreateRatesData();
+            Messaging.UiUpdate.Accounts.Send();
+            Messaging.UiUpdate.RatesOverview.Send();
         }
     }
 }

@@ -47,7 +47,7 @@
     <Compile Include="Prepare\PrepareUtil.cs" />
     <Compile Include="UiUtils.cs" />
     <Compile Include="Edit\EditUtils.cs" />
-    <Compile Include="Get\AddAccountData.cs" />
+    <Compile Include="Edit\EditAccounts.cs" />
     <Compile Include="Get\AccountDetailViewData.cs" />
     <Compile Include="Get\AccountsGroupViewData.cs" />
     <Compile Include="DataItems\AssetItem.cs" />
