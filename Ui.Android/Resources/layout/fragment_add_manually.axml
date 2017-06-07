@@ -8,7 +8,6 @@
       android:layout_gravity="center_vertical"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
       android:padding="@dimen/abc_action_bar_content_inset_material">
     <LinearLayout
         android:orientation="horizontal"
