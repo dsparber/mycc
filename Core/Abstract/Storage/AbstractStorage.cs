@@ -37,7 +37,7 @@ namespace MyCC.Core.Abstract.Storage
             Repositories.Add(repository);
         }
 
-        public virtual async Task Remove(TV repository)
+        public async Task Remove(TV repository)
         {
             await Database.Delete(repository);
             Repositories.Remove(repository);
