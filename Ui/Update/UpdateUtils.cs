@@ -46,6 +46,7 @@ namespace MyCC.Ui.Update
        {
            await MyccUtil.Rates.FetchNeededButNotLoaded(Messaging.Status.Progress.Send);
            CreateRatesData();
+           CreateAssetsData();
            Messaging.Status.Progress.Send(1);
        });
 

@@ -38,7 +38,7 @@ namespace MyCC.Ui.DataItems
 
                 Label = group.Key.Code;
                 Name = group.Key.Name;
-                Value = totalMoney.Amount * rate?.Rate ?? 0;
+                Value = new Money(totalMoney.Amount * rate?.Rate ?? 0, referenceCurrency).Amount;
                 Money = totalMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 Reference = new Money(Value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 Accounts =
