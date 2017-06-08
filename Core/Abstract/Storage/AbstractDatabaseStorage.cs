@@ -33,15 +33,6 @@ namespace MyCC.Core.Abstract.Storage
             return AllElements.Find(e => Equals(e, element));
         }
 
-        public override async Task Remove(TVa repository)
-        {
-            // Delete all elements
-            var repo = Repositories.Find(r => r.Id == repository.Id);
-            if (repo != null) await repo.RemoveAll();
-
-            await base.Remove(repository);
-        }
-
         public abstract TVa LocalRepository { get; }
     }
 }
