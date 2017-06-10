@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MyCC.Core;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;

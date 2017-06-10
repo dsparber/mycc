@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
@@ -154,51 +153,53 @@ namespace MyCC.Ui.Android.Views.Activities
             _header.Data = CoinInfoViewData.HeaderData(_currency);
             _footerFragment.LastUpdate = CoinInfoViewData.LastUpdate(_currency);
 
-            Func<bool?, ViewStates> show = b => b != null && b.Value ? ViewStates.Visible : ViewStates.Gone;
+            ViewStates Show(bool? b) => b != null && b.Value ? ViewStates.Visible : ViewStates.Gone;
 
             FindViewById<TextView>(Resource.Id.text_currency_code).Text = _currency.Code;
             FindViewById<TextView>(Resource.Id.text_currency_name).Text = _currency.Name;
 
-
-
             FindViewById<TextView>(Resource.Id.text_blockexplorer).Text = data?.Explorer;
-            FindViewById(Resource.Id.view_blockexplorer).Visibility = show(data?.HasExplorer);
+            FindViewById(Resource.Id.view_blockexplorer).Visibility = Show(data?.HasExplorer);
 
 
+            FindViewById(Resource.Id.view_group_coin_stats).Visibility = Show(data != null && (data.HasType || data.HasAlgorithm || data.HasDifficulty || data.HasHashrate));
 
             FindViewById<TextView>(Resource.Id.text_coin_type).Text = data?.Type;
-            FindViewById(Resource.Id.view_coin_type).Visibility = show(data?.HasType);
+            FindViewById(Resource.Id.view_coin_type).Visibility = Show(data?.HasType);
 
             FindViewById<TextView>(Resource.Id.text_algorithm).Text = data?.Algorithm;
-            FindViewById(Resource.Id.view_algorithm).Visibility = show(data?.HasAlgorithm);
+            FindViewById(Resource.Id.view_algorithm).Visibility = Show(data?.HasAlgorithm);
 
             FindViewById<TextView>(Resource.Id.text_difficulty).Text = data?.Difficulty;
-            FindViewById(Resource.Id.view_difficulty).Visibility = show(data?.HasDifficulty);
+            FindViewById(Resource.Id.view_difficulty).Visibility = Show(data?.HasDifficulty);
 
             FindViewById<TextView>(Resource.Id.text_hashrate).Text = data?.Hashrate;
-            FindViewById(Resource.Id.view_hashrate).Visibility = show(data?.HasHashrate);
+            FindViewById(Resource.Id.view_hashrate).Visibility = Show(data?.HasHashrate);
 
 
+            FindViewById(Resource.Id.view_group_block_stats).Visibility = Show(data != null && (data.HasBlockheight || data.HasBlockreward || data.HasBlocktime));
 
             FindViewById<TextView>(Resource.Id.text_blockheight).Text = data?.Blockheight;
-            FindViewById(Resource.Id.view_blockheight).Visibility = show(data?.HasBlockheight);
+            FindViewById(Resource.Id.view_blockheight).Visibility = Show(data?.HasBlockheight);
 
             FindViewById<TextView>(Resource.Id.text_blockreward).Text = data?.Blockreward;
-            FindViewById(Resource.Id.view_blockreward).Visibility = show(data?.HasBlockreward);
+            FindViewById(Resource.Id.view_blockreward).Visibility = Show(data?.HasBlockreward);
 
             FindViewById<TextView>(Resource.Id.text_blocktime).Text = data?.Blocktime;
-            FindViewById(Resource.Id.view_blocktime).Visibility = show(data?.HasBlocktime);
+            FindViewById(Resource.Id.view_blocktime).Visibility = Show(data?.HasBlocktime);
 
 
+
+            FindViewById(Resource.Id.view_group_supply).Visibility = Show(data != null && (data.HasSupply || data.HasMaxSupply || data.HasMarketCap));
 
             FindViewById<TextView>(Resource.Id.text_supply).Text = data?.Supply;
-            FindViewById(Resource.Id.view_supply).Visibility = show(data?.HasSupply);
+            FindViewById(Resource.Id.view_supply).Visibility = Show(data?.HasSupply);
 
             FindViewById<TextView>(Resource.Id.text_maxsupply).Text = data?.MaxSupply;
-            FindViewById(Resource.Id.view_maxsupply).Visibility = show(data?.HasMaxSupply);
+            FindViewById(Resource.Id.view_maxsupply).Visibility = Show(data?.HasMaxSupply);
 
             FindViewById<TextView>(Resource.Id.text_marketcap).Text = data?.MarketCap;
-            FindViewById(Resource.Id.view_marketcap).Visibility = show(data?.HasMarketCap);
+            FindViewById(Resource.Id.view_marketcap).Visibility = Show(data?.HasMarketCap);
 
             SetReferenceTable();
 

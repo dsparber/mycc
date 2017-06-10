@@ -45,6 +45,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
+              android:id="@+id/view_group_general_infos"
               android:layout_marginBottom="16dp">
             <LinearLayout
                 android:id="@+id/view_currency_code"
@@ -125,6 +126,7 @@
           <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:id="@+id/view_group_coin_stats"
               android:orientation="vertical"
               android:layout_marginBottom="16dp">
             <LinearLayout
@@ -232,6 +234,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
+              android:id="@+id/view_group_block_stats"
               android:layout_marginBottom="16dp">
             <LinearLayout
                 android:id="@+id/view_blockheight"
@@ -312,6 +315,7 @@
           <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:id="@+id/view_group_supply"
               android:orientation="vertical"
               android:layout_marginBottom="16dp">
             <LinearLayout
@@ -396,7 +400,7 @@
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:orientation="vertical"
             android:layout_height="wrap_content"
             android:id="@+id/view_open_in_blockexplorer" />
@@ -407,7 +411,7 @@
             android:id="@+id/text_equal_to"
             p2:textAllCaps="true"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp" />
         <LinearLayout
             android:orientation="horizontal"
