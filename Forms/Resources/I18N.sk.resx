@@ -1,0 +1,606 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>Kód meny</value>
+  </data>
+  <data name="AccountInformation" xml:space="preserve">
+    <value>Informácie o účte</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Účty</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Pridať</value>
+  </data>
+  <data name="AdditionalCurrencies" xml:space="preserve">
+    <value>Dalšie meny (Prehľad kurzov)</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Adresa</value>
+  </data>
+  <data name="AddressAdded" xml:space="preserve">
+    <value>Pridať adresu</value>
+  </data>
+  <data name="AddSource" xml:space="preserve">
+    <value>Nový zdroj</value>
+  </data>
+  <data name="CoinAlgorithm" xml:space="preserve">
+    <value>Algoritmus</value>
+  </data>
+  <data name="AllCurrenciesFromAccounts" xml:space="preserve">
+    <value>Všetky meny z účtov</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Suma</value>
+  </data>
+  <data name="ApiKey" xml:space="preserve">
+    <value>Kľúč</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>MyCC</value>
+  </data>
+  <data name="AppNameLong" xml:space="preserve">
+    <value>Moje kryptomeny</value>
+  </data>
+  <data name="AsCurrency" xml:space="preserve">
+    <value>ako {0}</value>
+  </data>
+  <data name="Assets" xml:space="preserve">
+    <value>Majetok</value>
+  </data>
+  <data name="BitcoinCanNotBeRemoved" xml:space="preserve">
+    <value>Bitcoin nemožno odstrániť.</value>
+  </data>
+  <data name="AddedWith" xml:space="preserve">
+    <value>Pridané s {0}</value>
+  </data>
+  <data name="CoinExplorer" xml:space="preserve">
+    <value>Databáza mincí (Blockchain)</value>
+  </data>
+  <data name="CoinBlockHeight" xml:space="preserve">
+    <value>Výška bloku</value>
+  </data>
+  <data name="CoinBlockReward" xml:space="preserve">
+    <value>Odmena za blok</value>
+  </data>
+  <data name="CoinBlocktime" xml:space="preserve">
+    <value>Blok času</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Zrušiť</value>
+  </data>
+  <data name="ChangePin" xml:space="preserve">
+    <value>Zmeniť PIN</value>
+  </data>
+  <data name="CoinSupply" xml:space="preserve">
+    <value>Vygenerované mince</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>© Ing. Georg Sparber</value>
+  </data>
+  <data name="Currencies" xml:space="preserve">
+    <value>Meny</value>
+  </data>
+  <data name="CurrenciesForRateView" xml:space="preserve">
+    <value>Krátky prehľad mien</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Mena</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Zdroje</value>
+  </data>
+  <data name="DefaultPageInfo" xml:space="preserve">
+    <value>Vybraté zobrazenie je prezentovaná po spustení aplikácie.</value>
+  </data>
+  <data name="DefaultView" xml:space="preserve">
+    <value>Predvolené zobrazenie</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Odstrániť</value>
+  </data>
+  <data name="Deleting" xml:space="preserve">
+    <value>Odstránenie</value>
+  </data>
+  <data name="CoinDifficulty" xml:space="preserve">
+    <value>Obtiažnosť</value>
+  </data>
+  <data name="DisablePin" xml:space="preserve">
+    <value>Deaktivovaný PIN</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Hotovo</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Upraviť</value>
+  </data>
+  <data name="Editing" xml:space="preserve">
+    <value>Upravovanie</value>
+  </data>
+  <data name="EnablePin" xml:space="preserve">
+    <value>Povolenie PIN kódu</value>
+  </data>
+  <data name="EqualTo" xml:space="preserve">
+    <value>Sa rovná</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Chyba</value>
+  </data>
+  <data name="Fetching" xml:space="preserve">
+    <value>Načítavanie</value>
+  </data>
+  <data name="FetchingNoSuccessText" xml:space="preserve">
+    <value>Chyba! Načítanie údajov bolo neúspešné.Nebol nájdený žiadny účet.</value>
+  </data>
+  <data name="FingerprintActive" xml:space="preserve">
+    <value>PIN a senzor odtlačkov prstov aktívny</value>
+  </data>
+  <data name="Further" xml:space="preserve">
+    <value>Ďalšie</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Všeobecné</value>
+  </data>
+  <data name="GeneralError" xml:space="preserve">
+    <value>Vyskytla sa neočakávaná chyba</value>
+  </data>
+  <data name="GHps" xml:space="preserve">
+    <value>GH/s</value>
+  </data>
+  <data name="GoToSourcesToAddAccount" xml:space="preserve">
+    <value>Môžete ísť na stránku nastavenia pre pridávanie údajov.</value>
+  </data>
+  <data name="Graph" xml:space="preserve">
+    <value>Graf</value>
+  </data>
+  <data name="CoinHashrate" xml:space="preserve">
+    <value>Hashrate</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Informácie</value>
+  </data>
+  <data name="IsEqualTo" xml:space="preserve">
+    <value>{0} sa rovná</value>
+  </data>
+  <data name="Label" xml:space="preserve">
+    <value>Popis</value>
+  </data>
+  <data name="LoadRatesAndBalancesOnStartup" xml:space="preserve">
+    <value>Aktualizovať kurzy a zostatky pri štarte</value>
+  </data>
+  <data name="Local" xml:space="preserve">
+    <value>miestne</value>
+  </data>
+  <data name="Manually" xml:space="preserve">
+    <value>Manuálne</value>
+  </data>
+  <data name="ManuallyAdded" xml:space="preserve">
+    <value>Manuálne pridané</value>
+  </data>
+  <data name="CoinMarketCap" xml:space="preserve">
+    <value>Trhová kapitalizácia</value>
+  </data>
+  <data name="CoinSupplyMax" xml:space="preserve">
+    <value>Max.vygenerovaných mínc</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Meno</value>
+  </data>
+  <data name="NetworkError" xml:space="preserve">
+    <value>Pripojenie na internet sa nepodarilo. Overte, že váš mobil má prístup na internet.</value>
+  </data>
+  <data name="NewPin" xml:space="preserve">
+    <value>Nový PIN kód</value>
+  </data>
+  <data name="NewPinsDontMatch" xml:space="preserve">
+    <value>Nový PIN sa nezhoduje</value>
+  </data>
+  <data name="NewSource" xml:space="preserve">
+    <value>Nový zdroj</value>
+  </data>
+  <data name="NoAccounts" xml:space="preserve">
+    <value>Žiadny účet</value>
+  </data>
+  <data name="NoCurrencies" xml:space="preserve">
+    <value>Žiadne meny</value>
+  </data>
+  <data name="NoDataToDisplay" xml:space="preserve">
+    <value>Žiadne dáta na zobrazenie</value>
+  </data>
+  <data name="NoSources" xml:space="preserve">
+    <value>Žiadne zdroje</value>
+  </data>
+  <data name="NoSourcesDescriptionAdd" xml:space="preserve">
+    <value>Môžete jednoducho pridať zdroj stlačením tlačidla Pridať (+).</value>
+  </data>
+  <data name="NotConfigured" xml:space="preserve">
+    <value>Nie je nakonfigurovaný</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OldPin" xml:space="preserve">
+    <value>Starý PIN kód</value>
+  </data>
+  <data name="OldPinWrong" xml:space="preserve">
+    <value>Zadané staré PIN je nesprávne!</value>
+  </data>
+  <data name="OneAccount" xml:space="preserve">
+    <value>Jeden účet</value>
+  </data>
+  <data name="OneCurrency" xml:space="preserve">
+    <value>Jedna mena</value>
+  </data>
+  <data name="OneSource" xml:space="preserve">
+    <value>Jeden zdroj</value>
+  </data>
+  <data name="Online" xml:space="preserve">
+    <value>online</value>
+  </data>
+  <data name="OnlyThreeCurrenciesCanBeStared" xml:space="preserve">
+    <value>Iba tri meny môžu byť označené hviezdičkou.</value>
+  </data>
+  <data name="OtherwiseTruncate" xml:space="preserve">
+    <value>Inak sú skrátené čísla</value>
+  </data>
+  <data name="Pin" xml:space="preserve">
+    <value>PIN</value>
+  </data>
+  <data name="PinActive" xml:space="preserve">
+    <value>Aktívny PIN</value>
+  </data>
+  <data name="PinToShort" xml:space="preserve">
+    <value>Zadaný kód PIN je krátky!</value>
+  </data>
+  <data name="CoinProofOfStake" xml:space="preserve">
+    <value>PoS</value>
+  </data>
+  <data name="CoinProofOfWork" xml:space="preserve">
+    <value>PoW</value>
+  </data>
+  <data name="Rates" xml:space="preserve">
+    <value>Kurzy</value>
+  </data>
+  <data name="RatesCurrenciesInfo" xml:space="preserve">
+    <value>Prehľad sadzieb ukazuje meny všetkých pridaných účtov plus tie nasledujúce.</value>
+  </data>
+  <data name="ReferenceCurrencies" xml:space="preserve">
+    <value>Referenčné meny</value>
+  </data>
+  <data name="ReferenceCurrencyInfoP1" xml:space="preserve">
+    <value>Hodnota všetkých mincí, každá minca alebo účet sa zobrazí v nasledujúcich menách.</value>
+  </data>
+  <data name="ReferenceCurrencyInfoP2" xml:space="preserve">
+    <value>Hodnoty označené hviezdičkou sa zobrazia v zlatej hlavičke.</value>
+  </data>
+  <data name="RefreshOnStartup" xml:space="preserve">
+    <value>Obnoviť pri spustení</value>
+  </data>
+  <data name="RepeatNewPin" xml:space="preserve">
+    <value>Opakujte PIN</value>
+  </data>
+  <data name="RepositoryAlreadyAdded" xml:space="preserve">
+    <value>Zadaný zdroj už bol pridaný!</value>
+  </data>
+  <data name="RoundNumbers" xml:space="preserve">
+    <value>Zaokrúhliť čísla</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Uložiť</value>
+  </data>
+  <data name="ScanQrCode" xml:space="preserve">
+    <value>Skenovať QR kód</value>
+  </data>
+  <data name="SearchCurrencies" xml:space="preserve">
+    <value>Vyhľadávanie mien</value>
+  </data>
+  <data name="ApiSecret" xml:space="preserve">
+    <value>Tajomstvo</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Zabezpečenie</value>
+  </data>
+  <data name="SelectCurrency" xml:space="preserve">
+    <value>Vyberte menu</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Nastavenia</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Zdroj</value>
+  </data>
+  <data name="Sources" xml:space="preserve">
+    <value>Zdroje</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>Tabuľka</value>
+  </data>
+  <data name="Testing" xml:space="preserve">
+    <value>Testovanie</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="UnitSecond" xml:space="preserve">
+    <value>s</value>
+  </data>
+  <data name="Unnamed" xml:space="preserve">
+    <value>Nepomenované</value>
+  </data>
+  <data name="UseFingerprint" xml:space="preserve">
+    <value>Použiť odtlačok prsta</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Hodnota</value>
+  </data>
+  <data name="VerifyInput" xml:space="preserve">
+    <value>Skontrolujte vstupné údaje prosím!</value>
+  </data>
+  <data name="UnlockApplication" xml:space="preserve">
+    <value>Odomknutie aplikácií</value>
+  </data>
+  <data name="DevelopedBy" xml:space="preserve">
+    <value>Vyvinuté od Daniel Sparber</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>O aplikácii</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Verzia</value>
+  </data>
+  <data name="ShowQrCode" xml:space="preserve">
+    <value>Zobraziť QR kód</value>
+  </data>
+  <data name="EnableAccount" xml:space="preserve">
+    <value>Povoliť konto</value>
+  </data>
+  <data name="EnabledInOverview" xml:space="preserve">
+    <value>Zobrazený v prehľade</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Posledná aktualizácia</value>
+  </data>
+  <data name="Never" xml:space="preserve">
+    <value>Nikdy</value>
+  </data>
+  <data name="PreferredBitcoinRate" xml:space="preserve">
+    <value>Preferovaný výmenný kurz Bitcoinu</value>
+  </data>
+  <data name="AvailableRates" xml:space="preserve">
+    <value>Dostupné kurzy</value>
+  </data>
+  <data name="InfoNoDirectRate" xml:space="preserve">
+    <value>Žiadny priamy kurz sa nenašiel. Táto sadzba sa vypočíta pomocou USD.</value>
+  </data>
+  <data name="AreEqualTo" xml:space="preserve">
+    <value>{0} sa rovná</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detaily</value>
+  </data>
+  <data name="QrCode" xml:space="preserve">
+    <value>QR kód</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Obnovuje sa …</value>
+  </data>
+  <data name="AddRate" xml:space="preserve">
+    <value>Pridať kurz</value>
+  </data>
+  <data name="AddReferenceCurrency" xml:space="preserve">
+    <value>Pridať referenčnú menu</value>
+  </data>
+  <data name="AdditionalRates" xml:space="preserve">
+    <value>Ďalšie kurzy</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Žiadne</value>
+  </data>
+  <data name="DisabledAccounts" xml:space="preserve">
+    <value>Vypnuté kontá</value>
+  </data>
+  <data name="LastChange" xml:space="preserve">
+    <value>Posledná zmena</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>povolené</value>
+  </data>
+  <data name="AllCurrencies" xml:space="preserve">
+    <value>Všetky meny</value>
+  </data>
+  <data name="AvailableCurrencies" xml:space="preserve">
+    <value>Meny k dispozícii</value>
+  </data>
+  <data name="Cryptocurrencies" xml:space="preserve">
+    <value>Cryptomeny</value>
+  </data>
+  <data name="FiatCurrencies" xml:space="preserve">
+    <value>Fiat meny</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>Zostatok</value>
+  </data>
+  <data name="BalanceAvailable" xml:space="preserve">
+    <value>Zostatok k dispozícii</value>
+  </data>
+  <data name="BalanceAvailableAddress" xml:space="preserve">
+    <value>Zostatok cez adresu</value>
+  </data>
+  <data name="BalanceAvailableBittrex" xml:space="preserve">
+    <value>Zostatok cez Bittrex</value>
+  </data>
+  <data name="ErrorRefreshingNotPossibleWithoutInternet" xml:space="preserve">
+    <value>Obnovenie nie je možné bez pripojenia k internetu.</value>
+  </data>
+  <data name="NoInternetAccess" xml:space="preserve">
+    <value>Bez prístupu na internet</value>
+  </data>
+  <data name="Offline" xml:space="preserve">
+    <value>V režime offline</value>
+  </data>
+  <data name="LoadingCurrencies" xml:space="preserve">
+    <value>Načítanie mien</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Súkromie</value>
+  </data>
+  <data name="PrivacyLinkId" xml:space="preserve">
+    <value>8085117</value>
+  </data>
+  <data name="AssetsColumnToHide" xml:space="preserve">
+    <value>Skryť stĺpec majetku v tabuľke </value>
+  </data>
+  <data name="AssetsColumnToHideDescription" xml:space="preserve">
+    <value>Vybratie skrytého stľpca majetku v tabuľke pri nedostatku miesta</value>
+  </data>
+  <data name="InitialiseApp" xml:space="preserve">
+    <value>Spustenie aplikácie</value>
+  </data>
+  <data name="InternetIsNeededForInitialisation" xml:space="preserve">
+    <value>Pred prvým použitím aplikácie MyCC, musia byť dostupné meny a ceny aktualizované. Aktivujte prístup na Internet.</value>
+  </data>
+  <data name="LoadingCurrenciesFrom" xml:space="preserve">
+    <value>Načítanie mien z {0}</value>
+  </data>
+  <data name="LoadingRates" xml:space="preserve">
+    <value>Načítanie potrebných výmenných kurzov</value>
+  </data>
+  <data name="ReferenceValue" xml:space="preserve">
+    <value>Referenčné hodnoty</value>
+  </data>
+  <data name="SavingSource" xml:space="preserve">
+    <value>Ukladanie zdroja</value>
+  </data>
+  <data name="AddressOnly" xml:space="preserve">
+    <value>Len adresa</value>
+  </data>
+  <data name="AllInfos" xml:space="preserve">
+    <value>Všetky info</value>
+  </data>
+  <data name="UpdatingBalancesAndRates" xml:space="preserve">
+    <value>Aktualizovať zostatky a sadzby</value>
+  </data>
+  <data name="SecureXpub" xml:space="preserve">
+    <value>Zabezpečenie xpub</value>
+  </data>
+  <data name="OpenInBlockExplorer" xml:space="preserve">
+    <value>Otvoriť v prehliadači</value>
+  </data>
+</root>

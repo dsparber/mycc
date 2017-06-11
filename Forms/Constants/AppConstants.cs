@@ -24,6 +24,6 @@ namespace MyCC.Forms.Constants
 
         public const int LabelWidth = 100;
 
-        public static readonly CoreVersion AppVersion = new CoreVersion(1, 0, 3);
+        public static readonly CoreVersion AppVersion = new CoreVersion(1, 1);
     }
 }
