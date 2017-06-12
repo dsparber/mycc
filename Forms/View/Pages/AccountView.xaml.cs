@@ -184,9 +184,9 @@ namespace MyCC.Forms.View.Pages
 
                 stack.Children.Add(explorerButton);
             }
-            stack.Children.Add(referenceView);
             stack.Children.Add(new SectionHeaderView(false) { Title = I18N.Info });
             stack.Children.Add(infoStackContainer);
+            stack.Children.Add(referenceView);
 
 
             _pullToRefresh = new PullToRefreshLayout
