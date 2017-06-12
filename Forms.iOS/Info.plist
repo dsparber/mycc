@@ -41,6 +41,8 @@
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>de</string>
+		<string>es</string>
+		<string>sk</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
