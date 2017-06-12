@@ -15,25 +15,51 @@ namespace MyCC.Ui.Android.Views.Fragments
         {
             set
             {
-                Text = value.Text;
-                Direction = value.SortDirection;
-                Gravity = value.RightAligned ? GravityFlags.Right : GravityFlags.Left;
-                OnClick = value.OnClick;
+                try
+                {
+                    Text = value.Text;
+                    Direction = value.SortDirection;
+                    Gravity = value.RightAligned ? GravityFlags.Right : GravityFlags.Left;
+                    OnClick = value.OnClick;
+                }
+                catch {/* not attached */}
             }
         }
 
         private string Text
         {
-            set => _textView.Text = value;
+            set
+            {
+                try
+                {
+                    _textView.Text = value;
+                }
+                catch {/* not attached */}
+            }
         }
 
         public bool First
         {
-            set => _textView.SetPadding(value ? Resources.GetDimensionPixelSize(Resource.Dimension.abc_action_bar_content_inset_material) : 8.DpToPx(), 8.DpToPx(), 4.DpToPx(), 8.DpToPx());
+            set
+            {
+                try
+                {
+                    _textView.SetPadding(value ? Resources.GetDimensionPixelSize(Resource.Dimension.abc_action_bar_content_inset_material) : 8.DpToPx(), 8.DpToPx(), 4.DpToPx(), 8.DpToPx());
+                }
+                catch {/* not attached */}
+            }
         }
+
         public bool Last
         {
-            set => _imageView.SetPadding(0, 0, value ? Resources.GetDimensionPixelSize(Resource.Dimension.abc_action_bar_content_inset_material) : 8.DpToPx(), 0);
+            set
+            {
+                try
+                {
+                    _imageView.SetPadding(0, 0, value ? Resources.GetDimensionPixelSize(Resource.Dimension.abc_action_bar_content_inset_material) : 8.DpToPx(), 0);
+                }
+                catch {/* not attached */}
+            }
         }
 
         private SortDirection? Direction

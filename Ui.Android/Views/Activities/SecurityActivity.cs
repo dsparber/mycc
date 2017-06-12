@@ -9,7 +9,7 @@ using MyCC.Ui.Android.Views.Fragments;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
-    [Activity(Theme = "@style/MyCC")]
+    [Activity(Theme = "@style/MyCC", Label = "@string/Security")]
 
     public class SecurityActivity : MyccActivity
     {
@@ -29,9 +29,6 @@ namespace MyCC.Ui.Android.Views.Activities
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.activity_security_actions);
-
-            SupportActionBar.Elevation = 3;
-            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
             _buttonEnablePin = FindViewById(Resource.Id.button_enable_pin);
             _buttonDisablePin = FindViewById(Resource.Id.button_disable_pin);
