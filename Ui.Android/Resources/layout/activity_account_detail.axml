@@ -38,9 +38,9 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/button_open_in_blockexplorer"
-              android:layout_marginTop="24dp"
-              android:layout_marginLeft="24dp"
-              android:layout_marginRight="24dp"
+              android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
+              android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+              android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
               android:textColor="#fff" />
           <TextView
               android:text="@string/EqualTo"
@@ -48,8 +48,8 @@
               android:layout_height="wrap_content"
               android:id="@+id/text_equal_to"
               app:textAllCaps="true"
-              android:layout_marginLeft="24dp"
-              android:layout_marginTop="24dp"
+              android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+              android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
               android:layout_marginBottom="8dp" />
           <LinearLayout
               android:orientation="horizontal"
@@ -85,16 +85,16 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               app:textAllCaps="true"
-              android:layout_marginLeft="24dp"
-              android:layout_marginTop="24dp"
+              android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+              android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
               android:layout_marginBottom="8dp" />
           <GridLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:columnCount="2"
-              android:layout_marginBottom="24dp"
-              android:layout_marginRight="24dp"
-              android:layout_marginLeft="24dp">
+              android:layout_marginBottom="@dimen/abc_action_bar_content_inset_material"
+              android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
+              android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material">
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_marginRight="8dp">

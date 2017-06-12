@@ -32,15 +32,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             p2:textAllCaps="true"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+            android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
             android:layout_marginBottom="8dp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp">
+            android:paddingLeft="@dimen/abc_action_bar_content_inset_material"
+            android:paddingRight="@dimen/abc_action_bar_content_inset_material">
           <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -397,8 +397,8 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
+            android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+            android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:orientation="vertical"
@@ -410,7 +410,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/text_equal_to"
             p2:textAllCaps="true"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp" />
         <LinearLayout

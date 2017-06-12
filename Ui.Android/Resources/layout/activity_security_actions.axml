@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="24dp"
+        android:padding="@dimen/abc_action_bar_content_inset_material"
         android:id="@+id/linearLayout1">
       <Button
           android:text="@string/EnablePin"
@@ -40,7 +40,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:id="@+id/layout_use_shake_gesture"
-          android:layout_marginTop="24dp"
+          android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
           android:layout_marginLeft="8dp"
           android:layout_marginRight="8dp">
         <TextView
