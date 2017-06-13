@@ -28,8 +28,8 @@ namespace MyCC.Ui.Edit
             if (wasMainCurrency)
             {
                 ApplicationSettings.MainCurrencies = ApplicationSettings.MainCurrencies.Except(new[] { currencyId }).ToList();
-                UiUtils.Update.CreateAssetsData();
-                UiUtils.Update.CreateRatesData();
+                UiUtils.AssetsRefresh.ResetCache();
+                UiUtils.RatesRefresh.ResetCache();
             }
             else
             {
@@ -37,6 +37,7 @@ namespace MyCC.Ui.Edit
             }
 
             Messaging.UiUpdate.ViewsWithRate.Send();
+            Messaging.UiUpdate.Accounts.Send();
             return true;
 
         }
@@ -62,9 +63,10 @@ namespace MyCC.Ui.Edit
 
                 ApplicationSettings.MainCurrencies = (willBecomeMainCurrency ? ApplicationSettings.MainCurrencies.Concat(currencyIdAsArray) : ApplicationSettings.MainCurrencies.Except(currencyIdAsArray)).ToList();
                 ApplicationSettings.FurtherCurrencies = (willBecomeMainCurrency ? ApplicationSettings.FurtherCurrencies.Except(currencyIdAsArray) : ApplicationSettings.FurtherCurrencies.Concat(currencyIdAsArray)).ToList();
-                UiUtils.Update.CreateAssetsData();
-                UiUtils.Update.CreateRatesData();
+                UiUtils.AssetsRefresh.ResetCache();
+                UiUtils.RatesRefresh.ResetCache();
                 Messaging.UiUpdate.ViewsWithRate.Send();
+                Messaging.UiUpdate.Accounts.Send();
             }
             return isNowMainCurrency;
         }

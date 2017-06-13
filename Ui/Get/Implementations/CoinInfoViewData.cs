@@ -13,13 +13,13 @@ using MyCC.Ui.DataItems;
 using MyCC.Ui.Helpers;
 using MyCC.Ui.Messages;
 
-namespace MyCC.Ui.Get
+namespace MyCC.Ui.Get.Implementations
 {
-    public class CoinInfoViewData
+    internal class CoinInfoViewData : ICoinInfoViewData
     {
-        public static HeaderDataItem HeaderData(Currency currency)
+        public static HeaderItem HeaderData(Currency currency)
         {
-            return new HeaderDataItem(currency.Name, new Money(MyccUtil.Rates.GetRate(new RateDescriptor(currency.Id, CurrencyConstants.Btc.Id))?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits());
+            return new HeaderItem(currency.Name, new Money(MyccUtil.Rates.GetRate(new RateDescriptor(currency.Id, CurrencyConstants.Btc.Id))?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits());
         }
 
         public CoinInfoItem CoinInfo(Currency currency)
@@ -59,15 +59,15 @@ namespace MyCC.Ui.Get
         {
             new SortButtonItem
             {
-                Text = StringHelper.TextResolver.Amount,
-                SortDirection = SortDirectionHelper.GetSortDirection(SortOrder, SortDirection, SortOrder.ByValue),
+                Text = StringUtils.TextResolver.Amount,
+                SortAscending = SortDirectionHelper.GetSortAscending(SortOrder, SortDirection, SortOrder.ByValue),
                RightAligned = true,
                 OnClick = () => OnSort(SortOrder.ByValue)
             },
             new SortButtonItem
             {
-                Text = StringHelper.TextResolver.Currency,
-                SortDirection = SortDirectionHelper.GetSortDirection(SortOrder, SortDirection, SortOrder.Alphabetical),
+                Text = StringUtils.TextResolver.Currency,
+                SortAscending = SortDirectionHelper.GetSortAscending(SortOrder, SortDirection, SortOrder.Alphabetical),
                 RightAligned = false,
                 OnClick = () => OnSort(SortOrder.Alphabetical)
             }

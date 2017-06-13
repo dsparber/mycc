@@ -28,8 +28,8 @@ namespace MyCC.Ui.Edit
             await AccountStorage.Instance.Add(repository);
             await repository.FetchOnline();
             UiUtils.Update.FetchNeededButNotLoadedRates();
-            UiUtils.Update.CreateAssetsData();
-            UiUtils.Update.CreateRatesData();
+            UiUtils.AssetsRefresh.ResetCache();
+            UiUtils.RatesRefresh.ResetCache();
             Messaging.UiUpdate.Accounts.Send();
             Messaging.UiUpdate.RatesOverview.Send();
 
@@ -40,8 +40,8 @@ namespace MyCC.Ui.Edit
         {
             await AccountStorage.Instance.LocalRepository.Add(account);
             UiUtils.Update.FetchNeededButNotLoadedRates();
-            UiUtils.Update.CreateAssetsData();
-            UiUtils.Update.CreateRatesData();
+            UiUtils.AssetsRefresh.ResetCache();
+            UiUtils.RatesRefresh.ResetCache();
             Messaging.UiUpdate.Accounts.Send();
             Messaging.UiUpdate.RatesOverview.Send();
         }

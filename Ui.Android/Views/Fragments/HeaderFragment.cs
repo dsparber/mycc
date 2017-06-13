@@ -11,7 +11,7 @@ namespace MyCC.Ui.Android.Views.Fragments
         private TextView _mainTextView;
         private TextView _infoTextView;
 
-        public HeaderDataItem Data
+        public HeaderItem Data
         {
             set
             {

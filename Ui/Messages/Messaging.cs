@@ -8,13 +8,6 @@
             public const string Network = "StatusNetwork";
         }
 
-        // Settings changed
-        public static class SettingChange
-        {
-            public const string MainCurrencies = "SettingChangeMainCurrencies";
-        }
-
-
         // Update UIs
         public static class UiUpdate
         {

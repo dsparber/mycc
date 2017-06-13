@@ -25,10 +25,6 @@ namespace MyCC.Ui.Update
 
         void FetchCryptoToFiatRates();
 
-        void CreateRatesData(); // TODO make internal
-
-        void CreateAssetsData(); // TODO make internal
-
         void ConnectivityChanged(bool connected);
     }
 }

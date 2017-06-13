@@ -10,9 +10,7 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Ui.Android.Views.Adapter;
-using Newtonsoft.Json;
 using MyCC.Core.Settings;
-using MyCC.Ui.Get;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -88,7 +86,7 @@ namespace MyCC.Ui.Android.Views.Activities
         private void SelectionCallback(object sender, AdapterView.ItemClickEventArgs e)
         {
             var resultData = new Intent();
-            resultData.PutExtra(ExtraCurrency, JsonConvert.SerializeObject(_adapter.GetItem(e.Position)));
+            resultData.PutExtra(ExtraCurrency, _adapter.GetItem(e.Position).Id);
             SetResult(Result.Ok, resultData);
             Finish();
         }
@@ -121,7 +119,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void FillListView()
         {
-            var exceptions = _withoutAlreadyAddedCurrencies ? RatesViewData.EnabledCurrencies : new List<Currency>();
+            var exceptions = _withoutAlreadyAddedCurrencies ? UiUtils.Get.Rates.EnabledCurrencyIds.Select(CurrencyHelper.Find) : new List<Currency>();
             exceptions = exceptions.Concat(_withoutReferenceCurrencies ? ApplicationSettings.AllReferenceCurrencies.Select(id => id.ToCurrency()) : new List<Currency>()).ToList();
             var allCurrencies = (_onlyAddressCurrencies ? AddressAccountRepository.AllSupportedCurrencies : CurrencyStorage.Instance.Currencies).Where(c => c != null).ToList();
             _currencies = allCurrencies.Except(exceptions).OrderBy(c => $"{c.Code} {c.Name}").ToList();

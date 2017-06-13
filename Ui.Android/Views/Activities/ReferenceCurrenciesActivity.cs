@@ -9,7 +9,6 @@ using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
-using Newtonsoft.Json;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -43,8 +42,8 @@ namespace MyCC.Ui.Android.Views.Activities
 
             if (requestCode == RequestCodeCurrency && resultCode == Result.Ok)
             {
-                var currency = JsonConvert.DeserializeObject<Currency>(data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency));
-                UiUtils.Edit.AddReferenceCurrency(currency.Id);
+                var currencyId = data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency);
+                UiUtils.Edit.AddReferenceCurrency(currencyId);
             }
         }
 

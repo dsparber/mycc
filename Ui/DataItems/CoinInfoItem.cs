@@ -18,8 +18,8 @@ namespace MyCC.Ui.DataItems
         {
             _data = coinInfoData ?? new CoinInfoData(currency);
             Explorer = explorer;
-            _pow = StringHelper.TextResolver.CoinProofOfWork;
-            _pos = StringHelper.TextResolver.CoinProofOfStake;
+            _pow = StringUtils.TextResolver.CoinProofOfWork;
+            _pos = StringUtils.TextResolver.CoinProofOfStake;
             _currency = currency;
         }
 
@@ -34,12 +34,12 @@ namespace MyCC.Ui.DataItems
             _data.IsProofOfStake.GetValueOrDefault() ? _pos :
             string.Empty;
 
-        public string Hashrate => $"{_data.Hashrate ?? 0:#,0.########} {StringHelper.TextResolver.GHps}";
-        public string Difficulty => $"{_data.Difficulty ?? 0:#,0.########}";
+        public string Hashrate => $"{(_data.Hashrate ?? 0).ToMax8DigitString()} {StringUtils.TextResolver.GHps}";
+        public string Difficulty => (_data.Difficulty ?? 0).ToMax8DigitString();
 
         public string Blockreward => new Money(_data.Blockreward ?? 0, _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
         public string Blockheight => $"{_data.BlockHeight ?? 0:#,0}";
-        public string Blocktime => $"{_data.Blocktime ?? 0:#,0.##} {StringHelper.TextResolver.UnitSecond}";
+        public string Blocktime => $"{_data.Blocktime ?? 0:#,0.##} {StringUtils.TextResolver.UnitSecond}";
 
         public string Supply => new Money(_data.CoinSupply ?? 0, _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
         public string MaxSupply => new Money(_data.MaxCoinSupply ?? 0, _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);

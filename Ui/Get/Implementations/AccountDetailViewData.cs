@@ -16,19 +16,19 @@ using MyCC.Ui.Helpers;
 using MyCC.Ui.Messages;
 using Xamarin.Forms;
 
-namespace MyCC.Ui.Get
+namespace MyCC.Ui.Get.Implementations
 {
-    public class AccountDetailViewData
+    internal class AccountDetailViewData : IAccountDetailViewData
     {
         private static ITextResolver TextResolver => DependencyService.Get<ITextResolver>();
 
-        public static HeaderDataItem HeaderData(Account account)
+        public static HeaderItem HeaderData(Account account)
         {
             var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { account.Money.Currency.Id })
                 .Select(x => new Money(account.Money.Amount * MyccUtil.Rates.GetRate(new RateDescriptor(account.Money.Currency.Id, x))?.Rate ?? 0, x.Find())).
                 OrderBy(m => m.Currency.Code);
 
-            return new HeaderDataItem(account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
+            return new HeaderItem(account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
                 additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney))) : account.Money.Currency.Name);
         }
 
@@ -77,14 +77,14 @@ namespace MyCC.Ui.Get
             new SortButtonItem
             {
                 Text = TextResolver.Amount,
-                SortDirection = SortDirectionHelper.GetSortDirection(SortOrder, SortDirection, SortOrder.ByValue),
+                SortAscending = SortDirectionHelper.GetSortAscending(SortOrder, SortDirection, SortOrder.ByValue),
                 RightAligned = true,
                 OnClick = () => OnSort(SortOrder.ByValue)
             },
             new SortButtonItem
             {
                 Text = TextResolver.Currency,
-                SortDirection = SortDirectionHelper.GetSortDirection(SortOrder, SortDirection, SortOrder.Alphabetical),
+                SortAscending = SortDirectionHelper.GetSortAscending(SortOrder, SortDirection, SortOrder.Alphabetical),
                 RightAligned = false,
                 OnClick = () => OnSort(SortOrder.Alphabetical)
             }

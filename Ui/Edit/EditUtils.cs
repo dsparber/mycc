@@ -4,6 +4,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
+using MyCC.Ui.Messages;
 
 namespace MyCC.Ui.Edit
 {
@@ -18,14 +19,26 @@ namespace MyCC.Ui.Edit
         public async Task Update(FunctionalAccount account)
         {
             await AccountStorage.Update(account);
-            UiUtils.Update.CreateAssetsData();
+            UiUtils.AssetsRefresh.ResetCache();
+            Messaging.UiUpdate.Accounts.Send();
         }
 
         public async Task Delete(FunctionalAccount account)
         {
             await AccountStorage.Instance.LocalRepository.Remove(account);
-            UiUtils.Update.CreateAssetsData();
+            UiUtils.AssetsRefresh.ResetCache();
+            Messaging.UiUpdate.Accounts.Send();
         }
+
+        public async Task Delete(OnlineAccountRepository repository)
+        {
+            await AccountStorage.Instance.Remove(repository);
+            UiUtils.AssetsRefresh.ResetCache();
+            Messaging.UiUpdate.Accounts.Send();
+        }
+
+        public Task Update(OnlineAccountRepository repository, string newAddress, string newCurrencyId, string newName, bool newEnabledState, Action testingFailed = null)
+        => EditRepository.Update(repository, newAddress, newCurrencyId, newName, newEnabledState, testingFailed);
 
         public void AddWatchedCurrency(string currencyId)
             => EditWatchedCurrencies.Add(currencyId);

@@ -10,9 +10,8 @@ using Android.Content;
 using Android.Support.Design.Widget;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
-using MyCC.Ui.Get;
+using MyCC.Ui.Get.Implementations;
 using MyCC.Ui.Messages;
-using Newtonsoft.Json;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -82,7 +81,7 @@ namespace MyCC.Ui.Android.Views.Activities
             if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Info)))
             {
                 var intent = new Intent(this, typeof(CoinInfoActivity));
-                intent.PutExtra(CoinInfoActivity.ExtraCurrency, JsonConvert.SerializeObject(_currency));
+                intent.PutExtra(CoinInfoActivity.ExtraCurrency, _currency.Id);
                 StartActivity(intent);
             }
             else
@@ -111,9 +110,9 @@ namespace MyCC.Ui.Android.Views.Activities
             var referenceItems = AccountsGroupViewData.ReferenceItems(_currency);
             var viewReference = FindViewById<LinearLayout>(Resource.Id.view_reference);
 
-            _sortReferenceAmount.Data = ViewData.AccountGroup.SortButtonsReference[0];
+            _sortReferenceAmount.Data = GetUtils.AccountGroup.SortButtonsReference[0];
             _sortAccountsAmount.First = true;
-            _sortReferenceCurrency.Data = ViewData.AccountGroup.SortButtonsReference[1];
+            _sortReferenceCurrency.Data = GetUtils.AccountGroup.SortButtonsReference[1];
             _sortReferenceCurrency.Last = true;
 
             viewReference.RemoveAllViews();
@@ -130,9 +129,9 @@ namespace MyCC.Ui.Android.Views.Activities
             var enabledItems = AccountsGroupViewData.EnabledAccountsItems(_currency).ToList();
             var viewEnabled = FindViewById<LinearLayout>(Resource.Id.view_enabled_accounts);
 
-            _sortAccountsName.Data = ViewData.AccountGroup.SortButtonsAccounts[0];
+            _sortAccountsName.Data = GetUtils.AccountGroup.SortButtonsAccounts[0];
             _sortAccountsName.First = true;
-            _sortAccountsAmount.Data = ViewData.AccountGroup.SortButtonsAccounts[1];
+            _sortAccountsAmount.Data = GetUtils.AccountGroup.SortButtonsAccounts[1];
 
             viewEnabled.RemoveAllViews();
 
@@ -155,9 +154,9 @@ namespace MyCC.Ui.Android.Views.Activities
             var disabledItems = AccountsGroupViewData.DisabledAccountsItems(_currency).ToList();
             var viewDisabled = FindViewById<LinearLayout>(Resource.Id.view_disabled_accounts);
 
-            _sortDisabledName.Data = ViewData.AccountGroup.SortButtonsAccounts[0];
+            _sortDisabledName.Data = GetUtils.AccountGroup.SortButtonsAccounts[0];
             _sortDisabledName.First = true;
-            _sortDisabledAmount.Data = ViewData.AccountGroup.SortButtonsAccounts[1];
+            _sortDisabledAmount.Data = GetUtils.AccountGroup.SortButtonsAccounts[1];
 
             viewDisabled.RemoveAllViews();
 

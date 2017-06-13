@@ -1,12 +1,13 @@
 using MyCC.Core.Currencies;
+using MyCC.Ui.Helpers;
 
 namespace MyCC.Ui.DataItems
 {
     public class ReferenceValueItem
     {
-        public string FormattedAmount => $"{_amount * Rate:#,0.00000000}";
+        public string FormattedAmount => (_amount * Rate).To8DigitString();
 
-        public string FormattedRate => $"{Rate:#,0.00000000}";
+        public string FormattedRate => Rate.To8DigitString();
 
         public readonly decimal Rate;
         public readonly string CurrencyCode;

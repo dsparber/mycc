@@ -15,6 +15,10 @@ namespace MyCC.Ui.Edit
         Task Update(FunctionalAccount account);
         Task Delete(FunctionalAccount account);
 
+        Task Delete(OnlineAccountRepository repository);
+        Task Update(OnlineAccountRepository repository, string newAddress, string newCurrencyId, string newName, bool newEnabledState, Action testingFailed = null);
+
+
         void AddWatchedCurrency(string currencyId);
         void RemoveWatchedCurrency(string currencyId);
 

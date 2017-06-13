@@ -6,18 +6,18 @@ using Xamarin.Forms;
 
 namespace MyCC.Ui.Helpers
 {
-    public static class StringHelper
+    public static class StringUtils
     {
         public static string AsString(this DateTime dateTime, string textNever)
         {
             var format = CultureInfo.CurrentCulture.DateTimeFormat;
 
             if (dateTime.Date == DateTime.MinValue.Date) return textNever;
-            else if (dateTime.Date != DateTime.Today) return dateTime.ToString($"{format.ShortDatePattern} {format.ShortTimePattern}");
-            else return dateTime.ToString(format.ShortTimePattern);
+            if (dateTime.Date != DateTime.Today) return dateTime.ToString($"{format.ShortDatePattern} {format.ShortTimePattern}");
+            return dateTime.ToString(format.ShortTimePattern);
         }
 
-        public static string MiddleTruncate(this string text, int charactersToShowCount = 5)
+        internal static string MiddleTruncate(this string text, int charactersToShowCount = 5)
         {
             if (string.IsNullOrWhiteSpace(text)) return string.Empty;
 
@@ -64,8 +64,10 @@ namespace MyCC.Ui.Helpers
             return string.Join(string.Empty, Regex.Replace(value, @"\t|\n|\r", "").Where(c => c != '\u200B')).Trim();
         }
 
+        internal static string To8DigitString(this decimal value) => $"{value:#,0.00000000}";
+        internal static string ToMax8DigitString(this decimal value) => $"{value:#,0.########}";
 
-        public static ITextResolver TextResolver => DependencyService.Get<ITextResolver>();
+        internal static ITextResolver TextResolver => DependencyService.Get<ITextResolver>();
     }
 }
 

@@ -10,7 +10,7 @@ using MyCC.Core.Preperation;
 
 namespace MyCC.Ui.Prepare
 {
-    public class PrepareUtil : IPrepareUtil
+    public class PrepareUtils : IPrepareUtils
     {
         public bool PreparingNeeded => !ApplicationSettings.AppInitialised ||
                                         Core.Preperation.Prepare.PreparingNeeded ||
@@ -37,8 +37,8 @@ namespace MyCC.Ui.Prepare
                 await CurrencyStorage.Instance.LoadOnline(SetProgress);
                 await MyccUtil.Rates.FetchNeededButNotLoaded(progress => onProgress((0.8 + progress * 0.2, DependencyService.Get<ITextResolver>().LoadingRates)));
 
-                UiUtils.Update.CreateAssetsData();
-                UiUtils.Update.CreateRatesData();
+                UiUtils.AssetsRefresh.ResetCache();
+                UiUtils.RatesRefresh.ResetCache();
                 ApplicationSettings.AppInitialised = true;
             }
             catch (Exception e)

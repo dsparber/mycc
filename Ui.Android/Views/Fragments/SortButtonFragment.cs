@@ -3,7 +3,6 @@ using Android.OS;
 using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
-using MyCC.Core.Types;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.DataItems;
 
@@ -18,7 +17,7 @@ namespace MyCC.Ui.Android.Views.Fragments
                 try
                 {
                     Text = value.Text;
-                    Direction = value.SortDirection;
+                    Ascending = value.SortAscending;
                     Gravity = value.RightAligned ? GravityFlags.Right : GravityFlags.Left;
                     OnClick = value.OnClick;
                 }
@@ -62,15 +61,15 @@ namespace MyCC.Ui.Android.Views.Fragments
             }
         }
 
-        private SortDirection? Direction
+        private bool? Ascending
         {
             set
             {
                 switch (value)
                 {
                     case null: _imageView.SetImageResource(Resource.Drawable.ic_sort); break;
-                    case SortDirection.Ascending: _imageView.SetImageResource(Resource.Drawable.ic_sort_asc); break;
-                    case SortDirection.Descending: _imageView.SetImageResource(Resource.Drawable.ic_sort_desc); break;
+                    case true: _imageView.SetImageResource(Resource.Drawable.ic_sort_asc); break;
+                    case false: _imageView.SetImageResource(Resource.Drawable.ic_sort_desc); break;
                 }
             }
         }

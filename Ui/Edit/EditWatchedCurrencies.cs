@@ -3,6 +3,7 @@ using System.Linq;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Settings;
 using MyCC.Ui.Get;
+using MyCC.Ui.Get.Implementations;
 using MyCC.Ui.Messages;
 
 namespace MyCC.Ui.Edit
@@ -30,12 +31,13 @@ namespace MyCC.Ui.Edit
         public static void Add(string currencyId)
         {
             ApplicationSettings.DisabledCurrencyIds = ApplicationSettings.DisabledCurrencyIds.Except(new[] { currencyId });
-            if (!RatesViewData.EnabledCurrencies.Any(currency => currencyId.Equals(currency.Id)))
+            if (!UiUtils.Get.Rates.EnabledCurrencyIds.Contains(currencyId))
             {
                 ApplicationSettings.WatchedCurrencies = new List<string>(ApplicationSettings.WatchedCurrencies) { currencyId };
             }
             UiUtils.Update.FetchNeededButNotLoadedRates();
-            UiUtils.Update.CreateRatesData();
+            UiUtils.RatesRefresh.ResetCache();
+            Messaging.UiUpdate.ViewsWithRate.Send();
         }
     }
 }

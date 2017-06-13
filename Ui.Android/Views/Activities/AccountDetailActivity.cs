@@ -13,9 +13,8 @@ using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Ui.Android.Helpers;
-using MyCC.Ui.Get;
+using MyCC.Ui.Get.Implementations;
 using MyCC.Ui.Messages;
-using Newtonsoft.Json;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -74,7 +73,7 @@ namespace MyCC.Ui.Android.Views.Activities
             else if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Info)))
             {
                 var intent = new Intent(this, typeof(CoinInfoActivity));
-                intent.PutExtra(CoinInfoActivity.ExtraCurrency, JsonConvert.SerializeObject(_account.Money.Currency));
+                intent.PutExtra(CoinInfoActivity.ExtraCurrency, _account.Money.Currency.Id);
                 StartActivity(intent);
             }
             else if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Edit)))
@@ -132,22 +131,22 @@ namespace MyCC.Ui.Android.Views.Activities
 
             Func<bool, ViewStates> show = b => b ? ViewStates.Visible : ViewStates.Gone;
 
-            FindViewById<TextView>(Resource.Id.text_name).Text = ViewData.AccountDetail.AccountName(_account);
-            FindViewById<TextView>(Resource.Id.text_type).Text = ViewData.AccountDetail.AccountType(_account);
+            FindViewById<TextView>(Resource.Id.text_name).Text = GetUtils.AccountDetail.AccountName(_account);
+            FindViewById<TextView>(Resource.Id.text_type).Text = GetUtils.AccountDetail.AccountType(_account);
 
-            FindViewById<TextView>(Resource.Id.text_source).Text = ViewData.AccountDetail.AccountSource(_account);
+            FindViewById<TextView>(Resource.Id.text_source).Text = GetUtils.AccountDetail.AccountSource(_account);
             var addressText = FindViewById<TextView>(Resource.Id.text_address);
-            addressText.Text = ViewData.AccountDetail.AccountAddressString(_account);
+            addressText.Text = GetUtils.AccountDetail.AccountAddressString(_account);
 
             var explorerButton = FindViewById<Button>(Resource.Id.button_open_in_blockexplorer);
-            explorerButton.Visibility = ViewData.AccountDetail.AddressClickable(_account) ? ViewStates.Visible : ViewStates.Gone;
+            explorerButton.Visibility = GetUtils.AccountDetail.AddressClickable(_account) ? ViewStates.Visible : ViewStates.Gone;
 
             explorerButton.Click += (sender, args) =>
             {
                 if (ConnectivityStatus.IsConnected)
                 {
                     var intent = new Intent(this, typeof(WebviewActivity));
-                    intent.PutExtra(WebviewActivity.ExtraUrl, ViewData.AccountDetail.AddressClickUrl(_account));
+                    intent.PutExtra(WebviewActivity.ExtraUrl, GetUtils.AccountDetail.AddressClickUrl(_account));
                     StartActivity(intent);
                 }
                 else
@@ -157,10 +156,10 @@ namespace MyCC.Ui.Android.Views.Activities
             };
 
 
-            FindViewById(Resource.Id.label_source).Visibility = show(ViewData.AccountDetail.ShowAccountSource(_account));
-            FindViewById(Resource.Id.text_source).Visibility = show(ViewData.AccountDetail.ShowAccountSource(_account));
-            FindViewById(Resource.Id.label_address).Visibility = show(ViewData.AccountDetail.ShowAccountAddress(_account));
-            addressText.Visibility = show(ViewData.AccountDetail.ShowAccountAddress(_account));
+            FindViewById(Resource.Id.label_source).Visibility = show(GetUtils.AccountDetail.ShowAccountSource(_account));
+            FindViewById(Resource.Id.text_source).Visibility = show(GetUtils.AccountDetail.ShowAccountSource(_account));
+            FindViewById(Resource.Id.label_address).Visibility = show(GetUtils.AccountDetail.ShowAccountAddress(_account));
+            addressText.Visibility = show(GetUtils.AccountDetail.ShowAccountAddress(_account));
 
             FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(_account.Money.Amount == 1 ? Resource.String.IsEqualTo : Resource.String.AreEqualTo), _account.Money);
 
@@ -168,9 +167,9 @@ namespace MyCC.Ui.Android.Views.Activities
             var items = AccountDetailViewData.Items(_account);
             var view = FindViewById<LinearLayout>(Resource.Id.view_reference);
 
-            _sortAmount.Data = ViewData.AccountDetail.SortButtons[0];
+            _sortAmount.Data = GetUtils.AccountDetail.SortButtons[0];
             _sortAmount.First = true;
-            _sortCurrency.Data = ViewData.AccountDetail.SortButtons[1];
+            _sortCurrency.Data = GetUtils.AccountDetail.SortButtons[1];
             _sortCurrency.Last = true;
 
             view.RemoveAllViews();

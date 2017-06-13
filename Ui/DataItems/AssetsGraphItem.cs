@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace MyCC.Ui.DataItems
 {
-    public class AssetsGraphItem
+    public static class AssetsGraphItem
     {
         public class Data
         {

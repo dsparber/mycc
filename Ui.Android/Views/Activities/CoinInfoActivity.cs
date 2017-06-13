@@ -7,13 +7,13 @@ using Android.Views;
 using Android.Widget;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
-using Newtonsoft.Json;
 using MyCC.Core.Account.Models.Base;
 using Android.Support.V4.Widget;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Ui.DataItems;
-using MyCC.Ui.Get;
+using MyCC.Ui.Get.Implementations;
 using MyCC.Ui.Messages;
 
 namespace MyCC.Ui.Android.Views.Activities
@@ -41,12 +41,8 @@ namespace MyCC.Ui.Android.Views.Activities
             SupportActionBar.Elevation = 3;
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
-            _showAccountsButton = Intent?.GetBooleanExtra(ExtraShowAccountsButton, false) ?? false;
-            var currencyString = Intent?.GetStringExtra(ExtraCurrency);
-            if (!string.IsNullOrWhiteSpace(currencyString))
-            {
-                _currency = JsonConvert.DeserializeObject<Currency>(currencyString);
-            }
+            _showAccountsButton = Intent.GetBooleanExtra(ExtraShowAccountsButton, false);
+            _currency = Intent.GetStringExtra(ExtraCurrency).Find();
 
             SupportActionBar.Title = _currency.Code;
             _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
@@ -133,8 +129,8 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void LoadData()
         {
-            var info = ViewData.CoinInfo.CoinInfo(_currency);
-            if (info == null && ViewData.CoinInfo.CoinInfoFetchable(_currency) && ConnectivityStatus.IsConnected)
+            var info = GetUtils.CoinInfo.CoinInfo(_currency);
+            if (info == null && GetUtils.CoinInfo.CoinInfoFetchable(_currency) && ConnectivityStatus.IsConnected)
             {
                 UiUtils.Update.FetchCoinInfoFor(_currency.Id);
             }
@@ -148,7 +144,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void SetCoinInfo(CoinInfoItem data)
         {
-            data = data ?? ViewData.CoinInfo.CoinInfo(_currency);
+            data = data ?? GetUtils.CoinInfo.CoinInfo(_currency);
 
             _header.Data = CoinInfoViewData.HeaderData(_currency);
             _footerFragment.LastUpdate = CoinInfoViewData.LastUpdate(_currency);
@@ -208,12 +204,12 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void SetReferenceTable()
         {
-            var items = ViewData.CoinInfo.Items(_currency);
+            var items = GetUtils.CoinInfo.Items(_currency);
             var view = FindViewById<LinearLayout>(Resource.Id.view_reference);
 
-            _sortAmount.Data = ViewData.CoinInfo.SortButtons[0];
+            _sortAmount.Data = GetUtils.CoinInfo.SortButtons[0];
             _sortAmount.First = true;
-            _sortCurrency.Data = ViewData.CoinInfo.SortButtons[1];
+            _sortCurrency.Data = GetUtils.CoinInfo.SortButtons[1];
             _sortCurrency.Last = true;
 
             view.RemoveAllViews();
