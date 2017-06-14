@@ -6,8 +6,6 @@ using ModernHttpClient;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
-using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 
 namespace MyCC.Core.CoinInfo.Repositories
@@ -16,7 +14,7 @@ namespace MyCC.Core.CoinInfo.Repositories
     {
         private static readonly Uri Url = new Uri("https://etcchain.com/api/v1/getIndex");
 
-        public string WebUrl(Currency currency) => "https://etcchain.com/explorer";
+        public string WebUrl(string currencyId) => "https://etcchain.com/explorer";
 
         private const string KeyEtc = "etc";
         private const string KeyDifficulty = "difficulty";
@@ -24,11 +22,11 @@ namespace MyCC.Core.CoinInfo.Repositories
         private const string KeySupply = "available_supply";
 
 
-        public List<Currency> SupportedCoins => new List<Currency> { "ETC1".Find() };
+        public List<string> SupportedCoins => new List<string> { "ETC1" };
 
         public string Name => ConstantNames.EtcChain;
 
-        public async Task<CoinInfoData> GetInfo(Currency currency)
+        public async Task<CoinInfoData> GetInfo(string currencyId)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 
@@ -37,7 +35,7 @@ namespace MyCC.Core.CoinInfo.Repositories
                 var json = JObject.Parse(await (await client.GetAsync(Url)).Content.ReadAsStringAsync());
 
 
-                return new CoinInfoData(currency)
+                return new CoinInfoData(currencyId)
                 {
                     LastUpdate = DateTime.Now,
                     Difficulty = decimal.TryParse((string)json[KeyEtc][KeyDifficulty], NumberStyles.Float, CultureInfo.InvariantCulture, out var d) ? d as decimal? : null,
@@ -48,7 +46,7 @@ namespace MyCC.Core.CoinInfo.Repositories
             catch (Exception e)
             {
                 e.LogError();
-                return new CoinInfoData(currency);
+                return new CoinInfoData(currencyId);
             }
         }
     }

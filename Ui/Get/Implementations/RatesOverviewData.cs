@@ -122,7 +122,7 @@ namespace MyCC.Ui.Get.Implementations
 
         private void SortAndNotify()
         {
-            foreach (var key in _items.Keys)
+            foreach (var key in _items.ToList().Select(pair => pair.Key))
             {
                 _items[key] = _items[key] != null ? ApplySort(_items[key]) : null;
             }

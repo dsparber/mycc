@@ -27,6 +27,7 @@ namespace MyCC.Core.Currencies
         public static bool IsFiat(this string currencyId) => currencyId.ToCurrency().IsFiat;
 
         public static IEnumerable<Currency> Currencies(this int flags) => CurrencyStorage.Instance.Currencies.Where(c => c.BalanceSourceFlags.IsSet(flags));
+        public static IEnumerable<string> CurrencyIds(this int flags) => flags.Currencies().Select(currency => currency.Id);
 
         public static Tuple<bool, Currency> Merge(this Currency c1, Currency c2)
         {

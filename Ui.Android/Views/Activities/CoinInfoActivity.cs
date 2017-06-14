@@ -11,9 +11,7 @@ using MyCC.Core.Account.Models.Base;
 using Android.Support.V4.Widget;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
 using MyCC.Ui.DataItems;
-using MyCC.Ui.Get.Implementations;
 using MyCC.Ui.Messages;
 
 namespace MyCC.Ui.Android.Views.Activities
@@ -24,7 +22,7 @@ namespace MyCC.Ui.Android.Views.Activities
         public const string ExtraCurrency = "currency";
         public const string ExtraShowAccountsButton = "showAccountsButton";
 
-        private Currency _currency;
+        private string _currencyId;
 
         private SortButtonFragment _sortAmount, _sortCurrency;
         private SwipeRefreshLayout _swipeToRefresh;
@@ -42,13 +40,13 @@ namespace MyCC.Ui.Android.Views.Activities
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
             _showAccountsButton = Intent.GetBooleanExtra(ExtraShowAccountsButton, false);
-            _currency = Intent.GetStringExtra(ExtraCurrency).Find();
+            _currencyId = Intent.GetStringExtra(ExtraCurrency);
 
-            SupportActionBar.Title = _currency.Code;
+            SupportActionBar.Title = _currencyId.Code();
             _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
             _footerFragment = (FooterFragment)SupportFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
 
-            FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(Resource.String.IsEqualTo), new Money(1, _currency));
+            FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(Resource.String.IsEqualTo), new Money(1, _currencyId.Find()));
 
             _sortAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
             _sortCurrency = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
@@ -58,10 +56,10 @@ namespace MyCC.Ui.Android.Views.Activities
 
             _swipeToRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
 
-            _swipeToRefresh.Refresh += (sender, e) => UiUtils.Update.FetchCoinInfoAndRatesFor(_currency.Id);
+            _swipeToRefresh.Refresh += (sender, e) => UiUtils.Update.FetchCoinInfoAndRatesFor(_currencyId);
 
             var explorerButtosView = FindViewById<LinearLayout>(Resource.Id.view_open_in_blockexplorer);
-            var explorerList = CoinInfoViewData.ExplorerList(_currency);
+            var explorerList = UiUtils.Get.CoinInfo.Explorer(_currencyId).ToList();
             foreach (var explorer in explorerList)
             {
                 var button = new Button(this)
@@ -75,7 +73,7 @@ namespace MyCC.Ui.Android.Views.Activities
                     if (ConnectivityStatus.IsConnected)
                     {
                         var intent = new Intent(this, typeof(WebviewActivity));
-                        intent.PutExtra(WebviewActivity.ExtraUrl, explorer.WebUrl(_currency));
+                        intent.PutExtra(WebviewActivity.ExtraUrl, explorer.WebLink);
                         StartActivity(intent);
                     }
                     else
@@ -92,7 +90,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            if (!_showAccountsButton || !AccountStorage.AccountsWithCurrency(_currency).Any()) return true;
+            if (!_showAccountsButton || !AccountStorage.AccountsWithCurrency(_currencyId).Any()) return true;
 
 
             menu.Add(0, 0, 0, Resources.GetString(Resource.String.Assets))
@@ -105,7 +103,7 @@ namespace MyCC.Ui.Android.Views.Activities
         {
             if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Assets)))
             {
-                var accounts = AccountStorage.AccountsWithCurrency(_currency);
+                var accounts = AccountStorage.AccountsWithCurrency(_currencyId);
 
                 if (accounts.Count == 1)
                 {
@@ -116,7 +114,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 else
                 {
                     var intent = new Intent(this, typeof(AccountGroupActivity));
-                    intent.PutExtra(AccountGroupActivity.ExtraCurrencyId, _currency.Id);
+                    intent.PutExtra(AccountGroupActivity.ExtraCurrencyId, _currencyId);
                     StartActivity(intent);
                 }
             }
@@ -129,10 +127,10 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void LoadData()
         {
-            var info = GetUtils.CoinInfo.CoinInfo(_currency);
-            if (info == null && GetUtils.CoinInfo.CoinInfoFetchable(_currency) && ConnectivityStatus.IsConnected)
+            var info = UiUtils.Get.CoinInfo.GetInfos(_currencyId);
+            if (info == null && UiUtils.Get.CoinInfo.InfosAvailable(_currencyId) && ConnectivityStatus.IsConnected)
             {
-                UiUtils.Update.FetchCoinInfoFor(_currency.Id);
+                UiUtils.Update.FetchCoinInfoFor(_currencyId);
             }
 
             SetCoinInfo(info);
@@ -144,15 +142,15 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void SetCoinInfo(CoinInfoItem data)
         {
-            data = data ?? GetUtils.CoinInfo.CoinInfo(_currency);
+            data = data ?? UiUtils.Get.CoinInfo.GetInfos(_currencyId);
 
-            _header.Data = CoinInfoViewData.HeaderData(_currency);
-            _footerFragment.LastUpdate = CoinInfoViewData.LastUpdate(_currency);
+            _header.Data = UiUtils.Get.CoinInfo.GetHeaderData(_currencyId);
+            _footerFragment.LastUpdate = UiUtils.Get.CoinInfo.LastUpdate(_currencyId);
 
             ViewStates Show(bool? b) => b != null && b.Value ? ViewStates.Visible : ViewStates.Gone;
 
-            FindViewById<TextView>(Resource.Id.text_currency_code).Text = _currency.Code;
-            FindViewById<TextView>(Resource.Id.text_currency_name).Text = _currency.Name;
+            FindViewById<TextView>(Resource.Id.text_currency_code).Text = _currencyId.Code();
+            FindViewById<TextView>(Resource.Id.text_currency_name).Text = _currencyId.FindName();
 
             FindViewById<TextView>(Resource.Id.text_blockexplorer).Text = data?.Explorer;
             FindViewById(Resource.Id.view_blockexplorer).Visibility = Show(data?.HasExplorer);
@@ -204,12 +202,12 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void SetReferenceTable()
         {
-            var items = GetUtils.CoinInfo.Items(_currency);
+            var items = UiUtils.Get.CoinInfo.ReferenceValues(_currencyId);
             var view = FindViewById<LinearLayout>(Resource.Id.view_reference);
 
-            _sortAmount.Data = GetUtils.CoinInfo.SortButtons[0];
+            _sortAmount.Data = UiUtils.Get.CoinInfo.SortButtons[0];
             _sortAmount.First = true;
-            _sortCurrency.Data = GetUtils.CoinInfo.SortButtons[1];
+            _sortCurrency.Data = UiUtils.Get.CoinInfo.SortButtons[1];
             _sortCurrency.Last = true;
 
             view.RemoveAllViews();

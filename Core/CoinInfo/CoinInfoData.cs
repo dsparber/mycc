@@ -1,5 +1,4 @@
 ﻿using System;
-using MyCC.Core.Currencies.Models;
 using SQLite;
 
 namespace MyCC.Core.CoinInfo
@@ -12,7 +11,7 @@ namespace MyCC.Core.CoinInfo
         /// </summary>
         /// <value>The currency code</value>
         [PrimaryKey, Column("Code")]
-        public string CurrencyCode { get; set; }
+        public string CurrencyId { get; set; }
 
         /// <summary>
         /// The algorithm used for accepting blocks.
@@ -95,18 +94,16 @@ namespace MyCC.Core.CoinInfo
         }
 
 
-        public CoinInfoData(Currency currency) : this(currency.Code) { }
-
-        private CoinInfoData(string currency)
+        public CoinInfoData(string currencyId)
         {
-            CurrencyCode = currency;
+            CurrencyId = currencyId;
         }
 
         public CoinInfoData() { }
 
         public override bool Equals(object obj)
         {
-            return CurrencyCode.Equals((obj as CoinInfoData)?.CurrencyCode);
+            return CurrencyId.Equals((obj as CoinInfoData)?.CurrencyId);
         }
 
         public override int GetHashCode() => 1;
@@ -120,7 +117,7 @@ namespace MyCC.Core.CoinInfo
         {
             return new CoinInfoData
             {
-                CurrencyCode = info.CurrencyCode ?? CurrencyCode,
+                CurrencyId = info.CurrencyId ?? CurrencyId,
                 Algorithm = info.Algorithm ?? Algorithm,
                 Blocktime = info.Blocktime ?? Blocktime,
                 CoinSupply = info.CoinSupply ?? CoinSupply,
@@ -137,7 +134,7 @@ namespace MyCC.Core.CoinInfo
 
         public override string ToString()
         {
-            return $"[CoinInfoData: CurrencyCode={CurrencyCode}, Algorithm={Algorithm}, Hashrate={Hashrate}, Difficulty={Difficulty}, CoinSupply={CoinSupply}, MaxCoinSupply={MaxCoinSupply}, BlockHeight={BlockHeight}, IsProofOfStake={IsProofOfStake}, IsProofOfWork={IsProofOfWork}, Blocktime={Blocktime}]";
+            return $"[CoinInfoData: CurrencyId={CurrencyId}, Algorithm={Algorithm}, Hashrate={Hashrate}, Difficulty={Difficulty}, CoinSupply={CoinSupply}, MaxCoinSupply={MaxCoinSupply}, BlockHeight={BlockHeight}, IsProofOfStake={IsProofOfStake}, IsProofOfWork={IsProofOfWork}, Blocktime={Blocktime}]";
         }
     }
 }

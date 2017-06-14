@@ -33,6 +33,10 @@ namespace MyCC.Core.Account.Storage
         public static List<FunctionalAccount> AccountsWithCurrency(Currency currency) => Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).ToList();
         public static List<FunctionalAccount> AccountsWithCurrency(string currencyId) => Instance.AllElements.Where(a => a.Money.Currency.Id.Equals(currencyId)).ToList();
 
+        public static string CurrencyIdOf(int accountId) => GetAccount(accountId)?.Money.Currency.Id;
+        public static Models.Base.Account GetAccount(int accountId) => Instance.AllElements.Find(account => account.Id == accountId);
+
+        public static AccountRepository RepositoryOf(int accountId) => RepositoryOf(GetAccount(accountId) as FunctionalAccount);
         public static AccountRepository RepositoryOf(FunctionalAccount account) => Instance.Repositories.Find(r => r.Id == account.ParentId);
 
         public static Task Update(FunctionalAccount account) => RepositoryOf(account).Update(account);

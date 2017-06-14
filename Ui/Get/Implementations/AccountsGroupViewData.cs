@@ -5,7 +5,6 @@ using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
@@ -17,22 +16,22 @@ namespace MyCC.Ui.Get.Implementations
 {
     internal class AccountsGroupViewData : IAccountsGroupViewData
     {
-        public static HeaderItem HeaderData(Currency currency)
+        public HeaderItem HeaderData(string currencyId)
         {
-            var money = new Money(EnabledAccountsItems(currency).Sum(a => a.Money.Amount), currency);
+            var money = new Money(EnabledAccountsItems(currencyId).Sum(a => a.Amount), currencyId.Find());
 
-            var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { currency.Id })
-                .Select(x => new Money(money.Amount * MyccUtil.Rates.GetRate(new RateDescriptor(currency.Id, x))?.Rate ?? 0, x.Find())).
+            var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { currencyId })
+                .Select(x => new Money(money.Amount * MyccUtil.Rates.GetRate(new RateDescriptor(currencyId, x))?.Rate ?? 0, x.Find())).
                 OrderBy(m => m.Currency.Code);
 
             return new HeaderItem(money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
-                additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney))) : currency.Name);
+                additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney))) : currencyId.FindName());
         }
 
 
-        public static IEnumerable<ReferenceValueItem> ReferenceItems(Currency currency)
+        public IEnumerable<ReferenceValueItem> ReferenceItems(string currencyId)
         {
-            var money = new Money(EnabledAccountsItems(currency).Sum(a => a.Money.Amount), currency);
+            var money = new Money(EnabledAccountsItems(currencyId).Sum(a => a.Amount), currencyId.Find());
 
             return ApplicationSettings.AllReferenceCurrencies.Except(new[] { money.Currency.Id })
                 .Select(c =>
@@ -43,29 +42,35 @@ namespace MyCC.Ui.Get.Implementations
                 .OrderByWithDirection(c => SortOrderReference == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Rate, SortDirectionReference == SortDirection.Ascending);
         }
 
-        public static DateTime LastUpdate(Currency currency)
+        public DateTime LastUpdate(string currencyId)
         {
-            var online = AccountStorage.AccountsWithCurrency(currency).Where(a => a is OnlineFunctionalAccount).ToList();
-            var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.AccountsWithCurrency(currency).Select(a => a.LastUpdate).DefaultIfEmpty(DateTime.Now).Max();
-            var ratesTime = MyccUtil.Rates.LastUpdateFor(currency.Id);
+            var online = AccountStorage.AccountsWithCurrency(currencyId).Where(a => a is OnlineFunctionalAccount).ToList();
+            var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.AccountsWithCurrency(currencyId).Select(a => a.LastUpdate).DefaultIfEmpty(DateTime.Now).Max();
+            var ratesTime = MyccUtil.Rates.LastUpdateFor(currencyId);
 
             return online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
         }
 
-        public static IEnumerable<Account> EnabledAccountsItems(Currency currency)
+        public IEnumerable<AccountItem> EnabledAccountsItems(string currencyId)
         {
-            return AccountStorage.AccountsWithCurrency(currency).Where(a => a.IsEnabled)
-                                 .OrderByWithDirection(a => SortOrderAccounts == SortOrder.Alphabetical ? a.Name as object : a.Money.Amount,
-                                                       SortDirectionAccounts == SortDirection.Ascending);
+            return AccountStorage.AccountsWithCurrency(currencyId).Where(a => a.IsEnabled).Select(account => new AccountItem(account))
+                                 .OrderByWithDirection(a => SortOrderAccounts == SortOrder.Alphabetical ? a.Name as object : a.Amount, SortDirectionAccounts == SortDirection.Ascending);
         }
 
-        public static Money GetEnabledSum(Currency currency) => new Money(EnabledAccountsItems(currency).Sum(a => a.Money.Amount), currency);
+        public bool HasAccounts(string currencyId) => EnabledAccountsItems(currencyId).Any() || DisabledAccountsItems(currencyId).Any();
 
-        public static IEnumerable<Account> DisabledAccountsItems(Currency currency)
+
+        public string ReferenceTableHeader(string currencyId)
         {
-            return AccountStorage.AccountsWithCurrency(currency).Where(a => !a.IsEnabled)
-                                 .OrderByWithDirection(a => SortOrderAccounts == SortOrder.Alphabetical ? a.Name as object : a.Money.Amount,
-                                                       SortDirectionAccounts == SortDirection.Ascending);
+            var money = new Money(EnabledAccountsItems(currencyId).Sum(a => a.Amount), currencyId.Find());
+
+            return string.Format(money.Amount == 1 ? StringUtils.TextResolver.IsEqualTo : StringUtils.TextResolver.AreEqualTo, money);
+        }
+
+        public IEnumerable<AccountItem> DisabledAccountsItems(string currencyId)
+        {
+            return AccountStorage.AccountsWithCurrency(currencyId).Where(a => !a.IsEnabled).Select(account => new AccountItem(account))
+                                 .OrderByWithDirection(a => SortOrderAccounts == SortOrder.Alphabetical ? a.Name as object : a.Amount, SortDirectionAccounts == SortDirection.Ascending);
         }
 
         public List<SortButtonItem> SortButtonsReference => new List<SortButtonItem>
@@ -104,14 +109,14 @@ namespace MyCC.Ui.Get.Implementations
             },
         };
 
-        private static void OnSortAccounts(SortOrder sortOrder)
+        private void OnSortAccounts(SortOrder sortOrder)
         {
             SortDirectionAccounts = SortDirectionHelper.GetNewSortDirection(SortOrderAccounts, SortDirectionAccounts, sortOrder);
             SortOrderAccounts = sortOrder;
             Messaging.UiUpdate.ReferenceTables.Send();
         }
 
-        private static void OnSortReference(SortOrder sortOrder)
+        private void OnSortReference(SortOrder sortOrder)
         {
             SortDirectionReference = SortDirectionHelper.GetNewSortDirection(SortOrderReference, SortDirectionReference, sortOrder);
             SortOrderReference = sortOrder;
@@ -120,25 +125,25 @@ namespace MyCC.Ui.Get.Implementations
 
 
 
-        private static SortOrder SortOrderReference
+        private SortOrder SortOrderReference
         {
             get => ApplicationSettings.SortOrderReferenceValues;
             set => ApplicationSettings.SortOrderReferenceValues = value;
         }
 
-        private static SortDirection SortDirectionReference
+        private SortDirection SortDirectionReference
         {
             get => ApplicationSettings.SortDirectionReferenceValues;
             set => ApplicationSettings.SortDirectionReferenceValues = value;
         }
 
-        private static SortOrder SortOrderAccounts
+        private SortOrder SortOrderAccounts
         {
             get => ApplicationSettings.SortOrderAccounts;
             set => ApplicationSettings.SortOrderAccounts = value;
         }
 
-        private static SortDirection SortDirectionAccounts
+        private SortDirection SortDirectionAccounts
         {
             get => ApplicationSettings.SortDirectionAccounts;
             set => ApplicationSettings.SortDirectionAccounts = value;

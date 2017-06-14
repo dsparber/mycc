@@ -1,8 +1,8 @@
-﻿using MyCC.Core;
+﻿using System.Collections.Generic;
+using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.CoinInfo;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 using MyCC.Ui.Helpers;
@@ -12,15 +12,15 @@ namespace MyCC.Ui.DataItems
     public class CoinInfoItem
     {
         private readonly CoinInfoData _data;
-        private readonly Currency _currency;
+        private readonly string _currencyId;
 
-        public CoinInfoItem(CoinInfoData coinInfoData, string explorer, Currency currency)
+        public CoinInfoItem(CoinInfoData coinInfoData, IEnumerable<string> explorer, string currencyId)
         {
-            _data = coinInfoData ?? new CoinInfoData(currency);
-            Explorer = explorer;
+            _data = coinInfoData ?? new CoinInfoData(currencyId);
+            Explorer = string.Join(", ", explorer);
             _pow = StringUtils.TextResolver.CoinProofOfWork;
             _pos = StringUtils.TextResolver.CoinProofOfStake;
-            _currency = currency;
+            _currencyId = currencyId;
         }
 
         public readonly string Explorer;
@@ -37,13 +37,13 @@ namespace MyCC.Ui.DataItems
         public string Hashrate => $"{(_data.Hashrate ?? 0).ToMax8DigitString()} {StringUtils.TextResolver.GHps}";
         public string Difficulty => (_data.Difficulty ?? 0).ToMax8DigitString();
 
-        public string Blockreward => new Money(_data.Blockreward ?? 0, _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+        public string Blockreward => new Money(_data.Blockreward ?? 0, _currencyId.Find()).ToStringTwoDigits(ApplicationSettings.RoundMoney);
         public string Blockheight => $"{_data.BlockHeight ?? 0:#,0}";
         public string Blocktime => $"{_data.Blocktime ?? 0:#,0.##} {StringUtils.TextResolver.UnitSecond}";
 
-        public string Supply => new Money(_data.CoinSupply ?? 0, _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-        public string MaxSupply => new Money(_data.MaxCoinSupply ?? 0, _currency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-        public string MarketCap => new Money((_data.CoinSupply ?? 0) * (MyccUtil.Rates.GetRate(new RateDescriptor(_currency.Id, CurrencyConstants.Btc.Id))?.Rate ?? 0), CurrencyConstants.Btc).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+        public string Supply => new Money(_data.CoinSupply ?? 0, _currencyId.Find()).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+        public string MaxSupply => new Money(_data.MaxCoinSupply ?? 0, _currencyId.Find()).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+        public string MarketCap => new Money((_data.CoinSupply ?? 0) * (MyccUtil.Rates.GetRate(new RateDescriptor(_currencyId, CurrencyConstants.Btc.Id))?.Rate ?? 0), CurrencyConstants.Btc).ToStringTwoDigits(ApplicationSettings.RoundMoney);
 
 
         public bool HasExplorer => !string.IsNullOrWhiteSpace(Explorer);
@@ -59,6 +59,6 @@ namespace MyCC.Ui.DataItems
 
         public bool HasSupply => _data.CoinSupply != null;
         public bool HasMaxSupply => _data.MaxCoinSupply != null;
-        public bool HasMarketCap => HasSupply && MyccUtil.Rates.HasRate(new RateDescriptor(_currency.Id, CurrencyConstants.Btc.Id));
+        public bool HasMarketCap => HasSupply && MyccUtil.Rates.HasRate(new RateDescriptor(_currencyId, CurrencyConstants.Btc.Id));
     }
 }

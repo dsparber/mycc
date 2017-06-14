@@ -142,8 +142,9 @@ namespace MyCC.Ui.Get.Implementations
         private static List<AssetItem> ApplySort(IEnumerable<AssetItem> enabledItems, IEnumerable<AssetItem> disabledItems)
         {
             var alphabetical = SortOrder == SortOrder.Alphabetical;
+            var byValue = SortOrder == SortOrder.ByValue;
 
-            object SortLambda(AssetItem r) => alphabetical ? r.CurrencyCode as object : r.ReferenceAmount;
+            object SortLambda(AssetItem r) => alphabetical ? r.CurrencyCode as object : byValue ? r.ReferenceAmount : r.Amount;
 
             return enabledItems.OrderByWithDirection(SortLambda, SortDirection == SortDirection.Ascending)
                 .Concat(disabledItems.OrderByWithDirection(SortLambda, SortDirection == SortDirection.Ascending))
@@ -189,7 +190,7 @@ namespace MyCC.Ui.Get.Implementations
 
         private void SortAndNotify()
         {
-            foreach (var key in _tableItems.Keys)
+            foreach (var key in _tableItems.ToList().Select(pair => pair.Key))
             {
                 _tableItems[key] = _tableItems[key] != null ? ApplySort(_tableItems[key]) : null;
             }

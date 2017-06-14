@@ -31,5 +31,7 @@ namespace MyCC.Ui.Android.Helpers
         public string LoadingRates => GetText(Resource.String.LoadingCurrencies);
         public string OnlyThreeCurrenciesCanBeStared => GetText(Resource.String.OnlyThreeCurrenciesCanBeStared);
         public string BitcoinCanNotBeRemoved => GetText(Resource.String.BitcoinCanNotBeRemoved);
+        public string IsEqualTo => GetText(Resource.String.IsEqualTo);
+        public string AreEqualTo => GetText(Resource.String.AreEqualTo);
     }
 }

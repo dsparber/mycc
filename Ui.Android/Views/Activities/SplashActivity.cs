@@ -7,7 +7,6 @@ using HockeyApp.Android;
 using HockeyApp.Android.Metrics;
 using MyCC.Core.Database;
 using MyCC.Ui.Android.Helpers;
-using MyCC.Ui.Get;
 using Xamarin.Forms;
 using ZXing.Mobile;
 using Application = Android.App.Application;

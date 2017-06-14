@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
@@ -15,10 +14,10 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class CryptoIdCoinInfoRepository : ICoinInfoRepository
     {
-        private Uri GetUri(Currency coin, string action)
-            => new Uri($"https://chainz.cryptoid.info/{coin.Code.ToLower()}/api.dws?q={action}");
+        private Uri GetUri(string currencyId, string action)
+            => new Uri($"https://chainz.cryptoid.info/{currencyId.Code().ToLower()}/api.dws?q={action}");
 
-        public string WebUrl(Currency currency) => $"https://chainz.cryptoid.info/{currency.Code.ToLower()}/#!crypto";
+        public string WebUrl(string currencyId) => $"https://chainz.cryptoid.info/{currencyId.Code().ToLower()}/#!crypto";
 
         private const string KeySummary = "summary";
         private const string KeyHashrate = "hashrate";
@@ -31,36 +30,36 @@ namespace MyCC.Core.CoinInfo.Repositories
 
         public string Name => ConstantNames.CryptoId;
 
-        public List<Currency> SupportedCoins
-            => CurrencyConstants.FlagCryptoId.Currencies().ToList();
+        public List<string> SupportedCoins
+            => CurrencyConstants.FlagCryptoId.CurrencyIds().ToList();
 
-        public async Task<CoinInfoData> GetInfo(Currency currency)
+        public async Task<CoinInfoData> GetInfo(string currencyId)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 
             try
             {
 
-                var summary = await client.GetAsync(GetUri(currency, KeySummary));
-                var hrate = await client.GetAsync(GetUri(currency, KeyHashrate));
+                var summary = await client.GetAsync(GetUri(currencyId, KeySummary));
+                var hrate = await client.GetAsync(GetUri(currencyId, KeyHashrate));
 
 
 
-                var summaryJson = JObject.Parse(await summary.Content.ReadAsStringAsync())[currency.Code.ToLower()];
+                var summaryJson = JObject.Parse(await summary.Content.ReadAsStringAsync())[currencyId.Code().ToLower()];
                 var hashrate =
                     decimal.Parse(await hrate.Content.ReadAsStringAsync(), CultureInfo.InvariantCulture) as decimal?;
                 hashrate = hashrate == 0 ? null : hashrate;
 
-                Func<JToken, string> parseOrNull = o =>
+                string ParseOrNull(JToken o)
                 {
                     var s = (string)o;
                     return string.IsNullOrEmpty(s?.Trim()) ? null : s;
-                };
+                }
 
-                return new CoinInfoData(currency)
+                return new CoinInfoData(currencyId)
                 {
-                    Algorithm = parseOrNull(summaryJson[JsonKeyAlgorithm]),
-                    IsProofOfWork = parseOrNull(summaryJson[JsonKeyAlgorithm]) != null,
+                    Algorithm = ParseOrNull(summaryJson[JsonKeyAlgorithm]),
+                    IsProofOfWork = ParseOrNull(summaryJson[JsonKeyAlgorithm]) != null,
                     IsProofOfStake = bool.Parse((string)summaryJson[JsonKeyIsPoS]),
                     BlockHeight = int.Parse((string)summaryJson[JsonKeyHeigth]),
                     Difficulty = decimal.Parse((string)summaryJson[JsonKeyDifficulty], CultureInfo.InvariantCulture),
@@ -73,7 +72,7 @@ namespace MyCC.Core.CoinInfo.Repositories
             catch (Exception e)
             {
                 e.LogError();
-                return new CoinInfoData(currency);
+                return new CoinInfoData(currencyId);
             }
         }
     }

@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyCC.Core.Resources;
-using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 
 namespace MyCC.Core.CoinInfo.Repositories
 {
     public class ReddCoinInfoRepository : ICoinInfoRepository
     {
-        public string WebUrl(Currency currency) => "http://live.reddcoin.com/status";
+        public string WebUrl(string currencyId) => "http://live.reddcoin.com/status";
 
         private static readonly Uri InfoUri = new Uri("https://live.reddcoin.com/api/status?q=getInfo");
 
@@ -19,17 +17,17 @@ namespace MyCC.Core.CoinInfo.Repositories
         private const string KeySupply = "moneysupply";
         private const string KeyDifficulty = "difficulty";
 
-        public List<Currency> SupportedCoins => new List<Currency> { "RDD1".Find() };
+        public List<string> SupportedCoins => new List<string> { "RDD1" };
 
         public string Name => ConstantNames.ReddCoin;
 
-        public async Task<CoinInfoData> GetInfo(Currency currency)
+        public async Task<CoinInfoData> GetInfo(string currencyId)
         {
             try
             {
                 var json = await InfoUri.GetJson();
 
-                return new CoinInfoData(currency)
+                return new CoinInfoData(currencyId)
                 {
                     LastUpdate = DateTime.Now,
                     Difficulty = json[KeyInfo][KeyDifficulty].ToDecimal(),
@@ -40,7 +38,7 @@ namespace MyCC.Core.CoinInfo.Repositories
             catch (Exception e)
             {
                 e.LogError();
-                return new CoinInfoData(currency);
+                return new CoinInfoData(currencyId);
             }
         }
     }

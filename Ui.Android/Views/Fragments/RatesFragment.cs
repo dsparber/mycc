@@ -52,7 +52,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            _referenceCurrencyId = savedInstanceState?.GetString("currency");
+            _referenceCurrencyId = savedInstanceState?.GetString("currency") ?? _referenceCurrencyId;
 
             var view = inflater.Inflate(Resource.Layout.fragment_rates, container, false);
 

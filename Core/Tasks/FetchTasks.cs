@@ -69,12 +69,12 @@ namespace MyCC.Core.Tasks
             }
         }
 
-        public static async Task FetchCoinInfo(Currency coin, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null)
+        public static async Task FetchCoinInfo(string currencyId, Action onStarted = null, Action onFinished = null, Action<Exception> onError = null)
         {
             try
             {
                 onStarted?.Invoke();
-                await CoinInfoStorage.Instance.FetchInfo(coin);
+                await CoinInfoStorage.Instance.FetchInfo(currencyId);
             }
             catch (Exception e)
             {

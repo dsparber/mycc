@@ -18,7 +18,7 @@
         }
 
         public IRatesOverviewData Rates => _ratesOverviewData;
-        public ICoinInfoViewData CoinInfoViewData => _coinInfoViewData;
+        public ICoinInfoViewData CoinInfo => _coinInfoViewData;
         public IAccountDetailViewData AccountDetail => _accountDetailViewData;
         public IAccountsGroupViewData AccountsGroup => _accountsGroupViewData;
         public IAssetsOverviewData Assets => _assetsOverviewData;

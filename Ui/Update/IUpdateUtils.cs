@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using MyCC.Core.Account.Models.Base;
 
 namespace MyCC.Ui.Update
 {
@@ -17,7 +16,7 @@ namespace MyCC.Ui.Update
 
         void FetchBalancesAndRatesFor(string currencyId);
 
-        void FetchBalanceAndRatesFor(FunctionalAccount account);
+        void FetchBalanceAndRatesFor(int accountId);
 
         void FetchCoinInfoAndRatesFor(string currencyId);
 

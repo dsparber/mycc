@@ -12,7 +12,6 @@ using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
 using ActionBarDrawerToggle = Android.Support.V7.App.ActionBarDrawerToggle;
 using Fragment = Android.Support.V4.App.Fragment;
-using MyCC.Ui.Messages;
 
 namespace MyCC.Ui.Android.Views.Activities
 {

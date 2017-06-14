@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Tasks;
 using MyCC.Ui.Helpers;
@@ -70,22 +71,23 @@ namespace MyCC.Ui.Update
            Messaging.Status.Progress.Send(1);
        });
 
-        public void FetchBalanceAndRatesFor(FunctionalAccount account) => ExecuteWithErrorWrapper(async () =>
-       {
-           Messaging.Status.Progress.Send(0.2);
-           await ApplicationTasks.FetchBalance(account, onError: e => throw e, onFinished: () => Messaging.Status.Progress.Send(0.2 + 0.4));
-           await MyccUtil.Rates.FetchFor(account.Money.Currency.Id, progress => Messaging.Status.Progress.Send(0.6 + 0.4 * progress));
-           UiUtils.AssetsRefresh.ResetCache();
-           UiUtils.RatesRefresh.ResetCache();
-           Messaging.UiUpdate.ViewsWithRate.Send();
-           Messaging.UiUpdate.Accounts.Send();
-           Messaging.Status.Progress.Send(1);
-       });
+        public void FetchBalanceAndRatesFor(int accountId) => ExecuteWithErrorWrapper(async () =>
+        {
+            var account = AccountStorage.GetAccount(accountId) as FunctionalAccount;
+            Messaging.Status.Progress.Send(0.2);
+            await ApplicationTasks.FetchBalance(account, onError: e => throw e, onFinished: () => Messaging.Status.Progress.Send(0.2 + 0.4));
+            await MyccUtil.Rates.FetchFor(account?.Money.Currency.Id, progress => Messaging.Status.Progress.Send(0.6 + 0.4 * progress));
+            UiUtils.AssetsRefresh.ResetCache();
+            UiUtils.RatesRefresh.ResetCache();
+            Messaging.UiUpdate.ViewsWithRate.Send();
+            Messaging.UiUpdate.Accounts.Send();
+            Messaging.Status.Progress.Send(1);
+        });
 
         public void FetchCoinInfoAndRatesFor(string currencyId) => ExecuteWithErrorWrapper(async () =>
        {
            Messaging.Status.Progress.Send(0.2);
-           await ApplicationTasks.FetchCoinInfo(currencyId.Find(), onError: e => throw e, onFinished: () => Messaging.Status.Progress.Send(0.2 + 0.4));
+           await ApplicationTasks.FetchCoinInfo(currencyId, onError: e => throw e, onFinished: () => Messaging.Status.Progress.Send(0.2 + 0.4));
            await MyccUtil.Rates.FetchFor(currencyId, progress => Messaging.Status.Progress.Send(0.6 + 0.4 * progress));
            Messaging.UiUpdate.CoinInfo.Send();
            Messaging.Status.Progress.Send(1);
@@ -94,7 +96,7 @@ namespace MyCC.Ui.Update
         public void FetchCoinInfoFor(string currencyId) => ExecuteWithErrorWrapper(async () =>
         {
             Messaging.Status.Progress.Send(0.2);
-            await ApplicationTasks.FetchCoinInfo(currencyId.Find(), onError: e => throw e, onFinished: () => Messaging.Status.Progress.Send(0.9));
+            await ApplicationTasks.FetchCoinInfo(currencyId, onError: e => throw e, onFinished: () => Messaging.Status.Progress.Send(0.9));
             Messaging.UiUpdate.CoinInfo.Send();
             Messaging.Status.Progress.Send(1);
         });

@@ -5,7 +5,6 @@ using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.CoinInfo;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
@@ -17,43 +16,36 @@ namespace MyCC.Ui.Get.Implementations
 {
     internal class CoinInfoViewData : ICoinInfoViewData
     {
-        public static HeaderItem HeaderData(Currency currency)
+        public HeaderItem GetHeaderData(string currencyId)
         {
-            return new HeaderItem(currency.Name, new Money(MyccUtil.Rates.GetRate(new RateDescriptor(currency.Id, CurrencyConstants.Btc.Id))?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits());
+            return new HeaderItem(currencyId.FindName(), new Money(MyccUtil.Rates.GetRate(new RateDescriptor(currencyId, CurrencyConstants.Btc.Id))?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits());
         }
 
-        public CoinInfoItem CoinInfo(Currency currency)
+        public CoinInfoItem GetInfos(string currencyId)
         {
-            var info = CoinInfoStorage.Instance.Get(currency);
-            if (info == null) return null;
-
-            return new CoinInfoItem(info, Explorer(currency), currency);
+            var info = CoinInfoStorage.Instance.Get(currencyId);
+            return info == null ? null : new CoinInfoItem(info, Explorer(currencyId).Select(item => item.Name), currencyId);
         }
 
-        public bool CoinInfoFetchable(Currency currency) => CoinInfoStorage.Instance.GetExplorer(currency).Any();
+        public bool InfosAvailable(string currencyId) => CoinInfoStorage.Instance.GetExplorer(currencyId).Any();
 
-        private string Explorer(Currency currency) => CoinInfoFetchable(currency) ?
-            string.Join(", ", CoinInfoStorage.Instance.GetExplorer(currency).Select(e => e.Name)) : null;
-
-        public List<ReferenceValueItem> Items(Currency currency)
+        public IEnumerable<ReferenceValueItem> ReferenceValues(string currencyId)
         {
-            return ApplicationSettings.AllReferenceCurrencies.Except(new[] { currency.Id })
-                .Select(c => new ReferenceValueItem(1, MyccUtil.Rates.GetRate(new RateDescriptor(currency.Id, c))?.Rate, c))
+            return ApplicationSettings.AllReferenceCurrencies.Except(new[] { currencyId })
+                .Select(c => new ReferenceValueItem(1, MyccUtil.Rates.GetRate(new RateDescriptor(currencyId, c))?.Rate, c))
                 .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Rate, SortDirection == SortDirection.Ascending)
                 .ToList();
         }
 
-        public static List<ICoinInfoRepository> ExplorerList(Currency currency) => CoinInfoStorage.Instance.GetExplorer(currency).ToList();
+        public IEnumerable<(string Name, string WebLink)> Explorer(string currencyId) => CoinInfoStorage.Instance.GetExplorer(currencyId).Select(explorer => (explorer.Name, explorer.WebUrl(currencyId))).ToList();
 
-        public static DateTime LastUpdate(Currency currency)
+        public DateTime LastUpdate(string currencyId)
         {
-            var ratesTime = MyccUtil.Rates.LastUpdateFor(currency.Id);
-            var infoTime = CoinInfoStorage.Instance.Get(currency)?.LastUpdate ?? DateTime.Now;
+            var ratesTime = MyccUtil.Rates.LastUpdateFor(currencyId);
+            var infoTime = CoinInfoStorage.Instance.Get(currencyId)?.LastUpdate ?? DateTime.Now;
 
             return ratesTime < infoTime ? ratesTime : infoTime;
         }
-
-
 
         public List<SortButtonItem> SortButtons => new List<SortButtonItem>
         {
@@ -73,7 +65,7 @@ namespace MyCC.Ui.Get.Implementations
             }
         };
 
-        private void OnSort(SortOrder sortOrder)
+        private static void OnSort(SortOrder sortOrder)
         {
             SortDirection = SortDirectionHelper.GetNewSortDirection(SortOrder, SortDirection, sortOrder);
             SortOrder = sortOrder;
@@ -81,14 +73,13 @@ namespace MyCC.Ui.Get.Implementations
         }
 
 
-
-        private SortOrder SortOrder
+        private static SortOrder SortOrder
         {
             get => ApplicationSettings.SortOrderReferenceValues;
             set => ApplicationSettings.SortOrderReferenceValues = value;
         }
 
-        private SortDirection SortDirection
+        private static SortDirection SortDirection
         {
             get => ApplicationSettings.SortDirectionReferenceValues;
             set => ApplicationSettings.SortDirectionReferenceValues = value;

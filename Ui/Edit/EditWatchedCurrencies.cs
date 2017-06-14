@@ -2,8 +2,6 @@
 using System.Linq;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Settings;
-using MyCC.Ui.Get;
-using MyCC.Ui.Get.Implementations;
 using MyCC.Ui.Messages;
 
 namespace MyCC.Ui.Edit

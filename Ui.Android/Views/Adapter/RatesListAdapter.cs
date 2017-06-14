@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Android.Content;
 using Android.Views;
 using Android.Widget;
-using MyCC.Core.Currencies.Models;
 using MyCC.Ui.DataItems;
 
 namespace MyCC.Ui.Android.Views.Adapter

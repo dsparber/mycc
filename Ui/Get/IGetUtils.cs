@@ -4,7 +4,7 @@
     {
         IAssetsOverviewData Assets { get; }
         IRatesOverviewData Rates { get; }
-        ICoinInfoViewData CoinInfoViewData { get; }
+        ICoinInfoViewData CoinInfo { get; }
         IAccountDetailViewData AccountDetail { get; }
         IAccountsGroupViewData AccountsGroup { get; }
     }

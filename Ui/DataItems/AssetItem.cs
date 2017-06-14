@@ -11,6 +11,7 @@ namespace MyCC.Ui.DataItems
         public readonly bool Enabled;
 
         public readonly string CurrencyId;
+        public readonly decimal Amount;
         public readonly decimal ReferenceAmount;
 
         public AssetItem(Money value, Money referenceValue, bool enabled)
@@ -20,6 +21,7 @@ namespace MyCC.Ui.DataItems
             FormattedReferenceValue = referenceValue.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
             Enabled = enabled;
             CurrencyId = value.Currency.Id;
+            Amount = value.Amount;
             ReferenceAmount = referenceValue.Amount;
         }
 
