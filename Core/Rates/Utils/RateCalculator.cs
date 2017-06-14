@@ -29,15 +29,15 @@ namespace MyCC.Core.Rates.Utils
 
         private static ExchangeRate GetMixedRate(this RateDescriptor rateDescriptor)
         {
-            if (RatesConfig.SelectedCryptoToFiatSource.IsAvailable(rateDescriptor))
+            if (RatesConfig.SelectedCryptoToFiatSource?.IsAvailable(rateDescriptor) ?? false)
             {
                 var directRate = RateDatabase.GetRateOrDefault(rateDescriptor);
-                return directRate.Descriptor.Equals(rateDescriptor) ? directRate : directRate.Inverse();
+                if (directRate != null)
+                    return directRate.Descriptor.Equals(rateDescriptor) ? directRate : directRate.Inverse();
             }
 
             var rateToDefaultFiatCurrency = rateDescriptor.GetFiatCurrencyId().RateToDefaultCurrency(useCrypto: false);
-            var rateToDefaultCryptoCurrency = rateDescriptor.GetCryptoCurrencyId()
-                .RateToDefaultCurrency(useCrypto: true);
+            var rateToDefaultCryptoCurrency = rateDescriptor.GetCryptoCurrencyId().RateToDefaultCurrency(useCrypto: true);
             var rateCryptoToFiat = RateDatabase.GetRateOrDefault(RatesConfig.DefaultCryptoToFiatDescriptor);
 
             var rate = rateToDefaultFiatCurrency.CombineWith(rateCryptoToFiat).CombineWith(rateToDefaultCryptoCurrency);
