@@ -57,7 +57,7 @@ namespace MyCC.Core.Rates
                 ExchangeRatesStorage.Instance.StoredRates :
                 ExchangeRatesStorage.Instance.Repositories.First(r => r.TypeId == repository).Rates;
 
-            var foundRate = rates.FirstOrDefault(c => c != null && (c.Equals(neededRate) || c.Equals(neededRate.Inverse)));
+            var foundRate = rates.ToList().FirstOrDefault(c => c != null && (c.Equals(neededRate) || c.Equals(neededRate.Inverse)));
             if (foundRate == null) return null;
 
             return foundRate.Equals(neededRate) ? foundRate : foundRate.Inverse;
