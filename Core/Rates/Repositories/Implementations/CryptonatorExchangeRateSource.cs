@@ -27,7 +27,7 @@ namespace MyCC.Core.Rates.Repositories.Implementations
                    SupportedCurrencies.Any(c => c.Id.Equals(rateDescriptor.SecondaryCurrencyId));
         }
 
-        protected override decimal? GetRateFromJson(JToken json) => json["ticker"]["price"].ToDecimal();
+        protected override (decimal? rate, bool inverse) GetRateFromJson(JToken json, RateDescriptor rateDescriptor) => (json["ticker"]["price"].ToDecimal(), false);
 
         private static string ToUrl(RateDescriptor rateDescriptor)
         {

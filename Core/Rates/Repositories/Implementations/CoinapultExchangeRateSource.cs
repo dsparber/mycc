@@ -1,4 +1,5 @@
 using System;
+using MyCC.Core.Currencies;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
@@ -24,6 +25,6 @@ namespace MyCC.Core.Rates.Repositories.Implementations
         }
 
         public override bool IsAvailable(RateDescriptor rateDescriptor) => rateDescriptor.IsBtcToUsdOrEur();
-        protected override decimal? GetRateFromJson(JToken json) => json["small"]["ask"].ToDecimal();
+        protected override (decimal? rate, bool inverse) GetRateFromJson(JToken json, RateDescriptor rateDescriptor) => (json["small"]["ask"].ToDecimal(), !rateDescriptor.ReferenceCurrencyId.Equals(CurrencyConstants.Btc.Id));
     }
 }

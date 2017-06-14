@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Helpers;
+using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using Newtonsoft.Json.Linq;
 
@@ -47,11 +48,11 @@ namespace MyCC.Core.Rates.Repositories.Utils
             var uri = GetUri(rateDescriptor);
             if (uri == null) return null;
             var json = await uri.GetJson(HttpHeader);
-            var rate = GetRateFromJson(json);
-            return rate == null ? null : new ExchangeRate(rateDescriptor, rate.Value, Id, DateTime.Now);
+            var result = GetRateFromJson(json, rateDescriptor);
+            return result.rate == null ? null : new ExchangeRate(result.inverse ? rateDescriptor.Inverse() : rateDescriptor, result.rate.Value, Id, DateTime.Now);
         }
 
-        protected abstract decimal? GetRateFromJson(JToken json);
+        protected abstract (decimal? rate, bool inverse) GetRateFromJson(JToken json, RateDescriptor rateDescriptor);
     }
 }
 
