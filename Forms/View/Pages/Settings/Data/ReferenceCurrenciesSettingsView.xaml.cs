@@ -114,9 +114,12 @@ namespace MyCC.Forms.View.Pages.Settings.Data
                 }
             };
 
-            if (currency.Equals(CurrencyConstants.Btc))
+            if (currency.Equals(CurrencyConstants.Btc) && ApplicationSettings.MainCurrencies.Contains(CurrencyConstants.Btc.Id))
             {
                 star.Action = (sender, e) => DisplayAlert(I18N.Error, I18N.BitcoinCanNotBeRemoved, I18N.Ok);
+            }
+            if (currency.Equals(CurrencyConstants.Btc))
+            {
                 delete.Action = (sender, e) => DisplayAlert(I18N.Error, I18N.BitcoinCanNotBeRemoved, I18N.Ok);
             }
 
