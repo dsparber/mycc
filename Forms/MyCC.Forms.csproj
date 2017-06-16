@@ -160,8 +160,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Resources\I18N.sk.resx" />
-    <None Include="Resources\I18N.es.resx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\I18N.de.resx">
@@ -214,6 +212,8 @@
       <SubType>
       </SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\I18N.sk.resx" />
+    <EmbeddedResource Include="Resources\I18N.es.resx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\Components\Header\HeaderView.xaml">

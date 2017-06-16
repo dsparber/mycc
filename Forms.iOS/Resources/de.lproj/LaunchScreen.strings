@@ -1,0 +1,12 @@
+
+/* Class = "UILabel"; text = "MyCC"; ObjectID = "GJd-Yh-RWb"; */
+"GJd-Yh-RWb.text" = "MyCC";
+
+/* Class = "UILabel"; text = "Developed by Daniel Sparber"; ObjectID = "KiP-Sc-58B"; */
+"KiP-Sc-58B.text" = "Entwickelt von Daniel Sparber";
+
+/* Class = "UILabel"; text = "© Ing. Georg Sparber"; ObjectID = "oSU-v8-FBu"; */
+"oSU-v8-FBu.text" = "© Ing. Georg Sparber";
+
+/* Class = "UILabel"; text = "My Cryptocurrencies"; ObjectID = "rwb-Jo-3BR"; */
+"rwb-Jo-3BR.text" = "Meine Kryptowährungen";

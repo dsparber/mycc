@@ -339,6 +339,9 @@
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
     <BundleResource Include="Resources\Html\DroidSansMono.ttf" />
+    <BundleResource Include="Resources\en.lproj\LaunchScreen.strings" />
+    <BundleResource Include="Resources\de.lproj\LaunchScreen.strings" />
+    <BundleResource Include="Resources\es.lproj\LaunchScreen.strings" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\BaseUrl.cs" />
@@ -526,6 +529,7 @@
     <BundleResource Include="Resources\edit.png" />
     <BundleResource Include="Resources\edit%402x.png" />
     <BundleResource Include="Resources\edit%403x.png" />
+    <Content Include="Resources\sk.lproj\LaunchScreen.strings" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\MyCC.Core.csproj">
@@ -542,9 +546,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <InterfaceDefinition Include="Base.lproj\LaunchScreen.storyboard" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
-    <InterfaceDefinition Include="Resources\en.lproj\LaunchScreen.storyboard" />
-    <InterfaceDefinition Include="Resources\de.lproj\LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -556,6 +559,7 @@
   <ItemGroup>
     <Folder Include="Resources\Images.xcassets\fingerprint.imageset\" />
     <Folder Include="Resources\Images.xcassets\StartupIcon.imageset\" />
+    <Folder Include="Base.lproj\" />
   </ItemGroup>
   <Import Project="..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
