@@ -62,17 +62,17 @@ div > *:first-child {
     margin: 0 -1em;
 }
 
-.footer p {
-    margin: 0.7em;
-    font-size: 0.8em;
-}
+    .footer p {
+        margin: 0.7em;
+        font-size: 0.8em;
+    }
 
 ul {
     list-style: none;
     padding: 0px;
 }
 
-ul li:before {
-    content: "-";
-    padding-right: 5px;
-}
+    ul li:before {
+        content: "-";
+        padding-right: 5px;
+    }

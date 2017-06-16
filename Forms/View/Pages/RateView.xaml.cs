@@ -93,8 +93,9 @@ namespace MyCC.Forms.View.Pages
         private void PositionSelected(object sender, EventArgs e)
         {
             var currencies = ApplicationSettings.MainCurrencies.ToList();
+            var position = HeaderCarousel.Position < currencies.Count || HeaderCarousel.Position > 0 ? HeaderCarousel.Position : currencies.Count - 1;
 
-            ApplicationSettings.StartupCurrencyRates = currencies[HeaderCarousel.Position];
+            ApplicationSettings.StartupCurrencyRates = currencies[position];
             Messaging.RatesPageCurrency.SendValueChanged();
         }
 
