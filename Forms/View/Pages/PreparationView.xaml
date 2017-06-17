@@ -1,6 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:corenames="clr-namespace:MyCC.Core.Resources;assembly=MyCC.Core"
              xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
              xmlns:components="clr-namespace:MyCC.Forms.View.Components.BaseComponents;assembly=MyCC.Forms"
              xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
@@ -16,7 +17,7 @@
             HorizontalOptions="CenterAndExpand"
             Margin="20"/>
         <Label 
-            Text="{resources:Translate AppName}"
+            Text="{x:Static corenames:ConstantNames.AppNameShort}"
             FontSize="36"
             FontAttributes="Bold"
             HorizontalTextAlignment="Center"
@@ -54,13 +55,13 @@
         <StackLayout 
             VerticalOptions="FillAndExpand"/>
         <Label 
-            Text="{resources:Translate Copyright}"
+            Text="{x:Static corenames:ConstantNames.Copyright}"
             HorizontalTextAlignment="Center"
             FontSize="14"
             TextColor="{x:Static constants:AppConstants.LaunchscreenTextColor}"
             HorizontalOptions="CenterAndExpand"/>
         <Label 
-            Text="{resources:Translate DevelopedBy}"
+            Text="{x:Static constants:AppConstants.DevelopedBy}"
             HorizontalTextAlignment="Center"
             FontSize="14"
             TextColor="{x:Static constants:AppConstants.LaunchscreenTextColor}"

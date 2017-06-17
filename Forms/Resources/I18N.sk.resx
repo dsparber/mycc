@@ -153,9 +153,6 @@
   <data name="ApiKey" xml:space="preserve">
     <value>Kľúč</value>
   </data>
-  <data name="AppName" xml:space="preserve">
-    <value>MyCC</value>
-  </data>
   <data name="AppNameLong" xml:space="preserve">
     <value>Moje kryptomeny</value>
   </data>
@@ -191,9 +188,6 @@
   </data>
   <data name="CoinSupply" xml:space="preserve">
     <value>Vygenerované mince</value>
-  </data>
-  <data name="Copyright" xml:space="preserve">
-    <value>© Ing. Georg Sparber</value>
   </data>
   <data name="Currencies" xml:space="preserve">
     <value>Meny</value>
@@ -457,7 +451,7 @@
     <value>Odomknutie aplikácií</value>
   </data>
   <data name="DevelopedBy" xml:space="preserve">
-    <value>Vyvinuté od Daniel Sparber</value>
+    <value>Vyvinuté od {0}</value>
   </data>
   <data name="About" xml:space="preserve">
     <value>O aplikácii</value>

@@ -6,6 +6,7 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
 using MyCC.Core.Rates.Repositories.Interfaces;
+using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
@@ -34,7 +35,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
 
             var header = new HeaderView(true)
             {
-                TitleText = I18N.AppName,
+                TitleText = ConstantNames.AppNameShort,
                 InfoText = PluralHelper.GetTextSourcs(ExchangeRatesStorage.Instance.Repositories.Count(r => r.RatesType == RateRepositoryType.CryptoToFiat))
             };
 

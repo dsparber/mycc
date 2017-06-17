@@ -1,5 +1,7 @@
-﻿using Xamarin.Forms;
+﻿﻿using Xamarin.Forms;
+using MyCC.Core.Resources;
 using MyCC.Core.Settings;
+using MyCC.Forms.Resources;
 
 namespace MyCC.Forms.Constants
 {
@@ -25,5 +27,6 @@ namespace MyCC.Forms.Constants
         public const int LabelWidth = 100;
 
         public static readonly CoreVersion AppVersion = new CoreVersion(1, 1, 1);
-    }
+        public static string DevelopedBy = string.Format(I18N.DevelopedBy, ConstantNames.Developer);
+	}
 }

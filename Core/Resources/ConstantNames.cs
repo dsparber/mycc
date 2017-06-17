@@ -2,7 +2,10 @@
 {
     public static class ConstantNames
     {
-        public const string ReddCoin = "ReddCoin";
+        public const string AppNameShort = "MyCC";
+        public const string Copyright = "© Ing. Georg Sparber";
+        public const string Developer = "Daniel Sparber";
+
         public const string Bitfinex = "Bitfinex";
         public const string BitPay = "BitPay";
         public const string Bitstamp = "Bitstamp";
@@ -23,5 +26,6 @@
         public const string QuadrigaCx = "QuadrigaCX";
         public const string OpenExchangeRates = "Open Exchange Rates";
         public const string Poloniex = "Poloniex";
+        public const string ReddCoin = "ReddCoin";
     }
 }

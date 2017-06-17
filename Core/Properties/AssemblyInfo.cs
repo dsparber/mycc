@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using MyCC.Core.Resources;
 
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
@@ -7,8 +8,8 @@
 [assembly: AssemblyDescription("My Cryptocurrencies - Core Utils")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MyCC")]
-[assembly: AssemblyCopyright("Daniel Sparber")]
+[assembly: AssemblyProduct(ConstantNames.AppNameShort)]
+[assembly: AssemblyCopyright(ConstantNames.Developer)]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

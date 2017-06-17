@@ -3,6 +3,7 @@ using System.Linq;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
+using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Helpers;
@@ -29,7 +30,7 @@ namespace MyCC.Forms.View.Pages.Settings
             /*RoundNumbers.On = ApplicationSettings.RoundMoney;
             RoundNumbers.Switch.Toggled += RoundNumbersChanged;*/
 
-            Header.TitleText = I18N.AppName;
+            Header.TitleText = ConstantNames.AppNameShort;
 
             AutoRefresh.Switch.Toggled += AutoRefreshChanged;
             ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new ReferenceCurrenciesSettingsView());
@@ -115,7 +116,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetAboutCell()
         {
-            AboutCell.Detail = $"{I18N.AppName} - {I18N.Version} {AppConstants.AppVersion}";
+            AboutCell.Detail = $"{ConstantNames.AppNameShort} - {I18N.Version} {AppConstants.AppVersion}";
             AboutCell.Tapped += (sender, e) => Navigation.PushAsync(new WebContentView("Html/about.html", true));
         }
 

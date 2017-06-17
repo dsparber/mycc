@@ -1,7 +1,8 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:corenames="clr-namespace:MyCC.Core.Resources;assembly=MyCC.Core"
 	xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	xmlns:cells="clr-namespace:MyCC.Forms.View.Components.Cells;assembly=MyCC.Forms"
 	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
@@ -11,7 +12,7 @@
     <ContentPage.Content>
         <container:ChangingStackLayout>
             <header:HeaderView
-				TitleText="{resources:Translate AppName}"
+				TitleText="{x:Static corenames:ConstantNames.AppNameShort}"
 				x:Name="Header" />
             <TableView
 				Intent="Form"

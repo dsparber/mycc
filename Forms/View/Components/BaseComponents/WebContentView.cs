@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using MyCC.Core.Resources;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
@@ -36,7 +37,7 @@ namespace MyCC.Forms.View.Components.BaseComponents
             var stack = new ChangingStackLayout { VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
             stack.Children.Add(new HeaderView
             {
-                TitleText = I18N.AppName,
+                TitleText = ConstantNames.AppNameShort,
                 InfoText = $"{I18N.Version} {AppConstants.AppVersion}"
             });
             stack.Children.Add(webView);

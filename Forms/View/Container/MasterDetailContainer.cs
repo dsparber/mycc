@@ -1,4 +1,5 @@
 ﻿using System;
+using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Constants;
@@ -19,7 +20,7 @@ namespace MyCC.Forms.View.Container
 
         public MasterDetailContainer()
         {
-            Title = I18N.AppName;
+            Title = ConstantNames.AppNameShort;
             BackgroundColor = AppConstants.TableBackgroundColor;
 
             _ratesPage = new NavigationPage(new RateView()) { Title = I18N.Rates, Icon = "rate.png", BarTextColor = Color.White };
@@ -37,7 +38,7 @@ namespace MyCC.Forms.View.Container
             public MasterPage(MasterDetailContainer container)
             {
                 Icon = "hamburger.png";
-                Title = I18N.AppName;
+                Title = ConstantNames.AppNameShort;
                 BackgroundColor = Color.White;
 
                 var stack = new StackLayout
@@ -84,7 +85,7 @@ namespace MyCC.Forms.View.Container
                     Spacing = 0,
                     Children =
                     {
-                        new HeaderView { TitleText = I18N.AppName, InfoText = I18N.AppNameLong },
+                        new HeaderView { TitleText = ConstantNames.AppNameShort, InfoText = I18N.AppNameLong },
                         new ScrollView { Content = stack }
                     }
                 };

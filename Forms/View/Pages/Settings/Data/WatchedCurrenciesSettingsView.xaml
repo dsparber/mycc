@@ -1,7 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:corenames="clr-namespace:MyCC.Core.Resources;assembly=MyCC.Core"
     xmlns:resources="clr-namespace:MyCC.Forms.Resources;assembly=MyCC.Forms"
 	xmlns:constants="clr-namespace:MyCC.Forms.Constants;assembly=MyCC.Forms"
 	xmlns:container="clr-namespace:MyCC.Forms.View.Container;assembly=MyCC.Forms"
@@ -18,7 +19,7 @@
     <ContentPage.Content>
         <container:ChangingStackLayout>
             <header:HeaderView
-				TitleText="{resources:Translate AppName}"
+				TitleText="{x:Static corenames:ConstantNames.AppNameShort}"
 				x:Name="Header"/>
             <ScrollView
 				IsClippedToBounds="true">

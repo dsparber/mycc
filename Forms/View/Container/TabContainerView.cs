@@ -1,3 +1,4 @@
+using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Constants;
@@ -12,7 +13,7 @@ namespace MyCC.Forms.View.Container
     {
         public TabContainerView()
         {
-            Title = I18N.AppName;
+            Title = ConstantNames.AppNameShort;
             BackgroundColor = AppConstants.TableBackgroundColor;
 
             var ratesPage = new NavigationPage(new RateView()) { Title = I18N.Rates, Icon = "rate.png", BarTextColor = Color.White };

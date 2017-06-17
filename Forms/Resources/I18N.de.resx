@@ -153,9 +153,6 @@
   <data name="ApiKey" xml:space="preserve">
     <value>Key</value>
   </data>
-  <data name="AppName" xml:space="preserve">
-    <value>MyCC</value>
-  </data>
   <data name="AppNameLong" xml:space="preserve">
     <value>Meine Kryptowährungen</value>
   </data>
@@ -191,9 +188,6 @@
   </data>
   <data name="CoinSupply" xml:space="preserve">
     <value>generierte Coins</value>
-  </data>
-  <data name="Copyright" xml:space="preserve">
-    <value>© Ing. Georg Sparber</value>
   </data>
   <data name="Currencies" xml:space="preserve">
     <value>Währungen</value>
@@ -457,7 +451,7 @@
     <value>Applikation entsperren</value>
   </data>
   <data name="DevelopedBy" xml:space="preserve">
-    <value>Entwickelt von Daniel Sparber</value>
+    <value>Entwickelt von {0}</value>
   </data>
   <data name="About" xml:space="preserve">
     <value>Über</value>
