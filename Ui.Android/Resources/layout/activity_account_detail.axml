@@ -12,7 +12,6 @@
       android:background="@color/colorBackground">
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiperefresh"
-        android:layout_below="@id/header_fragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
       <ScrollView
@@ -30,7 +29,6 @@
           <fragment
             android:name="MyCC.Ui.Android.Views.Fragments.HeaderFragment"
             android:id="@+id/header_fragment"
-            android:layout_below="@id/progress_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
           <Button
