@@ -4,12 +4,12 @@ using MyCC.Core.Resources;
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle(ConstantNames.AppNameShort)]
+[assembly: AssemblyTitle("MyCC.Forms")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright(ConstantNames.Developer)]
+[assembly: AssemblyProduct(ConstantNames.AppNameShort)]
+[assembly: AssemblyCopyright(ConstantNames.DeveloperCopyright)]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

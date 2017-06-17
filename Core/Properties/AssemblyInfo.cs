@@ -4,12 +4,12 @@ using MyCC.Core.Resources;
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("MyCC Core")]
+[assembly: AssemblyTitle("MyCC.Core")]
 [assembly: AssemblyDescription("My Cryptocurrencies - Core Utils")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct(ConstantNames.AppNameShort)]
-[assembly: AssemblyCopyright(ConstantNames.Developer)]
+[assembly: AssemblyCopyright(ConstantNames.DeveloperCopyright)]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

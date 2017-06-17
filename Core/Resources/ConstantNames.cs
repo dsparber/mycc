@@ -5,6 +5,7 @@
         public const string AppNameShort = "MyCC";
         public const string Copyright = "© Ing. Georg Sparber";
         public const string Developer = "Daniel Sparber";
+        public const string DeveloperCopyright = "Copyright © Daniel Sparber 2017";
 
         public const string Bitfinex = "Bitfinex";
         public const string BitPay = "BitPay";

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MyCC.Core.Abstract.Database;
 using MyCC.Core.Abstract.Models;
 using MyCC.Core.Abstract.Repositories;
