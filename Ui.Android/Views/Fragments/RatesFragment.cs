@@ -113,6 +113,7 @@ namespace MyCC.Ui.Android.Views.Fragments
                     _header.Data = UiUtils.Get.Rates.HeaderFor(_referenceCurrencyId);
                     _footerFragment.LastUpdate = UiUtils.Get.Rates.LastUpdate;
                     _items = UiUtils.Get.Rates.RateItemsFor(_referenceCurrencyId);
+                    if (_items == null) return;
                     SetSortButtons(UiUtils.Get.Rates.SortButtonsFor(_referenceCurrencyId), sortCurrency, sortValue);
                     _adapter.Clear();
                     _adapter.AddAll(_items);

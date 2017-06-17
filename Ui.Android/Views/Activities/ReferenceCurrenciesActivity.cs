@@ -73,6 +73,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 {
                     var removed = UiUtils.Edit.RemoveReferenceCurrency(c.Id);
                     if (removed) v.Visibility = ViewStates.Gone;
+                    _header.InfoText = ApplicationSettings.AllReferenceCurrencies.Count().GetPlural(Resource.String.NoCurrencies, Resource.String.OneCurrency, Resource.String.Currencies);
                 };
 
                 _container.AddView(v);
