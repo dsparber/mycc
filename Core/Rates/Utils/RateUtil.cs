@@ -36,7 +36,7 @@ namespace MyCC.Core.Rates.Utils
         public Task Fetch(IEnumerable<RateDescriptor> rateDescriptors, Action<double> onProgress = null) => RateLoader.FetchRates(rateDescriptors, onProgress: onProgress);
 
         public Task FetchNeeded(Action<double> onProgress = null)
-            => RateLoader.FetchRates(GetNeededRates(), onProgress: onProgress);
+            => RateLoader.FetchRates(GetNeededRates(), true, onProgress);
 
         public Task FetchNeededButNotLoaded(Action<double> onProgress = null)
             => RateLoader.FetchRates(GetNeededRates().Where(rateDescriptor => rateDescriptor.GetRate() == null), onProgress: onProgress);
