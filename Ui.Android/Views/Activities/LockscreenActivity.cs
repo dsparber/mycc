@@ -68,14 +68,15 @@ namespace MyCC.Ui.Android.Views.Activities
         {
             _cancellationSignal = new CancellationSignal();
 
-            var dialog = new FingerprintDialog { OnCancel = () => _cancellationSignal.Cancel() };
+            FingerprintDialog.OnCancel = () => _cancellationSignal?.Cancel();
+            var dialog = new FingerprintDialog();
 
             var callback = new CallbackManager
             {
                 OnSuccess = () =>
                 {
                     dialog.Dismiss();
-                    _cancellationSignal.Cancel();
+                    _cancellationSignal?.Cancel();
                     Locked = false;
                     Finish();
                 },
