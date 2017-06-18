@@ -85,7 +85,7 @@ namespace MyCC.Forms
                 try
                 {
                     if (CrossConnectivity.Current.IsConnected)
-                        await ApplicationTasks.FetchCurrenciesAndAvailableRates(
+                        await ApplicationTasks.FetchCurrencies(
                             Messaging.UpdatingCurrenciesAndAvailableRates.SendStarted,
                             Messaging.UpdatingCurrenciesAndAvailableRates.SendFinished, ErrorOverlay.Display);
                 }

@@ -14,10 +14,7 @@ namespace MyCC.Forms.View.Components.Cells
 
         public bool IsNumeric
         {
-            get
-            {
-                return _isNumeric;
-            }
+            get => _isNumeric;
             set
             {
                 _isNumeric = value;
@@ -48,13 +45,13 @@ namespace MyCC.Forms.View.Components.Cells
 
         public string Text
         {
-            get { return Entry != null ? Entry.Text : string.Empty; }
-            set { Entry.Text = value; }
+            get => Entry != null ? Entry.Text : string.Empty;
+            set => Entry.Text = value;
         }
 
         public bool IsEditable
         {
-            get { return Entry.IsEnabled; }
+            get => Entry.IsEnabled;
             set
             {
                 _entry.IsEnabled = value;
@@ -66,8 +63,8 @@ namespace MyCC.Forms.View.Components.Cells
 
         public bool IsPin
         {
-            get { return _numericEntry.IsPin; }
-            set { _numericEntry.IsPin = value; }
+            get => _numericEntry.IsPin;
+            set => _numericEntry.IsPin = value;
         }
 
         public CustomEntryCell()

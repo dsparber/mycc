@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 
@@ -14,7 +13,7 @@ namespace MyCC.Core.CoinInfo.Repositories
     {
         private static Uri GetUri(string action) => new Uri($"https://blockchain.info/q/{action}");
 
-        public string WebUrl(Currency currency) => "https://blockchain.info/stats";
+        public string WebUrl(string currencyId) => "https://blockchain.info/stats";
 
         private const string KeyHeight = "getblockcount";
         private const string KeyDifficulty = "getdifficulty";
@@ -22,11 +21,11 @@ namespace MyCC.Core.CoinInfo.Repositories
         private const string KeySupply = "totalbc";
         private const string KeyHashrate = "hashrate";
 
-        public List<Currency> SupportedCoins => new List<Currency> { Currencies.CurrencyConstants.Btc };
+        public List<string> SupportedCoins => new List<string> { Currencies.CurrencyConstants.Btc.Id };
 
         public string Name => ConstantNames.Blockchain;
 
-        public async Task<CoinInfoData> GetInfo(Currency currency)
+        public async Task<CoinInfoData> GetInfo(string currencyId)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 
@@ -36,7 +35,7 @@ namespace MyCC.Core.CoinInfo.Repositories
             var supplyTask = client.GetAsync(GetUri(KeySupply));
             var blockRewardTask = client.GetAsync(GetUri(KeyBlockReward));
 
-            Func<Task<HttpResponseMessage>, Task<string>> getString = async m =>
+            async Task<string> GetString(Task<HttpResponseMessage> m)
             {
                 try
                 {
@@ -48,13 +47,13 @@ namespace MyCC.Core.CoinInfo.Repositories
                     e.LogError();
                     return null;
                 }
-            };
+            }
 
-            var stringHeight = await getString(heightTask);
-            var stringHashrate = await getString(hashrateTask);
-            var stringDiff = await getString(diffTask);
-            var stringSupply = await getString(supplyTask);
-            var stringBlockReward = await getString(blockRewardTask);
+            var stringHeight = await GetString(heightTask);
+            var stringHashrate = await GetString(hashrateTask);
+            var stringDiff = await GetString(diffTask);
+            var stringSupply = await GetString(supplyTask);
+            var stringBlockReward = await GetString(blockRewardTask);
 
             var heigh = stringHeight != null ? int.Parse(stringHeight) as int? : null;
             var hashrate = stringHashrate != null ? decimal.Parse(stringHashrate, NumberStyles.Float, CultureInfo.InvariantCulture) as decimal? : null;
@@ -62,7 +61,7 @@ namespace MyCC.Core.CoinInfo.Repositories
             var supply = stringSupply != null ? decimal.Parse(stringSupply, NumberStyles.Float, CultureInfo.InvariantCulture) as decimal? : null;
             var blockReward = stringBlockReward != null ? decimal.Parse(stringBlockReward, NumberStyles.Float, CultureInfo.InvariantCulture) as decimal? : null;
 
-            return new CoinInfoData(currency)
+            return new CoinInfoData(currencyId)
             {
                 BlockHeight = heigh != 0 ? heigh : null,
                 CoinSupply = supply != 0 ? supply : null,

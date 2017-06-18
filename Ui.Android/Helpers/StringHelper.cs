@@ -7,7 +7,7 @@ namespace MyCC.Ui.Android.Helpers
     {
         public static string AsString(this DateTime dateTime)
         {
-            return Ui.Helpers.StringHelper.AsString(dateTime, Application.Context.GetString(Resource.String.Never));
+            return Ui.Helpers.StringUtils.AsString(dateTime, Application.Context.GetString(Resource.String.Never));
         }
 
         public static string GetPlural(this int count, int noItems, int oneItem, int manyItems)

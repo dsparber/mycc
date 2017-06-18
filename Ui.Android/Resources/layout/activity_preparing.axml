@@ -39,8 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/layout_progress"
-                android:paddingTop="24dp"
-                android:paddingBottom="24dp">
+                android:paddingTop="@dimen/abc_action_bar_content_inset_material"
+                android:paddingBottom="@dimen/abc_action_bar_content_inset_material">
                 <ProgressBar
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/layout_no_network"
-                android:paddingTop="24dp"
+                android:paddingTop="@dimen/abc_action_bar_content_inset_material"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 tools:visibility="gone">

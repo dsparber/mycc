@@ -157,7 +157,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 
         private bool IsEditable
         {
-            get { return RepositoryNameEntryCell.IsEditable; }
+            get => RepositoryNameEntryCell.IsEditable;
             set
             {
                 if (_currencyEntryCell != null) _currencyEntryCell.IsEditable = value;

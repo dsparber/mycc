@@ -15,10 +15,8 @@
       android:fillViewport="true">
     <LinearLayout
         android:orientation="vertical"
-        android:layout_gravity="center_vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="fill_parent"
         android:padding="@dimen/abc_action_bar_content_inset_material">
       <LinearLayout
           android:orientation="horizontal"
@@ -81,7 +79,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:id="@+id/linearLayout1"
-          android:layout_marginTop="24dp">
+          android:layout_marginTop="@dimen/abc_action_bar_content_inset_material">
         <ImageView
             android:src="@drawable/ic_visible"
             android:layout_width="wrap_content"

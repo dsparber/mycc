@@ -5,10 +5,11 @@ using Android.App;
 using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Widget;
+using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currencies;
-using MyCC.Core.Rates;
-using MyCC.Core.Rates.Repositories.Interfaces;
+using MyCC.Core.Rates.ModelExtensions;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
@@ -21,7 +22,7 @@ namespace MyCC.Ui.Android.Views.Activities
     {
         private HeaderFragment _header;
         private FooterFragment _footer;
-        private List<Tuple<TextView, IRateRepository>> _views;
+        private List<Tuple<TextView, string>> _views;
         private static bool _triedUpdate;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -34,37 +35,36 @@ namespace MyCC.Ui.Android.Views.Activities
             _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
             _footer = (FooterFragment)SupportFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
 
-            _header.InfoText = ExchangeRatesStorage.BitcoinRepositories.Count.GetPlural(Resource.String.NoSources, Resource.String.OneSource, Resource.String.Sources);
+            _header.InfoText = MyccUtil.Rates.CryptoToFiatSourceCount.GetPlural(Resource.String.NoSources, Resource.String.OneSource, Resource.String.Sources);
             SetFooter();
 
             var container = FindViewById<LinearLayout>(Resource.Id.container_items);
 
-            _views = ExchangeRatesStorage.BitcoinRepositories.OrderBy(r => r.Name).Select(source =>
+            _views = MyccUtil.Rates.CryptoToFiatSourcesWithRates.ToList().OrderBy(tuple => tuple.name).Select(tuple =>
             {
-
                 var v = LayoutInflater.Inflate(Resource.Layout.item_bitcoin_exchange, null);
-                v.FindViewById<TextView>(Resource.Id.text_name).Text = source.Name;
+                v.FindViewById<TextView>(Resource.Id.text_name).Text = tuple.name;
                 var detailText = v.FindViewById<TextView>(Resource.Id.text_info);
-                detailText.Text = GetDetail(source).Item1;
+                detailText.Text = GetDetail(tuple.rates.ToList());
 
                 var radioButton = v.FindViewById<RadioButton>(Resource.Id.radio_button_selected);
-                radioButton.Checked = source.TypeId == ApplicationSettings.PreferredBitcoinRepository;
+                radioButton.Checked = tuple.name == MyccUtil.Rates.SelectedCryptoToFiatSource;
 
                 v.Click += (sender, args) => radioButton.Toggle();
                 radioButton.CheckedChange += (sender, args) =>
                 {
-                    ApplicationSettings.PreferredBitcoinRepository = source.TypeId;
+                    MyccUtil.Rates.SelectedCryptoToFiatSource = tuple.name;
                     Finish();
                 };
 
                 container.AddView(v);
-                return Tuple.Create(detailText, source);
+                return Tuple.Create(detailText, tuple.name);
             }).ToList();
 
             var swipeRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             swipeRefresh.Refresh += (sender, args) =>
             {
-                Messaging.Request.BitcoinExchangeSources.Send();
+                UiUtils.Update.FetchCryptoToFiatRates();
             };
 
             Messaging.UiUpdate.BitcoinExchangeSources.Subscribe(this, () => RunOnUiThread(() =>
@@ -77,11 +77,11 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void SetFooter()
         {
-            var lastUpdate = ExchangeRatesStorage.BitcoinRepositories.Select(r => GetDetail(r).Item2).Min();
+            var lastUpdate = MyccUtil.Rates.LastCryptoToFiatUpdate();
             if (lastUpdate == DateTime.MinValue && !_triedUpdate)
             {
                 _triedUpdate = true;
-                Messaging.Request.BitcoinExchangeSources.Send();
+                UiUtils.Update.FetchCryptoToFiatRates();
             }
             _footer.LastUpdate = lastUpdate;
         }
@@ -90,20 +90,26 @@ namespace MyCC.Ui.Android.Views.Activities
         {
             foreach (var v in _views)
             {
-                v.Item1.Text = GetDetail(v.Item2).Item1;
+                v.Item1.Text = GetDetail(MyccUtil.Rates.CryptoToFiatSourcesWithRates.First(tuple => tuple.name.Equals(v.Item2)).rates.ToList());
             }
         }
 
-        private static Tuple<string, DateTime> GetDetail(IRateRepository repository)
+        private static string GetDetail(IReadOnlyCollection<ExchangeRate> rates)
         {
-            var usd = ExchangeRateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Usd, repository.TypeId);
-            var eur = ExchangeRateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Eur, repository.TypeId);
+            var descriptorBtcUsd = new RateDescriptor(CurrencyConstants.Btc.Id, CurrencyConstants.Usd.Id);
+            var descriptorBtcEur = new RateDescriptor(CurrencyConstants.Btc.Id, CurrencyConstants.Eur.Id);
 
-            var usdString = (usd?.AsMoney ?? new Money(0, CurrencyConstants.Usd)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            var eurString = (eur?.AsMoney ?? ExchangeRateHelper.GetRate(CurrencyConstants.Btc, CurrencyConstants.Eur, repository.TypeId)?.AsMoney ?? new Money(0, CurrencyConstants.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+            var usd = rates.FirstOrDefault(rate => rate.Descriptor.CurrenciesEqual(descriptorBtcUsd));
+            var eur = rates.FirstOrDefault(rate => rate.Descriptor.CurrenciesEqual(descriptorBtcEur));
+
+            usd = usd?.Descriptor.CurrenciesEqual(descriptorBtcUsd) ?? false ? usd : usd?.Inverse();
+            eur = eur?.Descriptor.CurrenciesEqual(descriptorBtcEur) ?? false ? eur : eur?.Inverse();
+
+            var usdString = new Money(usd?.Rate ?? 0, CurrencyConstants.Usd).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+            var eurString = new Money(eur?.Rate ?? (usd != null ? MyccUtil.Rates.GetRate(descriptorBtcEur)?.Rate : 0) ?? 0, CurrencyConstants.Eur).ToStringTwoDigits(ApplicationSettings.RoundMoney);
             var note = eur == null && usd != null ? "*" : string.Empty;
 
-            return Tuple.Create($"{eurString}{note} / {usdString}", usd?.LastUpdate ?? eur?.LastUpdate ?? DateTime.MinValue);
+            return $"{eurString}{note} / {usdString}";
         }
     }
 }

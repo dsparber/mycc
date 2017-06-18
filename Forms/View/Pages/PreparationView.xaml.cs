@@ -63,7 +63,7 @@ namespace MyCC.Forms.View.Pages
                 if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
 
                 // STEP 1: Fetch available currencies
-                var totalCount = CurrencyStorage.Instance.CurrencySources.Count() * 2;
+                var totalCount = CurrencyStorage.Instance.Sources.Count() * 2;
                 var count = 0;
 
                 Action<ICurrencySource> setProgress = source =>
@@ -77,7 +77,7 @@ namespace MyCC.Forms.View.Pages
                 await ApplicationTasks.LoadEverything();
 
                 // STEP 2: Fetch needed Rates
-                await TaskHelper.FetchMissingRates(false, progress => SetStatus(0.8 + progress * 0.1, I18N.LoadingRates));
+                await TaskHelper.FetchNeededButNotLoadedRates(false, progress => SetStatus(0.8 + progress * 0.1, I18N.LoadingRates));
 
                 ApplicationSettings.AppInitialised = true;
 

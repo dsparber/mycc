@@ -12,7 +12,7 @@
       android:paddingTop="8dp">
     <TextView
         android:text="x"
-        android:paddingLeft="24dp"
+        android:paddingLeft="@dimen/abc_action_bar_content_inset_material"
         android:layout_width="0dp"
         android:layout_weight="0.2"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
       android:paddingBottom="8dp">
     <TextView
         android:text="="
-        android:paddingLeft="24dp"
+        android:paddingLeft="@dimen/abc_action_bar_content_inset_material"
         android:layout_width="0dp"
         android:layout_weight="0.2"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text_default_material_light"
         android:paddingStart="8dp"
-        android:paddingEnd="24dp"
+        android:paddingEnd="@dimen/abc_action_bar_content_inset_material"
         android:typeface="monospace" />
   </LinearLayout>
 </LinearLayout>

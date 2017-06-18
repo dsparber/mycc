@@ -7,7 +7,7 @@ namespace MyCC.Forms.View.Components
 {
     public class InfoFooterComponent : ContentView
     {
-        public string Text { set { _label.Text = value; } }
+        public string Text { set => _label.Text = value; }
 
         private string Warning
         {

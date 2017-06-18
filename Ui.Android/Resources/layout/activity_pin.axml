@@ -16,14 +16,14 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="24dp">
+            android:padding="@dimen/abc_action_bar_content_inset_material">
             <EditText
                 android:inputType="numberPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edit_old_pin"
                 android:hint="@string/OldPin"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginBottom="@dimen/abc_action_bar_content_inset_material" />
             <EditText
                 android:inputType="numberPassword"
                 android:layout_width="match_parent"

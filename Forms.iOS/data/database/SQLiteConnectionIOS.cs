@@ -1,11 +1,8 @@
 ﻿using System;
 using System.IO;
-using MyCC.Core.Helpers;
-using MyCC.Forms.iOS.data.database;
+using MyCC.Core.Database;
 using SQLite;
-using Xamarin.Forms;
 
-[assembly: Dependency(typeof(SqLiteConnectionIos))]
 namespace MyCC.Forms.iOS.data.database
 {
     public class SqLiteConnectionIos : ISqLiteConnection

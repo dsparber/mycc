@@ -5,22 +5,24 @@ namespace MyCC.Ui.DataItems
 {
     public class AssetItem
     {
-        public string CurrencyCode => Value.Currency.Code;
-        public string FormattedValue => Value.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
-
+        public readonly string CurrencyCode;
+        public readonly string FormattedValue;
+        public readonly string FormattedReferenceValue;
         public readonly bool Enabled;
 
-        public string FormattedReferenceValue => ReferenceValue.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
-
-        public Money Value { get; private set; }
-
-        public Money ReferenceValue { get; private set; }
+        public readonly string CurrencyId;
+        public readonly decimal Amount;
+        public readonly decimal ReferenceAmount;
 
         public AssetItem(Money value, Money referenceValue, bool enabled)
         {
-            Value = value;
-            ReferenceValue = referenceValue;
+            CurrencyCode = value.Currency.Code;
+            FormattedValue = value.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
+            FormattedReferenceValue = referenceValue.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
             Enabled = enabled;
+            CurrencyId = value.Currency.Id;
+            Amount = value.Amount;
+            ReferenceAmount = referenceValue.Amount;
         }
 
     }

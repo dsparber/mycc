@@ -42,27 +42,43 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ViewData\AddAccountData.cs" />
-    <Compile Include="ViewData\AccountDetailViewData.cs" />
-    <Compile Include="ViewData\AccountsGroupViewData.cs" />
+    <Compile Include="DataItems\AccountItem.cs" />
+    <Compile Include="Edit\EditReferenceCurrencies.cs" />
+    <Compile Include="Edit\EditRepository.cs" />
+    <Compile Include="Get\IAccountDetailViewData.cs" />
+    <Compile Include="Get\IAccountsGroupViewData.cs" />
+    <Compile Include="Get\ICachedData.cs" />
+    <Compile Include="Get\ICoinInfoViewData.cs" />
+    <Compile Include="Get\IRatesOverviewData.cs" />
+    <Compile Include="Get\IAssetsOverviewData.cs" />
+    <Compile Include="Get\IGetUtils.cs" />
+    <Compile Include="Prepare\IPrepareUtils.cs" />
+    <Compile Include="Prepare\PrepareUtils.cs" />
+    <Compile Include="UiUtils.cs" />
+    <Compile Include="Edit\EditUtils.cs" />
+    <Compile Include="Edit\EditAccounts.cs" />
+    <Compile Include="Get\Implementations\AccountDetailViewData.cs" />
+    <Compile Include="Get\Implementations\AccountsGroupViewData.cs" />
     <Compile Include="DataItems\AssetItem.cs" />
     <Compile Include="DataItems\AssetsGraphItem.cs" />
-    <Compile Include="ViewData\AssetsViewData.cs" />
-    <Compile Include="ViewData\CoinHeaderData.cs" />
+    <Compile Include="Get\Implementations\AssetsOverviewData.cs" />
+    <Compile Include="DataItems\CoinHeaderItem.cs" />
     <Compile Include="DataItems\CoinInfoItem.cs" />
-    <Compile Include="ViewData\CoinInfoViewData.cs" />
-    <Compile Include="DataItems\HeaderDataItem.cs" />
+    <Compile Include="Get\Implementations\CoinInfoViewData.cs" />
+    <Compile Include="DataItems\HeaderItem.cs" />
     <Compile Include="DataItems\RateItem.cs" />
-    <Compile Include="ViewData\CurrencySettingsData.cs" />
-    <Compile Include="ViewData\RatesViewData.cs" />
+    <Compile Include="Edit\EditWatchedCurrencies.cs" />
+    <Compile Include="Edit\IEditUtils.cs" />
+    <Compile Include="Update\IUpdateUtils.cs" />
+    <Compile Include="Get\Implementations\RatesOverviewData.cs" />
     <Compile Include="DataItems\ReferenceValueItem.cs" />
     <Compile Include="DataItems\SortButtonItem.cs" />
-    <Compile Include="Tasks\TaskHelper.cs" />
-    <Compile Include="ViewData\ViewData.cs" />
+    <Compile Include="Update\UpdateUtils.cs" />
+    <Compile Include="Get\Implementations\GetUtils.cs" />
     <Compile Include="Helpers\IErrorDialog.cs" />
     <Compile Include="Helpers\ITextResolver.cs" />
     <Compile Include="Helpers\SortDirectionHelper.cs" />
-    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helpers\StringUtils.cs" />
     <Compile Include="Messages\MessageTools.cs" />
     <Compile Include="Messages\Messaging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +86,9 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\portable-net45+win8+wpa81+wp8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\portable-net40+sl4+win8+wp8\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Core.dll</HintPath>
@@ -85,6 +104,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -2,42 +2,11 @@
 {
     public static class Messaging
     {
-        // Request Data
-        public static class Request
-        {
-            public const string AllRates = "RequestAllRates";
-            public const string AllAssetsAndRates = "RequestAllAssets";
-
-            public const string DataForNewAccount = "RequestDataForNewAccount";
-
-            public const string AccountsByCurrency = "RequestAccountsByCurrency";
-            public const string RateAndInfo = "RequestCurrencyAndInfo";
-            public const string InfoForCurrency = "RequestInfoForCurrency";
-            public const string SingleAccount = "RequestSingleAccount";
-
-            public const string BitcoinExchangeSources = "RequestBitcoinExchangeSources";
-        }
-
-        // Update Data
-        public static class Update
-        {
-            public static readonly string[] AllItems = { Rates, Assets };
-            public const string Rates = "UpdateRateItems";
-            public const string Assets = "UpdateAssets";
-        }
-
         public static class Status
         {
             public const string Progress = "StatusProgress";
             public const string Network = "StatusNetwork";
         }
-
-        // Settings changed
-        public static class SettingChange
-        {
-            public const string MainCurrencies = "SettingChangeMainCurrencies";
-        }
-
 
         // Update UIs
         public static class UiUpdate

@@ -7,10 +7,10 @@ using Android.Widget;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Helpers;
-using Newtonsoft.Json;
 
 namespace MyCC.Ui.Android.Views.Fragments.AddSource
 {
@@ -70,7 +70,7 @@ namespace MyCC.Ui.Android.Views.Fragments.AddSource
         {
             if (requestCode == RequestCodeCurrency && resultCode == (int)Result.Ok)
             {
-                _currency = JsonConvert.DeserializeObject<Currency>(data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency));
+                _currency = data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency).Find();
                 _currencyEntry.Text = $"{_currency.Name} ({_currency.Code})";
                 if (AddSourceActivity != null) AddSourceActivity.Currency = _currency;
             }

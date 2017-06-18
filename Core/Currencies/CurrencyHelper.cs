@@ -23,8 +23,11 @@ namespace MyCC.Core.Currencies
         public static string FindName(this string currencyId) => currencyId.Find().Name;
         public static string FindName(this Currency currency) => currency.Id.Find().Name;
         public static string Code(this string currencyId) => currencyId.ToCurrency().Code;
+        public static bool IsCrypto(this string currencyId) => currencyId.ToCurrency().IsCrypto;
+        public static bool IsFiat(this string currencyId) => currencyId.ToCurrency().IsFiat;
 
         public static IEnumerable<Currency> Currencies(this int flags) => CurrencyStorage.Instance.Currencies.Where(c => c.BalanceSourceFlags.IsSet(flags));
+        public static IEnumerable<string> CurrencyIds(this int flags) => flags.Currencies().Select(currency => currency.Id);
 
         public static Tuple<bool, Currency> Merge(this Currency c1, Currency c2)
         {
@@ -36,5 +39,8 @@ namespace MyCC.Core.Currencies
 
             return Tuple.Create(updateName || c1.BalanceSourceFlags != c2.BalanceSourceFlags, c1);
         }
+
+        public static bool IsSet(this Currency currency, int sourceFlag) =>
+            currency.BalanceSourceFlags.IsSet(sourceFlag);
     }
 }

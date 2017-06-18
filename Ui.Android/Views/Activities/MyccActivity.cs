@@ -43,11 +43,11 @@ namespace MyCC.Ui.Android.Views.Activities
 
         protected override void OnStart()
         {
+            var millis = DateTime.Now.Subtract(_lastStop).TotalMilliseconds;
             base.OnStart();
 
             CurrentInstance = this;
 
-            var millis = DateTime.Now.Subtract(_lastStop).TotalMilliseconds;
             if (!(this is LockscreenActivity))
             {
                 if (Locked || _runningActivities == 0 && millis > 2500 && ApplicationSettings.IsPinSet)
@@ -87,14 +87,24 @@ namespace MyCC.Ui.Android.Views.Activities
             base.OnStop();
             _runningActivities -= 1;
 
-            if (_runningActivities == 0 && _shakeRecognizer != null)
+            if (_runningActivities != 0) return;
+
+            if (_shakeRecognizer != null)
             {
-                _lastStop = DateTime.Now;
                 var sensorManager = (SensorManager)GetSystemService(SensorService);
                 sensorManager.UnregisterListener(_shakeRecognizer);
                 _shakeRecognizer = null;
             }
+            _lastStop = DateTime.Now;
+        }
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            if (_runningActivities == 0)
+            {
+                _lastStop = DateTime.Now;
+            }
         }
     }
 }

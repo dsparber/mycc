@@ -8,6 +8,8 @@ using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Messages;
@@ -141,7 +143,7 @@ namespace MyCC.Forms.View.Components.Table
             {
                 var sum = AccountStorage.AccountsWithCurrency(currencyId).Sum(a => a.IsEnabled ? a.Money.Amount : 0);
                 var neededRate = new ExchangeRate(currencyId, ApplicationSettings.StartupCurrencyAssets);
-                var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
+                var rate = RateUtil.GetRate(neededRate) ?? neededRate;
 
                 var currency = currencyId.ToCurrency();
                 Code = currency.Code;

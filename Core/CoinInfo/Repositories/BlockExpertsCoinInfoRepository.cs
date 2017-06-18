@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 
@@ -14,28 +13,28 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class BlockExpertsCoinInfoRepository : ICoinInfoRepository
     {
-        public string WebUrl(Currency currency) => $"https://www.blockexperts.com/{currency.Code.ToLower()}";
+        public string WebUrl(string currencyId) => $"https://www.blockexperts.com/{currencyId.Code().ToLower()}";
 
-        private Uri GetUri(Currency coin, string action) => new Uri($"https://www.blockexperts.com/api?coin={coin.Code.ToLower()}&action={action}");
+        private static Uri GetUri(string currencyId, string action) => new Uri($"https://www.blockexperts.com/api?coin={currencyId.Code().ToLower()}&action={action}");
         private const string KeyHeight = "getheight";
         private const string KeyDifficulty = "getdifficulty";
         private const string KeyHashrate = "getnetworkghps";
         private const string KeySupply = "getmoneysupply";
 
-        public List<Currency> SupportedCoins => CurrencyConstants.FlagBlockExperts.Currencies().ToList();
+        public List<string> SupportedCoins => CurrencyConstants.FlagBlockExperts.CurrencyIds().ToList();
 
         public string Name => ConstantNames.BlockExperts;
 
-        public async Task<CoinInfoData> GetInfo(Currency currency)
+        public async Task<CoinInfoData> GetInfo(string currencyId)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 
-            var heightTask = client.GetAsync(GetUri(currency, KeyHeight));
-            var hashrateTask = client.GetAsync(GetUri(currency, KeyHashrate));
-            var diffTask = client.GetAsync(GetUri(currency, KeyDifficulty));
-            var supplyTask = client.GetAsync(GetUri(currency, KeySupply));
+            var heightTask = client.GetAsync(GetUri(currencyId, KeyHeight));
+            var hashrateTask = client.GetAsync(GetUri(currencyId, KeyHashrate));
+            var diffTask = client.GetAsync(GetUri(currencyId, KeyDifficulty));
+            var supplyTask = client.GetAsync(GetUri(currencyId, KeySupply));
 
-            Func<Task<HttpResponseMessage>, Task<string>> getString = async task =>
+            async Task<string> GetString(Task<HttpResponseMessage> task)
             {
                 try
                 {
@@ -48,14 +47,14 @@ namespace MyCC.Core.CoinInfo.Repositories
                     e.LogError();
                     return null;
                 }
-            };
+            }
 
-            int heigh; int.TryParse(await getString(heightTask), out heigh);
-            var hashrate = TryParse(await getString(hashrateTask));
-            var diff = TryParse(await getString(diffTask));
-            var supply = TryParse(await getString(supplyTask));
+            int heigh; int.TryParse(await GetString(heightTask), out heigh);
+            var hashrate = TryParse(await GetString(hashrateTask));
+            var diff = TryParse(await GetString(diffTask));
+            var supply = TryParse(await GetString(supplyTask));
 
-            return new CoinInfoData(currency)
+            return new CoinInfoData(currencyId)
             {
                 BlockHeight = heigh != 0 ? heigh as int? : null,
                 CoinSupply = supply != 0 ? supply as decimal? : null,

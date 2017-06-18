@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Android.App;
 using Android.Content;
@@ -9,7 +8,6 @@ using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.Android.Helpers;
@@ -17,14 +15,13 @@ using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Android.Views.Adapter;
 using MyCC.Ui.DataItems;
 using MyCC.Ui.Messages;
-using Newtonsoft.Json;
 using Fragment = Android.Support.V4.App.Fragment;
 
 namespace MyCC.Ui.Android.Views.Fragments
 {
     public class AssetsTableFragment : Fragment
     {
-        private Currency _referenceCurrency;
+        private string _referenceCurrencyId;
         private List<AssetItem> _items;
         private HeaderFragment _header;
         private FooterFragment _footerFragment;
@@ -33,44 +30,40 @@ namespace MyCC.Ui.Android.Views.Fragments
         private SortButtonFragment _sortAmount;
         private View _fragmentRootView;
 
-        public AssetsTableFragment(Currency referenceCurrency)
+        public AssetsTableFragment(string referenceCurrencyId)
         {
-            _referenceCurrency = referenceCurrency;
+            _referenceCurrencyId = referenceCurrencyId;
         }
 
         public AssetsTableFragment() { }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var saved = savedInstanceState?.GetString("currency");
-            if (saved != null)
-            {
-                _referenceCurrency = JsonConvert.DeserializeObject<Currency>(saved);
-            }
+            _referenceCurrencyId = savedInstanceState?.GetString("currency") ?? _referenceCurrencyId;
 
             var view = inflater.Inflate(Resource.Layout.fragment_assets_table, container, false);
 
             SetVisibleElements(view);
 
-            var headerData = ViewData.ViewData.Assets.Headers?[_referenceCurrency];
+            var headerData = UiUtils.Get.Assets.HeaderFor(_referenceCurrencyId);
             _header = (HeaderFragment)ChildFragmentManager.FindFragmentById(Resource.Id.header_fragment);
             _header.Data = headerData;
 
             _footerFragment = (FooterFragment)ChildFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
-            _footerFragment.LastUpdate = ViewData.ViewData.Assets.LastUpdate?[_referenceCurrency] ?? DateTime.MinValue;
+            _footerFragment.LastUpdate = UiUtils.Get.Assets.LastUpdate;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
-            refreshView.Refresh += (sender, args) => Messaging.Request.AllAssetsAndRates.Send();
+            refreshView.Refresh += (sender, args) => UiUtils.Update.FetchAllAssetsAndRates();
 
-            _items = ViewData.ViewData.Assets.Items?[_referenceCurrency] ?? new List<AssetItem>();
+            _items = UiUtils.Get.Assets.TableItemsFor(_referenceCurrencyId);
             var adapter = new AssetsListAdapter(Context, _items);
             var list = view.FindViewById<ListView>(Resource.Id.list_assets);
             list.Adapter = adapter;
             list.ItemClick += (sender, args) =>
             {
-                var currency = adapter.GetItem(args.Position).Value.Currency;
+                var currencyId = adapter.GetItem(args.Position).CurrencyId;
 
-                var accounts = AccountStorage.AccountsWithCurrency(currency);
+                var accounts = AccountStorage.AccountsWithCurrency(currencyId);
 
                 if (accounts.Count == 1)
                 {
@@ -81,12 +74,12 @@ namespace MyCC.Ui.Android.Views.Fragments
                 else
                 {
                     var intent = new Intent(Activity, typeof(AccountGroupActivity));
-                    intent.PutExtra(AccountGroupActivity.ExtraCurrencyId, currency.Id);
+                    intent.PutExtra(AccountGroupActivity.ExtraCurrencyId, currencyId);
                     StartActivity(intent);
                 }
             };
 
-            var sortData = ViewData.ViewData.Assets.SortButtons?[_referenceCurrency];
+            var sortData = UiUtils.Get.Assets.SortButtonsFor(_referenceCurrencyId);
             var sortCurrency = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
             _sortAmount = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_amount_sort);
             _sortValue = (SortButtonFragment)ChildFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
@@ -100,14 +93,10 @@ namespace MyCC.Ui.Android.Views.Fragments
                 if (Activity == null) return;
                 Activity.RunOnUiThread(() =>
                 {
-                    if (!ViewData.ViewData.Assets.IsDataAvailable) return;
-                    if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency.Id)) return;
-                    if (!ViewData.ViewData.Assets.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
-
-                    _header.Data = headerData;
-                    _footerFragment.LastUpdate = ViewData.ViewData.Assets.LastUpdate[_referenceCurrency];
-                    _items = ViewData.ViewData.Assets.Items[_referenceCurrency];
-                    SetSortButtons(ViewData.ViewData.Assets.SortButtons?[_referenceCurrency], sortCurrency, _sortAmount, _sortValue);
+                    _header.Data = UiUtils.Get.Assets.HeaderFor(_referenceCurrencyId);
+                    _footerFragment.LastUpdate = UiUtils.Get.Assets.LastUpdate;
+                    _items = UiUtils.Get.Assets.TableItemsFor(_referenceCurrencyId);
+                    SetSortButtons(UiUtils.Get.Assets.SortButtonsFor(_referenceCurrencyId), sortCurrency, _sortAmount, _sortValue);
                     adapter.Clear();
                     adapter.AddAll(_items);
                     SetVisibleElements(view);
@@ -141,7 +130,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         private static void SetVisibleElements(View view)
         {
-            var data = ViewData.ViewData.Assets.IsDataAvailable;
+            var data = UiUtils.Get.Assets.IsDataAvailable;
             view.FindViewById(Resource.Id.sort_buttons).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
             view.FindViewById(Resource.Id.swiperefresh).Visibility = data ? ViewStates.Visible : ViewStates.Invisible;
             view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;
@@ -158,7 +147,7 @@ namespace MyCC.Ui.Android.Views.Fragments
         public override void OnSaveInstanceState(Bundle outState)
         {
             base.OnSaveInstanceState(outState);
-            outState.PutString("currency", JsonConvert.SerializeObject(_referenceCurrency));
+            outState.PutString("currency", _referenceCurrencyId);
         }
     }
 }

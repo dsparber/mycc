@@ -6,6 +6,7 @@ using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Android.Views.Dialogs;
 using MyCC.Ui.Helpers;
 using Xamarin.Forms;
+using Application = Android.App.Application;
 
 [assembly: Dependency(typeof(ErrorDialog))]
 namespace MyCC.Ui.Android.Views.Dialogs
@@ -30,6 +31,14 @@ namespace MyCC.Ui.Android.Views.Dialogs
             MyccActivity.CurrentInstance.RunOnUiThread(() =>
             {
                 MyccActivity.CurrentInstance.ShowInfoDialog(Resource.String.Error, messageId);
+            });
+        }
+
+        public void Display(string errorText)
+        {
+            MyccActivity.CurrentInstance.RunOnUiThread(() =>
+            {
+                MyccActivity.CurrentInstance.ShowInfoDialog(Application.Context.GetString(Resource.String.Error), errorText);
             });
         }
     }

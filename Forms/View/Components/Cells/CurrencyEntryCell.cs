@@ -44,13 +44,13 @@ namespace MyCC.Forms.View.Components.Cells
                 _selectedCurrencyLabel.Text = _selectedCurrency != null ? _selectedCurrency.Code : I18N.SelectCurrency;
                 _selectedCurrencyLabel.TextColor = _selectedCurrency != null ? AppConstants.FontColor : AppConstants.FontColorLight;
             }
-            get { return _selectedCurrency; }
+            get => _selectedCurrency;
         }
 
         public Money SelectedMoney
         {
             set { SelectedCurrency = value.Currency; SelectedAmount = value.Amount; }
-            get { return new Money(SelectedAmount, SelectedCurrency); }
+            get => new Money(SelectedAmount, SelectedCurrency);
         }
 
 

@@ -1,22 +1,24 @@
-using MyCC.Core.Rates;
+using MyCC.Core.Currencies;
+using MyCC.Ui.Helpers;
 
 namespace MyCC.Ui.DataItems
 {
     public class ReferenceValueItem
     {
-        public string FormattedAmount => $"{Amount * Value:#,0.00000000}";
+        public string FormattedAmount => (_amount * Rate).To8DigitString();
 
-        public string FormattedRate => $"{Value:#,0.00000000}";
+        public string FormattedRate => Rate.To8DigitString();
 
-        public decimal Value;
-        public decimal Amount;
-        public string CurrencyCode;
+        public readonly decimal Rate;
+        public readonly string CurrencyCode;
 
-        public ReferenceValueItem(decimal amount, ExchangeRate rate)
+        private readonly decimal _amount;
+
+        public ReferenceValueItem(decimal amount, decimal? rate, string currencyId)
         {
-            Amount = amount;
-            Value = rate?.Rate ?? 0;
-            CurrencyCode = rate?.SecondaryCurrencyCode;
+            _amount = amount;
+            Rate = rate ?? 0;
+            CurrencyCode = currencyId.Code();
         }
 
     }

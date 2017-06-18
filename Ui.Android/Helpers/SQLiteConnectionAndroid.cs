@@ -1,10 +1,7 @@
 ﻿using System.IO;
-using MyCC.Core.Helpers;
-using MyCC.Ui.Android.Helpers;
+using MyCC.Core.Database;
 using SQLite;
-using Xamarin.Forms;
 
-[assembly: Dependency(typeof(SqLiteConnectionAndroid))]
 namespace MyCC.Ui.Android.Helpers
 {
     public class SqLiteConnectionAndroid : ISqLiteConnection

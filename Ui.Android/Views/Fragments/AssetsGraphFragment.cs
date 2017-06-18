@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Support.Design.Widget;
@@ -8,26 +6,23 @@ using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Webkit;
 using Java.Interop;
-using MyCC.Core.Currencies.Models;
-using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Activities;
 using MyCC.Ui.Messages;
-using Newtonsoft.Json;
 using Fragment = Android.Support.V4.App.Fragment;
 
 namespace MyCC.Ui.Android.Views.Fragments
 {
     public class AssetsGraphFragment : Fragment
     {
-        private Currency _referenceCurrency;
+        private string _referenceCurrencyId;
         private HeaderFragment _header;
         private FooterFragment _footerFragment;
 
 
-        public AssetsGraphFragment(Currency referenceCurrency)
+        public AssetsGraphFragment(string referenceCurrencyId)
         {
-            _referenceCurrency = referenceCurrency;
+            _referenceCurrencyId = referenceCurrencyId;
         }
 
         public AssetsGraphFragment()
@@ -36,11 +31,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var saved = savedInstanceState?.GetString("currency");
-            if (saved != null)
-            {
-                _referenceCurrency = JsonConvert.DeserializeObject<Currency>(saved);
-            }
+            _referenceCurrencyId = savedInstanceState?.GetString("currency") ?? _referenceCurrencyId;
 
             var view = inflater.Inflate(Resource.Layout.fragment_assets_graph, container, false);
 
@@ -50,33 +41,29 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             webView.Settings.JavaScriptEnabled = true;
             webView.Settings.DomStorageEnabled = true;
-            webView.SetWebViewClient(new CustomWebViewClient(_referenceCurrency));
+            webView.SetWebViewClient(new CustomWebViewClient(_referenceCurrencyId));
             webView.AddJavascriptInterface(new WebViewInterface(Context), "Native");
 
             webView.LoadUrl("file:///android_asset/pieChart.html");
 
-            var headerData = ViewData.ViewData.Assets.Headers?[_referenceCurrency];
+            var headerData = UiUtils.Get.Assets.HeaderFor(_referenceCurrencyId);
             _header = (HeaderFragment)ChildFragmentManager.FindFragmentById(Resource.Id.header_fragment);
             _header.Data = headerData;
 
             _footerFragment = (FooterFragment)ChildFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
-            _footerFragment.LastUpdate = ViewData.ViewData.Assets.LastUpdate?[_referenceCurrency] ?? DateTime.MinValue;
+            _footerFragment.LastUpdate = UiUtils.Get.Assets.LastUpdate;
 
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
-            refreshView.Refresh += (sender, args) => Messaging.Request.AllAssetsAndRates.Send();
+            refreshView.Refresh += (sender, args) => UiUtils.Update.FetchAllAssetsAndRates();
 
             Messaging.UiUpdate.AssetsGraph.Subscribe(this, () =>
             {
                 if (Activity == null) return;
                 Activity.RunOnUiThread(() =>
                 {
-                    if (!ViewData.ViewData.Assets.IsGraphDataAvailable) return;
-                    if (!ApplicationSettings.MainCurrencies.Contains(_referenceCurrency.Id)) return;
-                    if (!ViewData.ViewData.Assets.Headers.TryGetValue(_referenceCurrency, out headerData)) return;
-
-                    _header.Data = headerData;
-                    _footerFragment.LastUpdate = ViewData.ViewData.Assets.LastUpdate[_referenceCurrency];
-                    var js = ViewData.ViewData.Assets.JsDataString(_referenceCurrency);
+                    _header.Data = UiUtils.Get.Rates.HeaderFor(_referenceCurrencyId);
+                    _footerFragment.LastUpdate = UiUtils.Get.Assets.LastUpdate;
+                    var js = UiUtils.Get.Assets.GrapItemsJsFor(_referenceCurrencyId);
                     webView.LoadUrl($"javascript:{js}", null);
                     SetVisibleElements(view);
                     refreshView.Refreshing = false;
@@ -100,7 +87,7 @@ namespace MyCC.Ui.Android.Views.Fragments
 
         private static void SetVisibleElements(View view)
         {
-            var data = ViewData.ViewData.Assets.IsGraphDataAvailable;
+            var data = UiUtils.Get.Assets.IsGraphDataAvailable;
             view.FindViewById(Resource.Id.data_container).Visibility = data ? ViewStates.Visible : ViewStates.Gone;
             view.FindViewById(Resource.Id.no_data_text).Visibility = data ? ViewStates.Gone : ViewStates.Visible;
         }
@@ -108,25 +95,25 @@ namespace MyCC.Ui.Android.Views.Fragments
         public override void OnSaveInstanceState(Bundle outState)
         {
             base.OnSaveInstanceState(outState);
-            outState.PutString("currency", JsonConvert.SerializeObject(_referenceCurrency));
+            outState.PutString("currency", _referenceCurrencyId);
         }
 
         private class CustomWebViewClient : WebViewClient
         {
-            private readonly Currency _referenceCurrency;
+            private readonly string _referenceCurrencyId;
 
-            public CustomWebViewClient(Currency referenceCurrency)
+            public CustomWebViewClient(string referenceCurrencyId)
             {
-                _referenceCurrency = referenceCurrency;
+                _referenceCurrencyId = referenceCurrencyId;
             }
 
             public override void OnPageFinished(WebView view, string url)
             {
                 base.OnPageFinished(view, url);
 
-                if (!ViewData.ViewData.Assets.IsGraphDataAvailable) return;
+                if (!UiUtils.Get.Assets.IsGraphDataAvailable) return;
 
-                var js = ViewData.ViewData.Assets.JsDataString(_referenceCurrency);
+                var js = UiUtils.Get.Assets.GrapItemsJsFor(_referenceCurrencyId);
                 view.LoadUrl($"javascript:{js}", null);
             }
         }

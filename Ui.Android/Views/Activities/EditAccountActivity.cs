@@ -7,12 +7,11 @@ using Android.Views;
 using Android.Widget;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Ui.Android.Helpers;
-using MyCC.Ui.Messages;
 using MyCC.Ui.Android.Views.Fragments;
-using Newtonsoft.Json;
-using StringHelper = MyCC.Ui.Helpers.StringHelper;
+using MyCC.Ui.Helpers;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -67,7 +66,7 @@ namespace MyCC.Ui.Android.Views.Activities
             editAmount.TextChanged += (sender, args) =>
             {
                 var newText = string.Join(string.Empty, args.Text);
-                var text = StringHelper.CheckIfDecimal(newText);
+                var text = newText.CheckIfDecimal();
                 if (!string.Equals(text, newText))
                 {
                     editAmount.Text = string.Empty;
@@ -102,7 +101,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
             if (requestCode == RequestCodeCurrency && resultCode == Result.Ok)
             {
-                _currency = JsonConvert.DeserializeObject<Currency>(data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency));
+                _currency = data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency).Find();
                 _editCurrency.Text = $"{_currency.Name} ({_currency.Code})";
                 _header.MainText = Money.ToString();
             }
@@ -138,14 +137,12 @@ namespace MyCC.Ui.Android.Views.Activities
             _account.Name = NameOrDefault;
             _account.IsEnabled = _enabled;
 
-            await AccountStorage.Update(_account);
-            Messaging.Update.Assets.Send();
+            await UiUtils.Edit.Update(_account);
         }
 
         private async void Delete()
         {
-            await AccountStorage.Instance.LocalRepository.Remove(_account);
-            Messaging.Update.Assets.Send();
+            await UiUtils.Edit.Delete(_account);
         }
     }
 }

@@ -8,11 +8,10 @@ using Android.Widget;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Ui.Android.Helpers;
-using MyCC.Ui.Messages;
 using MyCC.Ui.Android.Views.Fragments;
-using Newtonsoft.Json;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -92,7 +91,7 @@ namespace MyCC.Ui.Android.Views.Activities
             var deleteButton = FindViewById<Button>(Resource.Id.button_delete);
             deleteButton.Click += (sender, args) =>
             {
-                Delete();
+                UiUtils.Edit.Delete(_repository);
                 Finish();
             };
 
@@ -112,7 +111,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
             if (requestCode == RequestCodeCurrency && resultCode == Result.Ok)
             {
-                _currency = JsonConvert.DeserializeObject<Currency>(data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency));
+                _currency = data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency).Find();
                 _editCurrency.Text = $"{_currency.Name} ({_currency.Code})";
             }
         }
@@ -144,54 +143,16 @@ namespace MyCC.Ui.Android.Views.Activities
             var dialog = this.GetLoadingDialog(null, Resource.String.Testing);
             dialog.Show();
 
-            // Test if data is valid
-            var addressRepo = _repository as AddressAccountRepository;
-            if (addressRepo != null && (!addressRepo.Address.Equals(_address) || !addressRepo.Currency.Equals(_currency)))
+            void OnError()
             {
-                var testRepo = AddressAccountRepository.CreateAddressAccountRepository(addressRepo.Name, _currency, _address ?? string.Empty);
-
-                if (testRepo == null || !await testRepo.Test())
-                {
-                    dialog.Dismiss();
-                    this.ShowInfoDialog(Resource.String.Error, Resource.String.FetchingNoSuccessText);
-                    return;
-                }
-                if (!addressRepo.Currency.Equals(_currency))
-                {
-                    await AccountStorage.Instance.Remove(_repository);
-                    await testRepo.FetchOnline();
-                    await AccountStorage.Instance.Add(testRepo);
-                }
-                testRepo.Id = _repository.Id;
-                _repository = testRepo;
-                await _repository.FetchOnline();
+                dialog.Dismiss();
+                this.ShowInfoDialog(Resource.String.Error, Resource.String.FetchingNoSuccessText);
             }
 
-            // Apply name and enabled status
-            _repository.Name = NameOrDefault;
-            foreach (var a in _repository.Elements)
-            {
-                a.Name = _repository.Name;
-                a.IsEnabled = _enabled;
-            }
+            await UiUtils.Edit.Update(_repository, _address, _currency.Id, NameOrDefault, _enabled, OnError);
 
-            // Save changes
-            await AccountStorage.Instance.Update(_repository);
-            foreach (var a in _repository.Elements.ToList())
-            {
-                await AccountStorage.Update(a);
-            }
-
-            Messaging.Update.Assets.Send();
             dialog.Dismiss();
-
             Finish();
-        }
-
-        private async void Delete()
-        {
-            await AccountStorage.Instance.Remove(_repository);
-            Messaging.Update.Assets.Send();
         }
     }
 }

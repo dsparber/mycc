@@ -10,8 +10,8 @@ namespace MyCC.Forms.View.Components.BaseComponents
     {
         public bool IsPin
         {
-            set { IsPassword = value; }
-            get { return IsPassword; }
+            set => IsPassword = value;
+            get => IsPassword;
         }
 
         public NumericEntry()

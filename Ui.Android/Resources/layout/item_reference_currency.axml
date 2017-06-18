@@ -7,11 +7,11 @@
   <LinearLayout
       p1:orientation="horizontal"
       p1:id="@+id/linearLayout1"
-      p1:paddingLeft="16dp"
+      p1:paddingLeft="@dimen/abc_action_bar_content_inset_material"
       p1:paddingBottom="4dp"
       p1:paddingTop="4dp"
       p1:background="#fff"
-      p1:paddingRight="8dp"
+      p1:paddingRight="@dimen/abc_action_bar_content_inset_material"
       p1:layout_width="match_parent"
       p1:layout_height="match_parent">
     <LinearLayout

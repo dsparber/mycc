@@ -27,5 +27,11 @@ namespace MyCC.Ui.Android.Helpers
         public string CoinProofOfStake => GetText(Resource.String.CoinProofOfStake);
         public string GHps => GetText(Resource.String.GHps);
         public string UnitSecond => GetText(Resource.String.UnitSecond);
+        public string LoadingCurrenciesFrom => GetText(Resource.String.LoadingCurrenciesFrom);
+        public string LoadingRates => GetText(Resource.String.LoadingCurrencies);
+        public string OnlyThreeCurrenciesCanBeStared => GetText(Resource.String.OnlyThreeCurrenciesCanBeStared);
+        public string BitcoinCanNotBeRemoved => GetText(Resource.String.BitcoinCanNotBeRemoved);
+        public string IsEqualTo => GetText(Resource.String.IsEqualTo);
+        public string AreEqualTo => GetText(Resource.String.AreEqualTo);
     }
 }

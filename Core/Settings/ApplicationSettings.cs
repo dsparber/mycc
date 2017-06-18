@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Currencies;
-using MyCC.Core.Rates.Repositories;
+using MyCC.Core.Rates.Repositories.Utils;
 using MyCC.Core.Types;
 
 namespace MyCC.Core.Settings
@@ -53,26 +53,26 @@ namespace MyCC.Core.Settings
 
         public static string StartupCurrencyAssets
         {
-            get { return SettingKeys.KeyAssetsPageCurrency.Get(CurrencyConstants.Btc.Id); }
-            set { SettingKeys.KeyAssetsPageCurrency.Set(value); }
+            get => SettingKeys.KeyAssetsPageCurrency.Get(CurrencyConstants.Btc.Id);
+            set => SettingKeys.KeyAssetsPageCurrency.Set(value);
         }
 
         public static string StartupCurrencyRates
         {
-            get { return SettingKeys.KeyRatePageCurrency.Get(CurrencyConstants.Btc.Id); }
-            set { SettingKeys.KeyRatePageCurrency.Set(value); }
+            get => SettingKeys.KeyRatePageCurrency.Get(CurrencyConstants.Btc.Id);
+            set => SettingKeys.KeyRatePageCurrency.Set(value);
         }
 
         public static IEnumerable<string> WatchedCurrencies
         {
-            get { return SettingKeys.KeyWatchedCurrencies.GetStrings(); }
-            set { SettingKeys.KeyWatchedCurrencies.SetStrings(value); }
+            get => SettingKeys.KeyWatchedCurrencies.GetStrings();
+            set => SettingKeys.KeyWatchedCurrencies.SetStrings(value);
         }
 
         public static IEnumerable<string> DisabledCurrencyIds
         {
-            get { return SettingKeys.KeyDisabledCurrencies.GetStrings(); }
-            set { SettingKeys.KeyDisabledCurrencies.SetStrings(value); }
+            get => SettingKeys.KeyDisabledCurrencies.GetStrings();
+            set => SettingKeys.KeyDisabledCurrencies.SetStrings(value);
         }
 
 
@@ -89,14 +89,14 @@ namespace MyCC.Core.Settings
 
         public static IEnumerable<string> MainCurrencies
         {
-            get { return SettingKeys.KeyMainCurrencies.GetStrings(SettingUtils.DefaultStaredReferenceCurrencies); }
-            set { SettingKeys.KeyMainCurrencies.SetStrings(value); }
+            get => SettingKeys.KeyMainCurrencies.GetStrings(SettingUtils.DefaultStaredReferenceCurrencies);
+            set => SettingKeys.KeyMainCurrencies.SetStrings(value);
         }
 
         public static IEnumerable<string> FurtherCurrencies
         {
-            get { return SettingKeys.KeyFurtherCurrencies.GetStrings(SettingUtils.DefaultFurtherReferenceCurrencies); }
-            set { SettingKeys.KeyFurtherCurrencies.SetStrings(value); }
+            get => SettingKeys.KeyFurtherCurrencies.GetStrings(SettingUtils.DefaultFurtherReferenceCurrencies);
+            set => SettingKeys.KeyFurtherCurrencies.SetStrings(value);
         }
 
         public static IEnumerable<string> AllReferenceCurrencies
@@ -104,109 +104,109 @@ namespace MyCC.Core.Settings
 
         public static SortOrder SortOrderAssets
         {
-            get { return SettingKeys.KeySortOrderTable.GetEnum(SortOrder.Alphabetical); }
-            set { SettingKeys.KeySortOrderTable.SetEnum(value); }
+            get => SettingKeys.KeySortOrderTable.GetEnum(SortOrder.Alphabetical);
+            set => SettingKeys.KeySortOrderTable.SetEnum(value);
         }
 
         public static SortDirection SortDirectionAssets
         {
-            get { return SettingKeys.KeySortDirectionTable.GetEnum(SortDirection.Ascending); }
-            set { SettingKeys.KeySortDirectionTable.SetEnum(value); }
+            get => SettingKeys.KeySortDirectionTable.GetEnum(SortDirection.Ascending);
+            set => SettingKeys.KeySortDirectionTable.SetEnum(value);
         }
 
         public static SortOrder SortOrderRates
         {
-            get { return SettingKeys.KeySortOrderRates.GetEnum(SortOrder.Alphabetical); }
-            set { SettingKeys.KeySortOrderRates.SetEnum(value); }
+            get => SettingKeys.KeySortOrderRates.GetEnum(SortOrder.Alphabetical);
+            set => SettingKeys.KeySortOrderRates.SetEnum(value);
         }
 
         public static SortDirection SortDirectionRates
         {
-            get { return SettingKeys.KeySortDirectionRates.GetEnum(SortDirection.Ascending); }
-            set { SettingKeys.KeySortDirectionRates.SetEnum(value); }
+            get => SettingKeys.KeySortDirectionRates.GetEnum(SortDirection.Ascending);
+            set => SettingKeys.KeySortDirectionRates.SetEnum(value);
         }
 
         public static SortOrder SortOrderAccounts
         {
-            get { return SettingKeys.KeySortOrderAccounts.GetEnum(SortOrder.Alphabetical); }
-            set { SettingKeys.KeySortOrderAccounts.SetEnum(value); }
+            get => SettingKeys.KeySortOrderAccounts.GetEnum(SortOrder.Alphabetical);
+            set => SettingKeys.KeySortOrderAccounts.SetEnum(value);
         }
 
         public static SortDirection SortDirectionAccounts
         {
-            get { return SettingKeys.KeySortDirectionAccounts.GetEnum(SortDirection.Ascending); }
-            set { SettingKeys.KeySortDirectionAccounts.SetEnum(value); }
+            get => SettingKeys.KeySortDirectionAccounts.GetEnum(SortDirection.Ascending);
+            set => SettingKeys.KeySortDirectionAccounts.SetEnum(value);
         }
 
         public static SortOrder SortOrderReferenceValues
         {
-            get { return SettingKeys.KeySortOrderReferenceValues.GetEnum(SortOrder.Alphabetical); }
-            set { SettingKeys.KeySortOrderReferenceValues.SetEnum(value); }
+            get => SettingKeys.KeySortOrderReferenceValues.GetEnum(SortOrder.Alphabetical);
+            set => SettingKeys.KeySortOrderReferenceValues.SetEnum(value);
         }
 
         public static SortDirection SortDirectionReferenceValues
         {
-            get { return SettingKeys.KeySortDirectionReferenceValues.GetEnum(SortDirection.Ascending); }
-            set { SettingKeys.KeySortDirectionReferenceValues.SetEnum(value); }
+            get => SettingKeys.KeySortDirectionReferenceValues.GetEnum(SortDirection.Ascending);
+            set => SettingKeys.KeySortDirectionReferenceValues.SetEnum(value);
         }
 
         public static bool AutoRefreshOnStartup
         {
-            get { return SettingKeys.KeyAutoRefreshOnStartup.Get(true); }
-            set { SettingKeys.KeyAutoRefreshOnStartup.Set(value); }
+            get => SettingKeys.KeyAutoRefreshOnStartup.Get(true);
+            set => SettingKeys.KeyAutoRefreshOnStartup.Set(value);
         }
 
         public static bool AppInitialised
         {
-            get { return SettingKeys.KeyAppInitialised.Get(false); }
-            set { SettingKeys.KeyAppInitialised.Set(value); }
+            get => SettingKeys.KeyAppInitialised.Get(false);
+            set => SettingKeys.KeyAppInitialised.Set(value);
         }
 
         public static bool RoundMoney => false;
 
         public static int PreferredBitcoinRepository
         {
-            get { return SettingKeys.PreferredBitcoinRepository.Get((int)RatesRepositories.Kraken); }
-            set { SettingKeys.PreferredBitcoinRepository.Set(value); }
+            get => SettingKeys.PreferredBitcoinRepository.Get((int)RateSourceId.Kraken);
+            set => SettingKeys.PreferredBitcoinRepository.Set(value);
         }
 
         public static StartupPage DefaultStartupPage
         {
-            get { return SettingKeys.KeyDefaultPage.GetEnum(StartupPage.RatesView); }
-            set { SettingKeys.KeyDefaultPage.SetEnum(value); }
+            get => SettingKeys.KeyDefaultPage.GetEnum(StartupPage.RatesView);
+            set => SettingKeys.KeyDefaultPage.SetEnum(value);
         }
 
         public static ColumnToHide AssetsColumToHideIfSmall
         {
-            get { return SettingKeys.KeyAssetsColumnHideWhenSmall.GetEnum(ColumnToHide.None); }
-            set { SettingKeys.KeyAssetsColumnHideWhenSmall.SetEnum(value); }
+            get => SettingKeys.KeyAssetsColumnHideWhenSmall.GetEnum(ColumnToHide.None);
+            set => SettingKeys.KeyAssetsColumnHideWhenSmall.SetEnum(value);
         }
 
 
         public static int PinLength
         {
-            get { return SettingKeys.KeyPinLength.Get(-1); }
-            private set { SettingKeys.KeyPinLength.Set(value); }
+            get => SettingKeys.KeyPinLength.Get(-1);
+            private set => SettingKeys.KeyPinLength.Set(value);
         }
 
         public static bool IsPinSet => PinLength != -1;
 
         public static bool IsFingerprintEnabled
         {
-            get { return SettingKeys.KeyFingerprintSet.Get(false); }
-            set { SettingKeys.KeyFingerprintSet.Set(value); }
+            get => SettingKeys.KeyFingerprintSet.Get(false);
+            set => SettingKeys.KeyFingerprintSet.Set(value);
         }
 
         public static bool LockByShaking
         {
-            get { return SettingKeys.KeyLockByShaking.Get(false); }
-            set { SettingKeys.KeyLockByShaking.Set(value); }
+            get => SettingKeys.KeyLockByShaking.Get(false);
+            set => SettingKeys.KeyLockByShaking.Set(value);
         }
 
         public static bool SecureXpub
         {
-            get { return !IsPinSet || SettingKeys.KeySecureXpub.Get(true); }
-            set { SettingKeys.KeySecureXpub.Set(value); }
+            get => !IsPinSet || SettingKeys.KeySecureXpub.Get(true);
+            set => SettingKeys.KeySecureXpub.Set(value);
         }
 
         public static int PoloniexRequestNonce
@@ -217,10 +217,7 @@ namespace MyCC.Core.Settings
                 SettingKeys.KeyPoloniexRequestNonce.Set(nounce + 1);
                 return nounce;
             }
-            set
-            {
-                SettingKeys.KeyPoloniexRequestNonce.Set(value);
-            }
+            set => SettingKeys.KeyPoloniexRequestNonce.Set(value);
         }
     }
 

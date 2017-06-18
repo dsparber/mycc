@@ -10,20 +10,8 @@
       android:layout_height="0dp"
       android:layout_weight="1"
       android:background="@color/colorBackground">
-    <fragment
-        android:name="MyCC.Ui.Android.Views.Fragments.ProgressFragment"
-        android:id="@+id/progress_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <fragment
-        android:name="MyCC.Ui.Android.Views.Fragments.HeaderFragment"
-        android:id="@+id/header_fragment"
-        android:layout_below="@id/progress_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiperefresh"
-        android:layout_below="@id/header_fragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
       <ScrollView
@@ -33,23 +21,108 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+          <fragment
+            android:name="MyCC.Ui.Android.Views.Fragments.ProgressFragment"
+            android:id="@+id/progress_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+          <fragment
+            android:name="MyCC.Ui.Android.Views.Fragments.HeaderFragment"
+            android:id="@+id/header_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
           <Button
               android:text="@string/OpenInBlockExplorer"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/button_open_in_blockexplorer"
-              android:layout_marginTop="24dp"
-              android:layout_marginLeft="24dp"
-              android:layout_marginRight="24dp"
+              android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
+              android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+              android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
               android:textColor="#fff" />
+          <TextView
+            android:text="@string/Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:textAllCaps="true"
+            android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+            android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
+            android:layout_marginBottom="8dp" />
+          <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:layout_marginBottom="@dimen/abc_action_bar_content_inset_material"
+            android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
+            android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material">
+            <LinearLayout
+              android:orientation="horizontal"
+              android:layout_marginRight="8dp">
+              <TextView
+                android:text="@string/Name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+              <TextView
+                android:text=":"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            </LinearLayout>
+            <TextView
+              android:id="@+id/text_name" />
+            <LinearLayout
+              android:orientation="horizontal"
+              android:id="@+id/linearLayout1"
+              android:layout_marginRight="8dp">
+              <TextView
+                android:text="@string/Type"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+              <TextView
+                android:text=":"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            </LinearLayout>
+            <TextView
+              android:id="@+id/text_type" />
+            <LinearLayout
+              android:orientation="horizontal"
+              android:id="@+id/label_source"
+              android:layout_marginRight="8dp">
+              <TextView
+                android:text="@string/Source"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+              <TextView
+                android:text=":"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            </LinearLayout>
+            <TextView
+              android:id="@+id/text_source" />
+            <LinearLayout
+              android:orientation="horizontal"
+              android:id="@+id/label_address"
+              android:layout_marginRight="8dp">
+              <TextView
+                android:text="@string/Address"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+              <TextView
+                android:text=":"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            </LinearLayout>
+            <TextView
+              android:id="@+id/text_address" />
+          </GridLayout>
           <TextView
               android:text="@string/EqualTo"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/text_equal_to"
               app:textAllCaps="true"
-              android:layout_marginLeft="24dp"
-              android:layout_marginTop="24dp"
+              android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+              android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
               android:layout_marginBottom="8dp" />
           <LinearLayout
               android:orientation="horizontal"
@@ -80,81 +153,7 @@
               android:layout_height="wrap_content"
               android:background="@color/colorDivider"
               android:id="@+id/view_reference" />
-          <TextView
-              android:text="@string/Info"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              app:textAllCaps="true"
-              android:layout_marginLeft="24dp"
-              android:layout_marginTop="24dp"
-              android:layout_marginBottom="8dp" />
-          <GridLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:columnCount="2"
-              android:layout_marginBottom="24dp"
-              android:layout_marginRight="24dp"
-              android:layout_marginLeft="24dp">
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginRight="8dp">
-              <TextView
-                  android:text="@string/Name"
-                  android:layout_width="wrap_content"
-                  android:layout_height="match_parent" />
-              <TextView
-                  android:text=":"
-                  android:layout_width="wrap_content"
-                  android:layout_height="match_parent" />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/text_name" />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:id="@+id/linearLayout1"
-                android:layout_marginRight="8dp">
-              <TextView
-                  android:text="@string/Type"
-                  android:layout_width="wrap_content"
-                  android:layout_height="match_parent" />
-              <TextView
-                  android:text=":"
-                  android:layout_width="wrap_content"
-                  android:layout_height="match_parent" />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/text_type" />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:id="@+id/label_source"
-                android:layout_marginRight="8dp">
-              <TextView
-                  android:text="@string/Source"
-                  android:layout_width="wrap_content"
-                  android:layout_height="match_parent" />
-              <TextView
-                  android:text=":"
-                  android:layout_width="wrap_content"
-                  android:layout_height="match_parent" />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/text_source" />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:id="@+id/label_address"
-                android:layout_marginRight="8dp">
-              <TextView
-                  android:text="@string/Address"
-                  android:layout_width="wrap_content"
-                  android:layout_height="match_parent" />
-              <TextView
-                  android:text=":"
-                  android:layout_width="wrap_content"
-                  android:layout_height="match_parent" />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/text_address" />
-          </GridLayout>
+
         </LinearLayout>
       </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>

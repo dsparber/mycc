@@ -14,7 +14,7 @@ namespace MyCC.Forms.View.Components.BaseComponents
         public int SelectedIndex
         {
             set { _selectedIndex = value; UpdateView(); }
-            get { return _selectedIndex; }
+            get => _selectedIndex;
         }
 
         private readonly StackLayout _stack;
@@ -29,7 +29,7 @@ namespace MyCC.Forms.View.Components.BaseComponents
         private Color _backgroundColor;
         public new Color BackgroundColor
         {
-            get { return _backgroundColor; }
+            get => _backgroundColor;
             set { _backgroundColor = value; UpdateView(); }
         }
 

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ModernHttpClient;
-using MyCC.Core.Currencies.Models;
+using MyCC.Core.Currencies;
 using MyCC.Core.Helpers;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
@@ -14,8 +13,8 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class BlockrCoinInfoRepository : ICoinInfoRepository
     {
-        private static Uri GetUri(Currency coin) => new Uri($"https://{coin.Code.ToLower()}.blockr.io/api/v1/coin/info");
-        public string WebUrl(Currency currency) => $"http://{currency.Code.ToLower()}.blockr.io/";
+        private static Uri GetUri(string currencyId) => new Uri($"https://{currencyId.Code().ToLower()}.blockr.io/api/v1/coin/info");
+        public string WebUrl(string currencyId) => $"http://{currencyId.Code().ToLower()}.blockr.io/";
 
 
         private const string JsonKeyData = "data";
@@ -32,14 +31,13 @@ namespace MyCC.Core.CoinInfo.Repositories
 
         public string Name => ConstantNames.Blockr;
 
-        public List<Currency> SupportedCoins => new List<string> { "btc", "ltc", "ppc", "mec", "qrk", "dgc", "tbtc" }
-            .Select(s => new Currency(s, true)).ToList();
+        public List<string> SupportedCoins => new List<string> { "BTC1", "LTC1", "PPC1", "MEC1", "QRK1", "DGC1", "TBTC1" };
 
-        public async Task<CoinInfoData> GetInfo(Currency currency)
+        public async Task<CoinInfoData> GetInfo(string currencyId)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 
-            var data = await client.GetAsync(GetUri(currency));
+            var data = await client.GetAsync(GetUri(currencyId));
             try
             {
                 var dataJson = JObject.Parse(await data.Content.ReadAsStringAsync())[JsonKeyData];
@@ -54,7 +52,7 @@ namespace MyCC.Core.CoinInfo.Repositories
                 var diffJson = dataJson[JsonKeyNextDiff];
                 var diff = (string)diffJson[JsonKeyDiff];
 
-                return new CoinInfoData(currency)
+                return new CoinInfoData(currencyId)
                 {
                     CoinSupply = decimal.Parse(volumeCurrent, CultureInfo.InvariantCulture),
                     MaxCoinSupply = decimal.Parse(volumeMax, CultureInfo.InvariantCulture),
@@ -66,7 +64,7 @@ namespace MyCC.Core.CoinInfo.Repositories
             catch (Exception e)
             {
                 e.LogError();
-                return new CoinInfoData(currency);
+                return new CoinInfoData(currencyId);
             }
         }
     }

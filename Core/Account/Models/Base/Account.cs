@@ -45,10 +45,7 @@ namespace MyCC.Core.Account.Models.Base
         private Money _money;
         public Money Money
         {
-            get
-            {
-                return _money;
-            }
+            get => _money;
             set
             {
                 if (value == null)
@@ -64,7 +61,7 @@ namespace MyCC.Core.Account.Models.Base
         /// </summary>
         public string Name
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 if (value == null)

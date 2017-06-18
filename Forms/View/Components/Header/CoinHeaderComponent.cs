@@ -4,6 +4,8 @@ using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates;
+using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Messages;
@@ -81,7 +83,7 @@ namespace MyCC.Forms.View.Components.Header
         private Money Sum => _account != null ? _account.Money : (_useOnlyThisCurrency ? CoinSum : MoneySum) ?? new Money(0, _currency);
 
         private Money CoinSum => _account != null ? _account.Money : new Money(AccountStorage.EnabledAccounts.Where(a => _currency.Equals(a.Money.Currency)).Sum(a => a.Money.Amount), _currency);
-        private Money CoinSumAs(Currency c) => new Money(CoinSum.Amount * (ExchangeRateHelper.GetRate(CoinSum.Currency, c)?.Rate ?? 0), c);
+        private Money CoinSumAs(Currency c) => new Money(CoinSum.Amount * (RateUtil.GetRate(CoinSum.Currency, c)?.Rate ?? 0), c);
 
         private Money MoneySum => MoneySumOf(_currency);
 
@@ -90,7 +92,7 @@ namespace MyCC.Forms.View.Components.Header
             var amount = AccountStorage.EnabledAccounts.Sum(a =>
             {
                 var rate = new ExchangeRate(a.Money.Currency.Id, currency.Id);
-                rate = ExchangeRateHelper.GetRate(rate) ?? rate;
+                rate = RateUtil.GetRate(rate) ?? rate;
 
                 return a.Money.Amount * rate.Rate ?? 0;
             });

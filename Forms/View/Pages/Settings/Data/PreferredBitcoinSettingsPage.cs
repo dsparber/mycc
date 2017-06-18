@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates;
-using MyCC.Core.Rates.Repositories.Interfaces;
+using MyCC.Core.Rates.Repositories.Utils;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
@@ -36,18 +37,18 @@ namespace MyCC.Forms.View.Pages.Settings.Data
             var header = new HeaderView(true)
             {
                 TitleText = ConstantNames.AppNameShort,
-                InfoText = PluralHelper.GetTextSourcs(ExchangeRatesStorage.Instance.Repositories.Count(r => r.RatesType == RateRepositoryType.CryptoToFiat))
+                InfoText = PluralHelper.GetTextSourcs(MyccUtil.Rates.CryptoToFiatSourceCount)
             };
 
             changingStack.Children.Add(header);
 
-            var query = ExchangeRatesStorage.Instance.Repositories
-                    .Where(r => r.RatesType == RateRepositoryType.CryptoToFiat)
+            var query = RateStorage.Instance.Sources
+                    .Where(r => r.Type == RateSourceType.CryptoToFiat)
                     .OrderBy(r => r.Name)
-                    .Select(r => Tuple.Create(r, GetDetailText(r.TypeId))).ToList();
+                    .Select(r => Tuple.Create(r, GetDetailText(r.Id))).ToList();
 
             _items = query
-                .Select(r => Tuple.Create(r.Item1.TypeId, new CustomViewCell()
+                .Select(r => Tuple.Create(r.Item1.Id, new CustomViewCell()
                 {
                     Text = r.Item1.Name,
                     Detail = r.Item2.Item1,
@@ -117,11 +118,11 @@ namespace MyCC.Forms.View.Pages.Settings.Data
 
         private static Tuple<string, DateTime> GetDetailText(int i)
         {
-            var usd = ExchangeRateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Usd, i);
-            var eur = ExchangeRateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Eur, i);
+            var usd = RateUtil.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Usd, i);
+            var eur = RateUtil.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Eur, i);
 
             var usdString = (usd?.AsMoney ?? new Money(0, CurrencyConstants.Usd)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            var eurString = (eur?.AsMoney ?? ExchangeRateHelper.GetRate(CurrencyConstants.Btc, CurrencyConstants.Eur, i)?.AsMoney ?? new Money(0, CurrencyConstants.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+            var eurString = (eur?.AsMoney ?? RateUtil.GetRate(CurrencyConstants.Btc, CurrencyConstants.Eur, i)?.AsMoney ?? new Money(0, CurrencyConstants.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
             var note = eur == null && usd != null ? "*" : string.Empty;
 
             return Tuple.Create($"{eurString}{note} / {usdString}", usd?.LastUpdate ?? eur?.LastUpdate ?? DateTime.MinValue);

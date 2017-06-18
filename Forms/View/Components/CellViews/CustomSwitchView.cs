@@ -15,28 +15,25 @@ namespace MyCC.Forms.View.Components.CellViews
 
         public string Title
         {
-            get { return _title; }
+            get => _title;
             set { _title = value; _titleLabel.Text = _title; }
         }
 
         public string Info
         {
-            get { return _info; }
+            get => _info;
             set { _info = value; _infoLabel.Text = _info; }
         }
 
         public bool IsEditable
         {
-            set
-            {
-                Switch.IsEnabled = value;
-            }
+            set => Switch.IsEnabled = value;
         }
 
         public bool On
         {
-            get { return Switch.IsToggled; }
-            set { Switch.IsToggled = value; }
+            get => Switch.IsToggled;
+            set => Switch.IsToggled = value;
         }
 
         public CustomSwitchView()
