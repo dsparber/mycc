@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,11 +18,15 @@ namespace MyCC.Forms.View.Pages.Settings.Data
 {
     public partial class ReferenceCurrenciesSettingsView
     {
-        public ReferenceCurrenciesSettingsView()
+        public void ReferenceCurrenciesInfoText()
+        {
+            Header.InfoText = PluralHelper.GetTextCurrencies(ApplicationSettings.AllReferenceCurrencies.Count());
+        }
+
+		public ReferenceCurrenciesSettingsView()
         {
             InitializeComponent();
-
-            Header.InfoText = PluralHelper.GetTextCurrencies(ApplicationSettings.AllReferenceCurrencies.Count());
+            ReferenceCurrenciesInfoText();
 
             foreach (var currency in ApplicationSettings.AllReferenceCurrencies.OrderBy(id => id))
             {
@@ -44,6 +48,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
                     CurrenciesSection.Insert(index, GetCell(c.Id));
                     Messaging.ReferenceCurrencies.SendValueChanged();
                     Task.Run(() => AppTaskHelper.FetchMissingRates());
+					ReferenceCurrenciesInfoText();
                 }
             };
             Navigation.PushAsync(overlay);
@@ -72,6 +77,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
                     ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Where(x => !x.ToCurrency().Code.Equals(c?.Text)).ToList();
                 }
                 Messaging.ReferenceCurrencies.SendValueChanged();
+				ReferenceCurrenciesInfoText();
             };
 
             star.Action = (sender, e) =>

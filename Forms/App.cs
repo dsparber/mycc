@@ -25,6 +25,8 @@ namespace MyCC.Forms
 
         public App()
         {
+			DependencyService.Get<ILocalise>().SetLocale();
+
             if (Prepare.PreparingNeeded)
             {
                 Prepare.ExecutePreperations();
@@ -38,8 +40,6 @@ namespace MyCC.Forms
             }
 
             MainPage = ApplicationSettings.AppInitialised ? startPage : new PreparationView();
-
-            DependencyService.Get<ILocalise>().SetLocale();
         }
 
         protected override async void OnStart()
@@ -127,4 +127,3 @@ namespace MyCC.Forms
         }
     }
 }
-
