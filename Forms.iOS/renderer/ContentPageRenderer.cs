@@ -54,11 +54,11 @@ namespace MyCC.Forms.iOS.renderer
                     {
                         systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Save);
                     }
-                    if (info.Text.Equals(I18N.Done))
+                    else if (info.Text.Equals(I18N.Done))
                     {
                         systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Done);
                     }
-                    if (info.Text.Equals(I18N.Edit))
+                    else if (info.Text.Equals(I18N.Edit))
                     {
                         systemItem = new UIBarButtonItem(UIBarButtonSystemItem.Edit);
                     }
