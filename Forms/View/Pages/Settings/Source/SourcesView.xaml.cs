@@ -7,7 +7,6 @@ using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Resources;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using MyCC.Forms.View.Overlays;

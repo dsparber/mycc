@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Helpers;
-using MyCC.Core.Rates;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Addsource;
 
 namespace MyCC.Forms.View.Overlays

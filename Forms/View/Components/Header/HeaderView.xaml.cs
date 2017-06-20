@@ -1,13 +1,12 @@
 ﻿using System.Linq;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
+using MyCC.Ui.Messages;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Components.Header
 {
     public partial class HeaderView
     {
-
         private readonly double _defaultSize = App.ScreenHeight > 480 ? 36 : 28;
         private readonly double _defaultSizeInfoText = App.ScreenHeight > 480 ? 18 : 15;
         private readonly double _minSizeInfoText = App.ScreenHeight > 480 ? 16 : 13;
@@ -78,7 +77,7 @@ namespace MyCC.Forms.View.Components.Header
         {
             if (!subscribeToRefresh) return;
 
-            MessagingCenter.Subscribe<string>(this, Messaging.Progress, d => Progress = double.Parse(d));
+            MessagingCenter.Subscribe<string>(this, Messaging.Status.Progress, d => Progress = double.Parse(d));
         }
 
         private double Progress
@@ -116,9 +115,14 @@ namespace MyCC.Forms.View.Components.Header
             InfoText = InfoText;
             LoadingText = LoadingText;
 
-            Messaging.Layout.SubscribeValueChanged(this, AdaptSize);
-
             WidthRequest = App.ScreenHeight / 3.0;
+        }
+
+        protected override SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
+        {
+            var sizeRequest = base.OnMeasure(widthConstraint, heightConstraint);
+            AdaptSize();
+            return sizeRequest;
         }
 
         private static string GetText(string text)

@@ -2,9 +2,9 @@
 {
     public class HeaderItem
     {
-        public virtual string MainText { get; }
+        public string MainText { get; internal set; }
 
-        public virtual string InfoText { get; }
+        public string InfoText { get; internal set; }
 
         public HeaderItem(string mainText, string infoText)
         {

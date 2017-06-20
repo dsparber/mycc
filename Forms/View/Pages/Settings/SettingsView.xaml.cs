@@ -2,7 +2,6 @@
 using System.Linq;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
-using MyCC.Core.Rates;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;

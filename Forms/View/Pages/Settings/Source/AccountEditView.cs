@@ -2,7 +2,6 @@ using System;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;

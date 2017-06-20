@@ -1,5 +1,4 @@
 ﻿using MyCC.Forms.Constants;
-using MyCC.Forms.Messages;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Container

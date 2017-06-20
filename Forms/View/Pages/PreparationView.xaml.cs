@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Sources;
@@ -8,10 +7,8 @@ using MyCC.Core.Preperation;
 using MyCC.Core.Settings;
 using MyCC.Core.Tasks;
 using MyCC.Forms.Resources;
-using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Container;
 using MyCC.Forms.View.Overlays;
-using MyCC.Ui.Tasks;
 using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

@@ -1,41 +1,5 @@
 "use strict";
 
-var testData = [{
-    "Code": "BTC",
-    "Name": "Bitcoin",
-    "Amount": "23,525.31",
-    "Reference": 213.96
-}, {
-    "Code": "ETH",
-    "Name": "Ethereum",
-    "Amount": 986.2425,
-    "Reference": "347,852.23"
-}, {
-    "Code": "PVC",
-    "Name": "PuraVidaCoin",
-    "Amount": "45,845.78",
-    "Reference": 478.54
-}];
-
-var testColumns = [
-    {
-        "Text": "Währung",
-        "Type": "Currency"
-    }, {
-        "Text": "Anzahl",
-        "Type": "Amount"
-    }, {
-        "Text": "in EUR",
-        "Type": "ReferenceCurrency"
-    }
-];
-
-var testSort = {
-    "Type": "Currency",
-    "Direction": "Ascending"
-};
-
-
 var sorterSet = false;
 
 function setHeader(columns) {
@@ -46,14 +10,13 @@ function setHeader(columns) {
     for (var i = 0; i < columns.length; i++) {
         var cell = row.insertCell(i);
         cell.innerHTML = "<span>" + columns[i]["Text"] + "</span>";
-        cell.setAttribute("type", columns[i]["Type"]);
-        cell.setAttribute("class", columns[i]["XYZ"]);
-        cell.onclick = headerClicked(columns[i]["Type"]);
+        cell.setAttribute("class", columns[i]["Ascending"] === true ? "down" : columns[i]["Ascending"] === false ? "up" : "");
+        cell.onclick = headerClicked(columns[i]["Id"]);
     }
     row.insertCell(columns.length);
 }
 
-function updateTable(data, sort) {
+function updateTable(data) {
 
     var coinTable = document.getElementById("coinTable");
     clearTable(coinTable);
@@ -76,10 +39,6 @@ function updateTable(data, sort) {
 
         row.onclick = rowClicked(data[i]["CallbackString"]);
     }
-
-    $("#coinTable thead").children().removeClass();
-    $("#coinTable td[type=" + sort["Type"] + "]").addClass(sort["Direction"] === "Ascending" ? "down" : "up");
-
     sizeAllocated();
 }
 
@@ -93,9 +52,9 @@ function rowClicked(code) {
     };
 }
 
-function headerClicked(type) {
+function headerClicked(id) {
     return function () {
-        window.open("http://none?" + "HeaderClickedCallback=" + type);
+        window.open("http://none?" + "HeaderClickedCallback=" + id);
     };
 }
 

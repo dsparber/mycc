@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Container;
 using Plugin.Fingerprint;

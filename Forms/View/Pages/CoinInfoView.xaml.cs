@@ -7,18 +7,13 @@ using MyCC.Core.Account.Storage;
 using MyCC.Core.CoinInfo;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
 using MyCC.Core.Rates.Models;
-using MyCC.Core.Rates.Utils;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
-using MyCC.Forms.Tasks;
 using Xamarin.Forms;
-using MyCC.Forms.Messages;
 using MyCC.Forms.View.Components.CellViews;
-using MyCC.Forms.View.Components.Header;
 using MyCC.Forms.View.Components.Table;
 using MyCC.Forms.View.Overlays;
 using Plugin.Connectivity;
@@ -33,7 +28,7 @@ namespace MyCC.Forms.View.Pages
 
         private readonly Dictionary<string, Tuple<Label, Label>> _infos;
 
-        public CoinInfoView(Currency currency, bool enableAccountButton = false)
+        public CoinInfoView(string currencyId, bool enableAccountButton = false)
         {
             InitializeComponent();
 

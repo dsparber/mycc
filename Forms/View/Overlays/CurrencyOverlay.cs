@@ -7,7 +7,6 @@ using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;

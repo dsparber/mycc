@@ -10,11 +10,11 @@ using MyCC.Core.Helpers;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Constants;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Pages;
+using MyCC.Ui.Messages;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Components.Table
@@ -31,16 +31,18 @@ namespace MyCC.Forms.View.Components.Table
             _currency = currency;
             _useEnabledAccounts = useEnabledAccounts;
 
-            _webView = new HybridWebView("Html/accountsTable.html") { LoadFinished = async () =>  
-                {
-	                UpdateView();
-	                if (_firstCall)
-	                {
-	                    await Task.Delay(1000);
-	                    UpdateView();
-	                    _firstCall = false;
-	                }
-                } 
+            _webView = new HybridWebView("Html/accountsTable.html")
+            {
+                LoadFinished = async () =>
+{
+    UpdateView();
+    if (_firstCall)
+    {
+        await Task.Delay(1000);
+        UpdateView();
+        _firstCall = false;
+    }
+}
             };
 
             _webView.RegisterCallback("Callback", idString =>
@@ -81,8 +83,8 @@ namespace MyCC.Forms.View.Components.Table
 
             UpdateView();
 
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
+            Messaging.UiUpdate.Assets.Subscribe(this, UpdateView);
+            Messaging.UiUpdate.Rates.Subscribe(this, UpdateView);
         }
 
         private void UpdateView()

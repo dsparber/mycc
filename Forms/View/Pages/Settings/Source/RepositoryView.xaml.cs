@@ -8,7 +8,6 @@ using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies.Models;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;

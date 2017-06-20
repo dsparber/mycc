@@ -2,7 +2,6 @@
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 
 namespace MyCC.Forms.View.Overlays

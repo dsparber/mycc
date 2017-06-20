@@ -5,14 +5,9 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
-using MyCC.Core.Rates.Utils;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCC.Forms.Tasks;
-using MyCC.Forms.View.Components.Header;
 using MyCC.Forms.View.Components.Table;
 using MyCC.Forms.View.Overlays;
 using Plugin.Connectivity;
@@ -33,7 +28,7 @@ namespace MyCC.Forms.View.Pages
         private readonly Currency _currency;
         private Money MoneySum => _accounts.ToList().Count == 0 ? null : new Money(_accounts.Where(a => a.Item1.IsEnabled).Sum(a => a.Item1.Money.Amount), _accounts.First().Item1.Money.Currency);
 
-        public AccountGroupView(Currency pageCurrency)
+        public AccountGroupView(string pageCurrencyId)
         {
             InitializeComponent();
 
