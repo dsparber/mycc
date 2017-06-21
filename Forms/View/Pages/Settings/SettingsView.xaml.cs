@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MyCC.Core;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Resources;
@@ -26,9 +27,6 @@ namespace MyCC.Forms.View.Pages.Settings
 
             AutoRefresh.On = ApplicationSettings.AutoRefreshOnStartup;
 
-            /*RoundNumbers.On = ApplicationSettings.RoundMoney;
-            RoundNumbers.Switch.Toggled += RoundNumbersChanged;*/
-
             Header.TitleText = ConstantNames.AppNameShort;
 
             AutoRefresh.Switch.Toggled += AutoRefreshChanged;
@@ -51,9 +49,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             };
             RatesCell.DetailBreakMode = LineBreakMode.TailTruncation;
-            /*
-                        AvailableCurrenciesCell.Tapped += (sender, args) => Navigation.PushAsync(new CurrencyGroupedInfoView());
-            */
+
             SetRatesCellDetail();
             SetPinCellText();
             SetAboutCell();
@@ -110,7 +106,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
         private void SetPreferredRateCellDetail()
         {
-            PreferredRateCell.Detail = RateStorage.PreferredBtcSource.Name;
+            PreferredRateCell.Detail = MyccUtil.Rates.SelectedCryptoToFiatSource;
         }
 
         private void SetAboutCell()

@@ -10,8 +10,8 @@ namespace MyCC.Ui.Edit
 {
     internal class EditUtils : IEditUtils
     {
-        public Task<bool> Add(OnlineAccountRepository repository, Action testingStarted = null, Action alreadyAdded = null, Action testingFailed = null)
-            => EditAccounts.Add(repository, testingStarted, alreadyAdded, testingFailed);
+        public Task<bool> Add(OnlineAccountRepository repository)
+            => EditAccounts.Add(repository);
 
         public Task Add(LocalAccount account)
             => EditAccounts.Add(account);
@@ -20,21 +20,21 @@ namespace MyCC.Ui.Edit
         {
             await AccountStorage.Update(account);
             UiUtils.AssetsRefresh.ResetCache();
-            Messaging.UiUpdate.Accounts.Send();
+            Messaging.UiUpdate.Assets.Send();
         }
 
         public async Task Delete(FunctionalAccount account)
         {
             await AccountStorage.Instance.LocalRepository.Remove(account);
             UiUtils.AssetsRefresh.ResetCache();
-            Messaging.UiUpdate.Accounts.Send();
+            Messaging.UiUpdate.Assets.Send();
         }
 
         public async Task Delete(OnlineAccountRepository repository)
         {
             await AccountStorage.Instance.Remove(repository);
             UiUtils.AssetsRefresh.ResetCache();
-            Messaging.UiUpdate.Accounts.Send();
+            Messaging.UiUpdate.Assets.Send();
         }
 
         public Task Update(OnlineAccountRepository repository, string newAddress, string newCurrencyId, string newName, bool newEnabledState, Action testingFailed = null)

@@ -25,5 +25,7 @@
         string BitcoinCanNotBeRemoved { get; }
         string IsEqualTo { get; }
         string AreEqualTo { get; }
+        string FetchingNoSuccessText { get; }
+        string VerifyInput { get; }
     }
 }

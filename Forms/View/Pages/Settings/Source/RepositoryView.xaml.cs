@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
@@ -12,6 +11,8 @@ using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 using MyCC.Core.Helpers;
+using MyCC.Ui;
+using MyCC.Ui.Messages;
 
 namespace MyCC.Forms.View.Pages.Settings.Source
 {
@@ -76,8 +77,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 
             SetView(isEditModal);
 
-            Messaging.UpdatingAccounts.SubscribeFinished(this, SetView);
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetView);
+            Messaging.UiUpdate.Assets.Subscribe(this, SetViewAction);
 
             IsEditable = false;
 
@@ -102,7 +102,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             }
         }
 
-        private void SetView() => SetView(false);
+        private void SetViewAction() => SetView(false);
 
         private void SetView(bool isEditable)
         {
@@ -141,17 +141,11 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             Header.IsLoading = true;
             RepositoryNameEntryCell.IsEditable = false;
 
-            await AccountStorage.Instance.Remove(_repository);
-            Messaging.UpdatingAccounts.SendFinished();
+            await UiUtils.Edit.Delete(_repository);
             Header.IsLoading = false;
-            if (_isEditModal)
-            {
-                await Navigation.PopOrPopModal();
-            }
-            else
-            {
-                await Navigation.PopAsync();
-            }
+
+            if (_isEditModal) await Navigation.PopOrPopModal();
+            else await Navigation.PopAsync();
         }
 
         private bool IsEditable
@@ -193,50 +187,11 @@ namespace MyCC.Forms.View.Pages.Settings.Source
                 Header.IsLoading = true;
                 IsEditable = false;
 
-                // Test if data is valid
                 var addressRepo = _repository as AddressAccountRepository;
-                if (addressRepo != null &&
-                    (!addressRepo.Address.Equals((AddressEntryCell.Text ?? string.Empty).Contains("...")
-                         ? addressRepo.Address
-                         : AddressEntryCell.Text ?? string.Empty) ||
-                     !addressRepo.Currency.Equals(_currencyEntryCell.SelectedCurrency)))
-                {
-                    var address = AddressEntryCell.Text ?? string.Empty;
-                    var testRepo = AddressAccountRepository.CreateAddressAccountRepository(addressRepo.Name,
-                        _currencyEntryCell.SelectedCurrency, address.Contains("...") ? addressRepo.Address : address);
+                var address = (AddressEntryCell.Text ?? string.Empty).Contains("...") ? addressRepo?.Address ?? string.Empty : AddressEntryCell.Text;
+                var name = RepositoryNameEntryCell.Text ?? I18N.Unnamed;
 
-                    if (testRepo == null || !await testRepo.Test())
-                    {
-                        SaveItem.Clicked += SaveClicked;
-                        Header.IsLoading = false;
-                        IsEditable = true;
-                        await DisplayAlert(I18N.Error, I18N.FetchingNoSuccessText, I18N.Ok);
-                        return;
-                    }
-                    if (!addressRepo.Currency.Equals(_currencyEntryCell.SelectedCurrency))
-                    {
-                        await AccountStorage.Instance.Remove(_repository);
-                        await testRepo.FetchOnline();
-                        await AccountStorage.Instance.Add(testRepo);
-                    }
-                    var enabled = EnableAccountsSection.Any(a => ((CustomSwitchCell)a).On);
-                    testRepo.Id = _repository.Id;
-                    _repository = testRepo;
-                    await _repository.FetchOnline();
-                    // Set (en-/dis-)abled
-                    foreach (var a in _repository.Elements) a.IsEnabled = enabled;
-                }
-
-                // Apply name and enabled status
-                _repository.Name = RepositoryNameEntryCell.Text ?? I18N.Unnamed;
-                foreach (var a in _repository.Elements) a.Name = _repository.Name;
-                foreach (var a in _changedAccounts) a.Item1.IsEnabled = a.Item2;
-
-                // Save changes
-                await AccountStorage.Instance.Update(_repository);
-                await Task.WhenAll(_repository.Elements.ToList().Select(AccountStorage.Update));
-
-                Messaging.UpdatingAccounts.SendFinished();
+                await UiUtils.Edit.Update(_repository, address, _currencyEntryCell.SelectedCurrency.Id, name, );
 
                 if (_isEditModal)
                 {
@@ -255,7 +210,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
                 SaveItem.Clicked += SaveClicked;
                 Header.IsLoading = false;
 
-                SetView();
+                SetViewAction();
             }
             catch (Exception ex)
             {

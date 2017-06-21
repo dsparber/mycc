@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
-using MyCC.Core.Helpers;
 using MyCC.Forms.Constants;
 using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Components.CellViews;
@@ -37,7 +36,7 @@ namespace MyCC.Forms.View.Components.Table
                 Device.BeginInvokeOnMainThread(() => _webView.HeightRequest = size);
             });
 
-            _webView.RegisterCallback("HeaderClickedCallback", id => _headerClickCallbacks[int.Parse(id)].Invoke();
+            _webView.RegisterCallback("HeaderClickedCallback", id => _headerClickCallbacks[int.Parse(id)].Invoke());
 
 
             var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };

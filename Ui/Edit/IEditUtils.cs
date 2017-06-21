@@ -8,7 +8,7 @@ namespace MyCC.Ui.Edit
 {
     public interface IEditUtils
     {
-        Task<bool> Add(OnlineAccountRepository repository, Action testingStarted = null, Action alreadyAdded = null, Action testingFailed = null);
+        Task<bool> Add(OnlineAccountRepository repository);
         Task Add(LocalAccount account);
 
 

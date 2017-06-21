@@ -8,11 +8,13 @@ namespace MyCC.Forms.View.Overlays
 {
     public partial class PinOverlay
     {
+        private readonly Action _callback;
         private readonly PinAction _pinAction;
 
-        public PinOverlay(PinAction pinAction)
+        public PinOverlay(PinAction pinAction, Action callback = null)
         {
             InitializeComponent();
+            _callback = callback;
 
             if (pinAction == PinAction.EnableOrDisable)
             {
@@ -32,7 +34,7 @@ namespace MyCC.Forms.View.Overlays
                     if (_pinAction == PinAction.Disable)
                     {
                         ApplicationSettings.Pin = null;
-                        Messaging.Pin.SendValueChanged();
+                        callback?.Invoke();
                         Navigation.PopOrPopModal();
                     }
                     else
@@ -105,7 +107,7 @@ namespace MyCC.Forms.View.Overlays
             }
 
             ApplicationSettings.Pin = newPin;
-            Messaging.Pin.SendValueChanged();
+            _callback.Invoke();
             Navigation.PopOrPopModal();
         }
     }

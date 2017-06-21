@@ -3,25 +3,26 @@ using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
+using MyCC.Ui.Helpers;
 using MyCC.Ui.Messages;
+using Xamarin.Forms;
 
 namespace MyCC.Ui.Edit
 {
     internal static class EditAccounts
     {
-        public static async Task<bool> Add(OnlineAccountRepository repository, Action testingStarted = null, Action alreadyAdded = null, Action testingFailed = null)
+        public static async Task<bool> Add(OnlineAccountRepository repository)
         {
             if (AccountStorage.AlreadyExists(repository))
             {
-                alreadyAdded?.Invoke();
+                DependencyService.Get<IErrorDialog>().Display(StringUtils.TextResolver.FetchingNoSuccessText);
                 return false;
             }
 
-            testingStarted?.Invoke();
             var success = await repository.Test();
             if (!success)
             {
-                testingFailed?.Invoke();
+                DependencyService.Get<IErrorDialog>().Display(StringUtils.TextResolver.VerifyInput);
                 return false;
             }
 
@@ -30,8 +31,8 @@ namespace MyCC.Ui.Edit
             UiUtils.Update.FetchNeededButNotLoadedRates();
             UiUtils.AssetsRefresh.ResetCache();
             UiUtils.RatesRefresh.ResetCache();
-            Messaging.UiUpdate.Accounts.Send();
-            Messaging.UiUpdate.RatesOverview.Send();
+            Messaging.UiUpdate.Assets.Send();
+            Messaging.UiUpdate.Rates.Send();
 
             return true;
         }
@@ -42,8 +43,8 @@ namespace MyCC.Ui.Edit
             UiUtils.Update.FetchNeededButNotLoadedRates();
             UiUtils.AssetsRefresh.ResetCache();
             UiUtils.RatesRefresh.ResetCache();
-            Messaging.UiUpdate.Accounts.Send();
-            Messaging.UiUpdate.RatesOverview.Send();
+            Messaging.UiUpdate.Assets.Send();
+            Messaging.UiUpdate.Rates.Send();
         }
     }
 }

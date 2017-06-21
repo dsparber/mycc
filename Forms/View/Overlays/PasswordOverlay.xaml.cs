@@ -3,6 +3,7 @@ using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Container;
+using MyCC.Ui.Messages;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 using Xamarin.Forms;
@@ -32,7 +33,7 @@ namespace MyCC.Forms.View.Overlays
             };
             ShowFingerprintIcon.GestureRecognizers.Add(recognizer);
 
-            Messaging.DarkStatusBar.Send(true);
+            Messaging.Status.DarkStatusBar.Send(true);
         }
 
         public PasswordOverlay(bool pushMainView, bool background = false) : this(background)
@@ -111,11 +112,11 @@ namespace MyCC.Forms.View.Overlays
             if (_pushMainView)
             {
                 await Navigation.PushModalAsync(Device.RuntimePlatform.Equals(Device.Android) ? new MasterDetailContainer() as Page : new TabContainerView());
-                Messaging.DarkStatusBar.Send(false);
+                Messaging.Status.DarkStatusBar.Send(false);
             }
             else
             {
-                Messaging.DarkStatusBar.Send(false);
+                Messaging.Status.DarkStatusBar.Send(false);
                 await Navigation.PopModalAsync();
             }
         }

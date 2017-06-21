@@ -49,7 +49,7 @@ namespace MyCC.Ui.Edit
                 await AccountStorage.Update(a);
             }
             UiUtils.AssetsRefresh.ResetCache();
-            Messaging.UiUpdate.Accounts.Send();
+            Messaging.UiUpdate.Assets.Send();
         }
     }
 }

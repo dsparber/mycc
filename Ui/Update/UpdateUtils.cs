@@ -18,8 +18,8 @@ namespace MyCC.Ui.Update
             await ApplicationTasks.LoadEverything();
             UiUtils.AssetsRefresh.ResetCache();
             UiUtils.RatesRefresh.ResetCache();
-            Messaging.UiUpdate.ViewsWithRate.Send();
-            Messaging.UiUpdate.Accounts.Send();
+            Messaging.UiUpdate.Rates.Send();
+            Messaging.UiUpdate.Assets.Send();
         }
 
         public void FetchAllRates() => ExecuteWithErrorWrapper(async () =>
@@ -27,8 +27,8 @@ namespace MyCC.Ui.Update
            await MyccUtil.Rates.FetchNeeded(Messaging.Status.Progress.Send);
            UiUtils.AssetsRefresh.ResetCache();
            UiUtils.RatesRefresh.ResetCache();
-           Messaging.UiUpdate.ViewsWithRate.Send();
-           Messaging.UiUpdate.Accounts.Send();
+           Messaging.UiUpdate.Rates.Send();
+           Messaging.UiUpdate.Assets.Send();
            Messaging.Status.Progress.Send(1);
        });
 
@@ -44,8 +44,8 @@ namespace MyCC.Ui.Update
            await MyccUtil.Rates.FetchNeeded(progress => Messaging.Status.Progress.Send(0.7 + progress * 0.3));
            UiUtils.AssetsRefresh.ResetCache();
            UiUtils.RatesRefresh.ResetCache();
-           Messaging.UiUpdate.ViewsWithRate.Send();
-           Messaging.UiUpdate.Accounts.Send();
+           Messaging.UiUpdate.Rates.Send();
+           Messaging.UiUpdate.Assets.Send();
            Messaging.Status.Progress.Send(1);
        });
 
@@ -54,8 +54,8 @@ namespace MyCC.Ui.Update
            await MyccUtil.Rates.FetchNeededButNotLoaded(Messaging.Status.Progress.Send);
            UiUtils.AssetsRefresh.ResetCache();
            UiUtils.RatesRefresh.ResetCache();
-           Messaging.UiUpdate.ViewsWithRate.Send();
-           Messaging.UiUpdate.Accounts.Send();
+           Messaging.UiUpdate.Rates.Send();
+           Messaging.UiUpdate.Assets.Send();
            Messaging.Status.Progress.Send(1);
        });
 
@@ -66,8 +66,8 @@ namespace MyCC.Ui.Update
            await MyccUtil.Rates.FetchFor(currencyId, progress => Messaging.Status.Progress.Send(0.6 + 0.4 * progress));
            UiUtils.AssetsRefresh.ResetCache();
            UiUtils.RatesRefresh.ResetCache();
-           Messaging.UiUpdate.ViewsWithRate.Send();
-           Messaging.UiUpdate.Accounts.Send();
+           Messaging.UiUpdate.Rates.Send();
+           Messaging.UiUpdate.Assets.Send();
            Messaging.Status.Progress.Send(1);
        });
 
@@ -79,8 +79,8 @@ namespace MyCC.Ui.Update
             await MyccUtil.Rates.FetchFor(account?.Money.Currency.Id, progress => Messaging.Status.Progress.Send(0.6 + 0.4 * progress));
             UiUtils.AssetsRefresh.ResetCache();
             UiUtils.RatesRefresh.ResetCache();
-            Messaging.UiUpdate.ViewsWithRate.Send();
-            Messaging.UiUpdate.Accounts.Send();
+            Messaging.UiUpdate.Rates.Send();
+            Messaging.UiUpdate.Assets.Send();
             Messaging.Status.Progress.Send(1);
         });
 

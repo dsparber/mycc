@@ -1,9 +1,9 @@
 using System;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Account.Storage;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
+using MyCC.Ui;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages.Settings.Source
@@ -100,12 +100,9 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             _account.Name = string.IsNullOrWhiteSpace(AccountName.Text) ? I18N.Unnamed : AccountName.Text;
             _account.IsEnabled = EnableAccountCell.On;
 
-            await AccountStorage.Update(_account);
-
-            Messaging.UpdatingAccounts.SendFinished();
+            await UiUtils.Edit.Update(_account);
 
             if (_isEditModal) await Navigation.PopOrPopModal();
-
 
             Title = _account.Name;
             Header.TitleText = _account.Money.ToString();
@@ -120,8 +117,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             AmountEntry.Entry.Unfocus();
             _currencyEntryCell.Unfocus();
 
-            await AccountStorage.Instance.LocalRepository.Remove(_account);
-            Messaging.UpdatingAccounts.SendFinished();
+            await UiUtils.Edit.Delete(_account);
 
             if (_isEditModal) await Navigation.PopOrPopModal();
             else await Navigation.PopAsync();

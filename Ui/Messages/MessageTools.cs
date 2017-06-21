@@ -28,7 +28,7 @@ namespace MyCC.Ui.Messages
         internal static void Send(this string message, double value) =>
             MessagingCenter.Send(value.ToString(CultureInfo.InvariantCulture), message);
 
-        internal static void Send(this string message, bool value) =>
+        public static void Send(this string message, bool value) =>
             MessagingCenter.Send(value.ToString(), message);
 
 

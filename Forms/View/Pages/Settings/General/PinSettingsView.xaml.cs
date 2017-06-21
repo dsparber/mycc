@@ -16,7 +16,7 @@ namespace MyCC.Forms.View.Pages.Settings.General
 
             SetPinCells();
 
-            FingerprintCell.Switch.Toggled += (sender, e) => { ApplicationSettings.IsFingerprintEnabled = e.Value; Messaging.Pin.SendValueChanged(); };
+            FingerprintCell.Switch.Toggled += (sender, e) => { ApplicationSettings.IsFingerprintEnabled = e.Value; SetPinCells(); };
             SecureXpubCell.Switch.Toggled += (sender, e) => ApplicationSettings.SecureXpub = e.Value;
 
             if (ApplicationSettings.IsFingerprintEnabled && ApplicationSettings.IsPinSet)
@@ -28,8 +28,6 @@ namespace MyCC.Forms.View.Pages.Settings.General
                 Table.Root.Remove(SecurityOptionsSection);
             }
             SecureXpubCell.Switch.IsToggled = ApplicationSettings.SecureXpub;
-
-            Messaging.Pin.SubscribeValueChanged(this, SetPinCells);
         }
 
         private void SetPinCells()
@@ -95,12 +93,12 @@ namespace MyCC.Forms.View.Pages.Settings.General
 
         private void EnableDisablePin(object sender, EventArgs e)
         {
-            Navigation.PushOrPushModal(new PinOverlay(PinAction.EnableOrDisable));
+            Navigation.PushOrPushModal(new PinOverlay(PinAction.EnableOrDisable, SetPinCells));
         }
 
         private void ChangePin(object sender, EventArgs e)
         {
-            Navigation.PushOrPushModal(new PinOverlay(PinAction.Change));
+            Navigation.PushOrPushModal(new PinOverlay(PinAction.Change, SetPinCells));
         }
     }
 }

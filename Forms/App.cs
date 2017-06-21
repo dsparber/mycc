@@ -5,6 +5,7 @@ using MyCC.Forms.View.Container;
 using MyCC.Forms.View.Overlays;
 using MyCC.Forms.View.Pages;
 using MyCC.Ui;
+using MyCC.Ui.Messages;
 using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -42,7 +43,7 @@ namespace MyCC.Forms
             var page = GetCurrentPage();
             if (page is PasswordOverlay) return;
 
-            if (page != null) Messaging.DarkStatusBar.Send(true);
+            if (page != null) Messaging.Status.DarkStatusBar.Send(true);
             page?.Navigation.PushModalAsync(new PasswordOverlay(false, true), false);
         }
 
