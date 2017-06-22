@@ -13,7 +13,7 @@ namespace MyCC.Ui.Edit
         public static void AddReferenceCurrency(string currencyId)
         {
             ApplicationSettings.FurtherCurrencies = new List<string>(ApplicationSettings.FurtherCurrencies) { currencyId };
-            Messaging.UiUpdate.ViewsWithRate.Send();
+            UiUtils.Update.FetchNeededButNotLoadedRates();
         }
 
         public static bool RemoveReferenceCurrency(string currencyId)

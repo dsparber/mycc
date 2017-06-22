@@ -100,7 +100,7 @@ namespace MyCC.Core.Settings
         }
 
         public static IEnumerable<string> AllReferenceCurrencies
-            => MainCurrencies.Concat(FurtherCurrencies).Distinct().ToList();
+            => MainCurrencies.Concat(FurtherCurrencies).Distinct().OrderBy(id => id).ToList();
 
         public static SortOrder SortOrderAssets
         {
