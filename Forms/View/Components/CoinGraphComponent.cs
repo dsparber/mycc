@@ -1,5 +1,6 @@
 using System;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Settings;
 using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Pages;
 using MyCC.Ui;
@@ -13,10 +14,10 @@ namespace MyCC.Forms.View.Components
         private readonly HybridWebView _webView;
         private readonly string _currencyId;
 
-        public CoinGraphComponent(INavigation navigation, string currencyId)
+        public CoinGraphComponent(INavigation navigation)
         {
             _webView = new HybridWebView("Html/pieChart.html") { LoadFinished = UpdateView };
-            _currencyId = currencyId;
+            _currencyId = ApplicationSettings.StartupCurrencyAssets;
 
             _webView.RegisterCallback("selectedCallback", id =>
             {
@@ -29,8 +30,8 @@ namespace MyCC.Forms.View.Components
 
             UpdateView();
 
-            Messaging.UiUpdate.Rates.Subscribe(this, UpdateView);
-            Messaging.UiUpdate.Assets.Subscribe(this, UpdateView);
+            Messaging.Update.Rates.Subscribe(this, UpdateView);
+            Messaging.Update.Assets.Subscribe(this, UpdateView);
         }
 
         private void UpdateView()

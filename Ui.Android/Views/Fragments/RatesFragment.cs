@@ -105,22 +105,31 @@ namespace MyCC.Ui.Android.Views.Fragments
 
             EditingEnabled = MainActivity.RatesEditingEnabled;
 
-            Messaging.UiUpdate.RatesOverview.Subscribe(this, () =>
+            void Sort()
+            {
+                _items = UiUtils.Get.Rates.RateItemsFor(_referenceCurrencyId);
+                if (_items == null) return;
+                SetSortButtons(UiUtils.Get.Rates.SortButtonsFor(_referenceCurrencyId), sortCurrency, sortValue);
+                _adapter.Clear();
+                _adapter.AddAll(_items);
+            }
+
+            void UpdateView()
             {
                 if (Activity == null) return;
                 Activity.RunOnUiThread(() =>
                 {
+                    Sort();
                     _header.Data = UiUtils.Get.Rates.HeaderFor(_referenceCurrencyId);
                     _footerFragment.LastUpdate = UiUtils.Get.Rates.LastUpdate;
-                    _items = UiUtils.Get.Rates.RateItemsFor(_referenceCurrencyId);
-                    if (_items == null) return;
-                    SetSortButtons(UiUtils.Get.Rates.SortButtonsFor(_referenceCurrencyId), sortCurrency, sortValue);
-                    _adapter.Clear();
-                    _adapter.AddAll(_items);
                     SetVisibleElements(view);
                     refreshView.Refreshing = false;
                 });
-            });
+            }
+
+            Messaging.Update.Rates.Subscribe(this, UpdateView);
+            Messaging.Update.Assets.Subscribe(this, UpdateView);
+            Messaging.Sort.Rates.Subscribe(this, Sort);
 
             view.FindViewById<FloatingActionButton>(Resource.Id.button_add).Click += (sender, args) =>
             {

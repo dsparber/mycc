@@ -83,7 +83,6 @@
     </Compile>
     <Compile Include="View\Components\InfoFooterComponent.cs" />
     <Compile Include="View\Components\BaseComponents\SegmentedControl.cs" />
-    <Compile Include="View\Container\MasterDetailContainer.cs" />
     <Compile Include="View\Container\TabContainerView.cs" />
     <Compile Include="View\Overlays\CurrencyOverlay.cs" />
     <Compile Include="View\Overlays\PinOverlay.xaml.cs">

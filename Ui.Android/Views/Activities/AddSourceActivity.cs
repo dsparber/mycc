@@ -100,13 +100,9 @@ namespace MyCC.Ui.Android.Views.Activities
 
             if (fragment is AddSourceFragment.Repository)
             {
-
                 if (_savingClickedCount > 1) return;
-                var result = await UiUtils.Edit.Add(((AddSourceFragment.Repository)fragment).GetRepository(),
-                    alreadyAdded:
-                    () => this.ShowInfoDialog(Resource.String.Error, Resource.String.RepositoryAlreadyAdded),
-                    testingStarted: () => progressDialog.SetMessage(Resources.GetString(Resource.String.Testing)),
-                    testingFailed: () => this.ShowInfoDialog(Resource.String.Error, Resource.String.FetchingNoSuccessText));
+                progressDialog.SetMessage(Resources.GetString(Resource.String.Testing));
+                var result = await UiUtils.Edit.Add(((AddSourceFragment.Repository)fragment).GetRepository());
                 _willFinish = result;
                 if (result) Finish();
             }

@@ -17,7 +17,7 @@ namespace MyCC.Ui.Messages
             MessagingCenter.Subscribe<string>(subscriber, message, s => action(double.Parse(s, CultureInfo.InvariantCulture)));
 
 
-        internal static void Send(this string message) =>
+        public static void Send(this string message) =>
             MessagingCenter.Send("X", message);
 
         internal static void Send(this IEnumerable<string> messages)

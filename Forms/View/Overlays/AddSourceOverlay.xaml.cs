@@ -6,6 +6,7 @@ using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Addsource;
 using MyCC.Ui;
+using MyCC.Ui.DataItems;
 
 namespace MyCC.Forms.View.Overlays
 {
@@ -16,8 +17,7 @@ namespace MyCC.Forms.View.Overlays
         public AddSourceOverlay(bool local = false)
         {
             InitializeComponent();
-            Header.TitleText = I18N.NewSource;
-            Header.LoadingText = I18N.Testing;
+            Header.Data = new HeaderItem(I18N.NewSource, I18N.Testing);
 
             var addViews = new List<AddSourceSubview>
             {
@@ -43,7 +43,7 @@ namespace MyCC.Forms.View.Overlays
                 _specificAddView = addViews[index];
                 NameEntryCell.Placeholder = _specificAddView.DefaultName;
                 var txt = NameEntryCell.Text?.Trim();
-                Header.InfoText = string.Empty.Equals(txt) || txt == null ? _specificAddView.DefaultName : txt;
+                Header.Info = string.Empty.Equals(txt) || txt == null ? _specificAddView.DefaultName : txt;
 
                 TableViewComponent.Root.Clear();
                 foreach (var s in _specificAddView.InputSections)
@@ -53,9 +53,9 @@ namespace MyCC.Forms.View.Overlays
                 TableViewComponent.Root.Add(NameSection);
             };
 
-            Header.InfoText = _specificAddView.DefaultName;
+            Header.Info = _specificAddView.DefaultName;
             NameEntryCell.Placeholder = _specificAddView.DefaultName;
-            NameEntryCell.Entry.TextChanged += (sender, e) => Header.InfoText = e.NewTextValue.Length != 0 ? e.NewTextValue : _specificAddView.DefaultName;
+            NameEntryCell.Entry.TextChanged += (sender, e) => Header.Info = e.NewTextValue.Length != 0 ? e.NewTextValue : _specificAddView.DefaultName;
         }
 
         private void Cancel(object sender, EventArgs e)

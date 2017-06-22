@@ -1,12 +1,12 @@
 ﻿using CarouselView.FormsPlugin.iOS;
 using Foundation;
 using HockeyApp.iOS;
-using MyCC.Forms.Constants;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using System;
 using MyCC.Core.Database;
+using MyCC.Forms.Constants;
 using MyCC.Forms.iOS.data.database;
 using MyCC.Ui.Messages;
 using Refractored.XamForms.PullToRefresh.iOS;

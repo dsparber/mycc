@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
@@ -18,8 +17,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 {
     public partial class RepositoryView
     {
-        private OnlineAccountRepository _repository;
-        private readonly List<Tuple<FunctionalAccount, bool>> _changedAccounts;
+        private readonly OnlineAccountRepository _repository;
         private readonly CurrencyEntryCell _currencyEntryCell;
 
         private readonly bool _isEditModal;
@@ -29,8 +27,6 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             InitializeComponent();
             _repository = repository;
             _isEditModal = isEditModal;
-
-            _changedAccounts = new List<Tuple<FunctionalAccount, bool>>();
 
             Header.TitleText = repository.Name;
             Header.InfoText = $"{I18N.Source}: {_repository.Description}";
@@ -77,7 +73,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 
             SetView(isEditModal);
 
-            Messaging.UiUpdate.Assets.Subscribe(this, SetViewAction);
+            Messaging.Update.Assets.Subscribe(this, SetViewAction);
 
             IsEditable = false;
 
@@ -106,19 +102,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 
         private void SetView(bool isEditable)
         {
-            var enableCells = _repository.Elements.OrderBy(e => e.Money.Currency.Name).Select(e =>
-             {
-                 var cell = new CustomSwitchCell { Info = $"{e.Money.ToString(false)} {e.Money.Currency.Name}", Title = e.Money.Currency.Code, On = e.IsEnabled };
-                 cell.Switch.Toggled += (sender, args) =>
-                 {
-                     _changedAccounts.RemoveAll(t => t.Item1.Equals(e));
-                     _changedAccounts.Add(Tuple.Create(e, args.Value));
-                 };
-                 cell.Switch.IsEnabled = IsEditable;
-                 return (ViewCell)cell;
-             }).ToList();
-
-            if (enableCells.Count == 0) { enableCells.Add(new CustomViewCell { Text = I18N.NoAccounts }); }
+            var enableCells = new[] { new CustomSwitchCell { Title = I18N.Enabled, Info = I18N.EnableAccount } };
 
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -150,7 +134,6 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 
         private bool IsEditable
         {
-            get => RepositoryNameEntryCell.IsEditable;
             set
             {
                 if (_currencyEntryCell != null) _currencyEntryCell.IsEditable = value;
@@ -191,7 +174,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
                 var address = (AddressEntryCell.Text ?? string.Empty).Contains("...") ? addressRepo?.Address ?? string.Empty : AddressEntryCell.Text;
                 var name = RepositoryNameEntryCell.Text ?? I18N.Unnamed;
 
-                await UiUtils.Edit.Update(_repository, address, _currencyEntryCell.SelectedCurrency.Id, name, );
+                await UiUtils.Edit.Update(_repository, address, _currencyEntryCell.SelectedCurrency.Id, name, EnableAccountsSection.OfType<CustomSwitchCell>().First().Switch.IsToggled);
 
                 if (_isEditModal)
                 {

@@ -53,9 +53,9 @@ namespace MyCC.Forms.View.Overlays
 
             switch (_pinAction)
             {
-                case PinAction.Enable: Header.InfoText = I18N.EnablePin; PinTable.Root.Remove(OldPinSection); break;
-                case PinAction.Disable: Header.InfoText = I18N.DisablePin; PinTable.Root.Remove(ChangePinSection); break;
-                case PinAction.Change: Header.InfoText = I18N.ChangePin; break;
+                case PinAction.Enable: Header.Info = I18N.EnablePin; PinTable.Root.Remove(OldPinSection); break;
+                case PinAction.Disable: Header.Info = I18N.DisablePin; PinTable.Root.Remove(ChangePinSection); break;
+                case PinAction.Change: Header.Info = I18N.ChangePin; break;
                 case PinAction.EnableOrDisable: throw new ArgumentException();
                 default: throw new ArgumentOutOfRangeException();
             }

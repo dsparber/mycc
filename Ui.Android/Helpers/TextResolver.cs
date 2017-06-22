@@ -33,5 +33,7 @@ namespace MyCC.Ui.Android.Helpers
         public string BitcoinCanNotBeRemoved => GetText(Resource.String.BitcoinCanNotBeRemoved);
         public string IsEqualTo => GetText(Resource.String.IsEqualTo);
         public string AreEqualTo => GetText(Resource.String.AreEqualTo);
+        public string FetchingNoSuccessText => GetText(Resource.String.FetchingNoSuccessText);
+        public string VerifyInput => GetText(Resource.String.VerifyInput);
     }
 }

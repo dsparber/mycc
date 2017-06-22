@@ -45,8 +45,8 @@ namespace MyCC.Forms.View.Components.Table
 
             Content = _webView;
 
-            Messaging.UiUpdate.Rates.Subscribe(this, UpdateView);
-            Messaging.UiUpdate.Assets.Subscribe(this, UpdateView);
+            Messaging.Update.Rates.Subscribe(this, UpdateView);
+            Messaging.Update.Assets.Subscribe(this, UpdateView);
         }
 
         public void OnAppearing()

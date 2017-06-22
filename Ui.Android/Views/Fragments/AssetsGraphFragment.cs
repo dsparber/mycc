@@ -56,7 +56,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             var refreshView = view.FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             refreshView.Refresh += (sender, args) => UiUtils.Update.FetchAllAssetsAndRates();
 
-            Messaging.UiUpdate.AssetsGraph.Subscribe(this, () =>
+            void UpdateContent()
             {
                 if (Activity == null) return;
                 Activity.RunOnUiThread(() =>
@@ -68,7 +68,10 @@ namespace MyCC.Ui.Android.Views.Fragments
                     SetVisibleElements(view);
                     refreshView.Refreshing = false;
                 });
-            });
+            }
+
+            Messaging.Update.Rates.Subscribe(this, UpdateContent);
+            Messaging.Update.Assets.Subscribe(this, UpdateContent);
 
             view.FindViewById<FloatingActionButton>(Resource.Id.button_add).Click += (sender, args) =>
             {

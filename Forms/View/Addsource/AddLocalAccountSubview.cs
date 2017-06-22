@@ -33,7 +33,7 @@ namespace MyCC.Forms.View.Addsource
             set => _currencyCell.IsEditable = value;
         }
 
-        public override FunctionalAccount GetAccount(string name)
+        public override LocalAccount GetAccount(string name)
         {
             try
             {

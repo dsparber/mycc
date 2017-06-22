@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
@@ -22,27 +21,27 @@ namespace MyCC.Forms.View.Components.Table
     public class AccountsTableComponent : ContentView
     {
         private readonly HybridWebView _webView;
-        private readonly Currency _currency;
+        private readonly string _currencyId;
         private readonly bool _useEnabledAccounts;
         private static bool _firstCall = true;
 
-        public AccountsTableComponent(INavigation navigation, Currency currency, bool useEnabledAccounts)
+        public AccountsTableComponent(INavigation navigation, string currencyId, bool useEnabledAccounts)
         {
-            _currency = currency;
+            _currencyId = currencyId;
             _useEnabledAccounts = useEnabledAccounts;
 
             _webView = new HybridWebView("Html/accountsTable.html")
             {
                 LoadFinished = async () =>
-{
-    UpdateView();
-    if (_firstCall)
-    {
-        await Task.Delay(1000);
-        UpdateView();
-        _firstCall = false;
-    }
-}
+                {
+                    UpdateView();
+                    if (_firstCall)
+                    {
+                        await Task.Delay(1000);
+                        UpdateView();
+                        _firstCall = false;
+                    }
+                }
             };
 
             _webView.RegisterCallback("Callback", idString =>
@@ -83,15 +82,15 @@ namespace MyCC.Forms.View.Components.Table
 
             UpdateView();
 
-            Messaging.UiUpdate.Assets.Subscribe(this, UpdateView);
-            Messaging.UiUpdate.Rates.Subscribe(this, UpdateView);
+            Messaging.Update.Assets.Subscribe(this, UpdateView);
+            Messaging.Update.Rates.Subscribe(this, UpdateView);
         }
 
         private void UpdateView()
         {
             try
             {
-                var items = AccountStorage.AccountsWithCurrency(_currency).Where(a => a.IsEnabled == _useEnabledAccounts).Select(a => new Data(a)).ToList();
+                var items = AccountStorage.AccountsWithCurrency(_currencyId).Where(a => a.IsEnabled == _useEnabledAccounts).Select(a => new Data(a)).ToList();
 
                 if (!items.Any()) return;
 

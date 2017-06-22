@@ -69,7 +69,7 @@ namespace MyCC.Ui.Get.Implementations
         {
             SortDirection = SortDirectionHelper.GetNewSortDirection(SortOrder, SortDirection, sortOrder);
             SortOrder = sortOrder;
-            Messaging.UiUpdate.ReferenceTables.Send();
+            Messaging.Sort.ReferenceTables.Send();
         }
 
 

@@ -67,7 +67,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 UiUtils.Update.FetchCryptoToFiatRates();
             };
 
-            Messaging.UiUpdate.BitcoinExchangeSources.Subscribe(this, () => RunOnUiThread(() =>
+            Messaging.Update.BitcoinExchangeSources.Subscribe(this, () => RunOnUiThread(() =>
             {
                 SetFooter();
                 UpdateText();

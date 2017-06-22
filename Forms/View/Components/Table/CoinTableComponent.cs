@@ -53,8 +53,8 @@ namespace MyCC.Forms.View.Components.Table
 
             _webView.LoadFinished = UpdateView;
 
-            Messaging.UiUpdate.Assets.Subscribe(this, UpdateView);
-            Messaging.UiUpdate.Rates.Subscribe(this, UpdateView);
+            Messaging.Update.Assets.Subscribe(this, UpdateView);
+            Messaging.Update.Rates.Subscribe(this, UpdateView);
         }
 
         private void UpdateView()

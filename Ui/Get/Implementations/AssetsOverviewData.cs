@@ -195,7 +195,7 @@ namespace MyCC.Ui.Get.Implementations
                 _tableItems[key] = _tableItems[key] != null ? ApplySort(_tableItems[key]) : null;
             }
             _sortButtons = new Dictionary<string, List<SortButtonItem>>();
-            Messaging.UiUpdate.AssetsTable.Send();
+            Messaging.Sort.Assets.Send();
         }
 
         public void ResetCache() => Init();

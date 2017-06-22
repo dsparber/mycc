@@ -113,14 +113,14 @@ namespace MyCC.Ui.Get.Implementations
         {
             SortDirectionAccounts = SortDirectionHelper.GetNewSortDirection(SortOrderAccounts, SortDirectionAccounts, sortOrder);
             SortOrderAccounts = sortOrder;
-            Messaging.UiUpdate.ReferenceTables.Send();
+            Messaging.Sort.Assets.Send();
         }
 
         private void OnSortReference(SortOrder sortOrder)
         {
             SortDirectionReference = SortDirectionHelper.GetNewSortDirection(SortOrderReference, SortDirectionReference, sortOrder);
             SortOrderReference = sortOrder;
-            Messaging.UiUpdate.ReferenceTables.Send();
+            Messaging.Sort.ReferenceTables.Send();
         }
 
 

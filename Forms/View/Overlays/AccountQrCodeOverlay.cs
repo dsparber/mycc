@@ -7,6 +7,7 @@ using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Container;
+using MyCC.Ui.DataItems;
 using Xamarin.Forms;
 using HeaderView = MyCC.Forms.View.Components.Header.HeaderView;
 
@@ -64,8 +65,7 @@ namespace MyCC.Forms.View.Overlays
             var changingStack = new ChangingStackLayout();
             changingStack.Children.Add(new HeaderView
             {
-                TitleText = accountRepository.Elements.First().Money.Currency.Code,
-                InfoText = accountRepository.Name
+                Data = new HeaderItem(accountRepository.Elements.First().Money.Currency.Code, accountRepository.Name)
             });
             changingStack.Children.Add(stack);
 

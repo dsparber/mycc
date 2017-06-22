@@ -111,7 +111,7 @@ namespace MyCC.Forms.View.Overlays
             PinFrame.Unfocus();
             if (_pushMainView)
             {
-                await Navigation.PushModalAsync(Device.RuntimePlatform.Equals(Device.Android) ? new MasterDetailContainer() as Page : new TabContainerView());
+                await Navigation.PushModalAsync(new TabContainerView());
                 Messaging.Status.DarkStatusBar.Send(false);
             }
             else

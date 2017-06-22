@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
@@ -31,8 +30,8 @@ namespace MyCC.Ui.Edit
             UiUtils.Update.FetchNeededButNotLoadedRates();
             UiUtils.AssetsRefresh.ResetCache();
             UiUtils.RatesRefresh.ResetCache();
-            Messaging.UiUpdate.Assets.Send();
-            Messaging.UiUpdate.Rates.Send();
+            Messaging.Update.Assets.Send();
+            Messaging.Update.Rates.Send();
 
             return true;
         }
@@ -43,8 +42,8 @@ namespace MyCC.Ui.Edit
             UiUtils.Update.FetchNeededButNotLoadedRates();
             UiUtils.AssetsRefresh.ResetCache();
             UiUtils.RatesRefresh.ResetCache();
-            Messaging.UiUpdate.Assets.Send();
-            Messaging.UiUpdate.Rates.Send();
+            Messaging.Update.Assets.Send();
+            Messaging.Update.Rates.Send();
         }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
@@ -9,8 +8,11 @@ using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
+using MyCC.Forms.View.Components.Header;
 using MyCC.Forms.View.Components.Table;
 using MyCC.Forms.View.Overlays;
+using MyCC.Ui;
+using MyCC.Ui.Messages;
 using Plugin.Connectivity;
 using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
@@ -93,7 +95,7 @@ namespace MyCC.Forms.View.Pages
             var currencies = ApplicationSettings.MainCurrencies.ToList();
 
             ApplicationSettings.StartupCurrencyAssets = currencies[HeaderCarousel.Position];
-            MessagingCenter.Send(MessageInfo.ValueChanged, Messaging.ReferenceCurrency);
+            Messaging.Status.CarouselPosition.Send();
         }
 
         private void SetHeaderCarousel()
@@ -124,20 +126,16 @@ namespace MyCC.Forms.View.Pages
 
         private void AddSubscriber()
         {
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
-            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
-
-            Messaging.Loading.SubscribeFinished(this, SetNoSourcesView);
-            Messaging.FetchMissingRates.SubscribeFinished(this, SetNoSourcesView);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, SetNoSourcesView);
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoSourcesView);
+            Messaging.Status.CarouselPosition.Subscribe(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
+            Messaging.Update.Rates.Subscribe(this, SetHeaderCarousel);
+            Messaging.Update.Assets.Subscribe(this, SetNoSourcesView);
         }
 
         private async void Refresh()
         {
             if (CrossConnectivity.Current.IsConnected)
             {
-                await AppTaskHelper.FetchBalancesAndRates();
+                UiUtils.Update.FetchAllAssetsAndRates();
                 _pullToRefresh.IsRefreshing = false;
             }
             else
@@ -149,7 +147,7 @@ namespace MyCC.Forms.View.Pages
 
         private class HeaderTemplateSelector : DataTemplateSelector
         {
-            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent((Currency)item));
+            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new HeaderView { Data = UiUtils.Get.Assets.HeaderFor(((Currency)item).Id) });
         }
 
         private void AddSource(object sender, EventArgs e)
@@ -159,13 +157,7 @@ namespace MyCC.Forms.View.Pages
 
         private void SetFooter()
         {
-            var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
-            var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
-            var ratesTime = AccountStorage.NeededRates.Distinct().Select(e => RateUtil.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
-
-            var time = online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
-
-            Device.BeginInvokeOnMainThread(() => Footer.Text = time.LastUpdateString());
+            Device.BeginInvokeOnMainThread(() => Footer.Text = UiUtils.Get.Assets.LastUpdate.LastUpdateString());
         }
     }
 }

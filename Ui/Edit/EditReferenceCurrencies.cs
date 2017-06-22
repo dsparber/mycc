@@ -13,7 +13,7 @@ namespace MyCC.Ui.Edit
         public static void AddReferenceCurrency(string currencyId)
         {
             ApplicationSettings.FurtherCurrencies = new List<string>(ApplicationSettings.FurtherCurrencies) { currencyId };
-            Messaging.UiUpdate.ViewsWithRate.Send();
+            UiUtils.Update.FetchNeededButNotLoadedRates();
         }
 
         public static bool RemoveReferenceCurrency(string currencyId)
@@ -36,8 +36,8 @@ namespace MyCC.Ui.Edit
                 ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Except(new[] { currencyId }).ToList();
             }
 
-            Messaging.UiUpdate.ViewsWithRate.Send();
-            Messaging.UiUpdate.Accounts.Send();
+            Messaging.Update.Assets.Send();
+            Messaging.Update.Rates.Send();
             return true;
 
         }
@@ -65,8 +65,8 @@ namespace MyCC.Ui.Edit
                 ApplicationSettings.FurtherCurrencies = (willBecomeMainCurrency ? ApplicationSettings.FurtherCurrencies.Except(currencyIdAsArray) : ApplicationSettings.FurtherCurrencies.Concat(currencyIdAsArray)).ToList();
                 UiUtils.AssetsRefresh.ResetCache();
                 UiUtils.RatesRefresh.ResetCache();
-                Messaging.UiUpdate.ViewsWithRate.Send();
-                Messaging.UiUpdate.Accounts.Send();
+                Messaging.Update.Rates.Send();
+                Messaging.Update.Assets.Send();
             }
             return isNowMainCurrency;
         }

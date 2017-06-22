@@ -127,7 +127,7 @@ namespace MyCC.Ui.Get.Implementations
                 _items[key] = _items[key] != null ? ApplySort(_items[key]) : null;
             }
             _sortButtons = new Dictionary<string, List<SortButtonItem>>();
-            Messaging.UiUpdate.RatesOverview.Send();
+            Messaging.Sort.Rates.Send();
         }
     }
 }

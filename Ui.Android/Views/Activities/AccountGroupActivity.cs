@@ -52,7 +52,10 @@ namespace MyCC.Ui.Android.Views.Activities
             _sortDisabledName = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_disabled_name_sort);
             _sortDisabledAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_disabled_amount_sort);
 
-            Messaging.UiUpdate.AccountDetail.Subscribe(this, () => RunOnUiThread(SetData));
+            Messaging.Update.Assets.Subscribe(this, () => RunOnUiThread(SetData));
+            Messaging.Update.Rates.Subscribe(this, () => RunOnUiThread(SetData));
+            Messaging.Sort.Accounts.Subscribe(this, () => RunOnUiThread(SetData));
+            Messaging.Sort.ReferenceTables.Subscribe(this, () => RunOnUiThread(SetData));
 
 
             _swipeToRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
