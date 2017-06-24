@@ -83,7 +83,7 @@ namespace MyCC.Forms.View.Pages
 
         private void Subscribe()
         {
-            Messaging.Update.Assets.Subscribe(this, LoadData);
+            Messaging.Update.Balances.Subscribe(this, LoadData);
             Messaging.Update.Rates.Subscribe(this, LoadData);
             Messaging.Sort.ReferenceTables.Subscribe(this, LoadData);
             Messaging.Sort.Accounts.Subscribe(this, LoadData);

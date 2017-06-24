@@ -10,7 +10,6 @@ using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using MyCC.Ui;
-using MyCC.Ui.Messages;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Overlays

@@ -8,10 +8,10 @@ namespace MyCC.Forms.View.Components.Header
 {
     public partial class HeaderView
     {
-        private readonly double _defaultSize = App.ScreenHeight > 480 ? 36 : 28;
-        private readonly double _defaultSizeInfoText = App.ScreenHeight > 480 ? 18 : 15;
-        private readonly double _minSizeInfoText = App.ScreenHeight > 480 ? 16 : 13;
-        private readonly double _minSizeMainText = App.ScreenHeight > 480 ? 28 : 24;
+        private readonly float _defaultSize = App.ScreenHeight > 480 ? 36 : 28;
+        private readonly float _defaultSizeInfoText = App.ScreenHeight > 480 ? 18 : 15;
+        private readonly float _minSizeInfoText = App.ScreenHeight > 480 ? 16 : 13;
+        private readonly float _minSizeMainText = App.ScreenHeight > 480 ? 28 : 24;
 
         private HeaderItem _data;
 
@@ -23,7 +23,8 @@ namespace MyCC.Forms.View.Components.Header
                 _data = value;
                 TitleLabel.Text = GetText(Data.MainText);
                 InfoText = GetText(Data.InfoText);
-                AdaptSize();
+                AdaptSizeInfo();
+                AdaptSizeMain();
             });
 
         }
@@ -33,7 +34,7 @@ namespace MyCC.Forms.View.Components.Header
             set => Device.BeginInvokeOnMainThread(() =>
             {
                 InfoText = GetText(value);
-                AdaptSize();
+                AdaptSizeInfo();
             });
         }
 
@@ -42,7 +43,7 @@ namespace MyCC.Forms.View.Components.Header
             set => Device.BeginInvokeOnMainThread(() =>
             {
                 TitleLabel.Text = GetText(value);
-                AdaptSize();
+                AdaptSizeMain();
             });
         }
 
@@ -126,28 +127,25 @@ namespace MyCC.Forms.View.Components.Header
 
             InfoLabel.IsVisible = height <= 150;
             InfoLabelStack.IsVisible = height > 150;
-            AdaptSize();
+            AdaptSizeInfo();
+            AdaptSizeMain();
         }
 
         private static readonly ITextSizeHelper SizeHelper = DependencyService.Get<ITextSizeHelper>();
 
-        private void AdaptSize()
+        private void AdaptSizeMain() => TitleLabel.FontSize = AdaptSize(_defaultSize, _minSizeMainText, Data.MainText, true);
+        private void AdaptSizeInfo() => InfoLabel.FontSize = AdaptSize(_defaultSizeInfoText, _minSizeInfoText, Data.InfoText);
+
+        private float AdaptSize(float defaultSize, float minSize, string text, bool bold = false)
         {
-            var size = (float)_defaultSize;
-            var sizeInfo = (float)_defaultSizeInfoText;
+            var size = defaultSize;
             var availableWidth = Width - 48;
 
-            while (SizeHelper.CalculateWidth(Data.MainText, size, true).Item2 > availableWidth && size > _minSizeMainText)
+            while (SizeHelper.CalculateWidth(text, size, bold).Item2 > availableWidth && size > minSize)
             {
                 size -= 0.25f;
             }
-            while (SizeHelper.CalculateWidth(Data.InfoText, sizeInfo).Item2 > availableWidth && sizeInfo > _minSizeInfoText)
-            {
-                sizeInfo -= 0.25f;
-            }
-
-            TitleLabel.FontSize = size;
-            InfoLabel.FontSize = sizeInfo;
+            return size;
         }
     }
 }

@@ -12,13 +12,11 @@ namespace MyCC.Core.Rates.Utils
 {
     public class RatesUtil : IRatesUtil
     {
-        public IEnumerable<(string name, IEnumerable<ExchangeRate> rates)> CryptoToFiatSourcesWithRates
-            => RatesConfig.Sources.Where(source => source.Type == RateSourceType.CryptoToFiat).Select(source =>
-             {
-                 var rates = RateDatabase.CryptoToFiatRates.Where(rate => rate.SourceId == source.Id);
-                 return (source.Name, rates);
-             });
+        public IEnumerable<(string name, string detail, bool selected)> CryptoToFiatSourcesWithDetail
+            => CryptoToFiatSourcesWithRates.Select(t => (t.name, t.rates.ToList().GetDetailText(), t.name.Equals(MyccUtil.Rates.SelectedCryptoToFiatSource)));
 
+        public IEnumerable<(string name, IEnumerable<ExchangeRate> rates)> CryptoToFiatSourcesWithRates
+            => CryptoToFiatInfoUtils.CryptoToFiatSourcesWithRates;
 
         public ExchangeRate GetRate(RateDescriptor rateDescriptor) => rateDescriptor.GetRate();
         public bool HasRate(RateDescriptor rateDescriptor) => rateDescriptor.GetRate() != null;
@@ -29,7 +27,7 @@ namespace MyCC.Core.Rates.Utils
             => GetNeededRatesFor(currencyId).Select(e => e.GetRate()?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
 
         public DateTime LastCryptoToFiatUpdate()
-            => CryptoToFiatSourcesWithRates.Min(tuple => tuple.rates.Any() ? tuple.rates.Min(rate => rate.LastUpdate) : DateTime.MinValue);
+            => CryptoToFiatInfoUtils.CryptoToFiatSourcesWithRates.Min(tuple => tuple.rates.Any() ? tuple.rates.Min(rate => rate.LastUpdate) : DateTime.MinValue);
 
         public Task LoadFromDatabase() => RateDatabase.LoadFromDatabase();
 

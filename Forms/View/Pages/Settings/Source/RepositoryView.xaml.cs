@@ -11,6 +11,7 @@ using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 using MyCC.Core.Helpers;
 using MyCC.Ui;
+using MyCC.Ui.DataItems;
 using MyCC.Ui.Messages;
 
 namespace MyCC.Forms.View.Pages.Settings.Source
@@ -28,8 +29,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             _repository = repository;
             _isEditModal = isEditModal;
 
-            Header.TitleText = repository.Name;
-            Header.InfoText = $"{I18N.Source}: {_repository.Description}";
+            Header.Data = new HeaderItem(repository.Name, $"{I18N.Source}: {_repository.Description}");
 
             var addressAccountRepository = repository as AddressAccountRepository;
             if (addressAccountRepository != null)
@@ -69,11 +69,11 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             TableView.Root.Remove(DeleteSection);
             ToolbarItems.Remove(SaveItem);
 
-            RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.TitleText = e.NewTextValue;
+            RepositoryNameEntryCell.Entry.TextChanged += (sender, e) => Header.Title = e.NewTextValue;
 
             SetView(isEditModal);
 
-            Messaging.Update.Assets.Subscribe(this, SetViewAction);
+            Messaging.Update.Balances.Subscribe(this, SetViewAction);
 
             IsEditable = false;
 
@@ -188,7 +188,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
                 ToolbarItems.Add(EditItem);
 
                 Title = I18N.Details;
-                Header.InfoText = $"{I18N.Source}: {_repository.Description}";
+                Header.Info = $"{I18N.Source}: {_repository.Description}";
 
                 SaveItem.Clicked += SaveClicked;
                 Header.IsLoading = false;

@@ -27,7 +27,7 @@ namespace MyCC.Forms.View.Pages.Settings
 
             AutoRefresh.On = ApplicationSettings.AutoRefreshOnStartup;
 
-            Header.TitleText = ConstantNames.AppNameShort;
+            Header.Title = ConstantNames.AppNameShort;
 
             AutoRefresh.Switch.Toggled += AutoRefreshChanged;
             ReferenceCurrenciesCell.Tapped += (sender, e) => Navigation.PushAsync(new ReferenceCurrenciesSettingsView());

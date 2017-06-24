@@ -232,7 +232,7 @@ namespace MyCC.Forms.View.Pages
             }
 
             Messaging.Update.Rates.Subscribe(this, Update);
-            Messaging.Update.Assets.Subscribe(this, Update);
+            Messaging.Update.Balances.Subscribe(this, Update);
             Messaging.Sort.ReferenceTables.Subscribe(this, Update);
 
         }

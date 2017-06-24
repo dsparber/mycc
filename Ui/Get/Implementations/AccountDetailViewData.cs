@@ -126,7 +126,7 @@ namespace MyCC.Ui.Get.Implementations
         {
             SortDirection = SortDirectionHelper.GetNewSortDirection(SortOrder, SortDirection, sortOrder);
             SortOrder = sortOrder;
-            Messaging.Update.Assets.Send();
+            Messaging.Update.Balances.Send();
         }
 
         private SortOrder SortOrder

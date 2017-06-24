@@ -13,10 +13,18 @@
 
         public static class Update
         {
-            public const string Rates = "UiUpdateRates";
-            public const string Assets = "UiUpdateAssets";
-            public const string CoinInfo = "UiUpdateCoinInfo";
-            public const string BitcoinExchangeSources = "UiUpdateBitcoinExchangeSources";
+            public const string Rates = "UpdateRates";
+            public const string Balances = "UpdateAssets";
+            public const string CoinInfos = "UpdateCoinInfo";
+            public const string CryptoToFiatRates = "UpdateBitcoinExchangeSources";
+        }
+
+        public static class Modified
+        {
+            public const string Rates = "ModifiedRates";
+            public const string Balances = "ModifiedAssets";
+            public const string CoinInfos = "ModifiedCoinInfo";
+            public const string CryptoToFiatRates = "ModifiedBitcoinExchangeSources";
         }
 
         public static class Sort

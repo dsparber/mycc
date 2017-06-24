@@ -31,7 +31,7 @@ namespace MyCC.Forms.View.Components
             UpdateView();
 
             Messaging.Update.Rates.Subscribe(this, UpdateView);
-            Messaging.Update.Assets.Subscribe(this, UpdateView);
+            Messaging.Update.Balances.Subscribe(this, UpdateView);
         }
 
         private void UpdateView()

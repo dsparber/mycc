@@ -22,7 +22,7 @@ namespace MyCC.Core.Test.Rates
         [Test]
         public void CryptoToFiatSourcesAvailable()
         {
-            var cryptoToFiatElements = MyccUtil.Rates.CryptoToFiatSourcesWithRates;
+            var cryptoToFiatElements = MyccUtil.Rates.CryptoToFiatSourcesWithDetail;
             Assert.AreEqual(9, cryptoToFiatElements.Count());
         }
 

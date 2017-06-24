@@ -19,7 +19,7 @@ namespace MyCC.Ui.Update
             UiUtils.AssetsRefresh.ResetCache();
             UiUtils.RatesRefresh.ResetCache();
             Messaging.Update.Rates.Send();
-            Messaging.Update.Assets.Send();
+            Messaging.Update.Balances.Send();
         }
 
         public void FetchAllRates() => ExecuteWithErrorWrapper(async () =>
@@ -28,7 +28,7 @@ namespace MyCC.Ui.Update
            UiUtils.AssetsRefresh.ResetCache();
            UiUtils.RatesRefresh.ResetCache();
            Messaging.Update.Rates.Send();
-           Messaging.Update.Assets.Send();
+           Messaging.Update.Balances.Send();
            Messaging.Status.Progress.Send(1);
        });
 
@@ -45,7 +45,7 @@ namespace MyCC.Ui.Update
            UiUtils.AssetsRefresh.ResetCache();
            UiUtils.RatesRefresh.ResetCache();
            Messaging.Update.Rates.Send();
-           Messaging.Update.Assets.Send();
+           Messaging.Update.Balances.Send();
            Messaging.Status.Progress.Send(1);
        });
 
@@ -55,7 +55,7 @@ namespace MyCC.Ui.Update
            UiUtils.AssetsRefresh.ResetCache();
            UiUtils.RatesRefresh.ResetCache();
            Messaging.Update.Rates.Send();
-           Messaging.Update.Assets.Send();
+           Messaging.Update.Balances.Send();
            Messaging.Status.Progress.Send(1);
        });
 
@@ -67,7 +67,7 @@ namespace MyCC.Ui.Update
            UiUtils.AssetsRefresh.ResetCache();
            UiUtils.RatesRefresh.ResetCache();
            Messaging.Update.Rates.Send();
-           Messaging.Update.Assets.Send();
+           Messaging.Update.Balances.Send();
            Messaging.Status.Progress.Send(1);
        });
 
@@ -80,7 +80,7 @@ namespace MyCC.Ui.Update
             UiUtils.AssetsRefresh.ResetCache();
             UiUtils.RatesRefresh.ResetCache();
             Messaging.Update.Rates.Send();
-            Messaging.Update.Assets.Send();
+            Messaging.Update.Balances.Send();
             Messaging.Status.Progress.Send(1);
         });
 
@@ -89,7 +89,7 @@ namespace MyCC.Ui.Update
            Messaging.Status.Progress.Send(0.2);
            await ApplicationTasks.FetchCoinInfo(currencyId, onError: e => throw e, onFinished: () => Messaging.Status.Progress.Send(0.2 + 0.4));
            await MyccUtil.Rates.FetchFor(currencyId, progress => Messaging.Status.Progress.Send(0.6 + 0.4 * progress));
-           Messaging.Update.CoinInfo.Send();
+           Messaging.Update.CoinInfos.Send();
            Messaging.Status.Progress.Send(1);
        });
 
@@ -97,14 +97,14 @@ namespace MyCC.Ui.Update
         {
             Messaging.Status.Progress.Send(0.2);
             await ApplicationTasks.FetchCoinInfo(currencyId, onError: e => throw e, onFinished: () => Messaging.Status.Progress.Send(0.9));
-            Messaging.Update.CoinInfo.Send();
+            Messaging.Update.CoinInfos.Send();
             Messaging.Status.Progress.Send(1);
         });
 
         public void FetchCryptoToFiatRates() => ExecuteWithErrorWrapper(async () =>
        {
            await MyccUtil.Rates.FetchAllFiatToCrypto(progess => Messaging.Status.Progress.Send(progess));
-           Messaging.Update.BitcoinExchangeSources.Send();
+           Messaging.Update.CryptoToFiatRates.Send();
        });
 
         private static async void ExecuteWithErrorWrapper(Func<Task> action)

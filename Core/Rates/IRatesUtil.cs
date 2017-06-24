@@ -26,6 +26,7 @@ namespace MyCC.Core.Rates
 
         int CryptoToFiatSourceCount { get; }
         string SelectedCryptoToFiatSource { get; set; }
+        IEnumerable<(string name, string detail, bool selected)> CryptoToFiatSourcesWithDetail { get; }
         IEnumerable<(string name, IEnumerable<ExchangeRate> rates)> CryptoToFiatSourcesWithRates { get; }
     }
 }

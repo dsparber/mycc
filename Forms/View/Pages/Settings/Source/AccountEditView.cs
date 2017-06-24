@@ -4,6 +4,7 @@ using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using MyCC.Ui;
+using MyCC.Ui.DataItems;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages.Settings.Source
@@ -24,8 +25,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             _isEditModal = isEditModal;
 
             Title = account.Name;
-            Header.TitleText = account.Money.ToString();
-            Header.InfoText = I18N.ManuallyAdded;
+            Header.Data = new HeaderItem(account.Money.ToString(), I18N.ManuallyAdded);
 
             AccountName.Text = account.Name;
             AmountEntry.Text = account.Money.Amount.ToString();
@@ -37,12 +37,12 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             ToolbarItems.Remove(SaveItem);
             EditView.Root.Remove(DeleteSection);
 
-            _currencyEntryCell.OnSelected = c => Header.TitleText = new Money(decimal.Parse(string.IsNullOrWhiteSpace(AmountEntry.Text) ? "0" : AmountEntry.Text), _currencyEntryCell.SelectedCurrency).ToString();
+            _currencyEntryCell.OnSelected = c => Header.Title = new Money(decimal.Parse(string.IsNullOrWhiteSpace(AmountEntry.Text) ? "0" : AmountEntry.Text), _currencyEntryCell.SelectedCurrency).ToString();
             AmountEntry.Entry.TextChanged += (s, o) =>
             {
                 try
                 {
-                    Header.TitleText = new Money(decimal.Parse(string.IsNullOrWhiteSpace(AmountEntry.Text) ? "0" : AmountEntry.Text), _currencyEntryCell.SelectedCurrency).ToString();
+                    Header.Title = new Money(decimal.Parse(string.IsNullOrWhiteSpace(AmountEntry.Text) ? "0" : AmountEntry.Text), _currencyEntryCell.SelectedCurrency).ToString();
                 }
                 catch { /* nothing */ }
             };
@@ -77,7 +77,6 @@ namespace MyCC.Forms.View.Pages.Settings.Source
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            Header.AdaptSize();
             if (_isEditModal) AmountEntry.Entry.Focus();
         }
 
@@ -105,7 +104,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             if (_isEditModal) await Navigation.PopOrPopModal();
 
             Title = _account.Name;
-            Header.TitleText = _account.Money.ToString();
+            Header.Title = _account.Money.ToString();
 
             ToolbarItems.Clear();
             ToolbarItems.Add(EditItem);

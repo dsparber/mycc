@@ -119,7 +119,7 @@ namespace MyCC.Forms.View.Pages
         {
             Messaging.Status.CarouselPosition.Subscribe(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
             Messaging.Update.Rates.Subscribe(this, SetHeaderCarousel);
-            Messaging.Update.Assets.Subscribe(this, SetNoSourcesView);
+            Messaging.Update.Balances.Subscribe(this, SetNoSourcesView);
         }
 
         private async void Refresh()

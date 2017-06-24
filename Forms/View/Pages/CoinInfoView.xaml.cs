@@ -115,7 +115,7 @@ namespace MyCC.Forms.View.Pages
 
             PullToRefresh.RefreshCommand = new Command(Refresh);
 
-            Messaging.Update.CoinInfo.Subscribe(this, () => UpdateView(true));
+            Messaging.Update.CoinInfos.Subscribe(this, () => UpdateView(true));
         }
 
         private void UpdateView(bool calledFromBackground = false)

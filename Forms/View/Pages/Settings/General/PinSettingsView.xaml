@@ -12,7 +12,7 @@
     <ContentPage.Content>
         <container:ChangingStackLayout>
             <header:HeaderView
-				TitleText="{x:Static corenames:ConstantNames.AppNameShort}"
+				Title="{x:Static corenames:ConstantNames.AppNameShort}"
 				x:Name="Header" />
             <TableView
 				Intent="Form"

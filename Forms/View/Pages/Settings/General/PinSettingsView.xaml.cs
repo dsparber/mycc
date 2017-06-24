@@ -33,7 +33,7 @@ namespace MyCC.Forms.View.Pages.Settings.General
         private void SetPinCells()
         {
 
-            Header.InfoText = ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled ? I18N.FingerprintActive : ApplicationSettings.IsPinSet ? I18N.PinActive : I18N.NotConfigured;
+            Header.Info = ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled ? I18N.FingerprintActive : ApplicationSettings.IsPinSet ? I18N.PinActive : I18N.NotConfigured;
 
             if (!ApplicationSettings.IsPinSet)
             {

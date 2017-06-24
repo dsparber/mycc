@@ -128,7 +128,7 @@ namespace MyCC.Ui.Android.Views.Fragments
             }
 
             Messaging.Update.Rates.Subscribe(this, UpdateView);
-            Messaging.Update.Assets.Subscribe(this, UpdateView);
+            Messaging.Update.Balances.Subscribe(this, UpdateView);
             Messaging.Sort.Rates.Subscribe(this, Sort);
 
             view.FindViewById<FloatingActionButton>(Resource.Id.button_add).Click += (sender, args) =>

@@ -12,7 +12,7 @@
 	Title="{resources:Translate DefaultView}">
     <container:ChangingStackLayout>
         <header:HeaderView
-			TitleText="{x:Static corenames:ConstantNames.AppNameShort}"
+			Title="{x:Static corenames:ConstantNames.AppNameShort}"
 			x:Name="Header" />
         <StackLayout
 			Spacing="0"

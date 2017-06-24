@@ -82,7 +82,7 @@ namespace MyCC.Forms.View.Components.Table
 
             UpdateView();
 
-            Messaging.Update.Assets.Subscribe(this, UpdateView);
+            Messaging.Update.Balances.Subscribe(this, UpdateView);
             Messaging.Update.Rates.Subscribe(this, UpdateView);
         }
 

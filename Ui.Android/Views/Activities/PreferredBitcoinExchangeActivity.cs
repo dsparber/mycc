@@ -6,11 +6,6 @@ using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Widget;
 using MyCC.Core;
-using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currencies;
-using MyCC.Core.Rates.ModelExtensions;
-using MyCC.Core.Rates.Models;
-using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
 using MyCC.Ui.Messages;
@@ -22,7 +17,7 @@ namespace MyCC.Ui.Android.Views.Activities
     {
         private HeaderFragment _header;
         private FooterFragment _footer;
-        private List<Tuple<TextView, string>> _views;
+        private Dictionary<string, TextView> _views;
         private static bool _triedUpdate;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -40,15 +35,15 @@ namespace MyCC.Ui.Android.Views.Activities
 
             var container = FindViewById<LinearLayout>(Resource.Id.container_items);
 
-            _views = MyccUtil.Rates.CryptoToFiatSourcesWithRates.ToList().OrderBy(tuple => tuple.name).Select(tuple =>
+            _views = MyccUtil.Rates.CryptoToFiatSourcesWithDetail.ToList().OrderBy(tuple => tuple.name).ToDictionary(t => t.name, tuple =>
             {
                 var v = LayoutInflater.Inflate(Resource.Layout.item_bitcoin_exchange, null);
                 v.FindViewById<TextView>(Resource.Id.text_name).Text = tuple.name;
                 var detailText = v.FindViewById<TextView>(Resource.Id.text_info);
-                detailText.Text = GetDetail(tuple.rates.ToList());
+                detailText.Text = tuple.detail;
 
                 var radioButton = v.FindViewById<RadioButton>(Resource.Id.radio_button_selected);
-                radioButton.Checked = tuple.name == MyccUtil.Rates.SelectedCryptoToFiatSource;
+                radioButton.Checked = tuple.selected;
 
                 v.Click += (sender, args) => radioButton.Toggle();
                 radioButton.CheckedChange += (sender, args) =>
@@ -58,8 +53,8 @@ namespace MyCC.Ui.Android.Views.Activities
                 };
 
                 container.AddView(v);
-                return Tuple.Create(detailText, tuple.name);
-            }).ToList();
+                return detailText;
+            });
 
             var swipeRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             swipeRefresh.Refresh += (sender, args) =>
@@ -67,7 +62,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 UiUtils.Update.FetchCryptoToFiatRates();
             };
 
-            Messaging.Update.BitcoinExchangeSources.Subscribe(this, () => RunOnUiThread(() =>
+            Messaging.Update.CryptoToFiatRates.Subscribe(this, () => RunOnUiThread(() =>
             {
                 SetFooter();
                 UpdateText();
@@ -88,28 +83,10 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void UpdateText()
         {
-            foreach (var v in _views)
+            foreach (var entry in MyccUtil.Rates.CryptoToFiatSourcesWithDetail)
             {
-                v.Item1.Text = GetDetail(MyccUtil.Rates.CryptoToFiatSourcesWithRates.First(tuple => tuple.name.Equals(v.Item2)).rates.ToList());
+                _views[entry.name].Text = entry.detail;
             }
-        }
-
-        private static string GetDetail(IReadOnlyCollection<ExchangeRate> rates)
-        {
-            var descriptorBtcUsd = new RateDescriptor(CurrencyConstants.Btc.Id, CurrencyConstants.Usd.Id);
-            var descriptorBtcEur = new RateDescriptor(CurrencyConstants.Btc.Id, CurrencyConstants.Eur.Id);
-
-            var usd = rates.FirstOrDefault(rate => rate.Descriptor.CurrenciesEqual(descriptorBtcUsd));
-            var eur = rates.FirstOrDefault(rate => rate.Descriptor.CurrenciesEqual(descriptorBtcEur));
-
-            usd = usd?.Descriptor.CurrenciesEqual(descriptorBtcUsd) ?? false ? usd : usd?.Inverse();
-            eur = eur?.Descriptor.CurrenciesEqual(descriptorBtcEur) ?? false ? eur : eur?.Inverse();
-
-            var usdString = new Money(usd?.Rate ?? 0, CurrencyConstants.Usd).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            var eurString = new Money(eur?.Rate ?? (usd != null ? MyccUtil.Rates.GetRate(descriptorBtcEur)?.Rate : 0) ?? 0, CurrencyConstants.Eur).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            var note = eur == null && usd != null ? "*" : string.Empty;
-
-            return $"{eurString}{note} / {usdString}";
         }
     }
 }

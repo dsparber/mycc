@@ -12,7 +12,7 @@
         <container:ChangingStackLayout>
             <header:HeaderView
 				x:Name="Header"
-				InfoText="{resources:Translate AppNameLong}" />
+				Info="{resources:Translate AppNameLong}" />
             <TableView
 				Intent="Settings">
                 <TableSection

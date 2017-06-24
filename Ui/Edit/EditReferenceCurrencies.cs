@@ -36,7 +36,7 @@ namespace MyCC.Ui.Edit
                 ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Except(new[] { currencyId }).ToList();
             }
 
-            Messaging.Update.Assets.Send();
+            Messaging.Update.Balances.Send();
             Messaging.Update.Rates.Send();
             return true;
 
@@ -66,7 +66,7 @@ namespace MyCC.Ui.Edit
                 UiUtils.AssetsRefresh.ResetCache();
                 UiUtils.RatesRefresh.ResetCache();
                 Messaging.Update.Rates.Send();
-                Messaging.Update.Assets.Send();
+                Messaging.Update.Balances.Send();
             }
             return isNowMainCurrency;
         }
