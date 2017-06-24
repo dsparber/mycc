@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
@@ -112,7 +113,7 @@ namespace MyCC.Forms.View.Components.Table
                     new HeaderData(I18N.Name, SortOrder.Alphabetical.ToString()),
                     new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
                         }, string.Empty);
-                    _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+                    _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), CultureInfo.CurrentCulture.Name);
                 });
             }
             catch (Exception e)

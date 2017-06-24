@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using MyCC.Core.Settings;
-using MyCC.Forms.Resources;
 using MyCC.Forms.View.Container;
 using MyCC.Forms.View.Overlays;
 using MyCC.Forms.View.Pages;
@@ -19,9 +18,6 @@ namespace MyCC.Forms
 
         public App()
         {
-            DependencyService.Get<ILocalise>().SetLocale();
-
-
             if (UiUtils.Prepare.PreparingNeeded)
             {
                 MainPage = new PreparationView();

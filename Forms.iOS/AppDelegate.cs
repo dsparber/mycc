@@ -5,9 +5,11 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using System;
+using System.Globalization;
 using MyCC.Core.Database;
 using MyCC.Forms.Constants;
 using MyCC.Forms.iOS.data.database;
+using MyCC.Forms.Resources;
 using MyCC.Ui.Messages;
 using Refractored.XamForms.PullToRefresh.iOS;
 
@@ -18,6 +20,8 @@ namespace MyCC.Forms.iOS
     {
         public override bool FinishedLaunching(UIApplication uiApplication, NSDictionary launchOptions)
         {
+            I18N.Culture = CultureInfo.CurrentCulture;
+
             Xamarin.Forms.Forms.Init();
             DatabaseUtil.SqLiteConnection = new SqLiteConnectionIos();
             CarouselViewRenderer.Init();
