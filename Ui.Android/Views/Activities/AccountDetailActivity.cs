@@ -133,7 +133,7 @@ namespace MyCC.Ui.Android.Views.Activities
             addressText.Text = Data.AccountAddressString(_accountId);
 
             var explorerButton = FindViewById<Button>(Resource.Id.button_open_in_blockexplorer);
-            explorerButton.Visibility = Data.AddressClickable(_accountId) ? ViewStates.Visible : ViewStates.Gone;
+            explorerButton.Visibility = Data.BlockExplorerCallAllowed(_accountId) ? ViewStates.Visible : ViewStates.Gone;
 
             explorerButton.Click += (sender, args) =>
             {
