@@ -42,7 +42,7 @@
         android:id="@+id/button_no_sort_1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.2" />
+        android:layout_weight="0.3" />
       <fragment
           android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
           android:id="@+id/button_currency_sort"
@@ -54,7 +54,7 @@
           android:id="@+id/button_value_sort"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_weight="1" />
+          android:layout_weight="0.9" />
       <fragment
           android:name="MyCC.Ui.Android.Views.Fragments.SortButtonFragment"
           android:id="@+id/button_no_sort"

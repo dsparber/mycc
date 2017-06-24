@@ -11,7 +11,7 @@ namespace MyCC.Ui.Get
         bool IsLocal(int accountId);
 
         bool ShowQrCodePossible(int accountId);
-        bool AddressClickable(int accountId);
+        bool BlockExplorerCallAllowed(int accountId);
         bool ShowAccountSource(int accountId);
         bool ShowAccountAddress(int accountId);
 
