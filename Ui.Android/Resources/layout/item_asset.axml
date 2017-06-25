@@ -7,7 +7,7 @@
       android:id="@+id/text_currency"
       android:ellipsize="end"
       android:maxLines="1"
-      android:paddingLeft="24dp"
+      android:paddingLeft="@dimen/abc_action_bar_content_inset_material"
       android:paddingRight="8dp"
       android:paddingTop="8dp"
       android:paddingBottom="8dp"

@@ -1,12 +1,16 @@
 ﻿using CarouselView.FormsPlugin.iOS;
 using Foundation;
 using HockeyApp.iOS;
-using MyCC.Forms.Constants;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using System;
-using MyCC.Forms.Messages;
+using System.Globalization;
+using MyCC.Core.Database;
+using MyCC.Forms.Constants;
+using MyCC.Forms.iOS.data.database;
+using MyCC.Forms.Resources;
+using MyCC.Ui.Messages;
 using Refractored.XamForms.PullToRefresh.iOS;
 
 namespace MyCC.Forms.iOS
@@ -16,7 +20,10 @@ namespace MyCC.Forms.iOS
     {
         public override bool FinishedLaunching(UIApplication uiApplication, NSDictionary launchOptions)
         {
+            I18N.Culture = CultureInfo.CurrentCulture;
+
             Xamarin.Forms.Forms.Init();
+            DatabaseUtil.SqLiteConnection = new SqLiteConnectionIos();
             CarouselViewRenderer.Init();
             PullToRefreshLayoutRenderer.Init();
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
@@ -24,13 +31,8 @@ namespace MyCC.Forms.iOS
             var x = (int)UIScreen.MainScreen.Bounds.Width;
             var y = (int)UIScreen.MainScreen.Bounds.Height;
             App.ScreenHeight = Math.Max(x, y);
-            App.ScreenWidth = Math.Min(x, y);
 
-            LoadApplication(new App());
-
-            var result = base.FinishedLaunching(uiApplication, launchOptions);
-
-            Messaging.DarkStatusBar.SubscribeToBool(this, b => UIApplication.SharedApplication.SetStatusBarStyle(b ? UIStatusBarStyle.Default : UIStatusBarStyle.LightContent, false));
+            Messaging.Status.DarkStatusBar.Subscribe(this, b => UIApplication.SharedApplication.SetStatusBarStyle(b ? UIStatusBarStyle.Default : UIStatusBarStyle.LightContent, false));
 
             UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.Default, false);
             UINavigationBar.Appearance.TintColor = Color.White.ToUIColor();
@@ -47,7 +49,8 @@ namespace MyCC.Forms.iOS
             manager.DisableUpdateManager = true;
             manager.StartManager();
 
-            return result;
+			LoadApplication(new App());
+            return base.FinishedLaunching(uiApplication, launchOptions);
         }
     }
 }

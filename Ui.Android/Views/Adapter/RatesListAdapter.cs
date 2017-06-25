@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using Android.Content;
 using Android.Views;
 using Android.Widget;
-using MyCC.Core.Currencies.Models;
 using MyCC.Ui.DataItems;
-using MyCC.Ui.ViewData;
 
 namespace MyCC.Ui.Android.Views.Adapter
 {
@@ -48,7 +46,7 @@ namespace MyCC.Ui.Android.Views.Adapter
 
             var removeIcon = convertView.FindViewById<ImageView>(Resource.Id.image_remove);
             removeIcon.Visibility = _editingEnabled ? ViewStates.Visible : ViewStates.Gone;
-            removeIcon.SetOnClickListener(new ClickListener(item.Currency, this));
+            removeIcon.SetOnClickListener(new ClickListener(item.CurrencyId, this));
 
             if (_removeIcons.ContainsKey(position))
             {
@@ -64,17 +62,17 @@ namespace MyCC.Ui.Android.Views.Adapter
 
         private class ClickListener : Java.Lang.Object, View.IOnClickListener
         {
-            private readonly Currency _currency;
+            private readonly string _currencyId;
             private readonly RatesListAdapter _adapter;
 
-            public ClickListener(Currency currency, RatesListAdapter adapter)
+            public ClickListener(string currencyId, RatesListAdapter adapter)
             {
-                _currency = currency;
+                _currencyId = currencyId;
                 _adapter = adapter;
             }
             public void OnClick(View v)
             {
-                CurrencySettingsData.Disable(_currency);
+                UiUtils.Edit.RemoveWatchedCurrency(_currencyId);
                 _adapter.CurrencyRemoved?.Invoke();
             }
         }

@@ -1,19 +1,10 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.Serialization;
-using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
 using MyCC.Core.Settings;
-using MyCC.Forms.Messages;
-using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Pages;
-using Newtonsoft.Json;
+using MyCC.Ui;
+using MyCC.Ui.Messages;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Components
@@ -37,95 +28,14 @@ namespace MyCC.Forms.View.Components
 
             UpdateView();
 
-            Messaging.Loading.SubscribeFinished(this, UpdateView);
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, UpdateView);
-            Messaging.UpdatingAccounts.SubscribeValueChanged(this, UpdateView);
-            Messaging.UpdatingAccountsAndRates.SubscribeValueChanged(this, UpdateView);
-
-            Messaging.Progress.SubscribeToComplete(this, UpdateView);
+            Messaging.Update.Rates.Subscribe(this, UpdateView);
+            Messaging.Update.Balances.Subscribe(this, UpdateView);
+            Messaging.Status.CarouselPosition.Subscribe(this, UpdateView);
         }
 
         private void UpdateView()
         {
-
-            var items = AccountStorage.AccountsGroupedByCurrency
-                        .Select(e => new Data(e, ApplicationSettings.StartupCurrencyAssets.ToCurrency())).Where(d => d.value > 0)
-                        .OrderByDescending(d => d.value).ToArray();
-
-            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction("showChart", items, new[] { I18N.OneAccount, I18N.Accounts }, new[] { I18N.OneCurrency, I18N.Currencies }, I18N.Further, I18N.NoDataToDisplay, ApplicationSettings.StartupCurrencyAssets.ToCurrency().Code, ApplicationSettings.RoundMoney, CultureInfo.CurrentCulture.ToString()));
-        }
-
-        [DataContract]
-        [JsonObject]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        public class Data
-        {
-            [DataMember]
-            public readonly decimal value;
-
-            [DataMember]
-            public readonly string label;
-
-            [DataMember]
-            public readonly string money;
-
-            [DataMember]
-            public readonly string reference;
-
-            [DataMember]
-            public readonly string name;
-
-            [DataMember]
-            public readonly AccountData[] accounts;
-
-            public Data(IGrouping<Currency, Account> group, Currency referenceCurrency)
-            {
-                var rate = new ExchangeRate(group.Key.Id, referenceCurrency.Id);
-                rate = ExchangeRateHelper.GetRate(rate) ?? rate;
-
-                var totalMoney = new Money(group.Sum(a => a.IsEnabled ? a.Money.Amount : 0), group.Key);
-
-                label = group.Key.Code;
-                name = group.Key.Name;
-                value = totalMoney.Amount * rate.Rate ?? 0;
-                money = totalMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
-                reference = new Money(value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-                accounts = group.Select(a => new AccountData(a, rate, referenceCurrency)).Where(d => d.value > 0).OrderByDescending(d => d.value).ToArray();
-            }
-        }
-
-        [DataContract]
-        [JsonObject]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        public class AccountData
-        {
-            [DataMember]
-            public readonly decimal value;
-
-            [DataMember]
-            public readonly string label;
-
-            [DataMember]
-            public readonly string money;
-
-            [DataMember]
-            public readonly string reference;
-
-            [DataMember]
-            public readonly int id;
-
-            public AccountData(Account account, ExchangeRate rate, Currency referenceCurrency)
-            {
-                value = account.IsEnabled ? account.Money.Amount * rate.Rate ?? 0 : 0;
-                label = account.Name;
-                money = (account.IsEnabled ? account.Money : new Money(0, account.Money.Currency)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-                reference = new Money(value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-                id = account.Id;
-            }
+            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction(UiUtils.Get.Assets.GrapItemsJsFor(ApplicationSettings.StartupCurrencyAssets)));
         }
     }
 }

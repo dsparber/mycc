@@ -8,8 +8,6 @@ using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
-using MyCC.Core.Settings;
 
 namespace MyCC.Core.Account.Storage
 {
@@ -35,22 +33,11 @@ namespace MyCC.Core.Account.Storage
         public static List<FunctionalAccount> AccountsWithCurrency(Currency currency) => Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).ToList();
         public static List<FunctionalAccount> AccountsWithCurrency(string currencyId) => Instance.AllElements.Where(a => a.Money.Currency.Id.Equals(currencyId)).ToList();
 
+        public static string CurrencyIdOf(int accountId) => GetAccount(accountId)?.Money.Currency.Id;
+        public static Models.Base.Account GetAccount(int accountId) => Instance.AllElements.Find(account => account.Id == accountId);
 
-        public static List<ExchangeRate> NeededRates => UsedCurrencies.Distinct()
-                                       .SelectMany(c => ApplicationSettings.AllReferenceCurrencies.Select(cref => new ExchangeRate(c, cref)))
-                                       .Select(e => ExchangeRateHelper.GetRate(e) ?? e)
-                                       .Where(r => r?.Rate == null)
-                                       .ToList();
-
-        public static List<ExchangeRate> NeededRatesFor(Currency accountCurrency) => ApplicationSettings.AllReferenceCurrencies
-                                       .Select(c => new ExchangeRate(accountCurrency.Id, c))
-                                       .Select(e => ExchangeRateHelper.GetRate(e) ?? e)
-                                       .Where(r => r.Rate == null)
-                                       .ToList();
-
-        public static List<ExchangeRate> NeededRatesFor(FunctionalAccount account) => NeededRatesFor(account.Money.Currency);
-
-        public static AccountRepository RepositoryOf(FunctionalAccount account) => Instance.Repositories.Find(r => r.Id == account.ParentId);
+        public static AccountRepository RepositoryOf(int accountId) => RepositoryOf(GetAccount(accountId) as FunctionalAccount);
+        public static AccountRepository RepositoryOf(FunctionalAccount account) => Instance.Repositories.Find(r => r.Id == account?.ParentId);
 
         public static Task Update(FunctionalAccount account) => RepositoryOf(account).Update(account);
 
@@ -63,14 +50,5 @@ namespace MyCC.Core.Account.Storage
 
         public static bool AlreadyExists(AccountRepository repository)
             => Instance.RepositoriesOfType(repository.GetType()).Any(r => r.Data.Equals(repository.Data));
-
-        public static int CurrenciesForGraph => AccountsGroupedByCurrency
-            .Select(e => e.Select(a =>
-            {
-                var rate = new ExchangeRate(e.Key.Id, ApplicationSettings.StartupCurrencyAssets);
-                rate = ExchangeRateHelper.GetRate(rate) ?? rate;
-
-                return a.IsEnabled ? a.Money.Amount * rate.Rate ?? 0 : 0;
-            }).Sum()).Count(v => v > 0);
     }
 }

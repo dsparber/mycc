@@ -15,7 +15,7 @@ namespace MyCC.Forms.View.Components.CellViews
 
         public string Text
         {
-            set { _label.Text = value; }
+            set => _label.Text = value;
         }
     }
 }

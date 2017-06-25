@@ -1,30 +1,5 @@
 "use strict";
 
-var testData = [{
-    "Code": "BTC",
-    "Reference": 213.96
-}, {
-    "Code": "ETH",
-    "Reference": "347,852.23"
-}, {
-    "Code": "PVC",
-    "Reference": 478.54
-}];
-
-var testColumns = [{
-    "Text": "Währung",
-    "Type": "Currency"
-}, {
-    "Text": "Entspricht",
-    "Type": "Value"
-}];
-
-var testSort = {
-    "Type": "Currency",
-    "Direction": "Ascending"
-};
-
-
 var sorterSet = false;
 
 function setHeader(columns) {
@@ -36,13 +11,13 @@ function setHeader(columns) {
     for (var i = 0; i < columns.length; i++) {
         var cell = row.insertCell(-1);
         cell.innerHTML = "<span>" + columns[i]["Text"] + "</span>";
-        cell.setAttribute("type", columns[i]["Type"]);
-        cell.onclick = headerClicked(columns[i]["Type"]);
+        cell.setAttribute("class", columns[i]["Ascending"] === true ? "down" : columns[i]["Ascending"] === false ? "up" : "");
+        cell.onclick = headerClicked(columns[i]["Id"]);
     }
     row.insertCell(-1);
 }
 
-function updateTable(data, sort) {
+function updateTable(data) {
 
     var coinTable = document.getElementById("coinTable");
     clearTable(coinTable);
@@ -61,10 +36,6 @@ function updateTable(data, sort) {
 
         row.onclick = rowClicked(data[i]["CallbackString"]);
     }
-
-    $("#coinTable thead").children().removeClass();
-    $("#coinTable td[type=" + sort["Type"] + "]").addClass(sort["Direction"] === "Ascending" ? "down" : "up");
-
     sizeAllocated();
 }
 
@@ -74,9 +45,9 @@ function rowClicked(code) {
     };
 }
 
-function headerClicked(type) {
+function headerClicked(id) {
     return function () {
-        window.open("http://none?" + "HeaderClickedCallback=" + type);
+        window.open("http://none?" + "HeaderClickedCallback=" + id);
     };
 }
 

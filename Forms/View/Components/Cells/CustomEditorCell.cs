@@ -17,8 +17,8 @@ namespace MyCC.Forms.View.Components.Cells
 
         public string Text
         {
-            get { return Editor != null ? Editor.Text : string.Empty; }
-            set { Editor.Text = value; }
+            get => Editor != null ? Editor.Text : string.Empty;
+            set => Editor.Text = value;
         }
 
         public bool IsEditable

@@ -14,13 +14,7 @@ namespace MyCC.Forms.Resources
     [ContentProperty("Text")]
     public class TranslateExtension : IMarkupExtension
     {
-        private readonly CultureInfo _ci;
         private const string ResourceId = "MyCC.Forms.Resources.I18N";
-
-        public TranslateExtension()
-        {
-            _ci = CultureInfo.CurrentCulture;
-        }
 
         public string Text { get; set; }
 
@@ -29,7 +23,7 @@ namespace MyCC.Forms.Resources
             if (Text == null) return string.Empty;
 
             var res = new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-            return res.GetString(Text, _ci) ?? res.GetString(Text, CultureInfo.InvariantCulture) ?? Text;
+            return res.GetString(Text, CultureInfo.CurrentCulture) ?? res.GetString(Text, CultureInfo.InvariantCulture) ?? Text;
         }
     }
 }

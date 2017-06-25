@@ -1,10 +1,10 @@
-using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Account.Models.Implementations;
 
 namespace MyCC.Forms.View.Addsource
 {
 
     public abstract class AddAccountSubview : AddSourceSubview
     {
-        public abstract FunctionalAccount GetAccount(string name);
+        public abstract LocalAccount GetAccount(string name);
     }
 }

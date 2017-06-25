@@ -1,18 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
-using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Account.Storage;
-using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
 using MyCC.Core.Settings;
-using MyCC.Core.Types;
-using MyCC.Forms.Messages;
-using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Pages;
+using MyCC.Ui;
+using MyCC.Ui.DataItems;
+using MyCC.Ui.Messages;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Components.Table
@@ -20,19 +17,18 @@ namespace MyCC.Forms.View.Components.Table
     public class RatesTableComponent : ContentView
     {
         private readonly HybridWebView _webView;
+        private readonly Dictionary<int, Action> _headerClickCallbacks;
+        private static int _currentId;
+
 
         public RatesTableComponent(INavigation navigation)
         {
-            _webView = new HybridWebView("Html/ratesTable.html")
-            {
-                LoadFinished = UpdateView
-            };
-            _webView.RegisterCallback("Callback", code =>
-            {
-                var currency = new Currency(code.Split(',')[0], bool.Parse(code.Split(',')[1]));
-                currency = currency.Find();
+            _webView = new HybridWebView("Html/ratesTable.html") { LoadFinished = UpdateView };
+            _headerClickCallbacks = new Dictionary<int, Action>();
 
-                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinInfoView(currency, true)));
+            _webView.RegisterCallback("Callback", currencyId =>
+            {
+                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(new CoinInfoView(currencyId, true)));
             });
 
             _webView.RegisterCallback("CallbackSizeAllocated", sizeString =>
@@ -41,32 +37,17 @@ namespace MyCC.Forms.View.Components.Table
                 Device.BeginInvokeOnMainThread(() => _webView.HeightRequest = size);
             });
 
-            _webView.RegisterCallback("HeaderClickedCallback", type =>
+            _webView.RegisterCallback("HeaderClickedCallback", id =>
             {
-                SortOrder value;
-                var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
-                if (clickedSortOrder == ApplicationSettings.SortOrderRates)
-                {
-                    ApplicationSettings.SortDirectionRates = ApplicationSettings.SortDirectionRates == SortDirection.Ascending
-                        ? SortDirection.Descending
-                        : SortDirection.Ascending;
-                }
-                ApplicationSettings.SortOrderRates = clickedSortOrder;
-
+                _headerClickCallbacks[int.Parse(id)].Invoke();
                 UpdateView();
             });
 
             Content = _webView;
 
-            _webView.LoadFinished = UpdateView;
-
-            Messaging.FetchMissingRates.SubscribeFinished(this, UpdateView);
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
-            Messaging.UpdatingRates.SubscribeFinished(this, UpdateView);
-
-            Messaging.RatesPageCurrency.SubscribeValueChanged(this, UpdateView);
-            Messaging.Loading.SubscribeFinished(this, UpdateView);
+            Messaging.Update.Rates.Subscribe(this, UpdateView);
+            Messaging.Update.Balances.Subscribe(this, UpdateView);
+			Messaging.Status.CarouselPosition.Subscribe(this, UpdateView);
         }
 
         public void OnAppearing()
@@ -76,41 +57,17 @@ namespace MyCC.Forms.View.Components.Table
 
         private void UpdateView()
         {
-            var items = ApplicationSettings.WatchedCurrencies
-                .Concat(ApplicationSettings.AllReferenceCurrencies)
-                .Concat(AccountStorage.UsedCurrencies)
-                .Distinct()
-                .Where(c => !c.Equals(ApplicationSettings.StartupCurrencyRates))
-                .Select(c => new Data(c.ToCurrency())).ToList();
+            var currencyId = ApplicationSettings.StartupCurrencyRates;
+            var items = UiUtils.Get.Rates.RateItemsFor(currencyId)?.Select(item => new Data(item)).ToList();
 
-            var itemsExisting = items.Count > 0;
-
-            if (!itemsExisting) return;
-
-            Func<Data, object> sortLambda;
-            switch (ApplicationSettings.SortOrderRates)
-            {
-                case SortOrder.Alphabetical: sortLambda = d => d.Code; break;
-                case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Reference); break;
-                case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Reference); break;
-                case SortOrder.None: sortLambda = d => 1; break;
-                default: sortLambda = d => 1; break;
-            }
-
-            items = ApplicationSettings.SortDirectionRates == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
+            if (items == null) return;
 
             Device.BeginInvokeOnMainThread(() =>
             {
-                _webView.CallJsFunction("setHeader", new[]{
-                    new HeaderData(I18N.Currency, SortOrder.Alphabetical.ToString()),
-                    new HeaderData(string.Format(I18N.AsCurrency, ApplicationSettings.StartupCurrencyRates.ToCurrency().Code), SortOrder.ByValue.ToString())
-                }, string.Empty);
-                _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
-
-                if (Device.RuntimePlatform.Equals(Device.Android))
-                {
-                    HeightRequest = 38 * (items.Count + 1) + 1;
-                }
+                _headerClickCallbacks.Clear();
+                _currentId = 0;
+                _webView.CallJsFunction("setHeader", UiUtils.Get.Rates.SortButtonsFor(currencyId).Select(button => new HeaderData(button, _currentId += 1, this)), string.Empty);
+                _webView.CallJsFunction("updateTable", items.ToArray(), CultureInfo.CurrentCulture.Name);
             });
         }
 
@@ -126,38 +83,12 @@ namespace MyCC.Forms.View.Components.Table
             [DataMember]
             public readonly string CallbackString;
 
-            public Data(Currency currency)
+            public Data(RateItem rateItem)
             {
-                var neededRate = new ExchangeRate(currency.Id, ApplicationSettings.StartupCurrencyRates);
-                var rate = ExchangeRateHelper.GetRate(neededRate) ?? neededRate;
-
-                Code = currency.Code;
-                Reference = new Money(rate.Rate ?? 0, ApplicationSettings.StartupCurrencyRates.ToCurrency()).ToString8Digits(false);
-                CallbackString = currency.Code + "," + currency.IsCrypto;
+                Code = rateItem.CurrencyCode;
+                Reference = rateItem.FormattedValue;
+                CallbackString = rateItem.CurrencyId;
             }
-
-            public override string ToString()
-            {
-                return string.Format($"{Code}: {Reference}");
-            }
-        }
-
-        [DataContract]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
-        public class SortData
-        {
-            [DataMember]
-            public readonly string Direction;
-            [DataMember]
-            public readonly string Type;
-
-            public SortData()
-            {
-                Direction = ApplicationSettings.SortDirectionRates.ToString();
-                Type = ApplicationSettings.SortOrderRates.ToString();
-            }
-
         }
 
         [DataContract]
@@ -168,14 +99,18 @@ namespace MyCC.Forms.View.Components.Table
             [DataMember]
             public readonly string Text;
             [DataMember]
-            public readonly string Type;
+            public readonly int Id;
+            [DataMember]
+            public readonly bool? Ascending;
 
-            public HeaderData(string text, string type)
+            public HeaderData(SortButtonItem sortButtonItem, int id, RatesTableComponent parent)
             {
-                Text = text;
-                Type = type;
-            }
+                Text = sortButtonItem.Text;
+                Id = id;
+                Ascending = sortButtonItem.SortAscending;
+                parent._headerClickCallbacks[id] = sortButtonItem.OnClick;
 
+            }
         }
 
         protected override void OnSizeAllocated(double width, double height)

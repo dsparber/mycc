@@ -16,27 +16,13 @@
                 Margin="5"
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand">
-                <StackLayout
-                    Orientation="Horizontal"
-                    x:Name="MoneyStack"
+                <Label
+                    x:Name="TitleLabel"
+                    FontSize="36"
+                    FontAttributes="Bold"
                     HorizontalOptions="CenterAndExpand"
-                    Spacing="0">
-                    <Label
-                        x:Name="TitleLabel"
-                        FontSize="36"
-                        FontAttributes="Bold"
-                        HorizontalOptions="CenterAndExpand"
-                        TextColor="White"
-                        LineBreakMode="TailTruncation" />
-                    <Label
-                        x:Name="CodeLabel"
-                        HorizontalOptions="CenterAndExpand"
-                        FontSize="36"
-                        Margin="8,0,0,0"
-                        FontAttributes="Bold"
-                        TextColor="White"
-                        LineBreakMode="NoWrap" />
-                </StackLayout>
+                    TextColor="White"
+                    LineBreakMode="TailTruncation" />
                 <Label
                     HorizontalOptions="FillAndExpand"
                     x:Name="InfoLabel"

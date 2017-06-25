@@ -9,7 +9,6 @@ using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Adapter;
 using MyCC.Ui.Android.Views.Fragments;
 using MyCC.Ui.Android.Views.Fragments.AddSource;
-using MyCC.Ui.ViewData;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -27,7 +26,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         public string Name
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 _name = (value ?? string.Empty).Replace("\n", string.Empty);
@@ -101,13 +100,9 @@ namespace MyCC.Ui.Android.Views.Activities
 
             if (fragment is AddSourceFragment.Repository)
             {
-
                 if (_savingClickedCount > 1) return;
-                var result = await AddAccountData.Add(((AddSourceFragment.Repository)fragment).GetRepository(),
-                    alreadyAdded:
-                    () => this.ShowInfoDialog(Resource.String.Error, Resource.String.RepositoryAlreadyAdded),
-                    testingStarted: () => progressDialog.SetMessage(Resources.GetString(Resource.String.Testing)),
-                    testingFailed: () => this.ShowInfoDialog(Resource.String.Error, Resource.String.FetchingNoSuccessText));
+                progressDialog.SetMessage(Resources.GetString(Resource.String.Testing));
+                var result = await UiUtils.Edit.Add(((AddSourceFragment.Repository)fragment).GetRepository());
                 _willFinish = result;
                 if (result) Finish();
             }
@@ -115,7 +110,7 @@ namespace MyCC.Ui.Android.Views.Activities
             {
                 var account = ((AddSourceFragment.Account)fragment).GetAccount();
                 if (_savingClickedCount > 1) return;
-                await AddAccountData.Add(account);
+                await UiUtils.Edit.Add(account);
                 _willFinish = true;
                 Finish();
             }

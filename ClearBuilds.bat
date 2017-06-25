@@ -1,5 +1,7 @@
 RD /S /Q "Core\bin"
 RD /S /Q "Core\obj"
+RD /S /Q "Core.Test\bin"
+RD /S /Q "Core.Test\obj"
 RD /S /Q "Forms\bin"
 RD /S /Q "Forms\obj"
 RD /S /Q "Forms.iOS\obj"

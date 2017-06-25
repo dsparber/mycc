@@ -19,5 +19,13 @@
         string CoinProofOfStake { get; }
         string GHps { get; }
         string UnitSecond { get; }
+        string LoadingCurrenciesFrom { get; }
+        string LoadingRates { get; }
+        string OnlyThreeCurrenciesCanBeStared { get; }
+        string BitcoinCanNotBeRemoved { get; }
+        string IsEqualTo { get; }
+        string AreEqualTo { get; }
+        string FetchingNoSuccessText { get; }
+        string VerifyInput { get; }
     }
 }

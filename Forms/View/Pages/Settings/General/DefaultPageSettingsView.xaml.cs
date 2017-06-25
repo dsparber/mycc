@@ -1,7 +1,6 @@
 ﻿using System;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 
 namespace MyCC.Forms.View.Pages.Settings.General
@@ -32,7 +31,6 @@ namespace MyCC.Forms.View.Pages.Settings.General
                 ApplicationSettings.DefaultStartupPage = StartupPage.RatesView;
             }
             UpdateCheckmarks();
-            Messaging.DefaultView.SendValueChanged();
         }
 
         private void UpdateCheckmarks()
@@ -40,7 +38,7 @@ namespace MyCC.Forms.View.Pages.Settings.General
             GraphOptionCell.ShowIcon = ApplicationSettings.DefaultStartupPage.Equals(StartupPage.GraphView);
             TableOptionCell.ShowIcon = ApplicationSettings.DefaultStartupPage.Equals(StartupPage.TableView);
             RatesOptionCell.ShowIcon = ApplicationSettings.DefaultStartupPage.Equals(StartupPage.RatesView);
-            Header.InfoText = ApplicationSettings.DefaultStartupPage.Equals(StartupPage.GraphView) ? $"{I18N.Assets} ({I18N.Graph})" : ApplicationSettings.DefaultStartupPage.Equals(StartupPage.TableView) ? $"{I18N.Assets} ({I18N.Table})" : I18N.Rates;
+            Header.Info = ApplicationSettings.DefaultStartupPage.Equals(StartupPage.GraphView) ? $"{I18N.Assets} ({I18N.Graph})" : ApplicationSettings.DefaultStartupPage.Equals(StartupPage.TableView) ? $"{I18N.Assets} ({I18N.Table})" : I18N.Rates;
         }
     }
 }

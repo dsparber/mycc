@@ -12,7 +12,7 @@ namespace MyCC.Forms.View.Components.Cells
 
         public string Title
         {
-            get { return _title; }
+            get => _title;
             set { _title = value; _titleLabel.Text = _title; }
         }
 

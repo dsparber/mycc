@@ -1,33 +1,5 @@
 "use strict";
 
-var testData = [{
-    "Amount": "750.12345678",
-    "Code": "EUR",
-    "Rate": "0,12345678"
-}, {
-    "Amount": "850.12345678",
-    "Code": "USD",
-    "Rate": "0,12345678"
-}, {
-    "Amount": "325750.12345678",
-    "Code": "DOGE",
-    "Rate": "0,12345678"
-}];
-
-var testColumns = [{
-    "Text": "Betrag",
-    "Type": "Amount"
-}, {
-    "Text": "Währung",
-    "Type": "Code"
-}];
-
-var testSort = {
-    "Type": "Code",
-    "Direction": "Ascending"
-};
-
-
 var sorterSet = false;
 
 function setHeader(columns) {
@@ -39,12 +11,12 @@ function setHeader(columns) {
     for (var i = 0; i < columns.length; i++) {
         var cell = row.insertCell(-1);
         cell.innerHTML = "<span>" + columns[i]["Text"] + "</span>";
-        cell.setAttribute("type", columns[i]["Type"]);
-        cell.onclick = headerClicked(columns[i]["Type"]);
+        cell.setAttribute("class", columns[i]["Ascending"] === true ? "down" : columns[i]["Ascending"] === false ? "up" : "");
+        cell.onclick = headerClicked(columns[i]["Id"]);
     }
 }
 
-function updateTable(data, sort, hideRate) {
+function updateTable(data) {
 
     var coinTable = document.getElementById("coinTable");
     clearTable(coinTable);
@@ -60,26 +32,20 @@ function updateTable(data, sort, hideRate) {
         var rateHtml = "<div><span>" + data[i]["Rate"].substring(0, data[i]["Rate"].length - 5) + "</span><span>" + data[i]["Rate"].substring(data[i]["Rate"].length - 5) + "</span></div>";
         var amountHtml = "<div><span>" + data[i]["Amount"].substring(0, data[i]["Amount"].length - 5) + "</span><span>" + data[i]["Amount"].substring(data[i]["Amount"].length - 5) + "</span></div>";
 
-        firstCell.innerHTML = "<div>" + (hideRate ? "" : "<div>x</div>") + "<div>=</div></div>";
-        amountCell.innerHTML = "<div>" + (hideRate ? "" : rateHtml) + amountHtml + "</div>";
+        firstCell.innerHTML = "<div>" + (!data[i]["Expanded"] ? "" : "<div>x</div>") + "<div>=</div></div>";
+        amountCell.innerHTML = "<div>" + (!data[i]["Expanded"]  ? "" : rateHtml) + amountHtml + "</div>";
         codeCell.innerHTML = "<div><div>" + data[i]["Code"] + "</div></div>";
     }
-
-    $("#coinTable thead").children().removeClass();
-    $("#coinTable td[type=" + sort["Type"] + "]").addClass(("Ascending" === sort["Direction"]) ? "down" : "up");
-
     sizeAllocated();
 }
 
-function headerClicked(type) {
+function headerClicked(id) {
     return function () {
-        // ReSharper disable once UndeclaredGlobalVariableUsing
-        window.open("http://none?" + "HeaderClickedCallback=" + type);
+        window.open("http://none?" + "HeaderClickedCallback=" + id);
     };
 }
 
 function sizeAllocated() {
-    // ReSharper disable once UndeclaredGlobalVariableUsing
     window.open("http://none?" + "CallbackSizeAllocated=" + document.getElementById("coinTable").offsetHeight);
 }
 

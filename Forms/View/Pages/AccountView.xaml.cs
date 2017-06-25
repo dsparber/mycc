@@ -5,19 +5,18 @@ using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Rates;
 using MyCC.Core.Resources;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Components.Header;
 using MyCC.Forms.View.Components.Table;
 using MyCC.Forms.View.Overlays;
 using MyCC.Forms.View.Pages.Settings.Source;
+using MyCC.Ui;
+using MyCC.Ui.Messages;
 using Plugin.Connectivity;
 using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
@@ -36,10 +35,14 @@ namespace MyCC.Forms.View.Pages
 
             _account = account;
 
-            var header = new CoinHeaderComponent(account);
+            var header = new HeaderView(true) { Data = UiUtils.Get.AccountDetail.HeaderData(_account.Id) };
             ChangingStack.Children.Insert(0, header);
 
-            var referenceView = new ReferenceCurrenciesView(account.Money);
+            var referenceView = new ReferenceCurrenciesView
+            {
+                Items = (UiUtils.Get.AccountDetail.GetReferenceItems(_account.Id), UiUtils.Get.AccountDetail.SortButtons),
+                Title = UiUtils.Get.AccountDetail.ReferenceTableHeader(_account.Id)
+            };
 
             var stack = new StackLayout { Spacing = 0, Margin = new Thickness(0, 0, 0, 40), Padding = new Thickness(0, 40, 0, 40) };
             var repo = AccountStorage.RepositoryOf(_account);
@@ -203,32 +206,40 @@ namespace MyCC.Forms.View.Pages
             SetView();
             SetFooter();
 
-            Action update = () =>
+            void Update()
             {
                 if (_account != null && !(_account is LocalAccount))
                 {
-                    _account = AccountStorage.Instance.Repositories.Find(r => r.Id == _account.ParentId)?
-                                .Elements.FirstOrDefault(e => e.Money.Currency.Equals(_account.Money.Currency));
+                    _account = AccountStorage.Instance.Repositories.Find(r => r.Id == _account.ParentId)?.Elements.FirstOrDefault(e => e.Money.Currency.Equals(_account.Money.Currency));
                 }
 
                 if (_account == null)
                 {
-                    try { Navigation.PopAsync(); }
-                    catch { /* ignored */ }
+                    try
+                    {
+                        Navigation.PopAsync();
+                    }
+                    catch
+                    {
+                        /* ignored */
+                    }
                     return;
                 }
 
-                updateLabelAction();
-                SetFooter();
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    header.Data = UiUtils.Get.AccountDetail.HeaderData(_account.Id);
+                    updateLabelAction();
+                    SetFooter();
+                });
+                referenceView.Items = (UiUtils.Get.AccountDetail.GetReferenceItems(_account.Id), UiUtils.Get.AccountDetail.SortButtons);
+                referenceView.Title = UiUtils.Get.AccountDetail.ReferenceTableHeader(_account.Id);
+            }
 
-                referenceView.ReferenceMoney = _account.Money;
-                referenceView.UpdateView();
-            };
-
-            Messaging.Progress.SubscribeToComplete(this, update);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, update);
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, update);
-
+            Messaging.Update.Rates.Subscribe(this, Update);
+            Messaging.Update.Balances.Subscribe(this, Update);
+            Messaging.Sort.ReferenceTables.Subscribe(this, Update);
+            Messaging.Status.Progress.SubscribeFinished(this, () => _pullToRefresh.IsRefreshing = false);
         }
 
         private void SetView()
@@ -250,8 +261,7 @@ namespace MyCC.Forms.View.Pages
         {
             if (CrossConnectivity.Current.IsConnected)
             {
-                await AppTaskHelper.FetchBalanceAndRates(_account);
-                _pullToRefresh.IsRefreshing = false;
+                UiUtils.Update.FetchBalanceAndRatesFor(_account.Id);
             }
             else
             {
@@ -262,7 +272,7 @@ namespace MyCC.Forms.View.Pages
 
         private void ShowInfo(object sender, EventArgs args)
         {
-            Navigation.PushAsync(new CoinInfoView(_account.Money.Currency));
+            Navigation.PushAsync(new CoinInfoView(_account.Money.Currency.Id));
         }
 
         private void Edit(object sender, EventArgs args)
@@ -280,12 +290,7 @@ namespace MyCC.Forms.View.Pages
 
         private void SetFooter()
         {
-            var accountTime = _account.LastUpdate;
-            var ratesTime = AccountStorage.NeededRatesFor(_account).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
-
-            var time = _account is LocalAccount ? ratesTime : ratesTime < accountTime ? ratesTime : accountTime;
-
-            Device.BeginInvokeOnMainThread(() => Footer.Text = time.LastUpdateString());
+            Footer.Text = UiUtils.Get.AccountDetail.LastUpdate(_account.Id).LastUpdateString();
         }
     }
 }

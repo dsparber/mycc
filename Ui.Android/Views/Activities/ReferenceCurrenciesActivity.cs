@@ -1,17 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
-using MyCC.Ui.Messages;
-using Newtonsoft.Json;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -45,10 +41,8 @@ namespace MyCC.Ui.Android.Views.Activities
 
             if (requestCode == RequestCodeCurrency && resultCode == Result.Ok)
             {
-                var currency = JsonConvert.DeserializeObject<Currency>(data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency));
-                ApplicationSettings.FurtherCurrencies = new List<string>(ApplicationSettings.FurtherCurrencies) { currency.Id };
-                Messaging.Update.AllItems.Send();
-                Messaging.UiUpdate.ViewsWithRate.Send();
+                var currencyId = data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency);
+                UiUtils.Edit.AddReferenceCurrency(currencyId);
             }
         }
 
@@ -71,49 +65,15 @@ namespace MyCC.Ui.Android.Views.Activities
 
                 starImage.Click += (sender, args) =>
                 {
-                    var willBecomeMainCurrency = !ApplicationSettings.MainCurrencies.Contains(c.Id);
-                    if (willBecomeMainCurrency && ApplicationSettings.MainCurrencies.Count() >= 3)
-                    {
-                        this.ShowInfoDialog(Resource.String.Error, Resource.String.OnlyThreeCurrenciesCanBeStared);
-                    }
-                    else if (!willBecomeMainCurrency && c.Equals(CurrencyConstants.Btc))
-                    {
-                        this.ShowInfoDialog(Resource.String.Error, Resource.String.BitcoinCanNotBeRemoved);
-                    }
-                    else
-                    {
-                        starImage.SetImageResource(willBecomeMainCurrency ? Resource.Drawable.ic_star_filled : Resource.Drawable.ic_star_empty);
-
-                        var ca = new[] { c.Id };
-
-                        ApplicationSettings.MainCurrencies = (willBecomeMainCurrency ? ApplicationSettings.MainCurrencies.Concat(ca) : ApplicationSettings.MainCurrencies.Except(ca)).ToList();
-                        ApplicationSettings.FurtherCurrencies = (willBecomeMainCurrency ? ApplicationSettings.FurtherCurrencies.Except(ca) : ApplicationSettings.FurtherCurrencies.Concat(ca)).ToList();
-                        Messaging.Update.AllItems.Send();
-                        Messaging.UiUpdate.ViewsWithRate.Send();
-                    }
+                    var isNowMainCurrency = UiUtils.Edit.ToggleReferenceCurrencyStar(c.Id);
+                    starImage.SetImageResource(isNowMainCurrency ? Resource.Drawable.ic_star_filled : Resource.Drawable.ic_star_empty);
                 };
 
                 v.FindViewById<ImageView>(Resource.Id.image_remove).Click += (sender, args) =>
                 {
-                    if (c.Equals(CurrencyConstants.Btc))
-                    {
-                        this.ShowInfoDialog(Resource.String.Error, Resource.String.BitcoinCanNotBeRemoved);
-                    }
-                    else
-                    {
-                        var wasMainCurrency = ApplicationSettings.MainCurrencies.Contains(c.Id);
-                        if (wasMainCurrency)
-                        {
-                            ApplicationSettings.MainCurrencies = ApplicationSettings.MainCurrencies.Except(new[] { c.Id }).ToList();
-                        }
-                        else
-                        {
-                            ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Except(new[] { c.Id }).ToList();
-                        }
-                        v.Visibility = ViewStates.Gone;
-                        Messaging.Update.AllItems.Send();
-                        Messaging.UiUpdate.ViewsWithRate.Send();
-                    }
+                    var removed = UiUtils.Edit.RemoveReferenceCurrency(c.Id);
+                    if (removed) v.Visibility = ViewStates.Gone;
+                    _header.InfoText = ApplicationSettings.AllReferenceCurrencies.Count().GetPlural(Resource.String.NoCurrencies, Resource.String.OneCurrency, Resource.String.Currencies);
                 };
 
                 _container.AddView(v);

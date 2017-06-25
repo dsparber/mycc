@@ -1,21 +1,16 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using MyCC.Ui.Android.Views.Fragments;
-using MyCC.Core.Account.Models.Base;
 using Android.Support.V4.Widget;
-using MyCC.Core.Account.Models.Implementations;
-using MyCC.Core.Account.Repositories.Base;
-using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
+using MyCC.Core.Currencies;
 using MyCC.Ui.Android.Helpers;
+using MyCC.Ui.Get;
 using MyCC.Ui.Messages;
-using MyCC.Ui.ViewData;
-using Newtonsoft.Json;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -24,12 +19,14 @@ namespace MyCC.Ui.Android.Views.Activities
     {
         public const string ExtraAccountId = "account";
 
-        private FunctionalAccount _account;
+        private int _accountId;
 
         private SortButtonFragment _sortAmount, _sortCurrency;
         private SwipeRefreshLayout _swipeToRefresh;
         private HeaderFragment _header;
         private FooterFragment _footerFragment;
+
+        private static readonly IAccountDetailViewData Data = UiUtils.Get.AccountDetail;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -40,25 +37,23 @@ namespace MyCC.Ui.Android.Views.Activities
             SupportActionBar.Elevation = 3;
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
-            var accountId = Intent?.GetIntExtra(ExtraAccountId, -1) ?? -1;
-            if (accountId != -1)
-            {
-                _account = AccountStorage.Instance.AllElements.Find(a => a.Id == accountId);
-            }
+            _accountId = Intent?.GetIntExtra(ExtraAccountId, -1) ?? -1;
 
-            SupportActionBar.Title = _account.Money.Currency.Code;
+
+            SupportActionBar.Title = Data.CurrencyId(_accountId).Code();
             _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
             _footerFragment = (FooterFragment)SupportFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
 
             _sortAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
             _sortCurrency = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
 
-            Messaging.UiUpdate.AccountDetail.Subscribe(this, () => RunOnUiThread(SetData));
-
+            Messaging.Update.Balances.Subscribe(this, () => RunOnUiThread(SetData));
+            Messaging.Update.Rates.Subscribe(this, () => RunOnUiThread(SetData));
+            Messaging.Sort.Accounts.Subscribe(this, () => RunOnUiThread(SetData));
 
             _swipeToRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
 
-            _swipeToRefresh.Refresh += (sender, e) => Messaging.Request.SingleAccount.Send(_account);
+            _swipeToRefresh.Refresh += (sender, e) => UiUtils.Update.FetchBalanceAndRatesFor(_accountId);
 
             SetData();
         }
@@ -68,27 +63,27 @@ namespace MyCC.Ui.Android.Views.Activities
             if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.ShowQrCode)))
             {
                 var intent = new Intent(this, typeof(ShowQrCodeActivity));
-                intent.PutExtra(ShowQrCodeActivity.ExtraSourceId, AccountStorage.RepositoryOf(_account).Id);
+                intent.PutExtra(ShowQrCodeActivity.ExtraSourceId, Data.RepositoryId(_accountId));
                 StartActivity(intent);
             }
             else if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Info)))
             {
                 var intent = new Intent(this, typeof(CoinInfoActivity));
-                intent.PutExtra(CoinInfoActivity.ExtraCurrency, JsonConvert.SerializeObject(_account.Money.Currency));
+                intent.PutExtra(CoinInfoActivity.ExtraCurrency, Data.CurrencyId(_accountId));
                 StartActivity(intent);
             }
             else if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Edit)))
             {
-                if (_account is LocalAccount)
+                if (Data.IsLocal(_accountId))
                 {
                     var intent = new Intent(this, typeof(EditAccountActivity));
-                    intent.PutExtra(EditAccountActivity.ExtraAccountId, _account.Id);
+                    intent.PutExtra(EditAccountActivity.ExtraAccountId, _accountId);
                     StartActivity(intent);
                 }
                 else
                 {
                     var intent = new Intent(this, typeof(EditSourceActivity));
-                    intent.PutExtra(EditSourceActivity.ExtraRepositoryId, AccountStorage.RepositoryOf(_account).Id);
+                    intent.PutExtra(EditSourceActivity.ExtraRepositoryId, Data.RepositoryId(_accountId));
                     StartActivity(intent);
                 }
             }
@@ -104,8 +99,7 @@ namespace MyCC.Ui.Android.Views.Activities
             menu.Add(0, 0, 0, Resources.GetString(Resource.String.Info))
            .SetIcon(Resource.Drawable.ic_action_info).SetShowAsAction(ShowAsAction.Always);
 
-            var repo = AccountStorage.RepositoryOf(_account);
-            if (repo is AddressAccountRepository && !(repo is BlockchainXpubAccountRepository))
+            if (Data.ShowQrCodePossible(_accountId))
             {
                 menu.Add(0, 0, 0, Resources.GetString(Resource.String.ShowQrCode))
                 .SetIcon(Resource.Drawable.ic_action_qr).SetShowAsAction(ShowAsAction.Always);
@@ -121,33 +115,33 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void SetData()
         {
-            if (AccountStorage.Instance.AllElements.FirstOrDefault(a => a.Id == _account.Id) == null)
+            if (AccountStorage.Instance.AllElements.FirstOrDefault(a => a.Id == _accountId) == null)
             {
                 Finish();
                 return;
             }
 
-            _header.Data = AccountDetailViewData.HeaderData(_account);
-            _footerFragment.LastUpdate = AccountDetailViewData.LastUpdate(_account);
+            _header.Data = Data.HeaderData(_accountId);
+            _footerFragment.LastUpdate = Data.LastUpdate(_accountId);
 
-            Func<bool, ViewStates> show = b => b ? ViewStates.Visible : ViewStates.Gone;
+            ViewStates Show(bool b) => b ? ViewStates.Visible : ViewStates.Gone;
 
-            FindViewById<TextView>(Resource.Id.text_name).Text = ViewData.ViewData.AccountDetail.AccountName(_account);
-            FindViewById<TextView>(Resource.Id.text_type).Text = ViewData.ViewData.AccountDetail.AccountType(_account);
+            FindViewById<TextView>(Resource.Id.text_name).Text = Data.AccountName(_accountId);
+            FindViewById<TextView>(Resource.Id.text_type).Text = Data.AccountType(_accountId);
 
-            FindViewById<TextView>(Resource.Id.text_source).Text = ViewData.ViewData.AccountDetail.AccountSource(_account);
+            FindViewById<TextView>(Resource.Id.text_source).Text = Data.AccountSource(_accountId);
             var addressText = FindViewById<TextView>(Resource.Id.text_address);
-            addressText.Text = ViewData.ViewData.AccountDetail.AccountAddressString(_account);
+            addressText.Text = Data.AccountAddressString(_accountId);
 
             var explorerButton = FindViewById<Button>(Resource.Id.button_open_in_blockexplorer);
-            explorerButton.Visibility = ViewData.ViewData.AccountDetail.AddressClickable(_account) ? ViewStates.Visible : ViewStates.Gone;
+            explorerButton.Visibility = Data.AddressClickable(_accountId) ? ViewStates.Visible : ViewStates.Gone;
 
             explorerButton.Click += (sender, args) =>
             {
                 if (ConnectivityStatus.IsConnected)
                 {
                     var intent = new Intent(this, typeof(WebviewActivity));
-                    intent.PutExtra(WebviewActivity.ExtraUrl, ViewData.ViewData.AccountDetail.AddressClickUrl(_account));
+                    intent.PutExtra(WebviewActivity.ExtraUrl, Data.AddressClickUrl(_accountId));
                     StartActivity(intent);
                 }
                 else
@@ -157,20 +151,20 @@ namespace MyCC.Ui.Android.Views.Activities
             };
 
 
-            FindViewById(Resource.Id.label_source).Visibility = show(ViewData.ViewData.AccountDetail.ShowAccountSource(_account));
-            FindViewById(Resource.Id.text_source).Visibility = show(ViewData.ViewData.AccountDetail.ShowAccountSource(_account));
-            FindViewById(Resource.Id.label_address).Visibility = show(ViewData.ViewData.AccountDetail.ShowAccountAddress(_account));
-            addressText.Visibility = show(ViewData.ViewData.AccountDetail.ShowAccountAddress(_account));
+            FindViewById(Resource.Id.label_source).Visibility = Show(Data.ShowAccountSource(_accountId));
+            FindViewById(Resource.Id.text_source).Visibility = Show(Data.ShowAccountSource(_accountId));
+            FindViewById(Resource.Id.label_address).Visibility = Show(Data.ShowAccountAddress(_accountId));
+            addressText.Visibility = Show(Data.ShowAccountAddress(_accountId));
 
-            FindViewById<TextView>(Resource.Id.text_equal_to).Text = string.Format(Resources.GetString(_account.Money.Amount == 1 ? Resource.String.IsEqualTo : Resource.String.AreEqualTo), _account.Money);
+            FindViewById<TextView>(Resource.Id.text_equal_to).Text = Data.ReferenceTableHeader(_accountId);
 
 
-            var items = AccountDetailViewData.Items(_account);
+            var items = Data.GetReferenceItems(_accountId);
             var view = FindViewById<LinearLayout>(Resource.Id.view_reference);
 
-            _sortAmount.Data = ViewData.ViewData.AccountDetail.SortButtons[0];
+            _sortAmount.Data = Data.SortButtons[0];
             _sortAmount.First = true;
-            _sortCurrency.Data = ViewData.ViewData.AccountDetail.SortButtons[1];
+            _sortCurrency.Data = Data.SortButtons[1];
             _sortCurrency.Last = true;
 
             view.RemoveAllViews();

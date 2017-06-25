@@ -1,17 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using MyCC.Core.Currencies;
-using MyCC.Core.Currencies.Sources;
-using MyCC.Core.Helpers;
-using MyCC.Core.Preperation;
+﻿using System.Threading.Tasks;
 using MyCC.Core.Settings;
-using MyCC.Core.Tasks;
-using MyCC.Forms.Resources;
-using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Container;
 using MyCC.Forms.View.Overlays;
-using MyCC.Ui.Tasks;
+using MyCC.Ui;
 using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -28,7 +19,7 @@ namespace MyCC.Forms.View.Pages
         {
             InitializeComponent();
 
-            Action<bool> startLoading = b =>
+            void StartLoading(bool b)
             {
                 if (!b || _startedLoading) return;
 
@@ -40,7 +31,7 @@ namespace MyCC.Forms.View.Pages
 
                 _startedLoading = true;
                 Task.Run(LoadInitalData).ConfigureAwait(false);
-            };
+            }
 
             if (!CrossConnectivity.Current.IsConnected)
             {
@@ -48,55 +39,18 @@ namespace MyCC.Forms.View.Pages
                 ProgressView.IsVisible = false;
             }
 
-            startLoading(CrossConnectivity.Current.IsConnected);
-            CrossConnectivity.Current.ConnectivityChanged += (sender, args) => startLoading(args.IsConnected);
+            StartLoading(CrossConnectivity.Current.IsConnected);
+            CrossConnectivity.Current.ConnectivityChanged += (sender, args) => StartLoading(args.IsConnected);
         }
 
         private async Task LoadInitalData()
         {
-            try
+            await UiUtils.Prepare.Prepare(tuple => SetStatus(tuple.progress, tuple.infoText));
+
+            Device.BeginInvokeOnMainThread(() =>
             {
-                if (Prepare.PreparingNeeded)
-                {
-                    if (Prepare.AsyncExecutePreperations != null) await Prepare.AsyncExecutePreperations;
-                }
-                if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
-
-                // STEP 1: Fetch available currencies
-                var totalCount = CurrencyStorage.Instance.CurrencySources.Count() * 2;
-                var count = 0;
-
-                Action<ICurrencySource> setProgress = source =>
-                {
-                    count += 1;
-                    SetStatus(0.8 * count / totalCount, string.Format(I18N.LoadingCurrenciesFrom, source.Name));
-                };
-
-                await CurrencyStorage.Instance.LoadOnline(setProgress, setProgress);
-
-                await ApplicationTasks.LoadEverything();
-
-                // STEP 2: Fetch needed Rates
-                await TaskHelper.FetchMissingRates(false, progress => SetStatus(0.8 + progress * 0.1, I18N.LoadingRates));
-
-                ApplicationSettings.AppInitialised = true;
-
-                // STEP 3: Refresh data if needed
-                if (ApplicationSettings.AutoRefreshOnStartup)
-                {
-                    SetStatus(0.95, I18N.UpdatingBalancesAndRates);
-                    await AppTaskHelper.FetchBalancesAndRates();
-                }
-
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    Navigation.PushModalAsync(ApplicationSettings.IsPinSet ? new PasswordOverlay(true) as Page : new TabContainerView());
-                });
-            }
-            catch (Exception e)
-            {
-                e.LogError();
-            }
+                Navigation.PushModalAsync(ApplicationSettings.IsPinSet ? new PasswordOverlay(true) as Page : new TabContainerView());
+            });
         }
 
         private void SetStatus(double percentage, string text)
@@ -104,7 +58,7 @@ namespace MyCC.Forms.View.Pages
             Device.BeginInvokeOnMainThread(() =>
             {
                 ProgressLabel.Text = text;
-                ProgressBar.Progress = percentage;
+                ProgressBar.ProgressTo(percentage, 500, Easing.CubicOut);
             });
         }
     }

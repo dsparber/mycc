@@ -6,6 +6,7 @@ using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Header;
 using MyCC.Forms.View.Container;
 using MyCC.Forms.View.Overlays;
+using MyCC.Ui.DataItems;
 using Plugin.Connectivity;
 using Xamarin.Forms;
 
@@ -37,8 +38,7 @@ namespace MyCC.Forms.View.Components.BaseComponents
             var stack = new ChangingStackLayout { VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
             stack.Children.Add(new HeaderView
             {
-                TitleText = ConstantNames.AppNameShort,
-                InfoText = $"{I18N.Version} {AppConstants.AppVersion}"
+                Data = new HeaderItem(ConstantNames.AppNameShort, $"{I18N.Version} {AppConstants.AppVersion}")
             });
             stack.Children.Add(webView);
             stack.Children.Add(indicator);

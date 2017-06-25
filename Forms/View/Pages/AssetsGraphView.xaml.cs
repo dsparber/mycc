@@ -1,19 +1,16 @@
 using System;
 using System.Linq;
-using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components;
 using MyCC.Forms.View.Components.Header;
 using MyCC.Forms.View.Overlays;
+using MyCC.Ui;
+using MyCC.Ui.Messages;
 using Plugin.Connectivity;
 using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
@@ -85,7 +82,7 @@ namespace MyCC.Forms.View.Pages
             var currencies = ApplicationSettings.MainCurrencies.ToList();
 
             ApplicationSettings.StartupCurrencyAssets = currencies[HeaderCarousel.Position];
-            MessagingCenter.Send(MessageInfo.ValueChanged, Messaging.ReferenceCurrency);
+            Messaging.Status.CarouselPosition.Send();
         }
 
         private void SetHeaderCarousel()
@@ -106,8 +103,8 @@ namespace MyCC.Forms.View.Pages
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                NoDataView.IsVisible = AccountStorage.CurrenciesForGraph == 0;
-                DataView.IsVisible = AccountStorage.CurrenciesForGraph != 0;
+                NoDataView.IsVisible = !UiUtils.Get.Assets.IsGraphDataAvailable;
+                DataView.IsVisible = UiUtils.Get.Assets.IsGraphDataAvailable;
             });
 
             SetFooter();
@@ -115,32 +112,22 @@ namespace MyCC.Forms.View.Pages
 
         private void SetFooter()
         {
-            var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
-            var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
-            var ratesTime = AccountStorage.NeededRatesFor(ApplicationSettings.StartupCurrencyAssets.ToCurrency()).Distinct().Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();
-
-            var time = online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
-
-            Device.BeginInvokeOnMainThread(() => Footer.Text = time.LastUpdateString());
+            Device.BeginInvokeOnMainThread(() => Footer.Text = UiUtils.Get.Assets.LastUpdate.LastUpdateString());
         }
 
         private void AddSubscriber()
         {
-            Messaging.ReferenceCurrency.SubscribeValueChanged(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
-            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
-
-            Messaging.Loading.SubscribeFinished(this, SetNoSourcesView);
-            Messaging.FetchMissingRates.SubscribeFinished(this, SetNoSourcesView);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, SetNoSourcesView);
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoSourcesView);
+            Messaging.Status.CarouselPosition.Subscribe(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
+            Messaging.Update.Rates.Subscribe(this, SetHeaderCarousel);
+            Messaging.Update.Balances.Subscribe(this, SetNoSourcesView);
+            Messaging.Status.Progress.SubscribeFinished(this, () => _pullToRefresh.IsRefreshing = false);
         }
 
         private async void Refresh()
         {
             if (CrossConnectivity.Current.IsConnected)
             {
-                await AppTaskHelper.FetchBalancesAndRates();
-                _pullToRefresh.IsRefreshing = false;
+                UiUtils.Update.FetchAllAssetsAndRates();
             }
             else
             {
@@ -156,7 +143,16 @@ namespace MyCC.Forms.View.Pages
 
         private class HeaderTemplateSelector : DataTemplateSelector
         {
-            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new CoinHeaderComponent((Currency)item));
+            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() =>
+            {
+                var currencyId = ((Currency)item).Id;
+                var header = new HeaderView(true) { Data = UiUtils.Get.Assets.HeaderFor(currencyId) };
+
+                Messaging.Update.Rates.Subscribe(this, () => header.Data = UiUtils.Get.Assets.HeaderFor(currencyId));
+                Messaging.Update.Balances.Subscribe(this, () => header.Data = UiUtils.Get.Assets.HeaderFor(currencyId));
+
+                return header;
+            });
         }
     }
 }

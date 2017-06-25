@@ -1,20 +1,20 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Constants;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Pages;
+using MyCC.Ui.Messages;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Components.Table
@@ -22,25 +22,27 @@ namespace MyCC.Forms.View.Components.Table
     public class AccountsTableComponent : ContentView
     {
         private readonly HybridWebView _webView;
-        private readonly Currency _currency;
+        private readonly string _currencyId;
         private readonly bool _useEnabledAccounts;
         private static bool _firstCall = true;
 
-        public AccountsTableComponent(INavigation navigation, Currency currency, bool useEnabledAccounts)
+        public AccountsTableComponent(INavigation navigation, string currencyId, bool useEnabledAccounts)
         {
-            _currency = currency;
+            _currencyId = currencyId;
             _useEnabledAccounts = useEnabledAccounts;
 
-            _webView = new HybridWebView("Html/accountsTable.html") { LoadFinished = async () =>  
+            _webView = new HybridWebView("Html/accountsTable.html")
+            {
+                LoadFinished = async () =>
                 {
-	                UpdateView();
-	                if (_firstCall)
-	                {
-	                    await Task.Delay(1000);
-	                    UpdateView();
-	                    _firstCall = false;
-	                }
-                } 
+                    UpdateView();
+                    if (_firstCall)
+                    {
+                        await Task.Delay(1000);
+                        UpdateView();
+                        _firstCall = false;
+                    }
+                }
             };
 
             _webView.RegisterCallback("Callback", idString =>
@@ -81,15 +83,15 @@ namespace MyCC.Forms.View.Components.Table
 
             UpdateView();
 
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, UpdateView);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, UpdateView);
+            Messaging.Update.Balances.Subscribe(this, UpdateView);
+            Messaging.Update.Rates.Subscribe(this, UpdateView);
         }
 
         private void UpdateView()
         {
             try
             {
-                var items = AccountStorage.AccountsWithCurrency(_currency).Where(a => a.IsEnabled == _useEnabledAccounts).Select(a => new Data(a)).ToList();
+                var items = AccountStorage.AccountsWithCurrency(_currencyId).Where(a => a.IsEnabled == _useEnabledAccounts).Select(a => new Data(a)).ToList();
 
                 if (!items.Any()) return;
 
@@ -111,7 +113,7 @@ namespace MyCC.Forms.View.Components.Table
                     new HeaderData(I18N.Name, SortOrder.Alphabetical.ToString()),
                     new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
                         }, string.Empty);
-                    _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), DependencyService.Get<ILocalise>().GetCurrentCultureInfo().Name);
+                    _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), CultureInfo.CurrentCulture.Name);
                 });
             }
             catch (Exception e)

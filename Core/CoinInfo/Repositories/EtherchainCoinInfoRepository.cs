@@ -6,14 +6,13 @@ using ModernHttpClient;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
-using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 
 namespace MyCC.Core.CoinInfo.Repositories
 {
     public class EtherchainCoinInfoRepository : ICoinInfoRepository
     {
-        public string WebUrl(Currency currency) => "https://etherchain.org/";
+        public string WebUrl(string currencyId) => "https://etherchain.org/";
 
         private static readonly Uri UrlMining = new Uri("https://etherchain.org/api/miningEstimator");
         private static readonly Uri UrlBlockCount = new Uri("https://etherchain.org/api/blocks/count");
@@ -26,11 +25,11 @@ namespace MyCC.Core.CoinInfo.Repositories
         private const string KeyResult = "result";
         private const string KeyCount = "count";
 
-        public List<Currency> SupportedCoins => new List<Currency> { new Currency("ETH", "Ethereum", true) };
+        public List<string> SupportedCoins => new List<string> { "ETH1" };
 
         public string Name => ConstantNames.Etherchain;
 
-        public async Task<CoinInfoData> GetInfo(Currency currency)
+        public async Task<CoinInfoData> GetInfo(string currencyId)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = 256000 };
 
@@ -43,7 +42,7 @@ namespace MyCC.Core.CoinInfo.Repositories
                 int n1, n5;
                 decimal n2, n3, n4;
 
-                return new CoinInfoData(currency)
+                return new CoinInfoData(currencyId)
                 {
                     BlockHeight = int.TryParse((string)jsonBlockCount[KeyData][0][KeyCount], out n1) ? n1 as int? : null,
                     Hashrate = decimal.TryParse((string)jsonMining[KeyData][0][KeyHashrate], NumberStyles.Float, CultureInfo.InvariantCulture, out n2) ? n2 / 10e8m as decimal? : null,
@@ -59,7 +58,7 @@ namespace MyCC.Core.CoinInfo.Repositories
             catch (Exception e)
             {
                 e.LogError();
-                return new CoinInfoData(currency);
+                return new CoinInfoData(currencyId);
             }
         }
     }

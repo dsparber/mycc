@@ -1,5 +1,4 @@
 ﻿using MyCC.Forms.Constants;
-using MyCC.Forms.Messages;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Container
@@ -19,10 +18,7 @@ namespace MyCC.Forms.View.Container
         {
             base.OnSizeAllocated(width, height);
             var orientation = width > height ? StackOrientation.Horizontal : StackOrientation.Vertical;
-            if (orientation == Orientation) return;
-
             Orientation = orientation;
-            Messaging.Layout.SendValueChanged();
         }
 
         protected override void OnChildAdded(Element child)

@@ -5,11 +5,7 @@ using Android.App;
 using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Widget;
-using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currencies;
-using MyCC.Core.Rates;
-using MyCC.Core.Rates.Repositories.Interfaces;
-using MyCC.Core.Settings;
+using MyCC.Core;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
 using MyCC.Ui.Messages;
@@ -21,7 +17,7 @@ namespace MyCC.Ui.Android.Views.Activities
     {
         private HeaderFragment _header;
         private FooterFragment _footer;
-        private List<Tuple<TextView, IRateRepository>> _views;
+        private Dictionary<string, TextView> _views;
         private static bool _triedUpdate;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -34,40 +30,39 @@ namespace MyCC.Ui.Android.Views.Activities
             _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
             _footer = (FooterFragment)SupportFragmentManager.FindFragmentById(Resource.Id.footer_fragment);
 
-            _header.InfoText = ExchangeRatesStorage.BitcoinRepositories.Count.GetPlural(Resource.String.NoSources, Resource.String.OneSource, Resource.String.Sources);
+            _header.InfoText = MyccUtil.Rates.CryptoToFiatSourceCount.GetPlural(Resource.String.NoSources, Resource.String.OneSource, Resource.String.Sources);
             SetFooter();
 
             var container = FindViewById<LinearLayout>(Resource.Id.container_items);
 
-            _views = ExchangeRatesStorage.BitcoinRepositories.OrderBy(r => r.Name).Select(source =>
+            _views = MyccUtil.Rates.CryptoToFiatSourcesWithDetail.ToList().OrderBy(tuple => tuple.name).ToDictionary(t => t.name, tuple =>
             {
-
                 var v = LayoutInflater.Inflate(Resource.Layout.item_bitcoin_exchange, null);
-                v.FindViewById<TextView>(Resource.Id.text_name).Text = source.Name;
+                v.FindViewById<TextView>(Resource.Id.text_name).Text = tuple.name;
                 var detailText = v.FindViewById<TextView>(Resource.Id.text_info);
-                detailText.Text = GetDetail(source).Item1;
+                detailText.Text = tuple.detail;
 
                 var radioButton = v.FindViewById<RadioButton>(Resource.Id.radio_button_selected);
-                radioButton.Checked = source.TypeId == ApplicationSettings.PreferredBitcoinRepository;
+                radioButton.Checked = tuple.selected;
 
                 v.Click += (sender, args) => radioButton.Toggle();
                 radioButton.CheckedChange += (sender, args) =>
                 {
-                    ApplicationSettings.PreferredBitcoinRepository = source.TypeId;
+                    MyccUtil.Rates.SelectedCryptoToFiatSource = tuple.name;
                     Finish();
                 };
 
                 container.AddView(v);
-                return Tuple.Create(detailText, source);
-            }).ToList();
+                return detailText;
+            });
 
             var swipeRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
             swipeRefresh.Refresh += (sender, args) =>
             {
-                Messaging.Request.BitcoinExchangeSources.Send();
+                UiUtils.Update.FetchCryptoToFiatRates();
             };
 
-            Messaging.UiUpdate.BitcoinExchangeSources.Subscribe(this, () => RunOnUiThread(() =>
+            Messaging.Update.CryptoToFiatRates.Subscribe(this, () => RunOnUiThread(() =>
             {
                 SetFooter();
                 UpdateText();
@@ -77,33 +72,21 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private void SetFooter()
         {
-            var lastUpdate = ExchangeRatesStorage.BitcoinRepositories.Select(r => GetDetail(r).Item2).Min();
+            var lastUpdate = MyccUtil.Rates.LastCryptoToFiatUpdate();
             if (lastUpdate == DateTime.MinValue && !_triedUpdate)
             {
                 _triedUpdate = true;
-                Messaging.Request.BitcoinExchangeSources.Send();
+                UiUtils.Update.FetchCryptoToFiatRates();
             }
             _footer.LastUpdate = lastUpdate;
         }
 
         private void UpdateText()
         {
-            foreach (var v in _views)
+            foreach (var entry in MyccUtil.Rates.CryptoToFiatSourcesWithDetail)
             {
-                v.Item1.Text = GetDetail(v.Item2).Item1;
+                _views[entry.name].Text = entry.detail;
             }
-        }
-
-        private static Tuple<string, DateTime> GetDetail(IRateRepository repository)
-        {
-            var usd = ExchangeRateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Usd, repository.TypeId);
-            var eur = ExchangeRateHelper.GetStoredRate(CurrencyConstants.Btc, CurrencyConstants.Eur, repository.TypeId);
-
-            var usdString = (usd?.AsMoney ?? new Money(0, CurrencyConstants.Usd)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            var eurString = (eur?.AsMoney ?? ExchangeRateHelper.GetRate(CurrencyConstants.Btc, CurrencyConstants.Eur, repository.TypeId)?.AsMoney ?? new Money(0, CurrencyConstants.Eur)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            var note = eur == null && usd != null ? "*" : string.Empty;
-
-            return Tuple.Create($"{eurString}{note} / {usdString}", usd?.LastUpdate ?? eur?.LastUpdate ?? DateTime.MinValue);
         }
     }
 }

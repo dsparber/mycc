@@ -16,7 +16,7 @@ namespace MyCC.Ui.Android.Views.Dialogs
         private ImageView _fingerprintIcon;
         private TextView _statusText;
 
-        public new Action OnCancel;
+        public new static Action OnCancel;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {

@@ -7,9 +7,9 @@ using MyCC.Core.Currencies.Models;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
+using MyCC.Ui;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Overlays
@@ -136,7 +136,7 @@ namespace MyCC.Forms.View.Overlays
             });
         }
 
-        public static void ShowAddRateOverlay(INavigation navigation, Action onComplete = null)
+        public static void ShowAddRateOverlay(INavigation navigation)
         {
             var task = new Func<IEnumerable<Currency>>(() =>
             {
@@ -146,13 +146,7 @@ namespace MyCC.Forms.View.Overlays
 
             var overlay = new CurrencyOverlay(task, I18N.AddRate, true)
             {
-                CurrencySelected = c =>
-                {
-                    onComplete?.Invoke();
-                    ApplicationSettings.WatchedCurrencies = new List<string>(ApplicationSettings.WatchedCurrencies) { c.Id };
-                    Messaging.ReferenceCurrencies.SendValueChanged();
-                    Messaging.UpdatingRates.SendFinished();
-                }
+                CurrencySelected = c => UiUtils.Edit.AddWatchedCurrency(c.Id)
             };
 
             navigation.PushOrPushModal(overlay);

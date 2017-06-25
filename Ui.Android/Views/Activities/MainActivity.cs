@@ -1,21 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Android.App;
 using Android.Content.Res;
 using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
-using MyCC.Core.Currencies;
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
 using ActionBarDrawerToggle = Android.Support.V7.App.ActionBarDrawerToggle;
 using Fragment = Android.Support.V4.App.Fragment;
-using MyCC.Ui.Messages;
-using MyCC.Ui.Tasks;
 
 namespace MyCC.Ui.Android.Views.Activities
 {
@@ -54,7 +50,7 @@ namespace MyCC.Ui.Android.Views.Activities
             if (!initBefore && _autoRefreshNeeded && ConnectivityStatus.IsConnected)
             {
                 _autoRefreshNeeded = false;
-                Task.Run(async () => await TaskHelper.UpdateAllAssetsAndRates());
+                UiUtils.Update.FetchAllAssetsAndRates();
             }
         }
 
@@ -96,8 +92,6 @@ namespace MyCC.Ui.Android.Views.Activities
             _position = _position ?? (startPage == StartupPage.RatesView ? 0 : startPage == StartupPage.TableView ? 1 : 2);
             _editItem?.SetVisible(_position == 0);
             SetFragment();
-
-            Messaging.SettingChange.MainCurrencies.Subscribe(this, SetFragment);
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -119,7 +113,7 @@ namespace MyCC.Ui.Android.Views.Activities
             switch (_position)
             {
                 case 0:
-                    _ratesFragments = ApplicationSettings.MainCurrencies.OrderBy(id => id).Select(c => new RatesFragment(c.Find())).ToList();
+                    _ratesFragments = ApplicationSettings.MainCurrencies.OrderBy(id => id).Select(id => new RatesFragment(id)).ToList();
                     foreach (var f in _ratesFragments) f.EditingEnabled = false;
                     RatesEditingEnabled = false;
                     fragment = new ViewPagerFragment(_ratesFragments.OfType<Fragment>().ToList(), ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyRates));
@@ -130,7 +124,7 @@ namespace MyCC.Ui.Android.Views.Activities
                     };
                     break;
                 case 1:
-                    var assetsfragments = ApplicationSettings.MainCurrencies.OrderBy(id => id).Select(c => new AssetsTableFragment(c.Find()) as Fragment).ToList();
+                    var assetsfragments = ApplicationSettings.MainCurrencies.OrderBy(id => id).Select(c => new AssetsTableFragment(c) as Fragment).ToList();
                     _assetsTableFragment = new ViewPagerFragment(assetsfragments, ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
                     _assetsTableFragment.PositionChanged = pos =>
                     {
@@ -142,7 +136,7 @@ namespace MyCC.Ui.Android.Views.Activities
                     fragment = _assetsTableFragment;
                     break;
                 case 2:
-                    var graphfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsGraphFragment(c.Find()) as Fragment).ToList();
+                    var graphfragments = ApplicationSettings.MainCurrencies.Select(c => new AssetsGraphFragment(c) as Fragment).ToList();
                     _assetsGraphFragment = new ViewPagerFragment(graphfragments, ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
                     _assetsGraphFragment.PositionChanged = pos =>
                     {

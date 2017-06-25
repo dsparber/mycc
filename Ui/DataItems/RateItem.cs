@@ -1,20 +1,20 @@
-using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Currencies.Models;
+using MyCC.Core.Currencies;
+using MyCC.Ui.Helpers;
 
 namespace MyCC.Ui.DataItems
 {
     public class RateItem
     {
-        public string CurrencyCode => Currency.Code;
-        public string FormattedValue => ReferenceValue.ToString8Digits(false);
+        public readonly string CurrencyCode;
+        public string FormattedValue => ReferenceValue.To8DigitString();
 
-        public Currency Currency { get; private set; }
+        public readonly decimal ReferenceValue;
+        public readonly string CurrencyId;
 
-        public Money ReferenceValue { get; private set; }
-
-        public RateItem(Currency currency, Money referenceValue)
+        public RateItem(string currencyId, decimal referenceValue)
         {
-            Currency = currency;
+            CurrencyId = currencyId;
+            CurrencyCode = currencyId.Code();
             ReferenceValue = referenceValue;
         }
 

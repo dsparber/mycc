@@ -29,7 +29,7 @@ namespace MyCC.Forms.View.Components.CellViews
 
         public string Title
         {
-            set { _label.Text = value.ToUpper(); }
+            set => _label.Text = value.ToUpper();
         }
     }
 }

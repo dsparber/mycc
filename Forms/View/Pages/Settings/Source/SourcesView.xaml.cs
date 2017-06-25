@@ -7,10 +7,10 @@ using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Resources;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using MyCC.Forms.View.Overlays;
+using MyCC.Ui.Messages;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Pages.Settings.Source
@@ -30,14 +30,13 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             PoloniexSection.Title = string.Format(I18N.AddedWith, ConstantNames.Poloniex);
             AddressSection.Title = I18N.AddressAdded;
 
-            Messaging.Loading.SubscribeFinished(this, SetView);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, SetView);
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetView);
+            Messaging.Update.Balances.Subscribe(this, SetView);
+            Messaging.Modified.Balances.Subscribe(this, SetView);
         }
 
         private void SetHeader()
         {
-            Header.InfoText = AccountsText(AccountStorage.Instance.AllElements.Count);
+            Header.Info = AccountsText(AccountStorage.Instance.AllElements.Count);
         }
 
         private static Func<int, string> AccountsText => count => PluralHelper.GetText(I18N.NoAccounts, I18N.OneAccount, I18N.Accounts, count);

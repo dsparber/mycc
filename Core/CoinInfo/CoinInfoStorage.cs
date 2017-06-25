@@ -2,10 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.CoinInfo.Repositories;
-using MyCC.Core.Currencies.Models;
-using MyCC.Core.Helpers;
+using MyCC.Core.Database;
 using SQLite;
-using Xamarin.Forms;
 
 namespace MyCC.Core.CoinInfo
 {
@@ -21,7 +19,7 @@ namespace MyCC.Core.CoinInfo
         {
             _elements = new List<CoinInfoData>();
 
-            _dbConnection = DependencyService.Get<ISqLiteConnection>().GetOldConnection();
+            _dbConnection = DatabaseUtil.OldConnection;
             _dbConnection.CreateTableAsync<CoinInfoData>();
 
             _repositories = new List<ICoinInfoRepository> {
@@ -35,13 +33,13 @@ namespace MyCC.Core.CoinInfo
             };
         }
 
-        public async Task<CoinInfoData> FetchInfo(Currency currency)
+        public async Task<CoinInfoData> FetchInfo(string currencyId)
         {
-            var info = new CoinInfoData(currency);
+            var info = new CoinInfoData(currencyId);
 
-            foreach (var r in GetExplorer(currency))
+            foreach (var r in GetExplorer(currencyId))
             {
-                info = info.AddUpdate(await r.GetInfo(currency));
+                info = info.AddUpdate(await r.GetInfo(currencyId));
             }
 
             if (_elements.Contains(info))
@@ -58,13 +56,13 @@ namespace MyCC.Core.CoinInfo
             return info;
         }
 
-        public IEnumerable<ICoinInfoRepository> GetExplorer(Currency currency) => _repositories.Where(r => r.SupportedCoins.Contains(currency));
+        public IEnumerable<ICoinInfoRepository> GetExplorer(string currencyId) => _repositories.Where(r => r.SupportedCoins.Contains(currencyId));
 
-        public CoinInfoData Get(Currency currency) => _elements.Find(e => string.Equals(e.CurrencyCode, currency.Code));
+        public CoinInfoData Get(string currencyId) => _elements.Find(e => string.Equals(e.CurrencyId, currencyId));
 
         public static readonly CoinInfoStorage Instance = new CoinInfoStorage();
 
-        public static IEnumerable<Currency> SupportetCurrencies
+        public static IEnumerable<string> SupportetCurrencies
             => Instance._repositories.SelectMany(r => r.SupportedCoins).Distinct();
     }
 }

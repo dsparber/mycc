@@ -41,9 +41,6 @@
     <Compile Include="Helpers\PluralHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\ITextSizeHelper.cs" />
-    <Compile Include="Messages\MessageInfo.cs" />
-    <Compile Include="Messages\Messaging.cs" />
-    <Compile Include="Messages\MessageTools.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\I18N.de.Designer.cs">
@@ -56,7 +53,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>I18N.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\ILocalise.cs" />
     <Compile Include="Resources\TranslateExtension.cs" />
     <Compile Include="View\Addsource\AddAccountSubview.cs" />
     <Compile Include="View\Addsource\AddAddressSubview.cs" />
@@ -81,14 +77,11 @@
     <Compile Include="View\Container\ChangingStackLayout.cs" />
     <Compile Include="View\Components\Table\CoinTableComponent.cs" />
     <Compile Include="View\Components\CoinGraphComponent.cs" />
-    <Compile Include="View\Components\Header\CoinHeaderComponent.cs" />
     <Compile Include="View\Components\Header\HeaderView.xaml.cs">
       <DependentUpon>HeaderView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Components\Header\CoinInfoHeaderComponent.cs" />
     <Compile Include="View\Components\InfoFooterComponent.cs" />
     <Compile Include="View\Components\BaseComponents\SegmentedControl.cs" />
-    <Compile Include="View\Container\MasterDetailContainer.cs" />
     <Compile Include="View\Container\TabContainerView.cs" />
     <Compile Include="View\Overlays\CurrencyOverlay.cs" />
     <Compile Include="View\Overlays\PinOverlay.xaml.cs">
@@ -125,7 +118,6 @@
       <DependentUpon>DefaultPageSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Overlays\ErrorOverlay.cs" />
-    <Compile Include="Tasks\AppTaskHelper.cs" />
     <Compile Include="View\Pages\AssetsTableView.xaml.cs">
       <DependentUpon>AssetsTableView.xaml</DependentUpon>
     </Compile>
@@ -138,7 +130,6 @@
     <Compile Include="View\Pages\Settings\Data\WatchedCurrenciesSettingsView.xaml.cs">
       <DependentUpon>WatchedCurrenciesSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Components\Header\RatesHeaderComponent.cs" />
     <Compile Include="View\Pages\CoinInfoView.xaml.cs">
       <DependentUpon>CoinInfoView.xaml</DependentUpon>
     </Compile>
@@ -160,6 +151,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Resources\I18N.sk.resx" />
+    <None Include="Resources\I18N.es.resx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\I18N.de.resx">
@@ -312,6 +305,9 @@
     </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\netstandard1.1\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.1\lib\portable-net40+sl4+win8+wp8\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Core.dll</HintPath>

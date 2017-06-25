@@ -11,20 +11,8 @@
       android:layout_height="0dp"
       android:layout_weight="1"
       android:background="@color/colorBackground">
-    <fragment
-        android:name="MyCC.Ui.Android.Views.Fragments.ProgressFragment"
-        android:id="@+id/progress_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <fragment
-        android:name="MyCC.Ui.Android.Views.Fragments.HeaderFragment"
-        android:id="@+id/header_fragment"
-        android:layout_below="@id/progress_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiperefresh"
-        android:layout_below="@id/header_fragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
       <ScrollView
@@ -35,6 +23,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp">
+          <fragment
+            android:name="MyCC.Ui.Android.Views.Fragments.ProgressFragment"
+            android:id="@+id/progress_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+          <fragment
+            android:name="MyCC.Ui.Android.Views.Fragments.HeaderFragment"
+            android:id="@+id/header_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
           <LinearLayout
               android:id="@+id/view_accounts"
               android:layout_width="match_parent"
@@ -45,8 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:textAllCaps="true"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+                android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
                 android:layout_marginBottom="8dp" />
             <LinearLayout
                 android:orientation="horizontal"
@@ -84,8 +82,8 @@
               android:layout_height="wrap_content"
               android:id="@+id/text_equal_to"
               app:textAllCaps="true"
-              android:layout_marginLeft="24dp"
-              android:layout_marginTop="24dp"
+              android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+              android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
               android:layout_marginBottom="8dp" />
           <LinearLayout
               android:orientation="horizontal"
@@ -126,8 +124,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:textAllCaps="true"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginLeft="@dimen/abc_action_bar_content_inset_material"
+                android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
                 android:layout_marginBottom="8dp" />
             <LinearLayout
                 android:orientation="horizontal"

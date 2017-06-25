@@ -1,40 +1,54 @@
 ﻿using System.Linq;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
+using MyCC.Ui.DataItems;
+using MyCC.Ui.Messages;
 using Xamarin.Forms;
 
 namespace MyCC.Forms.View.Components.Header
 {
     public partial class HeaderView
     {
+        private readonly float _defaultSize = App.ScreenHeight > 480 ? 36 : 28;
+        private readonly float _defaultSizeInfoText = App.ScreenHeight > 480 ? 18 : 15;
+        private readonly float _minSizeInfoText = App.ScreenHeight > 480 ? 16 : 13;
+        private readonly float _minSizeMainText = App.ScreenHeight > 480 ? 28 : 24;
 
-        private readonly double _defaultSize = App.ScreenHeight > 480 ? 36 : 28;
-        private readonly double _defaultSizeInfoText = App.ScreenHeight > 480 ? 18 : 15;
-        private readonly double _minSizeInfoText = App.ScreenHeight > 480 ? 16 : 13;
+        private HeaderItem _data;
 
-        public string TitleText
+        public HeaderItem Data
         {
-            private get { return TitleLabel.Text ?? string.Empty; }
-            set
+            private get => _data ?? new HeaderItem(string.Empty, string.Empty);
+            set => Device.BeginInvokeOnMainThread(() =>
+            {
+                _data = value;
+                TitleLabel.Text = GetText(Data.MainText);
+                InfoText = GetText(Data.InfoText);
+                AdaptSizeInfo();
+                AdaptSizeMain();
+            });
+
+        }
+
+        public string Info
+        {
+            set => Device.BeginInvokeOnMainThread(() =>
+            {
+                InfoText = GetText(value);
+                AdaptSizeInfo();
+            });
+        }
+
+        public string Title
+        {
+            set => Device.BeginInvokeOnMainThread(() =>
             {
                 TitleLabel.Text = GetText(value);
-                AdaptSize();
-            }
+                AdaptSizeMain();
+            });
         }
 
-        protected string CodeText
+        private string InfoText
         {
-            set
-            {
-                CodeLabel.IsVisible = !string.IsNullOrWhiteSpace(value);
-                CodeLabel.Text = GetText(value);
-            }
-            private get { return CodeLabel.Text; }
-        }
-
-        public string InfoText
-        {
-            private get { return InfoLabel.Text ?? string.Empty; }
             set
             {
                 InfoLabel.Text = GetText(value);
@@ -50,17 +64,12 @@ namespace MyCC.Forms.View.Components.Header
                         LineBreakMode = LineBreakMode.TailTruncation
                     });
                 }
-                AdaptSize();
             }
         }
 
         public string LoadingText
         {
-            private get { return RefreshingLabel.Text; }
-            set
-            {
-                RefreshingLabel.Text = GetText(value);
-            }
+            set => RefreshingLabel.Text = GetText(value);
         }
 
         public bool IsLoading
@@ -78,7 +87,7 @@ namespace MyCC.Forms.View.Components.Header
         {
             if (!subscribeToRefresh) return;
 
-            MessagingCenter.Subscribe<string>(this, Messaging.Progress, d => Progress = double.Parse(d));
+            Messaging.Status.Progress.Subscribe(this, d => Progress = d);
         }
 
         private double Progress
@@ -87,7 +96,7 @@ namespace MyCC.Forms.View.Components.Header
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    var task = ProgressBar.ProgressTo(value, 100, Easing.Linear);
+                    var task = ProgressBar.ProgressTo(value, 500, Easing.CubicOut);
                     if (value > 0.98)
                     {
                         task.ContinueWith(t => Device.BeginInvokeOnMainThread(() => ProgressBar.Progress = 0));
@@ -104,28 +113,13 @@ namespace MyCC.Forms.View.Components.Header
             LoadingIndicator.WidthRequest = _defaultSizeInfoText;
             InfoLabel.FontSize = _defaultSizeInfoText;
 
-            if (Device.RuntimePlatform.Equals(Device.Android))
-            {
-                LoadingIndicator.VerticalOptions = LayoutOptions.Center;
-                ProgressBar.HeightRequest = 1;
-            }
-
             Padding = new Thickness(0, 0, 0, 10);
-
-            TitleText = TitleText;
-            InfoText = InfoText;
-            LoadingText = LoadingText;
-
-            Messaging.Layout.SubscribeValueChanged(this, AdaptSize);
-
             WidthRequest = App.ScreenHeight / 3.0;
+            HeightRequest = 90;
         }
 
-        private static string GetText(string text)
-        {
-            text = text?.Trim();
-            return string.IsNullOrEmpty(text) ? " " : text;
-        }
+        private static string GetText(string text) => string.IsNullOrWhiteSpace(text) ? string.Empty : text.Trim();
+
 
         protected override void OnSizeAllocated(double width, double height)
         {
@@ -133,36 +127,25 @@ namespace MyCC.Forms.View.Components.Header
 
             InfoLabel.IsVisible = height <= 150;
             InfoLabelStack.IsVisible = height > 150;
-            MoneyStack.Orientation = height <= 150 ? StackOrientation.Horizontal : StackOrientation.Vertical;
+            AdaptSizeInfo();
+            AdaptSizeMain();
         }
 
-        public void AdaptSize()
-        {
-            var size = (float?)_defaultSize + 0.25f;
-            var sizeInfo = (float?)_defaultSizeInfoText + 0.25f;
-            double width, availableWidth;
+        private static readonly ITextSizeHelper SizeHelper = DependencyService.Get<ITextSizeHelper>();
 
-            do
+        private void AdaptSizeMain() => TitleLabel.FontSize = AdaptSize(_defaultSize, _minSizeMainText, Data.MainText, true);
+        private void AdaptSizeInfo() => InfoLabel.FontSize = AdaptSize(_defaultSizeInfoText, _minSizeInfoText, Data.InfoText);
+
+        private float AdaptSize(float defaultSize, float minSize, string text, bool bold = false)
+        {
+            var size = defaultSize;
+            var availableWidth = Width - 48;
+
+            while (SizeHelper.CalculateWidth(text, size, bold).Item2 > availableWidth && size > minSize)
             {
                 size -= 0.25f;
-                width = DependencyService.Get<ITextSizeHelper>().CalculateWidth(TitleText + (MoneyStack.Orientation == StackOrientation.Horizontal ? CodeText : string.Empty), size, true).Item2;
-                availableWidth = Width - 48;
-
-            } while (availableWidth > 0 && width > availableWidth);
-
-            do
-            {
-                sizeInfo -= 0.25f;
-                width = DependencyService.Get<ITextSizeHelper>().CalculateWidth(InfoText, sizeInfo, true).Item2;
-                availableWidth = Width - 40;
-
-            } while (sizeInfo > _minSizeInfoText && availableWidth > 0 && width > availableWidth);
-
-            TitleLabel.FontSize = (double)size;
-            CodeLabel.FontSize = (double)size;
-            InfoLabel.FontSize = (double)sizeInfo;
-
-            HeightRequest = 90;
+            }
+            return size;
         }
     }
 }

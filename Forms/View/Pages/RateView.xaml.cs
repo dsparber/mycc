@@ -4,16 +4,15 @@ using System.Threading.Tasks;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
 using MyCC.Core.Settings;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
-using MyCC.Forms.Tasks;
 using MyCC.Forms.View.Components.Header;
 using MyCC.Forms.View.Components.Table;
 using MyCC.Forms.View.Overlays;
+using MyCC.Ui;
+using MyCC.Ui.Messages;
 using Plugin.Connectivity;
 using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
@@ -46,7 +45,7 @@ namespace MyCC.Forms.View.Pages
 
             if (ApplicationSettings.DataLoaded)
             {
-                SetNoData();
+                SetData();
             }
         }
 
@@ -96,7 +95,7 @@ namespace MyCC.Forms.View.Pages
             var position = HeaderCarousel.Position < currencies.Count || HeaderCarousel.Position > 0 ? HeaderCarousel.Position : currencies.Count - 1;
 
             ApplicationSettings.StartupCurrencyRates = currencies[position];
-            Messaging.RatesPageCurrency.SendValueChanged();
+            Messaging.Status.CarouselPosition.Send();
         }
 
         private void SetHeaderCarousel()
@@ -116,25 +115,22 @@ namespace MyCC.Forms.View.Pages
 
         private void AddSubscriber()
         {
-            Messaging.ReferenceCurrencies.SubscribeValueChanged(this, SetHeaderCarousel);
-            Messaging.UpdatingRates.SubscribeFinished(this, () => { SetFooterText(); SetNoData(); });
-
-            Messaging.UpdatingAccountsAndRates.SubscribeFinished(this, SetNoData);
-            Messaging.UpdatingAccounts.SubscribeFinished(this, SetNoData);
-            Messaging.Loading.SubscribeFinished(this, SetNoData);
+            Messaging.Status.CarouselPosition.Subscribe(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyRates));
+            Messaging.Update.Rates.Subscribe(this, SetData);
+            Messaging.Update.Balances.Subscribe(this, SetData);
+            Messaging.Status.Progress.SubscribeFinished(this, () => _pullToRefresh.IsRefreshing = false);
         }
 
-        private async void Refresh()
+        private void Refresh()
         {
             if (CrossConnectivity.Current.IsConnected)
             {
-                await AppTaskHelper.UpdateRates();
-                _pullToRefresh.IsRefreshing = false;
+                UiUtils.Update.FetchAllRates();
             }
             else
             {
                 _pullToRefresh.IsRefreshing = false;
-                await DisplayAlert(I18N.NoInternetAccess, I18N.ErrorRefreshingNotPossibleWithoutInternet, I18N.Cancel);
+                DisplayAlert(I18N.NoInternetAccess, I18N.ErrorRefreshingNotPossibleWithoutInternet, I18N.Cancel);
             }
         }
 
@@ -143,26 +139,23 @@ namespace MyCC.Forms.View.Pages
         private class HeaderTemplateSelector : DataTemplateSelector
         {
             protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() =>
-             {
-                 var c = (Currency)item;
+            {
+                var currencyId = ((Currency)item).Id;
+                var header = new HeaderView(true) { Data = UiUtils.Get.Assets.HeaderFor(currencyId) };
 
-                 return new RatesHeaderComponent(c);
-             });
+                Messaging.Update.Rates.Subscribe(this, () => header.Data = UiUtils.Get.Rates.HeaderFor(currencyId));
+                Messaging.Update.Balances.Subscribe(this, () => header.Data = UiUtils.Get.Rates.HeaderFor(currencyId));
+
+                return header;
+            });
         }
 
         private void SetFooterText()
         {
-            var text = ApplicationSettings.WatchedCurrencies
-                            .Concat(ApplicationSettings.AllReferenceCurrencies)
-                            .Concat(AccountStorage.UsedCurrencies)
-                            .Distinct()
-                            .Select(e => new ExchangeRate(e, ApplicationSettings.StartupCurrencyRates))
-                            .Select(e => ExchangeRateHelper.GetRate(e)?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min().LastUpdateString();
-
-            Device.BeginInvokeOnMainThread(() => Footer.Text = text);
+            Device.BeginInvokeOnMainThread(() => Footer.Text = UiUtils.Get.Rates.LastUpdate.LastUpdateString());
         }
 
-        private void SetNoData()
+        private void SetData()
         {
             var anyItems = ApplicationSettings.WatchedCurrencies
                 .Concat(ApplicationSettings.AllReferenceCurrencies)
@@ -175,6 +168,7 @@ namespace MyCC.Forms.View.Pages
                 NoDataView.IsVisible = !anyItems;
                 DataView.IsVisible = anyItems;
             });
+            SetFooterText();
         }
     }
 }

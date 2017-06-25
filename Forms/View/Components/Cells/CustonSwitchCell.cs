@@ -24,11 +24,15 @@ namespace MyCC.Forms.View.Components.Cells
 
         }
 
-        public string Title { set { _view.Title = value; } }
+        public string Title { set => _view.Title = value; }
 
-        public string Info { set { _view.Info = value; } }
+        public string Info { set => _view.Info = value; }
 
-        public bool On { set { _view.On = value; } get { return _view.On; } }
+        public bool On
+        {
+            set => _view.On = value;
+            get => _view.On;
+        }
 
         public Switch Switch => _view.Switch;
     }

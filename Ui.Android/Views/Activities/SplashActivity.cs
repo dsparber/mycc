@@ -5,12 +5,8 @@ using Android.OS;
 using Android.Support.V7.App;
 using HockeyApp.Android;
 using HockeyApp.Android.Metrics;
-using MyCC.Core.Currencies;
-using MyCC.Core.Preperation;
-using MyCC.Core.Settings;
-using MyCC.Core.Tasks;
+using MyCC.Core.Database;
 using MyCC.Ui.Android.Helpers;
-using MyCC.Ui.Messages;
 using Xamarin.Forms;
 using ZXing.Mobile;
 using Application = Android.App.Application;
@@ -25,20 +21,12 @@ namespace MyCC.Ui.Android.Views.Activities
             base.OnCreate(savedInstanceState);
 
             Forms.Init(this, savedInstanceState);
+            DatabaseUtil.SqLiteConnection = new SqLiteConnectionAndroid();
             MobileBarcodeScanner.Initialize(Application);
             CrashManager.Register(this, "7792ee5321a64433ace4955a1693cca5");
             MetricsManager.Register(Application, "7792ee5321a64433ace4955a1693cca5");
-            ViewData.ViewData.Init();
-            MobileBarcodeScanner.Initialize(Application);
 
-            if (Prepare.PreparingNeeded)
-            {
-                Prepare.ExecutePreperations();
-                if (Prepare.AsyncExecutePreperations != null) await Prepare.AsyncExecutePreperations;
-            }
-            if (Migrate.MigrationsNeeded) await Migrate.ExecuteMigratations();
-
-            if (!ApplicationSettings.AppInitialised)
+            if (UiUtils.Prepare.PreparingNeeded)
             {
                 StartActivity(new Intent(this, typeof(PreparingAppActivity)));
             }
@@ -50,9 +38,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private async Task Startup()
         {
-            await CurrencyStorage.Instance.LoadFromDatabase();
-            await ApplicationTasks.LoadEverything();
-            Messaging.Update.AllItems.Send();
+            await UiUtils.Update.LoadNeededDataFromDatabaseAsync();
 
             RunOnUiThread(() =>
             {
@@ -60,7 +46,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 Finish();
             });
 
-            if (ConnectivityStatus.IsConnected) await ApplicationTasks.FetchCurrenciesAndAvailableRates();
+            if (ConnectivityStatus.IsConnected) UiUtils.Update.FetchCurrencies();
 
         }
     }

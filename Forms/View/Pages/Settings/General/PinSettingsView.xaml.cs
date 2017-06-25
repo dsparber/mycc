@@ -2,7 +2,6 @@
 using MyCC.Core.Settings;
 using MyCC.Core.Types;
 using MyCC.Forms.Helpers;
-using MyCC.Forms.Messages;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Overlays;
 using Plugin.Fingerprint;
@@ -17,7 +16,7 @@ namespace MyCC.Forms.View.Pages.Settings.General
 
             SetPinCells();
 
-            FingerprintCell.Switch.Toggled += (sender, e) => { ApplicationSettings.IsFingerprintEnabled = e.Value; Messaging.Pin.SendValueChanged(); };
+            FingerprintCell.Switch.Toggled += (sender, e) => { ApplicationSettings.IsFingerprintEnabled = e.Value; SetPinCells(); };
             SecureXpubCell.Switch.Toggled += (sender, e) => ApplicationSettings.SecureXpub = e.Value;
 
             if (ApplicationSettings.IsFingerprintEnabled && ApplicationSettings.IsPinSet)
@@ -29,14 +28,12 @@ namespace MyCC.Forms.View.Pages.Settings.General
                 Table.Root.Remove(SecurityOptionsSection);
             }
             SecureXpubCell.Switch.IsToggled = ApplicationSettings.SecureXpub;
-
-            Messaging.Pin.SubscribeValueChanged(this, SetPinCells);
         }
 
         private void SetPinCells()
         {
 
-            Header.InfoText = ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled ? I18N.FingerprintActive : ApplicationSettings.IsPinSet ? I18N.PinActive : I18N.NotConfigured;
+            Header.Info = ApplicationSettings.IsPinSet && ApplicationSettings.IsFingerprintEnabled ? I18N.FingerprintActive : ApplicationSettings.IsPinSet ? I18N.PinActive : I18N.NotConfigured;
 
             if (!ApplicationSettings.IsPinSet)
             {
@@ -96,12 +93,12 @@ namespace MyCC.Forms.View.Pages.Settings.General
 
         private void EnableDisablePin(object sender, EventArgs e)
         {
-            Navigation.PushOrPushModal(new PinOverlay(PinAction.EnableOrDisable));
+            Navigation.PushOrPushModal(new PinOverlay(PinAction.EnableOrDisable, SetPinCells));
         }
 
         private void ChangePin(object sender, EventArgs e)
         {
-            Navigation.PushOrPushModal(new PinOverlay(PinAction.Change));
+            Navigation.PushOrPushModal(new PinOverlay(PinAction.Change, SetPinCells));
         }
     }
 }

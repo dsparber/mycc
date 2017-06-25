@@ -1,13 +1,14 @@
 ﻿using System.Linq;
+using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currencies.Models;
-using MyCC.Core.Rates;
+using MyCC.Core.Rates.Models;
 using MyCC.Core.Settings;
 using Newtonsoft.Json;
 
 namespace MyCC.Ui.DataItems
 {
-    public class AssetsGraphItem
+    public static class AssetsGraphItem
     {
         public class Data
         {
@@ -31,14 +32,13 @@ namespace MyCC.Ui.DataItems
 
             public Data(IGrouping<Currency, Account> group, Currency referenceCurrency)
             {
-                var rate = new ExchangeRate(group.Key.Id, referenceCurrency.Id);
-                rate = ExchangeRateHelper.GetRate(rate) ?? rate;
+                var rate = MyccUtil.Rates.GetRate(new RateDescriptor(group.Key.Id, referenceCurrency.Id));
 
                 var totalMoney = new Money(group.Sum(a => a.IsEnabled ? a.Money.Amount : 0), group.Key);
 
                 Label = group.Key.Code;
                 Name = group.Key.Name;
-                Value = totalMoney.Amount * rate.Rate ?? 0;
+                Value = new Money(totalMoney.Amount * rate?.Rate ?? 0, referenceCurrency).Amount;
                 Money = totalMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 Reference = new Money(Value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 Accounts =
@@ -67,7 +67,7 @@ namespace MyCC.Ui.DataItems
 
             public AccountData(Account account, ExchangeRate rate, Currency referenceCurrency)
             {
-                Value = account.IsEnabled ? account.Money.Amount * rate.Rate ?? 0 : 0;
+                Value = account.IsEnabled ? account.Money.Amount * rate?.Rate ?? 0 : 0;
                 Label = account.Name;
                 Money = (account.IsEnabled ? account.Money : new Money(0, account.Money.Currency)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
                 Reference = new Money(Value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
