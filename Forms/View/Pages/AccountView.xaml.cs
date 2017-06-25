@@ -35,7 +35,7 @@ namespace MyCC.Forms.View.Pages
 
             _account = account;
 
-            var header = new HeaderView { Data = UiUtils.Get.AccountDetail.HeaderData(_account.Id) };
+            var header = new HeaderView(true) { Data = UiUtils.Get.AccountDetail.HeaderData(_account.Id) };
             ChangingStack.Children.Insert(0, header);
 
             var referenceView = new ReferenceCurrenciesView
@@ -234,7 +234,7 @@ namespace MyCC.Forms.View.Pages
             Messaging.Update.Rates.Subscribe(this, Update);
             Messaging.Update.Balances.Subscribe(this, Update);
             Messaging.Sort.ReferenceTables.Subscribe(this, Update);
-
+            Messaging.Status.Progress.SubscribeFinished(this, () => _pullToRefresh.IsRefreshing = false);
         }
 
         private void SetView()
@@ -257,7 +257,6 @@ namespace MyCC.Forms.View.Pages
             if (CrossConnectivity.Current.IsConnected)
             {
                 UiUtils.Update.FetchBalanceAndRatesFor(_account.Id);
-                _pullToRefresh.IsRefreshing = false;
             }
             else
             {

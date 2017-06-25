@@ -56,6 +56,8 @@ namespace MyCC.Forms.View.Components.BaseComponents
             Eval($"{function}({args})");
         }
 
+        public void CallJsFunction(string js) => Eval(js);
+
         public void RegisterCallback(string key, Action<string> action)
         {
             _callbacks.Add(key, action);

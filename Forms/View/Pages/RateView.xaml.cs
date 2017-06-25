@@ -115,22 +115,22 @@ namespace MyCC.Forms.View.Pages
 
         private void AddSubscriber()
         {
-            Messaging.Status.CarouselPosition.Subscribe(this, SetHeaderCarousel);
+            Messaging.Status.CarouselPosition.Subscribe(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyRates));
             Messaging.Update.Rates.Subscribe(this, SetData);
             Messaging.Update.Balances.Subscribe(this, SetData);
+            Messaging.Status.Progress.SubscribeFinished(this, () => _pullToRefresh.IsRefreshing = false);
         }
 
-        private async void Refresh()
+        private void Refresh()
         {
             if (CrossConnectivity.Current.IsConnected)
             {
                 UiUtils.Update.FetchAllRates();
-                _pullToRefresh.IsRefreshing = false;
             }
             else
             {
                 _pullToRefresh.IsRefreshing = false;
-                await DisplayAlert(I18N.NoInternetAccess, I18N.ErrorRefreshingNotPossibleWithoutInternet, I18N.Cancel);
+                DisplayAlert(I18N.NoInternetAccess, I18N.ErrorRefreshingNotPossibleWithoutInternet, I18N.Cancel);
             }
         }
 
@@ -142,7 +142,7 @@ namespace MyCC.Forms.View.Pages
              {
                  var c = (Currency)item;
 
-                 return new HeaderView{Data = UiUtils.Get.Rates.HeaderFor(c.Id)};
+                 return new HeaderView(true){Data = UiUtils.Get.Rates.HeaderFor(c.Id)};
              });
         }
 

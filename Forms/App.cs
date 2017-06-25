@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using MyCC.Core.Settings;
 using MyCC.Forms.View.Container;
 using MyCC.Forms.View.Overlays;
@@ -24,7 +25,7 @@ namespace MyCC.Forms
             }
             else
             {
-                UiUtils.Update.LoadNeededDataFromDatabase();
+                Task.Run(async () => await UiUtils.Update.LoadNeededDataFromDatabaseAsync());
 
                 MainPage = ApplicationSettings.IsPinSet ? new PasswordOverlay(true) : new TabContainerView() as Page;
 

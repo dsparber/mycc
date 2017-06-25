@@ -87,6 +87,7 @@ namespace MyCC.Forms.View.Pages
             Messaging.Update.Rates.Subscribe(this, LoadData);
             Messaging.Sort.ReferenceTables.Subscribe(this, LoadData);
             Messaging.Sort.Accounts.Subscribe(this, LoadData);
+			Messaging.Status.Progress.SubscribeFinished(this, () => _pullToRefresh.IsRefreshing = false);
         }
 
         private async void Refresh()
@@ -94,7 +95,6 @@ namespace MyCC.Forms.View.Pages
             if (CrossConnectivity.Current.IsConnected)
             {
                 UiUtils.Update.FetchBalancesAndRatesFor(_currencyId);
-                _pullToRefresh.IsRefreshing = false;
             }
             else
             {

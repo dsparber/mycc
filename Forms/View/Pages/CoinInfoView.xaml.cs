@@ -38,7 +38,7 @@ namespace MyCC.Forms.View.Pages
             }
 
             Title = _currencyId.Code();
-            var header = new HeaderView { Data = UiUtils.Get.CoinInfo.GetHeaderData(_currencyId) };
+            var header = new HeaderView(true) { Data = UiUtils.Get.CoinInfo.GetHeaderData(_currencyId) };
             ChangingStack.Children.Insert(0, header);
             InfoHeading.Text = Device.RuntimePlatform.Equals(Device.iOS) ? I18N.Info.ToUpper() : I18N.Info;
             InfoHeading.TextColor = AppConstants.TableSectionColor;
@@ -115,7 +115,9 @@ namespace MyCC.Forms.View.Pages
 
             PullToRefresh.RefreshCommand = new Command(Refresh);
 
-            Messaging.Update.CoinInfos.Subscribe(this, () => UpdateView(true));
+            Messaging.Update.Rates.Subscribe(this, () => UpdateView(true));
+			Messaging.Update.CoinInfos.Subscribe(this, () => UpdateView(true));
+            Messaging.Status.Progress.SubscribeFinished(this, () => PullToRefresh.IsRefreshing = false);
         }
 
         private void UpdateView(bool calledFromBackground = false)
@@ -237,7 +239,6 @@ namespace MyCC.Forms.View.Pages
             if (CrossConnectivity.Current.IsConnected)
             {
                 UiUtils.Update.FetchCoinInfoAndRatesFor(_currencyId);
-                PullToRefresh.IsRefreshing = false;
             }
             else
             {

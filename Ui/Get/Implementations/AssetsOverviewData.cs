@@ -63,7 +63,8 @@ namespace MyCC.Ui.Get.Implementations
             var baseCurrency = currencyId.Code();
             var culture = CultureInfo.CurrentCulture.ToString();
 
-            return $"showChart({data}, {accountStrings}, {currenciesStrings}, \"{furtherString}\", \"{noDataString}\", \"{baseCurrency}\", \"{roundMoney}\", \"{culture}\");";
+            var js = $"showChart({data}, {accountStrings}, {currenciesStrings}, \"{furtherString}\", \"{noDataString}\", \"{baseCurrency}\", \"{roundMoney}\", \"{culture}\");";
+            return js;
         }
 
         private static DateTime GetLastUpdate()

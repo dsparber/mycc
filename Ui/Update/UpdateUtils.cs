@@ -13,7 +13,7 @@ namespace MyCC.Ui.Update
 {
     internal class UpdateUtils : IUpdateUtils
     {
-        public async Task LoadNeededDataFromDatabase()
+        public async Task LoadNeededDataFromDatabaseAsync()
         {
             await ApplicationTasks.LoadEverything();
             UiUtils.AssetsRefresh.ResetCache();

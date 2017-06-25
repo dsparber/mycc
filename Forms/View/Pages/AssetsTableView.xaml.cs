@@ -129,6 +129,7 @@ namespace MyCC.Forms.View.Pages
             Messaging.Status.CarouselPosition.Subscribe(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
             Messaging.Update.Rates.Subscribe(this, SetHeaderCarousel);
             Messaging.Update.Balances.Subscribe(this, SetNoSourcesView);
+            Messaging.Status.Progress.SubscribeFinished(this, () => _pullToRefresh.IsRefreshing = false);
         }
 
         private async void Refresh()
@@ -136,7 +137,6 @@ namespace MyCC.Forms.View.Pages
             if (CrossConnectivity.Current.IsConnected)
             {
                 UiUtils.Update.FetchAllAssetsAndRates();
-                _pullToRefresh.IsRefreshing = false;
             }
             else
             {
@@ -147,7 +147,7 @@ namespace MyCC.Forms.View.Pages
 
         private class HeaderTemplateSelector : DataTemplateSelector
         {
-            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new HeaderView { Data = UiUtils.Get.Assets.HeaderFor(((Currency)item).Id) });
+            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new HeaderView(true) { Data = UiUtils.Get.Assets.HeaderFor(((Currency)item).Id) });
         }
 
         private void AddSource(object sender, EventArgs e)

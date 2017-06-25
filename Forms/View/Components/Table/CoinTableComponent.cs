@@ -54,7 +54,8 @@ namespace MyCC.Forms.View.Components.Table
             _webView.LoadFinished = UpdateView;
 
             Messaging.Update.Balances.Subscribe(this, UpdateView);
-            Messaging.Update.Rates.Subscribe(this, UpdateView);
+			Messaging.Update.Rates.Subscribe(this, UpdateView);
+            Messaging.Status.CarouselPosition.Subscribe(this, UpdateView);
         }
 
         private void UpdateView()

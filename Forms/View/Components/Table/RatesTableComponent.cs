@@ -47,6 +47,7 @@ namespace MyCC.Forms.View.Components.Table
 
             Messaging.Update.Rates.Subscribe(this, UpdateView);
             Messaging.Update.Balances.Subscribe(this, UpdateView);
+			Messaging.Status.CarouselPosition.Subscribe(this, UpdateView);
         }
 
         public void OnAppearing()

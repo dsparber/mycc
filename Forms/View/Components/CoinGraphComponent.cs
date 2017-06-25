@@ -12,12 +12,10 @@ namespace MyCC.Forms.View.Components
     public class CoinGraphComponent : ContentView
     {
         private readonly HybridWebView _webView;
-        private readonly string _currencyId;
 
         public CoinGraphComponent(INavigation navigation)
         {
             _webView = new HybridWebView("Html/pieChart.html") { LoadFinished = UpdateView };
-            _currencyId = ApplicationSettings.StartupCurrencyAssets;
 
             _webView.RegisterCallback("selectedCallback", id =>
             {
@@ -32,11 +30,12 @@ namespace MyCC.Forms.View.Components
 
             Messaging.Update.Rates.Subscribe(this, UpdateView);
             Messaging.Update.Balances.Subscribe(this, UpdateView);
+            Messaging.Status.CarouselPosition.Subscribe(this, UpdateView);
         }
 
         private void UpdateView()
         {
-            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction(UiUtils.Get.Assets.GrapItemsJsFor(_currencyId)));
+            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction(UiUtils.Get.Assets.GrapItemsJsFor(ApplicationSettings.StartupCurrencyAssets)));
         }
     }
 }

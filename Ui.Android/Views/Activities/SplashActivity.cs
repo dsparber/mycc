@@ -38,7 +38,7 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private async Task Startup()
         {
-            await UiUtils.Update.LoadNeededDataFromDatabase();
+            await UiUtils.Update.LoadNeededDataFromDatabaseAsync();
 
             RunOnUiThread(() =>
             {

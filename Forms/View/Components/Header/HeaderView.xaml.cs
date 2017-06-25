@@ -87,7 +87,7 @@ namespace MyCC.Forms.View.Components.Header
         {
             if (!subscribeToRefresh) return;
 
-            MessagingCenter.Subscribe<string>(this, Messaging.Status.Progress, d => Progress = double.Parse(d));
+            Messaging.Status.Progress.Subscribe(this, d => Progress = d);
         }
 
         private double Progress
@@ -96,7 +96,7 @@ namespace MyCC.Forms.View.Components.Header
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    var task = ProgressBar.ProgressTo(value, 100, Easing.Linear);
+                    var task = ProgressBar.ProgressTo(value, 500, Easing.CubicOut);
                     if (value > 0.98)
                     {
                         task.ContinueWith(t => Device.BeginInvokeOnMainThread(() => ProgressBar.Progress = 0));

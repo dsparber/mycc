@@ -11,11 +11,19 @@ namespace MyCC.Ui.Messages
             MessagingCenter.Subscribe<string>(subscriber, message, s => action());
 
         public static void Subscribe(this string message, object subscriber, Action<bool> action) =>
-        MessagingCenter.Subscribe<string>(subscriber, message, s => action(bool.Parse(s)));
+            MessagingCenter.Subscribe<string>(subscriber, message, s => action(bool.Parse(s)));
 
         public static void Subscribe(this string message, object subscriber, Action<double> action) =>
             MessagingCenter.Subscribe<string>(subscriber, message, s => action(double.Parse(s, CultureInfo.InvariantCulture)));
 
+        public static void SubscribeFinished(this string message, object subscriber, Action action) =>
+	        MessagingCenter.Subscribe<string>(subscriber, message, s =>
+	        {
+                if (double.Parse(s, CultureInfo.InvariantCulture) > 0.99)
+                {
+                    action();
+                }
+	        });
 
         public static void Send(this string message) =>
             MessagingCenter.Send("X", message);

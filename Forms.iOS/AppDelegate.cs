@@ -32,10 +32,6 @@ namespace MyCC.Forms.iOS
             var y = (int)UIScreen.MainScreen.Bounds.Height;
             App.ScreenHeight = Math.Max(x, y);
 
-            LoadApplication(new App());
-
-            var result = base.FinishedLaunching(uiApplication, launchOptions);
-
             Messaging.Status.DarkStatusBar.Subscribe(this, b => UIApplication.SharedApplication.SetStatusBarStyle(b ? UIStatusBarStyle.Default : UIStatusBarStyle.LightContent, false));
 
             UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.Default, false);
@@ -53,7 +49,8 @@ namespace MyCC.Forms.iOS
             manager.DisableUpdateManager = true;
             manager.StartManager();
 
-            return result;
+			LoadApplication(new App());
+            return base.FinishedLaunching(uiApplication, launchOptions);
         }
     }
 }
