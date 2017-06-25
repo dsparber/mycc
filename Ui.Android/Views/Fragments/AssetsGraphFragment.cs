@@ -61,7 +61,7 @@ namespace MyCC.Ui.Android.Views.Fragments
                 if (Activity == null) return;
                 Activity.RunOnUiThread(() =>
                 {
-                    _header.Data = UiUtils.Get.Rates.HeaderFor(_referenceCurrencyId);
+                    _header.Data = UiUtils.Get.Assets.HeaderFor(_referenceCurrencyId);
                     _footerFragment.LastUpdate = UiUtils.Get.Assets.LastUpdate;
                     var js = UiUtils.Get.Assets.GrapItemsJsFor(_referenceCurrencyId);
                     webView.LoadUrl($"javascript:{js}", null);

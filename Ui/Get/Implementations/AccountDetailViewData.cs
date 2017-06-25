@@ -47,13 +47,13 @@ namespace MyCC.Ui.Get.Implementations
         public bool ShowQrCodePossible(int accountId)
         {
             var repo = AccountStorage.RepositoryOf(accountId);
-            return repo is OnlineAccountRepository && !(repo is BlockExpertsAccountRepository);
+            return repo is OnlineAccountRepository && !(repo is BlockchainXpubAccountRepository);
         }
 
-        public bool AddressClickable(int accountId)
+        public bool BlockExplorerCallAllowed(int accountId)
         {
             var repo = AccountStorage.RepositoryOf(accountId);
-            return repo is OnlineAccountRepository && (!ApplicationSettings.SecureXpub || !(repo is BlockExpertsAccountRepository));
+            return repo is OnlineAccountRepository && (!ApplicationSettings.SecureXpub || !(repo is BlockchainXpubAccountRepository));
         }
 
         public string AddressClickUrl(int accountId) => (AccountStorage.RepositoryOf(accountId) as AddressAccountRepository)?.WebUrl;
