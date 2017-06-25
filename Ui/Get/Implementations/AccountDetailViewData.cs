@@ -26,6 +26,8 @@ namespace MyCC.Ui.Get.Implementations
         public HeaderItem HeaderData(int accountId)
         {
             var account = AccountStorage.GetAccount(accountId);
+            if (account == null) return null;
+
             var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { account.Money.Currency.Id })
                 .Select(x => new Money(account.Money.Amount * MyccUtil.Rates.GetRate(new RateDescriptor(account.Money.Currency.Id, x))?.Rate ?? 0, x.Find())).
                 OrderBy(m => m.Currency.Code);
@@ -34,11 +36,11 @@ namespace MyCC.Ui.Get.Implementations
                 additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney))) : account.Money.Currency.Name);
         }
 
-        public string AccountName(int accountId) => AccountStorage.GetAccount(accountId).Name;
+        public string AccountName(int accountId) => AccountStorage.GetAccount(accountId)?.Name;
 
         public string CurrencyId(int accountId) => AccountStorage.CurrencyIdOf(accountId);
 
-        public int RepositoryId(int accountId) => AccountStorage.RepositoryOf(accountId).Id;
+        public int RepositoryId(int accountId) => AccountStorage.RepositoryOf(accountId)?.Id ?? -1;
 
         public bool IsLocal(int accountId) => AccountStorage.RepositoryOf(accountId) is LocalAccountRepository;
 
@@ -58,7 +60,8 @@ namespace MyCC.Ui.Get.Implementations
 
         public string ReferenceTableHeader(int accountId)
         {
-            var money = AccountStorage.GetAccount(accountId).Money;
+            var money = AccountStorage.GetAccount(accountId)?.Money;
+            if (money == null) return string.Empty;
 
             return string.Format(money.Amount == 1 ? StringUtils.TextResolver.IsEqualTo : StringUtils.TextResolver.AreEqualTo, money);
         }
@@ -87,6 +90,8 @@ namespace MyCC.Ui.Get.Implementations
         public DateTime LastUpdate(int accountId)
         {
             var account = AccountStorage.GetAccount(accountId);
+            if (account == null) return DateTime.MinValue;
+
             var accountTime = (account as FunctionalAccount)?.LastUpdate ?? DateTime.MinValue;
             var ratesTime = MyccUtil.Rates.LastUpdateFor(account.Money.Currency.Id);
 
@@ -95,13 +100,16 @@ namespace MyCC.Ui.Get.Implementations
 
         public IEnumerable<ReferenceValueItem> GetReferenceItems(int accountId)
         {
-            return ApplicationSettings.AllReferenceCurrencies.Except(new[] { CurrencyId(accountId) })
-                .Select(c =>
-                {
-                    var rate = MyccUtil.Rates.GetRate(new RateDescriptor(CurrencyId(accountId), c));
-                    return new ReferenceValueItem(AccountStorage.GetAccount(accountId).Money.Amount, rate?.Rate, c);
-                })
-                .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Rate, SortDirection == SortDirection.Ascending);
+            var currencyId = CurrencyId(accountId);
+            if (currencyId == null) return new List<ReferenceValueItem>();
+
+            return ApplicationSettings.AllReferenceCurrencies.Except(new[] { currencyId })
+            .Select(c =>
+            {
+                var rate = MyccUtil.Rates.GetRate(new RateDescriptor(currencyId, c));
+                return new ReferenceValueItem(AccountStorage.GetAccount(accountId).Money.Amount, rate?.Rate, c);
+            })
+            .OrderByWithDirection(c => SortOrder == SortOrder.Alphabetical ? c.CurrencyCode as object : c.Rate, SortDirection == SortDirection.Ascending);
         }
 
         public List<SortButtonItem> SortButtons => new List<SortButtonItem>

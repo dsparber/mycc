@@ -139,11 +139,15 @@ namespace MyCC.Forms.View.Pages
         private class HeaderTemplateSelector : DataTemplateSelector
         {
             protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() =>
-             {
-                 var c = (Currency)item;
+            {
+                var currencyId = ((Currency)item).Id;
+                var header = new HeaderView(true) { Data = UiUtils.Get.Assets.HeaderFor(currencyId) };
 
-                 return new HeaderView(true){Data = UiUtils.Get.Rates.HeaderFor(c.Id)};
-             });
+                Messaging.Update.Rates.Subscribe(this, () => header.Data = UiUtils.Get.Rates.HeaderFor(currencyId));
+                Messaging.Update.Balances.Subscribe(this, () => header.Data = UiUtils.Get.Rates.HeaderFor(currencyId));
+
+                return header;
+            });
         }
 
         private void SetFooterText()

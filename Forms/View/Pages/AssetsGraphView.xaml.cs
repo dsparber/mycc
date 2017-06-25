@@ -143,7 +143,16 @@ namespace MyCC.Forms.View.Pages
 
         private class HeaderTemplateSelector : DataTemplateSelector
         {
-            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() => new HeaderView(true) { Data = UiUtils.Get.Assets.HeaderFor(((Currency)item).Id) });
+            protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() =>
+            {
+                var currencyId = ((Currency)item).Id;
+                var header = new HeaderView(true) { Data = UiUtils.Get.Assets.HeaderFor(currencyId) };
+
+                Messaging.Update.Rates.Subscribe(this, () => header.Data = UiUtils.Get.Assets.HeaderFor(currencyId));
+                Messaging.Update.Balances.Subscribe(this, () => header.Data = UiUtils.Get.Assets.HeaderFor(currencyId));
+
+                return header;
+            });
         }
     }
 }

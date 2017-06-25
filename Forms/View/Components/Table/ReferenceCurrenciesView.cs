@@ -15,7 +15,7 @@ namespace MyCC.Forms.View.Components.Table
     {
         public (IEnumerable<ReferenceValueItem> ReferenceValueItems, List<SortButtonItem> SortButtons) Items { set => Device.BeginInvokeOnMainThread(() => UpdateView(value)); }
 
-        public string TableHeaderLabel { set => Device.BeginInvokeOnMainThread(() => _sectionHeader.Title = value); }
+        public string Title { set => Device.BeginInvokeOnMainThread(() => _sectionHeader.Title = value); }
 
 
         private readonly SectionHeaderView _sectionHeader;

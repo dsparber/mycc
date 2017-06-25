@@ -77,6 +77,7 @@ namespace MyCC.Forms.View.Overlays
             var value = accountView != null ? accountView.GetAccount(name) : repositoryView?.GetRepository(name) as dynamic;
 
             await UiUtils.Edit.Add(value);
+            await Navigation.PopModalAsync();
 
             ViewsEnabled = true;
         }

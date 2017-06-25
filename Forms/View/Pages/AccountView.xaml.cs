@@ -40,7 +40,8 @@ namespace MyCC.Forms.View.Pages
 
             var referenceView = new ReferenceCurrenciesView
             {
-                Items = (UiUtils.Get.AccountDetail.GetReferenceItems(_account.Id), UiUtils.Get.AccountDetail.SortButtons)
+                Items = (UiUtils.Get.AccountDetail.GetReferenceItems(_account.Id), UiUtils.Get.AccountDetail.SortButtons),
+                Title = UiUtils.Get.AccountDetail.ReferenceTableHeader(_account.Id)
             };
 
             var stack = new StackLayout { Spacing = 0, Margin = new Thickness(0, 0, 0, 40), Padding = new Thickness(0, 40, 0, 40) };
@@ -225,10 +226,14 @@ namespace MyCC.Forms.View.Pages
                     return;
                 }
 
-                updateLabelAction();
-                SetFooter();
-
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    header.Data = UiUtils.Get.AccountDetail.HeaderData(_account.Id);
+                    updateLabelAction();
+                    SetFooter();
+                });
                 referenceView.Items = (UiUtils.Get.AccountDetail.GetReferenceItems(_account.Id), UiUtils.Get.AccountDetail.SortButtons);
+                referenceView.Title = UiUtils.Get.AccountDetail.ReferenceTableHeader(_account.Id);
             }
 
             Messaging.Update.Rates.Subscribe(this, Update);
@@ -285,7 +290,7 @@ namespace MyCC.Forms.View.Pages
 
         private void SetFooter()
         {
-            Device.BeginInvokeOnMainThread(() => Footer.Text = UiUtils.Get.AccountDetail.LastUpdate(_account.Id).LastUpdateString());
+            Footer.Text = UiUtils.Get.AccountDetail.LastUpdate(_account.Id).LastUpdateString();
         }
     }
 }

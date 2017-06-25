@@ -22,6 +22,7 @@ namespace MyCC.Forms.View.Pages
     {
         private readonly string _currencyId;
         private readonly ReferenceCurrenciesView _referenceView;
+        private readonly HeaderView _header;
 
 
         private readonly Dictionary<string, Tuple<Label, Label>> _infos;
@@ -38,8 +39,8 @@ namespace MyCC.Forms.View.Pages
             }
 
             Title = _currencyId.Code();
-            var header = new HeaderView(true) { Data = UiUtils.Get.CoinInfo.GetHeaderData(_currencyId) };
-            ChangingStack.Children.Insert(0, header);
+            _header = new HeaderView(true);
+            ChangingStack.Children.Insert(0, _header);
             InfoHeading.Text = Device.RuntimePlatform.Equals(Device.iOS) ? I18N.Info.ToUpper() : I18N.Info;
             InfoHeading.TextColor = AppConstants.TableSectionColor;
 
@@ -71,7 +72,8 @@ namespace MyCC.Forms.View.Pages
 
             _referenceView = new ReferenceCurrenciesView
             {
-                Items = (UiUtils.Get.CoinInfo.ReferenceValues(_currencyId), UiUtils.Get.CoinInfo.SortButtons)
+                Items = (UiUtils.Get.CoinInfo.ReferenceValues(_currencyId), UiUtils.Get.CoinInfo.SortButtons),
+                Title = string.Format(I18N.IsEqualTo, 1)
             };
             ContentView.Children.Add(_referenceView);
 
@@ -116,7 +118,7 @@ namespace MyCC.Forms.View.Pages
             PullToRefresh.RefreshCommand = new Command(Refresh);
 
             Messaging.Update.Rates.Subscribe(this, () => UpdateView(true));
-			Messaging.Update.CoinInfos.Subscribe(this, () => UpdateView(true));
+            Messaging.Update.CoinInfos.Subscribe(this, () => UpdateView(true));
             Messaging.Status.Progress.SubscribeFinished(this, () => PullToRefresh.IsRefreshing = false);
         }
 
@@ -126,6 +128,8 @@ namespace MyCC.Forms.View.Pages
 
             void UpdateUi()
             {
+                _header.Data = UiUtils.Get.CoinInfo.GetHeaderData(_currencyId);
+
                 _infos[I18N.Name].Item1.IsVisible = true;
                 _infos[I18N.Name].Item2.IsVisible = true;
                 _infos[I18N.Name].Item2.Text = _currencyId.FindName();

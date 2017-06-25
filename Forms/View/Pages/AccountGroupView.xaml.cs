@@ -21,6 +21,7 @@ namespace MyCC.Forms.View.Pages
         private readonly AccountsTableComponent _accountsViewEnabled;
         private readonly AccountsTableComponent _accountsViewDisabled;
         private readonly PullToRefreshLayout _pullToRefresh;
+        private readonly HeaderView _headerView;
 
 
         private readonly string _currencyId;
@@ -29,13 +30,13 @@ namespace MyCC.Forms.View.Pages
         {
             InitializeComponent();
 
-            var header = new HeaderView(true);
-            ChangingStack.Children.Insert(0, header);
+            _headerView = new HeaderView(true);
+            ChangingStack.Children.Insert(0, _headerView);
 
             _currencyId = pageCurrencyId;
             Title = $"\u03A3 {_currencyId.Code()}";
 
-            LoadData();
+            Update();
 
             _accountsViewEnabled = new AccountsTableComponent(Navigation, _currencyId, true);
             _accountsViewDisabled = new AccountsTableComponent(Navigation, _currencyId, false);
@@ -44,7 +45,8 @@ namespace MyCC.Forms.View.Pages
             stack.Children.Add(_accountsViewEnabled);
             _referenceView = new ReferenceCurrenciesView
             {
-                Items = (UiUtils.Get.AccountsGroup.ReferenceItems(_currencyId), UiUtils.Get.AccountsGroup.SortButtonsReference)
+                Items = (UiUtils.Get.AccountsGroup.ReferenceItems(_currencyId), UiUtils.Get.AccountsGroup.SortButtonsReference),
+                Title = UiUtils.Get.AccountsGroup.ReferenceTableHeader(_currencyId)
             };
 
 
@@ -66,11 +68,12 @@ namespace MyCC.Forms.View.Pages
             SetFooter();
         }
 
-        private void LoadData()
+        private void Update()
         {
             SetFooter();
             Device.BeginInvokeOnMainThread(() =>
             {
+                _headerView.Data = UiUtils.Get.AccountsGroup.HeaderData(_currencyId);
                 _accountsViewEnabled.IsVisible = UiUtils.Get.AccountsGroup.EnabledAccountsItems(_currencyId).Any();
                 _accountsViewDisabled.IsVisible = UiUtils.Get.AccountsGroup.DisabledAccountsItems(_currencyId).Any();
             });
@@ -79,15 +82,16 @@ namespace MyCC.Forms.View.Pages
             if (_referenceView == null) return;
 
             _referenceView.Items = (UiUtils.Get.AccountsGroup.ReferenceItems(_currencyId), UiUtils.Get.AccountsGroup.SortButtonsReference);
+            _referenceView.Title = UiUtils.Get.AccountsGroup.ReferenceTableHeader(_currencyId);
         }
 
         private void Subscribe()
         {
-            Messaging.Update.Balances.Subscribe(this, LoadData);
-            Messaging.Update.Rates.Subscribe(this, LoadData);
-            Messaging.Sort.ReferenceTables.Subscribe(this, LoadData);
-            Messaging.Sort.Accounts.Subscribe(this, LoadData);
-			Messaging.Status.Progress.SubscribeFinished(this, () => _pullToRefresh.IsRefreshing = false);
+            Messaging.Update.Balances.Subscribe(this, Update);
+            Messaging.Update.Rates.Subscribe(this, Update);
+            Messaging.Sort.ReferenceTables.Subscribe(this, Update);
+            Messaging.Sort.Accounts.Subscribe(this, Update);
+            Messaging.Status.Progress.SubscribeFinished(this, () => _pullToRefresh.IsRefreshing = false);
         }
 
         private async void Refresh()

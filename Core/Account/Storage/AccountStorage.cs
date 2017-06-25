@@ -37,7 +37,7 @@ namespace MyCC.Core.Account.Storage
         public static Models.Base.Account GetAccount(int accountId) => Instance.AllElements.Find(account => account.Id == accountId);
 
         public static AccountRepository RepositoryOf(int accountId) => RepositoryOf(GetAccount(accountId) as FunctionalAccount);
-        public static AccountRepository RepositoryOf(FunctionalAccount account) => Instance.Repositories.Find(r => r.Id == account.ParentId);
+        public static AccountRepository RepositoryOf(FunctionalAccount account) => Instance.Repositories.Find(r => r.Id == account?.ParentId);
 
         public static Task Update(FunctionalAccount account) => RepositoryOf(account).Update(account);
 
