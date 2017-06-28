@@ -51,13 +51,14 @@ namespace MyCC.Ui.Android.Views.Activities
             _sortAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
             _sortCurrency = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
 
+            Messaging.Modified.ReferenceCurrencies.Subscribe(this, () => RunOnUiThread(SetCoinInfo));
             Messaging.Update.CoinInfos.Subscribe(this, () => RunOnUiThread(SetCoinInfo));
             Messaging.Update.Rates.Subscribe(this, () => RunOnUiThread(SetCoinInfo));
             Messaging.Sort.ReferenceTables.Subscribe(this, () => RunOnUiThread(SetReferenceTable));
 
             _swipeToRefresh = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
 
-            _swipeToRefresh.Refresh += (sender, e) => UiUtils.Update.FetchCoinInfoAndRatesFor(_currencyId);
+            _swipeToRefresh.Refresh += (sender, e) => UiUtils.Update.FetchCoinInfoAndRateFor(_currencyId);
 
             var explorerButtosView = FindViewById<LinearLayout>(Resource.Id.view_open_in_blockexplorer);
             var explorerList = UiUtils.Get.CoinInfo.Explorer(_currencyId).ToList();

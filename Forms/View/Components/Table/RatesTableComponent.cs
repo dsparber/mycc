@@ -19,7 +19,7 @@ namespace MyCC.Forms.View.Components.Table
         private readonly HybridWebView _webView;
         private readonly Dictionary<int, Action> _headerClickCallbacks;
         private static int _currentId;
-
+        private string _currencyId = ApplicationSettings.StartupCurrencyRates;
 
         public RatesTableComponent(INavigation navigation)
         {
@@ -45,9 +45,20 @@ namespace MyCC.Forms.View.Components.Table
 
             Content = _webView;
 
+            Messaging.Sort.Rates.Subscribe(this, UpdateView);
             Messaging.Update.Rates.Subscribe(this, UpdateView);
-            Messaging.Update.Balances.Subscribe(this, UpdateView);
-			Messaging.Status.CarouselPosition.Subscribe(this, UpdateView);
+            Messaging.Modified.ReferenceCurrencies.Subscribe(this, UpdateView);
+            Messaging.Modified.WatchedCurrencies.Subscribe(this, UpdateView);
+            Messaging.Modified.Balances.Subscribe(this, UpdateView);
+            Messaging.Status.CarouselPosition.Subscribe(this, UpdateViewIfCurrencyChanged);
+        }
+
+        private void UpdateViewIfCurrencyChanged()
+        {
+            if (_currencyId.Equals(ApplicationSettings.StartupCurrencyRates)) return;
+
+            UpdateView();
+            _currencyId = ApplicationSettings.StartupCurrencyRates;
         }
 
         public void OnAppearing()
@@ -57,8 +68,7 @@ namespace MyCC.Forms.View.Components.Table
 
         private void UpdateView()
         {
-            var currencyId = ApplicationSettings.StartupCurrencyRates;
-            var items = UiUtils.Get.Rates.RateItemsFor(currencyId)?.Select(item => new Data(item)).ToList();
+            var items = UiUtils.Get.Rates.RateItemsFor(_currencyId)?.Select(item => new Data(item)).ToList();
 
             if (items == null) return;
 
@@ -66,7 +76,7 @@ namespace MyCC.Forms.View.Components.Table
             {
                 _headerClickCallbacks.Clear();
                 _currentId = 0;
-                _webView.CallJsFunction("setHeader", UiUtils.Get.Rates.SortButtonsFor(currencyId).Select(button => new HeaderData(button, _currentId += 1, this)), string.Empty);
+                _webView.CallJsFunction("setHeader", UiUtils.Get.Rates.SortButtonsFor(_currencyId).Select(button => new HeaderData(button, _currentId += 1, this)), string.Empty);
                 _webView.CallJsFunction("updateTable", items.ToArray(), CultureInfo.CurrentCulture.Name);
             });
         }

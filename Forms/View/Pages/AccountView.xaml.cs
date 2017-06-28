@@ -238,8 +238,10 @@ namespace MyCC.Forms.View.Pages
 
             Messaging.Update.Rates.Subscribe(this, Update);
             Messaging.Update.Balances.Subscribe(this, Update);
+            Messaging.Modified.ReferenceCurrencies.Subscribe(this, Update);
+            Messaging.Modified.Balances.Subscribe(this, Update);
             Messaging.Sort.ReferenceTables.Subscribe(this, Update);
-            Messaging.Status.Progress.SubscribeFinished(this, () => _pullToRefresh.IsRefreshing = false);
+            Messaging.Status.Progress.SubscribeFinished(this, () => Device.BeginInvokeOnMainThread(() => _pullToRefresh.IsRefreshing = false));
         }
 
         private void SetView()

@@ -47,6 +47,8 @@ namespace MyCC.Ui.Android.Views.Activities
             _sortAmount = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_value_sort);
             _sortCurrency = (SortButtonFragment)SupportFragmentManager.FindFragmentById(Resource.Id.button_currency_sort);
 
+            Messaging.Modified.Balances.Subscribe(this, () => RunOnUiThread(SetData));
+            Messaging.Modified.ReferenceCurrencies.Subscribe(this, () => RunOnUiThread(SetData));
             Messaging.Update.Balances.Subscribe(this, () => RunOnUiThread(SetData));
             Messaging.Update.Rates.Subscribe(this, () => RunOnUiThread(SetData));
             Messaging.Sort.Accounts.Subscribe(this, () => RunOnUiThread(SetData));

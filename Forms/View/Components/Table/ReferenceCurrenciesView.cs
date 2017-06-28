@@ -64,7 +64,7 @@ namespace MyCC.Forms.View.Components.Table
                     _headerClickCallbacks.Clear();
                     _currentId = 0;
                     _webView.CallJsFunction("setHeader", data.SortButtons.Select(button => new HeaderData(button, _currentId += 1, this)), string.Empty);
-                    _webView.CallJsFunction("updateTable", items.ToArray(), new AccountsTableComponent.SortData(), string.Empty);
+                    _webView.CallJsFunction("updateTable", items.ToArray(), string.Empty);
                 });
             }
         }

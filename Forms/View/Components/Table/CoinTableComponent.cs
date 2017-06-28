@@ -20,6 +20,7 @@ namespace MyCC.Forms.View.Components.Table
         private readonly HybridWebView _webView;
         private readonly Dictionary<int, Action> _headerClickCallbacks;
         private static int _currentId;
+        private static string _currencyId = ApplicationSettings.StartupCurrencyAssets;
 
         public CoinTableComponent()
         {
@@ -43,32 +44,38 @@ namespace MyCC.Forms.View.Components.Table
                 });
             });
 
-            _webView.RegisterCallback("HeaderClickedCallback", id =>
-            {
-                _headerClickCallbacks[int.Parse(id)].Invoke();
-                UpdateView();
-            });
+            _webView.RegisterCallback("HeaderClickedCallback", id => _headerClickCallbacks[int.Parse(id)].Invoke());
 
             Content = _webView;
 
             _webView.LoadFinished = UpdateView;
 
+            Messaging.Sort.Assets.Subscribe(this, UpdateView);
             Messaging.Update.Balances.Subscribe(this, UpdateView);
-			Messaging.Update.Rates.Subscribe(this, UpdateView);
-            Messaging.Status.CarouselPosition.Subscribe(this, UpdateView);
+            Messaging.Modified.Balances.Subscribe(this, UpdateView);
+            Messaging.Update.Rates.Subscribe(this, UpdateView);
+            Messaging.Status.CarouselPosition.Subscribe(this, UpdateViewIfCurrencyChanged);
+        }
+
+        private void UpdateViewIfCurrencyChanged()
+        {
+            if (_currencyId.Equals(ApplicationSettings.StartupCurrencyAssets)) return;
+
+            UpdateView();
+            _currencyId = ApplicationSettings.StartupCurrencyAssets;
         }
 
         private void UpdateView()
         {
-            var currencyId = ApplicationSettings.StartupCurrencyAssets;
-            var items = UiUtils.Get.Assets.TableItemsFor(currencyId)?.Select(item => new Data(item)).ToList();
+            var items = UiUtils.Get.Assets.TableItemsFor(_currencyId)?.Select(item => new Data(item)).ToList();
 
             if (items == null) return;
 
             Device.BeginInvokeOnMainThread(() =>
             {
                 _headerClickCallbacks.Clear();
-                _webView.CallJsFunction("setHeader", UiUtils.Get.Assets.SortButtonsFor(currencyId).Select(button => new HeaderData(button, _currentId += 1, this)), string.Empty);
+                _currentId = 0;
+                _webView.CallJsFunction("setHeader", UiUtils.Get.Assets.SortButtonsFor(_currencyId).Select(button => new HeaderData(button, _currentId += 1, this)), string.Empty);
                 _webView.CallJsFunction("updateTable", items.ToArray(), CultureInfo.CurrentCulture.Name);
             });
         }

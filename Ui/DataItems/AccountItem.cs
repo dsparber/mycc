@@ -9,6 +9,7 @@ namespace MyCC.Ui.DataItems
         public readonly string FormattedValue;
         public readonly int Id;
         public readonly decimal Amount;
+        public readonly bool Enabled;
 
         public AccountItem(Account account)
         {
@@ -16,6 +17,7 @@ namespace MyCC.Ui.DataItems
             Name = account.Name;
             Id = account.Id;
             Amount = account.Money.Amount;
+            Enabled = account.IsEnabled;
         }
     }
 }

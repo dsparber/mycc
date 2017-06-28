@@ -36,8 +36,7 @@ namespace MyCC.Ui.Edit
                 ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Except(new[] { currencyId }).ToList();
             }
 
-            Messaging.Update.Balances.Send();
-            Messaging.Update.Rates.Send();
+            Messaging.Modified.ReferenceCurrencies.Send();
             return true;
 
         }
@@ -65,8 +64,7 @@ namespace MyCC.Ui.Edit
                 ApplicationSettings.FurtherCurrencies = (willBecomeMainCurrency ? ApplicationSettings.FurtherCurrencies.Except(currencyIdAsArray) : ApplicationSettings.FurtherCurrencies.Concat(currencyIdAsArray)).ToList();
                 UiUtils.AssetsRefresh.ResetCache();
                 UiUtils.RatesRefresh.ResetCache();
-                Messaging.Update.Rates.Send();
-                Messaging.Update.Balances.Send();
+                Messaging.Modified.ReferenceCurrencies.Send();
             }
             return isNowMainCurrency;
         }

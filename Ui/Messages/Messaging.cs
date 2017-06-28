@@ -21,10 +21,9 @@
 
         public static class Modified
         {
-            public const string Rates = "ModifiedRates";
+            public const string WatchedCurrencies = "ModifiedRates";
             public const string Balances = "ModifiedAssets";
-            public const string CoinInfos = "ModifiedCoinInfo";
-            public const string CryptoToFiatRates = "ModifiedBitcoinExchangeSources";
+            public const string ReferenceCurrencies = "ModifiedReferenceCurrencies";
         }
 
         public static class Sort

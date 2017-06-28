@@ -17,7 +17,8 @@ namespace MyCC.Ui.Edit
         {
             // Test if data is valid
             var addressRepo = repository as AddressAccountRepository;
-            if (addressRepo != null && (!addressRepo.Address.Equals(newAddress) || !addressRepo.Currency.Id.Equals(newCurrencyId)))
+            var currencyChanged = !addressRepo?.Currency.Id.Equals(newCurrencyId) ?? false;
+            if (addressRepo != null && (!addressRepo.Address.Equals(newAddress) || currencyChanged))
             {
                 var testRepo = AddressAccountRepository.CreateAddressAccountRepository(addressRepo.Name, newCurrencyId.Find(), newAddress ?? string.Empty);
 
@@ -55,8 +56,12 @@ namespace MyCC.Ui.Edit
             {
                 await AccountStorage.Update(a);
             }
+            if (currencyChanged)
+            {
+                UiUtils.Update.FetchNeededButNotLoadedRates();
+            }
             UiUtils.AssetsRefresh.ResetCache();
-            Messaging.Update.Balances.Send();
+            Messaging.Modified.Balances.Send();
         }
     }
 }

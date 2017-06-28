@@ -4,13 +4,13 @@ namespace MyCC.Ui.Update
 {
     public interface IUpdateUtils
     {
-		Task LoadNeededDataFromDatabaseAsync();
+        Task LoadNeededDataFromDatabaseAsync();
 
         void FetchAllRates();
 
         void FetchCurrencies();
 
-		void FetchAllAssetsAndRates();
+        void FetchAllAssetsAndRates();
 
         void FetchNeededButNotLoadedRates();
 
@@ -18,7 +18,7 @@ namespace MyCC.Ui.Update
 
         void FetchBalanceAndRatesFor(int accountId);
 
-        void FetchCoinInfoAndRatesFor(string currencyId);
+        void FetchCoinInfoAndRateFor(string currencyId);
 
         void FetchCoinInfoFor(string currencyId);
 

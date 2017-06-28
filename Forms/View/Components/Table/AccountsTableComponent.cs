@@ -1,19 +1,18 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Helpers;
-using MyCC.Core.Settings;
-using MyCC.Core.Types;
 using MyCC.Forms.Constants;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.BaseComponents;
 using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Pages;
+using MyCC.Ui;
+using MyCC.Ui.DataItems;
 using MyCC.Ui.Messages;
 using Xamarin.Forms;
 
@@ -26,22 +25,25 @@ namespace MyCC.Forms.View.Components.Table
         private readonly bool _useEnabledAccounts;
         private static bool _firstCall = true;
 
+        private readonly Dictionary<int, Action> _headerClickCallbacks;
+        private static int _currentId;
+
         public AccountsTableComponent(INavigation navigation, string currencyId, bool useEnabledAccounts)
         {
             _currencyId = currencyId;
             _useEnabledAccounts = useEnabledAccounts;
+            _headerClickCallbacks = new Dictionary<int, Action>();
 
             _webView = new HybridWebView("Html/accountsTable.html")
             {
                 LoadFinished = async () =>
                 {
                     UpdateView();
-                    if (_firstCall)
-                    {
-                        await Task.Delay(1000);
-                        UpdateView();
-                        _firstCall = false;
-                    }
+                    if (!_firstCall) return;
+
+                    await Task.Delay(1000);
+                    UpdateView();
+                    _firstCall = false;
                 }
             };
 
@@ -58,21 +60,7 @@ namespace MyCC.Forms.View.Components.Table
                 var size = int.Parse(sizeString);
                 Device.BeginInvokeOnMainThread(() => _webView.HeightRequest = size);
             });
-
-            _webView.RegisterCallback("HeaderClickedCallback", type =>
-            {
-                SortOrder value;
-                var clickedSortOrder = Enum.TryParse(type, out value) ? value : SortOrder.None;
-                if (clickedSortOrder == ApplicationSettings.SortOrderAccounts)
-                {
-                    ApplicationSettings.SortDirectionAccounts = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending
-                        ? SortDirection.Descending
-                        : SortDirection.Ascending;
-                }
-                ApplicationSettings.SortOrderAccounts = clickedSortOrder;
-
-                UpdateView();
-            });
+            _webView.RegisterCallback("HeaderClickedCallback", id => _headerClickCallbacks[int.Parse(id)].Invoke());
 
             var stack = new StackLayout { Spacing = 0, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, BackgroundColor = AppConstants.TableBackgroundColor };
 
@@ -84,6 +72,8 @@ namespace MyCC.Forms.View.Components.Table
             UpdateView();
 
             Messaging.Update.Balances.Subscribe(this, UpdateView);
+            Messaging.Modified.Balances.Subscribe(this, UpdateView);
+            Messaging.Sort.Accounts.Subscribe(this, UpdateView);
             Messaging.Update.Rates.Subscribe(this, UpdateView);
         }
 
@@ -91,29 +81,15 @@ namespace MyCC.Forms.View.Components.Table
         {
             try
             {
-                var items = AccountStorage.AccountsWithCurrency(_currencyId).Where(a => a.IsEnabled == _useEnabledAccounts).Select(a => new Data(a)).ToList();
-
+                var items = (_useEnabledAccounts ? UiUtils.Get.AccountsGroup.EnabledAccountsItems(_currencyId) : UiUtils.Get.AccountsGroup.DisabledAccountsItems(_currencyId)).ToList();
                 if (!items.Any()) return;
-
-                Func<Data, object> sortLambda;
-                switch (ApplicationSettings.SortOrderAccounts)
-                {
-                    case SortOrder.Alphabetical: sortLambda = d => d.Name; break;
-                    case SortOrder.ByUnits: sortLambda = d => decimal.Parse(d.Amount.Replace("<", "").Trim()); break;
-                    case SortOrder.ByValue: sortLambda = d => decimal.Parse(d.Amount.Replace("<", "").Trim()); break;
-                    case SortOrder.None: sortLambda = d => 1; break;
-                    default: sortLambda = d => 1; break;
-                }
-
-                items = ApplicationSettings.SortDirectionAccounts == SortDirection.Ascending ? items.OrderBy(sortLambda).ToList() : items.OrderByDescending(sortLambda).ToList();
 
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    _webView.CallJsFunction("setHeader", new[]{
-                    new HeaderData(I18N.Name, SortOrder.Alphabetical.ToString()),
-                    new HeaderData(I18N.Amount, SortOrder.ByUnits.ToString())
-                        }, string.Empty);
-                    _webView.CallJsFunction("updateTable", items.ToArray(), new SortData(), CultureInfo.CurrentCulture.Name);
+                    _headerClickCallbacks.Clear();
+                    _currentId = 0;
+                    _webView.CallJsFunction("setHeader", UiUtils.Get.AccountsGroup.SortButtonsAccounts.Select(button => new HeaderData(button, _currentId += 1, this)), string.Empty);
+                    _webView.CallJsFunction("updateTable", items.Select(item => new Data(item)).ToArray(), string.Empty);
                 });
             }
             catch (Exception e)
@@ -136,31 +112,13 @@ namespace MyCC.Forms.View.Components.Table
             [DataMember]
             public readonly int Id;
 
-            public Data(Account account)
+            public Data(AccountItem account)
             {
                 Name = account.Name;
-                Amount = account.Money.ToString8Digits(false);
+                Amount = account.FormattedValue;
                 Id = account.Id;
-                Disabled = !account.IsEnabled;
+                Disabled = !account.Enabled;
             }
-        }
-
-        [DataContract]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
-        public class SortData
-        {
-            [DataMember]
-            public readonly string Direction;
-            [DataMember]
-            public readonly string Type;
-
-            public SortData()
-            {
-                Direction = ApplicationSettings.SortDirectionAccounts.ToString();
-                Type = ApplicationSettings.SortOrderAccounts.ToString();
-            }
-
         }
 
         [DataContract]
@@ -171,14 +129,18 @@ namespace MyCC.Forms.View.Components.Table
             [DataMember]
             public readonly string Text;
             [DataMember]
-            public readonly string Type;
+            public readonly int Id;
+            [DataMember]
+            public readonly bool? Ascending;
 
-            public HeaderData(string text, string type)
+            public HeaderData(SortButtonItem sortButtonItem, int id, AccountsTableComponent parent)
             {
-                Text = text;
-                Type = type;
-            }
+                Text = sortButtonItem.Text;
+                Id = id;
+                Ascending = sortButtonItem.SortAscending;
+                parent._headerClickCallbacks[id] = sortButtonItem.OnClick;
 
+            }
         }
 
         protected override void OnSizeAllocated(double width, double height)

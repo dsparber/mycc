@@ -70,6 +70,7 @@ namespace MyCC.Ui.Android.Views.Fragments
                 });
             }
 
+            Messaging.Modified.Balances.Subscribe(this, UpdateContent);
             Messaging.Update.Rates.Subscribe(this, UpdateContent);
             Messaging.Update.Balances.Subscribe(this, UpdateContent);
 

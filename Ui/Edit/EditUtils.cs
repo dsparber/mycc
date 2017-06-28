@@ -21,21 +21,21 @@ namespace MyCC.Ui.Edit
         {
             await AccountStorage.Update(account);
             UiUtils.AssetsRefresh.ResetCache();
-            Messaging.Update.Balances.Send();
+            Messaging.Modified.Balances.Send();
         }
 
         public async Task Delete(FunctionalAccount account)
         {
             await AccountStorage.Instance.LocalRepository.Remove(account);
             UiUtils.AssetsRefresh.ResetCache();
-            Messaging.Update.Balances.Send();
+            Messaging.Modified.Balances.Send();
         }
 
         public async Task Delete(OnlineAccountRepository repository)
         {
             await AccountStorage.Instance.Remove(repository);
             UiUtils.AssetsRefresh.ResetCache();
-            Messaging.Update.Balances.Send();
+            Messaging.Modified.Balances.Send();
         }
 
         public Task Update(OnlineAccountRepository repository, string newAddress, string newCurrencyId, string newName, Dictionary<int, bool> newEnabledStates, Action onError = null)

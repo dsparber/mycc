@@ -30,8 +30,7 @@ namespace MyCC.Ui.Edit
             UiUtils.Update.FetchNeededButNotLoadedRates();
             UiUtils.AssetsRefresh.ResetCache();
             UiUtils.RatesRefresh.ResetCache();
-            Messaging.Update.Balances.Send();
-            Messaging.Update.Rates.Send();
+            Messaging.Modified.Balances.Send();
 
             return true;
         }
@@ -47,8 +46,7 @@ namespace MyCC.Ui.Edit
             UiUtils.Update.FetchNeededButNotLoadedRates();
             UiUtils.AssetsRefresh.ResetCache();
             UiUtils.RatesRefresh.ResetCache();
-            Messaging.Update.Balances.Send();
-            Messaging.Update.Rates.Send();
+            Messaging.Modified.Balances.Send();
         }
     }
 }

@@ -120,7 +120,8 @@ namespace MyCC.Forms.View.Pages
 
             Messaging.Update.Rates.Subscribe(this, () => UpdateView(true));
             Messaging.Update.CoinInfos.Subscribe(this, () => UpdateView(true));
-            Messaging.Status.Progress.SubscribeFinished(this, () => PullToRefresh.IsRefreshing = false);
+            Messaging.Modified.ReferenceCurrencies.Subscribe(this, () => UpdateView(true));
+            Messaging.Status.Progress.SubscribeFinished(this, () => Device.BeginInvokeOnMainThread(() => PullToRefresh.IsRefreshing = false));
         }
 
         private void UpdateView(bool calledFromBackground = false)
@@ -243,7 +244,7 @@ namespace MyCC.Forms.View.Pages
         {
             if (CrossConnectivity.Current.IsConnected)
             {
-                UiUtils.Update.FetchCoinInfoAndRatesFor(_currencyId);
+                UiUtils.Update.FetchCoinInfoAndRateFor(_currencyId);
             }
             else
             {

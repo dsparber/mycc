@@ -19,7 +19,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
             InitializeComponent();
             SetReferenceCurrencyCells();
 
-            Messaging.Update.Rates.Subscribe(this, SetReferenceCurrencyCells);
+            Messaging.Modified.WatchedCurrencies.Subscribe(this, SetReferenceCurrencyCells);
         }
 
         private void SetReferenceCurrencyCells()
@@ -35,7 +35,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
                 var items = new List<CustomCellViewActionItem> { delete };
 
                 delete.Action = (sender, e) => UiUtils.Edit.RemoveWatchedCurrency(c);
-                
+
                 var currency = c.Find();
 
                 var cell = new CustomViewCell

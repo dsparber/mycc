@@ -1,33 +1,5 @@
 "use strict";
 
-var testData = [{
-    "Name": "Georgs langer Testname",
-    "Amount": "23,525.31",
-    "Id": 1
-}, {
-    "Name": "Paul",
-    "Amount": "986.24",
-    "Id": 3
-}, {
-    "Name": "Josef",
-    "Amount": "45,845.78",
-    "Id": 2
-}];
-
-var testColumns = [{
-    "Text": "Name",
-    "Type": "Name"
-}, {
-    "Text": "Anzahl",
-    "Type": "Amount"
-}];
-
-var testSort = {
-    "Type": "Name",
-    "Direction": "Ascending"
-};
-
-
 var sorterSet = false;
 
 function setHeader(columns) {
@@ -38,13 +10,13 @@ function setHeader(columns) {
     for (var i = 0; i < columns.length; i++) {
         var cell = row.insertCell(i);
         cell.innerHTML = "<span>" + columns[i]["Text"] + "</span>";
-        cell.setAttribute("type", columns[i]["Type"]);
-        cell.onclick = headerClicked(columns[i]["Type"]);
+        cell.setAttribute("class", columns[i]["Ascending"] === true ? "down" : columns[i]["Ascending"] === false ? "up" : "");
+        cell.onclick = headerClicked(columns[i]["Id"]);
     }
     row.insertCell(columns.length);
 }
 
-function updateTable(data, sort) {
+function updateTable(data) {
 
     var coinTable = document.getElementById("coinTable");
     clearTable(coinTable);
@@ -66,9 +38,6 @@ function updateTable(data, sort) {
         row.onclick = rowClicked(data[i]["Id"]);
     }
 
-    $("#coinTable thead").children().removeClass();
-    $("#coinTable td[type=" + sort["Type"] + "]").addClass(sort["Direction"] === "Ascending" ? "down" : "up");
-
     sizeAllocated();
 }
 
@@ -82,9 +51,9 @@ function sizeAllocated() {
     window.open("http://none?" + "CallbackSizeAllocated=" + document.getElementById("coinTable").offsetHeight);
 }
 
-function headerClicked(type) {
+function headerClicked(id) {
     return function () {
-        window.open("http://none?" + "HeaderClickedCallback=" + type);
+        window.open("http://none?" + "HeaderClickedCallback=" + id);
     };
 }
 

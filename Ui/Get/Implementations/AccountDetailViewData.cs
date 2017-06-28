@@ -134,7 +134,7 @@ namespace MyCC.Ui.Get.Implementations
         {
             SortDirection = SortDirectionHelper.GetNewSortDirection(SortOrder, SortDirection, sortOrder);
             SortOrder = sortOrder;
-            Messaging.Update.Balances.Send();
+            Messaging.Sort.ReferenceTables.Send();
         }
 
         private SortOrder SortOrder

@@ -89,13 +89,16 @@ namespace MyCC.Forms.View.Pages
         }
 
 
-
+        private string _lastCurrencyId = ApplicationSettings.StartupCurrencyAssets;
         private void PositionSelected(object sender, EventArgs e)
         {
             var currencies = ApplicationSettings.MainCurrencies.ToList();
 
             ApplicationSettings.StartupCurrencyAssets = currencies[HeaderCarousel.Position];
+            if (_lastCurrencyId.Equals(ApplicationSettings.StartupCurrencyAssets)) return;
+
             Messaging.Status.CarouselPosition.Send();
+            _lastCurrencyId = ApplicationSettings.StartupCurrencyAssets;
         }
 
         private void SetHeaderCarousel()
@@ -127,9 +130,7 @@ namespace MyCC.Forms.View.Pages
         private void AddSubscriber()
         {
             Messaging.Status.CarouselPosition.Subscribe(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
-            Messaging.Update.Rates.Subscribe(this, SetHeaderCarousel);
-            Messaging.Update.Balances.Subscribe(this, SetNoSourcesView);
-            Messaging.Status.Progress.SubscribeFinished(this, () => _pullToRefresh.IsRefreshing = false);
+            Messaging.Status.Progress.SubscribeFinished(this, () => Device.BeginInvokeOnMainThread(() => _pullToRefresh.IsRefreshing = false));
         }
 
         private async void Refresh()

@@ -23,7 +23,7 @@ namespace MyCC.Ui.Edit
                 ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Except(new[] { currencyId }).ToList();
             }
             UiUtils.RatesRefresh.ResetCache();
-            Messaging.Update.Rates.Send();
+            Messaging.Modified.WatchedCurrencies.Send();
 
         }
 
@@ -36,7 +36,7 @@ namespace MyCC.Ui.Edit
             }
             UiUtils.Update.FetchNeededButNotLoadedRates();
             UiUtils.RatesRefresh.ResetCache();
-            Messaging.Update.Rates.Send();
+            Messaging.Modified.WatchedCurrencies.Send();
         }
     }
 }

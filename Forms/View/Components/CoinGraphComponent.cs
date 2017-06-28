@@ -12,6 +12,7 @@ namespace MyCC.Forms.View.Components
     public class CoinGraphComponent : ContentView
     {
         private readonly HybridWebView _webView;
+        private string _currencyId = ApplicationSettings.StartupCurrencyAssets;
 
         public CoinGraphComponent(INavigation navigation)
         {
@@ -30,12 +31,21 @@ namespace MyCC.Forms.View.Components
 
             Messaging.Update.Rates.Subscribe(this, UpdateView);
             Messaging.Update.Balances.Subscribe(this, UpdateView);
-            Messaging.Status.CarouselPosition.Subscribe(this, UpdateView);
+            Messaging.Modified.Balances.Subscribe(this, UpdateView);
+            Messaging.Status.CarouselPosition.Subscribe(this, UpdateViewIfCurrencyChanged);
+        }
+
+        private void UpdateViewIfCurrencyChanged()
+        {
+            if (_currencyId.Equals(ApplicationSettings.StartupCurrencyAssets)) return;
+
+            UpdateView();
+            _currencyId = ApplicationSettings.StartupCurrencyAssets;
         }
 
         private void UpdateView()
         {
-            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction(UiUtils.Get.Assets.GrapItemsJsFor(ApplicationSettings.StartupCurrencyAssets)));
+            Device.BeginInvokeOnMainThread(() => _webView.CallJsFunction(UiUtils.Get.Assets.GrapItemsJsFor(_currencyId)));
         }
     }
 }

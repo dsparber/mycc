@@ -289,7 +289,7 @@ function groupData(data) {
 }
 
 function formatNumber(inputNumber) {
-    var number = _roundNumbers ? Math.round(inputNumber * 100) / 100 : Math.floor(inputNumber * 100) / 100;
+    var number = Math.floor(inputNumber * 100) / 100;
     return number.toLocaleString(_culture) + " " + _currencyCode;
 }
 
