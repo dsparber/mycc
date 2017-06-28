@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
+using MyCC.Ui.Helpers;
 using MyCC.Ui.Messages;
+using Xamarin.Forms;
 
 namespace MyCC.Ui.Edit
 {
     public static class EditRepository
     {
-        public static async Task Update(OnlineAccountRepository repository, string newAddress, string newCurrencyId, string newName, bool newEnabledState, Action testingFailed = null)
+        public static async Task Update(OnlineAccountRepository repository, string newAddress, string newCurrencyId, string newName, Dictionary<int, bool> newEnabledStates, Action onError = null)
         {
             // Test if data is valid
             var addressRepo = repository as AddressAccountRepository;
@@ -20,7 +23,8 @@ namespace MyCC.Ui.Edit
 
                 if (testRepo == null || !await testRepo.Test())
                 {
-                    testingFailed?.Invoke();
+                    onError?.Invoke();
+                    DependencyService.Get<IErrorDialog>().Display(StringUtils.TextResolver.FetchingNoSuccessText);
                     return;
                 }
                 if (!addressRepo.Currency.Id.Equals(newCurrencyId))
@@ -39,7 +43,10 @@ namespace MyCC.Ui.Edit
             foreach (var a in repository.Elements)
             {
                 a.Name = repository.Name;
-                a.IsEnabled = newEnabledState;
+                if (newEnabledStates.ContainsKey(a.Id))
+                {
+                    a.IsEnabled = newEnabledStates[a.Id];
+                }
             }
 
             // Save changes

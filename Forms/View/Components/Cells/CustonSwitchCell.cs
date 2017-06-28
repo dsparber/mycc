@@ -26,7 +26,11 @@ namespace MyCC.Forms.View.Components.Cells
 
         public string Title { set => _view.Title = value; }
 
-        public string Info { set => _view.Info = value; }
+        public string Info
+        {
+            set => _view.Info = value;
+            get => _view.Info;
+        }
 
         public bool On
         {
@@ -35,5 +39,10 @@ namespace MyCC.Forms.View.Components.Cells
         }
 
         public Switch Switch => _view.Switch;
+
+        public bool SwitchOn
+        {
+            set => _view.Switch.IsToggled = value;
+        }
     }
 }

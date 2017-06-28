@@ -143,13 +143,8 @@ namespace MyCC.Ui.Android.Views.Activities
             var dialog = this.GetLoadingDialog(null, Resource.String.Testing);
             dialog.Show();
 
-            void OnError()
-            {
-                dialog.Dismiss();
-                this.ShowInfoDialog(Resource.String.Error, Resource.String.FetchingNoSuccessText);
-            }
-
-            await UiUtils.Edit.Update(_repository, _address, _currency.Id, NameOrDefault, _enabled, OnError);
+            var enabledStates = _repository.Elements.ToDictionary(a => a.Id, a => _enabled);
+            await UiUtils.Edit.Update(_repository, _address, _currency.Id, NameOrDefault, enabledStates, () => dialog.Dismiss());
 
             dialog.Dismiss();
             Finish();

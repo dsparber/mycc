@@ -71,12 +71,17 @@ namespace MyCC.Forms.View.Overlays
             var nameText = (NameEntryCell.Text ?? string.Empty).Trim();
             var name = nameText.Equals(string.Empty) ? _specificAddView.DefaultName : nameText;
 
-            var repositoryView = _specificAddView as AddRepositorySubview;
             var accountView = _specificAddView as AddAccountSubview;
 
-            var value = accountView != null ? accountView.GetAccount(name) : repositoryView?.GetRepository(name) as dynamic;
-
-            await UiUtils.Edit.Add(value);
+            if (accountView != null)
+            {
+                await UiUtils.Edit.Add(accountView.GetAccount(name));
+            }
+            else
+            {
+                var repositoryView = (AddRepositorySubview)_specificAddView;
+                await UiUtils.Edit.Add(repositoryView.GetRepository(name));
+            }
             await Navigation.PopModalAsync();
 
             ViewsEnabled = true;

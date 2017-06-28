@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.CoinInfo;
 using MyCC.Core.Currencies;
@@ -73,7 +74,7 @@ namespace MyCC.Forms.View.Pages
             _referenceView = new ReferenceCurrenciesView
             {
                 Items = (UiUtils.Get.CoinInfo.ReferenceValues(_currencyId), UiUtils.Get.CoinInfo.SortButtons),
-                Title = string.Format(I18N.IsEqualTo, 1)
+                Title = string.Format(I18N.IsEqualTo, new Money(1, _currencyId.Find()))
             };
             ContentView.Children.Add(_referenceView);
 

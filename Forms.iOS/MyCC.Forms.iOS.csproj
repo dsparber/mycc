@@ -345,6 +345,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\BaseUrl.cs" />
+    <Compile Include="Helpers\ErrorDialog.cs" />
     <Compile Include="Helpers\TextResolver.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />

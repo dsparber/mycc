@@ -88,7 +88,7 @@ namespace MyCC.Forms.View.Components.Table
                 Code = referenceValue.CurrencyCode;
                 Amount = referenceValue.FormattedAmount;
                 Rate = referenceValue.FormattedRate;
-                Expanded = decimal.Parse(Amount) == 1;
+                Expanded = referenceValue.Amount != 1;
             }
         }
 

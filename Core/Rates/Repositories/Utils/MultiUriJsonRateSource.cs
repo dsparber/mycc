@@ -47,9 +47,17 @@ namespace MyCC.Core.Rates.Repositories.Utils
         {
             var uri = GetUri(rateDescriptor);
             if (uri == null) return null;
-            var json = await uri.GetJson(HttpHeader);
-            var result = GetRateFromJson(json, rateDescriptor);
-            return result.rate == null ? null : new ExchangeRate(result.inverse ? rateDescriptor.Inverse() : rateDescriptor, result.rate.Value, Id, DateTime.Now);
+            try
+            {
+                var json = await uri.GetJson(HttpHeader);
+                var result = GetRateFromJson(json, rateDescriptor);
+                return result.rate == null ? null : new ExchangeRate(result.inverse ? rateDescriptor.Inverse() : rateDescriptor, result.rate.Value, Id, DateTime.Now);
+            }
+            catch (Exception e)
+            {
+                e.LogError();
+                return null;
+            }
         }
 
         protected abstract (decimal? rate, bool inverse) GetRateFromJson(JToken json, RateDescriptor rateDescriptor);

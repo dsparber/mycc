@@ -25,7 +25,14 @@ namespace MyCC.Forms
             }
             else
             {
-                Task.Run(async () => await UiUtils.Update.LoadNeededDataFromDatabaseAsync());
+                Task.Run(async () =>
+                {
+                    await UiUtils.Update.LoadNeededDataFromDatabaseAsync();
+                    if (ApplicationSettings.AutoRefreshOnStartup && CrossConnectivity.Current.IsConnected)
+                    {
+                        UiUtils.Update.FetchAllAssetsAndRates();
+                    }
+                });
 
                 MainPage = ApplicationSettings.IsPinSet ? new PasswordOverlay(true) : new TabContainerView() as Page;
 

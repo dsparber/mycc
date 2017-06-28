@@ -10,6 +10,7 @@ using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 using MyCC.Core.Helpers;
+using MyCC.Core.Settings;
 using MyCC.Ui;
 using MyCC.Ui.DataItems;
 using MyCC.Ui.Messages;
@@ -102,7 +103,13 @@ namespace MyCC.Forms.View.Pages.Settings.Source
 
         private void SetView(bool isEditable)
         {
-            var enableCells = new[] { new CustomSwitchCell { Title = I18N.Enabled, Info = I18N.EnableAccount } };
+            var enableCells = _repository.Elements.Select(balance =>
+                new CustomSwitchCell
+                {
+                    Title = balance.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
+                    Info = balance.Money.Currency.Name,
+                    SwitchOn = balance.IsEnabled
+                });
 
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -174,7 +181,12 @@ namespace MyCC.Forms.View.Pages.Settings.Source
                 var address = (AddressEntryCell.Text ?? string.Empty).Contains("...") ? addressRepo?.Address ?? string.Empty : AddressEntryCell.Text;
                 var name = RepositoryNameEntryCell.Text ?? I18N.Unnamed;
 
-                await UiUtils.Edit.Update(_repository, address, _currencyEntryCell.SelectedCurrency.Id, name, EnableAccountsSection.OfType<CustomSwitchCell>().First().Switch.IsToggled);
+
+                var enabledStates = EnableAccountsSection.OfType<CustomSwitchCell>().ToDictionary(
+                    cell => _repository.Elements.First(a => a.Money.Currency.Name.Equals(cell.Info)).Id,
+                    cell => cell.Switch.IsToggled);
+
+                await UiUtils.Edit.Update(_repository, address, _currencyEntryCell.SelectedCurrency.Id, name, enabledStates);
 
                 if (_isEditModal)
                 {

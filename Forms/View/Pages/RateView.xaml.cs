@@ -141,7 +141,7 @@ namespace MyCC.Forms.View.Pages
             protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() =>
             {
                 var currencyId = ((Currency)item).Id;
-                var header = new HeaderView(true) { Data = UiUtils.Get.Assets.HeaderFor(currencyId) };
+                var header = new HeaderView(true) { Data = UiUtils.Get.Rates.HeaderFor(currencyId) };
 
                 Messaging.Update.Rates.Subscribe(this, () => header.Data = UiUtils.Get.Rates.HeaderFor(currencyId));
                 Messaging.Update.Balances.Subscribe(this, () => header.Data = UiUtils.Get.Rates.HeaderFor(currencyId));

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
@@ -37,8 +38,8 @@ namespace MyCC.Ui.Edit
             Messaging.Update.Balances.Send();
         }
 
-        public Task Update(OnlineAccountRepository repository, string newAddress, string newCurrencyId, string newName, bool newEnabledState, Action testingFailed = null)
-        => EditRepository.Update(repository, newAddress, newCurrencyId, newName, newEnabledState, testingFailed);
+        public Task Update(OnlineAccountRepository repository, string newAddress, string newCurrencyId, string newName, Dictionary<int, bool> newEnabledStates, Action onError = null)
+        => EditRepository.Update(repository, newAddress, newCurrencyId, newName, newEnabledStates, onError);
 
         public void AddWatchedCurrency(string currencyId)
             => EditWatchedCurrencies.Add(currencyId);

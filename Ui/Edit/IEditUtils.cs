@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
@@ -16,7 +17,7 @@ namespace MyCC.Ui.Edit
         Task Delete(FunctionalAccount account);
 
         Task Delete(OnlineAccountRepository repository);
-        Task Update(OnlineAccountRepository repository, string newAddress, string newCurrencyId, string newName, bool newEnabledState, Action testingFailed = null);
+        Task Update(OnlineAccountRepository repository, string newAddress, string newCurrencyId, string newName, Dictionary<int, bool> newEnabledStates, Action onError = null);
 
 
         void AddWatchedCurrency(string currencyId);

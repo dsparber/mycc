@@ -38,6 +38,11 @@ namespace MyCC.Ui.Edit
 
         public static async Task Add(LocalAccount account)
         {
+            if (account == null)
+            {
+                DependencyService.Get<IErrorDialog>().Display(StringUtils.TextResolver.VerifyInput);
+                return;
+            }
             await AccountStorage.Instance.LocalRepository.Add(account);
             UiUtils.Update.FetchNeededButNotLoadedRates();
             UiUtils.AssetsRefresh.ResetCache();
