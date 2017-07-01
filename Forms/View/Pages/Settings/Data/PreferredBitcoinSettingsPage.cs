@@ -7,11 +7,12 @@ using MyCC.Forms.Constants;
 using MyCC.Forms.Helpers;
 using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components;
-using MyCC.Forms.View.Components.Cells;
+using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Container;
 using MyCC.Ui;
 using MyCC.Ui.DataItems;
 using MyCC.Ui.Messages;
+using Refractored.XamForms.PullToRefresh;
 using Xamarin.Forms;
 using HeaderView = MyCC.Forms.View.Components.Header.HeaderView;
 
@@ -19,7 +20,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
 {
     public class PreferredBitcoinSettingsPage : ContentPage
     {
-        private readonly Dictionary<string, CustomViewCell> _views;
+        private readonly Dictionary<string, CustomCellView> _views;
         private readonly InfoFooterComponent _footer;
         private static bool _triedUpdate;
 
@@ -28,13 +29,12 @@ namespace MyCC.Forms.View.Pages.Settings.Data
             Title = I18N.PreferredBitcoinRate;
             BackgroundColor = AppConstants.TableBackgroundColor;
 
-            var section = new TableSection(I18N.Sources);
-            var tableView = new TableView();
-            tableView.Root.Add(section);
+            var tableView = new StackLayout { Spacing = 0 };
+            tableView.Children.Add(new SectionHeaderView { Title = I18N.Sources });
 
             _views = MyccUtil.Rates.CryptoToFiatSourcesWithDetail.ToList().OrderBy(t => t.name).ToDictionary(t => t.name, t =>
             {
-                var cell = new CustomViewCell
+                var cell = new CustomCellView
                 {
                     Text = t.name,
                     Detail = t.detail,
@@ -42,15 +42,17 @@ namespace MyCC.Forms.View.Pages.Settings.Data
                     Image = "checkmark.png"
                 };
 
-                cell.Tapped += (sender, args) =>
+                var gr = new TapGestureRecognizer();
+                gr.Tapped += (sender, args) =>
                 {
                     MyccUtil.Rates.SelectedCryptoToFiatSource = t.name;
                     Navigation.PopAsync();
                 };
+                cell.GestureRecognizers.Add(gr);
+                tableView.Children.Add(cell);
 
                 return cell;
             });
-            section.Add(_views.Values.OrderBy(cell => cell.Text));
 
             _footer = new InfoFooterComponent { Text = MyccUtil.Rates.LastUpdate().LastUpdateString() };
             var header = new HeaderView(true)
@@ -60,20 +62,42 @@ namespace MyCC.Forms.View.Pages.Settings.Data
 
             var changingStack = new ChangingStackLayout();
             changingStack.Children.Add(header);
+            var pullToRefresh = new PullToRefreshLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Content = new ScrollView { Content = tableView },
+                BackgroundColor = AppConstants.TableBackgroundColor,
+                RefreshCommand = new Command(() => UiUtils.Update.FetchCryptoToFiatRates()),
+            };
+
+
+
             changingStack.Children.Add(new StackLayout
             {
                 Spacing = 0,
                 BackgroundColor = AppConstants.BorderColor,
                 Children = {
-                    tableView,
-                    new ContentView{
-                        Margin = new Thickness(0,1,0,0),
-                        Padding = 5,
-                        Content = new Label { Text = $"* {I18N.InfoNoDirectRate}", VerticalOptions = LayoutOptions.End, FontSize = 12, TextColor = AppConstants.FontColorLight },
-                        BackgroundColor = Color.White
+                            pullToRefresh,
+                            new ContentView
+                            {
+                                Margin = new Thickness(0, 1, 0, 0),
+                                Padding = 5,
+                                Content = new Label
+                                {
+                                    Text = $"* {I18N.InfoNoDirectRate}",
+                                    VerticalOptions = LayoutOptions.End,
+                                    FontSize = 12,
+                                    TextColor = AppConstants.FontColorLight
+                                },
+                                BackgroundColor = Color.White
+                            },
+                            _footer
+
                     },
-                    _footer
-                    }
+                VerticalOptions = LayoutOptions.FillAndExpand
+
+
             });
             Content = changingStack;
 
@@ -81,12 +105,14 @@ namespace MyCC.Forms.View.Pages.Settings.Data
             {
                 SetFooter();
                 Update();
+                pullToRefresh.IsRefreshing = false;
             }));
+            SetFooter();
         }
         private void SetFooter()
         {
             var lastUpdate = MyccUtil.Rates.LastCryptoToFiatUpdate();
-            if (lastUpdate == DateTime.MinValue && !_triedUpdate)
+            if (lastUpdate < DateTime.Now.Subtract(new TimeSpan(6, 0, 0)) && !_triedUpdate)
             {
                 _triedUpdate = true;
                 UiUtils.Update.FetchCryptoToFiatRates();

@@ -73,7 +73,7 @@ namespace MyCC.Ui.Android.Views.Activities
         private void SetFooter()
         {
             var lastUpdate = MyccUtil.Rates.LastCryptoToFiatUpdate();
-            if (lastUpdate == DateTime.MinValue && !_triedUpdate)
+            if (lastUpdate < DateTime.Now.Subtract(new TimeSpan(6, 0, 0)) && !_triedUpdate)
             {
                 _triedUpdate = true;
                 UiUtils.Update.FetchCryptoToFiatRates();
