@@ -30,14 +30,9 @@ namespace MyCC.Forms.View.Pages
         public RateView()
         {
             InitializeComponent();
-
             InitPullToRefresh();
-
             AddSubscriber();
-
             SetHeaderCarousel();
-
-            SetFooterText();
 
             var button = new Button { Text = I18N.AddSource, BorderColor = AppConstants.BorderColor, BackgroundColor = Color.White, BorderRadius = 0, TextColor = AppConstants.ThemeColor, FontAttributes = FontAttributes.None };
             button.Clicked += AddRate;
@@ -121,6 +116,7 @@ namespace MyCC.Forms.View.Pages
         {
             Messaging.Status.CarouselPosition.Subscribe(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyRates));
             Messaging.Status.Progress.SubscribeFinished(this, () => Device.BeginInvokeOnMainThread(() => _pullToRefresh.IsRefreshing = false));
+            Messaging.Update.Rates.SubscribeFinished(this, SetData);
         }
 
         private void Refresh()
@@ -152,11 +148,6 @@ namespace MyCC.Forms.View.Pages
             });
         }
 
-        private void SetFooterText()
-        {
-            Device.BeginInvokeOnMainThread(() => Footer.Text = UiUtils.Get.Rates.LastUpdate.LastUpdateString());
-        }
-
         private void SetData()
         {
             var anyItems = ApplicationSettings.WatchedCurrencies
@@ -169,8 +160,8 @@ namespace MyCC.Forms.View.Pages
             {
                 NoDataView.IsVisible = !anyItems;
                 DataView.IsVisible = anyItems;
+                Footer.Text = UiUtils.Get.Rates.LastUpdate.LastUpdateString();
             });
-            SetFooterText();
         }
     }
 }

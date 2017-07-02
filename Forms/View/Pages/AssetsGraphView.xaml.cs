@@ -40,7 +40,7 @@ namespace MyCC.Forms.View.Pages
 
             if (ApplicationSettings.DataLoaded)
             {
-                SetNoSourcesView();
+                UpdateView();
             }
         }
 
@@ -103,26 +103,22 @@ namespace MyCC.Forms.View.Pages
             HeaderCarousel.WidthRequest = ScreenHeight / 3.0;
         }
 
-        private void SetNoSourcesView()
+        private void UpdateView()
         {
             Device.BeginInvokeOnMainThread(() =>
             {
                 NoDataView.IsVisible = !UiUtils.Get.Assets.IsGraphDataAvailable;
                 DataView.IsVisible = UiUtils.Get.Assets.IsGraphDataAvailable;
+                Footer.Text = UiUtils.Get.Assets.LastUpdate.LastUpdateString();
             });
-
-            SetFooter();
-        }
-
-        private void SetFooter()
-        {
-            Device.BeginInvokeOnMainThread(() => Footer.Text = UiUtils.Get.Assets.LastUpdate.LastUpdateString());
         }
 
         private void AddSubscriber()
         {
             Messaging.Status.CarouselPosition.Subscribe(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
             Messaging.Status.Progress.SubscribeFinished(this, () => Device.BeginInvokeOnMainThread(() => _pullToRefresh.IsRefreshing = false));
+            Messaging.Update.Rates.SubscribeFinished(this, UpdateView);
+            Messaging.Update.Balances.SubscribeFinished(this, UpdateView);
         }
 
         private async void Refresh()
