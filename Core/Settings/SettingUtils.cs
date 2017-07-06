@@ -23,9 +23,17 @@ namespace MyCC.Core.Settings
         {
             get
             {
-                var localCurrencyCode = RegionInfo.CurrentRegion.ISOCurrencySymbol;
-                var defaultCurrencies = new List<string> { CurrencyConstants.Btc.Id, CurrencyConstants.Usd.Id, new Currency(localCurrencyCode, false).Find().Id };
-                if (defaultCurrencies.Distinct().Count() == 2)
+                var defaultCurrencies = new List<string> { CurrencyConstants.Btc.Id, CurrencyConstants.Usd.Id };
+                try
+                {
+                    var localCurrencyCode = RegionInfo.CurrentRegion.ISOCurrencySymbol;
+                    defaultCurrencies.Add(new Currency(localCurrencyCode, false).Find().Id);
+                }
+                catch (NotImplementedException) { /* Do not use local currency */ }
+
+                defaultCurrencies = defaultCurrencies.Distinct().ToList();
+
+                if (defaultCurrencies.Count == 2)
                 {
                     defaultCurrencies.Add(CurrencyConstants.Eur.Id);
                 }
