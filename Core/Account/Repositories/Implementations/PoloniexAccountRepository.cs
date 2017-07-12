@@ -82,7 +82,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
                 if (error?.StartsWith("Nonce must be greater than ") ?? false)
                 {
                     var nonceString = error.Substring(27, error.IndexOf('.') - 27);
-                    if (int.TryParse(nonceString, out var nonce))
+                    if (long.TryParse(nonceString, out var nonce))
                     {
                         ApplicationSettings.PoloniexRequestNonce = nonce + 1;
                         return await GetResult();

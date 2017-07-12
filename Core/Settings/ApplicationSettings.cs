@@ -209,15 +209,21 @@ namespace MyCC.Core.Settings
             set => SettingKeys.KeySecureXpub.Set(value);
         }
 
-        public static int PoloniexRequestNonce
+        public static long PoloniexRequestNonce
         {
             get
             {
-                var nounce = SettingKeys.KeyPoloniexRequestNonce.Get(0);
-                SettingKeys.KeyPoloniexRequestNonce.Set(nounce + 1);
-                return nounce;
+                try
+                {
+                    var nounce = long.Parse(SettingKeys.KeyPoloniexRequestNonce.Get("0"));
+                    return PoloniexRequestNonce = nounce + 1;
+                }
+                catch
+                {
+                    return 0;
+                }
             }
-            set => SettingKeys.KeyPoloniexRequestNonce.Set(value);
+            set => SettingKeys.KeyPoloniexRequestNonce.Set(value.ToString());
         }
     }
 
