@@ -57,8 +57,8 @@ namespace MyCC.Forms.View.Components.Table
         {
             if (_currencyId.Equals(ApplicationSettings.StartupCurrencyRates)) return;
 
-            UpdateView();
             _currencyId = ApplicationSettings.StartupCurrencyRates;
+            UpdateView();
         }
 
         public void OnAppearing()

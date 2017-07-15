@@ -61,8 +61,8 @@ namespace MyCC.Forms.View.Components.Table
         {
             if (_currencyId.Equals(ApplicationSettings.StartupCurrencyAssets)) return;
 
-            UpdateView();
             _currencyId = ApplicationSettings.StartupCurrencyAssets;
+            UpdateView();
         }
 
         private void UpdateView()

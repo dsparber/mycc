@@ -97,8 +97,8 @@ namespace MyCC.Forms.View.Pages
             ApplicationSettings.StartupCurrencyAssets = currencies[HeaderCarousel.Position];
             if (_lastCurrencyId.Equals(ApplicationSettings.StartupCurrencyAssets)) return;
 
-            Messaging.Status.CarouselPosition.Send();
             _lastCurrencyId = ApplicationSettings.StartupCurrencyAssets;
+            Messaging.Status.CarouselPosition.Send();
         }
 
         private void SetHeaderCarousel()
