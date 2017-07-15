@@ -63,7 +63,7 @@ namespace MyCC.Core.Settings
             T value;
             try
             {
-                value = AppSettings.GetValueOrDefault(key, defaultValue);
+                value = AppSettings.GetValueOrDefault(key, defaultValue as dynamic);
             }
             catch
             {
@@ -92,7 +92,7 @@ namespace MyCC.Core.Settings
         {
             if (Cache.ContainsKey(key) && Equals(value, Cache[key])) return;
 
-            AppSettings.AddOrUpdateValue(key, value);
+            AppSettings.AddOrUpdateValue(key, value as dynamic);
 
             if (!Cache.ContainsKey(key))
             {
