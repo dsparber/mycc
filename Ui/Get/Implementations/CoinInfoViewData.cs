@@ -18,7 +18,7 @@ namespace MyCC.Ui.Get.Implementations
     {
         public HeaderItem GetHeaderData(string currencyId)
         {
-            return new HeaderItem(currencyId.FindName(), new Money(MyccUtil.Rates.GetRate(new RateDescriptor(currencyId, CurrencyConstants.Btc.Id))?.Rate ?? 0, CurrencyConstants.Btc).ToString8Digits());
+            return new HeaderItem(currencyId.FindName(), new Money(MyccUtil.Rates.GetRate(new RateDescriptor(currencyId, CurrencyConstants.Btc.Id))?.Rate ?? 0, CurrencyConstants.Btc).EightDigits());
         }
 
         public CoinInfoItem GetInfos(string currencyId)
@@ -51,14 +51,14 @@ namespace MyCC.Ui.Get.Implementations
         {
             new SortButtonItem
             {
-                Text = StringUtils.TextResolver.Amount,
+                Text = TextResolver.Instance.Amount,
                 SortAscending = SortDirectionHelper.GetSortAscending(SortOrder, SortDirection, SortOrder.ByValue),
                RightAligned = true,
                 OnClick = () => OnSort(SortOrder.ByValue)
             },
             new SortButtonItem
             {
-                Text = StringUtils.TextResolver.Currency,
+                Text = TextResolver.Instance.Currency,
                 SortAscending = SortDirectionHelper.GetSortAscending(SortOrder, SortDirection, SortOrder.Alphabetical),
                 RightAligned = false,
                 OnClick = () => OnSort(SortOrder.Alphabetical)

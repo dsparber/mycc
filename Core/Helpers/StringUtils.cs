@@ -2,9 +2,8 @@
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Xamarin.Forms;
 
-namespace MyCC.Ui.Helpers
+namespace MyCC.Core.Helpers
 {
     public static class StringUtils
     {
@@ -17,7 +16,7 @@ namespace MyCC.Ui.Helpers
             return dateTime.ToString(format.ShortTimePattern);
         }
 
-        internal static string MiddleTruncate(this string text, int charactersToShowCount = 5)
+        public static string MiddleTruncate(this string text, int charactersToShowCount = 5)
         {
             if (string.IsNullOrWhiteSpace(text)) return string.Empty;
 
@@ -64,10 +63,10 @@ namespace MyCC.Ui.Helpers
             return string.Join(string.Empty, Regex.Replace(value, @"\t|\n|\r", "").Where(c => c != '\u200B')).Trim();
         }
 
-        internal static string To8DigitString(this decimal value) => $"{value:#,0.00000000}";
-        internal static string ToMax8DigitString(this decimal value) => $"{value:#,0.########}";
-
-        internal static ITextResolver TextResolver => DependencyService.Get<ITextResolver>();
+        public static string To0DigitString(this decimal value) => $"{value:#,0.##}";
+        public static string To2DigitString(this decimal value) => $"{value:#,0.00}";
+        public static string To8DigitString(this decimal value) => $"{value:#,0.00000000}";
+        public static string ToMax8DigitString(this decimal value) => $"{value:#,0.########}";
     }
 }
 

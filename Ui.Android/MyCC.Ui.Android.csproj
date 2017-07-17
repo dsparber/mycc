@@ -251,7 +251,6 @@
     <Compile Include="Views\Fragments\AssetsTableFragment.cs" />
     <Compile Include="Views\Adapter\RatesListAdapter.cs" />
     <Compile Include="Views\Activities\AccountGroupActivity.cs" />
-    <Compile Include="Helpers\Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

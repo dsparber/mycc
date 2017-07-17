@@ -24,8 +24,8 @@ namespace MyCC.Ui.Get.Implementations
                 .Select(x => new Money(money.Amount * MyccUtil.Rates.GetRate(new RateDescriptor(currencyId, x))?.Rate ?? 0, x.Find())).
                 OrderBy(m => m.Currency.Code);
 
-            return new HeaderItem(money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
-                additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney))) : currencyId.FindName());
+            return new HeaderItem(money.TwoDigits(),
+                additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.TwoDigits())) : currencyId.FindName());
         }
 
 
@@ -64,7 +64,7 @@ namespace MyCC.Ui.Get.Implementations
         {
             var money = new Money(EnabledAccountsItems(currencyId).Sum(a => a.Amount), currencyId.Find());
 
-            return string.Format(money.Amount == 1 ? StringUtils.TextResolver.IsEqualTo : StringUtils.TextResolver.AreEqualTo, money);
+            return string.Format(money.Amount == 1 ? TextResolver.Instance.IsEqualTo : TextResolver.Instance.AreEqualTo, money);
         }
 
         public IEnumerable<AccountItem> DisabledAccountsItems(string currencyId)
@@ -77,14 +77,14 @@ namespace MyCC.Ui.Get.Implementations
         {
             new SortButtonItem
             {
-                Text = StringUtils.TextResolver.Amount,
+                Text = TextResolver.Instance.Amount,
                 SortAscending = SortDirectionHelper.GetSortAscending(SortOrderReference, SortDirectionReference, SortOrder.ByValue),
                 RightAligned = true,
                 OnClick = () => OnSortReference(SortOrder.ByValue)
             },
             new SortButtonItem
             {
-                Text = StringUtils.TextResolver.Currency,
+                Text = TextResolver.Instance.Currency,
                 SortAscending = SortDirectionHelper.GetSortAscending(SortOrderReference, SortDirectionReference, SortOrder.Alphabetical),
                 RightAligned = false,
                 OnClick = () => OnSortReference(SortOrder.Alphabetical)
@@ -95,14 +95,14 @@ namespace MyCC.Ui.Get.Implementations
         {
             new SortButtonItem
             {
-                Text = StringUtils.TextResolver.Name,
+                Text = TextResolver.Instance.Name,
                 SortAscending = SortDirectionHelper.GetSortAscending(SortOrderAccounts, SortDirectionAccounts, SortOrder.Alphabetical),
                 RightAligned = false,
                 OnClick = () => OnSortAccounts(SortOrder.Alphabetical)
             },
             new SortButtonItem
             {
-                Text = StringUtils.TextResolver.Amount,
+                Text = TextResolver.Instance.Amount,
                 SortAscending = SortDirectionHelper.GetSortAscending(SortOrderAccounts, SortDirectionAccounts, SortOrder.ByValue),
                 RightAligned = true,
                 OnClick = () => OnSortAccounts(SortOrder.ByValue)

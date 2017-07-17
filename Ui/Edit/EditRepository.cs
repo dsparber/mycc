@@ -25,7 +25,7 @@ namespace MyCC.Ui.Edit
                 if (testRepo == null || !await testRepo.Test())
                 {
                     onError?.Invoke();
-                    DependencyService.Get<IErrorDialog>().Display(StringUtils.TextResolver.FetchingNoSuccessText);
+                    DependencyService.Get<IErrorDialog>().Display(TextResolver.Instance.FetchingNoSuccessText);
                     return;
                 }
                 if (!addressRepo.Currency.Id.Equals(newCurrencyId))

@@ -9,8 +9,8 @@ using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
+using MyCC.Core.Helpers;
 using MyCC.Ui.Android.Views.Activities;
-using MyCC.Ui.Helpers;
 
 namespace MyCC.Ui.Android.Views.Fragments.AddSource
 {

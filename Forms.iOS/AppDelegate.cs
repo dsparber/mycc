@@ -1,11 +1,11 @@
 ﻿using CarouselView.FormsPlugin.iOS;
 using Foundation;
-using HockeyApp.iOS;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using System;
 using System.Globalization;
+using HockeyApp.iOS;
 using MyCC.Core.Database;
 using MyCC.Forms.Constants;
 using MyCC.Forms.iOS.data.database;
@@ -49,7 +49,7 @@ namespace MyCC.Forms.iOS
             manager.DisableUpdateManager = true;
             manager.StartManager();
 
-			LoadApplication(new App());
+            LoadApplication(new App());
             return base.FinishedLaunching(uiApplication, launchOptions);
         }
     }

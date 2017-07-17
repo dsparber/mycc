@@ -9,9 +9,9 @@ using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
+using MyCC.Core.Helpers;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
-using MyCC.Ui.Helpers;
 
 namespace MyCC.Ui.Android.Views.Activities
 {

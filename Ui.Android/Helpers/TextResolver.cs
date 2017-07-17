@@ -1,7 +1,7 @@
-﻿using MyCC.Ui.Android.Helpers;
-using MyCC.Ui.Helpers;
+﻿using MyCC.Ui.Helpers;
 using Xamarin.Forms;
 using Application = Android.App.Application;
+using TextResolver = MyCC.Ui.Android.Helpers.TextResolver;
 
 [assembly: Dependency(typeof(TextResolver))]
 namespace MyCC.Ui.Android.Helpers

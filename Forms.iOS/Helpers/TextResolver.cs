@@ -1,7 +1,7 @@
-﻿using MyCC.Forms.iOS.Helpers;
-using MyCC.Forms.Resources;
+﻿using MyCC.Forms.Resources;
 using MyCC.Ui.Helpers;
 using Xamarin.Forms;
+using TextResolver = MyCC.Forms.iOS.Helpers.TextResolver;
 
 [assembly: Dependency(typeof(TextResolver))]
 namespace MyCC.Forms.iOS.Helpers

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Settings;
 
 namespace MyCC.Ui.DataItems
 {
@@ -11,8 +10,8 @@ namespace MyCC.Ui.DataItems
         {
             var additionalReferencesOrdered = additionalReferences.OrderBy(m => m.Currency.Code).ToList();
 
-            MainText = referenceMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            InfoText = additionalReferencesOrdered.Any() ? string.Join(" / ", additionalReferencesOrdered.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney))) : referenceMoney.Currency.Name;
+            MainText = referenceMoney.MaxTwoDigits();
+            InfoText = additionalReferencesOrdered.Any() ? string.Join(" / ", additionalReferencesOrdered.Select(m => m.MaxTwoDigits())) : referenceMoney.Currency.Name;
         }
     }
 }

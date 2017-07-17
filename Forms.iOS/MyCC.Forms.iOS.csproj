@@ -127,6 +127,12 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Refractored.XamForms.PullToRefresh, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Refractored.XamForms.PullToRefresh.1.1.0\lib\Xamarin.iOS10\Refractored.XamForms.PullToRefresh.dll</HintPath>
+    </Reference>
+    <Reference Include="Refractored.XamForms.PullToRefresh.iOS, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Refractored.XamForms.PullToRefresh.1.1.0\lib\Xamarin.iOS10\Refractored.XamForms.PullToRefresh.iOS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -210,12 +216,6 @@
     </Reference>
     <Reference Include="SQLitePCLRaw.batteries_v2">
       <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.7\lib\Xamarin.iOS10\SQLitePCLRaw.batteries_v2.dll</HintPath>
-    </Reference>
-    <Reference Include="Refractored.XamForms.PullToRefresh">
-      <HintPath>..\packages\Refractored.XamForms.PullToRefresh.2.0.0-beta9\lib\Xamarin.iOS10\Refractored.XamForms.PullToRefresh.dll</HintPath>
-    </Reference>
-    <Reference Include="Refractored.XamForms.PullToRefresh.iOS">
-      <HintPath>..\packages\Refractored.XamForms.PullToRefresh.2.0.0-beta9\lib\Xamarin.iOS10\Refractored.XamForms.PullToRefresh.iOS.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Connectivity.Abstractions">
       <HintPath>..\packages\Xam.Plugin.Connectivity.3.0.1\lib\Xamarin.iOS10\Plugin.Connectivity.Abstractions.dll</HintPath>

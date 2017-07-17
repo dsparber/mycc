@@ -51,6 +51,7 @@
     <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="CoinInfo\Repositories\EtherchainCoinInfoRepository.cs" />
     <Compile Include="Currencies\Sources\OpenexchangeCurrencySource.cs" />
+    <Compile Include="Helpers\StringUtils.cs" />
     <Compile Include="MyccUtil.cs" />
     <Compile Include="Preperation\Prepare.cs" />
     <Compile Include="Preperation\Migrate.cs" />

@@ -15,6 +15,7 @@ using MyCC.Core.Types;
 using MyCC.Ui.DataItems;
 using MyCC.Ui.Helpers;
 using MyCC.Ui.Messages;
+using MyCC.Core.Helpers;
 using Xamarin.Forms;
 
 namespace MyCC.Ui.Get.Implementations
@@ -32,8 +33,8 @@ namespace MyCC.Ui.Get.Implementations
                 .Select(x => new Money(account.Money.Amount * MyccUtil.Rates.GetRate(new RateDescriptor(account.Money.Currency.Id, x))?.Rate ?? 0, x.Find())).
                 OrderBy(m => m.Currency.Code);
 
-            return new HeaderItem(account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
-                additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.ToStringTwoDigits(ApplicationSettings.RoundMoney))) : account.Money.Currency.Name);
+            return new HeaderItem(account.Money.TwoDigits(),
+                additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.TwoDigits())) : account.Money.Currency.Name);
         }
 
         public string AccountName(int accountId) => AccountStorage.GetAccount(accountId)?.Name;
@@ -63,7 +64,7 @@ namespace MyCC.Ui.Get.Implementations
             var money = AccountStorage.GetAccount(accountId)?.Money;
             if (money == null) return string.Empty;
 
-            return string.Format(money.Amount == 1 ? StringUtils.TextResolver.IsEqualTo : StringUtils.TextResolver.AreEqualTo, money);
+            return string.Format(money.Amount == 1 ? Helpers.TextResolver.Instance.IsEqualTo : Helpers.TextResolver.Instance.AreEqualTo, money);
         }
 
         public string AccountType(int accountId)

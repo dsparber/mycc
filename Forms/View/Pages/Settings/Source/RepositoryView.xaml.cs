@@ -10,7 +10,6 @@ using MyCC.Forms.Resources;
 using MyCC.Forms.View.Components.Cells;
 using Xamarin.Forms;
 using MyCC.Core.Helpers;
-using MyCC.Core.Settings;
 using MyCC.Ui;
 using MyCC.Ui.DataItems;
 using MyCC.Ui.Messages;
@@ -106,7 +105,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
             var enableCells = _repository.Elements.Select(balance =>
                 new CustomSwitchCell
                 {
-                    Title = balance.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney),
+                    Title = balance.Money.TwoDigits(),
                     Info = balance.Money.Currency.Name,
                     SwitchOn = balance.IsEnabled
                 });

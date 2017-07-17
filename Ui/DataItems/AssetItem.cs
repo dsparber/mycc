@@ -1,5 +1,4 @@
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Settings;
 
 namespace MyCC.Ui.DataItems
 {
@@ -17,8 +16,8 @@ namespace MyCC.Ui.DataItems
         public AssetItem(Money value, Money referenceValue, bool enabled)
         {
             CurrencyCode = value.Currency.Code;
-            FormattedValue = value.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
-            FormattedReferenceValue = referenceValue.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
+            FormattedValue = value.TwoDigits(false);
+            FormattedReferenceValue = referenceValue.TwoDigits(false);
             Enabled = enabled;
             CurrencyId = value.Currency.Id;
             Amount = value.Amount;

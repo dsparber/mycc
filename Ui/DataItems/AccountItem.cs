@@ -1,5 +1,4 @@
 ﻿using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Settings;
 
 namespace MyCC.Ui.DataItems
 {
@@ -13,7 +12,7 @@ namespace MyCC.Ui.DataItems
 
         public AccountItem(Account account)
         {
-            FormattedValue = account.Money.ToStringTwoDigits(ApplicationSettings.RoundMoney, false);
+            FormattedValue = account.Money.TwoDigits(false);
             Name = account.Name;
             Id = account.Id;
             Amount = account.Money.Amount;

@@ -3,8 +3,8 @@ using Android.Views;
 using Android.Widget;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Account.Repositories.Implementations;
+using MyCC.Core.Helpers;
 using MyCC.Ui.Android.Views.Activities;
-using MyCC.Ui.Helpers;
 
 namespace MyCC.Ui.Android.Views.Fragments.AddSource
 {

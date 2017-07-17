@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.App;
+using MyCC.Core.Helpers;
 
 namespace MyCC.Ui.Android.Helpers
 {
@@ -7,7 +8,7 @@ namespace MyCC.Ui.Android.Helpers
     {
         public static string AsString(this DateTime dateTime)
         {
-            return Ui.Helpers.StringUtils.AsString(dateTime, Application.Context.GetString(Resource.String.Never));
+            return dateTime.AsString(Application.Context.GetString(Resource.String.Never));
         }
 
         public static string GetPlural(this int count, int noItems, int oneItem, int manyItems)

@@ -55,10 +55,10 @@ namespace MyCC.Ui.Get.Implementations
         public string GrapItemsJsFor(string currencyId)
         {
             var data = JsonConvert.SerializeObject(GraphItemsFor(currencyId) ?? new AssetsGraphItem.Data[] { });
-            var accountStrings = JsonConvert.SerializeObject(new[] { StringUtils.TextResolver.OneAccount, StringUtils.TextResolver.Accounts });
-            var currenciesStrings = JsonConvert.SerializeObject(new[] { StringUtils.TextResolver.OneCurrency, StringUtils.TextResolver.Currencies });
-            var furtherString = StringUtils.TextResolver.Further;
-            var noDataString = StringUtils.TextResolver.NoDataToDisplay;
+            var accountStrings = JsonConvert.SerializeObject(new[] { TextResolver.Instance.OneAccount, TextResolver.Instance.Accounts });
+            var currenciesStrings = JsonConvert.SerializeObject(new[] { TextResolver.Instance.OneCurrency, TextResolver.Instance.Currencies });
+            var furtherString = TextResolver.Instance.Further;
+            var noDataString = TextResolver.Instance.NoDataToDisplay;
             var roundMoney = ApplicationSettings.RoundMoney.ToString();
             var baseCurrency = currencyId.Code();
             var culture = CultureInfo.CurrentCulture.ToString();
@@ -160,21 +160,21 @@ namespace MyCC.Ui.Get.Implementations
             {
                 new SortButtonItem
                 {
-                    Text = StringUtils.TextResolver.Currency,
+                    Text = TextResolver.Instance.Currency,
                     SortAscending =SortDirectionHelper.GetSortAscending(SortOrder, SortDirection, SortOrder.Alphabetical),
                     RightAligned = false,
                     OnClick = () => OnSort(SortOrder.Alphabetical)
                 },
                 new SortButtonItem
                 {
-                    Text = StringUtils.TextResolver.Amount,
+                    Text = TextResolver.Instance.Amount,
                     SortAscending = SortDirectionHelper.GetSortAscending(SortOrder, SortDirection, SortOrder.ByUnits),
                     RightAligned = true,
                     OnClick = () => OnSort(SortOrder.ByUnits)
                 },
                 new SortButtonItem
                 {
-                    Text = string.Format(StringUtils.TextResolver.AsCurrency, currencyId.Code()),
+                    Text = string.Format(TextResolver.Instance.AsCurrency, currencyId.Code()),
                     SortAscending = SortDirectionHelper.GetSortAscending(SortOrder, SortDirection, SortOrder.ByValue),
                     RightAligned = true,
                     OnClick = () => OnSort(SortOrder.ByValue)

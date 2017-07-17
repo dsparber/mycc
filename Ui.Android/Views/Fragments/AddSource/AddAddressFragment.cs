@@ -6,8 +6,8 @@ using MyCC.Core.Account.Helper;
 using MyCC.Core.Account.Repositories.Base;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
+using MyCC.Core.Helpers;
 using MyCC.Ui.Android.Views.Activities;
-using MyCC.Ui.Helpers;
 using Result = Android.App.Result;
 
 namespace MyCC.Ui.Android.Views.Fragments.AddSource

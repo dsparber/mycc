@@ -1,5 +1,5 @@
 using MyCC.Core.Currencies;
-using MyCC.Ui.Helpers;
+using MyCC.Core.Helpers;
 
 namespace MyCC.Ui.DataItems
 {

@@ -14,14 +14,14 @@ namespace MyCC.Ui.Edit
         {
             if (AccountStorage.AlreadyExists(repository))
             {
-                DependencyService.Get<IErrorDialog>().Display(StringUtils.TextResolver.FetchingNoSuccessText);
+                DependencyService.Get<IErrorDialog>().Display(TextResolver.Instance.FetchingNoSuccessText);
                 return false;
             }
 
             var success = await repository.Test();
             if (!success)
             {
-                DependencyService.Get<IErrorDialog>().Display(StringUtils.TextResolver.VerifyInput);
+                DependencyService.Get<IErrorDialog>().Display(TextResolver.Instance.VerifyInput);
                 return false;
             }
 
@@ -39,7 +39,7 @@ namespace MyCC.Ui.Edit
         {
             if (account == null)
             {
-                DependencyService.Get<IErrorDialog>().Display(StringUtils.TextResolver.VerifyInput);
+                DependencyService.Get<IErrorDialog>().Display(TextResolver.Instance.VerifyInput);
                 return;
             }
             await AccountStorage.Instance.LocalRepository.Add(account);

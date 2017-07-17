@@ -3,7 +3,6 @@ using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Rates.Models;
-using MyCC.Core.Settings;
 using Newtonsoft.Json;
 
 namespace MyCC.Ui.DataItems
@@ -39,8 +38,8 @@ namespace MyCC.Ui.DataItems
                 Label = group.Key.Code;
                 Name = group.Key.Name;
                 Value = new Money(totalMoney.Amount * rate?.Rate ?? 0, referenceCurrency).Amount;
-                Money = totalMoney.ToStringTwoDigits(ApplicationSettings.RoundMoney);
-                Reference = new Money(Value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+                Money = totalMoney.TwoDigits();
+                Reference = new Money(Value, referenceCurrency).TwoDigits();
                 Accounts =
                     group.Select(a => new AccountData(a, rate, referenceCurrency))
                         .Where(d => d.Value > 0)
@@ -69,8 +68,8 @@ namespace MyCC.Ui.DataItems
             {
                 Value = account.IsEnabled ? account.Money.Amount * rate?.Rate ?? 0 : 0;
                 Label = account.Name;
-                Money = (account.IsEnabled ? account.Money : new Money(0, account.Money.Currency)).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-                Reference = new Money(Value, referenceCurrency).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+                Money = (account.IsEnabled ? account.Money : new Money(0, account.Money.Currency)).TwoDigits();
+                Reference = new Money(Value, referenceCurrency).TwoDigits();
                 Id = account.Id;
             }
         }

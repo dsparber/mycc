@@ -6,7 +6,6 @@ using MyCC.Core.Rates.Data;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
 using MyCC.Core.Rates.Repositories.Utils;
-using MyCC.Core.Settings;
 
 namespace MyCC.Core.Rates.Utils
 {
@@ -23,8 +22,8 @@ namespace MyCC.Core.Rates.Utils
             usd = usd?.Descriptor.CurrenciesEqual(descriptorBtcUsd) ?? false ? usd : usd?.Inverse();
             eur = eur?.Descriptor.CurrenciesEqual(descriptorBtcEur) ?? false ? eur : eur?.Inverse();
 
-            var usdString = new Money(usd?.Rate ?? 0, CurrencyConstants.Usd).ToStringTwoDigits(ApplicationSettings.RoundMoney);
-            var eurString = new Money(eur?.Rate ?? (usd != null ? MyccUtil.Rates.GetRate(descriptorBtcEur)?.Rate : 0) ?? 0, CurrencyConstants.Eur).ToStringTwoDigits(ApplicationSettings.RoundMoney);
+            var usdString = new Money(usd?.Rate ?? 0, CurrencyConstants.Usd).TwoDigits();
+            var eurString = new Money(eur?.Rate ?? (usd != null ? MyccUtil.Rates.GetRate(descriptorBtcEur)?.Rate : 0) ?? 0, CurrencyConstants.Eur).TwoDigits();
             var note = eur == null && usd != null ? "*" : string.Empty;
 
             return $"{eurString}{note} / {usdString}";

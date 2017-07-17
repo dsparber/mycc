@@ -78,7 +78,7 @@
     <Compile Include="Helpers\IErrorDialog.cs" />
     <Compile Include="Helpers\ITextResolver.cs" />
     <Compile Include="Helpers\SortDirectionHelper.cs" />
-    <Compile Include="Helpers\StringUtils.cs" />
+    <Compile Include="Helpers\TextResolver.cs" />
     <Compile Include="Messages\MessageTools.cs" />
     <Compile Include="Messages\Messaging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

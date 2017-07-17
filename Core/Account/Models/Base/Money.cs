@@ -1,5 +1,6 @@
 using System;
 using MyCC.Core.Currencies.Models;
+using MyCC.Core.Helpers;
 
 namespace MyCC.Core.Account.Models.Base
 {
@@ -55,26 +56,32 @@ namespace MyCC.Core.Account.Models.Base
         /// Formats the money as string
         /// </summary>
         /// <returns>Money object as string</returns>
-        public override string ToString()
-        {
-            return ToString(true);
-        }
+        public override string ToString() => ToString(true);
 
         public string ToString(bool showCurrency)
         {
-            return $"{Amount:#,0.########}{(showCurrency ? $" {Currency.Code}" : string.Empty)}";
+            return $"{Amount.ToMax8DigitString()}{(showCurrency ? $" {Currency.Code}" : string.Empty)}";
         }
 
-        public string ToStringTwoDigits(bool round, bool showCurrency = true)
+        public string MaxTwoDigits(bool showCurrency = true)
         {
-            var amount = round ? Math.Round(Amount, 2) : Math.Truncate(Amount * 100) / 100;
-            return $"{(round && Amount < 0.01M && Amount > 0 ? $"< {0.01}" : $"{amount:#,0.00}")}{ (showCurrency ? $"\u00A0{Currency.Code}" : string.Empty)}";
+            var amount = Math.Truncate(Amount * 100) / 100;
+            var noDigits = amount == Math.Truncate(amount);
+            return $"{(noDigits ? Amount.To0DigitString() : amount.To2DigitString())}{Suffix(showCurrency)}";
         }
 
-        public string ToString8Digits(bool showCurrency = true)
+        public string TwoDigits(bool showCurrency = true)
+        {
+            var amount = Math.Truncate(Amount * 100) / 100;
+            return $"{amount.To2DigitString()}{Suffix(showCurrency)}";
+        }
+
+        public string EightDigits(bool showCurrency = true)
         {
             var amount = Math.Truncate(Amount * 100000000) / 100000000;
-            return $"{amount:#,0.00000000}{(showCurrency ? $"\u00A0{Currency.Code}" : string.Empty)}";
+            return $"{amount.To8DigitString()}{Suffix(showCurrency)}";
         }
+
+        private string Suffix(bool showCurrency) => showCurrency ? $"\u00A0{Currency.Code}" : string.Empty;
     }
 }

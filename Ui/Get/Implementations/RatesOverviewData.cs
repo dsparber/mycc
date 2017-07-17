@@ -93,7 +93,7 @@ namespace MyCC.Ui.Get.Implementations
             {
                 new SortButtonItem
                 {
-                    Text = StringUtils.TextResolver.Currency,
+                    Text = TextResolver.Instance.Currency,
                     SortAscending = SortDirectionHelper.GetSortAscending(ApplicationSettings.SortOrderRates,ApplicationSettings.SortDirectionRates, SortOrder.Alphabetical),
                     RightAligned = false,
                     OnClick = () =>
@@ -106,7 +106,7 @@ namespace MyCC.Ui.Get.Implementations
                 },
                 new SortButtonItem
                 {
-                    Text = string.Format(StringUtils.TextResolver.AsCurrency, currencyId.Code()),
+                    Text = string.Format(TextResolver.Instance.AsCurrency, currencyId.Code()),
                     SortAscending = SortDirectionHelper.GetSortAscending(ApplicationSettings.SortOrderRates,ApplicationSettings.SortDirectionRates, SortOrder.ByValue),
                     RightAligned = true,
                     OnClick = () =>
