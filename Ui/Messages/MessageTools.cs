@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using Xamarin.Forms;
 
 namespace MyCC.Ui.Messages
@@ -19,7 +18,7 @@ namespace MyCC.Ui.Messages
         public static void SubscribeFinished(this string message, object subscriber, Action action) =>
             MessagingCenter.Subscribe<string>(subscriber, message, s =>
             {
-                if (double.Parse(s, CultureInfo.InvariantCulture) > 0.99)
+                if (double.Parse(s) > 0.99)
                 {
                     action();
                 }

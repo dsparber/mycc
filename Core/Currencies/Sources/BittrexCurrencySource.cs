@@ -23,7 +23,7 @@ namespace MyCC.Core.Currencies.Sources
         {
             try
             {
-                var response = await HttpHelper.GetResponse(new Uri(UrlCurrencyList));
+                var response = await new Uri(UrlCurrencyList).GetResponse();
 
                 if (!response.IsSuccessStatusCode) return null;
 

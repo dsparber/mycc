@@ -125,20 +125,20 @@ namespace MyCC.Core.Account.Repositories.Implementations
                 var money = new Money(balance, curr);
                 var existing = Elements.ToList().Find(a => a.Money.Currency.Equals(money.Currency));
 
-                var newAccount = new BittrexAccount(existing?.Id, Name, money, existing?.IsEnabled ?? true, DateTime.Now, this);
+                var account = new BittrexAccount(existing?.Id, Name, money, existing?.IsEnabled ?? true, DateTime.Now, this);
 
                 if (existing != null)
                 {
-                    await Update(newAccount);
+                    await Update(account);
                 }
                 else
                 {
-                    await Add(newAccount);
+                    await Add(account);
                 }
-                currentAccounts.Add(newAccount);
+                currentAccounts.Add(account);
             }
-            Func<FunctionalAccount, bool> notInCurrentAccounts = e => !currentAccounts.Select(a => a.Id).Contains(e.Id);
-            await Task.WhenAll(Elements.Where(notInCurrentAccounts).Select(Remove));
+            bool NotInCurrentAccounts(FunctionalAccount e) => !currentAccounts.Select(a => a.Id).Contains(e.Id);
+            await Task.WhenAll(Elements.Where(NotInCurrentAccounts).Select(Remove));
 
             LastFetch = DateTime.Now;
             return true;

@@ -12,7 +12,7 @@ namespace MyCC.Ui.DataItems
 
         public AccountItem(Account account)
         {
-            FormattedValue = account.Money.TwoDigits(false);
+            FormattedValue = account.Money.EightDigits(false);
             Name = account.Name;
             Id = account.Id;
             Amount = account.Money.Amount;
