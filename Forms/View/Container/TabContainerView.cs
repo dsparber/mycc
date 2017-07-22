@@ -11,7 +11,7 @@ namespace MyCC.Forms.View.Container
 {
     public class TabContainerView : TabbedPage
     {
-        public TabContainerView()
+        private TabContainerView()
         {
             Title = ConstantNames.AppNameShort;
             BackgroundColor = AppConstants.TableBackgroundColor;
@@ -28,5 +28,8 @@ namespace MyCC.Forms.View.Container
 
             CurrentPage = ApplicationSettings.DefaultStartupPage == StartupPage.GraphView ? coinGraphPage : ApplicationSettings.DefaultStartupPage == StartupPage.TableView ? coinTablePage : ratesPage;
         }
+
+        private static TabContainerView instance = new TabContainerView();
+        public static TabContainerView Get => instance;
     }
 }

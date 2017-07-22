@@ -34,7 +34,7 @@ namespace MyCC.Forms
                     }
                 });
 
-                MainPage = ApplicationSettings.IsPinSet ? new PasswordOverlay(true) : new TabContainerView() as Page;
+                MainPage = ApplicationSettings.IsPinSet ? new PasswordOverlay(true) : TabContainerView.Get as Page;
 
                 if (CrossConnectivity.Current.IsConnected) UiUtils.Update.FetchCurrencies();
             }

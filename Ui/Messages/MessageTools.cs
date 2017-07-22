@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
+using System.Globalization;
 
 namespace MyCC.Ui.Messages
 {
@@ -13,12 +14,12 @@ namespace MyCC.Ui.Messages
             MessagingCenter.Subscribe<string>(subscriber, message, s => action(bool.Parse(s)));
 
         public static void Subscribe(this string message, object subscriber, Action<double> action) =>
-            MessagingCenter.Subscribe<string>(subscriber, message, s => action(double.Parse(s)));
+            MessagingCenter.Subscribe<string>(subscriber, message, s => action(double.Parse(s, CultureInfo.InvariantCulture)));
 
         public static void SubscribeFinished(this string message, object subscriber, Action action) =>
             MessagingCenter.Subscribe<string>(subscriber, message, s =>
             {
-                if (double.Parse(s) > 0.99)
+                if (double.Parse(s, CultureInfo.InvariantCulture) > 0.99)
                 {
                     action();
                 }
@@ -33,7 +34,7 @@ namespace MyCC.Ui.Messages
         }
 
         internal static void Send(this string message, double value) =>
-            MessagingCenter.Send(value.ToString(), message);
+            MessagingCenter.Send(value.ToString(CultureInfo.InvariantCulture), message);
 
         public static void Send(this string message, bool value) =>
             MessagingCenter.Send(value.ToString(), message);

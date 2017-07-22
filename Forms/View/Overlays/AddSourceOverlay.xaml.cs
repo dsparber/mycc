@@ -76,13 +76,15 @@ namespace MyCC.Forms.View.Overlays
             if (accountView != null)
             {
                 await UiUtils.Edit.Add(accountView.GetAccount(name));
-            }
+                await Navigation.PopModalAsync();
+			}
             else
             {
                 var repositoryView = (AddRepositorySubview)_specificAddView;
-                await UiUtils.Edit.Add(repositoryView.GetRepository(name));
-            }
-            await Navigation.PopModalAsync();
+                var success = await UiUtils.Edit.Add(repositoryView.GetRepository(name));
+                if (success)
+					await Navigation.PopModalAsync();
+			}
 
             ViewsEnabled = true;
         }

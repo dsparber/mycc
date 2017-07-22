@@ -12,6 +12,11 @@ namespace MyCC.Ui.Edit
     {
         public static async Task<bool> Add(OnlineAccountRepository repository)
         {
+            if (repository == null)
+			{
+				DependencyService.Get<IErrorDialog>().Display(TextResolver.Instance.VerifyInput);
+                return false;
+			}
             if (AccountStorage.AlreadyExists(repository))
             {
                 DependencyService.Get<IErrorDialog>().Display(TextResolver.Instance.FetchingNoSuccessText);

@@ -131,8 +131,8 @@ namespace MyCC.Forms.View.Pages
         {
             Messaging.Status.CarouselPosition.Subscribe(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets));
             Messaging.Status.Progress.SubscribeFinished(this, () => Device.BeginInvokeOnMainThread(() => _pullToRefresh.IsRefreshing = false));
-            Messaging.Update.Rates.SubscribeFinished(this, UpdateView);
-            Messaging.Update.Balances.SubscribeFinished(this, UpdateView);
+            Messaging.Update.Rates.Subscribe(this, UpdateView);
+            Messaging.Update.Balances.Subscribe(this, UpdateView);
         }
 
         private async void Refresh()
@@ -155,8 +155,8 @@ namespace MyCC.Forms.View.Pages
                 var currencyId = ((Currency)item).Id;
                 var header = new HeaderView(true) { Data = UiUtils.Get.Assets.HeaderFor(currencyId) };
 
-                Messaging.Update.Rates.Subscribe(this, () => header.Data = UiUtils.Get.Assets.HeaderFor(currencyId));
-                Messaging.Update.Balances.Subscribe(this, () => header.Data = UiUtils.Get.Assets.HeaderFor(currencyId));
+                Messaging.Update.Rates.Subscribe(header, () => header.Data = UiUtils.Get.Assets.HeaderFor(currencyId));
+                Messaging.Update.Balances.Subscribe(header, () => header.Data = UiUtils.Get.Assets.HeaderFor(currencyId));
 
                 return header;
             });

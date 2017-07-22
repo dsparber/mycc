@@ -116,7 +116,7 @@ namespace MyCC.Forms.View.Pages
         {
             Messaging.Status.CarouselPosition.Subscribe(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyRates));
             Messaging.Status.Progress.SubscribeFinished(this, () => Device.BeginInvokeOnMainThread(() => _pullToRefresh.IsRefreshing = false));
-            Messaging.Update.Rates.SubscribeFinished(this, SetData);
+            Messaging.Update.Rates.Subscribe(this, SetData);
         }
 
         private void Refresh()
@@ -139,12 +139,7 @@ namespace MyCC.Forms.View.Pages
             protected override DataTemplate OnSelectTemplate(object item, BindableObject container) => new DataTemplate(() =>
             {
                 var currencyId = ((Currency)item).Id;
-                var header = new HeaderView(true) { Data = UiUtils.Get.Rates.HeaderFor(currencyId) };
-
-                Messaging.Update.Rates.Subscribe(this, () => header.Data = UiUtils.Get.Rates.HeaderFor(currencyId));
-                Messaging.Update.Balances.Subscribe(this, () => header.Data = UiUtils.Get.Rates.HeaderFor(currencyId));
-
-                return header;
+                return new RatesOverviewHeader(currencyId);
             });
         }
 

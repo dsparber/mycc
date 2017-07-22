@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="View\Overlays\AccountQrCodeOverlay.cs" />
     <Compile Include="View\Components\Cells\CustomEditorCell.cs" />
+    <Compile Include="View\Components\Header\RatesOverviewHeader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

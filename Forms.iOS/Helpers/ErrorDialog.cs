@@ -5,6 +5,7 @@ using MyCC.Forms.iOS.Helpers;
 using MyCC.Forms.Resources;
 using MyCC.Ui.Helpers;
 using UIKit;
+using System.Linq;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(ErrorDialog))]
@@ -36,7 +37,19 @@ namespace MyCC.Forms.iOS.Helpers
             {
                 var alert = UIAlertController.Create(I18N.Error, errorText, UIAlertControllerStyle.Alert);
                 alert.AddAction(UIAlertAction.Create(I18N.Ok, UIAlertActionStyle.Default, action => { }));
-                UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(alert, true, null);
+
+                var rootViewController = UIApplication.SharedApplication.KeyWindow.RootViewController;
+                var navigationController = rootViewController as UINavigationController;
+                if (navigationController != null)
+                {
+                    rootViewController = navigationController.ViewControllers.First();
+                }
+                var tabBarController = rootViewController as UITabBarController;
+                if (tabBarController != null)
+                {
+                    rootViewController = tabBarController.SelectedViewController;
+                }
+                rootViewController.PresentViewController(alert, true, null);
             });
         }
     }

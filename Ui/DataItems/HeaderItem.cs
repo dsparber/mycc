@@ -11,5 +11,7 @@
             MainText = mainText;
             InfoText = infoText;
         }
+
+        public override string ToString() => $"[HeaderItem ({GetHashCode()}): MainText={MainText}, InfoText={InfoText}]";
     }
 }

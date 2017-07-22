@@ -111,7 +111,7 @@ namespace MyCC.Forms.View.Overlays
             PinFrame.Unfocus();
             if (_pushMainView)
             {
-                await Navigation.PushModalAsync(new TabContainerView());
+                await Navigation.PushModalAsync(TabContainerView.Get);
                 Messaging.Status.DarkStatusBar.Send(false);
             }
             else

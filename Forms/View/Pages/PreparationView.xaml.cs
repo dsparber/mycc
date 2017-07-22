@@ -49,7 +49,7 @@ namespace MyCC.Forms.View.Pages
 
             Device.BeginInvokeOnMainThread(() =>
             {
-                Navigation.PushModalAsync(ApplicationSettings.IsPinSet ? new PasswordOverlay(true) as Page : new TabContainerView());
+                Navigation.PushModalAsync(ApplicationSettings.IsPinSet ? new PasswordOverlay(true) as Page : TabContainerView.Get);
             });
         }
 

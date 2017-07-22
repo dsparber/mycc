@@ -19,8 +19,8 @@ namespace MyCC.Forms.View.Components.Table
     {
         private readonly HybridWebView _webView;
         private readonly Dictionary<int, Action> _headerClickCallbacks;
-        private static int _currentId;
-        private static string _currencyId = ApplicationSettings.StartupCurrencyAssets;
+        private int _currentId;
+        private string _currencyId = ApplicationSettings.StartupCurrencyAssets;
 
         public CoinTableComponent()
         {
