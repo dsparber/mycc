@@ -66,7 +66,7 @@ namespace MyCC.Core.Account.Models.Base
         public string MaxTwoDigits(bool showCurrency = true)
         {
             var amount = Math.Truncate(Amount * 100) / 100;
-            var noDigits = amount == Math.Truncate(amount);
+            var noDigits = Amount == Math.Truncate(Amount);
             return $"{(noDigits ? Amount.To0DigitString() : amount.To2DigitString())}{Suffix(showCurrency)}";
         }
 

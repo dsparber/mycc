@@ -63,10 +63,9 @@ namespace MyCC.Core.Helpers
             return string.Join(string.Empty, Regex.Replace(value, @"\t|\n|\r", "").Where(c => c != '\u200B')).Trim();
         }
 
-        public static string To0DigitString(this decimal value) => $"{value:#,0.##}";
+        public static string To0DigitString(this decimal value) => $"{value:#,0}";
         public static string To2DigitString(this decimal value) => $"{value:#,0.00}";
         public static string To8DigitString(this decimal value) => $"{value:#,0.00000000}";
         public static string ToMax8DigitString(this decimal value) => $"{value:#,0.########}";
     }
 }
-

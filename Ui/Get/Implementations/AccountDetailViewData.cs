@@ -33,8 +33,8 @@ namespace MyCC.Ui.Get.Implementations
                 .Select(x => new Money(account.Money.Amount * MyccUtil.Rates.GetRate(new RateDescriptor(account.Money.Currency.Id, x))?.Rate ?? 0, x.Find())).
                 OrderBy(m => m.Currency.Code);
 
-            return new HeaderItem(account.Money.TwoDigits(),
-                additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.TwoDigits())) : account.Money.Currency.Name);
+            return new HeaderItem(account.Money.MaxTwoDigits(),
+                additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.MaxTwoDigits())) : account.Money.Currency.Name);
         }
 
         public string AccountName(int accountId) => AccountStorage.GetAccount(accountId)?.Name;

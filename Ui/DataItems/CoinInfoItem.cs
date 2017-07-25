@@ -34,8 +34,8 @@ namespace MyCC.Ui.DataItems
             _data.IsProofOfStake.GetValueOrDefault() ? _pos :
             string.Empty;
 
-        public string Hashrate => $"{(_data.Hashrate ?? 0).ToMax8DigitString()} {TextResolver.Instance.GHps}";
-        public string Difficulty => (_data.Difficulty ?? 0).ToMax8DigitString();
+        public string Hashrate => $"{(_data.Hashrate ?? 0).To2DigitString()} {TextResolver.Instance.GHps}";
+        public string Difficulty => (_data.Difficulty ?? 0).To2DigitString();
 
         public string Blockreward => new Money(_data.Blockreward ?? 0, _currencyId.Find()).TwoDigits();
         public string Blockheight => $"{_data.BlockHeight ?? 0:#,0}";
