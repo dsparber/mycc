@@ -41,9 +41,9 @@ namespace MyCC.Forms.View.Components.BaseComponents
                 e.Cancel = true;
 
                 var url = new Uri(e.Url);
-                var args = url.Query.Substring(1, url.Query.Length - 1).Split('&').ToDictionary(s => s.Split('=')[0], s => s.Split('=')[1]);
+                var args = url.Query.Length > 1 ? url.Query.Substring(1, url.Query.Length - 1).Split('&').ToDictionary(s => s.Split('=')[0], s => s.Split('=')[1]) : new Dictionary<string, string>();
 
-                foreach (var a in args.Where(x => _callbacks.Keys.Contains(x.Key)))
+                foreach (var a in args.Where(arg => _callbacks.Keys.Contains(arg.Key)))
                 {
                     _callbacks[a.Key]?.Invoke(a.Value);
                 }
