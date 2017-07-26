@@ -45,7 +45,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
                 var gr = new TapGestureRecognizer();
                 gr.Tapped += (sender, args) =>
                 {
-                    MyccUtil.Rates.SelectedCryptoToFiatSource = t.name;
+                    UiUtils.Edit.SelectedCryptoToFiatSource = t.name;
                     Navigation.PopAsync();
                 };
                 cell.GestureRecognizers.Add(gr);

@@ -10,15 +10,18 @@ using MyCC.Core.Settings;
 
 namespace MyCC.Core.Rates.Utils
 {
-    public class RatesUtil : IRatesUtil
+    internal class RatesUtil : IRatesUtil
     {
         public IEnumerable<(string name, string detail, bool selected)> CryptoToFiatSourcesWithDetail
-            => CryptoToFiatSourcesWithRates.Select(t => (t.name, t.rates.ToList().GetDetailText(), t.name.Equals(MyccUtil.Rates.SelectedCryptoToFiatSource)));
+            => CryptoToFiatInfoUtils.CryptoToFiatSourcesWithRates.Select(t =>
+            (t.source.Name,
+            t.rates.ToList().GetDetailText((RateSourceId)t.source.Id), t.source.Name.Equals(MyccUtil.Rates.SelectedCryptoToFiatSource)));
 
         public IEnumerable<(string name, IEnumerable<ExchangeRate> rates)> CryptoToFiatSourcesWithRates
-            => CryptoToFiatInfoUtils.CryptoToFiatSourcesWithRates;
+            => CryptoToFiatInfoUtils.CryptoToFiatSourcesWithRates.Select(t => (t.source.Name, t.rates));
 
         public ExchangeRate GetRate(RateDescriptor rateDescriptor) => rateDescriptor.GetRate();
+        public ExchangeRate GetRate(RateDescriptor rateDescriptor, RateSourceId sourceId) => rateDescriptor.GetRate(sourceId);
         public bool HasRate(RateDescriptor rateDescriptor) => rateDescriptor.GetRate() != null;
 
         public DateTime LastUpdate() => GetNeededRates().Select(e => e.GetRate()?.LastUpdate ?? DateTime.Now).DefaultIfEmpty(DateTime.Now).Min();

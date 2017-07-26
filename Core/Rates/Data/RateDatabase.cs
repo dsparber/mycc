@@ -60,14 +60,14 @@ namespace MyCC.Core.Rates.Data
 
         private static IRateSource GetSourceFor(ExchangeRate rate) => RatesConfig.Sources.FirstOrDefault(source => source.Id == rate.SourceId);
 
-        public static ExchangeRate GetRateOrDefault(RateDescriptor rateDescriptor)
+        public static ExchangeRate GetRateOrDefault(RateDescriptor rateDescriptor, RateSourceId? sourceId = null)
         {
             if (rateDescriptor.HasEqualCurrencies()) return new ExchangeRate(rateDescriptor, 1);
 
             bool RatesFilter(ExchangeRate rate)
             {
                 if (rateDescriptor.HasCryptoAndFiatCurrency())
-                    return rate.SourceId == RatesConfig.SelectedCryptoToFiatSourceId && rate.Descriptor.CurrenciesEqual(rateDescriptor);
+                    return rate.SourceId == ((int?)sourceId ?? RatesConfig.SelectedCryptoToFiatSourceId) && rate.Descriptor.CurrenciesEqual(rateDescriptor);
 
                 return rate.Descriptor.CurrenciesEqual(rateDescriptor);
             }

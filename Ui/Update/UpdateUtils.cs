@@ -105,6 +105,7 @@ namespace MyCC.Ui.Update
        {
            await MyccUtil.Rates.FetchAllFiatToCrypto(progess => Messaging.Status.Progress.Send(progess));
            Messaging.Update.CryptoToFiatRates.Send();
+           Messaging.Update.Rates.Send();
        });
 
         private static async void ExecuteWithErrorWrapper(Func<Task> action)

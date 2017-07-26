@@ -26,5 +26,7 @@ namespace MyCC.Ui.Edit
         void AddReferenceCurrency(string currencyId);
         bool RemoveReferenceCurrency(string currencyId);
         bool ToggleReferenceCurrencyStar(string currencyId);
+
+        string SelectedCryptoToFiatSource { set; }
     }
 }

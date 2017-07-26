@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
 using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Repositories.Base;
@@ -57,5 +58,14 @@ namespace MyCC.Ui.Edit
 
         public bool ToggleReferenceCurrencyStar(string currencyId)
             => EditReferenceCurrencies.ToggleReferenceCurrencyStar(currencyId);
+
+        public string SelectedCryptoToFiatSource
+        {
+            set
+            {
+                MyccUtil.Rates.SelectedCryptoToFiatSource = value;
+                Messaging.Update.Rates.Send();
+            }
+        }
     }
 }

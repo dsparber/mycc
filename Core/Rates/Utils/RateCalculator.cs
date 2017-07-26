@@ -3,16 +3,17 @@ using System.Linq;
 using MyCC.Core.Rates.Data;
 using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Repositories.Utils;
 
 namespace MyCC.Core.Rates.Utils
 {
     internal static class RateCalculator
     {
-        public static ExchangeRate GetRate(this RateDescriptor rateDescriptor)
+        public static ExchangeRate GetRate(this RateDescriptor rateDescriptor, RateSourceId? sourceId = null)
         {
             if (rateDescriptor.HasEqualCurrencies()) return new ExchangeRate(rateDescriptor, 1);
             return rateDescriptor.HasCryptoAndFiatCurrency()
-                ? rateDescriptor.GetMixedRate()
+                ? rateDescriptor.GetMixedRate(sourceId)
                 : rateDescriptor.GetPureRate();
         }
 
@@ -27,18 +28,19 @@ namespace MyCC.Core.Rates.Utils
             return rate.Descriptor.Equals(rateDescriptor) ? rate : rate.Inverse();
         }
 
-        private static ExchangeRate GetMixedRate(this RateDescriptor rateDescriptor)
+        private static ExchangeRate GetMixedRate(this RateDescriptor rateDescriptor, RateSourceId? sourceId = null)
         {
-            if (RatesConfig.SelectedCryptoToFiatSource?.IsAvailable(rateDescriptor) ?? false)
+            var selectedSource = RatesConfig.Sources.FirstOrDefault(source => ((RateSourceId)source.Id).Equals(sourceId) && source.Type == RateSourceType.CryptoToFiat) ?? RatesConfig.SelectedCryptoToFiatSource;
+            if (selectedSource.IsAvailable(rateDescriptor))
             {
-                var directRate = RateDatabase.GetRateOrDefault(rateDescriptor);
+                var directRate = RateDatabase.GetRateOrDefault(rateDescriptor, sourceId);
                 if (directRate != null)
                     return directRate.Descriptor.Equals(rateDescriptor) ? directRate : directRate.Inverse();
             }
 
             var rateToDefaultFiatCurrency = rateDescriptor.GetFiatCurrencyId().RateToDefaultCurrency(useCrypto: false);
             var rateToDefaultCryptoCurrency = rateDescriptor.GetCryptoCurrencyId().RateToDefaultCurrency(useCrypto: true);
-            var rateCryptoToFiat = RateDatabase.GetRateOrDefault(RatesConfig.DefaultCryptoToFiatDescriptor);
+            var rateCryptoToFiat = RateDatabase.GetRateOrDefault(RatesConfig.DefaultCryptoToFiatDescriptor, sourceId);
 
             var rate = rateToDefaultFiatCurrency.CombineWith(rateCryptoToFiat).CombineWith(rateToDefaultCryptoCurrency);
             if (rate == null) return null;

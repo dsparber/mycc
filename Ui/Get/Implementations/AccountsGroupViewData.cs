@@ -113,7 +113,7 @@ namespace MyCC.Ui.Get.Implementations
         {
             SortDirectionAccounts = SortDirectionHelper.GetNewSortDirection(SortOrderAccounts, SortDirectionAccounts, sortOrder);
             SortOrderAccounts = sortOrder;
-            Messaging.Sort.Assets.Send();
+            Messaging.Sort.Accounts.Send();
         }
 
         private void OnSortReference(SortOrder sortOrder)

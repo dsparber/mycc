@@ -48,7 +48,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 v.Click += (sender, args) => radioButton.Toggle();
                 radioButton.CheckedChange += (sender, args) =>
                 {
-                    MyccUtil.Rates.SelectedCryptoToFiatSource = tuple.name;
+                    UiUtils.Edit.SelectedCryptoToFiatSource = tuple.name;
                     Finish();
                 };
 
