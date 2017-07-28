@@ -185,7 +185,7 @@ namespace MyCC.Forms.View.Pages.Settings.Source
                     cell => _repository.Elements.First(a => a.Money.Currency.Name.Equals(cell.Info)).Id,
                     cell => cell.Switch.IsToggled);
 
-                await UiUtils.Edit.Update(_repository, address, _currencyEntryCell.SelectedCurrency.Id, name, enabledStates);
+                await UiUtils.Edit.Update(_repository, address, _currencyEntryCell?.SelectedCurrency.Id, name, enabledStates);
 
                 if (_isEditModal)
                 {
