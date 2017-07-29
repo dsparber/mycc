@@ -181,10 +181,19 @@ namespace MyCC.Forms.View.Pages.Settings.Source
                 var name = RepositoryNameEntryCell.Text ?? I18N.Unnamed;
 
 
-                var enabledStates = EnableAccountsSection.OfType<CustomSwitchCell>().ToDictionary(
-                    cell => _repository.Elements.First(a => a.Money.Currency.Name.Equals(cell.Info)).Id,
-                    cell => cell.Switch.IsToggled);
 
+                Dictionary<int, bool> enabledStates;
+                if (addressRepo != null)
+                {
+                    enabledStates = new Dictionary<int, bool>();
+                    enabledStates[addressRepo.Elements.First().Id] = EnableAccountsSection.OfType<CustomSwitchCell>().First().Switch.IsToggled;
+                }
+                else
+                {
+                    enabledStates = EnableAccountsSection.OfType<CustomSwitchCell>().ToDictionary(
+                        cell => _repository.Elements.First(a => a.Money.Currency.Name.Equals(cell.Info)).Id,
+                        cell => cell.Switch.IsToggled);
+                }
                 await UiUtils.Edit.Update(_repository, address, _currencyEntryCell?.SelectedCurrency.Id, name, enabledStates);
 
                 if (_isEditModal)
