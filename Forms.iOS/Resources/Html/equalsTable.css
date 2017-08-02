@@ -1,115 +1,109 @@
 @font-face {
-    font-family: "DroidSansMono";
-    src: url('DroidSansMono.ttf') format('truetype');
+  font-family: "DroidSansMono";
+  src: url('DroidSansMono.ttf') format('truetype');
 }
 
 html, body {
-    font-family: "DroidSansMono", "Courier New", Consolas, monospace;
-    font-size: 8pt;
-    font-weight: lighter;
-    margin: 0;
-    -webkit-touch-callout: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: rgb(238, 239, 243);
+  font-family: "DroidSansMono", "Courier New", Consolas, monospace;
+  font-size: 8pt;
+  font-weight: lighter;
+  margin: 0;
+  -webkit-text-size-adjust: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: rgb(238, 239, 243);
 }
 
-    body > div {
-        position: fixed;
-        width: 100%;
-        overflow-x: auto;
-    }
+body>div {
+  position: fixed;
+  width: 100%;
+  overflow-x: auto;
+}
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
 }
 
 td:first-child {
-    padding-left: 15px;
-    width: 1px;
+  padding-left: 15px;
+  width: 1px;
 }
 
-    td:first-child + td {
-        text-align: right;
-    }
+td:first-child+td {
+  text-align: right;
+}
 
 thead td:last-child {
-    padding: 8px;
+  padding: 8px;
 }
 
 td:last-child {
-    width: 1px;
-    padding-right: 8px;
+  width: 1px;
+  padding-right: 8px;
 }
 
 td div div:first-child:not(:last-child) {
-    color: #aaa;
+  color: #aaa;
 }
 
-td > div {
-    padding: 2px 0;
+td>div {
+  padding: 2px 0;
 }
 
 td div div span:last-child {
-    font-size: 9pt;
+  font-size: 9pt;
 }
 
 td:last-child {
-    vertical-align: bottom;
+  vertical-align: bottom;
 }
 
-/*tbody td:last-child {
-    background-image: url('more.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 20px;
-}*/
-
 td {
-    white-space: nowrap;
-    text-align: left;
-    padding: 4px;
-    cursor: pointer;
+  white-space: nowrap;
+  text-align: left;
+  padding: 4px;
+  cursor: pointer;
 }
 
 thead td {
-    padding: 8px 4px;
+  padding: 8px 4px;
 }
 
 tr:first-child {
-    border-top: 1px solid #ccc;
+  border-top: 1px solid #ccc;
 }
 
 tr {
-    border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 
 thead tr {
-    background-color: rgb(238, 239, 243);
+  background-color: rgb(238, 239, 243);
 }
 
 thead td {
-    border-right: 1px solid lightgray;
-    padding-right: 0.35em;
+  border-right: 1px solid lightgray;
+  padding-right: 0.35em;
 }
 
-    thead td:not(:first-child) span {
-        display: block;
-        background-image: url("upDown.svg");
-        background-repeat: no-repeat;
-        background-position: right center;
-        background-size: auto 1em;
-        padding-right: 1.25em;
-    }
+thead td:not(:first-child) span {
+  display: block;
+  background-image: url("upDown.svg");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: auto 1em;
+  padding-right: 1.25em;
+}
 
 #coinTable thead .down span {
-    background-image: url("up.svg");
+  background-image: url("up.svg");
 }
 
 #coinTable thead .up span {
-    background-image: url("down.svg");
+  background-image: url("down.svg");
 }
