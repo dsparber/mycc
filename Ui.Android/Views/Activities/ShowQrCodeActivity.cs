@@ -18,20 +18,22 @@ namespace MyCC.Ui.Android.Views.Activities
     {
         private ShowQrCodePagerAdapter _pagerAdapter;
         private ViewPager _viewPager;
+        private int _sourceId;
 
-        public const string ExtraSourceId = "SourceId";
+        public const string KeySourceId = "SourceId";
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            bundle = bundle ?? new Bundle();
             SetContentView(Resource.Layout.activity_show_qr_code);
 
-            var id = Intent?.GetIntExtra(ExtraSourceId, -1) ?? -1;
-            var source = AccountStorage.Instance.Repositories.OfType<AddressAccountRepository>().FirstOrDefault(r => r.Id == id);
+            _sourceId = bundle.GetInt(KeySourceId, Intent?.GetIntExtra(KeySourceId, -1) ?? -1);
+            var source = AccountStorage.Instance.Repositories.OfType<AddressAccountRepository>().FirstOrDefault(r => r.Id == _sourceId);
             if (source == null) throw new NullReferenceException("A source id needs to be specified and passed with the intent!");
 
             _viewPager = FindViewById<ViewPager>(Resource.Id.viewpager);
-            _pagerAdapter = new ShowQrCodePagerAdapter(SupportFragmentManager, this, id);
+            _pagerAdapter = new ShowQrCodePagerAdapter(SupportFragmentManager, this, _sourceId);
             _viewPager.Adapter = _pagerAdapter;
 
             var tabLayout = FindViewById<TabLayout>(Resource.Id.sliding_tabs);
@@ -49,6 +51,12 @@ namespace MyCC.Ui.Android.Views.Activities
         {
             Finish();
             return true;
+        }
+
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
+            outState.PutInt(KeySourceId, _sourceId);
         }
     }
 }

@@ -21,11 +21,12 @@ namespace MyCC.Ui.Android.Views.Activities
     {
         private const int RequestCodeCurrency = 1;
 
-        public const string ExtraRepositoryId = "repositoryId";
+        public const string KeyRepositoryId = "repositoryId";
         private OnlineAccountRepository _repository;
         private HeaderFragment _header;
         private EditText _editCurrency;
 
+        private int _repositoryId;
         private string _name;
         private string _address;
         private Currency _currency;
@@ -37,16 +38,16 @@ namespace MyCC.Ui.Android.Views.Activities
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            savedInstanceState = savedInstanceState ?? new Bundle();
             SetContentView(Resource.Layout.activity_edit_source);
 
             SupportActionBar.Elevation = 3;
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
-            var repositoryId = Intent?.GetIntExtra(ExtraRepositoryId, -1) ?? -1;
-            _repository = AccountStorage.Instance.Repositories.Find(r => r.Id == repositoryId) as OnlineAccountRepository;
+            _repositoryId = savedInstanceState.GetInt(KeyRepositoryId, Intent?.GetIntExtra(KeyRepositoryId, -1) ?? -1);
+            _repository = AccountStorage.Instance.Repositories.Find(r => r.Id == _repositoryId) as OnlineAccountRepository;
 
-            if (repositoryId == -1 || _repository == null) throw new NullReferenceException("The account id needs to be specified and passed with the intent!");
+            if (_repositoryId == -1 || _repository == null) throw new NullReferenceException("The repository id needs to be specified and passed with the intent!");
 
             _name = _repository.Name;
             _enabled = _repository.Elements.All(a => a.IsEnabled);
@@ -114,6 +115,12 @@ namespace MyCC.Ui.Android.Views.Activities
                 _currency = data.GetStringExtra(CurrencyPickerActivity.ExtraCurrency).Find();
                 _editCurrency.Text = $"{_currency.Name} ({_currency.Code})";
             }
+        }
+
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
+            outState.PutInt(KeyRepositoryId, _repositoryId);
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)

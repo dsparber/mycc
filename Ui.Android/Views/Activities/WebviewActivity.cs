@@ -15,11 +15,13 @@ namespace MyCC.Ui.Android.Views.Activities
 
     public class WebviewActivity : MyccActivity
     {
-        public const string ExtraShowVersionHeader = "showVersionHeader";
-        public const string ExtraOpenLinksInNewActivity = "openLinksInNewActivity";
-        public const string ExtraUrl = "url";
-        public const string ExtraTitle = "title";
+        public const string KeyShowVersionHeader = "showVersionHeader";
+        public const string KeyOpenLinksInNewActivity = "openLinksInNewActivity";
+        public const string KeyUrl = "url";
+        public const string KeyTitle = "title";
 
+        private string _url;
+        private string _title;
         private bool _showVersionHeader;
         private bool _openLinksInNewActivity;
 
@@ -30,19 +32,20 @@ namespace MyCC.Ui.Android.Views.Activities
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            savedInstanceState = savedInstanceState ?? new Bundle();
             SetContentView(Resource.Layout.activity_webview);
 
             SupportActionBar.Elevation = 3;
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
-            _openLinksInNewActivity = Intent?.GetBooleanExtra(ExtraOpenLinksInNewActivity, false) ?? false;
-            _showVersionHeader = Intent?.GetBooleanExtra(ExtraShowVersionHeader, false) ?? false;
+            _openLinksInNewActivity = savedInstanceState.GetBoolean(KeyOpenLinksInNewActivity, Intent?.GetBooleanExtra(KeyOpenLinksInNewActivity, false) ?? false);
+            _showVersionHeader = savedInstanceState.GetBoolean(KeyShowVersionHeader, Intent?.GetBooleanExtra(KeyShowVersionHeader, false) ?? false);
+            _title = savedInstanceState.GetString(KeyTitle, Intent?.GetStringExtra(KeyTitle));
+            _url = savedInstanceState.GetString(KeyUrl, Intent?.GetStringExtra(KeyUrl));
 
-            var title = Intent?.GetStringExtra(ExtraTitle);
-            var url = Intent?.GetStringExtra(ExtraUrl);
-            if (string.IsNullOrWhiteSpace(url)) throw new NullReferenceException("A url must be specified and passed as an extra!");
+            if (string.IsNullOrWhiteSpace(_url)) throw new NullReferenceException("A url must be specified and passed as an extra!");
 
-            SupportActionBar.Title = title ?? new Uri(url).Host;
+            SupportActionBar.Title = _title ?? new Uri(_url).Host;
 
             _header = (HeaderFragment)SupportFragmentManager.FindFragmentById(Resource.Id.header_fragment);
             _webView = FindViewById<WebView>(Resource.Id.webview);
@@ -54,13 +57,22 @@ namespace MyCC.Ui.Android.Views.Activities
             _webView.Settings.JavaScriptEnabled = true;
             _webView.Settings.DomStorageEnabled = true;
             _webView.SetWebViewClient(new CustomWebViewClient(this, _progressBar, _openLinksInNewActivity));
-            _webView.LoadUrl(url);
+            _webView.LoadUrl(_url);
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             Finish();
             return true;
+        }
+
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
+            outState.PutString(KeyUrl, _url);
+            outState.PutString(KeyUrl, _title);
+            outState.PutBoolean(KeyUrl, _showVersionHeader);
+            outState.PutBoolean(KeyUrl, _openLinksInNewActivity);
         }
 
         private class CustomWebViewClient : WebViewClient
@@ -95,7 +107,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 if (ConnectivityStatus.IsConnected)
                 {
                     var intent = new Intent(Application.Context, typeof(WebviewActivity));
-                    intent.PutExtra(ExtraUrl, request.Url.ToString());
+                    intent.PutExtra(KeyUrl, request.Url.ToString());
                     Application.Context.StartActivity(intent);
                 }
                 else

@@ -75,7 +75,7 @@ namespace MyCC.Ui.Android.Views.Activities
                     if (ConnectivityStatus.IsConnected)
                     {
                         var intent = new Intent(this, typeof(WebviewActivity));
-                        intent.PutExtra(WebviewActivity.ExtraUrl, explorer.WebLink);
+                        intent.PutExtra(WebviewActivity.KeyUrl, explorer.WebLink);
                         StartActivity(intent);
                     }
                     else

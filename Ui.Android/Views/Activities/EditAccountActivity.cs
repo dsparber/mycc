@@ -21,11 +21,12 @@ namespace MyCC.Ui.Android.Views.Activities
     {
         private const int RequestCodeCurrency = 1;
 
-        public const string ExtraAccountId = "accountId";
+        public const string KeyAccountId = "accountId";
         private FunctionalAccount _account;
         private HeaderFragment _header;
         private EditText _editCurrency;
 
+        private int _accountId;
         private string _name;
         private decimal _amount;
         private Currency _currency;
@@ -37,16 +38,16 @@ namespace MyCC.Ui.Android.Views.Activities
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            savedInstanceState = savedInstanceState ?? new Bundle();
             SetContentView(Resource.Layout.activity_edit_account);
 
             SupportActionBar.Elevation = 3;
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
-            var accountId = Intent?.GetIntExtra(ExtraAccountId, -1) ?? -1;
-            if (accountId == -1) throw new NullReferenceException("The account id needs to be specified and passed with the intent!");
+            _accountId = savedInstanceState.GetInt(KeyAccountId, Intent?.GetIntExtra(KeyAccountId, -1) ?? -1);
+            if (_accountId == -1) throw new NullReferenceException("The account id needs to be specified and passed with the intent!");
 
-            _account = AccountStorage.Instance.AllElements.Find(a => a.Id == accountId);
+            _account = AccountStorage.Instance.AllElements.Find(a => a.Id == _accountId);
 
             _name = _account.Name;
             _currency = _account.Money.Currency;
@@ -93,6 +94,12 @@ namespace MyCC.Ui.Android.Views.Activities
 
             var activityRootView = FindViewById(Resource.Id.view_root);
             activityRootView.ViewTreeObserver.GlobalLayout += (sender, args) => SupportFragmentManager.SetFragmentVisibility(_header, activityRootView.Height > 480.DpToPx());
+        }
+
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
+            outState.PutInt(KeyAccountId, _accountId);
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)

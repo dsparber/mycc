@@ -65,7 +65,7 @@ namespace MyCC.Ui.Android.Views.Activities
             if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.ShowQrCode)))
             {
                 var intent = new Intent(this, typeof(ShowQrCodeActivity));
-                intent.PutExtra(ShowQrCodeActivity.ExtraSourceId, Data.RepositoryId(_accountId));
+                intent.PutExtra(ShowQrCodeActivity.KeySourceId, Data.RepositoryId(_accountId));
                 StartActivity(intent);
             }
             else if (string.Equals(item?.TitleFormatted?.ToString(), Resources.GetString(Resource.String.Info)))
@@ -79,13 +79,13 @@ namespace MyCC.Ui.Android.Views.Activities
                 if (Data.IsLocal(_accountId))
                 {
                     var intent = new Intent(this, typeof(EditAccountActivity));
-                    intent.PutExtra(EditAccountActivity.ExtraAccountId, _accountId);
+                    intent.PutExtra(EditAccountActivity.KeyAccountId, _accountId);
                     StartActivity(intent);
                 }
                 else
                 {
                     var intent = new Intent(this, typeof(EditSourceActivity));
-                    intent.PutExtra(EditSourceActivity.ExtraRepositoryId, Data.RepositoryId(_accountId));
+                    intent.PutExtra(EditSourceActivity.KeyRepositoryId, Data.RepositoryId(_accountId));
                     StartActivity(intent);
                 }
             }
@@ -143,7 +143,7 @@ namespace MyCC.Ui.Android.Views.Activities
                 if (ConnectivityStatus.IsConnected)
                 {
                     var intent = new Intent(this, typeof(WebviewActivity));
-                    intent.PutExtra(WebviewActivity.ExtraUrl, Data.AddressClickUrl(_accountId));
+                    intent.PutExtra(WebviewActivity.KeyUrl, Data.AddressClickUrl(_accountId));
                     StartActivity(intent);
                 }
                 else

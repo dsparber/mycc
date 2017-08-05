@@ -83,10 +83,10 @@ namespace MyCC.Ui.Android.Views.Fragments
             FindPreference("pref_about").PreferenceClick += (sender, args) =>
             {
                 var intent = new Intent(Context, typeof(WebviewActivity));
-                intent.PutExtra(WebviewActivity.ExtraUrl, "file:///android_asset/about.html");
-                intent.PutExtra(WebviewActivity.ExtraOpenLinksInNewActivity, true);
-                intent.PutExtra(WebviewActivity.ExtraShowVersionHeader, true);
-                intent.PutExtra(WebviewActivity.ExtraTitle, Resources.GetString(Resource.String.About));
+                intent.PutExtra(WebviewActivity.KeyUrl, "file:///android_asset/about.html");
+                intent.PutExtra(WebviewActivity.KeyOpenLinksInNewActivity, true);
+                intent.PutExtra(WebviewActivity.KeyShowVersionHeader, true);
+                intent.PutExtra(WebviewActivity.KeyTitle, Resources.GetString(Resource.String.About));
                 StartActivity(intent);
             };
 
@@ -95,10 +95,10 @@ namespace MyCC.Ui.Android.Views.Fragments
                 if (ConnectivityStatus.IsConnected)
                 {
                     var intent = new Intent(Context, typeof(WebviewActivity));
-                    intent.PutExtra(WebviewActivity.ExtraUrl, $"https://www.iubenda.com/privacy-policy/{Resources.GetString(Resource.String.PrivacyLinkId)}/full-legal");
-                    intent.PutExtra(WebviewActivity.ExtraOpenLinksInNewActivity, true);
-                    intent.PutExtra(WebviewActivity.ExtraShowVersionHeader, true);
-                    intent.PutExtra(WebviewActivity.ExtraTitle, Resources.GetString(Resource.String.Privacy));
+                    intent.PutExtra(WebviewActivity.KeyUrl, $"https://www.iubenda.com/privacy-policy/{Resources.GetString(Resource.String.PrivacyLinkId)}/full-legal");
+                    intent.PutExtra(WebviewActivity.KeyOpenLinksInNewActivity, true);
+                    intent.PutExtra(WebviewActivity.KeyShowVersionHeader, true);
+                    intent.PutExtra(WebviewActivity.KeyTitle, Resources.GetString(Resource.String.Privacy));
                     StartActivity(intent);
                 }
                 else
