@@ -12,6 +12,8 @@ namespace MyCC.Forms.iOS.Helpers
 
         public Tuple<double, double> CalculateWidth(string text, float? fontSize = null, bool bold = false)
         {
+            if (string.IsNullOrEmpty(text)) return Tuple.Create(.0, .0);
+
             var uiLabel = new UILabel { Text = text };
             if (fontSize.HasValue)
             {

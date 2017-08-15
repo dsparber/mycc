@@ -10,6 +10,7 @@ using MyCC.Core.Account.Repositories.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
+using MyCC.Core.Helpers;
 using MyCC.Ui.Android.Helpers;
 using MyCC.Ui.Android.Views.Fragments;
 
@@ -147,14 +148,22 @@ namespace MyCC.Ui.Android.Views.Activities
 
         private async void Save()
         {
-            var dialog = this.GetLoadingDialog(null, Resource.String.Testing);
-            dialog.Show();
+            try
+            {
+                var dialog = this.GetLoadingDialog(null, Resource.String.Testing);
+                dialog.Show();
 
-            var enabledStates = _repository.Elements.ToDictionary(a => a.Id, a => _enabled);
-            await UiUtils.Edit.Update(_repository, _address, _currency.Id, NameOrDefault, enabledStates, () => dialog.Dismiss());
+                var enabledStates = _repository.Elements.ToDictionary(a => a.Id, a => _enabled);
+                await UiUtils.Edit.Update(_repository, _address, _currency.Id, NameOrDefault, enabledStates,
+                    () => dialog.Dismiss());
 
-            dialog.Dismiss();
-            Finish();
+                dialog.Dismiss();
+                Finish();
+            }
+            catch (Exception e)
+            {
+                e.LogError();
+            }
         }
     }
 }
