@@ -25,9 +25,9 @@ namespace MyCC.Core.Currencies.Sources
 
             try
             {
-                var response = await HttpHelper.GetResponse(uri);
+                var response = await uri.GetResponse();
 
-                if (!response.IsSuccessStatusCode) return null;
+                if (!response.IsSuccessStatusCode) return new List<Currency>();
 
                 var content = await response.Content.ReadAsStringAsync();
                 var json = JObject.Parse(content);
