@@ -8,7 +8,7 @@ namespace MyCC.Core.Helpers
 {
     public static class HttpHelper
     {
-        private const int ClientDefaultBufferSize = 256000;
+        private const int ClientDefaultBufferSize = 1024 * 1024 * 1024;
 
         public static HttpClient CreateClient((string name, string value)? header = null)
         {

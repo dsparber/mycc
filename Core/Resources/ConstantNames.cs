@@ -28,5 +28,6 @@
         public const string OpenExchangeRates = "Open Exchange Rates";
         public const string Poloniex = "Poloniex";
         public const string ReddCoin = "ReddCoin";
+        public const string CoinMarketCap = "CoinMarketCap";
     }
 }

@@ -24,6 +24,7 @@ namespace MyCC.Core.Currencies
         {
             _sources = new List<ICurrencySource>
             {
+                new CoinMarketCapCurrencySource(),
                 new BittrexCurrencySource(),
                 new BlockExpertsCurrencySource(),
                 new CryptonatorCurrencySource(),

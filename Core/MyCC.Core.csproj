@@ -44,6 +44,7 @@
     <Compile Include="CoinInfo\Repositories\ReddCoinInfoRepository.cs" />
     <Compile Include="Currencies\CurrencyConstants.cs" />
     <Compile Include="Currencies\CurrencyHelper.cs" />
+    <Compile Include="Currencies\Sources\CoinMarketCapCurrencySource.cs" />
     <Compile Include="Database\DatabaseUtil.cs" />
     <Compile Include="Helpers\FlagHelper.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Rates\Models\ExchangeRateDbm.cs" />
     <Compile Include="Rates\Models\RateDescriptor.cs" />
     <Compile Include="Rates\ModelExtensions\RateDescriptorExtensionMethodes.cs" />
+    <Compile Include="Rates\Repositories\Implementations\CoinMarketCapExchangeRateSource.cs" />
     <Compile Include="Rates\Repositories\Utils\MultiUriJsonRateSource.cs" />
     <Compile Include="Rates\Repositories\Implementations\BitPayExchangeRateSource.cs" />
     <Compile Include="Rates\Repositories\Implementations\ItBitExchangeRateSource.cs" />

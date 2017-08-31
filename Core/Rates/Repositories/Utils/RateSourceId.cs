@@ -13,6 +13,7 @@
         BitPay = 9,
         Bitfinex = 10,
         Coinapult = 11,
-        ItBit = 12
+        ItBit = 12,
+        CoinMarketCap = 13
     }
 }

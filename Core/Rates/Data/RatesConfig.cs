@@ -16,6 +16,7 @@ namespace MyCC.Core.Rates.Data
 
         public static readonly IEnumerable<IRateSource> Sources = new IRateSource[] {
             new BittrexExchangeRateSource(),
+            new CoinMarketCapExchangeRateSource(),
             new BtceExchangeRateSource(),
             new CryptonatorExchangeRateSource(),
             new FixerIoExchangeRateSource(),
