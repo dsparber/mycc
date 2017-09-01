@@ -1,4 +1,5 @@
-﻿using MyCC.Core.Currencies.Models;
+﻿
+using MyCC.Core.Currencies.Models;
 
 namespace MyCC.Core.Currencies
 {
@@ -12,5 +13,6 @@ namespace MyCC.Core.Currencies
         public const int FlagBlockExperts = 1 << 1;
         public const int FlagCryptoId = 1 << 2;
         public const int FlagCryptonator = 1 << 3;
+        public const int FlagCoinMarketCap = 1 << 4;
     }
 }

@@ -40,6 +40,7 @@
     <Compile Include="Account\Repositories\Implementations\PoloniexAccountRepository.cs" />
     <Compile Include="Account\Repositories\Implementations\EthereumClassicAccountRepository.cs" />
     <Compile Include="Account\Repositories\Implementations\ReddCoinAccountRepository.cs" />
+    <Compile Include="CoinInfo\Repositories\CoinMarketCapInfoRepository.cs" />
     <Compile Include="CoinInfo\Repositories\EtcchainCoinInfoRepository.cs" />
     <Compile Include="CoinInfo\Repositories\ReddCoinInfoRepository.cs" />
     <Compile Include="Currencies\CurrencyConstants.cs" />

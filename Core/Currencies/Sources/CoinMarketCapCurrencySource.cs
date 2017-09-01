@@ -21,7 +21,7 @@ namespace MyCC.Core.Currencies.Sources
             try
             {
                 var response = (JArray)await new Uri(UrlCurrencyList).GetJson();
-                return response.Select(token => new Currency((string)token["symbol"], (string)token["name"], true));
+                return response.Select(token => new Currency((string)token["symbol"], (string)token["name"], true) { BalanceSourceFlags = CurrencyConstants.FlagCoinMarketCap });
             }
             catch (Exception e)
             {

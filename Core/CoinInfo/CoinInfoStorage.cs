@@ -23,13 +23,14 @@ namespace MyCC.Core.CoinInfo
             _dbConnection.CreateTableAsync<CoinInfoData>();
 
             _repositories = new List<ICoinInfoRepository> {
-                new CryptoIdCoinInfoRepository(),
-                new BlockExpertsCoinInfoRepository(),
                 new BlockchainCoinInfoRepository(),
                 new BlockrCoinInfoRepository(),
                 new EtherchainCoinInfoRepository(),
                 new EtcchainCoinInfoRepository(),
-                new ReddCoinInfoRepository()
+                new ReddCoinInfoRepository(),
+                new CoinMarketCapInfoRepository(),
+                new CryptoIdCoinInfoRepository(),
+                new BlockExpertsCoinInfoRepository()
             };
         }
 
