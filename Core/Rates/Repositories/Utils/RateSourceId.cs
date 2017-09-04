@@ -14,6 +14,7 @@
         Bitfinex = 10,
         Coinapult = 11,
         ItBit = 12,
-        CoinMarketCap = 13
+        CoinMarketCap = 13,
+        Poloniex = 14
     }
 }

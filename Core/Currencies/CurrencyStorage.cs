@@ -26,6 +26,7 @@ namespace MyCC.Core.Currencies
             {
                 new CoinMarketCapCurrencySource(),
                 new BittrexCurrencySource(),
+                new PoloniexCurrencySource(),
                 new BlockExpertsCurrencySource(),
                 new CryptonatorCurrencySource(),
                 new CryptoIdCurrencySource(),

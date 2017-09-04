@@ -14,5 +14,6 @@ namespace MyCC.Core.Currencies
         public const int FlagCryptoId = 1 << 2;
         public const int FlagCryptonator = 1 << 3;
         public const int FlagCoinMarketCap = 1 << 4;
+        public const int FlagPoloniex = 1 << 5;
     }
 }
