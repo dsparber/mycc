@@ -34,9 +34,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Account\Helper\AccountStringHelper.cs" />
+    <Compile Include="Account\Models\Implementations\BitcoinCashAccount.cs" />
     <Compile Include="Account\Models\Implementations\PoloniexAccount.cs" />
     <Compile Include="Account\Models\Implementations\ReddCoinAccount.cs" />
     <Compile Include="Account\Models\Implementations\EthereumClassicAccount.cs" />
+    <Compile Include="Account\Repositories\Implementations\BitcoinCashAccountRepository.cs" />
     <Compile Include="Account\Repositories\Implementations\PoloniexAccountRepository.cs" />
     <Compile Include="Account\Repositories\Implementations\EthereumClassicAccountRepository.cs" />
     <Compile Include="Account\Repositories\Implementations\ReddCoinAccountRepository.cs" />

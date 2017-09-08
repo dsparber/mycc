@@ -29,5 +29,6 @@
         public const string Poloniex = "Poloniex";
         public const string ReddCoin = "ReddCoin";
         public const string CoinMarketCap = "CoinMarketCap";
+        public const string CashExplorer = "CashExplorer";
     }
 }

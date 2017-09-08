@@ -20,6 +20,7 @@ namespace MyCC.Core.Account.Database
         public const int DbTypeEthereumClassicRepository = 8;
         public const int DbTypeReddCoinRepository = 9;
         public const int DbTypePoloniexRepository = 10;
+        public const int DbTypeBitcoinCashRepository = 11;
 
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
@@ -64,6 +65,7 @@ namespace MyCC.Core.Account.Database
                     case DbTypeBittrexRepository: return new BittrexAccountRepository(Id, Name, Data);
                     case DbTypeBlockExpertsRepository: return new BlockExpertsAccountRepository(Id, Name, Data);
                     case DbTypeBlockchainRepository: return new BlockchainAccountRepository(Id, Name, Data);
+                    case DbTypeBitcoinCashRepository: return new BitcoinCashAccountRepository(Id, Name, Data);
                     case DbTypeEthereumRepository: return new EthereumAccountRepository(Id, Name, Data);
                     case DbTypeCryptoidRepository: return new CryptoIdAccountRepository(Id, Name, Data);
                     case DbTypeBlockchainXpubRepository: return new BlockchainXpubAccountRepository(Id, Name, Data);

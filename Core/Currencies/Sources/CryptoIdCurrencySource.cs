@@ -11,7 +11,7 @@ namespace MyCC.Core.Currencies.Sources
 {
     internal class CryptoIdCurrencySource : ICurrencySource
     {
-        private const string UrlCurrencyList = "https://chainz.cryptoid.info/explorer/api.dws?q=summary";
+        private const string UrlCurrencyList = "https://chainz.cryptoid.info/2give/api.dws?q=summary";
 
         public string Name => ConstantNames.CryptoId;
 

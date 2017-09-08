@@ -110,6 +110,7 @@ namespace MyCC.Core.Account.Repositories.Base
         private static IEnumerable<AddressAccountRepository> Repositories(string name, Currency currency, string address) => new AddressAccountRepository[]
         {
             new BlockchainAccountRepository(default(int), name, address),
+            new BitcoinCashAccountRepository(default(int), name, address),
             new EthereumAccountRepository(default(int), name, address),
             new EthereumClassicAccountRepository(default(int), name, address),
             new ReddCoinAccountRepository(default(int), name, address),

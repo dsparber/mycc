@@ -75,6 +75,7 @@ namespace MyCC.Core.Account.Database
             if (repository is ReddCoinAccountRepository) return new ReddCoinAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (ReddCoinAccountRepository)repository);
             if (repository is EthereumClassicAccountRepository) return new EthereumClassicAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (EthereumClassicAccountRepository)repository);
             if (repository is PoloniexAccountRepository) return new PoloniexAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (PoloniexAccountRepository)repository);
+            if (repository is BitcoinCashAccountRepository) return new BitcoinCashAccount(Id, Name, money, IsEnabled ?? true, lastUpdate, (BitcoinCashAccountRepository)repository);
             return null;
         }
 
