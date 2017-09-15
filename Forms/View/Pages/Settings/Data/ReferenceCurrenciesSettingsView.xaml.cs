@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Currencies;
@@ -10,6 +10,7 @@ using MyCC.Forms.View.Components.Cells;
 using MyCC.Forms.View.Components.CellViews;
 using MyCC.Forms.View.Overlays;
 using MyCC.Ui;
+using MyCC.Ui.Messages;
 
 namespace MyCC.Forms.View.Pages.Settings.Data
 {
@@ -20,7 +21,13 @@ namespace MyCC.Forms.View.Pages.Settings.Data
             InitializeComponent();
 
             Header.Info = PluralHelper.GetTextCurrencies(ApplicationSettings.AllReferenceCurrencies.Count());
+            SetCells();
+            Messaging.Modified.ReferenceCurrencies.Subscribe(this, SetCells);
+        }
 
+        private void SetCells()
+        {
+            CurrenciesSection.Clear();
             foreach (var currency in ApplicationSettings.AllReferenceCurrencies.OrderBy(id => id))
             {
                 var cell = GetCell(currency);
@@ -39,7 +46,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
             Navigation.PushAsync(overlay);
         }
 
-        private CustomViewCell GetCell(string currencyId)
+        private static CustomViewCell GetCell(string currencyId)
         {
             var currency = currencyId.Find();
 

@@ -18,7 +18,7 @@ namespace MyCC.Core.Rates.Data
             new BittrexExchangeRateSource(),
             new PoloniexExchangeRateSource(),
             new CoinMarketCapExchangeRateSource(),
-            new BtceExchangeRateSource(),
+            // new BtceExchangeRateSource(),
             new CryptonatorExchangeRateSource(),
             new FixerIoExchangeRateSource(),
             new BitstampExchangeRateSource(),

@@ -89,6 +89,8 @@ namespace MyCC.Forms.View.Pages
         {
             var currencies = ApplicationSettings.MainCurrencies.ToList();
             var position = HeaderCarousel.Position < currencies.Count || HeaderCarousel.Position > 0 ? HeaderCarousel.Position : currencies.Count - 1;
+            if (position < 0 || position > currencies.Count - 1)
+                return;
 
             ApplicationSettings.StartupCurrencyRates = currencies[position];
             if (_lastCurrencyId.Equals(ApplicationSettings.StartupCurrencyRates)) return;
@@ -117,6 +119,7 @@ namespace MyCC.Forms.View.Pages
             Messaging.Status.CarouselPosition.Subscribe(this, () => HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyRates));
             Messaging.Status.Progress.SubscribeFinished(this, () => Device.BeginInvokeOnMainThread(() => _pullToRefresh.IsRefreshing = false));
             Messaging.Update.Rates.Subscribe(this, SetData);
+            Messaging.Modified.ReferenceCurrencies.Subscribe(this, SetHeaderCarousel);
         }
 
         private void Refresh()

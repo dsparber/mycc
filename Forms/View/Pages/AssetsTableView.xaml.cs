@@ -133,6 +133,7 @@ namespace MyCC.Forms.View.Pages
             Messaging.Status.Progress.SubscribeFinished(this, () => Device.BeginInvokeOnMainThread(() => _pullToRefresh.IsRefreshing = false));
             Messaging.Update.Rates.Subscribe(this, UpdateView);
             Messaging.Update.Balances.Subscribe(this, UpdateView);
+            Messaging.Modified.ReferenceCurrencies.Subscribe(this, SetHeaderCarousel);
         }
 
         private async void Refresh()

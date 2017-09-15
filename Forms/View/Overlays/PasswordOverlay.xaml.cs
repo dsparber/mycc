@@ -115,17 +115,26 @@ namespace MyCC.Forms.View.Overlays
                 {
                     await Navigation.PushModalAsync(TabContainerView.Get);
                     Messaging.Status.DarkStatusBar.Send(false);
-                } 
+                }
                 catch (System.InvalidOperationException)
                 {
-					Messaging.Status.DarkStatusBar.Send(false);
-					await Navigation.PopModalAsync();
+                    Messaging.Status.DarkStatusBar.Send(false);
+                    await Navigation.PopModalAsync();
                 }
             }
             else
             {
-                Messaging.Status.DarkStatusBar.Send(false);
-                await Navigation.PopModalAsync();
+                try
+                {
+                    Messaging.Status.DarkStatusBar.Send(false);
+                    await Navigation.PopModalAsync();
+
+                }
+                catch (System.InvalidOperationException)
+                {
+                    await Navigation.PushModalAsync(TabContainerView.Get);
+                    Messaging.Status.DarkStatusBar.Send(false);
+                }
             }
         }
     }

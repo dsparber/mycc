@@ -75,7 +75,7 @@ namespace MyCC.Forms.View.Components.Table
             {
                 _headerClickCallbacks.Clear();
                 _currentId = 0;
-                _webView.CallJsFunction("setHeader", UiUtils.Get.Assets.SortButtonsFor(_currencyId).Select(button => new HeaderData(button, _currentId += 1, this)), string.Empty);
+                _webView.CallJsFunction("setHeader", UiUtils.Get.Assets.SortButtonsFor(_currencyId)?.Select(button => new HeaderData(button, _currentId += 1, this)), string.Empty);
                 _webView.CallJsFunction("updateTable", items.ToArray(), CultureInfo.CurrentCulture.Name);
             });
         }

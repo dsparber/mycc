@@ -16,7 +16,7 @@ namespace MyCC.Core.Rates.Data
         private static readonly object SaveToDatabaseLock = new object();
         private static bool _loadedFromDatabase;
 
-        public static IEnumerable<ExchangeRate> CryptoToFiatRates => _exchangeRates.Where(rate => GetSourceFor(rate).Type == RateSourceType.CryptoToFiat);
+        public static IEnumerable<ExchangeRate> CryptoToFiatRates => _exchangeRates.Where(rate => GetSourceFor(rate)?.Type == RateSourceType.CryptoToFiat);
 
         public static async Task LoadFromDatabase()
         {
