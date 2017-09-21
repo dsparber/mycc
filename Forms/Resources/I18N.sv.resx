@@ -1,17 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,79 +26,79 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,4 +117,510 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Om</value>
+  </data>
+  <data name="AccountInformation" xml:space="preserve">
+    <value>Konto Information</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Konton</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Lägga till</value>
+  </data>
+  <data name="AdditionalCurrencies" xml:space="preserve">
+    <value>Ytterligare valutor</value>
+  </data>
+  <data name="AdditionalRates" xml:space="preserve">
+    <value>Ytterligare kurser</value>
+  </data>
+  <data name="AddRate" xml:space="preserve">
+    <value>Lägg till kurs</value>
+  </data>
+  <data name="AddReferenceCurrency" xml:space="preserve">
+    <value>Lägg till referensvaluta</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Adress</value>
+  </data>
+  <data name="AddressAdded" xml:space="preserve">
+    <value>Tillagd med adress</value>
+  </data>
+  <data name="AddSource" xml:space="preserve">
+    <value>Ny källa</value>
+  </data>
+  <data name="AllCurrencies" xml:space="preserve">
+    <value>Alla valutor</value>
+  </data>
+  <data name="AllCurrenciesFromAccounts" xml:space="preserve">
+    <value>Alla valutor från konton</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Belopp</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>MyCC</value>
+  </data>
+  <data name="AppNameLong" xml:space="preserve">
+    <value>Mina kryptovalutor</value>
+  </data>
+  <data name="AreEqualTo" xml:space="preserve">
+    <value>{0} är lika med</value>
+  </data>
+  <data name="AsCurrency" xml:space="preserve">
+    <value>som {0}</value>
+  </data>
+  <data name="Assets" xml:space="preserve">
+    <value>Tillgångar</value>
+  </data>
+  <data name="AvailableCurrencies" xml:space="preserve">
+    <value>Tillgänglig valuta</value>
+  </data>
+  <data name="AvailableRates" xml:space="preserve">
+    <value>Tillgänglig kurser</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>Saldo</value>
+  </data>
+  <data name="BalanceAvailable" xml:space="preserve">
+    <value>Disponibelt saldo</value>
+  </data>
+  <data name="BalanceAvailableAddress" xml:space="preserve">
+    <value>Saldo via adressen</value>
+  </data>
+  <data name="BalanceAvailableBittrex" xml:space="preserve">
+    <value>Saldo via Bittrex</value>
+  </data>
+  <data name="BitcoinCanNotBeRemoved" xml:space="preserve">
+    <value>Bitcoin kan inte tas bort.</value>
+  </data>
+  <data name="AddedWith" xml:space="preserve">
+    <value>Adderat med {0}</value>
+  </data>
+  <data name="ApiKey" xml:space="preserve">
+    <value>Nyckel</value>
+  </data>
+  <data name="ApiSecret" xml:space="preserve">
+    <value>Hemligt</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Avboka</value>
+  </data>
+  <data name="ChangePin" xml:space="preserve">
+    <value>Ändra PIN-kod</value>
+  </data>
+  <data name="CoinName" xml:space="preserve">
+    <value>Namn</value>
+  </data>
+  <data name="CoinAlgorithm" xml:space="preserve">
+    <value>Algoritm</value>
+  </data>
+  <data name="CoinBlockHeight" xml:space="preserve">
+    <value>Block höjd</value>
+  </data>
+  <data name="CoinBlockReward" xml:space="preserve">
+    <value>Block belöning</value>
+  </data>
+  <data name="CoinBlocktime" xml:space="preserve">
+    <value>Block tid</value>
+  </data>
+  <data name="CoinDifficulty" xml:space="preserve">
+    <value>Svårighet</value>
+  </data>
+  <data name="CoinExplorer" xml:space="preserve">
+    <value>Mynt explorer</value>
+  </data>
+  <data name="CoinHashrate" xml:space="preserve">
+    <value>Hashrate</value>
+  </data>
+  <data name="CoinMarketCap" xml:space="preserve">
+    <value>Börsvärde</value>
+  </data>
+  <data name="CoinProofOfStake" xml:space="preserve">
+    <value>PoS</value>
+  </data>
+  <data name="CoinProofOfWork" xml:space="preserve">
+    <value>PoW</value>
+  </data>
+  <data name="CoinSupply" xml:space="preserve">
+    <value>Mynt tillgång</value>
+  </data>
+  <data name="CoinSupplyMax" xml:space="preserve">
+    <value>Max. mynt tillgång</value>
+  </data>
+  <data name="CoinType" xml:space="preserve">
+    <value>Skriv</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>© Ing. Georg Sparber</value>
+  </data>
+  <data name="Cryptocurrencies" xml:space="preserve">
+    <value>Kryptovalutor</value>
+  </data>
+  <data name="Currencies" xml:space="preserve">
+    <value>Valutor</value>
+  </data>
+  <data name="CurrenciesForRateView" xml:space="preserve">
+    <value>Valutor för kurs vyn
+</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Valuta</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>Valuta kod</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="DefaultPageInfo" xml:space="preserve">
+    <value>Den markerade vyn presenteras när programmet startar.</value>
+  </data>
+  <data name="DefaultView" xml:space="preserve">
+    <value>Standardvyn</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Ta bort</value>
+  </data>
+  <data name="Deleting" xml:space="preserve">
+    <value>Tas bort</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detaljer</value>
+  </data>
+  <data name="DevelopedBy" xml:space="preserve">
+    <value>Utvecklats av Daniel Sparber</value>
+  </data>
+  <data name="DisabledAccounts" xml:space="preserve">
+    <value>Inaktiverade konton</value>
+  </data>
+  <data name="DisablePin" xml:space="preserve">
+    <value>Inaktivera PIN-kod</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Redigera</value>
+  </data>
+  <data name="Editing" xml:space="preserve">
+    <value>Redigerar</value>
+  </data>
+  <data name="EnableAccount" xml:space="preserve">
+    <value>Aktivera konto</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>aktiverat</value>
+  </data>
+  <data name="EnabledInOverview" xml:space="preserve">
+    <value>Visas i översikten</value>
+  </data>
+  <data name="EnablePin" xml:space="preserve">
+    <value>Aktivera PIN</value>
+  </data>
+  <data name="EqualTo" xml:space="preserve">
+    <value>Lika med</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Fel</value>
+  </data>
+  <data name="ErrorRefreshingNotPossibleWithoutInternet" xml:space="preserve">
+    <value>Det går inte att uppdatera utan Internetanslutning.</value>
+  </data>
+  <data name="Fetching" xml:space="preserve">
+    <value>Nerladdning</value>
+  </data>
+  <data name="FetchingNoSuccessText" xml:space="preserve">
+    <value>Fel! Misslyckad nerladdning av data. Ingen balans hittades!</value>
+  </data>
+  <data name="FiatCurrencies" xml:space="preserve">
+    <value>Fiat valutor</value>
+  </data>
+  <data name="FingerprintActive" xml:space="preserve">
+    <value>PIN och fingeravtryck aktiva</value>
+  </data>
+  <data name="Further" xml:space="preserve">
+    <value>Ytterligare</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Allmänt</value>
+  </data>
+  <data name="GeneralError" xml:space="preserve">
+    <value>Ett oväntat fel uppstod</value>
+  </data>
+  <data name="GHps" xml:space="preserve">
+    <value>GH/s</value>
+  </data>
+  <data name="GoToSourcesToAddAccount" xml:space="preserve">
+    <value>Du kan gå till inställningssidan för att lägga till data.</value>
+  </data>
+  <data name="Graph" xml:space="preserve">
+    <value>Graf</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="InfoNoDirectRate" xml:space="preserve">
+    <value>Ingen direkt kurs hittad. Denna kurs beräknas via USD.</value>
+  </data>
+  <data name="IsEqualTo" xml:space="preserve">
+    <value>{0} är lika med</value>
+  </data>
+  <data name="Label" xml:space="preserve">
+    <value>Etikett</value>
+  </data>
+  <data name="LastChange" xml:space="preserve">
+    <value>Senaste ändringen</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Senaste uppdateringen</value>
+  </data>
+  <data name="LoadingCurrencies" xml:space="preserve">
+    <value>Laddar valutor</value>
+  </data>
+  <data name="LoadRatesAndBalancesOnStartup" xml:space="preserve">
+    <value>Uppdatera kurser och saldon vid start</value>
+  </data>
+  <data name="Local" xml:space="preserve">
+    <value>lokala</value>
+  </data>
+  <data name="Manually" xml:space="preserve">
+    <value>Manuellt</value>
+  </data>
+  <data name="ManuallyAdded" xml:space="preserve">
+    <value>Lagts till manuellt</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Namn</value>
+  </data>
+  <data name="NetworkError" xml:space="preserve">
+    <value>En internet-anslutning kunde inte fastställas. Vänligen kontrollera att din telefon har tillgång till internet.</value>
+  </data>
+  <data name="Never" xml:space="preserve">
+    <value>Aldrig</value>
+  </data>
+  <data name="NewPin" xml:space="preserve">
+    <value>Ny PIN</value>
+  </data>
+  <data name="NewPinsDontMatch" xml:space="preserve">
+    <value>De nya PIN-koden matchar inte!</value>
+  </data>
+  <data name="NewSource" xml:space="preserve">
+    <value>Ny källa</value>
+  </data>
+  <data name="NoAccounts" xml:space="preserve">
+    <value>Inget konto</value>
+  </data>
+  <data name="NoCurrencies" xml:space="preserve">
+    <value>Ingen valuta</value>
+  </data>
+  <data name="NoDataToDisplay" xml:space="preserve">
+    <value>Ingen data att visa</value>
+  </data>
+  <data name="NoInternetAccess" xml:space="preserve">
+    <value>Ingen Internet tillgång</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Ingen</value>
+  </data>
+  <data name="NoSources" xml:space="preserve">
+    <value>Inget ursprung</value>
+  </data>
+  <data name="NoSourcesDescriptionAdd" xml:space="preserve">
+    <value>Du kan lätt lägga till ett ursprung genom att trycka på lägg till knappen (+).</value>
+  </data>
+  <data name="NotConfigured" xml:space="preserve">
+    <value>Inte konfigurerad</value>
+  </data>
+  <data name="Offline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="OldPin" xml:space="preserve">
+    <value>Gammal PIN</value>
+  </data>
+  <data name="OldPinWrong" xml:space="preserve">
+    <value>Angivna gamla PIN-koden är fel!</value>
+  </data>
+  <data name="OneAccount" xml:space="preserve">
+    <value>Ett konto</value>
+  </data>
+  <data name="OneCurrency" xml:space="preserve">
+    <value>En valuta</value>
+  </data>
+  <data name="OneSource" xml:space="preserve">
+    <value>En källa</value>
+  </data>
+  <data name="Online" xml:space="preserve">
+    <value>online</value>
+  </data>
+  <data name="OnlyThreeCurrenciesCanBeStared" xml:space="preserve">
+    <value>Enbart tre valutor kan märkas med en stjärna.</value>
+  </data>
+  <data name="OtherwiseTruncate" xml:space="preserve">
+    <value>Annars avkortas siffror</value>
+  </data>
+  <data name="Pin" xml:space="preserve">
+    <value>PIN</value>
+  </data>
+  <data name="PinActive" xml:space="preserve">
+    <value>PIN aktiv</value>
+  </data>
+  <data name="PinToShort" xml:space="preserve">
+    <value>Den angivna PIN-koden är för kort!</value>
+  </data>
+  <data name="PreferredBitcoinRate" xml:space="preserve">
+    <value>Rekommenderad Bitcoin växelkurs</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="PrivacyLinkId" xml:space="preserve">
+    <value>8085117</value>
+  </data>
+  <data name="QrCode" xml:space="preserve">
+    <value>QR-kod</value>
+  </data>
+  <data name="Rates" xml:space="preserve">
+    <value>Kurser</value>
+  </data>
+  <data name="RatesCurrenciesInfo" xml:space="preserve">
+    <value>Kurs vyn visar alla angivna konton, plus följande valutor.</value>
+  </data>
+  <data name="ReferenceCurrencies" xml:space="preserve">
+    <value>Referens valutor</value>
+  </data>
+  <data name="ReferenceCurrencyInfoP1" xml:space="preserve">
+    <value>Värdet på alla mynt, ett mynt eller ett konto visas för följande valutor.</value>
+  </data>
+  <data name="ReferenceCurrencyInfoP2" xml:space="preserve">
+    <value>Inom den gyllene rubriken visas värdena av stjärnmärkta valutor.</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Uppdateras ...</value>
+  </data>
+  <data name="RefreshOnStartup" xml:space="preserve">
+    <value>Uppdatera vid start</value>
+  </data>
+  <data name="RepeatNewPin" xml:space="preserve">
+    <value>Upprepa PIN</value>
+  </data>
+  <data name="RepositoryAlreadyAdded" xml:space="preserve">
+    <value>Den angivna källan var redan tillagd!</value>
+  </data>
+  <data name="RoundNumbers" xml:space="preserve">
+    <value>Runda tal</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Spara</value>
+  </data>
+  <data name="ScanQrCode" xml:space="preserve">
+    <value>Skanna QR koden</value>
+  </data>
+  <data name="SearchCurrencies" xml:space="preserve">
+    <value>Sök valutor</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Säkerhet</value>
+  </data>
+  <data name="SelectCurrency" xml:space="preserve">
+    <value>Välj valuta</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Inställningar</value>
+  </data>
+  <data name="ShowQrCode" xml:space="preserve">
+    <value>Visa QR-kod</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Källa</value>
+  </data>
+  <data name="Sources" xml:space="preserve">
+    <value>Källor</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>Tabell</value>
+  </data>
+  <data name="Testing" xml:space="preserve">
+    <value>Testning</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Skriv</value>
+  </data>
+  <data name="UnitSecond" xml:space="preserve">
+    <value>s</value>
+  </data>
+  <data name="UnlockApplication" xml:space="preserve">
+    <value>Låsa upp appen</value>
+  </data>
+  <data name="Unnamed" xml:space="preserve">
+    <value>Namnlös</value>
+  </data>
+  <data name="UseFingerprint" xml:space="preserve">
+    <value>Använd fingeravtryck</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Nummer</value>
+  </data>
+  <data name="VerifyInput" xml:space="preserve">
+    <value>Vänligen kontrollera din data!</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="PinWrong" xml:space="preserve">
+    <value>Fel PIN-kod angiven</value>
+  </data>
+  <data name="fingerprint_hint" xml:space="preserve">
+    <value>Touch-sensorn</value>
+  </data>
+  <data name="AuthenticationFailed" xml:space="preserve">
+    <value>Autentisering misslyckades</value>
+  </data>
+  <data name="UseShakeGesture" xml:space="preserve">
+    <value>Aktivera screenlock när du skakar enheten</value>
+  </data>
+  <data name="InternetIsNeededForInitialisation" xml:space="preserve">
+    <value>Innan du använder MyCC för första gången, måste valutor och tillgängliga priser laddas. Vänligen aktivera ditt internet.</value>
+  </data>
+  <data name="LoadingCurrenciesFrom" xml:space="preserve">
+    <value>Läser in valutor från {0}</value>
+  </data>
+  <data name="LoadingRates" xml:space="preserve">
+    <value>Laddning pågår av behövda valutakurser</value>
+  </data>
+  <data name="SavingSource" xml:space="preserve">
+    <value>Sparar källan</value>
+  </data>
+  <data name="AssetsColumnToHide" xml:space="preserve">
+    <value>Dölja tillgångar kolumn</value>
+  </data>
+  <data name="AssetsColumnToHideDescription" xml:space="preserve">
+    <value>Dölja en kolumn i tillgångs tabellen när det inte finns tillräckligt med utrymme</value>
+  </data>
+  <data name="ReferenceValue" xml:space="preserve">
+    <value>Referensvärdet</value>
+  </data>
+  <data name="InitialiseApp" xml:space="preserve">
+    <value>Initiera appen</value>
+  </data>
+  <data name="AllInfos" xml:space="preserve">
+    <value>Alla infos</value>
+  </data>
+  <data name="AddressOnly" xml:space="preserve">
+    <value>Enbart adressen</value>
+  </data>
+  <data name="UpdatingBalancesAndRates" xml:space="preserve">
+    <value>Uppdaterar saldon och priser</value>
+  </data>
+  <data name="SecureXpub" xml:space="preserve">
+    <value>Säkerthets xpub</value>
+  </data>
+  <data name="OpenInBlockExplorer" xml:space="preserve">
+    <value>Öppna i block explorer</value>
+  </data>
+
 </root>
