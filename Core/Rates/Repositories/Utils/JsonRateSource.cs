@@ -28,8 +28,8 @@ namespace MyCC.Core.Rates.Repositories.Utils
                 var json = await Uri.GetJson();
                 var jsonRates = GetRatesFromJson(json);
                 if (jsonRates != null)
-                {
-                    var rates = jsonRates.Where(tuple => tuple.rate != null && (descriptorList.Contains(tuple.rateDescriptor) || descriptorList.Contains(tuple.rateDescriptor.Inverse())))
+                                           {
+                    var rates = jsonRates.Where(tuple => tuple.rate != null && tuple.rate > 0 && (descriptorList.Contains(tuple.rateDescriptor) || descriptorList.Contains(tuple.rateDescriptor.Inverse())))
                         .Select(tuple => new ExchangeRate(tuple.rateDescriptor, tuple.rate.Value, Id, DateTime.Now));
                     return rates;
                 }

@@ -24,7 +24,7 @@ namespace MyCC.Core.Rates.Models
             Descriptor = descriptor;
 
             Id = $"{descriptor.Id}_{sourceId}";
-            _rate = Math.Round(rate, 8);
+            _rate = rate;
             _lastUpdate = lastUpate ?? default(DateTime);
         }
 
