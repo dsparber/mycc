@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CurrencyCode" xml:space="preserve">
-    <value>Código de moneda</value>
+  <data name="About" xml:space="preserve">
+    <value>Acerca de</value>
   </data>
   <data name="AccountInformation" xml:space="preserve">
     <value>Información de la cuenta</value>
@@ -132,6 +132,15 @@
   <data name="AdditionalCurrencies" xml:space="preserve">
     <value>Monedas adicionales</value>
   </data>
+  <data name="AdditionalRates" xml:space="preserve">
+    <value>Tarifas adicionales</value>
+  </data>
+  <data name="AddRate" xml:space="preserve">
+    <value>Añadir tasa</value>
+  </data>
+  <data name="AddReferenceCurrency" xml:space="preserve">
+    <value>Añadir moneda de referencia</value>
+  </data>
   <data name="Address" xml:space="preserve">
     <value>Dirección</value>
   </data>
@@ -141,8 +150,8 @@
   <data name="AddSource" xml:space="preserve">
     <value>Nueva fuente</value>
   </data>
-  <data name="CoinAlgorithm" xml:space="preserve">
-    <value>Algoritmo</value>
+  <data name="AllCurrencies" xml:space="preserve">
+    <value>Todas las monedas</value>
   </data>
   <data name="AllCurrenciesFromAccounts" xml:space="preserve">
     <value>Todas las monedas de las cuentas</value>
@@ -150,11 +159,14 @@
   <data name="Amount" xml:space="preserve">
     <value>Monto</value>
   </data>
-  <data name="ApiKey" xml:space="preserve">
-    <value>Clave</value>
+  <data name="AppName" xml:space="preserve">
+    <value>MyCC</value>
   </data>
   <data name="AppNameLong" xml:space="preserve">
     <value>Mis criptomonedas</value>
+  </data>
+  <data name="AreEqualTo" xml:space="preserve">
+    <value>{0} son iguales a</value>
   </data>
   <data name="AsCurrency" xml:space="preserve">
     <value>como {0}</value>
@@ -162,14 +174,47 @@
   <data name="Assets" xml:space="preserve">
     <value>Activos</value>
   </data>
+  <data name="AvailableCurrencies" xml:space="preserve">
+    <value>Monedas disponibles</value>
+  </data>
+  <data name="AvailableRates" xml:space="preserve">
+    <value>Tarifas disponibles</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>Saldo</value>
+  </data>
+  <data name="BalanceAvailable" xml:space="preserve">
+    <value>Saldo disponible</value>
+  </data>
+  <data name="BalanceAvailableAddress" xml:space="preserve">
+    <value>Saldo a través de la dirección</value>
+  </data>
+  <data name="BalanceAvailableBittrex" xml:space="preserve">
+    <value>Saldo a través de Bittrex</value>
+  </data>
   <data name="BitcoinCanNotBeRemoved" xml:space="preserve">
     <value>Bitcoin no puede ser eliminado.</value>
   </data>
   <data name="AddedWith" xml:space="preserve">
     <value>Agregado con {0}</value>
   </data>
-  <data name="CoinExplorer" xml:space="preserve">
-    <value>Explorador de moneda</value>
+  <data name="ApiKey" xml:space="preserve">
+    <value>Clave</value>
+  </data>
+  <data name="ApiSecret" xml:space="preserve">
+    <value>Clave secreta</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="ChangePin" xml:space="preserve">
+    <value>Cambiar PIN</value>
+  </data>
+  <data name="CoinName" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="CoinAlgorithm" xml:space="preserve">
+    <value>Algoritmo</value>
   </data>
   <data name="CoinBlockHeight" xml:space="preserve">
     <value>Altura del bloque</value>
@@ -180,14 +225,38 @@
   <data name="CoinBlocktime" xml:space="preserve">
     <value>Tiempo de bloqueo</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancelar</value>
+  <data name="CoinDifficulty" xml:space="preserve">
+    <value>Dificultad</value>
   </data>
-  <data name="ChangePin" xml:space="preserve">
-    <value>Cambiar PIN</value>
+  <data name="CoinExplorer" xml:space="preserve">
+    <value>Explorador de moneda</value>
+  </data>
+  <data name="CoinHashrate" xml:space="preserve">
+    <value>Tasa de hash</value>
+  </data>
+  <data name="CoinMarketCap" xml:space="preserve">
+    <value>Capitalización de mercado</value>
+  </data>
+  <data name="CoinProofOfStake" xml:space="preserve">
+    <value>PoS</value>
+  </data>
+  <data name="CoinProofOfWork" xml:space="preserve">
+    <value>PoW</value>
   </data>
   <data name="CoinSupply" xml:space="preserve">
     <value>Suministro de moneda</value>
+  </data>
+  <data name="CoinSupplyMax" xml:space="preserve">
+    <value>Max. suministro de moneda</value>
+  </data>
+  <data name="CoinType" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>© Ing. Georg Sparber</value>
+  </data>
+  <data name="Cryptocurrencies" xml:space="preserve">
+    <value>Criptomonedas</value>
   </data>
   <data name="Currencies" xml:space="preserve">
     <value>Monedas</value>
@@ -197,6 +266,9 @@
   </data>
   <data name="Currency" xml:space="preserve">
     <value>Moneda</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>Código de moneda</value>
   </data>
   <data name="Data" xml:space="preserve">
     <value>Datos</value>
@@ -213,8 +285,14 @@
   <data name="Deleting" xml:space="preserve">
     <value>Eliminando</value>
   </data>
-  <data name="CoinDifficulty" xml:space="preserve">
-    <value>Dificultad</value>
+  <data name="Details" xml:space="preserve">
+    <value>Detalles</value>
+  </data>
+  <data name="DevelopedBy" xml:space="preserve">
+    <value>Desarrollado por Daniel Sparber</value>
+  </data>
+  <data name="DisabledAccounts" xml:space="preserve">
+    <value>Cuentas deshabilitadas</value>
   </data>
   <data name="DisablePin" xml:space="preserve">
     <value>Desactivar PIN</value>
@@ -228,6 +306,15 @@
   <data name="Editing" xml:space="preserve">
     <value>Editando</value>
   </data>
+  <data name="EnableAccount" xml:space="preserve">
+    <value>Habilitar cuenta</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>activado</value>
+  </data>
+  <data name="EnabledInOverview" xml:space="preserve">
+    <value>Se muestra en el Resumen</value>
+  </data>
   <data name="EnablePin" xml:space="preserve">
     <value>Activar PIN</value>
   </data>
@@ -237,11 +324,17 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="ErrorRefreshingNotPossibleWithoutInternet" xml:space="preserve">
+    <value>Restauración no es posible sin una conexión a internet.</value>
+  </data>
   <data name="Fetching" xml:space="preserve">
     <value>Ir a buscar</value>
   </data>
   <data name="FetchingNoSuccessText" xml:space="preserve">
     <value>¡Error! Recuperar datos no tuvo éxito. ¡Ningún balance fue encontrado!</value>
+  </data>
+  <data name="FiatCurrencies" xml:space="preserve">
+    <value>Monedas Fiat</value>
   </data>
   <data name="FingerprintActive" xml:space="preserve">
     <value>PIN y huella digital activo</value>
@@ -264,17 +357,26 @@
   <data name="Graph" xml:space="preserve">
     <value>Gráfico</value>
   </data>
-  <data name="CoinHashrate" xml:space="preserve">
-    <value>Tasa de hash</value>
-  </data>
   <data name="Info" xml:space="preserve">
     <value>Info</value>
+  </data>
+  <data name="InfoNoDirectRate" xml:space="preserve">
+    <value>No fue encontrada la tasa. Esta tasa se calcula por medio de USD.</value>
   </data>
   <data name="IsEqualTo" xml:space="preserve">
     <value>{0} es igual a</value>
   </data>
   <data name="Label" xml:space="preserve">
     <value>Label</value>
+  </data>
+  <data name="LastChange" xml:space="preserve">
+    <value>Último cambio</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Última actualización</value>
+  </data>
+  <data name="LoadingCurrencies" xml:space="preserve">
+    <value>Cargando monedas</value>
   </data>
   <data name="LoadRatesAndBalancesOnStartup" xml:space="preserve">
     <value>Actualizar tasas y saldos al inicio</value>
@@ -288,17 +390,14 @@
   <data name="ManuallyAdded" xml:space="preserve">
     <value>Agregado manualmente</value>
   </data>
-  <data name="CoinMarketCap" xml:space="preserve">
-    <value>Capitalización de mercado</value>
-  </data>
-  <data name="CoinSupplyMax" xml:space="preserve">
-    <value>Max. suministro de moneda</value>
-  </data>
   <data name="Name" xml:space="preserve">
     <value>Nombre</value>
   </data>
   <data name="NetworkError" xml:space="preserve">
     <value>No se pudo establecer una conexión al internet. Por favor verifique que su teléfono tiene acceso a internet.</value>
+  </data>
+  <data name="Never" xml:space="preserve">
+    <value>Nunca</value>
   </data>
   <data name="NewPin" xml:space="preserve">
     <value>Nuevo PIN</value>
@@ -318,6 +417,12 @@
   <data name="NoDataToDisplay" xml:space="preserve">
     <value>No hay datos disponibles para mostrar</value>
   </data>
+  <data name="NoInternetAccess" xml:space="preserve">
+    <value>No hay acceso a Internet</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Ninguno</value>
+  </data>
   <data name="NoSources" xml:space="preserve">
     <value>No hay fuentes</value>
   </data>
@@ -326,6 +431,9 @@
   </data>
   <data name="NotConfigured" xml:space="preserve">
     <value>Sin configurar</value>
+  </data>
+  <data name="Offline" xml:space="preserve">
+    <value>Sin conexión</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Correcto</value>
@@ -363,11 +471,17 @@
   <data name="PinToShort" xml:space="preserve">
     <value>¡El PIN introducido es muy corto!</value>
   </data>
-  <data name="CoinProofOfStake" xml:space="preserve">
-    <value>PoS</value>
+  <data name="PreferredBitcoinRate" xml:space="preserve">
+    <value>Tipo de cambio de Bitcoin recomendado</value>
   </data>
-  <data name="CoinProofOfWork" xml:space="preserve">
-    <value>PoW</value>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacidad</value>
+  </data>
+  <data name="PrivacyLinkId" xml:space="preserve">
+    <value>8085117</value>
+  </data>
+  <data name="QrCode" xml:space="preserve">
+    <value>Código QR</value>
   </data>
   <data name="Rates" xml:space="preserve">
     <value>Tasas</value>
@@ -383,6 +497,9 @@
   </data>
   <data name="ReferenceCurrencyInfoP2" xml:space="preserve">
     <value>Los valores de las monedas Se muestran dentro de la cabecera dorada.</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Actualizando…</value>
   </data>
   <data name="RefreshOnStartup" xml:space="preserve">
     <value>Actualizar al iniciar</value>
@@ -405,9 +522,6 @@
   <data name="SearchCurrencies" xml:space="preserve">
     <value>Buscar monedas</value>
   </data>
-  <data name="ApiSecret" xml:space="preserve">
-    <value>Clave secreta</value>
-  </data>
   <data name="Security" xml:space="preserve">
     <value>Seguridad</value>
   </data>
@@ -416,6 +530,9 @@
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Ajustes</value>
+  </data>
+  <data name="ShowQrCode" xml:space="preserve">
+    <value>Mostrar código QR</value>
   </data>
   <data name="Source" xml:space="preserve">
     <value>Fuente</value>
@@ -435,6 +552,9 @@
   <data name="UnitSecond" xml:space="preserve">
     <value>s</value>
   </data>
+  <data name="UnlockApplication" xml:space="preserve">
+    <value>Desbloquear la aplicación</value>
+  </data>
   <data name="Unnamed" xml:space="preserve">
     <value>Sin nombre</value>
   </data>
@@ -447,125 +567,20 @@
   <data name="VerifyInput" xml:space="preserve">
     <value>Por favor verificar su entrada!</value>
   </data>
-  <data name="UnlockApplication" xml:space="preserve">
-    <value>Desbloquear la aplicación</value>
-  </data>
-  <data name="DevelopedBy" xml:space="preserve">
-    <value>Desarrollado por {0}</value>
-  </data>
-  <data name="About" xml:space="preserve">
-    <value>Acerca de</value>
-  </data>
   <data name="Version" xml:space="preserve">
     <value>Versión</value>
   </data>
-  <data name="ShowQrCode" xml:space="preserve">
-    <value>Mostrar código QR</value>
+  <data name="PinWrong" xml:space="preserve">
+    <value>PIN ingresado es incorrecto</value>
   </data>
-  <data name="EnableAccount" xml:space="preserve">
-    <value>Habilitar cuenta</value>
+  <data name="fingerprint_hint" xml:space="preserve">
+    <value>Sensor de contacto</value>
   </data>
-  <data name="EnabledInOverview" xml:space="preserve">
-    <value>Se muestra en el Resumen</value>
+  <data name="AuthenticationFailed" xml:space="preserve">
+    <value>La autenticación falló</value>
   </data>
-  <data name="LastUpdate" xml:space="preserve">
-    <value>Última actualización</value>
-  </data>
-  <data name="Never" xml:space="preserve">
-    <value>Nunca</value>
-  </data>
-  <data name="PreferredBitcoinRate" xml:space="preserve">
-    <value>Tipo de cambio de Bitcoin recomendado</value>
-  </data>
-  <data name="AvailableRates" xml:space="preserve">
-    <value>Tarifas disponibles</value>
-  </data>
-  <data name="InfoNoDirectRate" xml:space="preserve">
-    <value>No fue encontrada la tasa. Esta tasa se calcula por medio de USD.</value>
-  </data>
-  <data name="AreEqualTo" xml:space="preserve">
-    <value>{0} son iguales a</value>
-  </data>
-  <data name="Details" xml:space="preserve">
-    <value>Detalles</value>
-  </data>
-  <data name="QrCode" xml:space="preserve">
-    <value>Código QR</value>
-  </data>
-  <data name="RefreshingDots" xml:space="preserve">
-    <value>Actualizando…</value>
-  </data>
-  <data name="AddRate" xml:space="preserve">
-    <value>Añadir tasa</value>
-  </data>
-  <data name="AddReferenceCurrency" xml:space="preserve">
-    <value>Añadir moneda de referencia</value>
-  </data>
-  <data name="AdditionalRates" xml:space="preserve">
-    <value>Tarifas adicionales</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>Ninguno</value>
-  </data>
-  <data name="DisabledAccounts" xml:space="preserve">
-    <value>Cuentas deshabilitadas</value>
-  </data>
-  <data name="LastChange" xml:space="preserve">
-    <value>Último cambio</value>
-  </data>
-  <data name="Enabled" xml:space="preserve">
-    <value>activado</value>
-  </data>
-  <data name="AllCurrencies" xml:space="preserve">
-    <value>Todas las monedas</value>
-  </data>
-  <data name="AvailableCurrencies" xml:space="preserve">
-    <value>Monedas disponibles</value>
-  </data>
-  <data name="Cryptocurrencies" xml:space="preserve">
-    <value>Criptomonedas</value>
-  </data>
-  <data name="FiatCurrencies" xml:space="preserve">
-    <value>Monedas Fiat</value>
-  </data>
-  <data name="Balance" xml:space="preserve">
-    <value>Saldo</value>
-  </data>
-  <data name="BalanceAvailable" xml:space="preserve">
-    <value>Saldo disponible</value>
-  </data>
-  <data name="BalanceAvailableAddress" xml:space="preserve">
-    <value>Saldo a través de la dirección</value>
-  </data>
-  <data name="BalanceAvailableBittrex" xml:space="preserve">
-    <value>Saldo a través de Bittrex</value>
-  </data>
-  <data name="ErrorRefreshingNotPossibleWithoutInternet" xml:space="preserve">
-    <value>Restauración no es posible sin una conexión a internet.</value>
-  </data>
-  <data name="NoInternetAccess" xml:space="preserve">
-    <value>No hay acceso a Internet</value>
-  </data>
-  <data name="Offline" xml:space="preserve">
-    <value>Sin conexión</value>
-  </data>
-  <data name="LoadingCurrencies" xml:space="preserve">
-    <value>Cargando monedas</value>
-  </data>
-  <data name="Privacy" xml:space="preserve">
-    <value>Privacidad</value>
-  </data>
-  <data name="PrivacyLinkId" xml:space="preserve">
-    <value>8085117</value>
-  </data>
-  <data name="AssetsColumnToHide" xml:space="preserve">
-    <value>Ocultar columna de activos</value>
-  </data>
-  <data name="AssetsColumnToHideDescription" xml:space="preserve">
-    <value>Ocultar una columna de la tabla de activos cuando no hay suficiente espacio</value>
-  </data>
-  <data name="InitialiseApp" xml:space="preserve">
-    <value>Iniciando la aplicación</value>
+  <data name="UseShakeGesture" xml:space="preserve">
+    <value>Activar bloqueo de pantalla al agitar el dispositivo</value>
   </data>
   <data name="InternetIsNeededForInitialisation" xml:space="preserve">
     <value>Antes de usar el MyCC por primera vez, las divisas y tasas disponibles necesitan ser cargadas. Por favor, activar el internet.</value>
@@ -576,17 +591,26 @@
   <data name="LoadingRates" xml:space="preserve">
     <value>Cargando tipos de cambio requeridos</value>
   </data>
-  <data name="ReferenceValue" xml:space="preserve">
-    <value>Valor de referencia</value>
-  </data>
   <data name="SavingSource" xml:space="preserve">
     <value>Guardando la fuente</value>
   </data>
-  <data name="AddressOnly" xml:space="preserve">
-    <value>Solamente la dirección</value>
+  <data name="AssetsColumnToHide" xml:space="preserve">
+    <value>Ocultar columna de activos</value>
+  </data>
+  <data name="AssetsColumnToHideDescription" xml:space="preserve">
+    <value>Ocultar una columna de la tabla de activos cuando no hay suficiente espacio</value>
+  </data>
+  <data name="ReferenceValue" xml:space="preserve">
+    <value>Valor de referencia</value>
+  </data>
+  <data name="InitialiseApp" xml:space="preserve">
+    <value>Iniciando la aplicación</value>
   </data>
   <data name="AllInfos" xml:space="preserve">
     <value>Todas las informaciones</value>
+  </data>
+  <data name="AddressOnly" xml:space="preserve">
+    <value>Solamente la dirección</value>
   </data>
   <data name="UpdatingBalancesAndRates" xml:space="preserve">
     <value>Actualizando saldos y tasas</value>
@@ -597,4 +621,5 @@
   <data name="OpenInBlockExplorer" xml:space="preserve">
     <value>Abrir en el explorador de bloque</value>
   </data>
+
 </root>
