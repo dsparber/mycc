@@ -13,13 +13,14 @@
 		<string>de</string>
 		<string>es</string>
 		<string>sk</string>
+		<string>sv</string>
 	</array>
 	<key>CFBundleName</key>
 	<string>MyCC</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.2</string>
 	<key>CFBundleVersion</key>
-	<string>1.2.0.2</string>
+	<string>1.2.1</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
