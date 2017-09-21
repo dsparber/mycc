@@ -289,7 +289,7 @@
     <value>Details</value>
   </data>
   <data name="DevelopedBy" xml:space="preserve">
-    <value>Entwickelt von {0}</value>
+    <value>Entwickelt von Daniel Sparber</value>
   </data>
   <data name="DisabledAccounts" xml:space="preserve">
     <value>Ausgeblendete Konten</value>
@@ -505,7 +505,7 @@
     <value>Aktualisierung beim Start</value>
   </data>
   <data name="RepeatNewPin" xml:space="preserve">
-    <value>Wiederholen</value>
+    <value>PIN wiederholen</value>
   </data>
   <data name="RepositoryAlreadyAdded" xml:space="preserve">
     <value>Die eingegebene Quelle wurde bereits hinzugefügt!</value>
