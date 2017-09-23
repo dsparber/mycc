@@ -152,20 +152,11 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Resources\I18N.sk.resx" />
     <None Include="Resources\I18N.es.resx" />
+    <None Include="Resources\I18N.sk.resx" />
+    <None Include="Resources\I18N.sv.resx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\I18N.de.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>I18N.de.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\I18N.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>I18N.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="View\Pages\AssetsTableView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
@@ -206,8 +197,16 @@
       <SubType>
       </SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\I18N.es.resx" />
-    <EmbeddedResource Include="Resources\I18N.sk.resx" />
+    <EmbeddedResource Include="Resources\I18N.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>I18N.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\I18N.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>I18N.de.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\Components\Header\HeaderView.xaml">
