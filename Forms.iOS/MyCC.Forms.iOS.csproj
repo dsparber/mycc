@@ -331,6 +331,7 @@
     <ImageAsset Include="Resources\Images.xcassets\fingerprint.imageset\fingerprint3.png">
       <InProject>false</InProject>
     </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\AppStore Icon.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
