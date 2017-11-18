@@ -48,7 +48,7 @@ namespace MyCC.Ui.Get.Implementations
         public bool ShowQrCodePossible(int accountId)
         {
             var repo = AccountStorage.RepositoryOf(accountId);
-            return repo is OnlineAccountRepository && !(repo is BlockchainXpubAccountRepository);
+            return repo is AddressAccountRepository && !(repo is BlockchainXpubAccountRepository);
         }
 
         public bool BlockExplorerCallAllowed(int accountId)
