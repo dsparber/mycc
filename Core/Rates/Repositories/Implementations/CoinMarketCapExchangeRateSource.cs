@@ -16,7 +16,7 @@ namespace MyCC.Core.Rates.Repositories.Implementations
         public override int Id => (int)RateSourceId.CoinMarketCap;
         public override RateSourceType Type => RateSourceType.Crypto;
         public override string Name => ConstantNames.CoinMarketCap;
-        protected override Uri Uri => new Uri("https://api.coinmarketcap.com/v1/ticker/");
+        protected override Uri Uri => new Uri("https://api.coinmarketcap.com/v1/ticker/?limit=0");
 
         private static IEnumerable<Currency> SupportedCurrencies => CurrencyConstants.FlagCoinMarketCap.Currencies();
         public override bool IsAvailable(RateDescriptor rateDescriptor)

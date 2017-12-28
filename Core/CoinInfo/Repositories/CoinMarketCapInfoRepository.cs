@@ -18,7 +18,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 
         public async Task<CoinInfoData> GetInfo(string currencyId)
         {
-            var json = await new Uri("https://api.coinmarketcap.com/v1/ticker/").GetJson();
+            var json = await new Uri("https://api.coinmarketcap.com/v1/ticker/?limit=0").GetJson();
             var code = currencyId.Code();
 
             var item = json.FirstOrDefault(token => code.Equals((string)token["symbol"]));

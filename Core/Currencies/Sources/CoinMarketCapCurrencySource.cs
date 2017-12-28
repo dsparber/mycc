@@ -11,7 +11,7 @@ namespace MyCC.Core.Currencies.Sources
 {
     public class CoinMarketCapCurrencySource : ICurrencySource
     {
-        private const string UrlCurrencyList = "https://api.coinmarketcap.com/v1/ticker/";
+        private const string UrlCurrencyList = "https://api.coinmarketcap.com/v1/ticker/?limit=0";
 
         public string Name => ConstantNames.CoinMarketCap;
 
