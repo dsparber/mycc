@@ -26,7 +26,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
         {
             var currencyCells = new List<CustomViewCell>();
 
-            var watchedCurrencies = new List<string>(ApplicationSettings.WatchedCurrencies).ToList();
+            var watchedCurrencies = UiUtils.Get.Rates.EnabledCurrencyIds.Select(CurrencyHelper.Find).ToList();
             Header.Info = PluralHelper.GetTextCurrencies(watchedCurrencies.Count);
 
             foreach (var c in watchedCurrencies)
@@ -34,15 +34,13 @@ namespace MyCC.Forms.View.Pages.Settings.Data
                 var delete = new CustomCellViewActionItem { Icon = "delete.png", Data = c };
                 var items = new List<CustomCellViewActionItem> { delete };
 
-                delete.Action = (sender, e) => UiUtils.Edit.RemoveWatchedCurrency(c);
-
-                var currency = c.Find();
+                delete.Action = (sender, e) => UiUtils.Edit.RemoveWatchedCurrency(c.Id);
 
                 var cell = new CustomViewCell
                 {
-                    Text = currency.Code,
+                    Text = c.Code,
                     ActionItems = items,
-                    Detail = currency.Name
+                    Detail = c.Name
                 };
                 currencyCells.Add(cell);
             }

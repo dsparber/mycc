@@ -43,3 +43,5 @@ Resource.Designer.cs
 **/Resources/I18N*Designer.cs
 *.csproj.bak
 .vs/
+
+**/.idea/

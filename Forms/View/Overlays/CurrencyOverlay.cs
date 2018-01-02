@@ -140,8 +140,8 @@ namespace MyCC.Forms.View.Overlays
         {
             var task = new Func<IEnumerable<Currency>>(() =>
             {
-                var allReferenceCurrencies = ApplicationSettings.WatchedCurrencies.ToArray();
-                return CurrencyStorage.Instance.Currencies.Where(c => !allReferenceCurrencies.Contains(c.Id));
+                var exceptions = UiUtils.Get.Rates.EnabledCurrencyIds;
+                return CurrencyStorage.Instance.Currencies.Where(c => !exceptions.Contains(c.Id));
             });
 
             var overlay = new CurrencyOverlay(task, I18N.AddRate, true)
