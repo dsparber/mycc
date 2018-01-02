@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CarouselView.FormsPlugin.Abstractions;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
@@ -105,7 +106,7 @@ namespace MyCC.Forms.View.Pages
         {
             HeaderCarousel.ItemsSource = ApplicationSettings.MainCurrencies.Select(CurrencyHelper.Find).ToList();
             HeaderCarousel.Position = ApplicationSettings.MainCurrencies.ToList().IndexOf(ApplicationSettings.StartupCurrencyAssets);
-            HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.Count > 1;
+            HeaderCarousel.ShowIndicators = HeaderCarousel.ItemsSource.GetCount() > 1;
 
 
             if (HeaderCarousel.ItemTemplate != null) return;

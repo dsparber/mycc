@@ -20,10 +20,9 @@
         <container:ChangingStackLayout>
             <carousel:CarouselViewControl
 				x:Name="HeaderCarousel"
-				Arrows="true"
 				InterPageSpacing="0"
 				ShowIndicators="true"
-				PageIndicatorTintColor="#5FFF"
+	            IndicatorsTintColor="#5FFF"
 				CurrentPageIndicatorTintColor="White"
 				BackgroundColor="{x:Static constants:AppConstants.ThemeColor}" />
             <StackLayout
