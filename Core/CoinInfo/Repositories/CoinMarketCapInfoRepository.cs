@@ -10,7 +10,7 @@ namespace MyCC.Core.CoinInfo.Repositories
 {
     public class CoinMarketCapInfoRepository : ICoinInfoRepository
     {
-        public string WebUrl(string currencyId) => $"https://coinmarketcap.com/currencies/{currencyId.FindName().ToLower()}/";
+        public string WebUrl(string currencyId) => $"https://coinmarketcap.com/currencies/{currencyId.FindName().ToLower().Replace(" ", "-")}/";
 
         public List<string> SupportedCoins => CurrencyConstants.FlagCoinMarketCap.CurrencyIds().ToList();
 
