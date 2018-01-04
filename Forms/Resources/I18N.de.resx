@@ -288,6 +288,9 @@
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
+   <data name="DetailsOn" xml:space="preserve">
+    <value>Details auf {0}</value>
+  </data>
   <data name="DevelopedBy" xml:space="preserve">
     <value>Entwickelt von Daniel Sparber</value>
   </data>

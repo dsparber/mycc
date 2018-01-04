@@ -46,12 +46,12 @@ namespace MyCC.Forms.View.Pages
             InfoHeading.TextColor = AppConstants.TableSectionColor;
 
             var allExplorer = CoinInfoStorage.Instance.GetExplorer(_currencyId).ToList();
-            foreach (var e in allExplorer)
+            foreach (var expolorer in allExplorer)
             {
                 var explorerButton = new CustomCellView(true)
                 {
                     IsActionCell = true,
-                    Text = allExplorer.Count == 1 ? I18N.OpenInBlockExplorer : $"{I18N.OpenInBlockExplorer} ({e.Name})",
+                    Text = string.Format(I18N.DetailsOn, expolorer.Name),
                     IsCentered = true
                 };
                 var explorerGesture = new TapGestureRecognizer();
@@ -59,7 +59,7 @@ namespace MyCC.Forms.View.Pages
                 {
                     if (CrossConnectivity.Current.IsConnected)
                     {
-                        Navigation.PushModalAsync(new NavigationPage(new WebOverlay(e.WebUrl(_currencyId))));
+                        Navigation.PushModalAsync(new NavigationPage(new WebOverlay(expolorer.WebUrl(_currencyId))));
                     }
                     else
                     {

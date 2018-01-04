@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
@@ -66,8 +67,7 @@ namespace MyCC.Ui.Android.Views.Activities
             {
                 var button = new Button(this)
                 {
-                    Text = explorerList.Count == 1 ? Resources.GetString(Resource.String.OpenInBlockExplorer)
-                            : $"{Resources.GetString(Resource.String.OpenInBlockExplorer)} ({explorer.Name})"
+                    Text = string.Format(Resources.GetString(Resource.String.DetailsOn), explorer.Name)
                 };
                 button.SetTextColor(Color.White);
                 button.Click += (sender, args) =>

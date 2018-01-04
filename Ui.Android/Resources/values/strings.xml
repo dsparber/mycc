@@ -57,6 +57,7 @@
 <string name="Delete">"Delete"</string>
 <string name="Deleting">"Deleting"</string>
 <string name="Details">"Details"</string>
+<string name="DetailsOn">"Details on {0}"</string>
 <string name="DevelopedBy">"Developed by Daniel Sparber"</string>
 <string name="DisabledAccounts">"Disabled accounts"</string>
 <string name="DisablePin">"Disable PIN"</string>

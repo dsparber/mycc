@@ -43,16 +43,6 @@
     <Compile Include="App.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\I18N.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>I18N.de.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\I18N.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>I18N.resx</DependentUpon>
-    </Compile>
     <Compile Include="Resources\I18N.es.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -163,6 +153,9 @@
     <Compile Include="View\Overlays\AccountQrCodeOverlay.cs" />
     <Compile Include="View\Components\Cells\CustomEditorCell.cs" />
     <Compile Include="View\Components\Header\RatesOverviewHeader.cs" />
+    <Compile Include="Resources\I18N.Designer.cs">
+      <DependentUpon>I18N.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
