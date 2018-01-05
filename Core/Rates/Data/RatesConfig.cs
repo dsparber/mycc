@@ -15,9 +15,9 @@ namespace MyCC.Core.Rates.Data
         public static readonly RateDescriptor DefaultCryptoToFiatDescriptor = new RateDescriptor(DefaultFiatCurrencyId, DefaultCryptoCurrencyId);
 
         public static readonly IEnumerable<IRateSource> Sources = new IRateSource[] {
-            new CoinMarketCapExchangeRateSource(),
             new BittrexExchangeRateSource(),
             new PoloniexExchangeRateSource(),
+            new CoinMarketCapExchangeRateSource(),
             // new BtceExchangeRateSource(),
             new CryptonatorExchangeRateSource(),
             new FixerIoExchangeRateSource(),

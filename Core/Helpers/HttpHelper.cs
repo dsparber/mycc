@@ -13,6 +13,7 @@ namespace MyCC.Core.Helpers
         public static HttpClient CreateClient((string name, string value)? header = null)
         {
             var client = new HttpClient(new NativeMessageHandler()) { MaxResponseContentBufferSize = ClientDefaultBufferSize };
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("Chrome/22.0.1229.94");
             if (header != null)
                 client.DefaultRequestHeaders.Add(header.Value.name, header.Value.value);
             return client;
