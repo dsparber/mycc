@@ -16,6 +16,8 @@ namespace MyCC.Core.Currencies.Sources
         /// </summary>
         /// <returns>Fetched currencies</returns>
         Task<IEnumerable<Currency>> GetCurrencies();
+
+        IEnumerable<int> Flags { get; }
     }
 }
 

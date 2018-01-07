@@ -12,6 +12,9 @@ namespace MyCC.Core.Currencies.Sources
     {
         private const string UrlCurrencyList = "https://openexchangerates.org/api/currencies.json";
 
+        public IEnumerable<int> Flags => new int[] { };
+
+
         public async Task<IEnumerable<Currency>> GetCurrencies()
         {
             var uri = new Uri(UrlCurrencyList);

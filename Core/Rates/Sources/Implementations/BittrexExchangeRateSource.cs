@@ -29,7 +29,7 @@ namespace MyCC.Core.Rates.Repositories.Implementations
             if (!rateDescriptor.ContainsCurrency(CurrencyConstants.Btc.Id)) return false;
 
             var currency = rateDescriptor.GetCurrencyApartFrom(CurrencyConstants.Btc.Id).Find();
-            return currency.IsSet(CurrencyConstants.FlagBittrex);
+            return currency.IsSet(CurrencyConstants.FlagRatesBittrex);
         }
 
         protected override IEnumerable<(RateDescriptor rateDescriptor, decimal? rate)> GetRatesFromJson(JToken json)

@@ -15,6 +15,7 @@ namespace MyCC.Core.Currencies.Sources
 
         public string Name => ConstantNames.Poloniex;
 
+        public IEnumerable<int> Flags => new int[] { CurrencyConstants.FlagPoloniex };
 
         public async Task<IEnumerable<Currency>> GetCurrencies()
         {

@@ -14,6 +14,7 @@ namespace MyCC.Core.Currencies.Sources
         private const string UrlCurrencyList = "https://api.coinmarketcap.com/v1/ticker/?limit=0";
 
         public string Name => ConstantNames.CoinMarketCap;
+        public IEnumerable<int> Flags => new int[] { CurrencyConstants.FlagCoinMarketCap };
 
 
         public async Task<IEnumerable<Currency>> GetCurrencies()

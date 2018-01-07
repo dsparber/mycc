@@ -15,6 +15,8 @@ namespace MyCC.Core.Currencies.Sources
 
         public string Name => ConstantNames.Bittrex;
 
+        public IEnumerable<int> Flags => new int[]{CurrencyConstants.FlagRatesBittrex};
+
         private const string CurrencyListResult = "result";
         private const string CurrencyListResultName = "CurrencyLong";
         private const string CurrencyListResultCurrency = "Currency";
@@ -31,10 +33,16 @@ namespace MyCC.Core.Currencies.Sources
                 var json = JObject.Parse(content);
                 var result = (JArray)json[CurrencyListResult];
 
+                var rates = (await new Uri("https://bittrex.com/api/v1.1/public/getmarketsummaries").GetJson())["result"];
+                var rateCodes = rates.Select(token => (string)token["MarketName"])
+                                     .Where(market => market.StartsWith("BTC-", StringComparison.Ordinal))
+                                     .Select(market => market.Split('-')[1].ToUpper()).ToList();
+
                 return (from token in result
                         let name = (string)token[CurrencyListResultName]
                         let code = (string)token[CurrencyListResultCurrency]
-                        select new Currency(code, name, true) { BalanceSourceFlags = CurrencyConstants.FlagBittrex }).ToList();
+                        let flag = rateCodes.Contains(code) ? CurrencyConstants.FlagRatesBittrex : 0
+                        select new Currency(code, name, true) { BalanceSourceFlags = flag }).ToList();
             }
             catch (Exception e)
             {

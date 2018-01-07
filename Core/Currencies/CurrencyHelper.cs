@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Currencies.Models;
+using MyCC.Core.Currencies.Sources;
 using MyCC.Core.Helpers;
 
 namespace MyCC.Core.Currencies
@@ -29,15 +30,24 @@ namespace MyCC.Core.Currencies
         public static IEnumerable<Currency> Currencies(this int flags) => CurrencyStorage.Instance.Currencies.Where(c => c.BalanceSourceFlags.IsSet(flags));
         public static IEnumerable<string> CurrencyIds(this int flags) => flags.Currencies().Select(currency => currency.Id);
 
-        public static Tuple<bool, Currency> Merge(this Currency c1, Currency c2)
+        public static (bool update, Currency currency) Merge(this Currency c1, Currency c2, ICurrencySource c2Source)
         {
             if (string.IsNullOrWhiteSpace(c1?.Id) || string.IsNullOrWhiteSpace(c2.Name) || !string.Equals(c1.Id, c2.Id)) throw new InvalidOperationException("Different currencies can not be merged!");
 
-            var updateName = !c1.Name.ToLower().Equals(c2.Name.ToLower());
+            var update = !c1.Name.ToLower().Equals(c2.Name.ToLower());
             c1.BalanceSourceFlags = c1.BalanceSourceFlags.AddFlags(c2.BalanceSourceFlags);
-            c1.Name = updateName ? c2.Name : c1.Name;
+            c1.Name = update ? c2.Name : c1.Name;
 
-            return Tuple.Create(updateName || c1.BalanceSourceFlags != c2.BalanceSourceFlags, c1);
+            var flags = c2Source.Flags;
+            foreach (int flag in flags){
+                if (c1.BalanceSourceFlags.IsSet(flag) && !c2.BalanceSourceFlags.IsSet(flag))
+                {
+                    c1.BalanceSourceFlags = c1.BalanceSourceFlags.RemoveFlags(flag);
+                    update = true;
+                }
+            }
+
+            return (update || c1.BalanceSourceFlags != c2.BalanceSourceFlags, c1);
         }
 
         public static bool IsSet(this Currency currency, int sourceFlag) =>

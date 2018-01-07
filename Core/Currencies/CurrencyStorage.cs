@@ -57,10 +57,10 @@ namespace MyCC.Core.Currencies
 
                 var allCurrencies = fetchedCurrencies.Concat(Currencies).Distinct().ToList();
 
-                var overlap = allCurrencies.Intersect(result).Select(c => c.Merge(result.Find(x => x.Id == c.Id)));
-                var update = overlap.Where(t => t.Item1).Select(t => t.Item2).ToList();
+                var overlap = allCurrencies.Intersect(result).Select(c => c.Merge(result.Find(x => x.Id == c.Id), source));
+                var update = overlap.Where(t => t.update).Select(t => t.currency).ToList();
 
-                var duplicates = fetchedCurrencies.Intersect(result).Select(c => c.Merge(result.Find(x => x.Id == c.Id))).Select(c => c.Item2).ToList();
+                var duplicates = fetchedCurrencies.Intersect(result).Select(c => c.Merge(result.Find(x => x.Id == c.Id), source)).Select(c => c.currency).ToList();
                 fetchedCurrencies = fetchedCurrencies.Except(duplicates).Concat(result.Except(duplicates)).Concat(duplicates).ToList();
                 newCurrencies.AddRange(result.Except(allCurrencies));
                 updateCurrencies = updateCurrencies.Except(update).Concat(update).ToList();

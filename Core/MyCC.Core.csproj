@@ -63,28 +63,26 @@
     <Compile Include="Rates\Data\RateDatabase.cs" />
     <Compile Include="Rates\Data\RatesConfig.cs" />
     <Compile Include="Rates\IRatesUtil.cs" />
-    <Compile Include="Rates\ModelExtensions\ExchangeRateExtensionMethodes.cs" />
     <Compile Include="Rates\Models\ExchangeRateDbm.cs" />
     <Compile Include="Rates\Models\RateDescriptor.cs" />
-    <Compile Include="Rates\ModelExtensions\RateDescriptorExtensionMethodes.cs" />
-    <Compile Include="Rates\Repositories\Implementations\PoloniexExchangeRateSource.cs" />
-    <Compile Include="Rates\Repositories\Implementations\CoinMarketCapExchangeRateSource.cs" />
-    <Compile Include="Rates\Repositories\Utils\MultiUriJsonRateSource.cs" />
-    <Compile Include="Rates\Repositories\Implementations\BitPayExchangeRateSource.cs" />
-    <Compile Include="Rates\Repositories\Implementations\ItBitExchangeRateSource.cs" />
-    <Compile Include="Rates\Repositories\Implementations\CoinapultExchangeRateSource.cs" />
-    <Compile Include="Rates\Repositories\Implementations\CoinbaseExchangeRateSource.cs" />
-    <Compile Include="Rates\Repositories\Implementations\BitfinexExchangeRateSource.cs" />
-    <Compile Include="Rates\Repositories\Implementations\QuadrigaCxExchangeRateSource.cs" />
-    <Compile Include="Rates\Repositories\Implementations\CryptonatorExchangeRateSource.cs" />
-    <Compile Include="Rates\Repositories\IRateSource.cs" />
-    <Compile Include="Rates\Repositories\Utils\JsonRateSource.cs" />
-    <Compile Include="Rates\Repositories\Utils\RateDescriptorConstants.cs" />
-    <Compile Include="Rates\Repositories\Utils\RateSourceType.cs" />
-    <Compile Include="Rates\Repositories\Implementations\FixerIoExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Implementations\PoloniexExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Implementations\CoinMarketCapExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Utils\MultiUriJsonRateSource.cs" />
+    <Compile Include="Rates\Sources\Implementations\BitPayExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Implementations\ItBitExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Implementations\CoinapultExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Implementations\CoinbaseExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Implementations\BitfinexExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Implementations\QuadrigaCxExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Implementations\CryptonatorExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\IRateSource.cs" />
+    <Compile Include="Rates\Sources\Utils\JsonRateSource.cs" />
+    <Compile Include="Rates\Sources\Utils\RateDescriptorConstants.cs" />
+    <Compile Include="Rates\Sources\Utils\RateSourceType.cs" />
+    <Compile Include="Rates\Sources\Implementations\FixerIoExchangeRateSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rates\Repositories\Implementations\BitstampExchangeRateSource.cs" />
-    <Compile Include="Rates\Repositories\Utils\RateSourceId.cs" />
+    <Compile Include="Rates\Sources\Implementations\BitstampExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Utils\RateSourceId.cs" />
     <Compile Include="Rates\Utils\CryptoToFiatInfoUtils.cs" />
     <Compile Include="Rates\Utils\DistinctDescriptorsUtil.cs" />
     <Compile Include="Rates\Utils\RateCalculator.cs" />
@@ -120,8 +118,8 @@
     <Compile Include="Currencies\Sources\CryptoIdCurrencySource.cs" />
     <Compile Include="Currencies\Sources\CryptonatorCurrencySource.cs" />
     <Compile Include="Currencies\Sources\ICurrencySource.cs" />
-    <Compile Include="Rates\Repositories\Implementations\BittrexExchangeRateSource.cs" />
-    <Compile Include="Rates\Repositories\Implementations\BtceExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Implementations\BittrexExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Implementations\BtceExchangeRateSource.cs" />
     <Compile Include="Rates\Models\ExchangeRate.cs" />
     <Compile Include="Rates\Data\RateLoader.cs" />
     <Compile Include="Abstract\Database\AbstractDatabase.cs" />
@@ -162,8 +160,10 @@
     <Compile Include="CoinInfo\Repositories\BlockchainCoinInfoRepository.cs" />
     <Compile Include="Settings\CoreVersion.cs" />
     <Compile Include="Settings\Constants.cs" />
-    <Compile Include="Rates\Repositories\Implementations\KrakenExchangeRateSource.cs" />
+    <Compile Include="Rates\Sources\Implementations\KrakenExchangeRateSource.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Rates\Models\Extensions\ExchangeRateExtensionMethodes.cs" />
+    <Compile Include="Rates\Models\Extensions\RateDescriptorExtensionMethodes.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -230,6 +230,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Rates\Models\Extensions\" />
+  </ItemGroup>
   <Import Project="packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Import Project="..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets')" />
 </Project>
