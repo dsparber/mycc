@@ -15,7 +15,6 @@ namespace MyCC.Core.Account.Repositories.Implementations
     public class EthereumAccountRepository : AddressAccountRepository
     {
         private const string JsonKeyBalance = "balance";
-        private const string JsonKeyData = "data";
 
         public override string Description => ConstantNames.Etherchain;
 
@@ -23,7 +22,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public override IEnumerable<Currency> SupportedCurrencies => new List<Currency> { Currency };
 
         protected override decimal BalanceFactor => 1e18M;
-        protected override Func<string, decimal> Balance => httpContent => decimal.Parse((string)JObject.Parse(httpContent)[JsonKeyData][0][JsonKeyBalance], CultureInfo.InvariantCulture);
+        protected override Func<string, decimal> Balance => httpContent => decimal.Parse((string)JObject.Parse(httpContent)[JsonKeyBalance], CultureInfo.InvariantCulture);
         protected override Uri Url => new Uri($"https://etherchain.org/api/account/{Address}");
 
 

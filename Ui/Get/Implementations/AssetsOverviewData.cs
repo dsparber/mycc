@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
+using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates.Models;
@@ -72,7 +73,6 @@ namespace MyCC.Ui.Get.Implementations
             var online = AccountStorage.Instance.AllElements.Where(a => a is OnlineFunctionalAccount).ToList();
             var accountsTime = online.Any() ? online.Min(a => a.LastUpdate) : AccountStorage.Instance.AllElements.Any() ? AccountStorage.Instance.AllElements.Max(a => a.LastUpdate) : DateTime.Now;
             var ratesTime = MyccUtil.Rates.LastUpdate();
-
             return online.Count > 0 ? ratesTime < accountsTime ? ratesTime : accountsTime : ratesTime;
         }
 

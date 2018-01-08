@@ -28,10 +28,7 @@ namespace MyCC.Core.Rates.Data
 
         public static async Task SaveRates(List<ExchangeRate> fetchedRates, bool cleanDatabase = false)
         {
-            if (!_loadedFromDatabase)
-            {
-                await LoadFromDatabase();
-            }
+            await LoadFromDatabase();
             await DatabaseUtil.Connection.RunInTransactionAsync(sqliteConnection =>
             {
                 lock (SaveToDatabaseLock)
@@ -44,8 +41,8 @@ namespace MyCC.Core.Rates.Data
                     var rates = existingRates.Where(rate => !ratesToUpdate.Contains(rate.Descriptor, rate.SourceId)).Concat(ratesToUpdate).Concat(newRates).ToList();
                     _exchangeRates = rates;
 
-                    sqliteConnection.InsertAll(newRates.Select(rate => new ExchangeRateDbm(rate)));
-                    sqliteConnection.UpdateAll(ratesToUpdate.Select(rate => new ExchangeRateDbm(rate)));
+                    sqliteConnection.InsertAll(newRates.Select(rate => new ExchangeRateDbm(rate)).Distinct());
+                    sqliteConnection.UpdateAll(ratesToUpdate.Select(rate => new ExchangeRateDbm(rate)).Distinct());
 
                     if (!cleanDatabase) return;
 

@@ -17,8 +17,10 @@ namespace MyCC.Core.Rates.Models
         }
 
         public bool CurrenciesEqual(RateDescriptor rateDescriptor) =>
-            rateDescriptor.ContainsCurrency(ReferenceCurrencyId) &&
-            rateDescriptor.ContainsCurrency(SecondaryCurrencyId);
+        (rateDescriptor.ReferenceCurrencyId.Equals(ReferenceCurrencyId) &&
+         rateDescriptor.SecondaryCurrencyId.Equals(SecondaryCurrencyId)) || 
+        (rateDescriptor.SecondaryCurrencyId.Equals(ReferenceCurrencyId) &&
+         rateDescriptor.ReferenceCurrencyId.Equals(SecondaryCurrencyId));
 
         public override bool Equals(object obj) => Id.Equals((obj as RateDescriptor)?.Id);
         public override int GetHashCode() => Id.GetHashCode();

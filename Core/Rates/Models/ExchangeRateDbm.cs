@@ -13,7 +13,7 @@ namespace MyCC.Core.Rates.Models
     /// Simple exchange rate model
     /// </summary>
     [Table("ExchangeRates")]
-    internal class ExchangeRateDbm
+    internal class ExchangeRateDbm : IEquatable<ExchangeRateDbm> 
     {
         private string _id;
 
@@ -71,8 +71,10 @@ namespace MyCC.Core.Rates.Models
         }
 
 
-        public override bool Equals(object obj) => string.Equals(Id, (obj as Currency)?.Id);
+        public override bool Equals(object obj) => string.Equals(Id, (obj as ExchangeRateDbm)?.Id);
         public override int GetHashCode() => Id.GetHashCode();
         public override string ToString() => Id;
+
+        public bool Equals(ExchangeRateDbm other) => Id.Equals(other.Id);
     }
 }
