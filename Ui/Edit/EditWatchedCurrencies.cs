@@ -10,17 +10,13 @@ namespace MyCC.Ui.Edit
     {
         public static void Remove(string currencyId)
         {
-            if (ApplicationSettings.MainCurrencies.Contains(currencyId) || AccountStorage.UsedCurrencies.Contains(currencyId))
+            if (ApplicationSettings.AllReferenceCurrencies.Contains(currencyId) || AccountStorage.UsedCurrencies.Contains(currencyId))
             {
                 ApplicationSettings.DisabledCurrencyIds = ApplicationSettings.DisabledCurrencyIds.Concat(new[] { currencyId });
             }
             if (ApplicationSettings.WatchedCurrencies.Contains(currencyId))
             {
                 ApplicationSettings.WatchedCurrencies = ApplicationSettings.WatchedCurrencies.Except(new[] { currencyId }).ToList();
-            }
-            if (ApplicationSettings.FurtherCurrencies.Contains(currencyId))
-            {
-                ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Except(new[] { currencyId }).ToList();
             }
             UiUtils.RatesRefresh.ResetCache();
             Messaging.Modified.WatchedCurrencies.Send();
