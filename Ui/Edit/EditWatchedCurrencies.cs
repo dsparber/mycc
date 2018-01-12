@@ -14,11 +14,11 @@ namespace MyCC.Ui.Edit
             {
                 ApplicationSettings.DisabledCurrencyIds = ApplicationSettings.DisabledCurrencyIds.Concat(new[] { currencyId });
             }
-            else if (ApplicationSettings.WatchedCurrencies.Contains(currencyId))
+            if (ApplicationSettings.WatchedCurrencies.Contains(currencyId))
             {
                 ApplicationSettings.WatchedCurrencies = ApplicationSettings.WatchedCurrencies.Except(new[] { currencyId }).ToList();
             }
-            else if (ApplicationSettings.FurtherCurrencies.Contains(currencyId))
+            if (ApplicationSettings.FurtherCurrencies.Contains(currencyId))
             {
                 ApplicationSettings.FurtherCurrencies = ApplicationSettings.FurtherCurrencies.Except(new[] { currencyId }).ToList();
             }

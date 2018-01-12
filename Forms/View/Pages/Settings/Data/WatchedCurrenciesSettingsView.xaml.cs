@@ -26,7 +26,7 @@ namespace MyCC.Forms.View.Pages.Settings.Data
         {
             var currencyCells = new List<CustomViewCell>();
 
-            var watchedCurrencies = UiUtils.Get.Rates.EnabledCurrencyIds.Select(CurrencyHelper.Find).ToList();
+            var watchedCurrencies = ApplicationSettings.WatchedCurrencies.Select(CurrencyHelper.Find).ToList();
             Header.Info = PluralHelper.GetTextCurrencies(watchedCurrencies.Count);
 
             foreach (var c in watchedCurrencies)
