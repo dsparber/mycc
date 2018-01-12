@@ -40,6 +40,10 @@ namespace MyCC.Core.Rates.Repositories.Implementations
                 var rate = token[RateKey].ToDecimal();
                 var referenceCurrencyCode = market[1];
                 var secondaryCurrencyCode = market[0];
+
+                referenceCurrencyCode = "BCC".Equals(referenceCurrencyCode) ? "BCH" : referenceCurrencyCode;
+                secondaryCurrencyCode = "BCC".Equals(secondaryCurrencyCode) ? "BCH" : secondaryCurrencyCode;
+
                 var rateDescriptor = new RateDescriptor(new Currency(referenceCurrencyCode, true).Id, new Currency(secondaryCurrencyCode, true).Id);
 
                 return (rateDescriptor, rate);

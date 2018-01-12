@@ -42,7 +42,8 @@ namespace MyCC.Core.Currencies.Sources
                         let name = (string)token[CurrencyListResultName]
                         let code = (string)token[CurrencyListResultCurrency]
                         let flag = rateCodes.Contains(code) ? CurrencyConstants.FlagRatesBittrex : 0
-                        select new Currency(code, name, true) { BalanceSourceFlags = flag }).ToList();
+                        let codeFixed = "BCC".Equals(code) ? "BCH" : code
+                        select new Currency(codeFixed, name, true) { BalanceSourceFlags = flag }).ToList();
             }
             catch (Exception e)
             {

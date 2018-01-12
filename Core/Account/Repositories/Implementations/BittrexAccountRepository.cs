@@ -116,6 +116,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
             foreach (var r in results)
             {
                 var currencyCode = (string)r[CurrencyKey];
+                currencyCode = "BCC".Equals(currencyCode) ? "BCH" : currencyCode;
                 var balance = decimal.Parse((string)r[BalanceKey], NumberStyles.Float, CultureInfo.InvariantCulture);
 
                 if (balance == 0) continue;
