@@ -80,7 +80,8 @@ namespace MyCC.Core.Abstract.Storage
             await _onCreationTask;
             var i = .0;
             if (BeforeOnlineFetching != null) await BeforeOnlineFetching;
-            foreach (var x in Repositories)
+
+            foreach (var x in Repositories.ToArray())
             {
                 await x.FetchOnline();
                 i += 1;
