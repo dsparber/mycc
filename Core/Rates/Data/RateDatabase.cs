@@ -14,7 +14,6 @@ namespace MyCC.Core.Rates.Data
     {
         private static IEnumerable<ExchangeRate> _exchangeRates = new ExchangeRate[] { };
         private static readonly object SaveToDatabaseLock = new object();
-        private static bool _loadedFromDatabase;
 
         public static IEnumerable<ExchangeRate> CryptoToFiatRates => _exchangeRates.Where(rate => GetSourceFor(rate)?.Type == RateSourceType.CryptoToFiat);
 
@@ -23,7 +22,6 @@ namespace MyCC.Core.Rates.Data
             await DatabaseUtil.Connection.CreateTableAsync<ExchangeRateDbm>();
             var allRates = (await DatabaseUtil.Connection.Table<ExchangeRateDbm>().ToListAsync()).Select(dbm => dbm.AsExchangeRate).ToList();
             _exchangeRates = allRates;
-            _loadedFromDatabase = true;
         }
 
         public static async Task SaveRates(List<ExchangeRate> fetchedRates, bool cleanDatabase = false)
