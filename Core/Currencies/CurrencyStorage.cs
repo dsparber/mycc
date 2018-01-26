@@ -53,7 +53,14 @@ namespace MyCC.Core.Currencies
             var progress = .0;
             foreach (var source in _sources)
             {
-                var result = (await source.GetCurrencies()).ToList();
+                var result = (await source.GetCurrencies())?.ToList();
+
+                if (result == null)
+                {
+                    progress += 1;
+                    onProgress?.Invoke(progress / _sources.Count(), source.Name);
+                    continue;
+                }
 
                 var allCurrencies = fetchedCurrencies.Concat(Currencies).Distinct().ToList();
 
