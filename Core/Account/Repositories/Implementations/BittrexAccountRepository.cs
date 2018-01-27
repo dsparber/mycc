@@ -139,7 +139,7 @@ namespace MyCC.Core.Account.Repositories.Implementations
                 currentAccounts.Add(account);
             }
             bool NotInCurrentAccounts(FunctionalAccount e) => !currentAccounts.Select(a => a.Id).Contains(e.Id);
-            await Task.WhenAll(Elements.Where(NotInCurrentAccounts).Select(Remove));
+            await Task.WhenAll(Elements.Where(NotInCurrentAccounts).ToArray().Select(Remove));
 
             LastFetch = DateTime.Now;
             return true;
