@@ -66,7 +66,8 @@ namespace MyCC.Core.CoinInfo.Repositories
 
         private static decimal TryParse(string s)
         {
-            return string.IsNullOrWhiteSpace(s) ? 0 : decimal.Parse(s, NumberStyles.Float, CultureInfo.InvariantCulture);
+            decimal.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out var result);
+            return result;
         }
     }
 }
