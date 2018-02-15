@@ -16,7 +16,8 @@ namespace MyCC.Core.Account.Repositories.Implementations
         public override string DescriptionName => ConstantNames.BlockExperts;
         public override IEnumerable<Currency> SupportedCurrencies => CurrencyConstants.FlagBlockExperts.Currencies();
 
-        protected override Func<string, decimal> Balance => httpContent => decimal.Parse(httpContent, CultureInfo.InvariantCulture);
+        protected override Func<string, decimal> Balance => httpContent 
+        => decimal.Parse(httpContent, CultureInfo.InvariantCulture);
         protected override Uri Url => new Uri($"https://www.blockexperts.com/api?coin={Currency.Code.ToLower()}&action=getbalance&address={Address}");
 
 

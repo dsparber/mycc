@@ -20,8 +20,13 @@ namespace MyCC.Core.Rates.Data
         public static async Task LoadFromDatabase()
         {
             await DatabaseUtil.Connection.CreateTableAsync<ExchangeRateDbm>();
-            var allRates = (await DatabaseUtil.Connection.Table<ExchangeRateDbm>().ToListAsync()).Select(dbm => dbm.AsExchangeRate).ToList();
+            var rates = (await DatabaseUtil.Connection.Table<ExchangeRateDbm>().ToListAsync());
+            var zeroRates = rates.Where(rateDb => rateDb.Rate <= 0).ToList();
+            var allRates = rates.Except(zeroRates).Select(dbm => dbm.AsExchangeRate).ToList();
             _exchangeRates = allRates;
+
+            foreach (var rate in zeroRates)
+                await DatabaseUtil.Connection.DeleteAsync(rate);
         }
 
         public static async Task SaveRates(List<ExchangeRate> fetchedRates, bool cleanDatabase = false)
