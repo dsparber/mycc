@@ -66,23 +66,23 @@ namespace MyCC.Core.Abstract.Repositories
 
         public async Task AddOrUpdate(TModel element)
         {
-            _elements.RemoveAll(e => Equals(e, element));
+            var tempElements = _elements.ToArray().Except(new TModel[] { element });
             await _database.InsertOrUpdate(element);
-            _elements.Add(element);
+            _elements = tempElements.Concat(new TModel[] { element }).ToList();
         }
 
         public async Task Add(IEnumerable<TModel> newElements)
         {
             newElements = await _database.Insert(newElements);
-            _elements.AddRange(newElements);
+            _elements = _elements.ToArray().Concat(newElements).ToList();
         }
 
         public async Task Update(IEnumerable<TModel> updateElements)
         {
-            var enumerable = updateElements as IList<TModel> ?? updateElements.ToList();
-            _elements.RemoveAll(enumerable.Contains);
-            updateElements = await _database.Update(enumerable);
-            _elements.AddRange(updateElements);
+            var elementsToUpdate = updateElements as IList<TModel> ?? updateElements.ToList();
+            var tempElements = _elements.ToArray().Except(elementsToUpdate).ToList();
+            var updatedElements = (await _database.Update(elementsToUpdate)).ToList();
+            _elements = tempElements.Concat(updatedElements).ToList();
         }
 
         public async Task Update(TModel element)
@@ -92,9 +92,9 @@ namespace MyCC.Core.Abstract.Repositories
 
         public async Task Update(TModel oldElement, TModel newElement)
         {
-            _elements.Remove(oldElement);
+            var tempElements = _elements.ToArray().Except(new TModel[] { oldElement});
             newElement = await _database.Update(oldElement, newElement);
-            _elements.Add(newElement);
+            _elements = tempElements.Concat(new TModel[]{newElement}).ToList();
         }
     }
 }
