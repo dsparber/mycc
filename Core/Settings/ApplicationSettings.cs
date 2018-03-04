@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Currencies;
-using MyCC.Core.Rates.Repositories.Utils;
+using MyCC.Core.Rates.Sources.Utils;
 using MyCC.Core.Types;
 
 namespace MyCC.Core.Settings

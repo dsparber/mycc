@@ -1,7 +1,6 @@
 ﻿using System.Linq;
-using MyCC.Core.Rates.Models;
 
-namespace MyCC.Core.Rates.ModelExtensions
+namespace MyCC.Core.Rates.Models.Extensions
 {
     public static class ExchangeRateExtensionMethodes
     {

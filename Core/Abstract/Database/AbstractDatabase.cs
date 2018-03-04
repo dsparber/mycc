@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Abstract.Models;
@@ -10,7 +9,7 @@ namespace MyCC.Core.Abstract.Database
 {
     public abstract class AbstractDatabase<T, TV, TIdType> where T : IEntityDbm<TV, TIdType> where TV : IPersistable<TIdType>
     {
-        private SQLiteAsyncConnection _connection;
+        private readonly SQLiteAsyncConnection _connection;
 
         private Task _initialisation;
 
@@ -32,11 +31,9 @@ namespace MyCC.Core.Abstract.Database
             return _connection;
         }
 
-        public Task<SQLiteAsyncConnection> Connection => GetConnection();
+        protected Task<SQLiteAsyncConnection> Connection => GetConnection();
 
         protected abstract Task Create(SQLiteAsyncConnection connection);
-
-        protected abstract Task Drop(SQLiteAsyncConnection connection);
 
         protected AbstractDatabase()
         {
@@ -52,48 +49,17 @@ namespace MyCC.Core.Abstract.Database
 
             return element;
         }
-        public async Task<TV> InsertOrUpdate(TV element)
-        {
-            var dbElement = Resolve(element);
-            await (await Connection).InsertOrReplaceAsync(dbElement);
-            element.Id = dbElement.Id;
-
-            return element;
-        }
-        public async Task<IEnumerable<TV>> Insert(IEnumerable<TV> elemets)
-        {
-            var dbElements = elemets.Distinct().Select(Resolve).ToList();
-            await (await Connection).InsertAllAsync(dbElements);
-            return await Task.WhenAll(dbElements.Select(e => e.Resolve()));
-        }
 
         public async Task<TV> Update(TV element)
         {
-            return await Update(element, element);
-        }
-        public async Task DeleteAll()
-        {
-            await Drop(_connection);
-            await Create(_connection);
-        }
-
-        public async Task<TV> Update(TV oldElement, TV newElement)
-        {
-            if (EqualityComparer<TIdType>.Default.Equals(oldElement.Id, newElement.Id) && !EqualityComparer<TIdType>.Default.Equals(default(TIdType), newElement.Id))
+            if (!EqualityComparer<TIdType>.Default.Equals(default(TIdType), element.Id))
             {
-                await (await Connection).UpdateAsync(Resolve(newElement));
-                return newElement;
+                await (await Connection).UpdateAsync(Resolve(element));
+                return element;
             }
             // else
-            await Delete(oldElement);
-            return await Insert(newElement);
-        }
-
-        public async Task<IEnumerable<TV>> Update(IEnumerable<TV> elemets)
-        {
-            var dbElements = elemets.Select(Resolve).ToList();
-            await (await Connection).UpdateAllAsync(dbElements);
-            return await Task.WhenAll(dbElements.Select(e => e.Resolve()));
+            await Delete(element);
+            return await Insert(element);
         }
 
         public async Task Delete(TV element)
@@ -104,41 +70,17 @@ namespace MyCC.Core.Abstract.Database
         protected abstract Task<IEnumerable<T>> GetAllDbObjects();
         public async Task<IEnumerable<TV>> GetAll()
         {
-            // Easier to Debug
-            /*var elements = new List<TV>();
-
-            foreach (var o in await GetAllDbObjects())
-            {
-                var x = await o.Resolve();
-                if (x != null)
-                {
-                    elements.Add(x);
-                }
-            }
-           return elements;*/
-
-            // Efficient
             return (await Task.WhenAll((await GetAllDbObjects()).Select(o => o.Resolve()))).Where(o => o != null);
         }
 
-        public async Task<IEnumerable<TV>> Get(Func<T, bool> predicate)
-        {
-            return await Task.WhenAll((await GetAllDbObjects()).Where(predicate).Select(o => o.Resolve()));
-        }
-
-        public async Task<IEnumerable<TV>> Get(Func<TV, bool> predicate)
-        {
-            return (await Task.WhenAll((await GetAllDbObjects()).Select(o => o.Resolve()))).Where(predicate);
-        }
-
-        public abstract Task<T> GetDbObject(TIdType id);
+        protected abstract Task<T> GetDbObject(TIdType id);
         public async Task<TV> Get(TIdType id)
         {
             var element = await GetDbObject(id);
             return await ResolveReverse(element);
         }
 
-        public async Task<TV> ResolveReverse(T element)
+        private static async Task<TV> ResolveReverse(T element)
         {
             if (!EqualityComparer<T>.Default.Equals(element, default(T)))
             {

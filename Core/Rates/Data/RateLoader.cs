@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates.Models;
-using MyCC.Core.Rates.Repositories.Utils;
+using MyCC.Core.Rates.Sources.Utils;
 using MyCC.Core.Rates.Utils;
 
 namespace MyCC.Core.Rates.Data

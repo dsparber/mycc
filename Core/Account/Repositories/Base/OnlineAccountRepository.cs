@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace MyCC.Core.Account.Repositories.Base
 {
@@ -9,7 +8,6 @@ namespace MyCC.Core.Account.Repositories.Base
 
         public override async Task<bool> LoadFromDatabase()
         {
-            LastFastFetch = DateTime.Now;
             return await FetchFromDatabase();
         }
 

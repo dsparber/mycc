@@ -15,7 +15,7 @@ namespace MyCC.Core.Currencies.Sources
 
         public string Name => ConstantNames.Bittrex;
 
-        public IEnumerable<int> Flags => new int[]{CurrencyConstants.FlagRatesBittrex};
+        public IEnumerable<int> Flags => new[]{CurrencyConstants.FlagRatesBittrex};
 
         private const string CurrencyListResult = "result";
         private const string CurrencyListResultName = "CurrencyLong";

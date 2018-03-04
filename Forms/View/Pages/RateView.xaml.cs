@@ -35,7 +35,7 @@ namespace MyCC.Forms.View.Pages
             AddSubscriber();
             SetHeaderCarousel();
 
-            var button = new Button { Text = I18N.AddSource, BorderColor = AppConstants.BorderColor, BackgroundColor = Color.White, BorderRadius = 0, TextColor = AppConstants.ThemeColor, FontAttributes = FontAttributes.None };
+            var button = new Button { Text = I18N.AddSource, BorderColor = AppConstants.BorderColor, BackgroundColor = Color.White, CornerRadius = 0, TextColor = AppConstants.ThemeColor, FontAttributes = FontAttributes.None };
             button.Clicked += AddRate;
             NoDataStack.Children.Add(button);
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Abstract.Database;
 using MyCC.Core.Abstract.Models;
@@ -11,27 +10,6 @@ namespace MyCC.Core.Abstract.Storage
     {
         protected AbstractDatabaseStorage(AbstractDatabase<TA, TVa, int> database) : base(database) { }
 
-        public List<TV> AllElements
-        {
-            get
-            {
-                return Repositories.ToList().SelectMany(r => r.Elements).ToList();
-            }
-        }
-
-        public List<Tuple<TV, TVa>> AllElementsWithRepositories
-        {
-            get
-            {
-                return Repositories.SelectMany(r => r.Elements.Select(e => Tuple.Create(e, r))).ToList();
-            }
-        }
-
-        public TV Find(TV element)
-        {
-            return AllElements.Find(e => Equals(e, element));
-        }
-
-        public abstract TVa LocalRepository { get; }
+        public List<TV> AllElements => Repositories.ToList().SelectMany(r => r.Elements).ToList();
     }
 }

@@ -2,8 +2,8 @@
 using System.Linq;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates.Models;
-using MyCC.Core.Rates.Repositories;
-using MyCC.Core.Rates.Repositories.Implementations;
+using MyCC.Core.Rates.Sources;
+using MyCC.Core.Rates.Sources.Implementations;
 using MyCC.Core.Settings;
 
 namespace MyCC.Core.Rates.Data

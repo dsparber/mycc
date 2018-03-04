@@ -1,13 +1,13 @@
 using System;
 using MyCC.Core.Currencies;
 using MyCC.Core.Helpers;
-using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
-using MyCC.Core.Rates.Repositories.Utils;
+using MyCC.Core.Rates.Models.Extensions;
+using MyCC.Core.Rates.Sources.Utils;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
-namespace MyCC.Core.Rates.Repositories.Implementations
+namespace MyCC.Core.Rates.Sources.Implementations
 {
     internal class ItBitExchangeRateSource : MultiUriJsonRateSource
     {

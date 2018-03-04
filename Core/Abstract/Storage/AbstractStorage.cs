@@ -20,7 +20,7 @@ namespace MyCC.Core.Abstract.Storage
             _onCreationTask = OnCreation();
         }
 
-        private AbstractDatabase<T, TV, int> Database { get; set; }
+        private AbstractDatabase<T, TV, int> Database { get; }
 
         private async Task OnCreation()
         {
@@ -50,36 +50,16 @@ namespace MyCC.Core.Abstract.Storage
             Repositories.Add(repository);
         }
 
-        private List<TA> RepositoriesOfType<TA>() where TA : TV
-        {
-            return Repositories.OfType<TA>().ToList();
-        }
 
-        public List<TV> RepositoriesOfType(Type type)
+        protected List<TV> RepositoriesOfType(Type type)
         {
             return Repositories.FindAll(r => r.GetType() == type);
-        }
-
-        public TA RepositoryOfType<TA>() where TA : TV
-        {
-            return RepositoriesOfType<TA>().FirstOrDefault();
-        }
-
-        public TV RepositoryOfType(Type type)
-        {
-            return RepositoriesOfType(type).FirstOrDefault();
-        }
-
-        protected virtual Task BeforeFastFetching()
-        {
-            return Task.Factory.StartNew(() => { });
         }
 
         public async Task FetchOnline(Action<double> progressCallback = null)
         {
             await _onCreationTask;
             var i = .0;
-            if (BeforeOnlineFetching != null) await BeforeOnlineFetching;
 
             foreach (var x in Repositories.ToArray())
             {
@@ -89,12 +69,10 @@ namespace MyCC.Core.Abstract.Storage
             }
         }
 
-        protected Task BeforeOnlineFetching { private get; set; } = null;
 
         public async Task LoadFromDatabase()
         {
             await _onCreationTask;
-            await BeforeFastFetching();
             await Task.WhenAll(Repositories.Select(x => x.LoadFromDatabase()));
         }
     }

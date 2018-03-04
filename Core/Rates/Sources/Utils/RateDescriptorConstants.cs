@@ -1,7 +1,7 @@
 ﻿using MyCC.Core.Currencies;
 using MyCC.Core.Rates.Models;
 
-namespace MyCC.Core.Rates.Repositories.Utils
+namespace MyCC.Core.Rates.Sources.Utils
 {
     internal static class RateDescriptorConstants
     {

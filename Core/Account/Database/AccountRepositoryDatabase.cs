@@ -13,7 +13,7 @@ namespace MyCC.Core.Account.Database
             return await (await Connection).Table<AccountRepositoryDbm>().ToListAsync();
         }
 
-        public override async Task<AccountRepositoryDbm> GetDbObject(int id)
+        protected override async Task<AccountRepositoryDbm> GetDbObject(int id)
         {
             return await (await Connection).FindAsync<AccountRepositoryDbm>(p => p.Id == id);
         }
@@ -22,11 +22,6 @@ namespace MyCC.Core.Account.Database
         {
             return connection.CreateTableAsync<AccountRepositoryDbm>();
 
-        }
-
-        protected override Task Drop(SQLiteAsyncConnection connection)
-        {
-            return connection.DropTableAsync<AccountRepositoryDbm>();
         }
 
         protected override AccountRepositoryDbm Resolve(AccountRepository element)

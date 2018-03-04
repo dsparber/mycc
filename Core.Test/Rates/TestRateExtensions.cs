@@ -1,6 +1,6 @@
 ﻿using MyCC.Core.Currencies;
-using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Models.Extensions;
 using NUnit.Framework;
 
 namespace MyCC.Core.Test.Rates

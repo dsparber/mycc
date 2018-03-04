@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using MyCC.Core;
 using MyCC.Core.Account.Models.Base;
-using MyCC.Core.Account.Models.Implementations;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Currencies;
 using MyCC.Core.Rates.Models;

@@ -31,7 +31,7 @@ namespace MyCC.Forms.View.Pages
 
             InitPullToRefresh();
 
-            var button = new Button { Text = I18N.AddSource, BorderColor = AppConstants.BorderColor, BackgroundColor = Color.White, BorderRadius = 0, TextColor = AppConstants.ThemeColor, FontAttributes = FontAttributes.None };
+            var button = new Button { Text = I18N.AddSource, BorderColor = AppConstants.BorderColor, BackgroundColor = Color.White, CornerRadius = 0, TextColor = AppConstants.ThemeColor, FontAttributes = FontAttributes.None };
             button.Clicked += AddSource;
             NoDataStack.Children.Add(button);
 

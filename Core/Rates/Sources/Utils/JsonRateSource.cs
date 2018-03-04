@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Helpers;
-using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Models.Extensions;
 using Newtonsoft.Json.Linq;
 
-namespace MyCC.Core.Rates.Repositories.Utils
+namespace MyCC.Core.Rates.Sources.Utils
 {
     internal abstract class JsonRateSource : IRateSource
     {

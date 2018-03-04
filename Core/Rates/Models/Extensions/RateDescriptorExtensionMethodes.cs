@@ -1,8 +1,7 @@
 ﻿using System;
 using MyCC.Core.Currencies;
-using MyCC.Core.Rates.Models;
 
-namespace MyCC.Core.Rates.ModelExtensions
+namespace MyCC.Core.Rates.Models.Extensions
 {
     public static class RateDescriptorExtensionMethodes
     {

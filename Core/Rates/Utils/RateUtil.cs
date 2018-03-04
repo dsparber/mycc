@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using MyCC.Core.Account.Storage;
 using MyCC.Core.Rates.Data;
 using MyCC.Core.Rates.Models;
-using MyCC.Core.Rates.Repositories.Utils;
+using MyCC.Core.Rates.Sources.Utils;
 using MyCC.Core.Settings;
 
 namespace MyCC.Core.Rates.Utils

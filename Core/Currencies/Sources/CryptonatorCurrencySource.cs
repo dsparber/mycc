@@ -14,7 +14,7 @@ namespace MyCC.Core.Currencies.Sources
         private const string UrlCurrencyList = "https://api.cryptonator.com/api/currencies";
 
         public string Name => ConstantNames.Cryptonator;
-        public IEnumerable<int> Flags => new int[] { CurrencyConstants.FlagCryptonator };
+        public IEnumerable<int> Flags => new[] { CurrencyConstants.FlagCryptonator };
 
 
         private const string CurrencyListResult = "rows";

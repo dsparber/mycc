@@ -9,7 +9,7 @@ namespace MyCC.Core.Currencies.Sources
     {
 
         public string Name => ConstantNames.BlockExperts;
-        public IEnumerable<int> Flags => new int[] { CurrencyConstants.FlagBlockExperts };
+        public IEnumerable<int> Flags => new[] { CurrencyConstants.FlagBlockExperts };
 
 
         public async Task<IEnumerable<Currency>> GetCurrencies()

@@ -5,11 +5,11 @@ using MyCC.Core.Currencies;
 using MyCC.Core.Currencies.Models;
 using MyCC.Core.Helpers;
 using MyCC.Core.Rates.Models;
-using MyCC.Core.Rates.Repositories.Utils;
+using MyCC.Core.Rates.Sources.Utils;
 using MyCC.Core.Resources;
 using Newtonsoft.Json.Linq;
 
-namespace MyCC.Core.Rates.Repositories.Implementations
+namespace MyCC.Core.Rates.Sources.Implementations
 {
     internal class CoinMarketCapExchangeRateSource : JsonRateSource
     {

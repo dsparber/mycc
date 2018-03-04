@@ -18,7 +18,6 @@ namespace MyCC.Core.Account.Repositories.Implementations
 
         public override async Task<bool> LoadFromDatabase()
         {
-            LastFastFetch = DateTime.Now;
             return await FetchOnline();
         }
 

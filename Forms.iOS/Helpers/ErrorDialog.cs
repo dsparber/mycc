@@ -24,7 +24,7 @@ namespace MyCC.Forms.iOS.Helpers
             }
             else
             {
-                message = I18N.GeneralError;
+                // message = I18N.GeneralError;
                 throw e;
             }
             e.LogError();

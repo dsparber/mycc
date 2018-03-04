@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MyCC.Core.Database;
-using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
-using MyCC.Core.Rates.Repositories;
-using MyCC.Core.Rates.Repositories.Utils;
+using MyCC.Core.Rates.Models.Extensions;
+using MyCC.Core.Rates.Sources;
+using MyCC.Core.Rates.Sources.Utils;
 using MyCC.Core.Rates.Utils;
 
 namespace MyCC.Core.Rates.Data

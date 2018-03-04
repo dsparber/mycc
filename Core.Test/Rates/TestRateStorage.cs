@@ -3,8 +3,8 @@ using System.IO;
 using System.Threading.Tasks;
 using MyCC.Core.Currencies;
 using MyCC.Core.Database;
-using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
+using MyCC.Core.Rates.Models.Extensions;
 using MyCC.Core.Test.Database;
 using NUnit.Framework;
 

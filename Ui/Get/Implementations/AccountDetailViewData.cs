@@ -31,7 +31,7 @@ namespace MyCC.Ui.Get.Implementations
 
             var additionalReferences = ApplicationSettings.MainCurrencies.Except(new[] { account.Money.Currency.Id })
                 .Select(x => new Money(account.Money.Amount * MyccUtil.Rates.GetRate(new RateDescriptor(account.Money.Currency.Id, x))?.Rate ?? 0, x.Find())).
-                OrderBy(m => m.Currency.Code);
+                OrderBy(m => m.Currency.Code).ToList();
 
             return new HeaderItem(account.Money.MaxTwoDigits(),
                 additionalReferences.Any() ? string.Join(" / ", additionalReferences.Select(m => m.MaxTwoDigits())) : account.Money.Currency.Name);

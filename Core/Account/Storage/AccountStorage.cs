@@ -24,12 +24,12 @@ namespace MyCC.Core.Account.Storage
             }
         }
 
-        public override AccountRepository LocalRepository => Repositories.OfType<LocalAccountRepository>().FirstOrDefault();
+        public AccountRepository LocalRepository => Repositories.OfType<LocalAccountRepository>().FirstOrDefault();
 
         public static readonly AccountStorage Instance = new AccountStorage();
 
         public static IEnumerable<string> UsedCurrencies => Instance.AllElements.Select(a => a?.Money?.Currency.Id).Distinct().Where(e => e != null).ToList();
-        public static IEnumerable<IGrouping<Currency, Models.Base.Account>> AccountsGroupedByCurrency => Instance.AllElements.GroupBy(a => a?.Money?.Currency).Where(g => g.Key != null);
+        public static IEnumerable<IGrouping<Currency, Models.Base.Account>> AccountsGroupedByCurrency => Instance.AllElements.GroupBy(a => a?.Money?.Currency).Where(g => g?.Key != null);
         public static List<FunctionalAccount> AccountsWithCurrency(Currency currency) => Instance.AllElements.Where(a => a.Money.Currency.Equals(currency)).ToList();
         public static List<FunctionalAccount> AccountsWithCurrency(string currencyId) => Instance.AllElements.Where(a => a.Money.Currency.Id.Equals(currencyId)).ToList();
 

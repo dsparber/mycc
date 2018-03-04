@@ -1,6 +1,4 @@
-﻿using MyCC.Core.Rates.ModelExtensions;
-
-namespace MyCC.Core.Rates.Models
+﻿namespace MyCC.Core.Rates.Models
 {
     public class RateDescriptor
     {

@@ -1,5 +1,5 @@
 using System;
-using MyCC.Core.Rates.ModelExtensions;
+using MyCC.Core.Rates.Models.Extensions;
 
 namespace MyCC.Core.Rates.Models
 {

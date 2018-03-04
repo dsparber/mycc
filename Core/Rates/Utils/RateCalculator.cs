@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MyCC.Core.Rates.Data;
-using MyCC.Core.Rates.ModelExtensions;
 using MyCC.Core.Rates.Models;
-using MyCC.Core.Rates.Repositories.Utils;
+using MyCC.Core.Rates.Models.Extensions;
+using MyCC.Core.Rates.Sources.Utils;
 
 namespace MyCC.Core.Rates.Utils
 {

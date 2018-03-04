@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using MyCC.Core.Currencies.Models;
 using Newtonsoft.Json;
 using SQLite;
 

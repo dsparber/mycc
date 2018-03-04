@@ -14,7 +14,7 @@ namespace MyCC.Core.Currencies.Sources
         private const string UrlCurrencyList = "https://chainz.cryptoid.info/2give/api.dws?q=summary";
 
         public string Name => ConstantNames.CryptoId;
-        public IEnumerable<int> Flags => new int[] { CurrencyConstants.FlagCryptoId };
+        public IEnumerable<int> Flags => new[] { CurrencyConstants.FlagCryptoId };
 
 
         private const string JsonKeyName = "name";
