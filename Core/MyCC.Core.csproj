@@ -44,6 +44,16 @@
     <Compile Include="Account\Repositories\Implementations\PoloniexAccountRepository.cs" />
     <Compile Include="Account\Repositories\Implementations\EthereumClassicAccountRepository.cs" />
     <Compile Include="Account\Repositories\Implementations\ReddCoinAccountRepository.cs" />
+    <Compile Include="Assets\Database\AssetDbm.cs" />
+    <Compile Include="Assets\Database\AssetsDatabase.cs" />
+    <Compile Include="Assets\Database\AssetsSourceDbm.cs" />
+    <Compile Include="Assets\IAssets.cs" />
+    <Compile Include="Assets\Models\Asset.cs" />
+    <Compile Include="Assets\Models\AssetsSource.cs" />
+    <Compile Include="Assets\Models\AssetsSourceType.cs" />
+    <Compile Include="Assets\Sources\AssetsAddressSource.cs" />
+    <Compile Include="Assets\Sources\AssetsAmountSource.cs" />
+    <Compile Include="Assets\Utils\AssetsFactory.cs" />
     <Compile Include="CoinInfo\Repositories\CoinMarketCapInfoRepository.cs" />
     <Compile Include="CoinInfo\Repositories\EtcchainCoinInfoRepository.cs" />
     <Compile Include="CoinInfo\Repositories\BulwarkInfoRepository.cs" />
@@ -235,8 +245,5 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
   <Import Project="packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
 </Project>
