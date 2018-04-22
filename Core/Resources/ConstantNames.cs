@@ -30,5 +30,6 @@
         public const string ReddCoin = "ReddCoin";
         public const string CoinMarketCap = "CoinMarketCap";
         public const string CashExplorer = "CashExplorer";
+        public const string Bulwark = "Bulwark";
     }
 }

@@ -21,6 +21,7 @@ namespace MyCC.Core.Account.Database
         public const int DbTypeReddCoinRepository = 9;
         public const int DbTypePoloniexRepository = 10;
         public const int DbTypeBitcoinCashRepository = 11;
+        public const int DbTypeBulwark = 12;
 
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
@@ -72,6 +73,7 @@ namespace MyCC.Core.Account.Database
                     case DbTypeEthereumClassicRepository: return new EthereumClassicAccountRepository(Id, Name, Data);
                     case DbTypeReddCoinRepository: return new ReddCoinAccountRepository(Id, Name, Data);
                     case DbTypePoloniexRepository: return new PoloniexAccountRepository(Id, Name, Data);
+                    case DbTypeBulwark: return new BulwarkAccountRepository(Id, Name, Data);
                     default: throw new NotSupportedException();
                 }
             });

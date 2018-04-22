@@ -28,6 +28,7 @@ namespace MyCC.Core.CoinInfo
                 new EtherchainCoinInfoRepository(),
                 new EtcchainCoinInfoRepository(),
                 new ReddCoinInfoRepository(),
+                new BulwarkInfoRepository(),
                 new CoinMarketCapInfoRepository(),
                 new CryptoIdCoinInfoRepository(),
                 new BlockExpertsCoinInfoRepository()

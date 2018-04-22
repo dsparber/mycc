@@ -35,15 +35,18 @@
   <ItemGroup>
     <Compile Include="Account\Helper\AccountStringHelper.cs" />
     <Compile Include="Account\Models\Implementations\BitcoinCashAccount.cs" />
+    <Compile Include="Account\Models\Implementations\BulwarkAccount.cs" />
     <Compile Include="Account\Models\Implementations\PoloniexAccount.cs" />
     <Compile Include="Account\Models\Implementations\ReddCoinAccount.cs" />
     <Compile Include="Account\Models\Implementations\EthereumClassicAccount.cs" />
     <Compile Include="Account\Repositories\Implementations\BitcoinCashAccountRepository.cs" />
+    <Compile Include="Account\Repositories\Implementations\BulwarkAccountRepository.cs" />
     <Compile Include="Account\Repositories\Implementations\PoloniexAccountRepository.cs" />
     <Compile Include="Account\Repositories\Implementations\EthereumClassicAccountRepository.cs" />
     <Compile Include="Account\Repositories\Implementations\ReddCoinAccountRepository.cs" />
     <Compile Include="CoinInfo\Repositories\CoinMarketCapInfoRepository.cs" />
     <Compile Include="CoinInfo\Repositories\EtcchainCoinInfoRepository.cs" />
+    <Compile Include="CoinInfo\Repositories\BulwarkInfoRepository.cs" />
     <Compile Include="CoinInfo\Repositories\ReddCoinInfoRepository.cs" />
     <Compile Include="Currencies\CurrencyConstants.cs" />
     <Compile Include="Currencies\CurrencyHelper.cs" />
