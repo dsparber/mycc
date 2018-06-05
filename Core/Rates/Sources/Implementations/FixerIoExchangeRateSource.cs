@@ -17,7 +17,7 @@ namespace MyCC.Core.Rates.Repositories.Implementations
         public override int Id => (int)RateSourceId.FixerIo;
         public override string Name => ConstantNames.FixerIo;
 
-        protected override Uri Uri => new Uri("http://api.fixer.io/latest");
+        protected override Uri Uri => new Uri("http://data.fixer.io/api/latest?access_key=600b3fd721123dbd05bb99c79aa07412&format=1");
 
         private const string JsonKeyRates = "rates";
 
